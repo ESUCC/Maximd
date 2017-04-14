@@ -1,0 +1,144 @@
+<div style="float:left;padding-left: 10px;">
+    <div id="searchContainer" class="clearfix" style="padding-left: 10px; margin-top: 0px;">
+        <h1><b>NSSRS Report</b></h1>
+
+        <h2><B>Student Information:</B></h2>
+        <table>
+            <TR>
+                <TD>Record Status:</TD>
+                <TD>
+                    <B id="formValid"><?= $this->report->getValid() ? '<span style="color: green">Complete</span>' : '<span class="btsRed">Incomplete</span>' ?></B>
+                </TD>
+            </TR>
+            <TR>
+                <TD>Name:</TD>
+                <TD><?= $this->report->student->name_first . ' ' . $this->report->student->name_middle
+                    . ' ' . $this->report->student->name_last ?></TD>
+            </TR>
+        </table>
+        <h2><B>Forms in use:</B></h2>
+        <table>
+            <?
+            $formsInUse = '';
+            $formsNotInUse = '';
+            foreach ($this->report->forms as $formNumber => $formConfig) {
+                $finalForm = $this->report->getForm($formNumber, 'final');
+                if ($finalForm) {
+                    $finalFormId = $finalForm['id_form_' . $formNumber];
+                    $formsInUse .= "<tr><td>" . 'VIEW <a href="/form' . $formNumber . '/view/document/' . $finalFormId . '/page/1">' . $formConfig['title'] . '</a>' . "</td></tr>";
+                } else {
+                    $formsNotInUse .= "<tr><td>" . 'No <B>' . $formConfig['title'] . '</B> Form could be found / used.' . "</td></tr>";
+                }
+            }
+            echo $formsInUse . $formsNotInUse;
+            ?>
+        </table>
+
+        <form>
+            <h2><b>Student Information:</b></h2>
+            <table class="report_rows">
+                <tr>
+                    <th style="width:280px;"><b>Field Name</b></th>
+                    <th><b>Value</b></th>
+                </tr>
+                <? foreach ($this->report->form->getElements() as $index => $element):
+
+                    if('field06' == $index ||'field07' == $index) {
+                        continue;
+                    }
+                    ?>
+                    <TR id="<?= $index ?>-label" class="<?= count($element->getMessages()) ? 'btsRed' : '' ?>">
+                        <TD><?
+                            if (false === array_search($element->getName(), array_keys($this->report->form->getMessages()))) {
+                                echo '<i id="<?= $index ?>-dot" class="redGreenDot fa fa-circle" style="color: green"></i>';
+                            } else {
+                                echo '<i id="<?= $index ?>-dot" class="redGreenDot fa fa-circle" style="color: red"></i>';
+                            }
+                            ?> <?= $element->getLabel() ?></TD>
+                        <TD>
+                            <?
+                            if ('Transfer' == $this->report->type) {
+                                switch ($index) {
+                                    case 'field02':
+                                    case 'field05':
+                                    case 'field11':
+                                    case 'field16':
+                                    case 'field23':
+                                    case 'field32':
+                                    case 'field33':
+                                    case 'field34':
+                                    case 'field44':
+                                    case 'field47':
+                                    case 'field50':
+                                    case 'field52':
+                                        echo $element;
+                                        break;
+                                    case 'field01':
+                                    case 'field03':
+                                    case 'field35':
+                                    case 'default':
+                                        echo $element->getValue();
+                                        break;
+                                }
+                            } else {
+                                $elementValue = $element->getValue();
+                                if ('field02' == $index) {
+                                    // display the school name
+                                    $multiOptions = $element->getMultiOptions();
+                                    echo $elementValue;
+                                    if (isset($multiOptions[$elementValue])) {
+                                        echo " (" . $multiOptions[$elementValue] . ")";
+                                    }
+                                } elseif ('field44' == $index || 'field52' == $index) {
+                                    // selects with option groups
+                                    // display the selected value
+                                    $displayValue = null;
+                                    $multiOptions = $element->getMultiOptions();
+                                    if ('' !== $elementValue && !is_null($elementValue)) {
+                                        foreach ($multiOptions as $optionGroupName => $optionGroup) {
+                                            if (isset($optionGroup[$elementValue])) {
+                                                $displayValue = $optionGroupName . ' ' . $optionGroup[$elementValue];
+                                            }
+                                        }
+                                    }
+                                    if (is_null($displayValue)) {
+                                        echo $elementValue;
+                                    } else {
+                                        echo $displayValue;
+                                    }
+                                } else {
+                                    switch ($element->getType()) {
+                                        case 'App_Form_Element_Select':
+                                        case 'App_Form_Element_Radio':
+                                            $multiOptions = $element->getMultiOptions();
+                                            if ('' !== $elementValue && !is_null($elementValue) && isset($multiOptions[$elementValue])) {
+                                                echo $multiOptions[$elementValue];
+                                            } else {
+                                                echo $elementValue;
+                                            }
+                                            break;
+                                        case 'App_Form_Element_DatePicker':
+                                            if ('' !== $elementValue && !is_null($elementValue)) {
+                                                echo date('Y-m-d', strtotime($elementValue));
+                                            }
+                                            break;
+                                        case 'App_Form_Element_Text':
+                                            echo $elementValue;
+                                            break;
+                                    }
+                                }
+                            }
+                            ?>
+                            <? foreach ($element->getMessages() as $message): ?>
+                                <span class="btsRed"><?= $message ?></span>
+                            <? endforeach; ?>
+                        </TD>
+                    </TR>
+                <? endforeach; ?>
+            </table>
+        </form>
+        <div style="margin-top: 10px">
+            NSSRS data: <span id="commaSeparated"><?= $this->report->buildCommaSeparated() ?></span>
+        </div>
+    </div>
+</div>

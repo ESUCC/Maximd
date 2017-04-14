@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Special Considerations">
+           <tuv xml:lang="es"><seg>Consideraciones Especiales</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Considerations</seg></tuv>
+       </tu>
+       <tu tuid="complete all that apply">
+           <tuv xml:lang="es"><seg>Complete todas las opciones que apliquen,  de lo contrario expl&#xED;que por qu&#xE9; no aplica</seg></tuv>
+           <tuv xml:lang="en"><seg>complete all that apply, otherwise explain why this item does not apply</seg></tuv>
+       </tu>
+       <tu tuid="Student's strengths">
+           <tuv xml:lang="es"><seg>Fortalezas del estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>Student's strengths</seg></tuv>
+       </tu>
+       <tu tuid="SS Description">
+           <tuv xml:lang="es"><seg>Si el estudiante va a cumplir 16 a&#xF1;os de edad (o m&#xE1;s) durante este IEP, indique las fortalezas relacionadas con el &#xE1;rea de transici&#xF3;n, incluyendo empleo, capacitaci&#xF3;n despu&#xE9;s de la secundaria (preparatoria), habilidades para desenvolverse en la vida diaria y participaci&#xF3;n comunitaria</seg></tuv>
+           <tuv xml:lang="en"><seg>If the student will turn 16 (or older) during this IEP, indicate strengths related to the area of transition, including employment, post-secondary training, daily living skills, and community involvement</seg></tuv>
+       </tu>
+       <tu tuid="Parental information">
+           <tuv xml:lang="es"><seg>Informaci&#xF3;n de los padres, incluyendo lo que les preocupa mejorar de la educaci&#xF3;n de su hijo</seg></tuv>
+           <tuv xml:lang="en"><seg>Parental information, including concerns for enhancing their child's education</seg></tuv>
+       </tu>
+       <tu tuid="Pi Description">
+           <tuv xml:lang="es"><seg>Si el estudiante tiene 14 a&#xF1;os de edad o m&#xE1;s, indique las preocupaciones relacionadas con el &#xE1;rea de transici&#xF3;n, incluyendo empleo, capacitaci&#xF3;n adicional posterior, habilidades para desenvolverse en la vida diaria y participaci&#xF3;n comunitaria</seg></tuv>
+           <tuv xml:lang="en"><seg>If the student is age 14 or older, indicate concerns related to the area of transition including employment, post-secondary training, daily living skills and community involvement</seg></tuv>
+       </tu>
+       <tu tuid="Evaluation Results">
+           <tuv xml:lang="es"><seg>Resultados de evaluaci&#xF3;n(es) inicial(es) o reciente(es)</seg></tuv>
+           <tuv xml:lang="en"><seg>Results of initial or recent evaluation(s)</seg></tuv>
+       </tu>
+       <tu tuid="Evaluation Results Description">
+           <tuv xml:lang="es"><seg>esto debe incluir no s&#xF3;lo un informe de las calificaciones de las evaluaciones, sino tambi&#xE9;n una explicaci&#xF3;n de los resultados</seg></tuv>
+           <tuv xml:lang="en"><seg>this should include not only a report of test scores, but also an explanation of the results</seg></tuv>
+       </tu>
+       <tu tuid="Performance Results">
+           <tuv xml:lang="es"><seg>Los resultados del desempe&#xF1;o del ni&#xF1;o en cualquier evaluaci&#xF3;n general a nivel estatal y del distrito</seg></tuv>
+           <tuv xml:lang="en"><seg>Results of child's performance on any general state and district-wide assessments</seg></tuv>
+       </tu>
+       <tu tuid="interventions and strategies">
+           <tuv xml:lang="es"><seg>Si la conducta impide el aprendizaje, considerar el uso de intervenciones y estrategias de conducta positivas</seg></tuv>
+           <tuv xml:lang="en"><seg>If behavior impedes learning, consideration of the use of positive behavioral interventions and strategies</seg></tuv>
+       </tu>
+       <tu tuid="consideration of language needs">
+           <tuv xml:lang="es"><seg>Si el estudiante tiene aptitud limitada del idioma ingl&#xE9;s, considerar las necesidades del idioma</seg></tuv>
+           <tuv xml:lang="en"><seg>If student has Limited English proficiency, consideration of language needs</seg></tuv>
+       </tu>
+       <tu tuid="blind or visually impaired">
+           <tuv xml:lang="es"><seg>Si el ni&#xF1;o es ciego o visualmente discapacitado, el IEP deber&#xE1; proporcionar ense&#xF1;anza del braille el cual debe usarse , a menos que despu&#xE9;s de una evaluaci&#xF3;n se determine que el  braille y su uso no es apropiado para el ni&#xF1;o</seg></tuv>
+           <tuv xml:lang="en"><seg>If the student is blind or visually impaired, the IEP
+        shall provide Braille instruction and the use of Braille, unless after
+        an evaluation it is determined that Braille, and the use of Braille is
+        not appropriate for the child</seg></tuv>
+       </tu>
+       <tu tuid="communication needs">
+           <tuv xml:lang="es"><seg>Considerar las necesidades de comunicaci&#xF3;n del ni&#xF1;o</seg></tuv>
+           <tuv xml:lang="en"><seg>Consideration of the child's communication needs</seg></tuv>
+       </tu>
+       <tu tuid="deaf or hard of hearing">
+           <tuv xml:lang="es"><seg>Para ni&#xF1;os sordos o con problemas de audici&#xF3;n considerar las 3 siguientes &#xE1;reas</seg></tuv>
+           <tuv xml:lang="en"><seg>For children who are deaf or hard of hearing consideration of the following 3 areas</seg></tuv>
+       </tu>
+       <tu tuid="language and communication needs">
+           <tuv xml:lang="es"><seg>Necesidades de comunicaci&#xF3;n e idioma del ni&#xF1;o</seg></tuv>
+           <tuv xml:lang="en"><seg>Child's language and communication needs</seg></tuv>
+       </tu>
+       <tu tuid="Opportunities for direct communication">
+           <tuv xml:lang="es"><seg>Oportunidades de comunicaci&#xF3;n directa con compa&#xF1;eros y profesionales en el modo de comunicaci&#xF3;n y lenguaje del ni&#xF1;o </seg></tuv>
+           <tuv xml:lang="en"><seg>Opportunities for direct communication with peers and professionals in the child's language and communication mode</seg></tuv>
+       </tu>
+       <tu tuid="Academic level and opportunities">
+           <tuv xml:lang="es"><seg>Nivel acad&#xE9;mico y oportunidades de instrucci&#xF3;n directa en el modo de comunicaci&#xF3;n y lenguaje del ni&#xF1;o</seg></tuv>
+           <tuv xml:lang="en"><seg>Academic level and opportunities for direct instruction in the child's language and communication mode</seg></tuv>
+       </tu>
+       <tu tuid="assistive technology service or device">
+           <tuv xml:lang="es"><seg>Considerar que el ni&#xF1;o necesita servicios o dispositivos tecnol&#xF3;gicos de ayuda</seg></tuv>
+           <tuv xml:lang="en"><seg>Consideration of the child's need for assistive technology service or device</seg></tuv>
+       </tu>
+       <tu tuid="Considered but not necessary">
+           <tuv xml:lang="es"><seg>Se considera aunque no es necesario</seg></tuv>
+           <tuv xml:lang="en"><seg>Considered but not necessary</seg></tuv>
+       </tu>
+   </body>
+</tmx>

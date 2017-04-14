@@ -1,0 +1,300 @@
+<div>
+<?php //$this->headScript()->appendFile('/js/jquery.js'); ?>
+<?php 
+// added spell checker option to config because of license trouble in dev env
+$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+$sessUser = new Zend_Session_Namespace('user');
+// if(0 && $config->spellchecker->enabled && 
+// 	(1000254 == $sessUser->sessIdUser || 1010818 == $sessUser->sessIdUser)) {
+// 	$this->headScript()->appendFile("/sproxy/sproxy.php?cmd=script&doc=wsc");
+// 	$this->headScript()->appendFile('/js/startSpellCheck.js'); 
+// }
+
+$personnelTable = new Model_Table_PersonnelTable();
+$uName = Zend_Auth::getInstance()->getIdentity();
+$user = $personnelTable->getNameByUsername($uName);//->select()->from('iep_personnel')->where('username = ?', Zend_Auth::getInstance()->getIdentity())->query()->fetchAll();
+
+?>
+<table border="0">
+	<!-- logo row -->	
+	<tr>
+		<td colspan="2">
+			<?php 
+			$auth = Zend_Auth::getInstance();
+			if($auth->hasIdentity()) { 
+				echo $this->navigationTopTabs();
+			} ?>
+		</td>
+	</tr>
+	<tr>
+		<td style="width:50%;">
+			<?= $this->form->zend_checkout_time; ?>
+			<?php 
+				// zend_checkout set to 0 on autosave when checkout time runs out
+				echo $this->formHidden('zend_checkout', '1', array('ignore'=>true));
+			?>
+			</div>
+			<div id="response"></div>
+			<?
+			if('edit' == $this->mode) { // && 1000254  == $this->usersession->id_personnel
+				$checkoutDueTimestamp = strtotime($this->form->zend_checkout_time->getValue());
+			    $countDownLink = "/countdown/countdown/countto/". date('Y-m-d', $checkoutDueTimestamp) . "%20" . date('H:i:s', $checkoutDueTimestamp);
+				echo '<div class="btsb" style="white-space:nowrap;">You have this form checked out for: <span id="form_timer_server">';
+			    ?><SCRIPT language="JavaScript" SRC="<?php echo $countDownLink?>"></SCRIPT><?
+			    echo '</span></div>';
+			}
+			?>
+		</td>
+		<td style="text-align:right;" class="bts">
+			<span class="btsb">Form Options</span>:&nbsp;
+			<? 
+				echo $this->formOptionsLinkBar(
+					$this->db_form_data[$this->db_form_data['form_config']['key_name']], 
+					$this->db_form_data['form_config']['controller'], 
+					$this->studentFormOptions,
+					$this->page
+				);
+			?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<span class="btsb">Student</span>:&nbsp;<? echo $this->db_form_data['student_data']['name_student'] . " (".$this->db_form_data['student_data']['student_display'].")"; ?>
+		</td>
+		<td style="text-align:right;" class="bts">
+			<span class="btsb">Student Options</span>:&nbsp;
+			<?php echo $this->studentOptions($this->db_form_data['id_student'], $this->db_form_data['id_district']); ?>
+		</td>
+	</tr>
+	<?php $usersession = new Zend_Session_Namespace('user'); ?>
+	<?php echo $this->languageSelector(); ?>
+</table>
+
+<div id="serverInteractionProgressMsg" style="opacity: 0;"></div>
+<?php if ('log' != $this->mode) { ?>
+<div style="" id="page_navigation_controlbar">
+<table>
+	<tr>
+	<? if ($this->pageCount > 0) { 
+	   // Change $this->pageCount > 1 so that the autoclock save would work Mike did this 7-21-2016 ?>
+    	<td class="bts"><span class="btsb">Page</span>:</td>
+    	<td><? 
+    	   //echo My_Classes_iepFunctionGeneral::valueListNumbers("navPage", $this->pageCount, 1, $this->page, $this->page, "none", "onChange=\"javascript:recordAction(this.form, this.value);\"");
+//    	   echo My_Classes_iepFunctionGeneral::dropDownButtonNumbers("navPage", $this->pageCount, 1, $this->page, $this->page, "none");
+    	   echo My_Classes_iepFunctionGeneral::valueListNumbers("navPage", $this->pageCount, 1, $this->page, $this->page, "none"); 
+    		?>
+    	</td>
+	<? } ?>
+	<? if ($this->page > 1) { ?>
+		<td align="right">
+		<button dojoType="dijit.form.Button" id="prevPage" >Prev Page</button>
+		</td>
+	
+	<? } ?>
+	<? if ($this->page < $this->pageCount) { ?>
+		<td align="right">
+		<button dojoType="dijit.form.Button" id="nextPage" >Next Page</button>
+		</td>
+	<? } ?>
+	
+	<td align="right">
+	<?php echo $this->pageValidationListTop; ?>
+	</td>
+	
+		<td align="right">
+		<?php 
+            echo $this->formButton('formDoneButton', 'Done', array(
+                    'accesskey' => "d",
+                    'onclick' => "javascript:recordAction(dojo.byId('myform'), 'done');",
+                    'dojoType' => "dijit.form.Button"));
+        ?>
+		</td>
+			
+	<? 
+		// added spell checker option to config because of license trouble in dev env
+		$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+		if ($this->mode == "edit" && $config->spellchecker->enabled) { ?>
+            <td align="right">
+                <?= $this->jspell(); ?>
+            </td>
+		<? } ?>
+		<td align="right">
+		</td>
+		<?php if('edit' == $this->mode) { ?>
+		<td align="right">
+            <button dojoType="dijit.form.Button" type="button" id="submitButton" style="color:grey;display:none;">Old Save</button>
+        </td>
+		<td align="right">
+            <button class="jsavebutton dijitReset dijitInline dijitButtonNode" id="jsubmit-header" name="jsubmit-header" type="button">Save</button>
+        </td>
+        <?php } ?>
+	
+	</tr>
+</table>
+</div>
+<div id="validationListSpan">
+<table class="formTop" id="validationList" style="display:<? echo $this->fatal ? "inline":"none"; ?>">
+	<tbody>
+	<?php if(count($this->validationArr) <= 0 && !$this->valid) echo "DEVELOPER ISSUE: FORM IS NOT VALID BUT VALIDATIONARR IS EMPTY.<BR/>"; ?>
+        <? if (!$this->valid) { ?>
+        
+            <? if ($this->fatal) { //$arr = $formObj->validater->arrIssuesFatal; ?>
+            <tr>
+                <td align="left" class="bts" style="width:100%;" colspan="2"><span class="btsb">Error</span>:&nbsp;This page <span class="btsbRed">can&rsquo;t be saved</span> because of the following validation issues:</td>
+            </tr>
+            <? } else { //$arr = $formObj->validater->arrIssues; ?>
+            <tr>
+                <td align="left" class="bts" style="width:100%;" colspan="2">
+                <span class="btsb">Checklist</span>:&nbsp;This page is valid for draft status but can&rsquo;t be finalized until the following issues are resolved:
+                </td>
+            </tr>
+            <? }
+    
+    
+            //
+            // build validation output
+            //
+            
+            if(count($this->validationArr) > 0)
+            {
+            foreach($this->validationArr as $valRow) 
+            { 
+            	if(is_array($valRow['message'])) 
+            	{
+            		$message = implode(', ', $valRow['message']);
+            	} else {
+            		$message = $valRow['message'];
+            	}
+                ?>
+                <tr>
+                    <td valign="top"><? echo "&#8226;"; ?></td>
+                    <td style="width:100%;"><? echo "<b>".$valRow['label']."</b>" . ' ' . $message; ?></td>
+                </tr>
+    			<?
+            }
+            
+            }
+		
+            ?>
+            
+        <? } ?>
+	</tbody>
+</table>
+</div>
+
+<div id="hiddenValidationMessages">
+	<?php 
+		if(count($this->validationArr) > 0) {
+            echo '<input type="hidden" id="validationCount" value="'.count($this->validationArr).'" />';
+            $i = 0;
+			foreach($this->validationArr as $valRow) { 
+				
+            	if(is_array($valRow['message'])) {
+            		$message = implode(', ', $valRow['message']);
+            	} else {
+            		$message = $valRow['message'];
+            	}
+            	echo '<input type="hidden" id="validationMessage'.$i.'" name="'.$valRow['label'].'" value="'. $message .'" />'; 
+            	$i++;
+			}
+            }
+	?>
+</div>
+<div id="validationStatusSpan" style="float:left;">
+<table class="formTop" id="validationStatus">
+	<tbody>
+	<tr>
+        <? switch ($this->db_form_data ['status']) {
+            case "Final": ?>
+                <td align="left" style="width:100%;" class="bts">
+                	<? if ($this->option != "print") { ?><? echo "<span class=\"btsb\">Status</span>: ".$this->db_form_data ['status'];} ?>
+                </td>
+                <?	break;
+            case "Suspended": ?>
+                <td align="left" style="width:100%;" class="bts">
+                	<? if ($this->option != "print") { ?><? echo "<span class=\"btsb\">Status</span>: ".$this->db_form_data ['status'];} ?>
+                </td>
+                <?	break;
+            default:
+            if (!$this->valid && !$this->fatal) { ?>
+                    <td align="left" class="bts" style="white-space:nowrap;">
+                        <?  if ($this->option != "print" || $this->sub == "form_002" || $this->sub == "form_004" || $this->sub == "form_004dupe") { ?>
+                                <? echo "<span class=\"btsb\">Status</span>: <span class=\"btsbRed\">{$this->db_form_data ['status']}</span>";
+                            } ?>
+                            <? if ($this->option != "print") { ?>
+                                (<a accesskey="v" href="javascript:displayValidationList();" <? echo My_Classes_iepFunctionGeneral::windowStatus('Toggle Validation Issues'); ?>>
+                                <span class="btsLBlue" style="text-decoration:underline;">click here</span></a> to view checklist)
+                            <? } ?>
+                    </td>
+            <? } else { ?>
+                    <td align="left" class="bts" style="white-space:nowrap;">
+                        <?  if ($this->option != "print" || $this->sub == "form_002" || $this->sub == "form_004" || $this->sub == "form_004dupe") { ?>
+                                <? echo "<span class=\"btsb\">Status</span>: <span class=\"btsbRed\">{$this->db_form_data ['status']}</span>";
+                            } ?>
+                            <? if ($this->valid && $this->option != "print") { ?>
+                                (page is OK)
+                            <? } ?>
+                    </td>
+            <? } 
+            break; 
+        } ?>
+	</tr>
+	</tbody>
+</table>
+</div>
+<?php 
+$sessUser = new Zend_Session_Namespace ( 'user' );
+
+
+if('edit' == $this->mode) { 
+
+    if(0) {
+        // replacing error reporter
+        echo $this->jqueryErrorReporter();
+    } else {
+    ?>
+    <!-- Error Reporter -->
+        <div style="float:right;text-align:right;" dojoType="soliant.widget.ErrorReporter" 
+            keyName="<?= $this->formNum ?>"
+            formId="<?= $this->formId ?>"
+            user="<?= $this->userName ?>"
+            pageNumber="<?= $this->page ?>"
+            studentId="<?= $this->db_form_data['student_data']['id_student'] ?>"
+        ></div>
+<?php } ?>     
+<?php } ?>     
+<?php 
+  /*
+   * Remove Student Info header per request for form 13 
+   */
+  if ($this->controller != 'form013' && $this->controller != 'form028' && 'log' != $this->mode) { ?>
+	<table class="formSectionHead" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>Student Info</td>
+		</tr>
+	</table>
+<?php } 
+   if ($this->controller == 'form028') {
+?>
+	<table class="formSectionHeadBlue" cellpadding="0" cellspacing="0">
+		<tr>
+			<td>Nonresident Student Parentally-Placed in a Nonpublic School</td>
+		</tr>
+	</table>
+<?php }  ?>
+<?php } ?>
+<?php if('log' != $this->mode) { ?>
+<div style="width:300px;height:80px;" dojoType="dijit.Dialog" id="savingDialog" title="Saving...">
+  <div style="text-align: center;"><label for="name">Your page is being saved...</label></div>
+</div>
+<?php } ?>
+<?php if('edit' == $this->mode && $this->form->form_editor_type) {
+    $addStyle = 'display:none;';
+        if(1000254 == $sessUser->sessIdUser || 1010818 == $sessUser->sessIdUser) {
+            $addStyle = '';
+        }
+    ?>
+    <div class="noprint" style="background-color:red;height:30px;vertical-align:middle;<?=$addStyle?>">
+        <div style="text-align: center;"><?= $this->form->form_editor_type; ?></div>
+    </div>
+<?php } ?>

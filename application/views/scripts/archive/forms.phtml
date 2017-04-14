@@ -1,0 +1,199 @@
+<div style="margin-bottom:10px;">Archive Forms</div>
+<table style="display:none;">
+<tr>
+	<td>
+	<?= $this->form; ?>	
+	</td>
+	<td>
+	<?php 
+	if(count($this->formsToArchive) > 0) {
+		$archive = new App_Form_Element_Submit('archive', array('Label' => 'Archive', 'onclick'=>'javascript:runArchive();'));
+		$archive->removeDecorator('label');
+		echo $archive;
+		foreach($this->formsToArchive as $form)
+		{
+			if($form['pdf_archived']) {
+				$form['pdf_archived'] = 'True';
+			} else {
+				$form['pdf_archived'] = 'False';
+			}
+			echo "Id: " . $form['id'] . "(" . $form['date'] .') Archived: <span class="toArchive" id="' . $form['id'] . '">' . $form['pdf_archived'] . "</span></BR>"; 
+		}
+	}
+	?>
+	</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+function runArchive() {
+	console.debug('Archiving forms');
+	dojo.query('.toArchive').forEach(function(node, index) {
+		console.debug('index', index, node);
+
+	    var formNum = dojo.byId('form_num').value;
+	    console.debug('archive form Num:', formNum);
+	    console.debug('archive form ID:', node.id);
+
+	    // send to server to be saved
+		var xhrArgs = {
+//			content : submitObj,
+			handleAs : "json",
+	        url: '/form'+formNum+'/archive/document/'+node.id+'/page/1/ajaxRequest/true',
+			// sync: wait2finish, // should we wait till the call is done before
+			// continuing
+			sync : true,
+			load : function updateEditorCallback(data)
+			{
+				var returneditems = data.items;
+				node.innerHTML = returneditems[0]['result'];
+//				dojo.byId()
+			},
+			error:function(error){
+				//Do something on failure.
+				console.debug('error', error);
+			}
+		};
+		var deferred = dojo.xhrPost(xhrArgs); 
+
+	});
+}
+
+</script>
+<script type="text/javascript">
+	var archiveTable;
+	$(document).ready(function() {
+		try{
+			/* Add a click handler for selection to the rows */
+			$("#myarchivedatagrid tbody").click(function(event) {
+				$(archiveTable.fnSettings().aoData).each(function (){
+					$(this.nTr).removeClass('row_selected');
+				});
+				$(event.target.parentNode).addClass('row_selected');
+				var anSelected = fnGetSelected( archiveTable );
+				var rowdata = $('#myarchivedatagrid').dataTable().fnGetData(anSelected[0]);
+
+				console.debug('first row data:', rowdata[0]);
+				var submitString = 	
+					'&id_student=' + rowdata[0]+
+					'&status=Active';
+
+				// get student and populate student info area and populate forms datatable
+				$.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: '/student/get-student-data/id_student/'+rowdata[0],
+					data: submitString,
+					success: function(json) {
+						//console.debug('success', json['items'], json['items'][0]['name_first']);
+						$("#name_first").val(json['items'][0]['name_first']);
+						// refresh the forms table
+						$('#studentFormsDataTable').dataTable().fnDraw();
+					}
+				});	// end ajax call
+			});
+
+			console.debug('load datatables');
+			
+			// datatable - list of students
+			archiveTable = $('#myarchivedatagrid').dataTable({
+				"bJQueryUI":true,
+				"sPaginationType":"full_numbers",
+		        "bProcessing": true,
+		        "bServerSide": true,
+		        "sAjaxSource": '/archive/datatable',
+		        "fnServerData": function( sUrl, aoData, fnCallback ) {
+		        	aoData.push( { "name": "id_county", "value": $('#id_county').val() } );
+		        	aoData.push( { "name": "id_district", "value": $('#id_district').val() } );
+		        	aoData.push( { "name": "id_school", "value": $('#id_school').val() } );
+		            $.ajax( {
+		                "url": sUrl,
+		                "data": aoData,
+		                "success": fnCallback,
+		                "dataType": "json",
+		                "cache": false
+		            } );
+		        }
+			});
+			
+			// list of forms
+			formsTable = $('#studentFormsDataTable').dataTable({
+				"bJQueryUI":true,
+				"sPaginationType":"full_numbers",
+		        "bProcessing": true,
+		        "bServerSide": true,
+		        "sAjaxSource": '/student/get-student-forms',
+		        "fnServerData": function( sUrl, aoData, fnCallback ) {
+		        	var anSelected = fnGetSelected( $('#myarchivedatagrid').dataTable() );
+		        	var rowdata = $('#myarchivedatagrid').dataTable().fnGetData(anSelected[0]);
+		        	var idStudent = rowdata[0];
+		        	aoData.push( { "name": "id_student", "value": idStudent } );
+		            $.ajax( {
+		                "url": sUrl,
+		                "data": aoData,
+		                "success": fnCallback,
+		                "dataType": "json",
+		                "cache": false
+		            } );
+		        }
+			});
+			/* 
+			 * Add change handler to the school menu
+			 * will fire because triggerHandler("change") is applied on id_school 
+			*/		
+			$("#id_school").change(function() {
+				$('#myarchivedatagrid').dataTable().fnDraw();
+			});
+		} catch(err) {
+			console.debug('JAVASCRIPT ERROR: There has been an error trying to initialize the datatable.');
+		}
+
+	});
+	
+</script>
+
+<table id="mainDisplay" border="1">
+<tr style="background:grey;">
+	<td><?php //echo $this->jobQueue(); ?></td>
+	<td></td>
+</tr>
+
+<tr>
+	<td><?php echo $this->countyDistrictSchool('99', '9999', '999'); ?></td>
+	<td>
+		<?php echo new App_Form_Element_Text('name_first', array('label'=>'Name First', 'disabled'=>true)); ?>
+		<?php echo new App_Form_Element_DatePicker('start_date', array('label'=>'Start Date')); ?>
+		<?php echo new App_Form_Element_DatePicker('end_date', array('label'=>'End Date')); ?>
+	</td>
+</tr>
+<tr>
+	<td style="width:250px;">
+		<table id="myarchivedatagrid" class="display">
+		<thead>
+			<tr>
+				<th>ID Student</th>
+				<th>Name First</th>
+				<th>Name Last</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		</table>
+	</td>
+	<td style="width:600px;">
+		<table id="studentFormsDataTable" class="display">
+		<thead>
+			<tr>
+				<th style="width:300px;">Form</th>
+				<th>Create Date</th>
+				<th>Date</th>
+				<th>Status</th>
+				<th>Archived</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		</table>
+	</td>
+</tr>
+</table>

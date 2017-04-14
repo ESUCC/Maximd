@@ -1,0 +1,81 @@
+@CHARSET "UTF-8";
+
+/*
+ * included in print action in the abstract controller
+ */
+
+
+body {
+	font-size: 12pt; 
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+p { 
+    font-size: 12pt;
+    font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+p.MsoNormal, li.MsoNormal, div.MsoNormal, p.MsoListParagraphCxSpFirst, p.MsoListParagraphCxSpMiddle, p.MsoListParagraphCxSpLast { 
+	margin: 0; 
+	font-size: 12pt; 
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	padding:0;
+	margin:.1em 0;
+}
+h1 { 
+	margin:0;
+	font-size: 12pt; 
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7 { 
+	margin: 0; 
+	text-align: center; 
+    font-size: 12pt; 
+    font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-weight: bold;
+	padding:0;
+}
+
+span.Heading1Char { 
+	font-weight: bold;
+}
+span.Heading7Char { 
+	font-weight: bold;
+}
+
+.MsoChpDefault { 
+	font-size: 12pt;
+}
+.tab1 {
+	margin-left:50px;
+}
+.tab2 {
+	margin-left:100px;
+}
+.tab3 {
+	margin-left:150px;
+}
+.tab4 {
+	margin-left:200px;
+}
+.tab5 {
+	margin-left:250px;
+}
+.tab6 {
+	margin-left:300px;
+}
+.tab7 {
+	margin-left:350px;
+}
+.tab8 {
+	margin-left:400px;
+}
+.tab9 {
+	margin-left:450px;
+}
+.tab10 {
+	margin-left:500px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight:normal;
+}

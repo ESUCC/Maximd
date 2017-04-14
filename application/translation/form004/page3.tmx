@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Present Level of Academic Achievement and Functional Performance">
+           <tuv xml:lang="es"><seg>Presentar el nivel de logro acad&#xE9;mico y  desempe&#xF1;o funcional</seg></tuv>
+           <tuv xml:lang="en"><seg>Present Level of Academic Achievement and Functional Performance</seg></tuv>
+       </tu>
+       <tu tuid="Present level description">
+           <tuv xml:lang="es"><seg>Incluye c&#xF3;mo la discapacidad del ni&#xF1;o afecta su participaci&#xF3;n y  progreso en el programa general de estudios, o en el caso de los ni&#xF1;os que asisten al preescolar, c&#xF3;mo su discapacidad afecta la participaci&#xF3;n del ni&#xF1;o en actividades apropiadas</seg></tuv>
+           <tuv xml:lang="en"><seg>Includes how the child's disability affects the child's involvement and progress in 
+            the general education curriculum, or for preschool children, how their disability 
+            affects the child's participation in appropriate activities</seg></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+   </body>
+</tmx>

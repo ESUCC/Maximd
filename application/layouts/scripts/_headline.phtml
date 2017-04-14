@@ -1,0 +1,28 @@
+<?php  $this->contentPane()->captureStart('srs_headline', array('region' => 'top'))?>
+<div class="logoheader" style="float:left;">
+	Nebraska School District
+	<div class="logosub">Student Record System for Special Education</div>
+</div>
+<?php 
+$auth = Zend_Auth::getInstance();
+if($auth->hasIdentity()) {
+    /**
+     * get the user name
+     */
+    $session = new Zend_Session_Namespace('user');
+	?>
+	<div style="text-align:right;float:right;">
+		<B>Logged In:&nbsp;</b><?php echo $session->user->user['name_first'] . ' '. $session->user->user['name_last']; ?><br />
+		<div style="">
+		  <?php if('production' == APPLICATION_ENV) { ?>
+		  <a href="https://iep.unl.edu/srs.php?area=logoff">Log Out</a>
+		  <?php } else { ?>
+		  <a href="/login/logout">Log Out</a>
+		  <?php } ?>
+		</div>
+	</div>
+	<?php } ?>
+<?php echo $this->contentPane()->captureEnd('srs_headline') ?>
+
+
+

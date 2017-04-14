@@ -1,0 +1,20 @@
+drop function get_team_member_names(integer);
+CREATE FUNCTION get_team_member_names(integer) RETURNS text
+    LANGUAGE plpgsql AS $_$
+    declare 
+        teammember_rows record; 
+        personnel_rec record; 
+        retval text;  
+    begin 
+        -- passed param is id_student
+        retval := ''; 
+        for teammember_rows in select id_personnel from iep_student_team where status='Active' and id_student=$1 LOOP
+            select * into personnel_rec from iep_personnel where id_personnel = teammember_rows.id_personnel; 
+            retval := retval || personnel_rec.name_first::text || ' ' || personnel_rec.name_last::text  || ', '; 
+        END LOOP; 
+        retval := trim( trailing ' ' from retval);  
+        retval := trim( trailing ' ,' from retval); 
+        return retval; 
+    end;
+    $_$;
+select get_team_member_names(1198891);

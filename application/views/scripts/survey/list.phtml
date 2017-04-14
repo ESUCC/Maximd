@@ -1,0 +1,152 @@
+
+
+<div>Survey List</div>
+<BR/>
+<?//= $this->searchForm; ?>
+<BR/>
+<br/>
+
+<?php if (count($this->surveyList) < 1) { ?>
+    
+    <div>No results matched your search</div>
+
+<?php } else { ?>
+    <div><?= count($this->surveyList).' results' ?></div>
+    <table border="1">
+    <tr>
+        <td>Survey Name</td>
+        <td>County</td>
+        <td>District</td>
+        <td>Status</td>
+        <td>Edit</td>
+        <td>Type</td>
+        <td>Dev - Editable</td>
+        <td>Dev - Orgin</td>
+    </tr>
+    <?php foreach ($this->surveyList as $k => $r) { ?>
+        <tr>
+            <td><?= $r['survey_name'] ?></td>
+            <td><?= $r['name_county'] ?></td>
+            <td><?= $r['name_district'] ?></td>
+            <td><?
+                if('edit' == $r['status'] && true == $r['editable'])
+                {
+                    echo "Editable";
+                } elseif('take' == $r['status']) {
+                    echo "Published";
+                } elseif('closed' == $r['status']) {
+                    echo "Closed";
+                } elseif('edit' == $r['status'] && false == $r['editable']) {
+                    echo "<B>Error, distributed surveys should not have a status of edit.</B>";
+                }
+            ?></td>
+            <td><?  
+                    if(false == $r['editable'] && 'take' == $r['status'] && 0 == $r['survey_count']) // survey is not editable
+                    {
+                        //echo "<a href=\"/survey/edit/id/".$r['id_neb_survey']."\">Edit</a>";
+                        ?>
+                        <div style="text-align:left">
+                            <?php $takeLink = $this->url(array(
+                            'controller' => 'survey',
+                            'action' => 'take',
+                            'survey_code' => $r['unique_survey_string'],
+                            ), null, true); // 3rd param removes default values ?>
+                            <a href="<?= $this->url_server .  $takeLink; ?>">Take Survey</a>
+                        </div>
+                        <?
+                    } elseif(false == $r['editable'] && 'take' == $r['status']) {
+                        //echo "<a href=\"/survey/preview/id/".$r['id_neb_survey']."\">Preview</a>";
+                        ?>
+                        <div style="text-align:left">
+                            Survey Completed
+                        </div>
+                        <?
+
+
+                    } elseif('edit' == $r['status']) {
+                        //echo "<a href=\"/survey/edit/id/".$r['id_neb_survey']."\">Edit</a>";
+                        ?>
+                        <div>
+                            <a href="<?php echo $this->url(array(
+                            'controller' => 'survey',
+                            'action' => 'edit',
+                            'id' => $r['id_neb_survey'],
+                            ));?>">Edit Survey</a>
+                        </div>
+                        <?
+                    } elseif('take' == $r['status'] && 0 == $r['survey_count']) {
+                        //echo "<a href=\"/survey/preview/id/".$r['id_neb_survey']."\">Preview</a>";
+                        ?>
+                        <div style="text-align:left">
+                            <?php $takeLink = $this->url(array(
+                            'controller' => 'survey',
+                            'action' => 'take',
+                            'survey_code' => $r['unique_survey_string'],
+                            ), null, true); // 3rd param removes default values ?>
+                            <a href="<?= $this->url_server .  $takeLink; ?>">Take Survey</a>
+                        </div>
+                        <?
+                    } elseif('take' == $r['status']) {
+                        //echo "<a href=\"/survey/preview/id/".$r['id_neb_survey']."\">Preview</a>";
+                        ?>
+                        <div style="text-align:left">
+                            Survey Completed
+                        </div>
+                        <?
+                    }
+
+                    if('take' == $r['status']  && true == $r['editable']) {
+                        ?>
+                        <div style="text-align:left">
+                            <?php $takeLink = $this->url(array(
+                            'controller' => 'survey',
+                            'action' => 'distribute',
+                            'surveyid' => $r['id_neb_survey'],
+                            ), null, true); // 3rd param removes default values ?>
+                            <a href="<?= $this->url_server .  $takeLink; ?>">Distribute</a>
+                        </div>
+                        <?
+                    }
+
+
+                    if('take' == $r['status'] || 'closed' == $r['status'] ) {
+                        ?>
+                        <div style="text-align:left">
+                            <?php $takeLink = $this->url(array(
+                            'controller' => 'survey',
+                            'action' => 'results',
+                            'id' => $r['id_neb_survey_distribute'],
+                            ), null, true); // 3rd param removes default values ?>
+                            <a href="<?= $this->url_server .  $takeLink; ?>">Results</a>
+                        </div>
+                        <?
+                    }
+                    
+                    if('take' == $r['status']) {
+                        ?>
+                        <div style="text-align:left">
+                            <?php $takeLink = $this->url(array(
+                            'controller' => 'survey',
+                            'action' => 'closesurvey',
+                            'id' => $r['id_neb_survey'],
+                            ), null, true); // 3rd param removes default values ?>
+                            <a href="<?= $this->url_server .  $takeLink; ?>">Close</a>
+                        </div>
+                        <?
+                    }
+                    
+            ?></td>
+            <td><?= $r['survey_type'] ?></td>
+            <td><?= $r['editable'] ?></td>
+            <td><?= $r['orgin'] ?></td>
+        </tr>
+    <?php } ?>
+    </table>
+<?php } ?>
+
+
+Survey Validation<BR>
+Delete Survey<BR>
+<pre>
+<? //print_r($this->surveyList);
+

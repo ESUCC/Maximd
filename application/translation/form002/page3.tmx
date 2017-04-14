@@ -1,0 +1,276 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Check the appropriate line to indicate the verification decision">
+           <tuv xml:lang="es"><seg>Seleccione el rengl&#xF3;n apropiado para indicar la decisi&#xF3;n de verificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Check the appropriate line to indicate the verification decision</seg></tuv>
+       </tu>
+       <tu tuid="If no disability is verified refer student to SAT (Student Assistance Team) or problem-solving team and provide MDT information to SAT.">
+           <tuv xml:lang="es"><seg>Si no se verifica ninguna discapacidad, referir al estudiante al SAT (Equipo de Asistencia para Estudiantes) o al equipo de resoluci&#xF3;n de problemas y proporcionarle la informaci&#xF3;n del MDT (equipo multidisciplinario) al SAT.</seg></tuv>
+           <tuv xml:lang="en"><seg>If no disability is verified refer student to SAT (Student Assistance Team) or problem-solving team and provide MDT information to SAT.</seg></tuv>
+       </tu>
+       <tu tuid="Speech Language Impairment (SLI) in the area">
+           <tuv xml:lang="es"><seg>Deficiencia del habla y lenguaje en el &#xE1;rea</seg></tuv>
+           <tuv xml:lang="en"><seg>Speech Language Impairment (SLI) in the area</seg></tuv>
+       </tu>
+       <tu tuid="Primary Disability">
+           <tuv xml:lang="es"><seg>Discapacidad principal</seg></tuv>
+           <tuv xml:lang="en"><seg>Primary Disability</seg></tuv>
+       </tu>
+       <tu tuid="Please indicate which of the above disabilities is the primary disability">
+           <tuv xml:lang="es"><seg>Por favor indique cu&#xE1;l de las discapacidades que aparecen anteriormente es la discapacidad principal. </seg></tuv>
+           <tuv xml:lang="en"><seg>Please indicate which of the above disabilities is the primary disability</seg></tuv>
+       </tu>
+       <tu tuid="Additional information required for Multiple Impairments (MULTI)">
+           <tuv xml:lang="es"><seg>Informaci&#xF3;n adicional es requerida para m&#xFA;ltiples (MULTI) deficiencias </seg></tuv>
+           <tuv xml:lang="en"><seg>Additional information required for Multiple Impairments (MULTI)</seg></tuv>
+       </tu>
+       <tu tuid="Basis for making the determination">
+           <tuv xml:lang="es"><seg>En que se basa la determinaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Basis for making the determination</seg></tuv>
+       </tu>
+       <tu tuid="Describe the child's education">
+           <tuv xml:lang="es"><seg>Describa las necesidades de aprendizaje del ni&#xF1;o y la naturaleza y la medida en la que lo servicios de educaci&#xF3;n especial y relacionados son requeridos; para beb&#xE9;s y ni&#xF1;os peque&#xF1;os, describa las necesidades de desarrollo en cada uno de los campos de desarrollo y las necesidades espec&#xED;ficas del ni&#xF1;o/a en cada una de las &#xE1;reas de desarrollo. </seg></tuv>
+           <tuv xml:lang="en"><seg>Describe the child's education needs and the nature and extent of the special education related services that the child needs; for infants and toddlers, describe the developmental needs in each of the developmental domains and the unique needs of the child in each of the developmental areas.</seg></tuv>
+       </tu>
+       <tu tuid="Additional information required for verification of specific learning disabilities">
+           <tuv xml:lang="es"><seg>Se requiere informaci&#xF3;n adicional para la verificaci&#xF3;n de discapacidades de aprendizaje espec&#xED;ficas</seg></tuv>
+           <tuv xml:lang="en"><seg>Additional information required for verification of specific learning disabilities</seg></tuv>
+       </tu>
+       <tu tuid="A. No disability verified.">
+           <tuv xml:lang="es"><seg>A. No se ha verificado ninguna discapacidad.</seg></tuv>
+           <tuv xml:lang="en"><seg>A. No disability verified.</seg></tuv>
+       </tu>
+       <tu tuid="B. The child has met the written verification requirements as per one or more of the following:">
+           <tuv xml:lang="es"><seg>B. El ni&#xF1;o ha cumplido los requisitos por escrito de por lo menos uno de los siguientes:</seg></tuv>
+           <tuv xml:lang="en"><seg>B. The child has met the written verification requirements as per one or more of the following:</seg></tuv>
+       </tu>
+       <tu tuid="Date Referred to SAT">
+           <tuv xml:lang="es"><seg>Fecha en la que fue referido al SAT</seg></tuv>
+           <tuv xml:lang="en"><seg>Date Referred to SAT</seg></tuv>
+       </tu>
+       <tu tuid="SAT Contact Person">
+           <tuv xml:lang="es"><seg>Persona a contactar del SAT</seg></tuv>
+           <tuv xml:lang="en"><seg>SAT Contact Person</seg></tuv>
+       </tu>
+       <tu tuid="Autism (AU)">
+           <tuv xml:lang="es"><seg>Austismo (AU)</seg></tuv>
+           <tuv xml:lang="en"><seg>Autism (AU)</seg></tuv>
+       </tu>
+       <tu tuid="Behavioral Disorder (BD)">
+           <tuv xml:lang="es"><seg>Trastorno de conducta (BD)</seg></tuv>
+           <tuv xml:lang="en"><seg>Behavioral Disorder (BD)</seg></tuv>
+       </tu>
+       <tu tuid="Deaf Blindness (DB)">
+           <tuv xml:lang="es"><seg>Sordera y ceguera (DB)</seg></tuv>
+           <tuv xml:lang="en"><seg>Deaf Blindness (DB)</seg></tuv>
+       </tu>
+       <tu tuid="Hearing Impairment (HI)">
+           <tuv xml:lang="es"><seg>Deficiencia Auditiva (HI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Hearing Impairment (HI)</seg></tuv>
+       </tu>
+       <tu tuid="Deaf (Severe Profound)">
+           <tuv xml:lang="es"><seg>Sordera (Severa Profunda)</seg></tuv>
+           <tuv xml:lang="en"><seg>Deaf (Severe Profound)</seg></tuv>
+       </tu>
+       <tu tuid="Hard of Hearing (Mild/Moderate)">
+           <tuv xml:lang="es"><seg>Dificultad auditiva (Ligera/Media)</seg></tuv>
+           <tuv xml:lang="en"><seg>Hard of Hearing (Mild/Moderate)</seg></tuv>
+       </tu>
+       <tu tuid="Hearing Disability">
+           <tuv xml:lang="es"><seg>Discapacidad auditiva</seg></tuv>
+           <tuv xml:lang="en"><seg>Hearing Disability</seg></tuv>
+       </tu>
+       <tu tuid="Mental Handicap">
+           <tuv xml:lang="es"><seg>Discapacidad Mental</seg></tuv>
+           <tuv xml:lang="en"><seg>Mental Handicap</seg></tuv>
+       </tu>
+       <tu tuid="Multiple Impairments (MULTI)">
+           <tuv xml:lang="es"><seg>M&#xFA;ltiples deficiencias (MULTI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Multiple Impairments (MULTI)</seg></tuv>
+       </tu>
+       <tu tuid="Orthopedic Impairment (OI)">
+           <tuv xml:lang="es"><seg>Deficiencias ortop&#xE9;dicas (OI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Orthopedic Impairment (OI)</seg></tuv>
+       </tu>
+       <tu tuid="Other Health Impairment (OHI)">
+           <tuv xml:lang="es"><seg>Otras deficiencias de la salud</seg></tuv>
+           <tuv xml:lang="en"><seg>Other Health Impairment (OHI)</seg></tuv>
+       </tu>
+       <tu tuid="Specific Learning Disability (SLD)">
+           <tuv xml:lang="es"><seg>Discapacidad espec&#xED;fica de aprendizaje</seg></tuv>
+           <tuv xml:lang="en"><seg>Specific Learning Disability (SLD)</seg></tuv>
+       </tu>
+       <tu tuid="Language">
+           <tuv xml:lang="es"><seg>Idioma</seg></tuv>
+           <tuv xml:lang="en"><seg>Language</seg></tuv>
+       </tu>
+       <tu tuid="Articulation">
+           <tuv xml:lang="es"><seg>Articulaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Articulation</seg></tuv>
+       </tu>
+       <tu tuid="Voice">
+           <tuv xml:lang="es"><seg>Voz</seg></tuv>
+           <tuv xml:lang="en"><seg>Voice</seg></tuv>
+       </tu>
+       <tu tuid="Fluency">
+           <tuv xml:lang="es"><seg>Fluidez</seg></tuv>
+           <tuv xml:lang="en"><seg>Fluency</seg></tuv>
+       </tu>
+       <tu tuid="Traumatic Brain Injury (TBI)">
+           <tuv xml:lang="es"><seg>Herida Traum&#xE1;tica del cerebro</seg></tuv>
+           <tuv xml:lang="en"><seg>Traumatic Brain Injury (TBI)</seg></tuv>
+       </tu>
+       <tu tuid="Visual Impairment (VI) in the area of:">
+           <tuv xml:lang="es"><seg>Deficiencia Visual (VI) en el &#xE1;rea de:</seg></tuv>
+           <tuv xml:lang="en"><seg>Visual Impairment (VI) in the area of:</seg></tuv>
+       </tu>
+       <tu tuid="Blind">
+           <tuv xml:lang="es"><seg>Ciego</seg></tuv>
+           <tuv xml:lang="en"><seg>Blind</seg></tuv>
+       </tu>
+       <tu tuid="Legally Blind">
+           <tuv xml:lang="es"><seg>Legalmente ciego</seg></tuv>
+           <tuv xml:lang="en"><seg>Legally Blind</seg></tuv>
+       </tu>
+       <tu tuid="Partially Sighted">
+           <tuv xml:lang="es"><seg>Ceguera parcial</seg></tuv>
+           <tuv xml:lang="en"><seg>Partially Sighted</seg></tuv>
+       </tu>
+       <tu tuid="Visual Impairment">
+           <tuv xml:lang="es"><seg>Deficiencia visual</seg></tuv>
+           <tuv xml:lang="en"><seg>Visual Impairment</seg></tuv>
+       </tu>
+       <tu tuid="Developmental Delay (DD)">
+           <tuv xml:lang="es"><seg>Deficiencia en su desarrollo (DD)</seg></tuv>
+           <tuv xml:lang="en"><seg>Developmental Delay (DD)</seg></tuv>
+       </tu>
+       <tu tuid="Click Here to View Developmental Areas">
+           <tuv xml:lang="es"><seg>Haga clic aqu&#xED; para ver las &#xE1;reas de desarrollo</seg></tuv>
+           <tuv xml:lang="en"><seg>Click Here to View Developmental Areas</seg></tuv>
+       </tu>
+       <tu tuid="1. Cognitive Development">
+           <tuv xml:lang="es"><seg>Desarrollo cognitivo</seg></tuv>
+           <tuv xml:lang="en"><seg>1. Cognitive Development</seg></tuv>
+       </tu>
+       <tu tuid="2. Fine and Gross Motor Development">
+           <tuv xml:lang="es"><seg>Desarrollo de motricidades gruesas y finas</seg></tuv>
+           <tuv xml:lang="en"><seg>2. Fine and Gross Motor Development</seg></tuv>
+       </tu>
+       <tu tuid="3. Language Development">
+           <tuv xml:lang="es"><seg>Desarrollo del lenguaje</seg></tuv>
+           <tuv xml:lang="en"><seg>3. Language Development</seg></tuv>
+       </tu>
+       <tu tuid="4. Social/Emotional Development">
+           <tuv xml:lang="es"><seg>Desarrollo social /emocional</seg></tuv>
+           <tuv xml:lang="en"><seg>4. Social/Emotional Development</seg></tuv>
+       </tu>
+       <tu tuid="5. Self Help Skills">
+           <tuv xml:lang="es"><seg>Habilidades de autoayuda</seg></tuv>
+           <tuv xml:lang="en"><seg>5. Self Help Skills</seg></tuv>
+       </tu>
+       <tu tuid="A. Relevant behavior noted during observation:">
+           <tuv xml:lang="es"><seg>A. Comportamiento relevante anotado durante observaviones</seg></tuv>
+           <tuv xml:lang="en"><seg>A. Relevant behavior noted during observation:</seg></tuv>
+       </tu>
+       <tu tuid="Autism (AU)">
+           <tuv xml:lang="es"><seg>Austismo (AU)</seg></tuv>
+           <tuv xml:lang="en"><seg>Autism (AU)</seg></tuv>
+       </tu>
+       <tu tuid="Behavioral Disorder (BD)">
+           <tuv xml:lang="es"><seg>Trastorno de conducta (BD)</seg></tuv>
+           <tuv xml:lang="en"><seg>Behavioral Disorder (BD)</seg></tuv>
+       </tu>
+       <tu tuid="Deaf Blindness (DB)">
+           <tuv xml:lang="es"><seg>Sordera y ceguera (DB)</seg></tuv>
+           <tuv xml:lang="en"><seg>Deaf Blindness (DB)</seg></tuv>
+       </tu>
+       <tu tuid="Hearing Impairment (HI)">
+           <tuv xml:lang="es"><seg>Deficiencia Auditiva (HI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Hearing Impairment (HI)</seg></tuv>
+       </tu>
+       <tu tuid="Mental Handicap (MH)">
+           <tuv xml:lang="es"><seg>Discapacidad menta (MH)</seg></tuv>
+           <tuv xml:lang="en"><seg>Mental Handicap (MH)</seg></tuv>
+       </tu>
+       <tu tuid="Multiple Impairment (MULTI)">
+           <tuv xml:lang="es"><seg>M&#xFA;ltiples deficiencias (MULTI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Multiple Impairment (MULTI)</seg></tuv>
+       </tu>
+       <tu tuid="Orthopedic Impairment (OI)">
+           <tuv xml:lang="es"><seg>Deficiencias ortop&#xE9;dicas (OI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Orthopedic Impairment (OI)</seg></tuv>
+       </tu>
+       <tu tuid="Other Health Impairment (OHI)">
+           <tuv xml:lang="es"><seg>Otras deficiencias de la salud</seg></tuv>
+           <tuv xml:lang="en"><seg>Other Health Impairment (OHI)</seg></tuv>
+       </tu>
+       <tu tuid="Specific Learning Disability (SLD)">
+           <tuv xml:lang="es"><seg>Discapacidad espec&#xED;fica de aprendizaje</seg></tuv>
+           <tuv xml:lang="en"><seg>Specific Learning Disability (SLD)</seg></tuv>
+       </tu>
+       <tu tuid="Speech Language Impairment (SLI)">
+           <tuv xml:lang="es"><seg>Deficiencias del habla y lenguaje (SLI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Speech Language Impairment (SLI)</seg></tuv>
+       </tu>
+       <tu tuid="Traumatic Brain Injury (TBI)">
+           <tuv xml:lang="es"><seg>Herida Traum&#xE1;tica del cerebro</seg></tuv>
+           <tuv xml:lang="en"><seg>Traumatic Brain Injury (TBI)</seg></tuv>
+       </tu>
+       <tu tuid="Visual Impairment (VI)">
+           <tuv xml:lang="es"><seg>Deficiencia visual (VI)</seg></tuv>
+           <tuv xml:lang="en"><seg>Visual Impairment (VI)</seg></tuv>
+       </tu>
+       <tu tuid="Developmental Delay (DD)">
+           <tuv xml:lang="es"><seg>Deficiencia en su desarrollo (DD)</seg></tuv>
+           <tuv xml:lang="en"><seg>Developmental Delay (DD)</seg></tuv>
+       </tu>
+       <tu tuid="Primary Disability">
+           <tuv xml:lang="es"><seg>Discapacidad principal</seg></tuv>
+           <tuv xml:lang="en"><seg>Primary Disability</seg></tuv>
+       </tu>
+       <tu tuid="Basis for making the determination">
+           <tuv xml:lang="es"><seg>En que se basa la determinaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Basis for making the determination</seg></tuv>
+       </tu>
+       <tu tuid="C. Educationally relevant medical findings, if any:">
+           <tuv xml:lang="es"><seg>C. Hallazgos m&#xE9;dicos pertinentes a la educaci&#xF3;n, si hay alguno</seg></tuv>
+           <tuv xml:lang="en"><seg>C. Educationally relevant medical findings, if any:</seg></tuv>
+       </tu>
+       <tu tuid="D. Is there a severe discrepancy between achievement and ability?">
+           <tuv xml:lang="es"><seg>D. &#xBF;Existe una gran discrepancia entre la capacidad y el rendimiento?</seg></tuv>
+           <tuv xml:lang="en"><seg>D. Is there a severe discrepancy between achievement and ability?</seg></tuv>
+       </tu>
+       <tu tuid="E. If yes, is the discrepancy correctable without special education?">
+           <tuv xml:lang="es"><seg>E. Si la respuesta es "s&#xED;", es posible corregir la discrepancia sin educaci&#xF3;n especial?</seg></tuv>
+           <tuv xml:lang="en"><seg>E. If yes, is the discrepancy correctable without special education?</seg></tuv>
+       </tu>
+       <tu tuid="F. Summarize the effects of environmental, cultural or economic disadvantages:">
+           <tuv xml:lang="es"><seg>F. Resuma los efectos de las desventajas culturales, econ&#xF3;micas o del medio ambiente:</seg></tuv>
+           <tuv xml:lang="en"><seg>F. Summarize the effects of environmental, cultural or economic disadvantages:</seg></tuv>
+       </tu>
+       <tu tuid="Hearing Impairments">
+           <tuv xml:lang="es"><seg>Deficiencias auditivas</seg></tuv>
+           <tuv xml:lang="en"><seg>Hearing Impairments</seg></tuv>
+       </tu>
+       <tu tuid="Visual Impairments">
+           <tuv xml:lang="es"><seg>Deficiencias visuales</seg></tuv>
+           <tuv xml:lang="en"><seg>Visual Impairments</seg></tuv>
+       </tu>
+       <tu tuid="None of the above">
+           <tuv xml:lang="es"><seg>Ninguno de los anteriores</seg></tuv>
+           <tuv xml:lang="en"><seg>None of the above</seg></tuv>
+       </tu>
+       <tu tuid="Educational needs">
+           <tuv xml:lang="es"><seg>Necesidades educacionales</seg></tuv>
+           <tuv xml:lang="en"><seg>Educational needs</seg></tuv>
+       </tu>
+       <tu tuid="B. Relationship of relevant behavior to the child's academic functioning:">
+           <tuv xml:lang="es"><seg>B. Relaci&#xF3;n entre comportamiento pertinente con el rendimiento acad&#xE9;mico del ni&#xF1;o/a?</seg></tuv>
+           <tuv xml:lang="en"><seg>B. Relationship of relevant behavior to the child's academic functioning:</seg></tuv>
+       </tu>
+   </body>
+</tmx>

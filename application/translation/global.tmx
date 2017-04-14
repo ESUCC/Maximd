@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Add Row">
+           <tuv xml:lang="es"><seg>A&#xF1;adir una fila</seg></tuv>
+           <tuv xml:lang="en"><seg>Add Row</seg></tuv>
+       </tu>
+       <tu tuid="Access Level">
+           <tuv xml:lang="es"><seg>Nivel de acceso</seg></tuv>
+           <tuv xml:lang="en"><seg>Access Level</seg></tuv>
+       </tu>
+       <tu tuid="Student">
+           <tuv xml:lang="es"><seg>Estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>Student</seg></tuv>
+       </tu>
+       <tu tuid="Date of Birth">
+           <tuv xml:lang="es"><seg>Fecha de nacimiento</seg></tuv>
+           <tuv xml:lang="en"><seg>Date of Birth</seg></tuv>
+       </tu>
+       <tu tuid="Grade">
+           <tuv xml:lang="es"><seg>Grado</seg></tuv>
+           <tuv xml:lang="en"><seg>Grade</seg></tuv>
+       </tu>
+       <tu tuid="School">
+           <tuv xml:lang="es"><seg>Escuela</seg></tuv>
+           <tuv xml:lang="en"><seg>School</seg></tuv>
+       </tu>
+       <tu tuid="School District">
+           <tuv xml:lang="es"><seg>Distrito escolar</seg></tuv>
+           <tuv xml:lang="en"><seg>School District</seg></tuv>
+       </tu>
+       <tu tuid="Parents">
+           <tuv xml:lang="es"><seg>Padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Parents</seg></tuv>
+       </tu>
+       <tu tuid="Age">
+           <tuv xml:lang="es"><seg>Edad </seg></tuv>
+           <tuv xml:lang="en"><seg>Age</seg></tuv>
+       </tu>
+       <tu tuid="Gender">
+           <tuv xml:lang="es"><seg>G&#xE9;nero</seg></tuv>
+           <tuv xml:lang="en"><seg>Gender</seg></tuv>
+       </tu>
+       <tu tuid="Additional Resources">
+           <tuv xml:lang="es"><seg>Recursos adicionales</seg></tuv>
+           <tuv xml:lang="en"><seg>Additional Resources</seg></tuv>
+       </tu>
+       <tu tuid="You may contact any of the following">
+           <tuv xml:lang="es"><seg>Puede comunicarse con cualquiera de los siguientes recursos para ayudarle a entender las leyes dederales y estatales para la educaci&#xF3;n de los ni&#xF1;os con discapacidad y los derechos de los padres orogados por esas leyes.  Una explicaci&#xF3;n de sus derechos ser&#xE1; proporcionado sin costo alguno por cualquiera de las siguientes organizaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>You may contact any of the following resources to help you understand the federal and state laws for educating children with disabilities and parental rights granted by those laws. An explanation of your rights will be provided at no cost by any of the following organizations</seg></tuv>
+       </tu>
+       <tu tuid="Address">
+           <tuv xml:lang="es"><seg>Correo</seg></tuv>
+           <tuv xml:lang="en"><seg>Address</seg></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+   </body>
+</tmx>

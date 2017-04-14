@@ -1,0 +1,8 @@
+drop table queue;
+CREATE TABLE queue (
+    queue_id serial NOT NULL,
+    queue_name varchar,
+    timeout integer,
+    message_id integer,
+    message varchar
+);

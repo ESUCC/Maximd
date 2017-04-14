@@ -1,0 +1,120 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_026; ?>
+<?= $this->element->page; ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+    <tr class="noprint">
+        <td>Revocation of Consent for Special Education and Related Services</td>
+    </tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+    <tr>
+    	<td colspan="2">This document enables the parent(s)/guardian(s) to revoke consent to special education and related services in writing.  By revoking consent in writing, I understand that the <strong><?php echo $view->db_form_data['name_district']; ?></strong>:</td>
+    </tr>
+    <tr>
+    	<td width="15%" align="center" valign="top">1.</td>
+    	<td>May not continue to provide special education and related services to the student, but must provide prior written notice before ceasing the provision of special education and related services. </td>
+    </tr>
+    <tr>
+    	<td width="15%" align="center" valign="top">2.</td>
+    	<td>May not seek to use consent override procedures such as mediation or due process to obtain agreement or a ruling that services may be provided to the student.  </td>
+    </tr>
+    <tr>
+    	<td width="15%" align="center" valign="top">3.</td>
+    	<td>Will not be considered to be in violation of the requirement to make free appropriate public education (FAPE) available to the student because of the failure to provide the student with further special education and related services. </td>
+    </tr>
+    <tr>
+    	<td width="15%" align="center" valign="top">4.</td>
+    	<td>Is not required to convene an Individualized Education Program (IEP) Team meeting or develop an IEP for the student for further provision of special education and related services.  </td>
+    </tr>
+    <tr>
+    	<td width="15%" align="center" valign="top">5.</td>
+    	<td>Is not required to amend the student's education records to remove any references to the student's receipt of special education and related services because of the revocation of consent. </td>
+    </tr>
+    <tr>
+    	<td width="15%" align="center" valign="top"><?php echo $this->element->revoke_consent; ?></td>
+    	<td><strong>I REVOKE my consent for my child to continue to receive special education and related services.</strong></td>
+    </tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+<?
+    if('print'==$view->mode){ //PRINT ?>
+        <tr>
+        	<td>
+        	<table width="100%">
+        	<?php if (1==$this->element->parent_sig_on_file->getValue()) { ?>
+            <td>Parent Signature on File</td>
+            <?php } else { ?>
+            <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            <?php if (''!=$this->element->parent_sig_on_file_date->getValue()) { ?>
+            <td>Date: <?php echo $this->element->parent_sig_on_file_date->getValue(); ?></td>
+            <?php } else { ?>
+            <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            </table>
+            </td>
+        </tr>
+    <? } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+        <td width="10%" align="right">Signature on File: </td>
+        <td><?php echo $this->element->parent_sig_on_file; ?></td>
+    </tr>
+    <?php } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+    	 <td width="10%" align="right">Date: </td>
+        <td><?php echo $this->element->parent_sig_on_file_date; ?></td>
+    </tr>
+    <? } ?>
+    </table>
+<table class="formInput formDesc" style="padding-bottom: 10px;text-align: left; background-color:#eee;font-weight:bold;border:1px solid #000;">
+	<tr>  
+    	<td>Special Education and Related Services will be discontinued ONLY after the school district has received your signature to revoke consent for Special Education and Related Services for your child and the provision of Prior Written Notice to the parent(s).</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top:15px;">
+	<tr>
+		<td align="center"><strong>For School District Use Only:</strong></td>
+	</tr>
+</table>
+<table class="formInput" id="district-use-only" cellspacing="0">
+	<tr>
+		<td class="small-head small-head-color" width="25%">Date Received</td>
+		<td align="center" colspan="2" class="small-head small-head-color">Signature of School District Official</td>
+	</tr>
+	<tr>
+		<td class="add-height"> <?php 
+		    $value = $this->element->signature_of_school_district_official_date->getValue();
+			echo ($view->mode == 'print' && ''!=$value) ? $value : (($view->mode != 'print') ? $this->element->signature_of_school_district_official_date : ' &nbsp; '); ?> 
+		</td>
+		<td class="add-height" colspan="2"> <?php 
+		$value = $this->element->signature_of_school_district_official->getValue();
+		echo ($view->mode == 'print' && 1==$value) ? 'Signature of School District Official is on file' : (($view->mode != 'print') ? $this->element->signature_of_school_district_official : ''); ?> </td>
+	</tr>
+	<tr>
+		<td colspan="2" class="small-head no-bott-border" align="right">Date Prior Written Notice provided:</td>
+		<td class="small-head small-head-color" width="25%">Date</td>
+	</tr>
+	<tr>
+		<td colspan="2"> &nbsp; </td>
+		<td class="add-height"> <?php 
+		$value = $this->element->date_prior_written_notice->getValue();
+		echo ($view->mode == 'print' && ''!=$value) ? $value : (($view->mode != 'print') ? $this->element->date_prior_written_notice : ' &nbsp; '); ?> </td>
+	</tr>
+	<tr>
+		<td colspan="2" class="small-head no-bott-border" align="right">Date Special Education and related services discontinued:</td>
+		<td class="small-head small-head-color" width="25%">Date</td>
+	</tr>
+	<tr>
+		<td colspan="2"> &nbsp; </td>
+		<td class="add-height"> <?php 
+		$value = $this->element->date_special_education->getValue();
+		echo ($view->mode == 'print' && ''!=$value) ? $value : (($view->mode != 'print') ? $this->element->date_special_education : ' &nbsp; '); ?> </td>
+	</tr>
+</table>

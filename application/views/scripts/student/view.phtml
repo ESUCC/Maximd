@@ -1,0 +1,44 @@
+
+
+<div>View Student Detail</div>
+<div><a href="/student/edit/id_student/<?= $this->id_student; ?>">Edit</a></div>
+
+Student Options: <?= $this->studentOptionsMenu($this->studentOptionsMenu_MultiOptions, $this->id_student);?>
+<br/>
+<?= $this->studentForm; ?>
+<BR/>
+
+
+
+<!-- PRIVILEGES -->
+<?php if (count($this->privResults) < 1) { ?>
+
+    <div>No privileges found.</div>
+
+<?php } else { ?>
+
+    <div><?= count($this->privResults).' results' ?></div>
+    <table border="1">
+        <tr>
+            <th>County</th>
+            <th>District</th>
+            <th>School</th>
+            <th>Class</th>
+            <th>Status</th>
+        </tr>
+
+        <?php foreach ($this->privResults as $k => $r) { ?>
+        <?php $i = 0; ?>
+            <tr>
+                <td><?= $r['name_county'] ?></td>
+                <td><?= $r['name_district'] ?></td>
+                <td><?= $r['name_school'] ?></td>
+                <td><?= $r['class'] ?></td>
+                <td><?= $r['status']; ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php } ?>
+
+    </table>
+
+<?php }

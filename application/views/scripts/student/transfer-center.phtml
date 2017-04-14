@@ -1,0 +1,53 @@
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationSubmenu();
+            } ?>
+        </td>
+    </tr>
+</table>
+
+<div style="">
+    <div style="" class="clearfix">
+    <h3 id="searchStudents">Student Transfer Center</h3>
+    <div style="width:650px;padding:10px">
+        <p>Welcome to the student transfer center. Transferring students is a two-step process. Suppose three students are to be transferred from Brush Creek Elementary School to Brush Creek Middle School. The steps are as follows:</p>
+        <p>1. The school manager of Brush Creek Elementary begins the transfer process by selecting a group of students to transfer. She does this by searching for each student in the regular student list search screen, and then clicking the "Transfer" checkbox (on the student list screen) for each student to be transferred. When she has found and selected all three students, she clicks "initiate transfer" below. There she will select the destination school (Brush Creek Middle School).</p>
+        <p>2. The school manager at Brush Creek Middle School is notified by email that the transfer process has been initiated by Bush Creek Elementary. Pending transfers to Brush Creek Middle School are access by clicking "confirm transfer" below. The transfer comfirmation screen will show all pending transfers. Each one may be individually confirmed, or not. If Brush Creek Middle School's manager approves the transfer, all the chosen students are transferred to BCMS from BC Elementary.</p>
+        <p>As an optional feature, the school manager at Brush Creek Middle School could have explicitly requested the transfer. To request a transfer of students to your school, use the "request transfer" option below. You will be given slots to type in a number of student names. These names will then be sent in an email. (In the above example the email would have gone to the school manager at Brush Creek Elementary, naming the three students and requesting that the transfer process be initiated for them).</p>
+    </div>
+    <div style="padding:10px">
+        <table style="width:650px;">
+            <tbody>
+                <tr>
+                    <td style="padding-top:5px;" class="btb" colspan="4">Transfer Options</td>
+                </tr>
+                <tr>
+                    <td nowrap="nowrap">&nbsp;</td><td>&nbsp;</td>
+                    <td width="100%"><a href="https://iep.unl.edu/srs.php?area=student&amp;sub=transfer_request">Request Transfer</a><br>Choose this option to send a transfer request to a school from which you wish to receive new students.</td>
+                </tr>
+                <tr>
+                    <td nowrap="nowrap">&nbsp;</td><td>&nbsp;</td>
+                    <td width="100%"><a href="/student/search/collection/student">Initiate Transfer</a><br>Choose this option to initiate a transfer of students from your school to some other other school. You will need to find and save a group of students before using this option. (Find the students using the search tools in Student List, and check the "Transfer" box for each student).</td>
+                </tr>
+                <tr>
+                    <td nowrap="nowrap">&nbsp;</td><td>&nbsp;</td>
+                    <td width="100%"><a href="/student/confirm-transfer">Confirm Transfer</a> You have <?= count($this->myTransferRequests)>=100?'100+':count($this->myTransferRequests) ?> transfer(s).
+                        <br>Choose this option to confirm a transfer of students to your school.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<?

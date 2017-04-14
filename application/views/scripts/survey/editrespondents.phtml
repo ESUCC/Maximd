@@ -1,0 +1,74 @@
+<?php ?>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'edit',
+    'id' => $this->id,
+    ));?>">Edit Survey</a>
+</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'preview',
+    'id' => $this->id,
+    ));?>">Take Survey (Preview)</a>
+</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'take',
+    'id' => $this->id,
+    ));?>">Take Survey</a>
+</div>
+<div>Edit Respondents</div>
+
+<BR/>
+
+<form enctype="application/x-www-form-urlencoded" action="/survey/saverespondents" method="post" name="">
+
+    <?= $this->surveyForm->survey_name ?>
+    <?= $this->surveyForm->id ?>
+    <?= $this->surveyForm->id_county ?>
+    <?= $this->surveyForm->id_district ?>
+    <?= $this->surveyForm->id_school ?>
+    <?= $this->surveyForm->submit ?>
+    
+    <?php $this->dojo()->enable() ?>
+
+    <div style="position: relative; width: 99%; height: 900px; border: 1px #ccc solid;">
+      <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" class="borderContainer">  
+        
+        <div dojoType="dijit.layout.ContentPane" id="left_1" splitter="true" region="left" style="width: 400px;">
+                
+            <div style="text-align:center;border: solid 1px grey;padding: 2px 2px 2px 2px">
+                Respondents (Place each address on it's own line)
+            </div>
+    
+            <div style="text-align:center;border: solid 1px grey;padding: 2px 2px 2px 2px">
+                <?  // build dijit text area
+                    echo $this->textarea(
+                        'respondent_emails',
+                        $this->respondent_emails,
+                        array(),
+                        array('style' => 'width: 300px;height: 200px;text-align:left;')
+                    );    
+                 ?>
+            </div>
+
+
+        </div>
+        <div dojoType="dijit.layout.ContentPane" id="right_1" splitter="true" region="center" style="">
+                
+            <div style="text-align:center;border: solid 1px grey;padding: 2px 2px 2px 2px">
+                Validaition Results <B>(Bolded addresses do not validate and may have problems)</B>
+            </div>
+    
+            <div style="text-align:center;border: solid 1px grey;padding: 2px 2px 2px 2px">
+                <?= $this->emailValidationResult; ?>
+            </div>
+
+    
+        </div>
+      </div>
+    </div>
+</form>

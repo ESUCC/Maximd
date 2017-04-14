@@ -1,0 +1,35 @@
+	<?php 
+	   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+    ?>
+    <?= $this->element->id_form_024; ?>
+    <?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>RESPONSE FORM</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;" border="0">
+    <tr>
+        <td colspan="2" style="">
+            <?php echo $this->element->give_consent; ?> 
+            I give my consent for <?php echo $this->element->consent_receiver; ?> 
+            to be invited to the IEP meeting.  I understand that my consent is 
+            voluntary and may be revoked at any time before the identified 
+            representative(s) has/have been invited.  I also give my consent 
+            to release the following education records.
+            
+        </td>
+    </tr>    
+</table>
+
+
+
+<?php echo $this->element->submit; ?>
+
+
+
+
+

@@ -1,0 +1,23 @@
+<table id="student_search_table_header">
+	<tr>
+	    <td>
+	        <?= $this->element->search; ?>
+	        <?= $this->element->id_student_search; ?>
+	    </td>
+	    <td>
+	        <?= $this->element->limitto; ?>
+	    </td>
+	    <td>
+	        <?= $this->element->status; ?>
+	    </td>
+	    <td>
+	        <?= $this->element->orderby; ?>
+	    </td>
+	    <td>
+	        <?= $this->element->recsPer; ?>
+	    </td>
+	    <td>
+	        <a href="javascript:void(0);" onclick="getSearchRow('<?= $this->element->id_student_search->getValue(); ?>');">Add Row</a> 
+	    </td>
+	</tr>
+</table>

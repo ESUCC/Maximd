@@ -1,0 +1,6 @@
+# & omits duplicates from history
+# See http://www.talug.org/events/20030709/cmdline_history.html
+HISTIGNORE="&:ls:exit"
+PATH=$PATH:/usr/local/zend/bin:/usr/local/zend/mysql/bin
+cd /vagrant
+

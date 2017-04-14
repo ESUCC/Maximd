@@ -1,0 +1,14 @@
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+</table>
+<h1>Student Reports</h1>
+<?
+foreach ($this->reportTitles as $reportKey => $reportTitle) {
+    echo '<div><a href="/report/'.strtolower($reportTitle).'/id_student/'.$this->id_student.'">'.$reportTitle.'</a></div>';
+}

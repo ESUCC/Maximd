@@ -1,0 +1,51 @@
+dl>dd:first-of-type{
+    /*font-weight: 800;*/
+}
+
+fieldset {
+    /*margin-right: 40px;*/
+}
+
+.zend_form > span {
+    float: left;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.zend_form > span.column_name_county {
+    width:120px;
+}
+.zend_form > span.column_name_district {
+    width:120px;
+}
+.zend_form > span.column_name_school {
+    width:120px;
+}
+.zend_form > span.column_role {
+    width:220px;
+}
+.zend_form > span.column_status {
+    width:120px;
+}
+.zend_form > span.column_links {
+    width:120px;
+}
+
+.zend_form > span.column_goal_desc {
+    width:120px;
+}
+.zend_form > span.column_chart_type {
+    width:120px;
+}
+
+.zend_form label.srsLabel {
+    width:300px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5px;
+}
+.zend_form span.hint {
+    width: 300px;
+    display: inline-block;
+    text-align: left;
+}
+

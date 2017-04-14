@@ -1,0 +1,265 @@
+
+.bt             {color:#000000;}
+.bts            {color:#000000;}
+.btsb           {font-weight:500; color:#333;}
+.btsbRed        {font-weight:500; color:#FF0000;}
+.btsLBlue       {color:#0033FF;}
+
+.bgLight2	{
+	background-color:#FFC;
+	border:1px solid #AAA;
+}
+.bgLight3 {border-top:1px solid #AAA;} /* outline question above richtextbox - nested in a sc_richTextBox */
+
+input[type=text] {margin-top:2px; margin-bottom:2px;}
+
+table.formTop {
+    padding:0;
+    font-size:1em;
+    width:100%; 
+    color:#000000; 
+    border-bottom:1px solid #aaa;
+    margin-top:8px;
+}
+
+/*table.formTitleHead {background-color:#FFF;font-size:1em; margin-top:10px; border:1px solid #AAA;border-bottom:none;}*/
+/*table.formTitleHead td{padding:4px;}*/
+
+table.formTitleHead, div.formTitleHead {background-color:#FFF;font-size:1.2em; margin-top:10px; border:none;} /*form title/instruction text*/
+table.formTitleHead td{padding:4px 0 10px 0;}
+
+table.formTitleHeadBlue, div.formTitleHeadBlue {
+    background-color:#3366cc;
+    font-size:1.2em;
+    font-weight:800;
+    color:#FFF;
+    margin-top:10px;
+    border:none;
+} /*form title/instruction text*/
+table.formTitleHeadBlue td {padding-left: 5px;}
+
+table.formSectionHead {
+  border-collapse: collapse;
+    padding:30px 4px 2px 4px;
+	font-size:1.2em;
+	width:100%; 
+	height:19px; 
+	font-weight:normal; 
+	color:#333; 
+	background-color:#FFEEAA;
+	margin-top:5px;
+}
+
+table.formSectionHeadBlue {
+  border-collapse: collapse;
+    padding:30px 4px 2px 4px;
+	font-size:1.2em;
+	width:100%; 
+	height:19px; 
+	font-weight:normal; 
+	color:#fff; 
+	background-color:#3366cc;
+	margin-top:5px;
+}
+
+.formSectionHead td, .formSectionHeadBlue td  {padding-left:4px;}
+
+table.sc_subSectionHead {
+    background-color:#FFF;
+	border-top:2px solid #039;
+    margin:20px 0 0 0;
+    font-size:1.2em;
+}
+table.sc_subSectionHead td {padding:10px 0 4px 4px;}
+
+table.formDesc {
+	font-size:1em;
+	width:100%; 
+	color:#000; 
+	background-color:#EEE; 
+	margin-top:1px;
+}
+.formSectionHead table.formDesc, .formSectionHeadBlue table.formDesc {
+	border:1px solid #AAA;
+	background-color:#FFF;
+	border-bottom:none;
+}
+table.formDesc td {padding:2px 4px;}
+
+table.formInput {
+    font-size:1em;
+    color:#000; 
+}
+table.formInput td {padding:6px 4px;}
+
+table.formInputBorder {border-left:1px solid #AAA;}
+table.formInputBorder td {border-bottom:1px solid #AAA; border-right:1px solid #AAA;}
+
+table.sc_formInputBlock {
+    margin-bottom:20px;
+    border:1px solid #AAA; 
+}
+table.sc_formInputBlock td {padding:6px 4px;}
+table.sc_formInputBlock label {padding-right:0;}
+
+tr.sc_richTextBox td {padding:0; border-top:1px solid #AAA;}
+
+table.noBorder, table.noBorder td {border:none;}
+
+table.formInputSub td {padding:0 0 6px 0;}
+table.formInputSub td div {font-weight:normal;}
+
+td.tanHead {
+    padding:2px 6px;
+	color:#000000; 
+	border:1px solid #aaa;
+}
+
+tr.tanHead { 
+	border-bottom: 1px solid #CCC;
+}
+tr.tanHead td { 
+	background-color:#EFEFEF;
+}
+
+/* thinInput */
+table.thinInput td {padding:2px 1px;}
+
+
+
+
+colorme{
+    margin-top: .5em;
+    color: #292929;
+    /*border: 1px solid #BABABA;*/
+    padding: 2px 8px;
+    margin-left: 0px;
+    margin-bottom: .5em;
+    -o-border-radius: 3px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 3px;
+    -webkit-box-shadow: 0px 3px 7px #adadad;
+    border-radius: 3px;
+    -moz-box-sizing: border-box;
+    -opera-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/*.colorme label{
+	padding:0 0 0 10px;
+}*/
+
+.colorme .colorme {padding:4px 0 4px 0;} /* space out nested form elements */
+
+.changed {
+    border: 1px solid #bce;
+    background-color: #cdf;
+}
+.changedOrange{
+    background-color: #ff8c00;
+}
+.changedRed{
+    background-color: #ff0000;
+}
+
+.refreshEditor {
+    border: 1px;
+}
+
+.errored {
+    border: 1px solid red; background-color:#FBE6E6;
+}
+.changed, .errored {padding:3px;}
+
+.srsDescription{
+	margin-left: 4px;
+}
+
+span.srsCheckboxDescription {  display:inline-block; width:95%;} /* to give space between the checkbox and text */
+
+.colorme span {vertical-align:text-top;} /* needed to align the checkboxes and radio buttons to the top with the explanation text */
+
+
+
+#page_navigation_controlbar table {width:0;}
+#page_navigation_controlbar2 table {width:0;}
+#page_navigation_controlbar td {padding:0 2px;}
+#page_navigation_controlbar2 td {padding:0 2px;}
+
+table.sc_commentText {margin-bottom:10px;} /* outline blocks for instruction text */
+
+/* Page specific edits and overrides */
+
+#ifsp_parents_parent input {width:100px;} /* edit form 13 pg 1 */
+table.sc_commentText {margin-bottom:10px;} /* outline blocks for instruction text */
+
+/*
+ * Min Height for TextareaEditors
+ */
+.RichTextEditable {
+   min-height:150px; 
+}
+
+.smallEditor .RichTextEditable {
+    min-height:75px;
+}
+
+table.formChart {
+	border-collapse:collapse;
+	}
+
+.formChart {
+	border:1px solid #999999;
+	padding:4px;
+	}
+.displayBoldLabel {
+    font-weight:800;
+}
+
+.checkboxTableFix {
+	width: 100%;
+	font-size: 1em;}
+.tablefixContainer {
+	width: 48%;
+	float: left;
+	margin: 1%;
+}
+#cd {
+	display:inline;
+	width:100px;
+}
+
+
+.enabledButton {
+	color: black;'
+}
+/*
+ * when the page is saved, a dialog appears and this is the 
+ * color of the underlay
+ */
+#savingDialog_underlay { background-color:#0066FF; }
+
+.printonly {
+	display:none;
+}
+
+
+
+.editor-error-msg  { font-size: 12px; border: 2px solid #CC0000; background-color:#FFFFFF; }
+.editor-header { width:800px; }
+.editor-history-link {float:right;margin-right:2px;margin-top:3px;}
+.editor-message {float:right;margin-right:20px;margin-top:3px;}
+
+.tab-hide {
+    left: -10000px;
+}
+
+
+
+/*
+ * tinyMce custom buttons
+ */
+.defaultSkin a.mce_mce_history, .defaultSkin a.mce_mce_history .mceIcon  {margin-top:2px;width: 40px;}

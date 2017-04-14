@@ -1,0 +1,27 @@
+<div dojoType="soliant.widget.FileUploader" class="soliantFileUploader">
+	<div dojoType="dijit.form.Form" action="/file-uploader/save" dojoAttachPoint="FileUploaderForm" enctype="multipart/form-data" >
+		<fieldset>
+			<legend>PDF Uploads</legend>
+			<div dojoAttachPoint="FileUploaderDiv" class="FileUploaderInput"></div>
+			<div dojoAttachPoint="UploadButton"
+					dojoAttachEvent="onclick:upload" 
+					class="dijitFileInput dijitFileInputButton UploadButton">Upload</div>
+					
+			<div dojoAttachPoint="uploadFormFileList" 
+					dojoType="dojox.form.uploader.FileList" 
+					uploaderId="willbereplacedwith_uploadFormFileId" 
+					class="FileList"></div>
+		</fieldset>
+	</div>
+
+	<div dojoType="dijit.form.Form" action="/file-uploader/save" dojoAttachPoint="FileUploaderFormIE" enctype="multipart/form-data" >
+		<fieldset>
+			<legend>PDF Uploads</legend>
+			<div dojoAttachPoint="FileUploaderDivIE" class=""FileUploaderInput""></div>
+			<div dojoAttachPoint="UploadButtonIE"
+					dojoAttachEvent="onclick:upload" 
+					class="dijitFileInput dijitFileInputButton UploadButtonIE">Upload</div>
+		</fieldset>
+	</div>
+	<div dojoAttachPoint="ResultMessage"></div>
+</div>

@@ -1,0 +1,10 @@
+#
+# export FREMONT
+#
+0 2 * * * /usr/local/zend/bin/php /etc/httpd/srs-zf/exports/Fremont/run_export.php production
+
+#
+# export Grand Island
+#
+30 2 * * * /usr/local/zend/bin/php /etc/httpd/srs-zf/exports/GrandIsland/run_export.php production
+ 

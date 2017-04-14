@@ -1,0 +1,42 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+
+<?php
+if($view->mode == "print") {
+	$dateCellWidthTop = "width:120px;";
+	$dateCellWidth = "width:99px;";
+} else {
+	$dateCellWidthTop = "width:150px;";
+	$dateCellWidth = "width:150px;";
+}?>
+
+<div style="clear:both;page-break-before: always;page-break-after: always;">
+	
+	<div class="confidential printonly">Confidential</div>
+
+	<table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+	    <tr>
+	        <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+	        <td>Family Concerns And Desired Priorities</td>
+	    </tr>
+	</table>
+	<table class="formInput" style="margin-top:1px;">     
+	    <tr>
+	        <td valign="top" style="<?= $dateCellWidth; ?>">
+	        <?php 
+	            $this->element->date_family_concerns->removeDecorator('label');
+	            echo $this->element->date_family_concerns;
+	        ?></td>
+	        <td><?php echo $this->element->family_concerns; ?></td>
+	    </tr>
+	</table>
+
+    <?php echo $this->ifspHistory($view, $this, 'family_concerns_show_ifsps', 'family_concerns_print_ifsps', 'date_family_concerns', 'family_concerns') ?>
+
+</div>
+<?php //Zend_Debug::dump($view->db_form_data['ifsp_history']); ?>

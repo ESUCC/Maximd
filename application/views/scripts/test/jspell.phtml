@@ -1,0 +1,25 @@
+	<script type='text/javascript'>$Spelling.PopUpStyle="modalbox";</script>
+	<script type='text/javascript'>
+	function startJSpell(){
+	    var myFrames = new Array();
+	    var counter = 0;
+	    $('iframe').each(function(){
+	        if(undefined!=$(this).attr('id')) {
+	        	myFrames[counter] = $(this).attr('id');//.replace("_iframe", "")
+	            counter++;
+	    	}
+	    
+	    });
+	    $Spelling.SpellCheckInWindow(myFrames)
+	}
+	</script>
+	<input type="button" value="Spell Check" onclick="startJSpell()">
+	
+	<form>
+	<?php 
+		echo new App_Form_Element_TestEditor('test', array('value'=>'Hello Worlb. This Examplee shows JavaScript Spellcheck "as-you-type" and also spellchecking window functionallity on the smae paage.... this time implemented using jQuery and the $() selector.'));
+		echo new App_Form_Element_TestEditor('test1', array('value'=>'Hello Worlb. This Examplee shows JavaScript Spellcheck "as-you-type" and also spellchecking window functionallity on the smae paage.... this time implemented using jQuery and the $() selector.'));
+		echo new App_Form_Element_TestEditor('test2', array('value'=>'Hello Worlb. This Examplee shows JavaScript Spellcheck "as-you-type" and also spellchecking window functionallity on the smae paage.... this time implemented using jQuery and the $() selector.'));
+		echo new App_Form_Element_TestEditor('test3', array('value'=>'Hello Worlb. This Examplee shows JavaScript Spellcheck "as-you-type" and also spellchecking window functionallity on the smae paage.... this time implemented using jQuery and the $() selector.'));
+	?>
+		</form>

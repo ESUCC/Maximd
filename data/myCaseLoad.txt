@@ -1,0 +1,412 @@
+
+--
+-- my_caseload view
+-- view should only allow access to students that the personnel has privs that
+--
+drop view my_caseload;
+CREATE VIEW my_caseload
+    AS 
+ 
+    select 
+    id_personnel,
+    status,
+    s.id_student,
+    s.name_first,
+    s.name_last,
+    s.name_first || ' ' || s.name_last as name_full,
+    s.gender,
+    s.alternate_assessment,
+    s.grade,
+    s.pub_school_student,
+
+	-- form 004    
+    (select id_form_004 from iep_form_004 where iep_form_004.status='Final' and iep_form_004.id_student = s.id_student ORDER BY date_conference DESC, timestamp_created DESC limit 1) as final_id_form_004,
+    (select date_conference from iep_form_004 where iep_form_004.status='Final' and iep_form_004.id_student = s.id_student ORDER BY date_conference DESC, timestamp_created DESC limit 1) as final_date_form_004,
+    (select primary_disability_drop from iep_form_004 where iep_form_004.status='Final' and iep_form_004.id_student = s.id_student ORDER BY date_conference DESC, timestamp_created DESC limit 1) as primary_disability_drop,
+    get_related_services((select id_form_004 from iep_form_004 where iep_form_004.status='Final' and iep_form_004.id_student = s.id_student ORDER BY date_conference DESC, timestamp_created DESC limit 1)) as related_services,
+    
+    -- form 002
+    (select id_form_002 from iep_form_002 where iep_form_002.status='Final' and iep_form_002.id_student = s.id_student order by date_mdt DESC, timestamp_created DESC limit 1) as final_id_form_002,
+    (select date_mdt from iep_form_002 where iep_form_002.status='Final' and iep_form_002.id_student = s.id_student order by date_mdt DESC, timestamp_created DESC limit 1) as final_date_form_002,
+    (select disability_primary from iep_form_002 where iep_form_002.status='Final' and iep_form_002.id_student = s.id_student order by date_mdt DESC, timestamp_created DESC limit 1) as disability_primary,
+    (select initial_verification_date from iep_form_002 where iep_form_002.status='Final' and iep_form_002.id_student = s.id_student order by date_mdt DESC, timestamp_created DESC limit 1) as initial_verification_date,
+
+    get_name_school(s.id_county, s.id_district, s.id_school) as school_building,
+    
+    -- team members
+    get_team_member_names(s.id_student) as team_member_names,
+    
+    -- personnel
+    (select name_first from iep_personnel where s.id_case_mgr = iep_personnel.id_personnel) as case_mgr_name_first,
+    (select name_last from iep_personnel where s.id_case_mgr = iep_personnel.id_personnel) as case_mgr_name_last,
+    (select name_first || ' ' || name_last from iep_personnel where s.id_case_mgr = iep_personnel.id_personnel) as case_mgr_name_full
+    
+    from ( 
+    	select 
+        id_student as id_stu, 
+        id_personnel,
+        min(class) as class,
+        case 
+            when min(class) = 1 then 'ADMIN' 
+            when min(class) = 2 then 'DM' 
+            when min(class) = 3 then 'ADM' 
+            when min(class) = 4 then 'SM' 
+            when min(class) = 5 then 'ASM' 
+            when min(class) = 6 and id_personnel = id_case_mgr then 'CM' 
+            when min(class) = 6 and id_personnel = id_ei_case_mgr then 'EICM' 
+            when min(class) = 6 and id_personnel = id_ser_cord then 'SC' 
+            when min(class) = 6 and exists (select 1 from iep_student_team st where st.id_personnel = id_personnel and st."id_student" = id_student and st.status='Active') then 'TEAM' 
+            
+            when min(class) = 7 then 'TEAM' 
+            when min(class) = 8 and id_personnel = id_case_mgr then 'CM' 
+            when min(class) = 8 and id_personnel = id_ei_case_mgr then 'EICM' 
+            when min(class) = 8 and id_personnel = id_ser_cord then 'SC' 
+            when min(class) = 8 and exists (select 1 from iep_student_team st where st.id_personnel = id_personnel and st."id_student" = id_student and st.status='Active') then 'TEAM' 
+            when min(class) = 9 then 'PA' 
+            when min(class) = 10 then 'SC' 
+        end as access_type
+        
+        
+    from 
+        
+    (    
+            -- select for system admin
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                                -- system admin
+                                -- joins to all students
+                                ("iep_privileges"."class" = 1)
+        
+        union 
+        
+            -- select for district managers
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                            -- district mananger
+                            -- joins to students in the district
+                            (
+                                (
+                                    "iep_privileges"."class" = 2 OR
+                                    "iep_privileges"."class" = 3 
+                                ) AND
+                                "iep_privileges"."id_district" = "iep_student"."id_district" AND
+                                "iep_privileges"."id_county" = "iep_student"."id_county"
+                            )
+        
+        union 
+        
+            -- select for school managers
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                            -- school mananger
+                            -- joins to students in the school
+                            (
+                                (
+                                    "iep_privileges"."class" = 4 OR
+                                    "iep_privileges"."class" = 5 
+                                ) AND
+                                "iep_privileges"."id_school" = "iep_student"."id_school" AND
+                                "iep_privileges"."id_district" = "iep_student"."id_district" AND
+                                "iep_privileges"."id_county" = "iep_student"."id_county"
+                            )
+        
+        union
+            
+            -- select for cm, eicm, student team
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                            -- case mgr
+                            -- joins to students with this personnel as their case manager
+                            (   "iep_privileges"."class" = 6 AND 
+                                "iep_privileges"."id_school" = "iep_student"."id_school" AND
+                                "iep_privileges"."id_district" = "iep_student"."id_district" AND
+                                "iep_privileges"."id_county" = "iep_student"."id_county" AND 
+                                (
+                                    "iep_personnel"."id_personnel" = "iep_student"."id_case_mgr" OR
+                                    "iep_personnel"."id_personnel" = "iep_student"."id_ei_case_mgr" OR 
+                                    exists (select 1 from iep_student_team st where st.id_personnel = "iep_personnel"."id_personnel" and
+                                        st."id_student" = "iep_student"."id_student" and st.status='Active')
+                                )
+    
+                            )
+        
+            
+            
+        union 
+            
+            -- select for student team
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                            -- school staff(7)
+                            -- joins to students with this personnel on their team
+                            (   "iep_privileges"."class" = 7 AND 
+                                "iep_privileges"."id_school" = "iep_student"."id_school" AND
+                                "iep_privileges"."id_district" = "iep_student"."id_district" AND
+                                "iep_privileges"."id_county" = "iep_student"."id_county" and 
+                                 exists (select 1 from iep_student_team st where st.id_personnel = "iep_personnel"."id_personnel" and
+                                    st."id_student" = "iep_student"."id_student" and st.status='Active')
+                                
+                            )
+        
+        
+        union 
+        
+            -- select for cm, eicm, student team
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                            -- specialist (8)
+                            -- joins to students with this personnel as their specialist
+                            (   "iep_privileges"."class" = 8 AND 
+                                "iep_privileges"."id_school" = "iep_student"."id_school" AND
+                                "iep_privileges"."id_district" = "iep_student"."id_district" AND
+                                "iep_privileges"."id_county" = "iep_student"."id_county" AND 
+                                (
+                                    "iep_personnel"."id_personnel" = "iep_student"."id_ei_case_mgr" OR
+                                    "iep_personnel"."id_personnel" = "iep_student"."id_ser_cord" OR
+                                     exists (select 1 from iep_student_team st where st.id_personnel = "iep_personnel"."id_personnel" and
+                                        st."id_student" = "iep_student"."id_student" and st.status='Active')                                    
+                                )
+                            )
+        
+        
+        union 
+        
+            -- select for cm, eicm, student team
+            select 
+            
+            iep_student.id_student,
+            iep_student.id_case_mgr,
+            iep_student.id_ei_case_mgr,
+            iep_student.id_ser_cord,
+            iep_personnel.id_personnel,
+            
+            iep_privileges.class as class
+            
+            from
+        
+                --
+                -- select personnel
+                --
+                "public"."iep_personnel" "iep_personnel" 
+                    
+                    --
+                    -- joined to thier privileges
+                    --
+                    inner join "public"."iep_privileges" "iep_privileges" 
+                    on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                        "iep_personnel"."status" = 'Active' and 
+                        "iep_privileges"."status" = 'Active'
+                        
+                        --
+                        -- joined to thier students where they have access
+                        --
+                        inner join "public"."iep_student" "iep_student" 
+                        on  
+                            -- service coordinator(10)
+                            -- joins to students with this personnel as their service coordinator
+                            (   "iep_privileges"."class" = 10 AND 
+                                "iep_privileges"."id_school" = "iep_student"."id_school" AND
+                                "iep_privileges"."id_district" = "iep_student"."id_district" AND
+                                "iep_privileges"."id_county" = "iep_student"."id_county" AND 
+                                (
+                                    "iep_personnel"."id_personnel" = "iep_student"."id_ser_cord" OR
+                                     exists (select 1 from iep_student_team st where st.id_personnel = "iep_personnel"."id_personnel" and
+                                        st."id_student" = "iep_student"."id_student" and st.status='Active')                                    
+                                )
+                            )
+        
+        
+        
+    ) as all_matches    
+    
+    group by 
+        id_personnel,
+        id_student,
+    id_case_mgr,
+    id_ei_case_mgr,
+    id_ser_cord
+    
+    ) as unique_matches    
+    
+    left join iep_student s on unique_matches.id_stu = s.id_student
+	--left join iep_form_002 finalForm002 on unique_matches.id_stu = s.id_student and finalForm002.status = 'Final'
+	--left join iep_form_004 finalForm004 on unique_matches.id_stu = s.id_student and finalForm004.status = 'Final' 
+	--order by finalForm002.date_mdt, finalForm004.date_conference
+    ;
+
+
+
+--select access_type, id_stu, class  from my_caseload where id_personnel ='1008919' order by access_type;
+select * from my_caseload where id_student = '1001077' and id_personnel = 1000254;
+grant all on table my_caseload to stylescope;

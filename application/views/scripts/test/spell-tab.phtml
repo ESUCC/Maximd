@@ -1,0 +1,101 @@
+		
+	<script type="text/javascript">
+		//<!-- 
+
+function startSpellCheck(){
+    var myFrames = new Array();
+    var counter = 0;
+    $('iframe').each(function(){
+        myFrames[counter] = $(this).attr('id');
+        counter++;
+    });
+
+    doSpell({    
+           ctrl: myFrames,
+           lang: 'en_US',
+           onFinish:onFinish
+        });
+}
+onFinish = function(mSender){
+	for(var i=0;i<mSender.length;i++){
+		// updateInlineValueTextArea : textareaID, updateValue
+		//updateInlineValueTest(mSender[i].id.replace("_iframe", ""), $('#'+mSender[i].id).contents().find('body').html());
+	}
+//	modified();
+};
+		//-->
+
+	</script>	
+	<div class="header">&nbsp;</div>
+	<h1>WebSpellChecker for multiple text boxes</h1>
+	<h3>Please enter your text into the boxes below and press the "Spell Check" button.</h3>
+	
+	<div id="iep_form_004_goal_tab_container_parent">
+<div id="iep_form_004_goal_tab_container" dojoType="my.TabContainer">
+<div id="iep_form_004_goal_1">
+<table class="formTitleHead" width="100%" style="margin-top:0;">
+	<tr>
+        <td>
+        	Editor
+		</td>
+		<td align="right">
+			<input type="hidden" name="iep_form_004_goal_1[id_form_004_goal]" value="2118791" ignore="1" id="iep_form_004_goal_1-id_form_004_goal" />
+        </td>
+    </tr>
+</table>
+<table class="sc_formInputBlock">        
+     <tr class="bgLight3">
+    	<td>
+    		An additional page should be used for each goal, and goals for transition services 
+    		can be recorded on this page.
+    	</td>
+    </tr>
+     <tr class="sc_richTextBox">
+        <td>
+            <div id="iep_form_004_goal_1-measurable_ann_goal-colorme" class="colorme">
+        	<div class="colorme" id="measurable_ann_goal-colorme"><div class="printEditor wordPasteStyle ">
+<input id="iep_form_004_goal_1-measurable_ann_goal" name="iep_form_004_goal_1[measurable_ann_goal]" value="This is an exampl of a sentence with two mispelled words. Just type text with misspelling to see how it works. " type="hidden" /><a href="javascript:void(0);" onclick="editorHistory('iep_form_004_goal_1[measurable_ann_goal]');">Editor History</a> <div   alt="Measurable Annual Goals:" title="Measurable Annual Goals:" plugins="['cut', 'copy', 'paste', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'insertOrderedList', 'indent', 'outdent', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull']" extraPlugins="['dijit._editor.plugins.AlwaysShowToolbar']" height="50" dojoType="dijit.Editor" minHeight="5em" AlwaysShowToolbar="true" style="background-color:#dddddd;width:675px;" id="iep_form_004_goal_1-measurable_ann_goal-Editor">This is an exampl of a sentence with two mispelled words. Just type text with misspelling to see how it works. </div>
+
+<noscript><textarea name="iep_form_004_goal_1-measurable_ann_goal" id="iep_form_004_goal_1-measurable_ann_goal-Editor"   alt="Measurable Annual Goals:" title="Measurable Annual Goals:" plugins="['cut', 'copy', 'paste', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'insertOrderedList', 'indent', 'outdent', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull']" extraPlugins="['dijit._editor.plugins.AlwaysShowToolbar']" height="50" dojoType="dijit.Editor" minHeight="5em" AlwaysShowToolbar="true" style="background-color:#dddddd;width:675px;" rows="24" cols="80">This is an exampl of a sentence with two mispelled words. Just type text with misspelling to see how it works. </textarea></noscript></div></div>        	</div> 
+        </td>
+    </tr>
+</table>   
+
+</div>
+
+<div id="iep_form_004_goal_2">
+<table class="formTitleHead" width="100%" style="margin-top:0;">
+	<tr>
+        <td>
+        	Editor
+		</td>
+		<td align="right">
+			<input type="hidden" name="iep_form_004_goal_2[id_form_004_goal]" value="2122671" ignore="1" id="iep_form_004_goal_2-id_form_004_goal" />
+        </td>
+    </tr>
+</table>
+<table class="sc_formInputBlock">        
+     <tr class="bgLight3">
+    	<td>
+    		An additional page should be used for each goal, and goals for transition services 
+    		can be recorded on this page.
+    	</td>
+    </tr>
+     <tr class="sc_richTextBox">
+        <td>
+            <div id="iep_form_004_goal_2-measurable_ann_goal-colorme" class="colorme">
+        	<div class="colorme" id="measurable_ann_goal-colorme"><div class="printEditor wordPasteStyle ">
+<input id="iep_form_004_goal_2-measurable_ann_goal" name="iep_form_004_goal_2[measurable_ann_goal]" value="This is an exampl of a sentence with two mispelled words. Just type text with misspelling to see how it works. " type="hidden" /><a href="javascript:void(0);" onclick="editorHistory('iep_form_004_goal_2[measurable_ann_goal]');">Editor History</a> <div   alt="Measurable Annual Goals:" title="Measurable Annual Goals:" plugins="['cut', 'copy', 'paste', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'insertOrderedList', 'indent', 'outdent', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull']" extraPlugins="['dijit._editor.plugins.AlwaysShowToolbar']" height="50" dojoType="dijit.Editor" minHeight="5em" AlwaysShowToolbar="true" style="background-color:#dddddd;width:675px;" id="iep_form_004_goal_2-measurable_ann_goal-Editor">This is an exampl of a sentence with two mispelled words. Just type text with misspelling to see how it works. </div>
+<noscript><textarea name="iep_form_004_goal_2-measurable_ann_goal" id="iep_form_004_goal_2-measurable_ann_goal-Editor"   alt="Measurable Annual Goals:" title="Measurable Annual Goals:" plugins="['cut', 'copy', 'paste', '|', 'bold', 'italic', 'underline', 'strikethrough', '|', 'insertOrderedList', 'indent', 'outdent', 'justifyLeft', 'justifyRight', 'justifyCenter', 'justifyFull']" extraPlugins="['dijit._editor.plugins.AlwaysShowToolbar']" height="50" dojoType="dijit.Editor" minHeight="5em" AlwaysShowToolbar="true" style="background-color:#dddddd;width:675px;" rows="24" cols="80"></textarea></noscript></div></div>        	</div> 
+        </td>
+
+    </tr>
+</table>   
+
+</div>
+</div></div><!-- end tab container parent -->
+	
+	
+	<input value="Spell Check" onclick="startSpellCheck();" type="button">
+	
+

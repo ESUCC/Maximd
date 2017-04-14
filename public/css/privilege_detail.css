@@ -1,0 +1,26 @@
+
+
+.zend_form label.srsLabel {
+    width:220px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5px;
+}
+.zend_form span.hint {
+    width: 350px;
+    display: inline-block;
+    text-align: left;
+}
+
+#fieldset-parent_information label.srsLabel {
+    width:120px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5px;
+
+}
+#fieldset-parent_information span.hint {
+    width: 450px;
+    display: inline-block;
+    text-align: left;
+}

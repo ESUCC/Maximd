@@ -1,0 +1,28 @@
+<!-- PUT MAIN COLUMN CODE HERE -->
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php } ?>
+<?php 
+	//$this->browserDetection();
+?>
+<span class="btb">PLEASE BE ADVISED</span>:<br/><br/>
+<div class="bt" style="width:600px;border-style: none;">
+
+
+<?php 
+//	if(!$this->isRecent) { echo '<div class="browser-error">Your browser may not be fully compatible website. Please update your web browser to the most recent version.</div>'; }
+?>
+
+
+
+    For security purposes, this computer system employs software programs to monitor network traffic.<br/>
+    Anyone using this system consents to the monitoring of their activities by security personnel.<br/>
+    All activities are logged.<br/><br/>Unauthorized access or attempts to use, alter, destroy or damage data, 
+    programs or equipment will result in criminal prosecution. In the event of unauthorized intrusion, all relevant
+    information regarding possible violation of law will be provided to law enforcement officials.<br/><br/>
+    IP address: 192.168.101.172 has been logged.
+    <BR/><BR/>
+    <?= $this->siteEntranceForm; ?>
+    <BR/>
+
+</div>

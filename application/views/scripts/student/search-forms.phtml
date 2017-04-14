@@ -1,0 +1,72 @@
+<?
+$this->usersession = new Zend_Session_Namespace ( 'user' );
+$nameFull = $this->usersession->user->user['name_first'] . ' ';
+$nameFull .= is_null($this->usersession->user->user['name_middle'])?'':$this->usersession->user->user['name_middle'].' ';
+$nameFull .= $this->usersession->user->user['name_last'] . ' ';
+
+
+/**
+ * override /css/srs_style_additions.css
+ */
+$this->headLink ()->appendStylesheet ( '/css/search_forms.css');
+
+?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#srs_mainPane').css('margin-left', "30px");
+    });
+</script>
+
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td colspan="2">
+            <?php
+            $auth = Zend_Auth::getInstance();
+            if($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+</table>
+<?php $this->headScript()->appendFile('/js/studentFormSearch.js'); ?>
+<?php $this->headScript()->appendFile('/js/jquery.fileDownload.js'); ?>
+
+<!--Header (student, options)-->
+<div >
+    <B>Student: </B><?= $this->student['name_student_full'] ?> (<?= $this->student['id_student'] ?>)
+	<span style="margin-left:525px"><?php echo $this->id_student; echo $this->studentOptionsMenu($this->studentOptionsMenu_MultiOptions, $this->student['id_student']);?></span>
+</div>
+<br />
+
+<!--Header end-->
+
+<div class="searchPageContainer clearfix">
+    <h3 class="searchPageHeader">Create Form</h3>
+    <div style="padding-left: 15px;"><?php 
+    $isDemoStudent = $this->IsDemoStudent($this->student['id_county'], $this->student['id_district'], $this->student['id_school']);
+    $this->searchForm->formCreateType->setAttrib('onChange', "formCreateType(this.value, '" . $this->student['id_student'] . "', '".$isDemoStudent."')");
+    echo $this->searchForm->formCreateType; ?>
+    </div>
+</div>
+<br />
+<br />
+
+<div id="searchFormsContainer" class="clearfix">
+    <h3 id="searchStudents">Search Forms</h3>
+    <?php echo $this->searchForm; ?>
+</div>
+<div id="searchResults" class="clearfix">
+    <?= $this->searchTable; ?>
+</div>
+
+<div id="preparing-file-modal" title="Preparing report..." style="display: none;">
+    We are preparing your report, please wait...
+
+    <!--Throw what you'd like for a progress indicator below-->
+    <div class="ui-progressbar-value ui-corner-left ui-corner-right" style="width: 100%; height:22px; margin-top: 20px;"></div>
+</div>
+
+<div id="error-modal" title="Error" style="display: none;">
+    There was a problem generating your report, please try again.
+</div>

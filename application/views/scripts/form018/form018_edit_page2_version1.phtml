@@ -1,0 +1,10 @@
+<?php 
+$view = $this->element->page->getView();
+
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo $this->element->id_form_018;
+echo $this->element->page;
+echo $this->subformTab($view, 'iep_form_018_supp', true, "Supplemental Form");
+?>

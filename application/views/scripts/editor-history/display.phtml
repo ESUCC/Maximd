@@ -1,0 +1,49 @@
+<script>
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+</script>
+<h2>Editor History</h2>
+<div id="tabs">
+	<?php
+	$admin = false;
+	$sessUser = new Zend_Session_Namespace ( 'user' );
+	foreach($sessUser->user->privs as $priv)
+	{
+	    if(1==$priv['class']) {
+	        $admin = true;
+	    }
+	}
+	
+    $tabNumber = 1;
+    $headerHtml = "";
+    $tabsHtml = "";
+    foreach ($this->res as $saveLogRow) {
+        $date = new Zend_Date($saveLogRow['timestamp_created'], 
+                Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY . ' ' .
+                         Zend_Date::HOUR . ':' . Zend_Date::MINUTE . ':' .
+                         Zend_Date::SECOND . '.' . Zend_Date::MILLISECOND);
+    
+        $headerHtml .= '<li style="font-size:10px;"><a href="#tabs-' . $tabNumber . '">' .
+             $date->get(
+                    Zend_Date::MONTH . '/' . Zend_Date::DAY . '/' . Zend_Date::YEAR . ' ' .
+                     Zend_Date::HOUR . ':' . Zend_Date::MINUTE . ':' . Zend_Date::SECOND) .
+             '<br />' . Model_Table_PersonnelTable::getUserName($saveLogRow['id_user']);
+        if($admin) $headerHtml .= '<br />' . $saveLogRow['computer_platform'] . ' ' .$saveLogRow['browser_type'] . ' ' .$saveLogRow['browser_version'];
+        $headerHtml .= "</a></li>";
+        
+        $tabsHtml .= '<div id="tabs-' . $tabNumber . '">';
+        $tabsHtml .= $saveLogRow['field_value'];
+        $tabsHtml .= '</div>';
+        
+        $tabNumber ++;
+    }
+    ?>
+    <ul><?=$headerHtml?></ul>
+	<?=$tabsHtml?>
+</div>
+
+
+
+
+

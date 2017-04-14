@@ -1,0 +1,96 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+
+<div style="clear:both;page-break-before: always;">
+	<?php if($view->mode != 'print') { ?>
+	<table class="formSectionHead" cellspacing="0" cellpadding="0">
+	   <tr>
+	        <td><?php echo $view->db_form_data['ifsptype']; ?> IFSP</td>
+	    </tr>
+	</table>
+	<?php } ?>
+	<table class="formInput">
+	    <tr>
+	        <td class="printBoldLabel">
+	        	<?php echo $this->element->service_sp_conditions->getLabel(); ?>
+	        </td>
+	        <td class="printonly">
+	        	<div class="confidential">Confidential</div>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td colspan="2">
+	            <?php echo $this->element->service_sp_conditions; ?>
+	        </td>
+	    </tr>
+	</table>
+	
+	<table  cellspacing="0" cellpadding="0">
+	   <tr>
+	        <td class="tanHead printBoldLabel">
+	        <?php 
+	        	if('print' != $view->mode) {
+	        		echo "THE SERVICES THAT WILL BE PROVIDED TO SUPPORT ALL GOALS AND OBJECTIVES ARE:";
+	        	} else {
+	        		echo "The Services that will be provided to support all goals and objectives are:";
+	        	}
+	        ?>
+	        <br /><span class="noprint">
+	Schools should report ALL services including those not paid for by the school.<br />
+	The first Service listed should be the one in which the child receives the most.</span></td>
+	    </tr>
+	</table>
+	<?php
+
+
+    if(0) {
+        if($view->mode != 'print') {
+            echo $this->subformTab($view, 'ifsp_services', true, 'Service');
+        } else {
+            echo $this->subformTab($view, 'ifsp_services', false, 'Service');
+        }
+    } else {
+        echo $this->jqueryTab($view, 'ifsp_services', ('print' == $this->mode)?false:true, "Service");
+    }
+
+    ?>
+</div>
+<div id="other_services_parent" style="width:800px;">
+<?php echo $this->subform($view, 'other_services'); ?>
+</div>
+<div id="other_services_parent" style="width:800px;">
+<?php echo $this->subform($view, 'home_community'); ?>
+</div>
+
+<div class="noprint" style="width:600px;height:330px;" dojoType="dijit.Dialog" id="dde" title="Special Education NSSRS Data Element Definitions">
+    <ol>
+        <li>
+            Home - early intervention services are provided primarily in the principal residence of the child’s family or caregivers.
+        </li>
+        <li>
+            Community-based Setting - early intervention services are provided primarily in a setting where children without disabilities typically are found. These settings include but are not limited to:
+            <ul>
+                <li>child care centers (including family day care)</li>
+                <li>preschools</li>
+                <li>regular nursery schools</li>
+                <li>early childhood center</li>
+                <li>libraries</li>
+                <li>grocery stores</li>
+                <li>parks</li>
+                <li>restaurants</li>
+                <li>and community centers (e.g., YMCA, Boys and Girls Clubs)</li>
+            </ul>
+        </li>
+        <li>
+            Other Setting - early intervention services are provided primarily in a setting that is not home or community-based. These settings include, but are not limited to, services provided in a hospital, residential facility, clinic, and EI center/class for children with disabilities.
+        </li>
+    </ol>
+</div>
+
+
+

@@ -1,0 +1,53 @@
+<?php ?>
+<form name="mainform" method="post" action="/formmanagement/save"
+	class="editor" enctype="application/x-www-form-urlencoded">
+<table align="center" style="width: 800px">
+	<TR>
+		<TD><?php 
+		//        print_r($this->formNumArr);
+		foreach($this->formNumArr as $formKey => $formManager)
+		{
+			//				echo $formManager->getFormNumber() . '|'. $formManager->existsFileForm() . "<br>";
+
+			// debug each form
+			echo "<br/><B>Processing form $formKey<BR/></B>";
+			
+			// confirm form definition file exists
+//			if($formManager->existsFileForm()) {
+//				echo "/application/forms/Form$formKey.php exists<BR/>";
+//			} else {
+//				echo '<span style="color:red">/application/forms/Form'.$formKey.'.php DOES NOT EXIST</span><BR/>';
+//			}
+//			
+//			// make sure the main view script folder exists
+//			if($formManager->existsFileViewScriptFolder()) {
+//				echo "/application/views/scripts/form$formKey/ exists<BR/>";
+//			} else {
+//				echo '<span style="color:red">/application/views/scripts/form'.$formKey.'/ DOES NOT EXIST</span><BR/>';
+//			}
+			
+			echo $formManager->existsFileMsg(APPLICATION_PATH . '/forms/Form'. $formKey.'.php') . "<BR/>";
+			echo $formManager->existsFileMsg(APPLICATION_PATH . '/views/scripts/form'. $formKey.'/') . "<BR/>";
+			
+			// look for form viewscript for each page
+			for($x=1; $x<= $formManager->pageCount; $x++)
+			{
+				echo $formManager->existsFileMsg(APPLICATION_PATH . '/views/scripts/form'.$formKey.'/form'.$formKey.'_edit_page'.$x.'_version1.phtml') . "<BR/>";
+			}
+			
+			// look for JS files for each page
+			for($x=1; $x<= $formManager->pageCount; $x++)
+			{
+				echo $formManager->existsFileMsg(APPLICATION_PATH . '/../public/js-src/srs_forms/form'.$formKey.'_p'.$x.'_v1.js') . "<BR/>";
+				if(!$formManager->existsFile(APPLICATION_PATH . '/../public/js-src/srs_forms/form'.$formKey.'_p'.$x.'_v1.js'))
+				{
+					$this->cmd_line_build .= 'cp /Applications/ZendServer/apache2/htdocs/neb_srs/library/My/File/Js/srs_form_page.js '  . APPLICATION_PATH . '/../public/js-src/srs_forms/form'.$formKey.'_p'.$x.'_v1_COPIED.js' . "<BR/>"; 
+				}
+			}
+
+		}
+		?></TD>
+	</TR>
+</TABLE>
+<?= $this->cmd_line_build; ?>
+</form>

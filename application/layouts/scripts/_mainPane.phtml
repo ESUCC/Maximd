@@ -1,0 +1,212 @@
+<?php
+    //
+    // center/center
+    //
+?>
+<?php  $this->contentPane()->captureStart('srs_mainPane', array('region' => 'center'))?>
+
+
+    <div id="mainPane_top"></div>
+    <div id="mainPane_body">
+        <?php
+
+                //
+                // 20090219 jlavere
+                //
+                // code to build navigation tab on top of web pages
+                // main bar and sub bar
+                // code requires helper My/View/Helper/NavBar.php
+                // and view helper My/Plugin/ViewSetup.php to
+                // make $this->controller and $this->action work
+                //
+                #echo "controller: " . $this->controller . "<BR>";
+                #echo "action: " . $this->action . "<BR>";
+                //if($this->noheadlink !== false) echo $this->navBar( $this->controller, $this->action);
+
+                $sessIdUser = $this->sessIdUser;
+                $sessUserMinPriv = $this->sessUserMinPriv;
+                $sessCanCreateStudent = $this->sessCanCreateStudent;
+                $sessPrivCheckObj = $this->sessPrivCheckObj;
+                $sessNameFull = $this->sessNameFull;
+
+                $area = 'student';
+                $sub = 'form_024';
+        ?>
+        <?php echo $this->layout()->content ?>
+
+        </div> <!-- END mainPane_body -->
+        <div id="mainFooter">Copyright &copy; Nebraska Department of Education 2010. All rights reserved.  |  <a href="">Site Policy</a></div>
+
+<?php echo $this->contentPane()->captureEnd('srs_mainPane') ?>
+<?php
+    // this is the left/middle/right split of the main layout
+
+	// left/center
+	$hidebar = false;
+	if(isset($this->hideLeftBar) && true==$this->hideLeftBar) {
+		$hidebar = true;
+	}
+	if(!$hidebar) {
+	    $this->contentPane()->captureStart('srs_left', array('region' => 'left'));
+	?>
+	<div id="leftTop"></div>
+	<div class="subNav">
+	<?php
+		// <img alt="SRS Logo" src="/images_srs/body_logo_sm.jpg">
+		$auth = Zend_Auth::getInstance();
+		if($auth->hasIdentity()) {
+
+			$sessQuickLinks = new Zend_Session_Namespace('QuickLinks');
+			?>
+		  	<!-- Begin Quick link area -->
+			  <?php
+			  	if('form010' == Zend_Controller_Front::getInstance()->getRequest()->getControllerName()) {
+					// override sticky side bar
+					$overrideStyle = 'position:static;';
+			  	} else {
+					$overrideStyle = '';
+			  	}
+			  ?>
+			  <div class="subBar" style="<?=$overrideStyle;?>">
+		      <div class="subBar_top <?php if('view' == $this->mode) echo "subBar_top_view"; ?>"><?php
+		      if('view' == $this->mode) {
+	// 				echo 'VIEW ONLY</div>';
+		      	echo '<div><img src="/images_srs/view_only.png" /></div>';
+		      }
+			  ?></div>
+			  <div class="subBar_body">
+				<?php
+
+				if('view' == $this->mode) {
+					#rotate {
+	// 				echo '<div id="viewMode">VIEW ONLY</div>';
+	// 				echo '<div id="viewModeDivBelow"></div>';
+
+				} elseif('home' == Zend_Controller_Front::getInstance()->getRequest()->getControllerName()) {
+                    ?>
+                    <table border="0">
+                        <tr class="bgDark"><td align="center" nowrap="nowrap" style="height:19; width:1px;" class="menuTextBig"><B>Help Center</B></td><tr>
+                        <tr><td><a href="srs.php?area=help&sub=tutorials" class="menuTextLinkBig" style="text-decoration:underline;"  >Tutorials</a></td><tr>
+                        <tr><td><a href="srs.php?area=help&sub=faq" class="menuTextLinkBig" style="text-decoration:underline;"  >FAQ</a></td><tr>
+<!--                        <tr><td><a href="srs.php?area=help&sub=techreq" class="menuTextLinkBig" style="text-decoration:underline;"  >Technical Requirements</a></td><tr>-->
+                        <tr><td><a href="srs.php?area=help&sub=hdrequests" class="menuTextLinkBig" style="text-decoration:underline;"  >Help Desk Request</a></td><tr>
+<!--                        <tr><td><a href="srs.php?area=help&sub=feedback" class="menuTextLinkBig" style="text-decoration:underline;"  >Feedback</a></td><tr>-->
+<!--                        <tr><td><a href="srs.php?area=help&sub=security" class="menuTextLinkBig" style="text-decoration:underline;"  >Security</a></td><tr>-->
+<!--                        <tr><td><a href="srs.php?area=help&sub=enhancements" class="menuTextLinkBig" style="text-decoration:underline;"  >Future Enhancements</a></td><tr>-->
+                    <? if(isset($surveyWaiting) && $surveyWaiting) {?>
+                        <tr><td><a href="srs.php?area=home&sub=survey" class="menuTextLinkBig" style="text-decoration:underline;"  >Surveys</a></td><tr>
+                    <? } ?>
+                    </table>
+                <?
+				} elseif('form010' == Zend_Controller_Front::getInstance()->getRequest()->getControllerName()) { ?>
+						<p>Progress Report Helper</p>
+						<p>List of students where you are the case manager or on the student team. This tool allows you to navigate to the draft progress reports for each student in your care.</p>
+						<div id="case_load_student_list" style="height:434px;overflow:scroll;">
+							<?php //echo str_repeat("<p><a style=\"color:green\" href=\"#\">test</a></p>", 30); ?>
+							<?php echo $this->prHelper($this->prCurrentStudent, $this->prList); ?>
+						</div>
+
+				<?php } elseif('form013' == Zend_Controller_Front::getInstance()->getRequest()->getControllerName() ) { ?>
+						<?php if('create' != Zend_Controller_Front::getInstance()->getRequest()->getActionName()) { ?>
+							<p>Primary Disability
+								<?= $sessQuickLinks->primary_disability; ?></p>
+							<p>Last IFSP
+								<?= $sessQuickLinks->prev_ifsp; ?></p>
+							<p>Last MDT
+								<?= $sessQuickLinks->prev_mdt; ?></p>
+							<p>Last Initial Evaluation
+								<?= $sessQuickLinks->last_initial_ifsp_eval; ?></p>
+							<p>Last Initial Placement
+								<?= $sessQuickLinks->last_initial_ifsp_placement; ?></p>
+							<p>Last Notice of IFSP
+								<?= $sessQuickLinks->last_notice_of_ifsp; ?></p>
+						<?php } ?>
+				<?php } elseif('form' == substr(Zend_Controller_Front::getInstance()->getRequest()->getControllerName(), 0, 4)) { ?>
+						<p>Primary Disability
+						<?= $sessQuickLinks->primary_disability; ?></p>
+						<p>Primary Service
+						<?= $sessQuickLinks->primary_service; ?></p>
+						<p>Related Services
+						</p>
+						<p>Last IEP
+						<?= $sessQuickLinks->prev_iep; ?></p>
+						<p>Last Notice of IEP
+						<?= $sessQuickLinks->prev_notice_iep; ?></p>
+						<p>Last PR
+						<?= $sessQuickLinks->prev_pr; ?></p>
+						<p>Last MDT
+						<?= $sessQuickLinks->prev_mdt; ?></p>
+						<p>Last IFSP
+						<?= $sessQuickLinks->prev_ifsp; ?></p>
+
+				<?php } elseif(	'student' == Zend_Controller_Front::getInstance()->getRequest()->getControllerName() &&
+								'list' == Zend_Controller_Front::getInstance()->getRequest()->getActionName() ) {
+
+						$this->dojo()->requireModule('dijit.layout.AccordionContainer');
+						$this->dojo()->requireModule('dojox.html._base');
+						$this->dojo()->requireModule('dojox.html._base');
+						$this->dojo()->requireModule('dojox.grid.DataGrid');
+						$this->dojo()->requireModule('dojo.data.ItemFileReadStore');
+
+						echo '<div style="color:black;" id="StudentSearch_Widget_List">';
+						echo '</div>';
+					} ?>
+
+
+				<?php if('form' == substr(Zend_Controller_Front::getInstance()->getRequest()->getControllerName(), 0, 4)) { ?>
+					<?php if('create' != Zend_Controller_Front::getInstance()->getRequest()->getActionName()) { ?>
+						<div class="navButtons" style="width:82%;text-align:center;padding-right:24px;color:grey;">
+							<HR style="height: 1px;border: 0;color: #CCC;background-color: #CCC;width: 90%;">
+							Goto page: <?php echo My_Classes_iepFunctionGeneral::valueListNumbers("navPage3placeholder", $this->pageCount, 1, $this->page, $this->page, "none"); ?>
+						</div>
+
+						<div class="navButtons" style="width:82%;text-align:center;padding-right:24px;color:grey;">
+							<? if ($this->page > 1) { ?>
+								<button class="enabledButton" dojoType="dijit.form.Button" id="prevPage3" >Prev</button>
+							<? } ?>
+							<? if ($this->page < $this->pageCount) { ?>
+								<button class="enabledButton" dojoType="dijit.form.Button" id="nextPage3" >Next</button>
+							<? } ?>
+						</div>
+						<div class="navButtons" style="width:82%;text-align:center;padding-right:24px;color:grey;">
+							<?php
+					            echo $this->formButton('formDoneButton3', 'Done', array(
+					                    'accesskey' => "d",
+					                    'onclick' => "javascript:recordAction(dojo.byId('myform'), 'done');",
+					                    'dojoType' => "dijit.form.Button",
+					            		'class' => "enabledButton"
+					            ));
+					        ?>
+					        <?php if('edit' == $this->mode) { ?>
+					        <button dojoType="dijit.form.Button" type="button" id="submitButton3" style="display:none;">Old Save</button>
+					        <button class="jsavebutton dijitReset dijitInline dijitButtonNode" id="jsubmit-leftside" name="jsubmit-leftside" type="button">Save</button>
+					        <?php } ?>
+						</div>
+						<div style="width:82%;text-align:center;color:grey;">
+							<?php echo $this->pageValidationList; ?><BR>
+						</div>
+					<?php } ?>
+
+				<?php } ?>
+
+			  </div>   <!-- END subBar_body -->
+			  <div class="subBar_btm"></div>
+
+			</div> <!-- End subBar -->
+	<?php } ?>
+	  </div> <!-- End subNav -->
+
+	  <div class="srs_leftClose"></div>
+	<?php echo $this->contentPane()->captureEnd('srs_left');
+
+	} // end hidebar
+	?>
+
+
+<?php
+    //
+    // right/center
+    //
+?>
+<?php //$this->contentPane()->captureStart('srs_right', array('region' => 'right'))?>
+<?php //echo $this->contentPane()->captureEnd('srs_right') ?>

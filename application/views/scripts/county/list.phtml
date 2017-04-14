@@ -1,0 +1,43 @@
+<div><h1>County List</h1></div>
+
+<?= $this->countyForm; ?><br/><br/>
+
+<?php if (isset($this->results)) { ?>
+  <?php if (count($this->results) < 1) { ?>
+    
+      <div><h3>No results matched your search</h3></div>
+
+  <?php } else { ?>
+  	<form id="Search" enctype="application/x-www-form-urlencoded" method="post" action="/county/list">
+      <div><?= count($this->results).' results' ?></div>
+      <?= $this->formHidden('page', $this->page); ?>
+      <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+      <table id="result">
+      <tr>
+          <th>County Name</th>
+          <th>County</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+      </tr>
+      <?php 
+      	
+      	$rownum = 0;
+//      	foreach ($this->results as $k => $r) {
+      	foreach($this->paginator as $k => $r) {      
+      		$rowClassAddition = ($rownum++ % 2) ? 'evenrow' : 'oddrow';
+      		?>
+          <tr class="result <? echo $rowClassAddition; ?>">
+              <td><?= $r['name_county'] ?></td>
+              <td><?= $r['name_county'] ?></td>
+              <td><a href="/county/view/id_county/<?= $r['id_county'] ?>">View</a></td>
+              <td><a href="/county/edit/id_county/<?= $r['id_county'] ?>">Edit</a></td>
+          </tr>
+      <?php } ?>
+      </table>
+      </form>
+  <?php } ?>
+<?php } ?>
+
+<ul>
+
+</ul>

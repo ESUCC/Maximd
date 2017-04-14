@@ -1,0 +1,106 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_028; ?>
+<?= $this->element->page; ?>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+    <tr>
+    	<td style="<? if('print' != $view->mode):?>width:175px;<? else: ?>width:250px;<? endif;?>"><strong>Today's Date:</strong></td>
+    	<td><?php echo $this->element->today_date; ?></td>
+	</tr>
+    <tr>
+    	<td style="<? if('print' != $view->mode):?>width:175px;<? else: ?>width:250px;<? endif;?>"><strong>MDT Re-evaluation Date:</strong></td>
+    	<td><?php echo $this->element->mdt_re_evaluation; ?></td>
+	</tr>
+</table>
+<?php 
+  /*
+   * Removing Per SRSSUPP-702
+   *
+<table class="formInput" style="margin-top:1px;" width="100%">
+    <tr>
+       <td style="width:125px;">Parent's Name</td>
+       <td style="width:125px;">Home Phone</td>
+       <td style="width:125px;">Work Phone</td>
+       <td style="width:125px;">Email</td>
+       <!-- <td style="width:150px;"> Remove Row </td> -->
+    </tr>
+</table>
+<?php echo $view->form->getSubForm('parents'); ?>
+<div id="parents_parent" class="">
+<?php echo $this->subform($view, 'parents', false, false, false); ?>
+</div>
+   */ 
+?>
+<table class="formInput noprint" style="padding-bottom: 10px;text-align: left">
+	<tr>
+    	<td style="width:275px;"><strong>Public School District Providing Services:</strong></td>
+    	<td><?php echo $this->element->public_school_district_providing_services; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+    <tr>
+    	<td><strong>Parent Concerns:</strong><br /><?php echo $this->element->parent_concerns; ?></td>
+	</tr>
+	<tr>
+    	<td><strong>Present Levels of Education Performance:</strong><br /><?php echo $this->element->present_levels_of_education_performance; ?></td>
+	</tr>
+	<tr>
+    	<td><strong>Measureable Annual Goals:</strong><br /><?php echo $this->element->measureable_annual_goals; ?></td>
+	</tr>
+</table>
+<table class="formSectionHeadBlue" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="printBoldLabeWithBorder">Service Delivery Plan Schedule</td>
+	</tr>
+</table>
+<table class="formDesc" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><label class="printBoldLabel">Date of initiation of Service:</label> <?php echo $this->element->date_of_initiation_of_services; ?></td>
+	</tr>
+	<tr>
+		<td><label class="printBoldLabel">Duration of Service:</label> <?php echo $this->element->duration_of_services_from; ?> To <?php echo $this->element->duration_of_services_to; ?></td>
+	</tr>
+	<tr>
+		<td><label class="printBoldLabel">Description of Service(s) to be Provided by <strong><?php echo $view->db_form_data['name_district']; ?></strong></label> <span class="noprint"> (Direct Service, Consultation, Teacher Training, Instructional Materials, Equipment):</span>
+	</tr>
+	<tr>
+		<td><?php echo $this->element->description_of_service_to_be_provided; ?></td>
+	</tr>
+</table>
+<table class="formSectionHeadBlue" cellpadding="0" cellspacing="0" style="padding-top: 10px;">
+	<tr>
+		<td class="printBoldLabeWithBorder">Documentation of Meeting Participation</td>
+	</tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+	<tr>
+		<td>The following individuals, as indicated by their signatures, participated in the development of the service plan.</td>
+	</tr>
+</table>
+<table class="formInput noprint" style="margin-top:1px;" width="100%"> 
+    <tr>
+       <td style="width:5px;"> &nbsp; </td>
+       <td style="width:100px;">Full Name</td>
+       <td style="width:100px;">Role</td>
+       <td style="width:75px;">Date</td>
+       <td style="width:75px;"> Remove Row </td>
+    </tr>
+</table>
+<div id="meeting_participation_parent">
+<?php echo $this->subform($view, 'meeting_participation', false, false, false); ?>
+</div>
+<?php echo $view->form->getSubForm('meeting_participation'); ?>
+<table class="formSectionHeadBlue" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="printBoldLabeWithBorder">Notice to Parent Regarding Availability of a Free Appropriate Public Education (FAPE)</td>
+	</tr>
+</table>
+<table class="formDesc" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>Nonresident children with disabilities parentally-placed in a nonpublic sNonresident children with disabilities parentally-placed in a nonpublic school have no right to receive some or all of the special education and related services from the <strong><?php echo $view->db_form_data['name_district']; ?></strong> that would be available if the child was receiving special education from their resident public school. The district in which the child resides will provide free, appropriate public education in accordance with the Individuals with Disabilities Education Act (IDEA). Please contact <?php echo $this->element->fape_contact; ?> at the <?php echo $this->element->fape_contact_location; ?> Public School District if you elect for your child to have an Individualized Education Program (IEP) and the provision of free and appropriate special education and related services.</td>
+	</tr>
+</table>

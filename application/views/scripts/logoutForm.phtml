@@ -1,0 +1,17 @@
+<form name="searchFormHome" method="post" action="<?php echo $this->action; ?>" class="editor" enctype="application/x-www-form-urlencoded">
+wer
+<?php echo $this->element->Logout; ?>
+
+<?php if("edit" == $this->showLinkType) { ?>
+	
+	<a href="profile">Edit My Profile</a>
+	
+<?php } elseif("home" == $this->showLinkType) { ?>
+	
+	<a href="search/home">Return to search</a>
+	
+<?php } ?>
+
+<?php if($this->cartlink) echo "<div><a href=\"purchase\">View My Cart</a></div>"; ?>
+
+</form>

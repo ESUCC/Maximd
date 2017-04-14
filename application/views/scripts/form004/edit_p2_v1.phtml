@@ -1,0 +1,216 @@
+<?php 
+$view = $this->element->page->getView();
+if (isset($view->db_form_data['summary_form']) && true == $view->db_form_data['summary_form']) {
+    $summaryForm = true;
+} else {
+    $summaryForm = false;
+}
+$district = isset($view->db_form_data['district']) ? $view->db_form_data['district'][0] : null;
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo $this->element->id_form_004;
+echo $this->element->page;
+echo $this->element->dob;
+
+?>
+<table class="formTitleHead">
+	<tr>
+		<td><?php echo $this->translate('Special Considerations'); ?> <?php if ('print' != $view->mode) { ?>(<?php echo $this->translate('complete all that apply'); ?>.)<?php } ?></td>
+	</tr>
+</table>
+<?php if (!$summaryForm || $district['iep_summary_student_strengths']) :?>
+<table class="sc_formInputBlock">
+	<tr class="bgLight3">
+		<td class="btsb"><?php echo $this->translate('Student\'s strengths'); ?>: <?php if ('print' != $view->mode) { ?>(<?php echo $this->translate('SS Description')?>)<?php } ?></td>
+	</tr>
+	<tr class="sc_richTextBox">
+		<td>
+			<?php
+			echo $this->element->student_strengths;
+			?>
+			</td>
+	</tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_parental_concerns']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('Parental information'); ?>: <?php if ('print' != $view->mode) { ?>(<?php echo $this->translate('Pi Description'); ?>)<?php } ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->parental_concerns;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_results_evaluation']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('Evaluation Results'); ?> <?php if ('print' != $view->mode) { ?>(<?php echo $this->translate('Evaluation Results Description'); ?>)<?php } ?>:</td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->results_evaluation;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_results_perf']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('Performance Results'); ?>:</td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->results_perf;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_behavioral_strategies']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('interventions and strategies'); ?>:</td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->behavioral_strategies_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->behavioral_strategies;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_language_needs']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('consideration of language needs'); ?>:</td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->language_needs_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->language_needs;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_braille_instruction']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('blind or visually impaired'); ?>:</td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->braille_instruction_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->braille_instruction;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_comm_needs']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('communication needs'); ?>:</td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->comm_needs_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->comm_needs;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_deaf_comm_needs']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('deaf or hard of hearing'); ?>: <br />
+        <span class="printIndent"><i>1. <?php echo $this->translate('language and communication needs'); ?>:</i></span></td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->deaf_comm_needs_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->deaf_comm_needs;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_deaf_comm_opp']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><span class="printIndent"><i> 2. <?php echo $this->translate('Opportunities for direct communication'); ?>: </i></span></td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->deaf_comm_opp_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->deaf_comm_opp;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_deaf_academic_lev']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><span class="printIndent"><i> 3. <?php echo $this->translate('Academic level and opportunities'); ?>: </i></span></td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->deaf_academic_lev_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->deaf_academic_lev;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_assistive_tech']) :?>
+<table class="sc_formInputBlock">
+    <tr class="bgLight3">
+        <td class="btsb"><?php echo $this->translate('assistive technology service or device'); ?>:</td>
+    </tr>
+    <tr class="noprint"> 
+        <td><?php echo $this->element->assistive_tech_checkbox; ?></td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <?php
+            echo $this->element->assistive_tech;
+            ?>
+            </td>
+    </tr>
+</table>
+<?php endif; ?>
+
+<?php

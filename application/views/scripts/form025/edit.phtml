@@ -1,0 +1,16 @@
+<form action="/form025/changepage" id="myform" method="post">
+<?php
+    include_once('../application/views/scripts/formEditHeader.phtml');
+//    echo $this->form->getSubForm('student_data');
+
+    echo $this->studentInfoHeader($this->db_form_data, '025');
+
+    echo $this->form;
+
+    // this element is used by the changepage action
+    echo $this->formHidden('mode', 'edit', array('ignore'=>true));
+    echo $this->formHidden('form_number', '025', array('ignore'=>true));
+    echo $this->formHidden('id_student', $this->db_form_data['id_student'], array('ignore'=>true));
+    include_once('../application/views/scripts/formEditFooter.phtml');
+    ?>
+</form>

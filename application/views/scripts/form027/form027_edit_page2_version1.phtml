@@ -1,0 +1,142 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_027; ?>
+<?=$this->element->page; ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+	<tr class="noprint">
+        <td>Notice and Consent for Early Intervention Initial Screening</td>
+	</tr>
+</table> 
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+	<tr>
+		<td align="center">
+			<strong>GIVE CONSENT FOR SCREENING:</strong>
+		</td>
+	</tr>
+	<tr>
+		<td>I/We have received a copy of the Notice for Initial Early Intervention Screening; understand the content of the Notice and GIVE CONSENT for the screening specified in the Notice.  I/We understand that this consent is voluntary and I/We may withdraw consent at any time.  If I/We withdraw consent, I/We understand it is not retroactive.</td>
+	</tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+<?
+    if('print'==$view->mode){ //PRINT ?>
+        <tr>
+        	<td>
+        	<table width="100%">
+        	<?php if (1==$this->element->parent_sig_screening_consent->getValue()) { ?>
+            <td>Parent Signature on File</td>
+            <?php } else { ?>
+            <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            <?php if (''!=$this->element->parent_sig_screening_consent_date->getValue()) { ?>
+            <td>Date: <?php echo $this->element->parent_sig_screening_consent_date->getValue(); ?></td>
+            <?php } else { ?>
+            <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            </table>
+            </td>
+        </tr>
+    <? } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+        <td width="10%" align="right">Signature on File: </td>
+        <td><?php echo $this->element->parent_sig_screening_consent; ?></td>
+    </tr>
+    <?php } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+    	 <td width="10%" align="right">Date: </td>
+        <td><?php echo $this->element->parent_sig_screening_consent_date; ?></td>
+    </tr>
+    <? } ?>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+	<tr>
+		<td align="center">
+			<strong>DO <u>NOT</u> GIVE CONSENT FOR SCREENING:</strong>
+		</td>
+	</tr>
+	<tr>
+		<td>I/We have received a copy of the Notice for Initial Early Intervention Screening, understand the content of the Notice, and DO NOT GIVE CONSENT for the screening specified in the Notice.</td>
+	</tr>
+</table>  
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+<?
+    if('print'==$view->mode){ //PRINT ?>
+        <tr>
+        	<td>
+        	<table width="100%">
+        	<?php if (1==$this->element->parent_sig_screening_non_consent->getValue()) { ?>
+            <td>Parent Signature on File</td>
+            <?php } else { ?>
+            <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            <?php if (''!=$this->element->parent_sig_screening_non_consent_date->getValue()) { ?>
+            <td>Date: <?php echo $this->element->parent_sig_screening_non_consent_date->getValue(); ?></td>
+            <?php } else { ?>
+            <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            </table>
+            </td>
+        </tr>
+    <? } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+        <td width="10%" align="right">Signature on File: </td>
+        <td><?php echo $this->element->parent_sig_screening_non_consent; ?></td>
+    </tr>
+    <?php } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+    	 <td width="10%" align="right">Date: </td>
+        <td><?php echo $this->element->parent_sig_screening_non_consent_date; ?></td>
+    </tr>
+    <? } ?>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+	<tr>
+		<td align="center">
+			<strong>OR:</strong>
+		</td>
+	</tr>
+	<tr>
+		<td>I/We have received a copy of the Notice for Initial Early Intervention Screening, understand the content of the Notice, and DO NOT GIVE CONSENT for the screening specified in the notice, and instead request a multidisciplinary evaluation.  I/We understand that I/We must provide written consent for the multidisciplinary evaluation and the multidisciplinary evaluation must be completed within 45 calendar days of the Early Development Network receiving the referral.</td>
+	</tr>
+</table>    
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+<?
+    if('print'==$view->mode){ //PRINT ?>
+        <tr>
+        	<td>
+        	<table width="100%">
+        	<?php if (1==$this->element->parent_sig_screening_non_consent_request->getValue()) { ?>
+            <td>Parent Signature on File</td>
+            <?php } else { ?>
+            <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            <?php if (''!=$this->element->parent_sig_screening_non_consent_request_date->getValue()) { ?>
+            <td>Date: <?php echo $this->element->parent_sig_screening_non_consent_request_date->getValue(); ?></td>
+            <?php } else { ?>
+            <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            </table>
+            </td>
+        </tr>
+    <? } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+        <td width="10%" align="right">Signature on File: </td>
+        <td><?php echo $this->element->parent_sig_screening_non_consent_request; ?></td>
+    </tr>
+    <?php } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+    	 <td width="10%" align="right">Date: </td>
+        <td><?php echo $this->element->parent_sig_screening_non_consent_request_date; ?></td>
+    </tr>
+    <? } ?>
+</table>                    

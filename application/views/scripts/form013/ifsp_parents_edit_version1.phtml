@@ -1,0 +1,62 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<? $view = $this->element->rownumber->getView(); ?>
+<table class="formInput" style="" border="0" id="ifsp_parents_<?= $rowNum; ?>">
+    	<?php 
+  					
+    		if(isset($view->guardians[$rowNum - 1]) && 
+    			$this->element->pg_name->getValue() == '' && 
+    			$this->element->pg_address->getValue() == '' &&
+    			$this->element->pg_home_phone->getValue() == '' &&
+    			$this->element->pg_work_phone->getValue() == ''
+    		) {	
+            // the row is blank, fill in the guardian
+            $this->element->pg_name->setValue($view->guardians[$rowNum - 1]['name_first'] . ' ' . $view->guardians[$rowNum - 1]['name_last']);
+            $this->element->pg_address->setValue($view->guardians[$rowNum - 1]['address_street1'] . ' ' . 
+                                                $view->guardians[$rowNum - 1]['address_street2'] . ' ' .
+                                                $view->guardians[$rowNum - 1]['address_city'] . ' ' . 
+                                                $view->guardians[$rowNum - 1]['address_state'] . ' ' .
+                                                $view->guardians[$rowNum - 1]['address_zip']);
+            $this->element->pg_home_phone->setValue($view->guardians[$rowNum - 1]['phone_home']);
+            $this->element->pg_work_phone->setValue($view->guardians[$rowNum - 1]['phone_work']);
+            
+        }
+    	?>
+    <tr id="RS<?= $rowNum; ?>">
+        <td style="width:10px;">
+            <?= $rowNum; ?>.
+        </td>
+        <td style="width:200px;vertical-align: top">
+            <div id="ifsp_parents_<?= $rowNum; ?>-pg_name-colorme" class="colorme">
+            <?= $this->element->pg_name; ?>
+            <?= $this->element->id_ifsp_parents; ?>
+            </div>
+        </td>
+        <td style="width:200px;vertical-align: top">
+            <div id="ifsp_parents_<?= $rowNum; ?>-pg_role-colorme" class="colorme">
+            <?= $this->element->pg_role; ?>
+            </div>
+        </td>
+        <td style="vertical-align: top" rowspan="2">
+            <div id="ifsp_parents_<?= $rowNum; ?>-pg_address-colorme" class="colorme">
+            <?= $this->element->pg_address; ?>
+            </div>
+        </td>
+        <td class="noprint" style="width:43px;" align="left" rowspan="2">
+            <div id="ifsp_parents_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+        
+        </tr><tr><td>&nbsp;</td>
+        <td>
+            <div id="ifsp_parents_<?= $rowNum; ?>-pg_home_phone-colorme" class="colorme">
+            <?= $this->element->pg_home_phone; ?>
+            </div>
+        </td>
+        <td>
+            <div id="ifsp_parents_<?= $rowNum; ?>-pg_work_phone-colorme" class="colorme">
+            <?= $this->element->pg_work_phone; ?>
+            </div>
+        </td>
+    </tr>
+</table>

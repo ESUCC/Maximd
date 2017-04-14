@@ -1,0 +1,23 @@
+---
+vagrantfile-local:
+    vm:
+        hostname: 'srs.local'
+        network:
+            private_network: '172.20.15.109'
+    hostsupdater:
+        vhostsubdomains:
+            dev: 'dev'
+            phpmyadmin: 'phpmyadmin'
+
+# Do not modify below this line unless you know what you're doing
+zendserver::license_name: 'US-00597-14'
+zendserver::license_key: '5ILM7NV0801O31DF2F66A586D84B61A0'
+zendserver::accept_eula: true
+zendserver::admin_password: 'password'
+zendserver::zend_server_version: '8.0'
+zendserver::phpversion: '5.5'
+zendserver::admin_api_key_name: 'admin'
+zendserver::admin_api_key_secret: 'caff756fd7682fa35901afa923822f63771570c25afd5368e'
+zendserver::join_cluster: false
+zendserver::db_username: 'root'
+zendserver::db_host: '127.0.0.1'

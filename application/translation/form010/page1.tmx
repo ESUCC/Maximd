@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Date Notice">
+           <tuv xml:lang="es"><seg>Fecha de notificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Date Notice</seg></tuv>
+       </tu>
+       <tu tuid="Add Report">
+           <tuv xml:lang="es"><seg>Agregar informe</seg></tuv>
+           <tuv xml:lang="en"><seg>Add Report</seg></tuv>
+       </tu>
+       <tu tuid="Delete Report">
+           <tuv xml:lang="es"><seg>Borrar informe</seg></tuv>
+           <tuv xml:lang="en"><seg>Delete Report</seg></tuv>
+       </tu>
+       <tu tuid="Goal">
+           <tuv xml:lang="es"><seg>Objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Goal</seg></tuv>
+       </tu>
+       <tu tuid="Benchmarks">
+           <tuv xml:lang="es"><seg>Puntos de referencia o est&#xE1;ndares</seg></tuv>
+           <tuv xml:lang="en"><seg>Benchmarks</seg></tuv>
+       </tu>
+       <tu tuid="Schedule">
+           <tuv xml:lang="es"><seg>Horario</seg></tuv>
+           <tuv xml:lang="en"><seg>Schedule</seg></tuv>
+       </tu>
+       <tu tuid="Evaluation Procedure">
+           <tuv xml:lang="es"><seg>Procedimiento de la evaluaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Evaluation Procedure</seg></tuv>
+       </tu>
+       <tu tuid="Progress Measurement">
+           <tuv xml:lang="es"><seg>Medici&#xF3;n del progreso</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Measurement</seg></tuv>
+       </tu>
+       <tu tuid="Sufficient">
+           <tuv xml:lang="es"><seg>Suficiente</seg></tuv>
+           <tuv xml:lang="en"><seg>Sufficient</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+       <tu tuid="Comments">
+           <tuv xml:lang="es"><seg>Comentarios</seg></tuv>
+           <tuv xml:lang="en"><seg>Comments</seg></tuv>
+       </tu>
+       <tu tuid="Chart List">
+           <tuv xml:lang="es"><seg>Lista de gr&#xE1;ficos</seg></tuv>
+           <tuv xml:lang="en"><seg>Chart List</seg></tuv>
+       </tu>
+       <tu tuid="Scale">
+           <tuv xml:lang="es"><seg>Escala</seg></tuv>
+           <tuv xml:lang="en"><seg>Scale</seg></tuv>
+       </tu>
+       <tu tuid="Very Large">
+           <tuv xml:lang="es"><seg>Muy grande</seg></tuv>
+           <tuv xml:lang="en"><seg>Very Large</seg></tuv>
+       </tu>
+       <tu tuid="Small">
+           <tuv xml:lang="es"><seg>Peque&#xF1;o</seg></tuv>
+           <tuv xml:lang="en"><seg>Small</seg></tuv>
+       </tu>
+       <tu tuid="Medium">
+           <tuv xml:lang="es"><seg>Mediano</seg></tuv>
+           <tuv xml:lang="en"><seg>Medium</seg></tuv>
+       </tu>
+       <tu tuid="Large">
+           <tuv xml:lang="es"><seg>Grande</seg></tuv>
+           <tuv xml:lang="en"><seg>Large</seg></tuv>
+       </tu>
+       <tu tuid="Goal Met">
+           <tuv xml:lang="es"><seg>Se cumpli&#xF3; el objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Goal Met</seg></tuv>
+       </tu>
+       <tu tuid="Progress Made, Goal Not Met">
+           <tuv xml:lang="es"><seg>Hubo progreso pero no se cumpli&#xF3; el objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Made, Goal Not Met</seg></tuv>
+       </tu>
+       <tu tuid="Little or No Progress">
+           <tuv xml:lang="es"><seg>Poco o ning&#xFA;n progreso</seg></tuv>
+           <tuv xml:lang="en"><seg>Little or No Progress</seg></tuv>
+       </tu>
+       <tu tuid="Other specify">
+           <tuv xml:lang="es"><seg>Otro, especifique</seg></tuv>
+           <tuv xml:lang="en"><seg>Other specify</seg></tuv>
+       </tu>
+       <tu tuid="Check to remove row">
+           <tuv xml:lang="es"><seg>Seleccione para eliminar el rengl&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Check to remove row</seg></tuv>
+       </tu>
+       <tu tuid="If other, explain">
+           <tuv xml:lang="es"><seg>Si otro, proporcionar explique</seg></tuv>
+           <tuv xml:lang="en"><seg>If other, explain</seg></tuv>
+       </tu>
+       <tu tuid="Goal Progress">
+           <tuv xml:lang="es"><seg>El progreso del objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Goal Progress</seg></tuv>
+       </tu>
+       <tu tuid="...Choose">
+           <tuv xml:lang="es"><seg>&#x85;Elija</seg></tuv>
+           <tuv xml:lang="en"><seg>...Choose</seg></tuv>
+       </tu>
+       <tu tuid="A - 6 Weeks">
+           <tuv xml:lang="es"><seg>A- 6 Semanas</seg></tuv>
+           <tuv xml:lang="en"><seg>A - 6 Weeks</seg></tuv>
+       </tu>
+       <tu tuid="B - 9 Weeks">
+           <tuv xml:lang="es"><seg>B- 9 Semanas</seg></tuv>
+           <tuv xml:lang="en"><seg>B - 9 Weeks</seg></tuv>
+       </tu>
+       <tu tuid="C - Semester">
+           <tuv xml:lang="es"><seg>C- Semestre</seg></tuv>
+           <tuv xml:lang="en"><seg>C - Semester</seg></tuv>
+       </tu>
+       <tu tuid="D - Other">
+           <tuv xml:lang="es"><seg>D- Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>D - Other</seg></tuv>
+       </tu>
+       <tu tuid="Teacher Observation">
+           <tuv xml:lang="es"><seg>Observaciones del maestro</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher Observation</seg></tuv>
+       </tu>
+       <tu tuid="Written Performance">
+           <tuv xml:lang="es"><seg>Despempe&#xF1;o en escritura</seg></tuv>
+           <tuv xml:lang="en"><seg>Written Performance</seg></tuv>
+       </tu>
+       <tu tuid="Oral Performance">
+           <tuv xml:lang="es"><seg>Desempe&#xF1;o oral</seg></tuv>
+           <tuv xml:lang="en"><seg>Oral Performance</seg></tuv>
+       </tu>
+       <tu tuid="Criterion Reference Test">
+           <tuv xml:lang="es"><seg>Pruebas con referencia a criterio</seg></tuv>
+           <tuv xml:lang="en"><seg>Criterion Reference Test</seg></tuv>
+       </tu>
+       <tu tuid="Parent Report">
+           <tuv xml:lang="es"><seg>Informe de los padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Report</seg></tuv>
+       </tu>
+       <tu tuid="Time Sample">
+           <tuv xml:lang="es"><seg>Tiempo de muestreo</seg></tuv>
+           <tuv xml:lang="en"><seg>Time Sample</seg></tuv>
+       </tu>
+       <tu tuid="Report Cards">
+           <tuv xml:lang="es"><seg>Boletas de calificaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Report Cards</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro </seg></tuv>
+           <tuv xml:lang="en">Other<seg/></tuv>
+       </tu>
+   </body>
+</tmx>

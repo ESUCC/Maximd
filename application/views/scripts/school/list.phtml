@@ -1,0 +1,41 @@
+<div>School List</div>
+
+<?= $this->schoolForm; ?>
+
+<?php if (isset($this->results)) { ?>
+  <?php if (count($this->results) < 1) { ?>
+    
+      <div>No results matched your search</div>
+
+  <?php } else { ?>
+  	<form id="Search" enctype="application/x-www-form-urlencoded" method="post" action="/school/list">
+      <div><?= count($this->results).' results' ?></div>
+      <?= $this->formHidden('page', $this->page); ?>
+      <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+      <table id="result">
+      <tr>
+          <th>County Name</th>
+          <th>District Name</th>
+          <th>School Name</th>
+          <th>&nbsp;</th>
+      </tr>
+      <?php 
+      	
+      	$rownum = 0;
+//      	foreach ($this->results as $k => $r) {
+      	foreach($this->paginator as $k => $r) {    ?>  
+          <tr>
+              <td><?= $r['name_county'] ?></td>
+              <td><?= $r['name_district'] ?></td>
+              <td><?= $r['name_school'] ?></td>
+              <td><a id="viewLink" href="/school/view/id_county/<?= $r['id_county'] ?>/id_district/<?= $r['id_district'] ?>/id_school/<?= $r['id_school'] ?>">View</a></td>
+              <td><a id="editLink" href="/school/edit/id_county/<?= $r['id_county'] ?>/id_district/<?= $r['id_district'] ?>/id_school/<?= $r['id_school'] ?>">Edit</a></td>
+          </tr>
+      <?php } ?>
+      </table>
+  <?php } ?>
+<?php } ?>
+
+<ul>
+
+</ul>

@@ -1,0 +1,23 @@
+<? if(0) { ?>
+{"identifier":"id",
+	"label":"name",
+  "items":[{
+		"checked":false,
+		"id":"root",
+		"name":"State",	
+		"children":[
+			{
+				"id":"root_0",
+				"name":"root_0_name",
+				"checked":false,
+				"children":[{"checked":false,"children":[],"id":"root_0_0","name":"root_0_0_name"},{"checked":false,"children":[],"id":"root_0_1","name":"root_0_1_name"},{"checked":false,"children":[],"id":"root_0_2","name":"root_0_2_name"},{"checked":true,"children":[],"id":"root_0_3","name":"root_0_3_name"}]
+			},
+			{
+				"id":"root_1",
+				"name":"root_1_name",
+				"checked":false,
+				"children":[{"checked":true,"children":[],"id":"root_1_0","name":"root_1_0_name"},{"checked":false,"children":[],"id":"root_1_1","name":"root_1_1_name"},{"checked":false,"children":[],"id":"root_1_2","name":"root_1_2_name"}]
+			}]
+	}]
+}
+<? } else { echo $this->dojoData->toJson(); }

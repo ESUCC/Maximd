@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Title">
+           <tuv xml:lang="es"><seg>T&#xED;tulo</seg></tuv>
+           <tuv xml:lang="en"><seg>Title</seg></tuv>
+       </tu>
+       <tu tuid="Content">
+           <tuv xml:lang="es"><seg>Contenido</seg></tuv>
+           <tuv xml:lang="en"><seg>Content</seg></tuv>
+       </tu>
+       <tu tuid="Check to remove">
+           <tuv xml:lang="es"><seg>Seleccionar para remover</seg></tuv>
+           <tuv xml:lang="en"><seg>Check to remove</seg></tuv>
+       </tu>
+       <tu tuid="Supplemental Forms">
+           <tuv xml:lang="es"><seg>Formularios adicionales</seg></tuv>
+           <tuv xml:lang="en"><seg>Supplemental Forms</seg></tuv>
+       </tu>
+   </body>
+</tmx>

@@ -1,0 +1,130 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_029; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Permission to Invite Outside Agency to Attend Meeting  </td>
+    </tr>
+</table>
+
+<table class="formInput noprint" style="margin-top:1px;">     
+    <tr>
+		<td>
+        <label class="sc_bulletInputLeft"> 
+        <?php echo $this->element->on_off_checkbox_page_4; ?>
+        <span id="on_off_descpt">
+        <?php echo $this->element->on_off_checkbox_page_4->getDescription(); ?>
+        </span>
+        </label>
+		</td>
+    </tr>
+</table> 
+
+<?php if(!$this->element->on_off_checkbox_page_4->getValue() && 'print' == $view->mode) { 
+	// do not print if box is not checked.
+	// we output this in edit mode so that it can dynamically appear
+	?>
+
+<?php } else { ?>
+<div id="subformToChange" style="<? if(!$this->element->on_off_checkbox_page_4->getValue()) echo "display:none;"; ?>">				
+	<table class="formInput"><tr><td>
+	A review of your child's IEP and/or transition records indicates that, to the extent 
+	appropriate, an agency representative(s) may be invited to the IEP meeting to assist 
+	with the transition planning for your child. The reason that the district proposes to 
+	invite the representative(s) is that there is a possibility that the agency may provide 
+	or pay for services. Your consent to invite the agency representative(s) to the upcoming 
+	IEP meeting is required.
+	</td></tr></table>
+    <?php echo $this->subform($view, 'outside_agency');?>
+</div>
+<?php } ?>
+
+<?php if(!$this->element->on_off_checkbox_page_4->getValue() && 'print' == $view->mode) { 
+    // do not print if box is not checked.
+    // we output this in edit mode so that it can dynamically appear
+    ?>
+<?php } else { ?>
+    <div id="subformToChange2" style="<? if(!$this->element->on_off_checkbox_page_4->getValue()) echo "display:none;"; ?>">              
+    
+        <table class="formInput" cellspacing="5">
+            <tr>
+                <td align="left">
+                    <label class="sc_bulletInputLeft">
+                    <?php echo $this->element->voluntary_consent; ?>
+                    <?php echo $this->element->voluntary_consent->getDescription(); ?>
+        </label>
+                </td>
+            </tr>
+        </table>
+        
+		<table class="formSectionHead" cellspacing="0" cellpadding="0">
+		    <tr>
+		        <td>Parent Signature</td>
+		    </tr>
+		</table>
+        <table class="formInput" cellspacing="5">
+            <tr>
+                <td colspan="4" align="left">
+                    <div id="p4_signature_on_file-colorme" class="colorme">
+                    <?php echo $this->element->p4_signature_on_file; ?>
+                    (select 'Yes' to indicate that signature is on file)
+                    </div>
+                </td>
+            </tr>
+
+            <?php
+            if('print' == $view->mode && ('' == $this->element->p4_signature_on_file->getValue()
+                    || null == $this->element->p4_signature_on_file->getValue()) ) { ?>
+                <tr>
+                    <td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Parent Signature:</td>
+                    <td width="200" valign="bottom" style="white-space: nowrap;">
+                        <?php
+                        if('t' == $this->element->p4_signature_on_file->getValue()) {
+                            echo 'Yes';
+                            echo '<hr size="1" />';
+                        } else {
+                            echo '<hr size="1" />';
+                        }
+                        ?></td>
+                    <td width="50" valign="bottom" align="right" style="height:25px;white-space: nowrap;">Date:</td>
+                    <td width="200" valign="bottom" align="left" style="white-space: nowrap;">
+                        <?php
+                        if(strlen($this->element->p4_parent_date_1->getValue()) > 0) {
+                            echo $this->element->p4_parent_date_1->getValue();
+                        }
+                        echo '<hr size="1" />';
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" valign="bottom" style="height:25px;white-space: nowrap;">
+                        <?php
+                        if(strlen($this->element->p4_signature_on_file_other->getValue()) > 0) {
+                            echo $this->element->p4_signature_on_file_other->getValue();
+                        } else {
+                            echo $this->element->p4_signature_on_file_other;
+                        }
+                        echo '<br/><br/><hr size="1" />';
+                        ?>
+                    </td>
+                </tr>
+            <? } else { ?>
+                <tr>
+                    <td align="left">
+                        <?php echo $this->element->p4_parent_date_1; ?>
+                    </td>
+                    <td align="left">
+                        <?php echo $this->element->p4_signature_on_file_other; ?>
+                    </td>
+                </tr>
+            <? } ?>
+        </table>
+    
+    </div>
+<?php } ?>
+

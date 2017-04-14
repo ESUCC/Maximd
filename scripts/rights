@@ -1,0 +1,16 @@
+total 278548
+drwxrwsr-x  6 zend zend      4096 Oct  2 08:39 .
+drwxr-sr-x 23 zend zend      4096 Aug 15 15:31 ..
+-rw-rw-r--  1 zend zend     11864 Aug 15 15:36 buildOutputFile.php
+-rw-rw-r--  1 zend zend      2729 Aug 15 15:36 cmd_line_helper.php
+drwxrwsr-x  3 zend zend      4096 Jul 21 19:26 cron
+-rw-rw-r--  1 zend zend      1190 Aug 15 15:36 destroyTestDb.php
+drwxrwsr-x  2 zend zend      4096 Jul 21 19:27 dojoBuildScripts
+-rw-rw-r--  1 zend zend        18 Aug 15 15:36 dummy.php
+drwxrwsr-x  3 zend zend      4096 Jul 21 19:27 jobqueue
+-rw-rw-r--  1 zend zend      1226 Aug 15 15:36 loadTestDb.php
+-rw-rw-r--  1 zend zend      1290 Aug 15 15:36 LoginManager.php
+-rw-r--r--  1 root zend 285170990 Sep 19 12:10 mike.tgz
+-rw-r--r--  1 root zend         0 Oct  2 08:39 rights
+drwxrwsr-x  2 zend zend      4096 Jul 21 19:27 sql
+-rw-rw-r--  1 zend zend      1073 Aug 15 15:36 updateFormsWithFinalizedGrade.php

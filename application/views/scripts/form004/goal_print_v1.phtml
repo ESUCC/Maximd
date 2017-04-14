@@ -1,0 +1,64 @@
+<?php
+$view = $this->element->schedule_other->getView();
+if (true !== $view->db_form_data['summary_form']) {
+	$summaryForm = false;
+} else {
+	$summaryForm = true;
+}
+if(isset($view->db_form_data['district'])) {
+    $district = $view->db_form_data['district'][0];
+} else {
+    $district = array();
+}
+
+?>
+<table class="" style="page-break-before: always">
+<?php if (!$summaryForm || $district['iep_summary_measurable_ann_goal']) :?>
+<tr>
+  <td><B><?php echo $this->translate('Measurable Annual Goal'); ?>:</B> <?php echo $this->element->measurable_ann_goal; ?></td>
+</tr>
+<?php endif; ?>
+</table>
+<?php if (!$summaryForm || $district['iep_summary_short_term_obj']) :?>
+<table class="" style="width:100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td class="print_bgGreyBoldGoal" style="text-align:left"><B><?php echo $this->translate('ShortTerm Objectives Or Benchmarks'); ?></B></td></tr>
+<tr><td class="print_bgGreySmallGoal" style="text-align:left">(<?php echo $this->translate('Goal description'); ?>.)</td></tr>
+<tr><td class="print_bgWhiteSmallGoal"><?php echo $this->element->short_term_obj; ?></td></tr>
+</table>
+<?php endif; ?>
+<?php 
+if (!$summaryForm || 
+	$district['iep_summary_schedule'] ||
+	$district['iep_summary_eval_procedure'] ||
+	$district['iep_summary_person_responsible'] ||
+	$district['iep_summary_progress']) :
+echo "<BR />";
+echo "<span class=\"print_bgWhiteMedGoal\"><B>".$this->translate('PROGRESS REPORT')."</B></span>:<BR />";
+if (!$summaryForm || $district['iep_summary_schedule']) :
+echo "<span class=\"print_bgWhiteSmallGoal\"><B>".$this->translate('Schedule')."</B>:".$this->element->schedule;
+if('' != $this->element->schedule_other->getValue()) echo " (" . $this->element->schedule_other . ")";
+echo "</span><BR />";
+endif; 
+if (!$summaryForm || $district['iep_summary_eval_procedure']) :
+echo "<span class=\"print_bgWhiteSmallGoal\"><B>".$this->translate('Evaluation Procedures/Instruments')."</B>:".$this->checkedValues($this->element->eval_procedure);
+if('' != $this->element->eval_procedure_other->getValue()) echo " (" . $this->element->eval_procedure_other . ")";
+echo "</span><BR />";
+endif; 
+if (!$summaryForm || $district['iep_summary_person_responsible']) :
+echo "<span class=\"print_bgWhiteSmallGoal\"><B>".$this->translate('Person(s) Responsible')."</B>:".$this->checkedValues($this->element->person_responsible);
+if('' != $this->element->person_responsible_other->getValue()) echo " (" . $this->element->person_responsible_other . ")";
+echo "</span><BR />";
+endif;
+if (!$summaryForm || $district['iep_summary_progress']) :
+echo "<span class=\"print_bgWhiteSmallGoal\"><B>".$this->translate('Review Dates')."</B>:";
+if('' != $this->element->progress_date1->getValue()) echo ($this->element->progress_date1) . "; ";
+if('' != $this->element->progress_date2->getValue()) echo ($this->element->progress_date2) . "; ";
+if('' != $this->element->progress_date3->getValue()) echo ($this->element->progress_date3) . "; ";
+if('' != $this->element->progress_date4->getValue()) echo ($this->element->progress_date4) . "; ";
+if('' != $this->element->progress_date5->getValue()) echo ($this->element->progress_date5) . "; ";
+if('' != $this->element->progress_date6->getValue()) echo ($this->element->progress_date6) . "; ";
+echo "</span><BR />";
+echo "<span class=\"print_bgWhiteSmallGoal\"><B>".$this->translate('Statement of how student\'s progress')."</B>:" . $this->element->stmt_of_progress. "</span><BR />";
+echo "<BR />";                
+endif;
+endif;

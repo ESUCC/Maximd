@@ -1,0 +1,212 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_012; ?>
+<?= $this->element->page; ?>
+    
+<table class="formTitleHead" cellpadding="0" cellspacing="0">
+    <tbody>
+        <tr>
+            <td>Notice That No Additional Information Is Needed To
+            Determine Continued Eligibility</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formInput">
+   <tr>
+        <td>
+            <?php 
+            if('print' == $view->mode)
+            {
+            	echo "<B>" . $this->element->date_notice->getLabel() . "</B> ";
+            	echo $this->element->date_notice->getValue();
+            } else {
+            	echo $this->element->date_notice;
+            }
+            ?>
+        </td>
+    </tr>    
+        <tr>
+            <td>As part of the identification, eligibility, and
+            evaluation of program effectiveness process, the team, including the
+            parent/guardian, and other qualified persons, met to review the existing
+            information regarding the student's educational needs. After a review of
+            this information, <strong>the team concluded that no additional
+            information is needed to determine whether your child continues to be
+            eligible to receive special education and related services.</strong><br>
+            The reasons for this determination are:</td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->determination; ?></td>
+        </tr>
+        <tr>
+            <td>The following information listed below was used
+            to determine the student's present level of educational performance and
+            considerations for additional testing. The school district has reviewed
+            all the information listed below and has determined, based on this
+            information, that no additional tesing is necessary to determine
+            eligibility.</td>
+        </tr>
+</table>
+<span><strong>This information included:</strong></span>
+<table class="formInput printIndent">
+    <tbody>
+        
+        <tr>
+            <td><strong>Existing Evaluations</strong></td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo $this->element->existing_evals; ?><br />
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Information Provided by Parent/Guardian</strong></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->pg_report; ?><br /></td>
+        </tr>
+        <tr>
+            <td><strong>Current Classroom Performance</strong></td>
+        </tr>
+        <tr>
+            <td>
+            <?php echo $this->element->classroom_performance; ?><br />
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Student's Actual Achievement Level</strong></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->actual_achievement; ?><br /></td>
+        </tr>
+        <tr>
+            <td><strong>Curriculum Based Measurement Performance Levels</strong></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->performance_measurements; ?><br /></td>
+        </tr>
+        <tr>
+            <td><strong>Additional Observations by Staff</strong></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->staff_observations; ?><br /></td>
+        </tr>
+        <tr>
+            <td><strong>Other Relevant Information</strong></td>
+        </tr>
+        <tr>
+            <td><?php echo $this->element->other_information; ?><br /></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formSectionHead formSectionHead" cellpadding="0" cellspacing="0">
+    <tbody>
+        <tr>
+            <td>Additional Resources</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formInput formInput">
+    <tbody>
+        <tr>
+            <td colspan="4" class="p2424 p2424">You may contact any of the following
+            resources to help you understand the federal and state laws for educating
+            children with disabilities and parental rights granted by those laws. An
+            explanation of your rights will be provided at no cost by any of the
+            following organizations:</td>
+        </tr>
+
+        <tr>
+            <td class="c7"></td>
+            <td colspan="3" nowrap="nowrap">Nebraska Parent Training
+            Center: 800-284-8520 or 402-346-0525</td>
+        </tr>
+
+        <tr>
+            <td class="c7"></td>
+            <td colspan="2" nowrap="nowrap">Nebraska Advocacy Services:
+            800-422-6091 or 402-474-3183</td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formInput formInput">
+    <tbody>
+        <tr>
+            <td colspan="2">You have the right to request that an
+            assessment be completed to determine whether your child continues to be
+            eligible to receive special education and related services. If you want
+            this assessment to be conducted, please contact:</td>
+        </tr>
+        <tr align="center">
+            <td>
+            <?php echo $this->element->contact_name; ?>
+            </td>
+            <td>
+            <?php echo $this->element->contact_num; ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <div id="provided_wrapper-colorme" class="colorme">
+            This notice was provided on: 
+            <?php echo $this->element->date_sent; ?> 
+            by the following person: <?php echo $this->element->sender; ?>
+            </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6"></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formInput formInput pagebreak-print">
+    <tbody>
+        <tr>
+            <td colspan="2"><strong>Response:</strong></td>
+        </tr>
+        <tr>
+            <td colspan="2">I/We have been notified that no
+            additional information is needed at this time. I/We understand that I/We
+            have the right to request that an assessment be conducted.</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formInput formInput">
+    <tbody>
+        <tr>
+            <td class="c7"><?php echo $this->element->agree; ?></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td valign="bottom" style="white-space: nowrap;width:70px;">Parent Signature:</td>
+        <!-- <td align="left" valign="bottom" style="white-space: nowrap;"><img src="/images/line_black.gif" width="250px" height="1" border="0">&nbsp;&nbsp;</td> -->
+        <td align="left" valign="bottom" style="white-space: nowrap;border-bottom-style:solid;border-width:1px;width:150px">&nbsp;</td>
+        <td><?php echo $this->element->signature_on_file; ?></td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td style="white-space: nowrap;"><?php echo $this->element->parent_date_1; ?></td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td style="white-space: nowrap;"><?php echo $this->element->no_signature_reason; ?></td>
+    </tr>
+</table>
+

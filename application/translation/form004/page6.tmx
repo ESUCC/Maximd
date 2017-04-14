@@ -1,0 +1,1383 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Primary Service (from most recent finalized MDT)">
+           <tuv xml:lang="es"><seg>Servicio principal (del MDT  finalizado recientemente)</seg></tuv>
+           <tuv xml:lang="en"><seg>Primary Service (from most recent finalized MDT)</seg></tuv>
+       </tu>
+       <tu tuid="Services">
+           <tuv xml:lang="es"><seg>Servicios</seg></tuv>
+           <tuv xml:lang="en"><seg>Services</seg></tuv>
+       </tu>
+       <tu tuid="Special Education Service">
+           <tuv xml:lang="es"><seg>Servicios de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Education Service</seg></tuv>
+       </tu>
+       <tu tuid="based on peer reviewed research to the extent practicable">
+           <tuv xml:lang="es"><seg>basado en la investigaci&#xF3;n revisada por colegas en la medida de lo posible</seg></tuv>
+           <tuv xml:lang="en"><seg>based on peer reviewed research to the extent practicable</seg></tuv>
+       </tu>
+       <tu tuid="statement of special education and related services">
+           <tuv xml:lang="es"><seg>Proporcionar un informe sobre la educaci&#xF3;n especial y servicios relacionados proporcionados al ni&#xF1;o e incluir una descripci&#xF3;n del grado, de haber alguno, al cual el ni&#xF1;o no participar&#xE1; con ni&#xF1;os no discapacitados en un sal&#xF3;n de clases regular</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide a statement of special education services provided to the child and include a description of the extent, if any, to which the child will not participate with nondisabled children in the regular classroom</seg></tuv>
+       </tu>
+       <tu tuid="Duration Dates From">
+           <tuv xml:lang="es"><seg>Fechas de duraci&#xF3;n desde</seg></tuv>
+           <tuv xml:lang="en"><seg>Duration Dates From</seg></tuv>
+       </tu>
+       <tu tuid="Please enter the date of conference">
+           <tuv xml:lang="es"><seg>Por favor ingrese la fecha de la reuni&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Please enter the date of conference</seg></tuv>
+       </tu>
+       <tu tuid="months">
+           <tuv xml:lang="es"><seg>meses</seg></tuv>
+           <tuv xml:lang="en"><seg>months</seg></tuv>
+       </tu>
+       <tu tuid="Does Service Follow School Calendar">
+           <tuv xml:lang="es"><seg>&#xBF;Se presta el servicio siguiendo el calendario escolar?</seg></tuv>
+           <tuv xml:lang="en"><seg>Does Service Follow School Calendar</seg></tuv>
+       </tu>
+       <tu tuid="to">
+           <tuv xml:lang="es"><seg>SPANISH:hasta</seg></tuv>
+           <tuv xml:lang="en"><seg>to</seg></tuv>
+       </tu>
+       <tu tuid="Primary Service:">
+           <tuv xml:lang="es"><seg>SPANISH:Servicio principal:</seg></tuv>
+           <tuv xml:lang="en"><seg>Primary Service:</seg></tuv>
+       </tu>
+       <tu tuid="Special Ed. service location:">
+           <tuv xml:lang="es"><seg>Ubicaci&#xF3;n del servicio de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Ed. service location:</seg></tuv>
+       </tu>
+       <tu tuid="IEP Info">
+           <tuv xml:lang="es"><seg>Informaci&#xF3;n del IEP </seg></tuv>
+           <tuv xml:lang="en"><seg>IEP Info</seg></tuv>
+       </tu>
+       <tu tuid="SESIS Information">
+           <tuv xml:lang="es"><seg>Informaci&#xF3;n del SESIS </seg></tuv>
+           <tuv xml:lang="en"><seg>SESIS Information</seg></tuv>
+       </tu>
+       <tu tuid="Percent of time child spends in:">
+           <tuv xml:lang="es"><seg>Porcentaje del tiempo que el ni&#xF1;o pasa en:</seg></tuv>
+           <tuv xml:lang="en"><seg>Percent of time child spends in:</seg></tuv>
+       </tu>
+       <tu tuid="Special Education and Related Services">
+           <tuv xml:lang="es"><seg>Educaci&#xF3;n especial y servicios relacionados</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Education Services</seg></tuv>
+       </tu>
+       <tu tuid="Regular Education">
+           <tuv xml:lang="es"><seg>Educaci&#xF3;n regular</seg></tuv>
+           <tuv xml:lang="en"><seg>Regular Education</seg></tuv>
+       </tu>
+       <tu tuid="MIPS Consent Form">
+           <tuv xml:lang="es"><seg>Formulario de Consentimiento de MIPS </seg></tuv>
+           <tuv xml:lang="en"><seg>MIPS Consent Form</seg></tuv>
+       </tu>
+       <tu tuid="student is receiving">
+           <tuv xml:lang="es"><seg>Si este estudiante est&#xE1; recibiendo Terapia Educacional , Terapia F&#xED;sica, o Terapia del habla, el SRS autom&#xE1;ticamente generar&#xE1; un "Formulario de consentimiento de Asistencia M&#xE9;dica en las Escuelas P&#xFA;blicas (AMEP)" ("Medicaid in Public Schools (MIPS) Consent Form"). Este formulario aparecer&#xE1; como la &#xFA;ltima p&#xE1;gina impresa del IEP. Usted puede finalizar este IEP sin tener que completar esta secci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>If this student is receiving Occupational Therapy, Physical Therapy, or Speech Language Therapy, the SRS will automatically generate a "Medicaid in Public Schools (MIPS) Consent form". This form will appear as the final printed page of this IEP. You can finalize this IEP without completing this section</seg></tuv>
+       </tu>
+       <tu tuid="Parent Signature">
+           <tuv xml:lang="es"><seg>Firma de los Padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Signature</seg></tuv>
+       </tu>
+       <tu tuid="indicate that signature is on file">
+           <tuv xml:lang="es"><seg>seleccione 'S&#xED;' para indicar que esa firma consta en el archivo</seg></tuv>
+           <tuv xml:lang="en"><seg>select 'Yes' to indicate that signature is on file</seg></tuv>
+       </tu>
+       <tu tuid="No Signature Explanation">
+           <tuv xml:lang="es"><seg>En caso de no haber firma, explique por qu&#xE9;</seg></tuv>
+           <tuv xml:lang="en"><seg>No Signature Explanation</seg></tuv>
+       </tu>
+       <tu tuid="please explain">
+           <tuv xml:lang="es"><seg>Si arriba se  seleccion&#xF3; 'No', por favor explique</seg></tuv>
+           <tuv xml:lang="en"><seg>If 'No' selected above, please explain</seg></tuv>
+       </tu>
+       <tu tuid="Conference Date:">
+           <tuv xml:lang="es"><seg>Fecha de la reuni&#xF3;n:</seg></tuv>
+           <tuv xml:lang="en"><seg>Conference Date:</seg></tuv>
+       </tu>
+       <tu tuid="Special Ed. service from:">
+           <tuv xml:lang="es"><seg>Servicio de educaci&#xF3;n especial desde:</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Ed. service from:</seg></tuv>
+       </tu>
+       <tu tuid="Special Ed. service to:">
+           <tuv xml:lang="es"><seg>Servicio de educaci&#xF3;n especial hasta:</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Ed. service to:</seg></tuv>
+       </tu>
+       <tu tuid="Special Ed. service location:">
+           <tuv xml:lang="es"><seg>Ubicaci&#xF3;n del servicio de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Ed. service location:</seg></tuv>
+       </tu>
+       <tu tuid="Primary Service Calendar">
+           <tuv xml:lang="es"><seg>Calendario de Servicio Principal</seg></tuv>
+           <tuv xml:lang="en"><seg>Primary Service Calendar</seg></tuv>
+       </tu>
+       <tu tuid="min/day / hours/day value">
+           <tuv xml:lang="es"><seg> valor de minutos/d&#xED;a / horas/d&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>min/day / hours/day value</seg></tuv>
+       </tu>
+       <tu tuid="min/day">
+           <tuv xml:lang="es"><seg>minutos/d&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>min/day</seg></tuv>
+       </tu>
+       <tu tuid="hrs/day">
+           <tuv xml:lang="es"><seg>horas/d&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>hrs/day</seg></tuv>
+       </tu>
+       <tu tuid="min/day / hours/day">
+           <tuv xml:lang="es"><seg>min/d&#xED;a / horas/d&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>min/day / hours/day</seg></tuv>
+       </tu>
+       <tu tuid="days/week">
+           <tuv xml:lang="es"><seg>d&#xED;as/semana</seg></tuv>
+           <tuv xml:lang="en"><seg>days/week</seg></tuv>
+       </tu>
+       <tu tuid="days/month">
+           <tuv xml:lang="es"><seg>d&#xED;as/meses</seg></tuv>
+           <tuv xml:lang="en"><seg>days/month</seg></tuv>
+       </tu>
+       <tu tuid="days/quarter">
+           <tuv xml:lang="es"><seg>SPANISH :d&#xED;as/trimestre</seg></tuv>
+           <tuv xml:lang="en"><seg>days/quarter</seg></tuv>
+       </tu>
+       <tu tuid="days/semester">
+           <tuv xml:lang="es"><seg>d&#xED;as/semestre</seg></tuv>
+           <tuv xml:lang="en"><seg>days/semester</seg></tuv>
+       </tu>
+       <tu tuid="days/year">
+           <tuv xml:lang="es"><seg>d&#xED;as/a&#xF1;o</seg></tuv>
+           <tuv xml:lang="en"><seg>days/year</seg></tuv>
+       </tu>
+       <tu tuid="Days value">
+           <tuv xml:lang="es"><seg>Valor de d&#xED;as</seg></tuv>
+           <tuv xml:lang="en"><seg>Days value</seg></tuv>
+       </tu>
+       <tu tuid="Months">
+           <tuv xml:lang="es"><seg>Meses</seg></tuv>
+           <tuv xml:lang="en"><seg>Months</seg></tuv>
+       </tu>
+       <tu tuid="With regular education peers">
+           <tuv xml:lang="es"><seg>Con compa&#xF1;eros de educaci&#xF3;n regular</seg></tuv>
+           <tuv xml:lang="en"><seg>With regular education peers</seg></tuv>
+       </tu>
+       <tu tuid="Not with regular education peers">
+           <tuv xml:lang="es"><seg>Sin compa&#xF1;eros de educaci&#xF3;n regular</seg></tuv>
+           <tuv xml:lang="en"><seg>Not with regular education peers</seg></tuv>
+       </tu>
+       <tu tuid="Regular education peers">
+           <tuv xml:lang="es"><seg>Compa&#xF1;eros del programa de educaci&#xF3;n regular</seg></tuv>
+           <tuv xml:lang="en"><seg>Regular education peers</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+       <tu tuid="Parent Signature on file">
+           <tuv xml:lang="es"><seg>Firma de los padres en el archivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Signature on file</seg></tuv>
+       </tu>
+       <tu tuid="Date of Parent Signature:">
+           <tuv xml:lang="es"><seg>Fecha de la firma del padre o la madre:</seg></tuv>
+           <tuv xml:lang="en"><seg>Date of Parent Signature:</seg></tuv>
+       </tu>
+       <tu tuid="No Signature Explanation">
+           <tuv xml:lang="es"><seg>En caso de no haber firma, explique por qu&#xE9;</seg></tuv>
+           <tuv xml:lang="en"><seg>No Signature Explanation</seg></tuv>
+       </tu>
+       <tu tuid="Mips Consent:">
+           <tuv xml:lang="es"><seg>Consentimiento de Mips:</seg></tuv>
+           <tuv xml:lang="en"><seg>Mips Consent:</seg></tuv>
+       </tu>
+       <tu tuid="I give CONSENT to the public school district named herein to access Medicaid funding on behalf of my child (named above) and understand that I may withdraw this consent at any time upon written notice to the public school district.">
+           <tuv xml:lang="es"><seg>Doy mi CONSENTIMIENTO al distrito de la escuela p&#xFA;blica aqu&#xED;  nombrado para acceder a los fondos de Medicaid en representaci&#xF3;n de mi hijo (nombrado anteriormente) y entiendo que yo puedo dar de baja a este consentimiento en cualquier momento mediante una nota escrita al distrito de la escuela p&#xFA;blica.</seg></tuv>
+           <tuv xml:lang="en"><seg>I give CONSENT to the public school district named herein to access Medicaid funding on behalf of my child (named above) and understand that I may withdraw this consent at any time upon written notice to the public school district.</seg></tuv>
+       </tu>
+       <tu tuid="I REFUSE to give consent to the public school district to access Medicaid funding on behalf of my child and understand that my refusal will not affect the district's obligation to provide my child a Free Appropriate Public Education (FAPE) at no cost.">
+           <tuv xml:lang="es"><seg>Me REHUSO a dar consentimiento al distrito escolar p&#xFA;blico para que tenga acceso a los fondos de Medicaid en nombre de mi hijo y entiendo que mi rechazo no afectar&#xE1; la obligaci&#xF3;n del distrito de proporcionarle a mi hijo Educaci&#xF3;n P&#xFA;blica Gratuita y Apropiada(EPAG) (Free Appropriate Public Education (FAPE)) sin costo alguno.</seg></tuv>
+           <tuv xml:lang="en"><seg>I REFUSE to give consent to the public school district to access Medicaid funding on behalf of my child and understand that my refusal will not affect the district's obligation to provide my child a Free Appropriate Public Education (FAPE) at no cost.</seg></tuv>
+       </tu>
+       <tu tuid="(If 'No' selected above, please explain)">
+           <tuv xml:lang="es"><seg>(Si se seleccion&#xF3; 'No' arriba, por favor explique)</seg></tuv>
+           <tuv xml:lang="en"><seg>(If 'No' selected above, please explain)</seg></tuv>
+       </tu>
+       <tu tuid="Choose Special Ed. Service">
+           <tuv xml:lang="es"><seg>Seleccione Servicio de Educaci&#xF3;n Especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Choose Special Ed. Service</seg></tuv>
+       </tu>
+       <tu tuid="Assistive Technology Services/Devices">
+           <tuv xml:lang="es"><seg>Servicios/Dispositivos tecnol&#xF3;gicos auxiliares</seg></tuv>
+           <tuv xml:lang="en"><seg>Assistive Technology Services/Devices</seg></tuv>
+       </tu>
+       <tu tuid="Audiology">
+           <tuv xml:lang="es"><seg>Audiolog&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Audiology</seg></tuv>
+       </tu>
+       <tu tuid="Family Training, Counseling, Home visits and other Supports">
+           <tuv xml:lang="es"><seg>Capacitaci&#xF3;n familiar, Asesoramiento, Visitas a domicilio y otros servicios de Apoyo</seg></tuv>
+           <tuv xml:lang="en"><seg>Family Training, Counseling, Home visits and other Supports</seg></tuv>
+       </tu>
+       <tu tuid="Health Services">
+           <tuv xml:lang="es"><seg>Servicios de salud</seg></tuv>
+           <tuv xml:lang="en"><seg>Health Services</seg></tuv>
+       </tu>
+       <tu tuid="Interpreting Services">
+           <tuv xml:lang="es"><seg>Servicios de interpretaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Interpreting Services</seg></tuv>
+       </tu>
+       <tu tuid="Medical Services (for diagnostic or evaluation purposes)">
+           <tuv xml:lang="es"><seg>Servicios m&#xE9;dicos (para prop&#xF3;sitos de diagn&#xF3;stico o evaluaci&#xF3;n)</seg></tuv>
+           <tuv xml:lang="en"><seg>Medical Services (for diagnostic or evaluation purposes)</seg></tuv>
+       </tu>
+       <tu tuid="Nursing Services">
+           <tuv xml:lang="es"><seg>Servicios de enfermer&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Nursing Services</seg></tuv>
+       </tu>
+       <tu tuid="Nutrition Services">
+           <tuv xml:lang="es"><seg>Servicios de nutrici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Nutrition Services</seg></tuv>
+       </tu>
+       <tu tuid="Occupational Therapy Services">
+           <tuv xml:lang="es"><seg>Servicios de terapia ocupacional</seg></tuv>
+           <tuv xml:lang="en"><seg>Occupational Therapy Services</seg></tuv>
+       </tu>
+       <tu tuid="Physical Therapy">
+           <tuv xml:lang="es"><seg>Terapia f&#xED;sica</seg></tuv>
+           <tuv xml:lang="en"><seg>Physical Therapy</seg></tuv>
+       </tu>
+       <tu tuid="Psychological Services">
+           <tuv xml:lang="es"><seg>Servicios psicol&#xF3;gicos</seg></tuv>
+           <tuv xml:lang="en"><seg>Psychological Services</seg></tuv>
+       </tu>
+       <tu tuid="Respite Care">
+           <tuv xml:lang="es"><seg>Cuidado de relevo</seg></tuv>
+           <tuv xml:lang="en"><seg>Respite Care</seg></tuv>
+       </tu>
+       <tu tuid="Services Coordination">
+           <tuv xml:lang="es"><seg>Coordinaci&#xF3;n de servicios</seg></tuv>
+           <tuv xml:lang="en"><seg>Services Coordination</seg></tuv>
+       </tu>
+       <tu tuid="Social Work Services">
+           <tuv xml:lang="es"><seg>Servicios de trabajo social</seg></tuv>
+           <tuv xml:lang="en"><seg>Social Work Services</seg></tuv>
+       </tu>
+       <tu tuid="Special Instruction (Resource)">
+           <tuv xml:lang="es"><seg>Instrucci&#xF3;n especial (Fuentes)</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Instruction (Resource)</seg></tuv>
+       </tu>
+       <tu tuid="Speech-language Therapy">
+           <tuv xml:lang="es"><seg>Terapia del Habla</seg></tuv>
+           <tuv xml:lang="en"><seg>Speech-language Therapy</seg></tuv>
+       </tu>
+       <tu tuid="Teacher of the Hearing Impaired">
+           <tuv xml:lang="es"><seg>Maestro de personas con discapacidad auditiva</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher of the Hearing Impaired</seg></tuv>
+       </tu>
+       <tu tuid="Teacher of the Visually Impaired">
+           <tuv xml:lang="es"><seg>Maestro de personas con discapacidad visual</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher of the Visually Impaired</seg></tuv>
+       </tu>
+       <tu tuid="Transportation">
+           <tuv xml:lang="es"><seg>Transporte</seg></tuv>
+           <tuv xml:lang="en"><seg>Transportation</seg></tuv>
+       </tu>
+       <tu tuid="Vision Services">
+           <tuv xml:lang="es"><seg>Servicios para el cuidado de la vista</seg></tuv>
+           <tuv xml:lang="en"><seg>Vision Services</seg></tuv>
+       </tu>
+       <tu tuid="If other, specify">
+           <tuv xml:lang="es"><seg>Si es otro, especifique</seg></tuv>
+           <tuv xml:lang="en"><seg>If other, specify</seg></tuv>
+       </tu>
+       <tu tuid="Duration Dates From/To">
+           <tuv xml:lang="es"><seg>Fechas de duraci&#xF3;n Desde/Hasta</seg></tuv>
+           <tuv xml:lang="en"><seg>Duration Dates From/To</seg></tuv>
+       </tu>
+       <tu tuid="Location">
+           <tuv xml:lang="es"><seg>Lugar</seg></tuv>
+           <tuv xml:lang="en"><seg>Location</seg></tuv>
+       </tu>
+       <tu tuid="Does Service Follow School Calendar">
+           <tuv xml:lang="es"><seg>&#xBF;Se presta el servicio siguiendo el calendario escolar?</seg></tuv>
+           <tuv xml:lang="en"><seg>Does Service Follow School Calendar</seg></tuv>
+       </tu>
+       <tu tuid="Related Service:">
+           <tuv xml:lang="es"><seg>Servicio relacionado:</seg></tuv>
+           <tuv xml:lang="en"><seg>Related Service:</seg></tuv>
+       </tu>
+       <tu tuid="Special Education Related Services: Location:">
+           <tuv xml:lang="es"><seg>Servicios Relacionados a Educaci&#xF3;n Especial: Ubicaci&#xF3;n:</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Education Related Services: Location:</seg></tuv>
+       </tu>
+       <tu tuid="Related Service Date From:">
+           <tuv xml:lang="es"><seg>Fecha de servicio relacionado desde:</seg></tuv>
+           <tuv xml:lang="en"><seg>Related Service Date From:</seg></tuv>
+       </tu>
+       <tu tuid="Related Service Date To:">
+           <tuv xml:lang="es"><seg>Fecha de servicio relacionado hasta:</seg></tuv>
+           <tuv xml:lang="en"><seg>Related Service Date To:</seg></tuv>
+       </tu>
+       <tu tuid="Days Unit">
+           <tuv xml:lang="es"><seg>Unidad de d&#xED;as</seg></tuv>
+           <tuv xml:lang="en"><seg>Days Unit</seg></tuv>
+       </tu>
+       <tu tuid="Remove Row">
+           <tuv xml:lang="es"><seg>Eliminar rengl&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Remove Row</seg></tuv>
+       </tu>
+       <tu tuid="Related Services Row">
+           <tuv xml:lang="es"><seg>Fila de servicios relacionados </seg></tuv>
+           <tuv xml:lang="en"><seg>Related Services Row</seg></tuv>
+       </tu>
+       <tu tuid="Choose Related Service">
+           <tuv xml:lang="es"><seg>Seleccione servicios relacionados </seg></tuv>
+           <tuv xml:lang="en"><seg>Choose Related Service</seg></tuv>
+       </tu>
+       <tu tuid="Assistive technology services/devices">
+           <tuv xml:lang="es"><seg>Servicios/Dispositivos tecnol&#xF3;gicos auxiliares</seg></tuv>
+           <tuv xml:lang="en"><seg>Assistive technology services/devices</seg></tuv>
+       </tu>
+       <tu tuid="Family training, counseling, home visits and other supports">
+           <tuv xml:lang="es"><seg>Capacitaci&#xF3;n familiar, Asesoramiento, Visitas a domicilio y otros servicios de apoyo</seg></tuv>
+           <tuv xml:lang="en"><seg>Family training, counseling, home visits and other supports</seg></tuv>
+       </tu>
+       <tu tuid="Health services">
+           <tuv xml:lang="es"><seg>Servicios de salud</seg></tuv>
+           <tuv xml:lang="en"><seg>Health services</seg></tuv>
+       </tu>
+       <tu tuid="Medical services (for diagnostic or evaluation purposes)">
+           <tuv xml:lang="es"><seg>Servicios m&#xE9;dicos (para prop&#xF3;sitos de evaluaci&#xF3;n o diagn&#xF3;stico)</seg></tuv>
+           <tuv xml:lang="en"><seg>Medical services (for diagnostic or evaluation purposes)</seg></tuv>
+       </tu>
+       <tu tuid="Nursing services">
+           <tuv xml:lang="es"><seg>Servicios de enfermer&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Nursing services</seg></tuv>
+       </tu>
+       <tu tuid="Nutrition services">
+           <tuv xml:lang="es"><seg>Servicios de nutrici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Nutrition services</seg></tuv>
+       </tu>
+       <tu tuid="Psychological services">
+           <tuv xml:lang="es"><seg>Servicios psicol&#xF3;gicos</seg></tuv>
+           <tuv xml:lang="en"><seg>Psychological services</seg></tuv>
+       </tu>
+       <tu tuid="Respite care">
+           <tuv xml:lang="es"><seg>Cuidado de relevo</seg></tuv>
+           <tuv xml:lang="en"><seg>Respite care</seg></tuv>
+       </tu>
+       <tu tuid="Services coordination">
+           <tuv xml:lang="es"><seg>Servicios de coordinaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Services coordination</seg></tuv>
+       </tu>
+       <tu tuid="Social work services">
+           <tuv xml:lang="es"><seg>Servicios de trabajo social</seg></tuv>
+           <tuv xml:lang="en"><seg>Social work services</seg></tuv>
+       </tu>
+       <tu tuid="Speech-language therapy">
+           <tuv xml:lang="es"><seg>Terapia del habla</seg></tuv>
+           <tuv xml:lang="en"><seg>Speech-language therapy</seg></tuv>
+       </tu>
+       <tu tuid="Not Required">
+           <tuv xml:lang="es"><seg>No requerido</seg></tuv>
+           <tuv xml:lang="en"><seg>Not Required</seg></tuv>
+       </tu>
+       <tu tuid="Choose Location">
+           <tuv xml:lang="es"><seg>Seleccione el lugar</seg></tuv>
+           <tuv xml:lang="en"><seg>Choose Location</seg></tuv>
+       </tu>
+       <tu tuid="Separate School">
+           <tuv xml:lang="es"><seg>Otra escuela / Escuela distinta</seg></tuv>
+           <tuv xml:lang="en"><seg>Separate School</seg></tuv>
+       </tu>
+       <tu tuid="Separate Class">
+           <tuv xml:lang="es"><seg>Otra aula/ Aula distinta</seg></tuv>
+           <tuv xml:lang="en"><seg>Separate Class</seg></tuv>
+       </tu>
+       <tu tuid="Residential Facility">
+           <tuv xml:lang="es"><seg>Instituci&#xF3;n residencial</seg></tuv>
+           <tuv xml:lang="en"><seg>Residential Facility</seg></tuv>
+       </tu>
+       <tu tuid="Home">
+           <tuv xml:lang="es"><seg>SPANISH:Casa</seg></tuv>
+           <tuv xml:lang="en"><seg>Home</seg></tuv>
+       </tu>
+       <tu tuid="Service Provider Location">
+           <tuv xml:lang="es"><seg>Ubicaci&#xF3;n del Proovedor de Servicios</seg></tuv>
+           <tuv xml:lang="en"><seg>Service Provider Location</seg></tuv>
+       </tu>
+       <tu tuid="Regular Early Childhood Program, 10+ h/wk; Services at EC Program">
+           <tuv xml:lang="es"><seg>Programa regular de educaci&#xF3;n preescolar, 10+ h/semana; Servicios en el Programa EC </seg></tuv>
+           <tuv xml:lang="en"><seg>Regular Early Childhood Program, 10+ h/wk; Services at EC Program</seg></tuv>
+       </tu>
+       <tu tuid="Regular Early Childhood Program, 10+ h/wk; Services outside EC Program">
+           <tuv xml:lang="es"><seg>Programa regular de educaci&#xF3;n preescolar, 10+ h/semana; Servicios fuera del Programa EC </seg></tuv>
+           <tuv xml:lang="en"><seg>Regular Early Childhood Program, 10+ h/wk; Services outside EC Program</seg></tuv>
+       </tu>
+       <tu tuid="Regular Early Childhood Program, &lt;10 h/wk; Services at EC Program">
+           <tuv xml:lang="es"><seg>Programa regular de educaci&#xF3;n preescolar, &lt;10+ h/semana; Servicios en el Programa EC </seg></tuv>
+           <tuv xml:lang="en"><seg>Regular Early Childhood Program, &lt;10 h/wk; Services at EC Program</seg></tuv>
+       </tu>
+       <tu tuid="Regular Early Childhood Program, &lt;10 h/wk; Services outside EC Program">
+           <tuv xml:lang="es"><seg>Programa regular de educaci&#xF3;n preescolar, &lt;10+ h/semana; Servicios fuera del Programa EC </seg></tuv>
+           <tuv xml:lang="en"><seg>Regular Early Childhood Program, &lt;10 h/wk; Services outside EC Program</seg></tuv>
+       </tu>
+       <tu tuid="Special Education Related Services">
+           <tuv xml:lang="es" retranslate="true"><seg>Servicios Relacionados a Educaci&#xF3;n Especial:</seg></tuv>
+           <tuv xml:lang="en"><seg>Additional Special Education Services</seg></tuv>
+       </tu>
+       <tu tuid="Supplementary Aids Services">
+           <tuv xml:lang="es"><seg>Servicios y ayuda suplementaria</seg></tuv>
+           <tuv xml:lang="en"><seg>Supplementary Aids &amp; Services</seg></tuv>
+       </tu>
+       <tu tuid="Program Modifications Accommodations">
+           <tuv xml:lang="es"><seg>Programar modificaciones y ajustes/Cambios y ajustes del programa</seg></tuv>
+           <tuv xml:lang="en"><seg>Program Modifications &amp; Accommodations</seg></tuv>
+       </tu>
+       <tu tuid="Extend time requirements">
+           <tuv xml:lang="es"><seg>Requerimientos de extensi&#xF3;n del tiempo</seg></tuv>
+           <tuv xml:lang="en"><seg>Extend time requirements</seg></tuv>
+       </tu>
+       <tu tuid="Allow breaks, vary activity often">
+           <tuv xml:lang="es"><seg>Permiir recesos y varie las actividades con frecuencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow breaks, vary activity often</seg></tuv>
+       </tu>
+       <tu tuid="Omit assignments requiring&lt;BR&gt;- copying, if timed">
+           <tuv xml:lang="es"><seg>Si se est&#xE1; tomando el tiempo, omita asignaciones que requieran &lt;BR&gt;- copiar</seg></tuv>
+           <tuv xml:lang="en"><seg>Omit assignments requiring&lt;BR&gt;- copying, if timed</seg></tuv>
+       </tu>
+       <tu tuid="School texts sent home for preview">
+           <tuv xml:lang="es"><seg>Enviar a casa los textos escolares para revisi&#xF3;n previa</seg></tuv>
+           <tuv xml:lang="en"><seg>School texts sent home for preview</seg></tuv>
+       </tu>
+       <tu tuid="Vary activity often">
+           <tuv xml:lang="es"><seg> Variar las actividades frecuentemente</seg></tuv>
+           <tuv xml:lang="en"><seg>Vary activity often</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Teacher emphasize:&lt;BR&gt;- Visual&lt;BR&gt;- Auditory&lt;BR&gt;- Tactil&lt;BR&gt;- Multi-sensory">
+           <tuv xml:lang="es"><seg>El maestro enfatiza:&lt;BR&gt;- Visual&lt;BR&gt;- Auditivo&lt;BR&gt;- T&#xE1;ctil&lt;BR&gt;- Multisensorial</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher emphasize:&lt;BR&gt;- Visual&lt;BR&gt;- Auditory&lt;BR&gt;- Tactil&lt;BR&gt;- Multi-sensory</seg></tuv>
+       </tu>
+       <tu tuid="Individual/Small group Instruction">
+           <tuv xml:lang="es"><seg>Instrucci&#xF3;n individual o en grupos peque&#xF1;os</seg></tuv>
+           <tuv xml:lang="en"><seg>Individual/Small group Instruction</seg></tuv>
+       </tu>
+       <tu tuid="Utilize specialized curriculum">
+           <tuv xml:lang="es"><seg>Utilizar programa de estudios especializado</seg></tuv>
+           <tuv xml:lang="en"><seg>Utilize specialized curriculum</seg></tuv>
+       </tu>
+       <tu tuid="Tape lectures for replay">
+           <tuv xml:lang="es"><seg>Grabar clases para poder  reproducirlas </seg></tuv>
+           <tuv xml:lang="en"><seg>Tape lectures for replay</seg></tuv>
+       </tu>
+       <tu tuid="Utilize manipulative materials">
+           <tuv xml:lang="es"><seg>Utilizar materiales que se puedan manipular</seg></tuv>
+           <tuv xml:lang="en"><seg>Utilize manipulative materials</seg></tuv>
+       </tu>
+       <tu tuid="Emphasize critical information">
+           <tuv xml:lang="es"><seg>Enfatizar informaci&#xF3;n cr&#xED;tica</seg></tuv>
+           <tuv xml:lang="en"><seg>Emphasize critical information</seg></tuv>
+       </tu>
+       <tu tuid="Preteach vocabulary">
+           <tuv xml:lang="es"><seg>Ense&#xF1;ar vocabulario con anterioridad</seg></tuv>
+           <tuv xml:lang="en"><seg>Preteach vocabulary</seg></tuv>
+       </tu>
+       <tu tuid="Reduce language level or reading&lt;BR&gt;- level of assignment">
+           <tuv xml:lang="es"><seg>Reducir el nivel del lenguaje o de&lt;BR&gt; de lectura- nivel de asignaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Reduce language level or reading&lt;BR&gt;- level of assignment</seg></tuv>
+       </tu>
+       <tu tuid="Sign language Interpreter">
+           <tuv xml:lang="es"><seg>Int&#xE9;rprete de lenguaje de se&#xF1;as</seg></tuv>
+           <tuv xml:lang="en"><seg>Sign language Interpreter</seg></tuv>
+       </tu>
+       <tu tuid="Use specialized communication supports">
+           <tuv xml:lang="es"><seg>Usar soportes especializados para la comunicaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Use specialized communication supports</seg></tuv>
+       </tu>
+       <tu tuid="Oral Interpreter">
+           <tuv xml:lang="es"><seg>Int&#xE9;rprete oral</seg></tuv>
+           <tuv xml:lang="en"><seg>Oral Interpreter</seg></tuv>
+       </tu>
+       <tu tuid="Present demonstration (model)">
+           <tuv xml:lang="es"><seg>Hacer demostraci&#xF3;n (modelar)</seg></tuv>
+           <tuv xml:lang="en"><seg>Present demonstration (model)</seg></tuv>
+       </tu>
+       <tu tuid="Teacher or peer provides notes or outline">
+           <tuv xml:lang="es"><seg>El maestro o compa&#xF1;ero proporciona notas o esquema</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher or peer provides notes or outline</seg></tuv>
+       </tu>
+       <tu tuid="Functional application of academic skills">
+           <tuv xml:lang="es"><seg>Aplicaci&#xF3;n funcional de las habilidades acad&#xE9;micas</seg></tuv>
+           <tuv xml:lang="en"><seg>Functional application of academic skills</seg></tuv>
+       </tu>
+       <tu tuid="Use visual sequences">
+           <tuv xml:lang="es"><seg>Usar secuencias visuales</seg></tuv>
+           <tuv xml:lang="en"><seg>Use visual sequences</seg></tuv>
+       </tu>
+       <tu tuid="Make/use vocabulary supports such as word cards, personal dictionaries, vocabulary files">
+           <tuv xml:lang="es"><seg>Hacer/usar apoyo para el vocabulario como tarjetas de palabras, diccionarios personales, archivos de vocabulario</seg></tuv>
+           <tuv xml:lang="en"><seg>Make/use vocabulary supports such as word cards, personal dictionaries, vocabulary files</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Preferential seating">
+           <tuv xml:lang="es"><seg>Asiento preferencial</seg></tuv>
+           <tuv xml:lang="en"><seg>Preferential seating</seg></tuv>
+       </tu>
+       <tu tuid="Seat near teacher">
+           <tuv xml:lang="es"><seg>Sentarse cerca de la profesora</seg></tuv>
+           <tuv xml:lang="en"><seg>Seat near teacher</seg></tuv>
+       </tu>
+       <tu tuid="Seat near positive role model">
+           <tuv xml:lang="es"><seg>Sentarse cerca de compa&#xF1;eros que sean modelos positivos a seguir</seg></tuv>
+           <tuv xml:lang="en"><seg>Seat near positive role model</seg></tuv>
+       </tu>
+       <tu tuid="Avoid distracting stimuli">
+           <tuv xml:lang="es"><seg>Evitar distracciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Avoid distracting stimuli</seg></tuv>
+       </tu>
+       <tu tuid="Increase distance between desks">
+           <tuv xml:lang="es"><seg>Aumentar la distancia entre pupitres/escritorios</seg></tuv>
+           <tuv xml:lang="en"><seg>Increase distance between desks</seg></tuv>
+       </tu>
+       <tu tuid="Planned seating:&lt;BR&gt;- Bus Classroom&lt;BR&gt;- Lunchroom &lt;BR&gt;- Auditorium">
+           <tuv xml:lang="es"><seg>Asientos planificados:&lt;BR&gt;-Transportar el sal&#xF3;n&lt;BR&gt;- Comedor &lt;BR&gt;- Auditorio</seg></tuv>
+           <tuv xml:lang="en"><seg>Planned seating:&lt;BR&gt;- Bus Classroom&lt;BR&gt;- Lunchroom &lt;BR&gt;- Auditorium</seg></tuv>
+       </tu>
+       <tu tuid="Alter physical room arrangement">
+           <tuv xml:lang="es"><seg>Cambiar la forma en como est&#xE1; arreglada/configurada f&#xED;sicamente la habitaci&#xF3;n </seg></tuv>
+           <tuv xml:lang="en"><seg>Alter physical room arrangement</seg></tuv>
+       </tu>
+       <tu tuid="Define areas concretely">
+           <tuv xml:lang="es"><seg>Definir &#xE1;reas concretamente</seg></tuv>
+           <tuv xml:lang="en"><seg>Define areas concretely</seg></tuv>
+       </tu>
+       <tu tuid="Reduce/minimize distractions&lt;BR&gt;- Visual Auditory&lt;BR&gt;- Spatial Movement">
+           <tuv xml:lang="es"><seg>Reducir/minimizar distractiones&lt;BR&gt;-Visual Auditiva&lt;BR&gt;- Movimiento espacial</seg></tuv>
+           <tuv xml:lang="en"><seg>Reduce/minimize distractions&lt;BR&gt;- Visual Auditory&lt;BR&gt;- Spatial Movement</seg></tuv>
+       </tu>
+       <tu tuid="Teach positive rules for use of space">
+           <tuv xml:lang="es"><seg>Ense&#xF1;e reglas positivas para el uso del espacio</seg></tuv>
+           <tuv xml:lang="en"><seg>Teach positive rules for use of space</seg></tuv>
+       </tu>
+       <tu tuid="Complete work in technology setting">
+           <tuv xml:lang="es"><seg>Completar el trabajo en un &#xE1;mbito tecnol&#xF3;gico</seg></tuv>
+           <tuv xml:lang="en"><seg>Complete work in technology setting</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Taped texts and/or other class materials">
+           <tuv xml:lang="es"><seg>Textos y/u otros materiales de clase grabados </seg></tuv>
+           <tuv xml:lang="en"><seg>Taped texts and/or other class materials</seg></tuv>
+       </tu>
+       <tu tuid="Highlighted texts/study guides">
+           <tuv xml:lang="es"><seg>Gu&#xED;as de textos/estudios resaltados</seg></tuv>
+           <tuv xml:lang="en"><seg>Highlighted texts/study guides</seg></tuv>
+       </tu>
+       <tu tuid="Use supplementary materials">
+           <tuv xml:lang="es"><seg>Usar materiales suplementarios</seg></tuv>
+           <tuv xml:lang="en"><seg>Use supplementary materials</seg></tuv>
+       </tu>
+       <tu tuid="Note taking assistance:Photocopy of notes of peer">
+           <tuv xml:lang="es"><seg>Ayuda para tomar notas: fotocopiar anotaciones de compa&#xF1;eros</seg></tuv>
+           <tuv xml:lang="en"><seg>Note taking assistance:Photocopy of notes of peer</seg></tuv>
+       </tu>
+       <tu tuid="Type handwritten teacher material">
+           <tuv xml:lang="es"><seg>Teclear el material del profesor que est&#xE9; escrito a mano</seg></tuv>
+           <tuv xml:lang="en"><seg>Type handwritten teacher material</seg></tuv>
+       </tu>
+       <tu tuid="Arrangement of materials on page">
+           <tuv xml:lang="es"><seg>Configuraci&#xF3;n del material sobre la p&#xE1;gina</seg></tuv>
+           <tuv xml:lang="en"><seg>Arrangement of materials on page</seg></tuv>
+       </tu>
+       <tu tuid="Provide large print materials">
+           <tuv xml:lang="es"><seg>Proporcionar materiales con letras grandes</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide large print materials</seg></tuv>
+       </tu>
+       <tu tuid="Enlarge notes/workbook pages (photocopier)">
+           <tuv xml:lang="es"><seg>Agrandar las anotaciones o las p&#xE1;ginas del libro de trabajo (fotocopiadora)</seg></tuv>
+           <tuv xml:lang="en"><seg>Enlarge notes/workbook pages (photocopier)</seg></tuv>
+       </tu>
+       <tu tuid="Special equipment:&lt;BR&gt;- Calculator&lt;BR&gt;- Computer&lt;BR&gt;- Video recorder&lt;BR&gt;- Audio Recorder&lt;BR&gt;- SGD: Speech Generating Device&lt;BR&gt;- Amplification System">
+           <tuv xml:lang="es"><seg>Equipo especial :&lt;BR&gt;- Calculadora&lt;BR&gt;- Computadora&lt;BR&gt;-Grabadora de video&lt;BR&gt;- Grabadora de audio&lt;BR&gt;- SGD: Dispositivo generador del habla &lt;BR&gt;- Sistema de amplificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Special equipment:&lt;BR&gt;- Calculator&lt;BR&gt;- Computer&lt;BR&gt;- Video recorder&lt;BR&gt;- Audio Recorder&lt;BR&gt;- SGD: Speech Generating Device&lt;BR&gt;- Amplification System</seg></tuv>
+       </tu>
+       <tu tuid="Give directions in small, distinct steps">
+           <tuv xml:lang="es"><seg>Dar instrucciones/ indicaciones en  pasos  breves y de forma clara</seg></tuv>
+           <tuv xml:lang="en"><seg>Give directions in small, distinct steps</seg></tuv>
+       </tu>
+       <tu tuid="Allow copying an answer directly from paper/book">
+           <tuv xml:lang="es"><seg>Permitir que se copie una respuesta directamente de una hoja/libro</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow copying an answer directly from paper/book</seg></tuv>
+       </tu>
+       <tu tuid="Provide oral directions">
+           <tuv xml:lang="es"><seg>Proporcionar instrucciones verbalmente</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide oral directions</seg></tuv>
+       </tu>
+       <tu tuid="Lower difficulty level">
+           <tuv xml:lang="es"><seg>Disminuir el nivel de dificultad.</seg></tuv>
+           <tuv xml:lang="en"><seg>Lower difficulty level</seg></tuv>
+       </tu>
+       <tu tuid="Shorten assignment">
+           <tuv xml:lang="es"><seg>Reducir la asignaci&#xF3;n </seg></tuv>
+           <tuv xml:lang="en"><seg>Shorten assignment</seg></tuv>
+       </tu>
+       <tu tuid="Reduce paper and pencil tasks">
+           <tuv xml:lang="es"><seg>Reducir tareas que requieran el uso de papel y l&#xE1;piz</seg></tuv>
+           <tuv xml:lang="en"><seg>Reduce paper and pencil tasks</seg></tuv>
+       </tu>
+       <tu tuid="Read directions to student">
+           <tuv xml:lang="es"><seg>Leer instrucciones al estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>Read directions to student</seg></tuv>
+       </tu>
+       <tu tuid="Give oral cues or prompts">
+           <tuv xml:lang="es"><seg>Proporcionar instrucciones o  indicaciones verbalmente</seg></tuv>
+           <tuv xml:lang="en"><seg>Give oral cues or prompts</seg></tuv>
+       </tu>
+       <tu tuid="Record or type assignment">
+           <tuv xml:lang="es"><seg>Grabar o teclear las asignaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Record or type assignment</seg></tuv>
+       </tu>
+       <tu tuid="Adapt worksheets, packets">
+           <tuv xml:lang="es"><seg>Adaptar hojas de c&#xE1;lculo, paquetes</seg></tuv>
+           <tuv xml:lang="en"><seg>Adapt worksheets, packets</seg></tuv>
+       </tu>
+       <tu tuid="Provide alternate assignments or strategies">
+           <tuv xml:lang="es"><seg>Proporcionar estrategias o asignaciones alternativas </seg></tuv>
+           <tuv xml:lang="en"><seg>Provide alternate assignments or strategies</seg></tuv>
+       </tu>
+       <tu tuid="Avoid penalizing for spelling errors">
+           <tuv xml:lang="es"><seg>Evitar penalizar por errores ortogr&#xE1;ficos</seg></tuv>
+           <tuv xml:lang="en"><seg>Avoid penalizing for spelling errors</seg></tuv>
+       </tu>
+       <tu tuid="Redo for better grade">
+           <tuv xml:lang="es"><seg>Volver a hacerlo para mejorar la calificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Redo for better grade</seg></tuv>
+       </tu>
+       <tu tuid="Allow student to use resource assistance when necessary">
+           <tuv xml:lang="es"><seg>Permitir que el estudiante utilice fuentes de ayuda cuando sea necesario</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow student to use resource assistance when necessary</seg></tuv>
+       </tu>
+       <tu tuid="Provide assignments in an electronic format">
+           <tuv xml:lang="es"><seg>Proporcionar asignaciones en formato electr&#xF3;nico</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide assignments in an electronic format</seg></tuv>
+       </tu>
+       <tu tuid="Peer tutoring">
+           <tuv xml:lang="es"><seg>Tutor&#xED;a entre compa&#xF1;eros</seg></tuv>
+           <tuv xml:lang="en"><seg>Peer tutoring</seg></tuv>
+       </tu>
+       <tu tuid="Nonverbal">
+           <tuv xml:lang="es"><seg>No verbal</seg></tuv>
+           <tuv xml:lang="en"><seg>Nonverbal</seg></tuv>
+       </tu>
+       <tu tuid="Positive reinforcement">
+           <tuv xml:lang="es"><seg>Refuerzo positivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Positive reinforcement</seg></tuv>
+       </tu>
+       <tu tuid="Concrete reinforcement">
+           <tuv xml:lang="es"><seg>Refuerzo concreto</seg></tuv>
+           <tuv xml:lang="en"><seg>Concrete reinforcement</seg></tuv>
+       </tu>
+       <tu tuid="Offer choice">
+           <tuv xml:lang="es"><seg>Ofrecer una opci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Offer choice</seg></tuv>
+       </tu>
+       <tu tuid="Use strengths/Interests often">
+           <tuv xml:lang="es"><seg>Usar  fortalezas o intereses con frecuencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Use strengths/Interests often</seg></tuv>
+       </tu>
+       <tu tuid="Allow in-class movement">
+           <tuv xml:lang="es"><seg>Permitir movimiento dentro del aula</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow in-class movement</seg></tuv>
+       </tu>
+       <tu tuid="Increase immediacy of rewards">
+           <tuv xml:lang="es"><seg>Incrementar la inmediatez de las recompensas</seg></tuv>
+           <tuv xml:lang="en"><seg>Increase immediacy of rewards</seg></tuv>
+       </tu>
+       <tu tuid="Use behavioral contracts">
+           <tuv xml:lang="es"><seg>Usar contratos conductuales</seg></tuv>
+           <tuv xml:lang="en"><seg>Use behavioral contracts</seg></tuv>
+       </tu>
+       <tu tuid="Peer advocacy">
+           <tuv xml:lang="es"><seg>Respaldo/Apoyo a los compa&#xF1;eros</seg></tuv>
+           <tuv xml:lang="en"><seg>Peer advocacy</seg></tuv>
+       </tu>
+       <tu tuid="Peer tutoring">
+           <tuv xml:lang="es"><seg>Tutor&#xED;a entre compa&#xF1;eros</seg></tuv>
+           <tuv xml:lang="en"><seg>Peer tutoring</seg></tuv>
+       </tu>
+       <tu tuid="Structure activities to create or&lt;BR&gt;- discourage opportunities of social interaction">
+           <tuv xml:lang="es"><seg>SPANISH:Dise&#xF1;ar actividades para crear o&lt;BR&gt;- desalentar oportunidades de interacci&#xF3;n social</seg></tuv>
+           <tuv xml:lang="en"><seg>Structure activities to create or&lt;BR&gt;- discourage opportunities of social interaction</seg></tuv>
+       </tu>
+       <tu tuid="Focus on social process rather than activity">
+           <tuv xml:lang="es"><seg>Concentraci&#xF3;n en el proceso social m&#xE1;s que en la actividad</seg></tuv>
+           <tuv xml:lang="en"><seg>Focus on social process rather than activity</seg></tuv>
+       </tu>
+       <tu tuid="Structure shared experience in school">
+           <tuv xml:lang="es"><seg>Dise&#xF1;ar experiencias compartidas en la escuela</seg></tuv>
+           <tuv xml:lang="en"><seg>Structure shared experience in school</seg></tuv>
+       </tu>
+       <tu tuid="Cooperative learning groups">
+           <tuv xml:lang="es"><seg>Grupos de aprendizaje cooperativo</seg></tuv>
+           <tuv xml:lang="en"><seg>Cooperative learning groups</seg></tuv>
+       </tu>
+       <tu tuid="Use multiple/rotating peers">
+           <tuv xml:lang="es"><seg>Usar compa&#xF1;eros m&#xFA;ltiples/rotaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Use multiple/rotating peers</seg></tuv>
+       </tu>
+       <tu tuid="Teach friendship&lt;BR&gt;- skills/sharing/negotiations">
+           <tuv xml:lang="es"><seg>Ense&#xF1;ar amistad&lt;BR&gt;- habilidades/compartir/negociaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Teach friendship&lt;BR&gt;- skills/sharing/negotiations</seg></tuv>
+       </tu>
+       <tu tuid="Teach social communications skills&lt;BR&gt;- Greetings&lt;BR&gt;- Negotiations&lt;BR&gt;- Turn taking &lt;BR&gt;- Sharing">
+           <tuv xml:lang="es"><seg>Ense&#xF1;ar habilidades de comunicaci&#xF3;n social&lt;BR&gt;- Saludos&lt;BR&gt;- Negociaciones&lt;BR&gt;- Tomar turnos&lt;BR&gt;- Compartir</seg></tuv>
+           <tuv xml:lang="en"><seg>Teach social communications skills&lt;BR&gt;- Greetings&lt;BR&gt;- Negotiations&lt;BR&gt;- Turn taking &lt;BR&gt;- Sharing</seg></tuv>
+       </tu>
+       <tu tuid="Use positive reinforcement">
+           <tuv xml:lang="es"><seg>Usar refuerzo positivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Use positive reinforcement</seg></tuv>
+       </tu>
+       <tu tuid="Use concrete reinforcement">
+           <tuv xml:lang="es"><seg>Usar refuerzo concreto</seg></tuv>
+           <tuv xml:lang="en"><seg>Use concrete reinforcement</seg></tuv>
+       </tu>
+       <tu tuid="Check often for understanding review&lt;BR&gt;- copying, if timed">
+           <tuv xml:lang="es"><seg>Si se toma el tiempo, verificar con frecuencia que se comprendi&#xF3; la revisi&#xF3;n &lt;BR&gt;- al copiar</seg></tuv>
+           <tuv xml:lang="en"><seg>Check often for understanding review&lt;BR&gt;- copying, if timed</seg></tuv>
+       </tu>
+       <tu tuid="Peer tutoring">
+           <tuv xml:lang="es"><seg>Tutor&#xED;a entre compa&#xF1;eros</seg></tuv>
+           <tuv xml:lang="en"><seg>Peer tutoring</seg></tuv>
+       </tu>
+       <tu tuid="Request parent reinforcement">
+           <tuv xml:lang="es"><seg>Solicitar el refuerzo de los padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Request parent reinforcement</seg></tuv>
+       </tu>
+       <tu tuid="Have student repeat directions">
+           <tuv xml:lang="es"><seg>Hacer que los estudiantes repitan las instrucciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Have student repeat directions</seg></tuv>
+       </tu>
+       <tu tuid="Make/Use vocabulary files">
+           <tuv xml:lang="es"><seg>Crear/Usar archivos de vocabulario </seg></tuv>
+           <tuv xml:lang="en"><seg>Make/Use vocabulary files</seg></tuv>
+       </tu>
+       <tu tuid="Teach study skills">
+           <tuv xml:lang="es"><seg>Ense&#xF1;ar habilidades de estudio</seg></tuv>
+           <tuv xml:lang="en"><seg>Teach study skills</seg></tuv>
+       </tu>
+       <tu tuid="Use study sheets to organize material">
+           <tuv xml:lang="es"><seg>Usar hojas de estudio para organizar el material</seg></tuv>
+           <tuv xml:lang="en"><seg>Use study sheets to organize material</seg></tuv>
+       </tu>
+       <tu tuid="Long term assignment time lines">
+           <tuv xml:lang="es"><seg>Cronograma para asignaciones a largo plazo</seg></tuv>
+           <tuv xml:lang="en"><seg>Long term assignment time lines</seg></tuv>
+       </tu>
+       <tu tuid="Repeated review/drill">
+           <tuv xml:lang="es"><seg>Revisi&#xF3;n/Pr&#xE1;ctica continua</seg></tuv>
+           <tuv xml:lang="en"><seg>Repeated review/drill</seg></tuv>
+       </tu>
+       <tu tuid="Behavior management system">
+           <tuv xml:lang="es"><seg>Sistema de manejo de conducta</seg></tuv>
+           <tuv xml:lang="en"><seg>Behavior management system</seg></tuv>
+       </tu>
+       <tu tuid="Visual daily schedule">
+           <tuv xml:lang="es"><seg>Horario diario visual</seg></tuv>
+           <tuv xml:lang="en"><seg>Visual daily schedule</seg></tuv>
+       </tu>
+       <tu tuid="Calendar/Assignment Book">
+           <tuv xml:lang="es"><seg>Calendario/Libro de Asignaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Calendar/Assignment Book</seg></tuv>
+       </tu>
+       <tu tuid="Plan for generalizations">
+           <tuv xml:lang="es"><seg>Plan para generalizaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Plan for generalizations</seg></tuv>
+       </tu>
+       <tu tuid="Teach skill in several&lt;BR&gt;- settings/environments">
+           <tuv xml:lang="es"><seg>Ense&#xF1;ar habilidades en varios&lt;BR&gt;- entornos/ambientes</seg></tuv>
+           <tuv xml:lang="en"><seg>Teach skill in several&lt;BR&gt;- settings/environments</seg></tuv>
+       </tu>
+       <tu tuid="Redo assignment for a better grade">
+           <tuv xml:lang="es"><seg>Volver a hacer la asignaci&#xF3;n para mejorar la calificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Redo assignment for a better grade</seg></tuv>
+       </tu>
+       <tu tuid="Provide extended time">
+           <tuv xml:lang="es"><seg>Proporcionar una extensi&#xF3;n de tiempo</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide extended time</seg></tuv>
+       </tu>
+       <tu tuid="Allowed to answer questions orally">
+           <tuv xml:lang="es"><seg>Permitir que se contesten preguntas oralmente</seg></tuv>
+           <tuv xml:lang="en"><seg>Allowed to answer questions orally</seg></tuv>
+       </tu>
+       <tu tuid="Allow for short answer format">
+           <tuv xml:lang="es"><seg>Permitir un formato de respuesta corta</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow for short answer format</seg></tuv>
+       </tu>
+       <tu tuid="Taped">
+           <tuv xml:lang="es"><seg>Grabado</seg></tuv>
+           <tuv xml:lang="en"><seg>Taped</seg></tuv>
+       </tu>
+       <tu tuid="Utilize multiple choice">
+           <tuv xml:lang="es"><seg>Utilizar opci&#xF3;n m&#xFA;ltiple</seg></tuv>
+           <tuv xml:lang="en"><seg>Utilize multiple choice</seg></tuv>
+       </tu>
+       <tu tuid="Read test to student">
+           <tuv xml:lang="es"><seg>Leer el examen al alumno</seg></tuv>
+           <tuv xml:lang="en"><seg>Read test to student</seg></tuv>
+       </tu>
+       <tu tuid="Modify format">
+           <tuv xml:lang="es"><seg>Modificar el formato</seg></tuv>
+           <tuv xml:lang="en"><seg>Modify format</seg></tuv>
+       </tu>
+       <tu tuid="Shorten length">
+           <tuv xml:lang="es"><seg>Acortar la duraci&#xF3;n </seg></tuv>
+           <tuv xml:lang="en"><seg>Shorten length</seg></tuv>
+       </tu>
+       <tu tuid="Sign test directions">
+           <tuv xml:lang="es"><seg>Dar las instrucciones del examen en lenguaje de se&#xF1;as </seg></tuv>
+           <tuv xml:lang="en"><seg>Sign test directions</seg></tuv>
+       </tu>
+       <tu tuid="Preview language to test questions">
+           <tuv xml:lang="es"><seg>Repasar de antemano el lenguaje utilizado en las preguntas del examen</seg></tuv>
+           <tuv xml:lang="en"><seg>Preview language to test questions</seg></tuv>
+       </tu>
+       <tu tuid="Sign test to students; student signs answers">
+           <tuv xml:lang="es"><seg>Administrar el examen a trav&#xE9;s del lenguaje de se&#xF1;as  ;los estudiantes dan sus respuestas a trav&#xE9;s del lenguaje de se&#xF1;as.</seg></tuv>
+           <tuv xml:lang="en"><seg>Sign test to students; student signs answers</seg></tuv>
+       </tu>
+       <tu tuid="Test administered by special services personnel">
+           <tuv xml:lang="es"><seg>El examen es administrado por personal de servicios especiales</seg></tuv>
+           <tuv xml:lang="en"><seg>Test administered by special services personnel</seg></tuv>
+       </tu>
+       <tu tuid="Check for understanding">
+           <tuv xml:lang="es"><seg>Verifcar la comprensi&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Check for understanding</seg></tuv>
+       </tu>
+       <tu tuid="Provide visual information/pictures">
+           <tuv xml:lang="es"><seg>Proporcionar informaci&#xF3;n/figuras visuales</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide visual information/pictures</seg></tuv>
+       </tu>
+       <tu tuid="Paraphrase test items">
+           <tuv xml:lang="es"><seg>Parafrasear los &#xED;tems de los examenes</seg></tuv>
+           <tuv xml:lang="en"><seg>Paraphrase test items</seg></tuv>
+       </tu>
+       <tu tuid="Utilize specialized writing systems/devices">
+           <tuv xml:lang="es"><seg>Utilizar sistemas/dispositivos de escritura especializados</seg></tuv>
+           <tuv xml:lang="en"><seg>Utilize specialized writing systems/devices</seg></tuv>
+       </tu>
+       <tu tuid="Color-coded test">
+           <tuv xml:lang="es"><seg>Examen con c&#xF3;digo de colores</seg></tuv>
+           <tuv xml:lang="en"><seg>Color-coded test</seg></tuv>
+       </tu>
+       <tu tuid="Retest after student demonstrates review of material">
+           <tuv xml:lang="es"><seg>Volver a evaluar despu&#xE9;s de que el estudiante demuestre haber revisado del material</seg></tuv>
+           <tuv xml:lang="en"><seg>Retest after student demonstrates review of material</seg></tuv>
+       </tu>
+       <tu tuid="Flash cards with key points">
+           <tuv xml:lang="es"><seg>Tarjetas de repaso con puntos clave</seg></tuv>
+           <tuv xml:lang="en"><seg>Flash cards with key points</seg></tuv>
+       </tu>
+       <tu tuid="Provide study guides 2 to 3 days in advance">
+           <tuv xml:lang="es"><seg>Proporcionar gu&#xED;as de estudio con 2 a 3 d&#xED;as de anticipaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide study guides 2 to 3 days in advance</seg></tuv>
+       </tu>
+       <tu tuid="Word bank for short answer or fill in the blank questions">
+           <tuv xml:lang="es"><seg>Banco de palabras para respuestas cortas o para completar  respuestas en blanco</seg></tuv>
+           <tuv xml:lang="en"><seg>Word bank for short answer or fill in the blank questions</seg></tuv>
+       </tu>
+       <tu tuid="Circle # of items for which the student needs assistance or completed with help">
+           <tuv xml:lang="es"><seg>Hacer un c&#xED;rculo alrededor del n&#xFA;mero o de los &#xED;tems en los cuales el estudiante necesita ayuda o complet&#xF3; con ayuda</seg></tuv>
+           <tuv xml:lang="en"><seg>Circle # of items for which the student needs assistance or completed with help</seg></tuv>
+       </tu>
+       <tu tuid="Correct test items listing p.# of text">
+           <tuv xml:lang="es"><seg>Corregir las partes del examen indicando el n&#xFA;mero de la p&#xE1;gina del texto</seg></tuv>
+           <tuv xml:lang="en"><seg>Correct test items listing p.# of text</seg></tuv>
+       </tu>
+       <tu tuid="Re-teach and re-test material">
+           <tuv xml:lang="es"><seg>Volver a ense&#xF1;ar y a evaluar el material </seg></tuv>
+           <tuv xml:lang="en"><seg>Re-teach and re-test material</seg></tuv>
+       </tu>
+       <tu tuid="Divide test/assignments into smaller sections which are administered separately">
+           <tuv xml:lang="es"><seg>Dividir los ex&#xE1;menes/asignaciones en secciones m&#xE1;s peque&#xF1;as, las cuales son administradas separadamente</seg></tuv>
+           <tuv xml:lang="en"><seg>Divide test/assignments into smaller sections which are administered separately</seg></tuv>
+       </tu>
+       <tu tuid="Use more objective test items (Less essay)">
+           <tuv xml:lang="es"><seg>Usar m&#xE1;s partes objetivas en los ex&#xE1;menes (Menos ensayo)</seg></tuv>
+           <tuv xml:lang="en"><seg>Use more objective test items (Less essay)</seg></tuv>
+       </tu>
+       <tu tuid="Provide reminders on the test, i.e. watch math signs">
+           <tuv xml:lang="es"><seg>Proporcionar recordatorios en los ex&#xE1;menes, ej: observar los s&#xED;mbolos matem&#xE1;ticos.</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide reminders on the test, i.e. watch math signs</seg></tuv>
+       </tu>
+       <tu tuid="Allow the student to refer to notes/text">
+           <tuv xml:lang="es"><seg>Permitir que el estudiante haga uso de notas/textos de referencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow the student to refer to notes/text</seg></tuv>
+       </tu>
+       <tu tuid="Dictate ideas to a peer or an adult">
+           <tuv xml:lang="es"><seg>Dictar ideas a un compa&#xF1;ero o a un adulto</seg></tuv>
+           <tuv xml:lang="en"><seg>Dictate ideas to a peer or an adult</seg></tuv>
+       </tu>
+       <tu tuid="Shorten writing assignments">
+           <tuv xml:lang="es"><seg>Acortar las asignaciones escritas</seg></tuv>
+           <tuv xml:lang="en"><seg>Shorten writing assignments</seg></tuv>
+       </tu>
+       <tu tuid="Use a tape recorder to dictate writing">
+           <tuv xml:lang="es"><seg>Usar una grabadora para dictar lo que hay que escribir</seg></tuv>
+           <tuv xml:lang="en"><seg>Use a tape recorder to dictate writing</seg></tuv>
+       </tu>
+       <tu tuid="Allow for use of computer and special software for outlining, word-processing, spelling, and/or grammar check">
+           <tuv xml:lang="es"><seg>Permitir el uso de computadoras y software especial para delinear, procesar palabras, verificar ortograf&#xED;a, y/o gram&#xE1;tica</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow for use of computer and special software for outlining, word-processing, spelling, and/or grammar check</seg></tuv>
+       </tu>
+       <tu tuid="Allow visual representation of ideas">
+           <tuv xml:lang="es"><seg>Permitir representaci&#xF3;n visual de ideas</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow visual representation of ideas</seg></tuv>
+       </tu>
+       <tu tuid="Provide a structure for the writing">
+           <tuv xml:lang="es"><seg>Proporcionar una estructura para la escritura</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide a structure for the writing</seg></tuv>
+       </tu>
+       <tu tuid="Allow use of flow chart for organizing before the student writes">
+           <tuv xml:lang="es"><seg>Permitir el uso de diagramas de flujo para organizarse antes de que el estudiante comience a escribir</seg></tuv>
+           <tuv xml:lang="en"><seg>Allow use of flow chart for organizing before the student writes</seg></tuv>
+       </tu>
+       <tu tuid="Grade on the basis of content, do not penalize for errors in mechanics, grammar, or spelling">
+           <tuv xml:lang="es"><seg>Calificar en base al contenido, no penalice por errores de mec&#xE1;nica, gram&#xE1;tica u ortograf&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Grade on the basis of content, do not penalize for errors in mechanics, grammar, or spelling</seg></tuv>
+       </tu>
+       <tu tuid="Pass/fail">
+           <tuv xml:lang="es"><seg>Aprob&#xF3;/reprob&#xF3;</seg></tuv>
+           <tuv xml:lang="en"><seg>Pass/fail</seg></tuv>
+       </tu>
+       <tu tuid="Attendance pass/fail">
+           <tuv xml:lang="es"><seg>Aprob&#xF3;/reprob&#xF3;  en asistencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Attendance pass/fail</seg></tuv>
+       </tu>
+       <tu tuid="Regular grading">
+           <tuv xml:lang="es"><seg>Calendario/Libro de asignaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Regular grading</seg></tuv>
+       </tu>
+       <tu tuid="Credit given if effort is commensurate">
+           <tuv xml:lang="es"><seg>Cr&#xE9;dito otorgado si el esfuerzo es conmensurado</seg></tuv>
+           <tuv xml:lang="en"><seg>Credit given if effort is commensurate</seg></tuv>
+       </tu>
+       <tu tuid="Modified grading scale">
+           <tuv xml:lang="es"><seg>Escala de calificaciones modificada</seg></tuv>
+           <tuv xml:lang="en"><seg>Modified grading scale</seg></tuv>
+       </tu>
+       <tu tuid="Student given credit for oral presentation">
+           <tuv xml:lang="es"><seg>Cr&#xE9;dito otorgado al estudiante por presentaci&#xF3;n oral</seg></tuv>
+           <tuv xml:lang="en"><seg>Student given credit for oral presentation</seg></tuv>
+       </tu>
+       <tu tuid="Student graded only on skills being taught">
+           <tuv xml:lang="es"><seg>El estudiante es calificado &#xFA;nicamente en las habilidades que han sido ense&#xF1;adas</seg></tuv>
+           <tuv xml:lang="en"><seg>Student graded only on skills being taught</seg></tuv>
+       </tu>
+       <tu tuid="Use supported writing device">
+           <tuv xml:lang="es"><seg>Usar dispositivo de escritura compatible</seg></tuv>
+           <tuv xml:lang="en"><seg>Use supported writing device</seg></tuv>
+       </tu>
+       <tu tuid="Provide supported writing software">
+           <tuv xml:lang="es"><seg>Proporcionar un sofware de escritura compatible</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide supported writing software</seg></tuv>
+       </tu>
+       <tu tuid="Use speech generating device">
+           <tuv xml:lang="es"><seg>Usar un dispositivo generador del habla</seg></tuv>
+           <tuv xml:lang="en"><seg>Use speech generating device</seg></tuv>
+       </tu>
+       <tu tuid="Use supported augmented speech options">
+           <tuv xml:lang="es"><seg>Usar opciones  compatibles para aumentar el habla</seg></tuv>
+           <tuv xml:lang="en"><seg>Use supported augmented speech options</seg></tuv>
+       </tu>
+       <tu tuid="Provide physical access strategies">
+           <tuv xml:lang="es"><seg>Proporcionar estrategias de acceso f&#xED;sico</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide physical access strategies</seg></tuv>
+       </tu>
+       <tu tuid="Provide vision supports for enlarged print">
+           <tuv xml:lang="es"><seg>Proporcione apoyos visuales para letras m&#xE1;s grandes</seg></tuv>
+           <tuv xml:lang="en"><seg>Provide vision supports for enlarged print</seg></tuv>
+       </tu>
+       <tu tuid="Braille">
+           <tuv xml:lang="es"><seg>Braille</seg></tuv>
+           <tuv xml:lang="en"><seg>Braille</seg></tuv>
+       </tu>
+       <tu tuid="Utilize auditory trainer systems">
+           <tuv xml:lang="es"><seg>Utilizar sistemas de capacitaci&#xF3;n auditivas</seg></tuv>
+           <tuv xml:lang="en"><seg>Utilize auditory trainer systems</seg></tuv>
+       </tu>
+       <tu tuid="Pacing">
+           <tuv xml:lang="es"><seg>Ritmo</seg></tuv>
+           <tuv xml:lang="en"><seg>Pacing</seg></tuv>
+       </tu>
+       <tu tuid="Lesson Presentation">
+           <tuv xml:lang="es"><seg>Presentaci&#xF3;n de la lecci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Lesson Presentation</seg></tuv>
+       </tu>
+       <tu tuid="Environment">
+           <tuv xml:lang="es"><seg>Ambiente</seg></tuv>
+           <tuv xml:lang="en"><seg>Environment</seg></tuv>
+       </tu>
+       <tu tuid="Materials">
+           <tuv xml:lang="es"><seg>Materiales</seg></tuv>
+           <tuv xml:lang="en"><seg>Materials</seg></tuv>
+       </tu>
+       <tu tuid="Assignments">
+           <tuv xml:lang="es"><seg>Asignaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Assignments</seg></tuv>
+       </tu>
+       <tu tuid="Social Interaction Support">
+           <tuv xml:lang="es"><seg>Apoyo de interacci&#xF3;n social</seg></tuv>
+           <tuv xml:lang="en"><seg>Social Interaction Support</seg></tuv>
+       </tu>
+       <tu tuid="Testing Accommodations">
+           <tuv xml:lang="es"><seg>Ajustes para el examen</seg></tuv>
+           <tuv xml:lang="en"><seg>Testing Accommodations</seg></tuv>
+       </tu>
+       <tu tuid="Writing Accommodations">
+           <tuv xml:lang="es"><seg>Ajustes para la escritura</seg></tuv>
+           <tuv xml:lang="en"><seg>Writing Accommodations</seg></tuv>
+       </tu>
+       <tu tuid="Other Assistive Technologies">
+           <tuv xml:lang="es"><seg>Otras tecnolog&#xED;as auxiliares</seg></tuv>
+           <tuv xml:lang="en"><seg>Other Assistive Technologies</seg></tuv>
+       </tu>
+       <tu tuid="Assistive Technology">
+           <tuv xml:lang="es"><seg>Tecnolog&#xED;a Auxiliar</seg></tuv>
+           <tuv xml:lang="en"><seg>Assistive Technology</seg></tuv>
+       </tu>
+       <tu tuid="Have you recorded the subject areas in which these modifications/accommodations should be addressed?">
+           <tuv xml:lang="es"><seg>&#xBF;Ha registrado las materias en las cuales estas modificaciones/ajustes deber&#xE1;n hacerse?</seg></tuv>
+           <tuv xml:lang="en"><seg>Have you recorded the subject areas in which these modifications/accommodations should be addressed?</seg></tuv>
+       </tu>
+       <tu tuid="Accomodations Checklist">
+           <tuv xml:lang="es"><seg>Lista de ajustes</seg></tuv>
+           <tuv xml:lang="en"><seg>Accomodations Checklist</seg></tuv>
+       </tu>
+       <tu tuid="Check to Show Accommodations Checklist">
+           <tuv xml:lang="es"><seg>Verifique que aparezca la lista de ajustes</seg></tuv>
+           <tuv xml:lang="en"><seg>Check to Show Accommodations Checklist</seg></tuv>
+       </tu>
+       <tu tuid="CONFIDENTIAL">
+           <tuv xml:lang="es"><seg>CONFIDENCIAL</seg></tuv>
+           <tuv xml:lang="en"><seg>CONFIDENTIAL</seg></tuv>
+       </tu>
+       <tu tuid="Teacher Report for Students Receiving">
+           <tuv xml:lang="es"><seg>Reporte del maestro para estudiantes que est&#xE1;n recibiendo servicios de educaci&#xF3;n especial&lt;br /&gt;&#xD;
+Modificaciones/Ajustes hechos actualmente en el IEP</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher Report for Students Receiving Special Education Services&lt;br /&gt;&#xD;
+        Modifications/Accommodations Currently Addressed on the IEP</seg></tuv>
+       </tu>
+       <tu tuid="Case Manager">
+           <tuv xml:lang="es"><seg>Administrador de Casos</seg></tuv>
+           <tuv xml:lang="en"><seg>Case Manager</seg></tuv>
+       </tu>
+       <tu tuid="Student">
+           <tuv xml:lang="es"><seg>Estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>Student</seg></tuv>
+       </tu>
+       <tu tuid="Grade">
+           <tuv xml:lang="es"><seg>Calificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Grade</seg></tuv>
+       </tu>
+       <tu tuid="IEP Manager">
+           <tuv xml:lang="es"><seg>Gerente del IEP</seg></tuv>
+           <tuv xml:lang="en"><seg>IEP Manager</seg></tuv>
+       </tu>
+       <tu tuid="Dear Teachers">
+           <tuv xml:lang="es"><seg>Estimados maestros</seg></tuv>
+           <tuv xml:lang="en"><seg>Dear Teachers</seg></tuv>
+       </tu>
+       <tu tuid="This student">
+           <tuv xml:lang="es"><seg>Este estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>This student</seg></tuv>
+       </tu>
+       <tu tuid="is eligible to receive special education services">
+           <tuv xml:lang="es"><seg>cumple con los requisitos para recibir servicios de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>is eligible to receive special education services</seg></tuv>
+       </tu>
+       <tu tuid="The following is a list of modifications">
+           <tuv xml:lang="es"><seg>A continuaci&#xF3;n aparece una lista con las modificaciones que beneficiar&#xE1;n a este estudiante. Las que est&#xE1;n se&#xF1;aladas han sido espec&#xED;ficamente recomendadas para este estudiante en su reuni&#xF3;n del IEP. Es su responsabilidad cumplir con las modificaciones/ajustes que aparecen en el listado a continuaci&#xF3;n. Por favor incorpore estas modificaciones/ajustes al planear las actividades en el sal&#xF3;n de clases. Se pueden a&#xF1;adir otras modificaciones/ajustes seg&#xFA;n se considere necesario</seg></tuv>
+           <tuv xml:lang="en"><seg>The following is a list of modifications that will  benefit this student. The ones that are marked have been specifically recommended for this student at his/her IEP meeting. It is your responsibility to follow the Modification/Accommodations listed below. Please incorporate these Modification/Accommodations when planning classroom activities. Other Modification/Accommodation can be added as deemed necessary</seg></tuv>
+       </tu>
+       <tu tuid="necessary to advance student toward attaining annual goals and progress in the general curriculum">
+           <tuv xml:lang="es"><seg>necesario para que el estudiante avance hacia el logro de los objetivos anuales y progrese en el programa general de estudios</seg></tuv>
+           <tuv xml:lang="en"><seg>necessary to advance student toward attaining annual goals and progress in the general curriculum</seg></tuv>
+       </tu>
+       <tu tuid="Note: Modification/Accommodation are not limited to the items marked and may be reviewed as needed">
+           <tuv xml:lang="es"><seg>Nota: Las modificaciones/ajustes no se limitan a los puntos se&#xF1;alados y pueden ser revisados seg&#xFA;n sea necesario</seg></tuv>
+           <tuv xml:lang="en"><seg>Note: Modification/Accommodation are not limited to the items marked and may be reviewed as needed</seg></tuv>
+       </tu>
+       <tu tuid="General Education Program Participation">
+           <tuv xml:lang="es"><seg>Participaci&#xF3;n en el Programa de Educaci&#xF3;n General</seg></tuv>
+           <tuv xml:lang="en"><seg>General Education Program Participation</seg></tuv>
+       </tu>
+       <tu tuid="Indicate the appropriate subject area">
+           <tuv xml:lang="es"><seg>Indique las materias apropiada adem&#xE1;s de las modificaciones/ajustes que deben proporcion&#xE1;rsele al estudiante en el programa de educaci&#xF3;n general. Si aplica m&#xE1;s de uno, entonces seleccione "Todos las materias" o seleccione "Otro"  y complete el campo del texo "Otro"  al final de la secci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Indicate the appropriate subject area beside all Modification/Accommodations that are to be provided to the student in the general education program. If more than one applies, then choose "All Subjects" or choose "Other" and complete the "Other" text field at the bottom of the section</seg></tuv>
+       </tu>
+       <tu tuid="Motivation Reinforcement">
+           <tuv xml:lang="es"><seg>Motivaci&#xF3;n y refuerzo</seg></tuv>
+           <tuv xml:lang="en"><seg>Motivation &amp; Reinforcement</seg></tuv>
+       </tu>
+       <tu tuid="Instructional Modification Accommodation">
+           <tuv xml:lang="es"><seg>Modificaciones/Ajustes instruccionales</seg></tuv>
+           <tuv xml:lang="en"><seg>Instructional Modification/Accommodation</seg></tuv>
+       </tu>
+       <tu tuid="Self Management Follow-through">
+           <tuv xml:lang="es"><seg>Auto control / Seguimiento propio</seg></tuv>
+           <tuv xml:lang="en"><seg>Self Management/Follow-through</seg></tuv>
+       </tu>
+       <tu tuid="Grading  Reporting Progress">
+           <tuv xml:lang="es"><seg>Calificaciones/Informe de progreso</seg></tuv>
+           <tuv xml:lang="en"><seg>Grading / Reporting Progress</seg></tuv>
+       </tu>
+       <tu tuid="DOB">
+           <tuv xml:lang="es"><seg>Fecha de nacimiento</seg></tuv>
+           <tuv xml:lang="en"><seg>DOB</seg></tuv>
+       </tu>
+       <tu tuid="All Subjects">
+           <tuv xml:lang="es"><seg>Todas las materias</seg></tuv>
+           <tuv xml:lang="en"><seg>All Subjects</seg></tuv>
+       </tu>
+       <tu tuid="Reading">
+           <tuv xml:lang="es"><seg>Lectura</seg></tuv>
+           <tuv xml:lang="en"><seg>Reading</seg></tuv>
+       </tu>
+       <tu tuid="English/Language Arts">
+           <tuv xml:lang="es"><seg>Ingl&#xE9;s/Artes del Lenguaje</seg></tuv>
+           <tuv xml:lang="en"><seg>English/Language Arts</seg></tuv>
+       </tu>
+       <tu tuid="Spelling">
+           <tuv xml:lang="es"><seg>Ortograf&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Spelling</seg></tuv>
+       </tu>
+       <tu tuid="Math">
+           <tuv xml:lang="es"><seg>Matem&#xE1;tica</seg></tuv>
+           <tuv xml:lang="en"><seg>Math</seg></tuv>
+       </tu>
+       <tu tuid="Science">
+           <tuv xml:lang="es"><seg>Ciencias</seg></tuv>
+           <tuv xml:lang="en"><seg>Science</seg></tuv>
+       </tu>
+       <tu tuid="Social Studies">
+           <tuv xml:lang="es"><seg>Estudios Sociales</seg></tuv>
+           <tuv xml:lang="en"><seg>Social Studies</seg></tuv>
+       </tu>
+       <tu tuid="Health">
+           <tuv xml:lang="es"><seg>Salud</seg></tuv>
+           <tuv xml:lang="en"><seg>Health</seg></tuv>
+       </tu>
+       <tu tuid="Economics">
+           <tuv xml:lang="es"><seg>Econom&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Economics</seg></tuv>
+       </tu>
+       <tu tuid="Physical Education">
+           <tuv xml:lang="es"><seg>Educaci&#xF3;n F&#xED;sica</seg></tuv>
+           <tuv xml:lang="en"><seg>Physical Education</seg></tuv>
+       </tu>
+       <tu tuid="Music/Art">
+           <tuv xml:lang="es"><seg>M&#xFA;sica/Arte</seg></tuv>
+           <tuv xml:lang="en"><seg>Music/Art</seg></tuv>
+       </tu>
+       <tu tuid="Career Education">
+           <tuv xml:lang="es"><seg>Educaci&#xF3;n sobre carreras profesionales</seg></tuv>
+           <tuv xml:lang="en"><seg>Career Education</seg></tuv>
+       </tu>
+       <tu tuid="Lunch">
+           <tuv xml:lang="es"><seg>Almuerzo</seg></tuv>
+           <tuv xml:lang="en"><seg>Lunch</seg></tuv>
+       </tu>
+       <tu tuid="Family and Consumer Science">
+           <tuv xml:lang="es"><seg>Familia y Ciencias del Consumidor </seg></tuv>
+           <tuv xml:lang="en"><seg>Family and Consumer Science</seg></tuv>
+       </tu>
+       <tu tuid="Library">
+           <tuv xml:lang="es"><seg>Biblioteca</seg></tuv>
+           <tuv xml:lang="en"><seg>Library</seg></tuv>
+       </tu>
+       <tu tuid="Title 1">
+           <tuv xml:lang="es"><seg>T&#xED;tulo 1</seg></tuv>
+           <tuv xml:lang="en"><seg>Title 1</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Statement of Special Education and Related Services">
+           <tuv xml:lang="es"><seg>Declaraci&#xF3;n de Educaci&#xF3;n Especial y Servicios Relacionados</seg></tuv>
+           <tuv xml:lang="en"><seg>Statement of Special Education and Related Services</seg></tuv>
+       </tu>
+       <tu tuid="PARENTAL CONSENT FOR PUBLIC SCHOOL DISTRICT TO ACCESS MEDICAID FUNDING (MIPS Consent Form)">
+           <tuv xml:lang="es"><seg>CONSENTIMIENTO DE LOS PADRES DE FAMILIA PARA QUE EL DISTRITO ESCOLAR P&#xDA;BLICO TENGA ACCESO A LOS FONDOS DE MEDICAID (Formulario de consentimeinto de MIPS)</seg></tuv>
+           <tuv xml:lang="en"><seg>PARENTAL CONSENT FOR PUBLIC SCHOOL DISTRICT TO ACCESS MEDICAID FUNDING (MIPS Consent Form)</seg></tuv>
+       </tu>
+       <tu tuid="State Law requires public schools">
+           <tuv xml:lang="es"><seg>La Ley Estatal requiere que las escuelas p&#xFA;blicas tengan acceso a los fondos federales de Medicaid para las terapias guiadas por un IEP  y  un IFSP provistas a ni&#xF1;os que cumplan con los requisitos para recibir Medicaid.  La Ley Federal requiere el consentimiento de los padres para que los distritos tengan acceso a estos fondos de Medicaid. El distrito no requerir&#xE1; que los padres o los ni&#xF1;os se inscriban en el programa de Medicaid de Nebraska y los reclamos s&#xF3;lo se presentar&#xE1;n en caso de que el ni&#xF1;o/estudiante sea elegible. No obstante, el distrito escolar a&#xFA;n debe proporcionar  todos los servicios de educaci&#xF3;n especial que sean requeridos para el ni&#xF1;o o para la familia, sin costo alguno. Este consentimiento es voluntario y puede ser anulado en cualquier momento. (Nebraska R.R.S. 43-2511; y 34 CFR 300.0 &amp; 34 CFR 300.154)</seg></tuv>
+           <tuv xml:lang="en"><seg>State Law requires public schools to access Federal Medicaid funding for IEP and IFSP directed therapies provided to children eligible for Medicaid.  Federal Law requires parental consent for districts to access this Medicaid funding.  The district will not require parents or children to enroll in the Nebraska Medicaid program and claims will only be submitted when the child/student is eligible.  Regardless, all required special education services must still be provided by the school district at no cost to the child or family.  This consent is voluntary and may be withdrawn at any time. (Nebraska R.R.S. 43-2511; and 34 CFR 300.0 &amp; 34 CFR 300.154)</seg></tuv>
+       </tu>
+       <tu tuid="consent refusal">
+           <tuv xml:lang="es"><seg>Este CONSENTIMIENTO/RECHAZO se hace en nombre del estudiante/ni&#xF1;o nombrado en la misma y aplica &#xFA;nicamente para las terapias identificadas y proporcionadas  actualmente en el per&#xED;odo de vigencia de este IEP/IFSP</seg></tuv>
+           <tuv xml:lang="en"><seg>This CONSENT/REFUSAL is made on behalf of the student/child named herein and applies only for therapies identified and actually provided during the effective period of this IEP/IFSP</seg></tuv>
+       </tu>
+       <tu tuid="Service follows school calendar">
+           <tuv xml:lang="es"><seg>El servicio sigue el calendario escolar</seg></tuv>
+           <tuv xml:lang="en"><seg>Service follows school calendar</seg></tuv>
+       </tu>
+       <tu tuid="Service">
+           <tuv xml:lang="es"><seg>Servicio</seg></tuv>
+           <tuv xml:lang="en"><seg>Service</seg></tuv>
+       </tu>
+       <tu tuid="Duration">
+           <tuv xml:lang="es"><seg>Duraci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Duration</seg></tuv>
+       </tu>
+       <tu tuid="Start Date">
+           <tuv xml:lang="es"><seg>Fecha de Inicio</seg></tuv>
+           <tuv xml:lang="en"><seg>Start Date</seg></tuv>
+       </tu>
+       <tu tuid="End Date">
+           <tuv xml:lang="es"><seg>Fecha de Finalizaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>End Date</seg></tuv>
+       </tu>
+       <tu tuid="Times/day">
+           <tuv xml:lang="es"><seg>Veces/d&#xED;a</seg></tuv>
+           <tuv xml:lang="en"><seg>Times/day</seg></tuv>
+       </tu>
+       <tu tuid="Frequency">
+           <tuv xml:lang="es"><seg>Frecuencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Frequency</seg></tuv>
+       </tu>
+       <tu tuid="Assistive Technology Devices or Services">
+           <tuv xml:lang="es"><seg>Dispositivos o servicios tecnol&#xF3;gicos auxiliares</seg></tuv>
+           <tuv xml:lang="en"><seg>Assistive Technology Devices or Services</seg></tuv>
+       </tu>
+       <tu tuid="Supports for School Personnel">
+           <tuv xml:lang="es"><seg>Apoyos para el personal escolar</seg></tuv>
+           <tuv xml:lang="en"><seg>Supports for School Personnel</seg></tuv>
+       </tu>
+       <tu tuid="Percent of time child spends in">
+           <tuv xml:lang="es"><seg>Porcentaje del tiempo que el ni&#xF1;o pasa en:</seg></tuv>
+           <tuv xml:lang="en"><seg>Percent of time child spends in</seg></tuv>
+       </tu>
+       <tu tuid="Written Notification to Access">
+           <tuv xml:lang="es"><seg>Notificaci&#xF3;n por Escrito par acceder a Los Beneficios P&#xFA;blicos o Seguro de un Ni&#xF1;o o Padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Written Notification to Access a Child's or Parent's Public Benefits or Insurance &#xD;
+</seg></tuv>
+       </tu>
+       <tu tuid="Date">
+           <tuv xml:lang="es"><seg>Fecha</seg></tuv>
+           <tuv xml:lang="en"><seg>Date</seg></tuv>
+       </tu>
+       <tu tuid="Student">
+           <tuv xml:lang="es"><seg>Estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>Student</seg></tuv>
+       </tu>
+       <tu tuid="Parent Guardian">
+           <tuv xml:lang="es"><seg>Padre/Tutor</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent/Guardian</seg></tuv>
+       </tu>
+       <tu tuid="As a parent of a child with a disability">
+           <tuv xml:lang="es"><seg>Como padre de un ni&#xF1;o con una discapacidad, usted tiene el derecho a ser notificado por primera vez y posteriormente cada a&#xF1;o si la escuela trata de acceder a los beneficios o seguros p&#xFA;blicos (ej. Medicaid) para pagar por servicios de educaci&#xF3;n especial requeridos que est&#xE1;n incluidos en el IEP de su hijo y que son necesarios para asegurar una Educaci&#xF3;n P&#xFA;blica Gratuita y Apropiada (FAPE).</seg></tuv>
+           <tuv xml:lang="en"><seg>As a parent of a child with a disability, you have a right to be notified the first time and annually thereafter if the school district seeks to access your or your child's public benefits or insurance (i.e. Medicaid) to pay for required special education and related services which are included on your child's IEP and are necessary to ensure a Free Appropriate Public Education (FAPE).</seg></tuv>
+       </tu>
+       <tu tuid="Prior to utilizing your or your child">
+           <tuv xml:lang="es"><seg>Antes de utilizar los beneficios p&#xFA;blicos o seguro de su hijo(a) por primera vez, se le pedir&#xE1; a usted su consentimiento. El consentimiento previo por escrito que usted proporcionara debe:</seg></tuv>
+           <tuv xml:lang="en"><seg>Prior to utilizing your or your child?s public benefits or insurance for the first time, you will be asked for your consent.  The prior written consent which you provide must:</seg></tuv>
+       </tu>
+       <tu tuid="specify the personally identifiable">
+           <tuv xml:lang="es"><seg>Especificar la informaci&#xF3;n personal identificable que tal vez revelen (ejem. records o informaci&#xF3;n acerca de los servicios que tal vez se proporcionen a cierto ni&#xF1;o en particular), </seg></tuv>
+           <tuv xml:lang="en"><seg>specify the personally identifiable information that may be disclosed (e.g., records or information about the services that may be provided to a particular child), </seg></tuv>
+       </tu>
+       <tu tuid="specify the purpose of the disclosure">
+           <tuv xml:lang="es"><seg>Especificar el prop&#xF3;sito de la revelaci&#xF3;n ( ejem: servicios de factura bajo la parte B), y </seg></tuv>
+           <tuv xml:lang="en"><seg>specify the purpose of the disclosure (e.g., billing for services under Part B), and </seg></tuv>
+       </tu>
+       <tu tuid="specify the agency to which">
+           <tuv xml:lang="es"><seg>Especificar la agencia a la cual se le puede revelar la informaci&#xF3;n ( ejem: los beneficios p&#xFA;blicos del estado o programa de seguro (Medicaid); y </seg></tuv>
+           <tuv xml:lang="en"><seg>specify the agency to which the disclosure may be made (e.g., the State's public benefits or insurance program (e.g., Medicaid)); and</seg></tuv>
+       </tu>
+       <tu tuid="specify that you">
+           <tuv xml:lang="es"><seg>Especificar que usted, el padre, entiende y acepta que el distrito escolar pudiera tener acceso a los beneficios p&#xFA;blicos o seguro de su hijo(a) para pagar por los servicios relacionados a su educaci&#xF3;n especial. </seg></tuv>
+           <tuv xml:lang="en"><seg>specify that you, the parent, understands and agrees that the school district may access your or your child's public benefits or insurance to pay for special education and related services.  </seg></tuv>
+       </tu>
+       <tu tuid="if you consent">
+           <tuv xml:lang="es"><seg>Si usted da su consentimiento, el distrito escolar anualmente le proporcionara una notificaci&#xF3;n por escrito de sus derechos con respecto al uso de los beneficios p&#xFA;blicos o de seguro.</seg></tuv>
+           <tuv xml:lang="en"><seg>If you consent, the school district will annually provide you with written notification of your rights regarding the use of your public benefits or insurance.</seg></tuv>
+       </tu>
+       <tu tuid="parents have the right to withdraw">
+           <tuv xml:lang="es"><seg>Los padres tienen derecho a retirar su consentimiento para la revelaci&#xF3;n de informaci&#xF3;n personal de sus hijo a la agencia responsable de la administraci&#xF3;n de las prestaciones publicas del Estado, o seguro (Medicaid) en cualquier momento. El retiro de consentimiento o la negativa a dar su consentimiento para revelar informaci&#xF3;n de la identificaci&#xF3;n personal a la agencia responsable de la administraci&#xF3;n de las prestaciones publicas del estado o seguro(Medicaid) no libera al distrito escolar de su responsabilidad de asegurar que toda educaci&#xF3;n especial requerida y relacionada con los servicios mencionados en el IEP del ni&#xF1;o(a) se proporcionen sin costo alguno para los padres. </seg></tuv>
+           <tuv xml:lang="en"><seg>Parents have the right to withdraw their consent to disclosure of their child's personally identifiable information to the agency responsible for the administration of the State's public benefits or insurance program (e.g., Medicaid) at any time.  The withdrawal of consent or refusal to provide consent to disclose personally identifiable information to the agency responsible for the administration of the State's public benefits or insurance program (e.g., Medicaid) does not relieve the school district of its responsibility to ensure that all required special education and related services as specified on the child's IEP are provided at no cost to the parents.</seg></tuv>
+       </tu>
+       <tu tuid="a school district may not">
+           <tuv xml:lang="es"><seg>Una escuela NO:</seg></tuv>
+           <tuv xml:lang="en"><seg>A school district may NOT:</seg></tuv>
+       </tu>
+       <tu tuid="require parents to sign up">
+           <tuv xml:lang="es"><seg>Exigir&#xE1; a los padres inscribirse en los beneficios de las escuelas publicas o programas de seguro (Medicaid) para que su hijo reciba una educaci&#xF3;n publica gratuita y apropiada(FEPE);</seg></tuv>
+           <tuv xml:lang="en"><seg>Require parents to sign up for or enroll in public benefits or insurance programs (e.g., Medicaid) in order for their child to receive a Free Appropriate Pubic Education (FAPE); </seg></tuv>
+       </tu>
+       <tu tuid="require parents to incur">
+           <tuv xml:lang="es"><seg>Requerir&#xE1; que los padres hagan un gasto de su bolsillo como pago de cantidad deducible, o co-pago incurrido en la presentaci&#xF3;n de una demanda por servicios de educaci&#xF3;n especial, (sin embargo, el distrito podr&#xED;a pagar el costo el cual los padres de otra manera podr&#xED;an estar obligados a pagar);</seg></tuv>
+           <tuv xml:lang="en"><seg>Require parents to incur an out-of-pocket expense such as the payment of a deductible or co-pay amount incurred in filing a claim for special education services;  (However, the district may pay the cost that the parents otherwise would be required to pay.)</seg></tuv>
+       </tu>
+       <tu tuid="may not use a child">
+           <tuv xml:lang="es"><seg>No puede utilizar los beneficios p&#xFA;blicos o seguro de un ni&#xF1;o si al utilizarlos: </seg></tuv>
+           <tuv xml:lang="en"><seg>May not use a child's benefits under a public benefits or insurance program if that use would:</seg></tuv>
+       </tu>
+       <tu tuid="decrease available lifetime">
+           <tuv xml:lang="es"><seg>Disminuye la cobertura de servicios a largo tiempo o cualquier otro beneficio asegurado; </seg></tuv>
+           <tuv xml:lang="en"><seg>Decrease available lifetime coverage or any other insured benefit;</seg></tuv>
+       </tu>
+       <tu tuid="result in the family paying">
+           <tuv xml:lang="es"><seg>Resultar&#xE1; en que la familia tenga que pagar por los servicios que de otra manera estar&#xED;an cubiertos por los beneficios p&#xFA;blicos o programas de seguro y que son necesarios durante el tiempo que el ni&#xF1;o esta fuera de la escuela; </seg></tuv>
+           <tuv xml:lang="en"><seg>Result in the family paying for services that would otherwise be covered by the public benefits or insurance program and that are required for the child outside of the time the child is in school;</seg></tuv>
+       </tu>
+       <tu tuid="increase premiums">
+           <tuv xml:lang="es"><seg>Incrementa el pago o causa la descontinuaci&#xF3;n a los beneficios de seguro;</seg></tuv>
+           <tuv xml:lang="en"><seg>Increase premiums or lead to the discontinuation of benefits or insurance; or</seg></tuv>
+       </tu>
+       <tu tuid="risk loss of eligibility">
+           <tuv xml:lang="es"><seg>Corre el riesgo de perder la elegibilidad de servicios o extensiones en casa y comunidad, basados en gastos agregados relacionados con la salud. </seg></tuv>
+           <tuv xml:lang="en"><seg>Risk loss of eligibility for home and community-based waivers, based on aggregate health-related expenditures</seg></tuv>
+       </tu>
+       <tu tuid="note">
+           <tuv xml:lang="es"><seg>NOTA:</seg></tuv>
+           <tuv xml:lang="en"><seg>NOTE:</seg></tuv>
+       </tu>
+       <tu tuid="this notice must be written and provided">
+           <tuv xml:lang="es"><seg>Testa nota debe ser escrita y proporcionada en lenguaje entendible para el publico en general, y proporcionado en el lenguaje nativo de los padres o otro m&#xE9;todo de comunicaci&#xF3;n utilizado por los padres a menos que esto no sea claramente posible hacerlo.</seg></tuv>
+           <tuv xml:lang="en"><seg>This notice must be written and provided in language understandable to the general public, and provided in the native language of the parents or other mode of communication used by the parents unless it is clearly not feasible to do so.  </seg></tuv>
+       </tu>
+       <tu tuid="if the parents native language">
+           <tuv xml:lang="es"><seg>Si el lenguaje nativo de los padres es otro que no sea Ingles, la informaci&#xF3;n fue proporcionada en el siguiente lenguaje: </seg></tuv>
+           <tuv xml:lang="en"><seg>If the parent's native language is other than English, the notice was provided in the following language:</seg></tuv>
+       </tu>
+       <tu tuid="spanish">
+           <tuv xml:lang="es"><seg>Espa&#xF1;ol</seg></tuv>
+           <tuv xml:lang="en"><seg>Spanish</seg></tuv>
+       </tu>
+       <tu tuid="other">
+           <tuv xml:lang="es"><seg>Otro (especifique)</seg></tuv>
+           <tuv xml:lang="en"><seg>Other (specify)</seg></tuv>
+       </tu>
+       <tu tuid="if the native language or other mode">
+           <tuv xml:lang="es"><seg>Si el lenguaje nativo u otro modo de comunicaci&#xF3;n de los padres no es lenguaje por escrito, el distrito escolar o cooperativa aprobada deber&#xE1; tomar los pasos necesarios para asegurarse de: (1) que la nota sea traducida oralmente o de otra manera a los padres en su lenguaje nativo o otro medio de comunicaci&#xF3;n: y (2) que el padre entienda el contenido de esta nota. </seg></tuv>
+           <tuv xml:lang="en"><seg>If the native language or other mode of communication of the parents is not a written language, the school district or approved cooperative shall take steps to ensure: (1) that the notice is translated orally or by other means to the parents in his or her native language or other mode of communication; and (2) that the parent understands the content of the notice.  </seg></tuv>
+       </tu>
+   </body>
+</tmx>

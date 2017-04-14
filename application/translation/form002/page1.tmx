@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Check all that apply to this MDT Report">
+           <tuv xml:lang="es"><seg>Marcar todo lo que sea pertinente a este reporte de MDT (de equipo multidisciplinario)</seg></tuv>
+           <tuv xml:lang="en"><seg>Check all that apply to this MDT Report</seg></tuv>
+       </tu>
+       <tu tuid="evaluations consisted of procedures">
+           <tuv xml:lang="es"><seg>Esta evaluaci&#xF3;n const&#xF3; de procedimientos que fueron utilizados para determinar si el ni&#xF1;o tiene una discapacidad y para determinar la naturaleza y el grado de educaci&#xF3;n especial y servicios relacionados que ser&#xE1;n proporcionados si el ni&#xF1;o es elegible. </seg></tuv>
+           <tuv xml:lang="en"><seg>The evaluations consisted of procedures that were used to determine whether the child has a disability and the nature and the extent of the special education and related services that will be provided, if the child qualifies.</seg></tuv>
+       </tu>
+       <tu tuid="Date MDT">
+           <tuv xml:lang="es"><seg>Fecha del MDT</seg></tuv>
+           <tuv xml:lang="en"><seg>Date MDT</seg></tuv>
+       </tu>
+       <tu tuid="Date Notice">
+           <tuv xml:lang="es"><seg>Fecha de la notificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Date Notice</seg></tuv>
+       </tu>
+       <tu tuid="Student Has Never Verified">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o nunca ha sido verificado</seg></tuv>
+           <tuv xml:lang="en"><seg>Student Has Never Verified</seg></tuv>
+       </tu>
+       <tu tuid="Initial Verification">
+           <tuv xml:lang="es"><seg>Verificaci&#xF3;n inicial</seg></tuv>
+           <tuv xml:lang="en"><seg>Initial Verification</seg></tuv>
+       </tu>
+       <tu tuid="This an initial Special Education verification according to 92 NAC 51 (Rule 51)">
+           <tuv xml:lang="es"><seg>Esta es una verificaci&#xF3;n inicial de Educaci&#xF3;n Especial seg&#xFA;n el 92 NAC 51 (Norma 51)</seg></tuv>
+           <tuv xml:lang="en"><seg>This an initial Special Education verification according to 92 NAC 51 (Rule 51)</seg></tuv>
+       </tu>
+       <tu tuid="Initial Verification date not found. Please add">
+           <tuv xml:lang="es"><seg>No se encuentra la fecha de la verificaci&#xF3;n inicial. Por favor agregar. </seg></tuv>
+           <tuv xml:lang="en"><seg>Initial Verification date not found. Please add</seg></tuv>
+       </tu>
+       <tu tuid="Check either A or B">
+           <tuv xml:lang="es"><seg>Marcar A o B</seg></tuv>
+           <tuv xml:lang="en"><seg>Check either A or B</seg></tuv>
+       </tu>
+       <tu tuid="Explanation">
+           <tuv xml:lang="es"><seg>Explicaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Explanation</seg></tuv>
+       </tu>
+       <tu tuid="Summary of data obtained">
+           <tuv xml:lang="es"><seg>Resumen de la informaci&#xF3;n obtenida</seg></tuv>
+           <tuv xml:lang="en"><seg>Summary of data obtained</seg></tuv>
+       </tu>
+       <tu tuid="Initial Verification Date">
+           <tuv xml:lang="es"><seg>Fecha de la verificaci&#xF3;n inicial</seg></tuv>
+           <tuv xml:lang="en"><seg>Initial Verification Date</seg></tuv>
+       </tu>
+       <tu tuid="Testing materials and procedures">
+           <tuv xml:lang="es"><seg>Procedimientos y materiales de la evaluaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Testing materials and procedures</seg></tuv>
+       </tu>
+       <tu tuid="MDT completion">
+           <tuv xml:lang="es"><seg>Finalizaci&#xF3;n del MDT</seg></tuv>
+           <tuv xml:lang="en"><seg>MDT completion</seg></tuv>
+       </tu>
+       <tu tuid="Explanation">
+           <tuv xml:lang="es"><seg>Explicaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Explanation</seg></tuv>
+       </tu>
+       <tu tuid="Summary of data obtained">
+           <tuv xml:lang="es"><seg>Resumen de la informaci&#xF3;n obtenida</seg></tuv>
+           <tuv xml:lang="en"><seg>Summary of data obtained</seg></tuv>
+       </tu>
+       <tu tuid="Is this an initial Special Education verification according to 92 NAC 51 (Rule 51):">
+           <tuv xml:lang="es"><seg> Es esta una verificaci&#xF3;n inicial de Educaci&#xF3;n Especial seg&#xFA;n el 92 NAC 51 (Norma 51)</seg></tuv>
+           <tuv xml:lang="en"><seg>Is this an initial Special Education verification according to 92 NAC 51 (Rule 51):</seg></tuv>
+       </tu>
+       <tu tuid="Never Verified">
+           <tuv xml:lang="es"><seg>Nunca se verific&#xF3;</seg></tuv>
+           <tuv xml:lang="en"><seg>Never Verified</seg></tuv>
+       </tu>
+       <tu tuid="The testing materials and procedures selected and administered were not racially or culturally discriminatory.">
+           <tuv xml:lang="es"><seg>Los materiales y procedimientos seleccionados y utilizados para la evaluaci&#xF3;n de ninguna manera discriminar&#xF3;n contra razas or culturas.  </seg></tuv>
+           <tuv xml:lang="en"><seg>The testing materials and procedures selected and administered were not racially or culturally discriminatory.</seg></tuv>
+       </tu>
+       <tu tuid="Materials and procedures used to assess a child with limited English proficiency were selected and administered to insure that they measure the extent to which the child has a disability and needs special education, rather than measuring the child's English language skills.">
+           <tuv xml:lang="es"><seg>Los materiales y procedimientos utilizados para la evaluaci&#xF3;n de ni&#xF1;os cuyo dominio del ingl&#xE9;s es limitado fueron seleccionados y utilizados para asegurar que se midiera el grado hasta el cual el ni&#xF1;o tiene una discapacidad y necesita educaci&#xF3;n especial,  m&#xE1;s no para medir las destreza del ni&#xF1;o con el idioma ingl&#xE9;s.</seg></tuv>
+           <tuv xml:lang="en"><seg>Materials and procedures used to assess a child with limited English proficiency were selected and administered to insure that they measure the extent to which the child has a disability and needs special education, rather than measuring the child's English language skills.</seg></tuv>
+       </tu>
+       <tu tuid="A variety of assessment tools and strategies are used to gather relevant functional, developmental and academic information about the child, including information provided by the parent, and information related to enabling the child to be involved in and progress in the general education curriculum (or for a preschool child, to participate in appropriate activities), that may assist in determining whether the child is a child with a disability according to 92 NAC 51 (Rule 51), and the content of the child's IEP or IFSP.">
+           <tuv xml:lang="es"><seg>Se utiliza una variedad de estrategias y herramientas de evaluaci&#xF3;n para recolectar informaci&#xF3;n funcional, de desarrollo y acad&#xE9;mica pertinente sobre el ni&#xF1;o/a, incluyendo informaci&#xF3;n proporcionada por los padres e informaci&#xF3;n relacionada que permita que el ni&#xF1;o/a est&#xE9; involucrado y progrese en el programa de educaci&#xF3;n regular (para ni&#xF1;os en programas pre-escolares, para que participen en actividades apropiadas) que pueda ayudar a determinar si el ni&#xF1;o/a tiene una discapacidad seg&#xFA;n el 92 NAC 51 (Norma 51), y el contenido del IEP o IFSP del ni&#xF1;o/a.</seg></tuv>
+           <tuv xml:lang="en"><seg>A variety of assessment tools and strategies are used to gather relevant functional, developmental and academic information about the child, including information provided by the parent, and information related to enabling the child to be involved in and progress in the general education curriculum (or for a preschool child, to participate in appropriate activities), that may assist in determining whether the child is a child with a disability according to 92 NAC 51 (Rule 51), and the content of the child's IEP or IFSP.</seg></tuv>
+       </tu>
+       <tu tuid="All data information obtained from the parent was considered for the purpose of making the verification decision.">
+           <tuv xml:lang="es"><seg>Toda la informaci&#xF3;n de datos obtenida de los padres fue considerada con el prop&#xF3;sito de tomar la decisi&#xF3;n de verificaci&#xF3;n.</seg></tuv>
+           <tuv xml:lang="en"><seg>All data information obtained from the parent was considered for the purpose of making the verification decision.</seg></tuv>
+       </tu>
+       <tu tuid="Instruments used to complete the MDT evaluation have been validated for the specific purpose for which they were used.">
+           <tuv xml:lang="es"><seg>Los instrumentos utilizados para completar la evaluaci&#xF3;n del MDT (equipo multidisciplinario) han sido verificados para el prop&#xF3;sito espec&#xED;fico para el cual fueron utilizados.</seg></tuv>
+           <tuv xml:lang="en"><seg>Instruments used to complete the MDT evaluation have been validated for the specific purpose for which they were used.</seg></tuv>
+       </tu>
+       <tu tuid="The MDT evaluation was completed in the language and form most likely to yield accurate information on what the child knows and can do academically, developmentally and functionally.">
+           <tuv xml:lang="es"><seg>La evaluaci&#xF3;n del MDT (equipo multidisciplinario) fue completada en el lenguaje y formato m&#xE1;s apropiado para que los resultados proporcionen informaci&#xF3;n acertada sobre qu&#xE9; es lo que el ni&#xF1;o sabe y puede hacer en  &#xE1;reas acad&#xE9;micas, de desarrollo y funcional. </seg></tuv>
+           <tuv xml:lang="en"><seg>The MDT evaluation was completed in the language and form most likely to yield accurate information on what the child knows and can do academically, developmentally and functionally.</seg></tuv>
+       </tu>
+       <tu tuid="It was not feasible to complete the MDT evaluation in the child's predominant or native language or other mode of communication.">
+           <tuv xml:lang="es"><seg>No fue posible completar la evaluaci&#xF3;n del MDT (equipo multidisciplinario)  en el idioma materno o predominante u otra modalidad de comunicaci&#xF3;n del ni&#xF1;o/a. </seg></tuv>
+           <tuv xml:lang="en"><seg>It was not feasible to complete the MDT evaluation in the child's predominant or native language or other mode of communication.</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+   </body>
+</tmx>

@@ -1,0 +1,52 @@
+<?php 
+    //$view = $this->form->ifsptype->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<form action="/form013/create/student/<?=$this->student; ?>" id="myform" method="post">
+	<?= new Zend_Form_Element_Hidden('submitted') ?>
+	<div  width="100%" style="margin-top:50px;">
+	    <div style="background-color:yellow;">
+	    	<B>What type of IFSP do you wish to create?</B>
+	    </div> 
+	    <div>
+	    	<?php if(isset($this->params['submitted']) && 1 == $this->params['submitted'] && (!isset($this->params['ifsptype']) || '' == $this->params['ifsptype'])) { 
+	    			echo "<span style=\"color:red;\">You must select an ifsp type.</span>";
+	    		}
+	    	?>
+	    	<?php echo $this->form->ifsptype; ?>
+	    </div> 
+	</div>
+	<div  width="100%" style="margin-top:10px;">
+	    <div style="background-color:yellow;">
+	    	<B>Importing Data- Please select how you would like import data into this IFSP?</B>
+	    </div> 
+	    <div>
+	    	<?php if(isset($this->params['submitted']) && 1 == $this->params['submitted'] && (!isset($this->params['import']) || '' == $this->params['import'])) { 
+	    			echo "<span style=\"color:red;\">You must select an import option.</span>";
+	    		}
+	    	?>
+	    	<?php echo $this->form->import; ?>
+	    </div> 
+	</div>
+	<div  width="100%" style="margin-top:10px;">
+	    <div>
+	    	<?php if(
+			    		isset($this->params['submitted']) && 
+			    		1 == $this->params['submitted'] && 
+			    		(
+			    			((!isset($this->params['updateFromThisIfsp']) || '' == $this->params['updateFromThisIfsp']) && isset($this->params['import']) && 'duplicate' == $this->params['import']) ||
+				    		((!isset($this->params['updateFromThisIfsp']) || '' == $this->params['updateFromThisIfsp']) && isset($this->params['import']) && 'update' == $this->params['import'])
+				    	) 
+		    		) { 
+		    			echo "<span style=\"color:red;\">You must select an IFSP to import from when selecting to {$this->params['import']} the ifsp..</span>";
+	    		}
+	    	?>
+	    	<?php echo $this->form->updateFromThisIfsp;?>
+	    </div> 
+	    <div>
+	    	<?php echo $this->form->button; ?>
+	    </div> 
+	</div>
+
+</form>

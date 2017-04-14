@@ -1,0 +1,78 @@
+<?php
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo '<input type="hidden" name="goto_id_form_010" id="goto_id_form_010" value="" />';
+echo '<input type="hidden" name="goto_id_student" id="goto_id_student" value="" />';
+
+// get the view into a variable
+$view = $this->element->page->getView();
+?>
+<?= $this->element->id_form_010; ?>
+<?= $this->element->page; ?>
+<? // uploader
+if('print'!=$view->mode) { echo $this->fileUploader();
+} ?>
+<BR>
+<table style="width: 100%">
+    <tr>
+        <td>
+            <?= $this->element->date_notice; ?>
+        </td>
+    </tr>
+</table>
+<div class="noprint">
+    <?php
+
+    // display all the progress reports for the IEP that this
+    // progress report is related to
+    echo $this->progressReportTabs($view, 'progress_reports');
+
+
+    if('edit' == $view->mode) {
+
+        // link to add report
+        if($view->accessArrayObj->form_010['new']) {
+            ?><a href="<?php echo $this->url(array(
+                'controller' => 'form010',
+                'action' => 'create',
+                'parent_key' => 'id_form_004',
+                'parent_id' => $view->db_form_data['id_form_004'],
+                'student' => $view->db_form_data['student_data']['id_student'],
+            ));?>"><?php echo $this->translate('Add Report'); ?></a><?php
+        }
+
+        // link to delete report
+        if($view->accessArrayObj->form_010['Draft']['delete']) { ?>
+            <a href="<?php echo $this->url(array(
+                'controller' => 'form010',
+                'action' => 'delete',
+                'document' => $view->db_form_data['id_form_010'],
+            ));?>"><?php echo $this->translate('Delete Report'); ?></a><?php
+        }
+    }
+    ?>
+</div>
+<?php
+// Display related goal progress rows for this progress report
+if(isset($view->db_form_data['goal_progress'])) { ?>
+<table class="" id="goal_progress_parent" style="width: 100%">
+    <tr><td>
+        <table class="" cellpadding="0" cellspacing="0" >
+            <tr>
+                <td style="height:21px;">
+				<span class="">
+					<?= $view->form->getSubForm('goal_progress')->getElement('subformTitle')->getValue(); ?>&nbsp;
+                    <?= $view->form->getSubForm('goal_progress')->getElement('count');?>
+				</span>
+                </td>
+            </tr>
+        </table>
+    </td>
+    </tr>
+    <?php echo $this->subform($view, 'goal_progress', false); ?>
+</table><?
+}
+
+//if('945069' == $this->element->id_form_010->getValue()) {
+//    Zend_Debug::dump($view->db_form_data);
+//}

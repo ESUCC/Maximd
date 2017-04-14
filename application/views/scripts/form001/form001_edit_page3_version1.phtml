@@ -1,0 +1,152 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?php echo $this->element->id_form_001; ?>
+<?php echo $this->element->page; ?>
+
+<?php if('print' == $view->mode && '' == $this->element->consent->getValue() ) { ?>
+    <?php echo $this->parentSignatureForm001(); ?>
+<?php } else { ?>
+<table class="formTitleHead">
+    <tr>
+        <td class="printBoldLabel"><?php echo $this->translate('Give Consent for Initial Evaluation'); ?></td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="consent_wrapper_1-colorme" class="colorme">
+            <?   
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                $a->setMultiOptions(array("1" => $this->element->consent->getMultiOption("1")));
+                $a->setAttrib('onchange', "javascript:modified('', '', '', '', '', '');" . "colorMeById(this.id, 'consent_wrapper_1');");
+                $a->removeDecorator('label');
+                $a->setAttrib('label_class', 'sc_bulletInputLeft'); // set an attribute in the label of the multi-option
+//                Zend_Debug::dump($a->helper);
+                echo $a;
+            ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="formTitleHead">
+    <tr>
+        <td class="printBoldLabel"><?php echo $this->translate('Do Not Give Consent for Initial Evaluation'); ?></td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="consent_wrapper_0-colorme" class="colorme">
+            <?   
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                $a->setMultiOptions(array("0" => $this->element->consent->getMultiOption("0")));
+                $a->setAttrib('onchange', "javascript:modified('', '', '', '', '', '');" . "colorMeById(this.id, 'consent_wrapper_0');");
+                $a->removeDecorator('label');
+                $a->setAttrib('label_class', 'sc_bulletInputLeft'); // set an attribute in the label of the multi-option
+                echo $a;
+            ?>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" class="p8888">
+        <?php echo $this->element->no_consent_reason; ?>
+        </td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr><td colspan="2" class="p8888"><?php echo $this->element->received_rule_55; ?></td></tr>
+</table>
+<?php
+
+if('print' == $view->mode) {
+	?>
+	<table class="formInput" style="margin-top:1px;">
+	    <tr>
+	        <td width="100" valign="bottom" style="height:25px;white-space: nowrap;"><?php echo $this->translate('Parent Signature'); ?>:</td>
+	        <td width="250px" align="left" valign="bottom" style="white-space: nowrap;">
+	        <?php 
+	        if('print' == $view->mode) {
+	            echo '<hr size="1" />'; 
+	        } else {
+	            echo '<img src="/images/line_black.gif" width="250px" height="1px" border="0">&nbsp;&nbsp;';
+	        }
+	        ?></td>
+	        <td  style="white-space: nowrap;">
+	        <?php 
+	        if('t' != $this->element->signature_on_file->getValue() && 'print' == $view->mode) {
+	        } else {
+	            echo $this->element->signature_on_file;
+	        }
+	        ?></td>
+	    </tr>
+	</table>
+	<table class="formInput" style="margin-top:1px;">
+	    <tr>
+	        <td>
+	        <?php
+	        echo $view->DateOrUnderline($view, $this->element->consent_date); 
+	        ?>
+	        </td>
+	    </tr>
+	</table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td>
+            <?php
+            echo $view->DateOrUnderline($view, $this->element->date_district_received); 
+            ?>
+            </td>
+        </tr>
+    </table>
+	<?php
+} else {
+	?>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td width="100" valign="bottom" style="height:25px;white-space: nowrap;"><?php echo $this->translate('Parent Signature'); ?>:</td>
+            <td width="250px" align="left" valign="bottom" style="white-space: nowrap;">
+            <?php 
+            if('print' == $view->mode) {
+                echo '<hr size="1" />'; 
+            } else {
+                echo '<img src="/images/line_black.gif" width="250px" height="1px" border="0">&nbsp;&nbsp;';
+            }
+            ?></td>
+            <td  style="white-space: nowrap;">
+            <?php 
+            if('t' != $this->element->signature_on_file->getValue() && 'print' == $view->mode) {
+            } else {
+                echo $this->element->signature_on_file;
+            }
+            ?></td>
+        </tr>
+    </table>
+    <table class="formInput">
+        <tr>
+            
+            <?php
+                if('' == $this->element->consent_date->getValue() && 'print' == $view->mode) {
+                    echo '<td style="white-space: nowrap;">'.$this->translate('Consent Date').': </TD><td><hr size="1" /></TD>';
+                } else {
+                    echo '<td style="white-space: nowrap;">';
+                    echo $this->element->consent_date;
+                    echo '</TD>';
+                }
+            ?>
+            <td style="white-space: nowrap;"><?php echo $this->element->date_district_received; ?></td>
+        </tr>
+    </table>
+	<?php
+}
+
+?>
+
+
+<?php } ?>

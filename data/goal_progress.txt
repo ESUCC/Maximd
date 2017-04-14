@@ -1,0 +1,27 @@
+Drop VIEW goal_progress;
+
+CREATE VIEW goal_progress AS
+    Select 
+        goal.short_term_obj, 
+        goal.measurable_ann_goal, 
+        goal.schedule, 
+        goal.eval_procedure, 
+        goal.id_student,
+        progress.id_form_004_goal, 
+        progress.id_form_010, 
+        progress.progress_measurement, 
+        progress.progress_sufficient, 
+        progress.progress_comment, 
+        progress.id_goal_progress, 
+        progress.progress_measurement_explain 
+    from 
+        iep_form_004_goal goal, 
+        iep_form_004_goal_progress progress 
+    where 
+        goal.id_form_004_goal = progress.id_form_004_goal
+         
+ORDER BY 
+    id_form_004_goal ASC;
+
+    
+    --select id_form_010 from goal_progress where id_student = '1001077';

@@ -1,0 +1,159 @@
+<?php 
+$view = $this->element->page->getView();
+if (true !== $view->db_form_data['summary_form']) {
+	$summaryForm = false;
+} else {
+	$summaryForm = true;
+}
+if(isset($view->db_form_data['district'])) {
+    $district = $view->db_form_data['district'][0];
+} else {
+    $district = array();
+}
+
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo $this->element->id_form_004;
+echo $this->element->page;
+
+?>
+<?php if (!$summaryForm || $district['iep_summary_transportation']) :?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Transportation'); ?></td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <TD>
+        <table class="formInput" style="margin-top:1px;">
+            <tr>
+                <td style="text-align: left;" colspan="2">
+                    <?php 
+                        echo "<B>" . $this->element->transportation_yn->getLabel() . "</B> ";
+                        echo $this->element->transportation_yn->getMultiOption((int) $this->element->transportation_yn->getValue());
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php 
+                        echo "<B>" . $this->element->transportation_why->getLabel() . "</B> ";
+                        echo $this->element->transportation_why->getValue();
+                    ?>
+                </td>
+            </tr>
+        </table>
+        </TD>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td><B><?php echo $this->translate('special education transportation'); ?>:</B></td>
+    </tr>
+    <tr>
+        <td>
+        <?php 
+            echo $this->element->transportation_desc->getValue();
+        ?>
+        </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_assessment']) :?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Assessment'); ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+        <?php 
+            if('print' == $view->mode) {
+                //echo "<B>" . $this->element->assessment_accom->getLabel() . "</B>";
+                if (strlen($this->element->assessment_accom->getValue()) > 0)
+                echo "<B>" . $this->translate($this->element->assessment_accom->getValue()) . "</B> ";
+            } else {
+                echo $this->element->assessment_accom;
+            }
+            
+        ?></td>
+    </tr>
+    <tr>
+        <td>
+            <?php
+            if('print' == $view->mode) {
+                if($this->element->district_assessments && 'The child will participate in district-wide assessment WITH accommodations, as specified:' != $this->element->assessment_accom->getValue()) {
+                    echo $this->element->assessment_desc->getValue();
+                } elseif($this->element->district_assessments) {
+					echo $this->element->assessment_desc->getValue();
+                } else {
+                    // old forms
+                    echo $this->element->assessment_desc->getValue();
+                }
+            }
+            ?>
+            <?php
+            if('print' == $view->mode && $this->element->district_assessments) {
+                if('The child will participate in district-wide assessment WITH accommodations, as specified:' == $this->element->assessment_accom->getValue()) {
+                    echo $this->element->district_assessments->getValue();
+                }
+            }
+            ?>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td><b><?php echo $this->translate('academic and functional performance'); ?>:</b></td>
+    </tr>
+    <tr>
+        <td>
+        <?php 
+            echo $this->element->assessment_alt->getValue();
+        ?>
+        </td>
+    </tr>
+</table>
+<?php endif; ?>
+<?php if (!$summaryForm || $district['iep_summary_extended_school_services']) :?>
+<?php if(!$view->lps || 10 <= $view->version) { ?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Extended School Year Services'); ?></td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+            <table class="formInput" style="margin-top:1px;">
+            <tr>
+                <td>
+		        <?php 
+                    echo "<B>" . $this->element->ext_school_year_yn->getLabel() . "</B> ";
+                    echo $this->element->ext_school_year_yn->getMultiOption((int) $this->element->ext_school_year_yn->getValue());
+		        ?>
+                </td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+    
+    <tr>
+        <td><B><?php echo $this->translate('child will participate'); ?>:</B></td>
+    </tr>
+    <tr>
+        <td>
+        <?php 
+            echo "<B>" . $this->element->ext_school_year_desc->getLabel() . "</B> ";
+            echo $this->element->ext_school_year_desc->getValue();
+        ?>
+        </td>
+    </tr>
+</table>
+<?php } ?>
+<?php endif; ?>

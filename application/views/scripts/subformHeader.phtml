@@ -1,0 +1,18 @@
+<table class="<?php if (in_array($this->element->subformName->getValue(), array('team_member', 'form_002_suppform', 'team_member_absences', 'iep_form_004_goal','iep_form_004_suppform', 'ifsp_goals', 'team_members', 'iep_form_018_supp', 'gen_ed_teacher', 'school_representative', 'special_ed_teacher', 'special_knowledge', 'eval_results', 'home_community', 'other_services','other_attendee'))) { echo 'formTitleHead'; } elseif(in_array($this->element->subformName->getValue(), array('ifsp_parents'))) {echo 'formSectionHead';} else { echo 'sc_subSectionHead'; } ?>">
+	<tr>
+		<td>
+			<?= $this->element->subformTitle->getValue(); ?> &nbsp;
+		    <?= $this->element->count;?>
+			<?= $this->element->addrow; ?>
+			<?= $this->element->add_subform_row; ?>
+		    <span class="dataAssisstant" id="dataAssisstant__<?= $this->element->subformName->getValue(); ?>"
+		    	style="display:none;height:auto;">
+		    	<a href="JavaScript:void()" onClick="dijit.byId('dialog__dataAssisstant__<?= $this->element->subformName->getValue(); ?>').show()">Data Assisstant</a>
+		    </span>
+		</td>
+		<td align="right">
+		    <?= $this->element->override;?>
+		</td>
+	</tr>
+</table>
+

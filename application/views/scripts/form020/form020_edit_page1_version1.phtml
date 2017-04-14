@@ -1,0 +1,277 @@
+<?php 
+	   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+    ?>
+    <?= $this->element->id_form_020; ?>
+    <?= $this->element->page; ?>
+    
+  <table class="formTitleHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+      <td>TRANSPORTATION INFORMATION</td>
+    </tr>
+  </table>
+  <table class="formInput"  class="formInput" >
+    <tr>
+        <td colspan="2">
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+    <tr>
+      <td colspan="2" class="tanHead"><strong>FOR CHILDREN 6 YEARS OF AGE OR YOUNGER</strong>:</td>
+    </tr>
+    <tr>
+      <td><?php echo $this->element->bip_weight; ?></td>
+      <td><?php echo $this->element->bip_height; ?></td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td class="tanHead" colspan="2"><strong>PARENT/GUARDIAN</strong>: Indicate relationship and name of contacts</td>
+    </tr>
+    <tr>
+      <td class="formInput">
+        <table class="formInput"  border="0">
+          <tr>
+            <td><?php echo $this->element->st_contact_1; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->st_name_1; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->st_phone_home_1; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->st_phone_work_1; ?></td>
+          </tr>
+        </table>
+      </td>
+      <td class="formInput">
+        <table class="formInput"  border="0">
+          <tr>
+            <td><?php echo $this->element->st_contact_2; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->st_name_2; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->st_phone_home_2; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->st_phone_work_2; ?></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td class="tanHead" colspan="4"><strong>PICK-UP AND DELIVERY ADDRESS</strong>:<br>
+      (Address must be same for both)</td>
+      <td class="tanHead" colspan="4"><strong>EMERGENCY ADDRESS</strong>:<br>
+      (Within the Bellevue School District Only)</td>
+    </tr>
+    <tr>
+      <td class="formInput" colspan="4">
+        <table class="formInput" >
+          <tr>
+            <td><?php echo $this->element->pu_add1_name; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->pu_add1_address; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->pu_add1_phone; ?></td>
+          </tr>
+        </table>
+      </td>
+      <td class="formInput" colspan="4">
+        <table class="formInput" >
+          <tr>
+            <td><?php echo $this->element->pu_add2_name; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->pu_add2_address; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->pu_add2_phone; ?></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td class="tanHead"><em>Students who need either supervision at home or assistance on and off the bus must be met by an adult. The parent must select one of the following options for students being provided specialized transportation.</em></td>
+    </tr>
+    <tr>
+      <td>&nbsp;&nbsp;<?php echo $this->element->spec_transportation; ?></td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td colspan="2" class="tanHead"><strong>If the parent indicates that the child can enter the residence without adult supervision, Bellevue Public Schools will not be responsible for the child after the student leaves the school bus. By choosing this option, the parent releases Bellevue Public Schools from any and all liability for the safety and well-being of the student after the child exits the school bus.</strong></td>
+    </tr>
+    <tr>
+      <td><?php echo $this->element->med_side_effect; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $this->element->med_allergies; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $this->element->med_physician; ?></td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td colspan="2" class="tanHead">Parental Signature</td>
+    </tr>
+    <tr>
+      <td><?php echo $this->element->parental_sig; ?></td>
+    </tr>
+  </table>
+  <table class="formSectionHead">
+    <tr>
+      <td>OFFICE USE ONLY (This section of the form is not printed or viewable by parents)</td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td><strong>STUDENT IS ELIGIBLE FOR SPECIALIZED TRANSPORTATION</strong>:
+      <?php echo $this->element->office_use_spec_transportation; ?></td>
+    </tr>
+    <tr>
+      <td>If yes, eligibility is based upon:
+      <?php echo $this->element->office_use_based_on; ?></td>
+    </tr>
+  </table>
+  <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+      <td>SPECIAL SAFETY REQUIREMENTS</td>
+    </tr>
+  </table>
+  <table class="formInput" >
+    <tr>
+      <td class="formInput" colspan="4">
+        <table class="formInput" >
+          <tr>
+            <td><?php echo $this->element->ssr_wheel_chair_lift; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->ssr_nurse_aid; ?></td>
+          </tr>
+        </table>
+      </td>
+      <td class="formInput" colspan="4">
+        <table class="formInput" >
+          <tr>
+            <td><?php echo $this->element->srs_safety_restraint; ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $this->element->ssr_child_seat; ?></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+      <td>HANDICAPPING CONDITION(S)</td>
+    </tr>
+  </table>
+  <?php /*
+  <table class="formInput" >
+  <?php $viewMode = trim($this->element->mode->getValue()); ?>
+    <tr>
+      <td class="formInput" colspan="4">
+        <table class="formInput" >
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_specific_learning->isChecked()) {echo $this->element->handi_specific_learning;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_behavior_disorder->isChecked()) {echo $this->element->handi_behavior_disorder;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_mild_mental_dis->isChecked()) {echo $this->element->handi_mild_mental_dis;} ?></</td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_mod_mental_dis->isChecked()) {echo $this->element->handi_mod_mental_dis; }?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_sev_mental_dis->isChecked()) {echo $this->element->handi_sev_mental_dis;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_speech_imp->isChecked()) {echo $this->element->handi_speech_imp;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_autism->isChecked()) {echo $this->element->handi_autism;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_hearing_imp->isChecked()) {echo $this->element->handi_hearing_imp;} ?></td>
+          </tr>
+         
+        </table>
+      </td>
+      <td class="formInput" colspan="4">
+        <table class="formInput" >
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_orth_imp->isChecked()) {echo $this->element->handi_orth_imp;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_visual_dis->isChecked()) {echo $this->element->handi_visual_dis;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_deaf_blind->isChecked()) {echo $this->element->handi_deaf_blind;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_multihandi->isChecked()) {echo $this->element->handi_multihandi;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_tram_brain->isChecked()) {echo $this->element->handi_tram_brain;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_other_hearing->isChecked()) {echo $this->element->handi_other_hearing;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_dev_dis->isChecked()) {echo $this->element->handi_dev_dis;} ?></td>
+          </tr>
+          <tr>
+            <td><?php if($viewMode != 'print' || $this->element->handi_other->isChecked()) {echo $this->element->handi_other;} ?></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  */ ?>
+  <?php // START TABLE Fix?>
+  <div class="checkboxTableFix">
+  <?php $viewMode = trim($this->element->mode->getValue()); ?>
+			<?php if($viewMode != 'print' || $this->element->handi_specific_learning->isChecked()) {echo $this->element->handi_specific_learning;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_behavior_disorder->isChecked()) {echo $this->element->handi_behavior_disorder;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_mild_mental_dis->isChecked()) {echo $this->element->handi_mild_mental_dis;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_mod_mental_dis->isChecked()) {echo $this->element->handi_mod_mental_dis; }?>
+			<?php if($viewMode != 'print' || $this->element->handi_sev_mental_dis->isChecked()) {echo $this->element->handi_sev_mental_dis;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_speech_imp->isChecked()) {echo $this->element->handi_speech_imp;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_autism->isChecked()) {echo $this->element->handi_autism;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_hearing_imp->isChecked()) {echo $this->element->handi_hearing_imp;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_orth_imp->isChecked()) {echo $this->element->handi_orth_imp;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_visual_dis->isChecked()) {echo $this->element->handi_visual_dis;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_deaf_blind->isChecked()) {echo $this->element->handi_deaf_blind;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_multihandi->isChecked()) {echo $this->element->handi_multihandi;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_tram_brain->isChecked()) {echo $this->element->handi_tram_brain;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_other_hearing->isChecked()) {echo $this->element->handi_other_hearing;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_dev_dis->isChecked()) {echo $this->element->handi_dev_dis;} ?>
+			<?php if($viewMode != 'print' || $this->element->handi_other->isChecked()) {echo $this->element->handi_other;} ?>
+			<span style="visibility:hidden;">&nbsp</span>
+  </div><!-- END tablefix -->
+  
+  <?php // END TABLE Fix?>
+  
+  <table class="formInput" >
+    <tr>
+      <td><?php echo $this->element->attending_school; ?></td>
+    </tr>
+    <tr>
+      <td><?php echo $this->element->preschool_program; ?></td>
+    </tr>
+  </table>
+  

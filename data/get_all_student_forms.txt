@@ -1,0 +1,83 @@
+--
+-- Name: get_all_student_forms(integer, character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE or replace FUNCTION get_all_student_forms(id_student integer, view_type character varying, statuslimit character varying) RETURNS SETOF student_forms_row
+    LANGUAGE plpgsql
+    AS $$
+DECLARE
+    sqlStmt varchar;
+    r student_forms_row%rowtype;
+    dateLimitText varchar;
+    statusLimitText varchar;
+BEGIN
+    
+    Raise Notice 'view_type:%', view_type;
+
+    --
+    -- date limitation
+    --
+    IF 'current' = lower(view_type) THEN
+        dateLimitText := ' and timestamp_created >= now() - INTERVAL ''13 months'' ';
+    ELSE
+        dateLimitText := '';
+    END IF;
+    
+    --
+    -- status limitation
+    --
+    IF 'final' = lower(statusLimit) THEN
+        statusLimitText := ' and status = ''Final'' ';
+    ELSIF 'any' = statusLimit THEN
+        statusLimitText := '';
+    ELSE
+        statusLimitText := ' and status = ''' || initcap(statusLimit) || ''' ';
+    END IF;
+
+    --
+    -- build selects for all forms
+    --
+    sqlStmt := NULL;
+    sqlStmt := student_forms_conditional_add(view_type, 'form_001', sqlStmt, 'SELECT version_number, CAST(''001'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_001 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_001 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_002', sqlStmt, 'SELECT version_number, CAST(''002'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_002 as id, status, '''' as title, date_mdt as date, page_status, id_case_mgr, CASE WHEN date_mdt IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_002 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_003', sqlStmt, 'SELECT version_number, CAST(''003'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_003 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_003 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_004', sqlStmt, 'SELECT version_number, CAST(''004'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_004 as id, status, '''' as title, date_conference as date, page_status, id_case_mgr, CASE WHEN date_conference IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_004 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_005', sqlStmt, 'SELECT version_number, CAST(''005'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_005 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_005 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_006', sqlStmt, 'SELECT version_number, CAST(''006'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_006 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_006 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_007', sqlStmt, 'SELECT version_number, CAST(''007'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_007 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_007 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_008', sqlStmt, 'SELECT version_number, CAST(''008'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_008 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_008 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_009', sqlStmt, 'SELECT version_number, CAST(''009'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_009 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_009 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+--    sqlStmt := student_forms_conditional_add(view_type, 'form_010', sqlStmt, 'SELECT version_number, CAST(''010'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_010 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_010 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_011', sqlStmt, 'SELECT version_number, CAST(''011'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_011 as id, status, '''' as title, mdt_conf_date as date, page_status, id_case_mgr, CASE WHEN mdt_conf_date IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_011 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_012', sqlStmt, 'SELECT version_number, CAST(''012'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_012 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_012 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_013', sqlStmt, 'SELECT version_number, CAST(''013'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_013 as id, status, '''' as title, meeting_date as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_013 WHERE id_student = ' || id_student || statusLimitText || dateLimitText || ' AND ''parent exists'' != get_parentexists(id_form_013) ');
+    sqlStmt := student_forms_conditional_add(view_type, 'form_014', sqlStmt, 'SELECT version_number, CAST(''014'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_014 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_014 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_015', sqlStmt, 'SELECT version_number, CAST(''015'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_015 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_015 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_016', sqlStmt, 'SELECT version_number, CAST(''016'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_016 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_016 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_017', sqlStmt, 'SELECT version_number, CAST(''017'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_017 as id, status, title as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_017 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_018', sqlStmt, 'SELECT version_number, CAST(''018'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_018 as id, status, title as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_018 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_019', sqlStmt, 'SELECT version_number, CAST(''019'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_019 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_019 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_020', sqlStmt, 'SELECT version_number, CAST(''020'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_020 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_020 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_021', sqlStmt, 'SELECT version_number, CAST(''021'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_021 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_021 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_022', sqlStmt, 'SELECT version_number, CAST(''022'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_022 as id, status, '''' as title, date_mdt as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_022 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_023', sqlStmt, 'SELECT version_number, CAST(''023'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_023 as id, status, '''' as title, date_conference as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_023 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_024', sqlStmt, 'SELECT version_number, CAST(''024'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_024 as id, status, '''' as title, date_conference as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_024 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_025', sqlStmt, 'SELECT version_number, CAST(''025'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_025 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_025 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_026', sqlStmt, 'SELECT version_number, CAST(''026'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_026 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_026 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_027', sqlStmt, 'SELECT version_number, CAST(''027'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_027 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_027 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_028', sqlStmt, 'SELECT version_number, CAST(''028'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_028 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_028 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_029', sqlStmt, 'SELECT version_number, CAST(''029'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_029 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_029 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := student_forms_conditional_add(view_type, 'form_030', sqlStmt, 'SELECT version_number, CAST(''030'' as CHAR( 3 ) ) as form_no, timestamp_created,  to_char(timestamp_created,''MM/DD/YYYY'') as create_date, id_form_030 as id, status, '''' as title, date_notice as date, page_status, id_case_mgr, CASE WHEN date_notice IS NULL THEN 0 ELSE 1 END AS date_null FROM iep_form_030 WHERE id_student = ' || id_student || statusLimitText || dateLimitText);
+    sqlStmt := sqlStmt || 'ORDER BY timestamp_created DESC, status ASC, date_null ASC, date DESC';
+    
+    --
+    -- loop to return all rows
+    --
+    IF '' != sqlStmt THEN 
+        for r in EXECUTE sqlStmt loop
+            return next r;
+        end loop;
+    END IF;
+    return;    
+
+END;$$;

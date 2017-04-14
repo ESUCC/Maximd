@@ -1,0 +1,87 @@
+<?php
+ $view = Zend_Layout::getMvcInstance()->getView();
+ $formatFields = array(
+        'id_student' => array('id_student', 'searchId'),
+        'name_full' => array('name_full', 'searchName'),
+        'name_county' => array('name_county', 'searchCounty'),
+        'name_district' => array('name_district', 'searchDistrict'),
+        'name_school' => array('name_school', 'searchSchool'),
+        'role' => array('user_role', 'searchUserRole'),
+        'manager' => array('name_case_mgr', 'searchCaseMGR'),
+        'address' => array('address', 'searchAddress'),
+        'phone' => array('phone', 'searchPhone'),
+        'iep' => array('iep_due_date_link', 'searchIEP'),
+        'mdt' => array('mdt_due_date_link', 'searchMDT'),
+         'age' => array('age', 'searchId'),
+         'dob' => array('dob', 'searchMDT'),
+         );
+ ?>
+<li class="<?php echo ($this->partialCounter%2 ==0) ? 'even' : 'odd'; ?>">
+    <ul>
+        <?php foreach ($view->formatFields AS $field) : 
+            if (!empty($field)) : ?>
+            <li class="<?php echo $formatFields[$field][1]; ?>">
+            <?php if ('mdt' == $field) : ?>
+            <?php 
+                $mdtTimeAddition = "+3 years -1 day";
+                $det_noticeTimeAddition = "+3 years -1 day";
+                $mdt_due_date_link = '';
+              
+                if(!empty($this->mdtorform001_final_id) && "form_002" == $this->mdtorform001_final_form_type) {
+                    $mdt_due_date_link = "<i><B>" . date("m/d/y", strtotime($this->mdtorform001_final_date_created . $mdtTimeAddition))  .  "</b></i>";
+                } elseif(isset($this->mdtorform001_final_id) && "form_012" == $this->mdtorform001_final_form_type) {
+                    $mdt_due_date_link = "<i><B>" . date("m/d/y", strtotime($this->mdtorform001_final_date_created . $det_noticeTimeAddition))."*" . "</i></B>";
+                }
+                
+                $mdt_dueDate = strip_tags($mdt_due_date_link);
+                $mdt_dueDate = str_replace("*", "", $mdt_dueDate); // date could have an astrick
+                $mdt_dueDate_interval = round((strtotime($mdt_dueDate) - strtotime('today')) / 86400 + 1);
+                if($mdt_dueDate_interval <= 60 && $mdt_dueDate_interval >= 0) {
+                    $mdt_due_date_link = "<span class=\"btsOrange\">" . $mdt_due_date_link . "</span>";
+                
+                } elseif($mdt_dueDate_interval < 0) {
+                    $mdt_due_date_link = "<span class=\"btsRed\">" . $mdt_due_date_link . "</span>";
+                }
+                
+                echo $mdt_due_date_link;
+            ?>
+            <?php elseif ('iep' == $field) : ?>
+            <?php
+                $iepTimeAddition = ""; //No time addition per SRSSUPP-689
+                $ifspTimeAddition = "-1 day +182 days";
+                
+                // Dupe IEP link
+                if(!empty($this->iep_id) && "form_004" == $this->form_type) {
+                    // build display field for the date
+                    $iep_due_date_link = "<i><B>" . date("m/d/y", strtotime($this->iep_date_conference_duration . $iepTimeAddition))  .  "</b></i>";
+                } elseif(isset($this->iep_id) && "form_013" == $this->form_type) {
+                    // add astrik if ifsp
+                    $iep_due_date_link = "<i><B>" . date("m/d/y", strtotime($this->iep_date_conference . $ifspTimeAddition))."*" . "</i></B>";
+                
+                } else {
+                    $iep_due_date_link = '';
+                }
+                
+                // make red if less than 60 days away
+                $iep_dueDate = strip_tags($iep_due_date_link);
+                $iep_dueDate = str_replace("*", "", $iep_dueDate); // date could have an astrick
+                $iep_dueDate_interval = round((strtotime($iep_dueDate) - strtotime('today')) / 86400 + 1);
+                if($iep_dueDate_interval <= 60 && $iep_dueDate_interval >= 0) {
+                    $iep_due_date_link = "<span class=\"btsOrange\">" . $iep_due_date_link . "</span>";
+                
+                } elseif($iep_dueDate_interval < 0) {
+                    $iep_due_date_link = "<span class=\"btsRed\">" . $iep_due_date_link . "</span>";
+                } 
+                
+                echo $iep_due_date_link;
+            ?>
+            <?php elseif ('role' == $field) : ?>
+            <?php echo $this->UserRole($this->id_student); ?>
+            <?php else : ?>
+            <?php echo $this->$formatFields[$field][0]; ?>
+            <?php endif; ?>
+            </li>
+        <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+</li>

@@ -1,0 +1,413 @@
+
+.bt {color:#000000;}
+.bts {color:#000000;}
+.btsb {font-weight:800; color:#000000;}
+.btsbRed {font-weight:800; color:#FF0000;}
+.btsRed {color:#FF0000;}
+.btsLBlue {color:#0033FF;}
+
+.printCellUnderline {
+	padding-top:10px;
+	border-bottom:2px black solid;
+}
+.printCellUnderlineThin {
+	padding-top:10px;
+	border-bottom:1px black solid;
+}
+.printCellUnderlineThinPaddedTable td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.printCellUnderlineThinPadded {
+    padding-top:10px;
+	border-bottom:1px black solid;
+}
+.printCellGrey {
+	background-color:grey;
+}
+
+table.formTop {
+    padding:2px 4px 2px 4px;
+	font-size:12pt;
+    width:100%;
+    color:#000000;
+    background-color:#FFFFFF;
+    margin-top:3px;
+}
+table.formTitleHead {
+    padding:2px 4px 2px 4px;
+	font-size:12pt;
+	width:100%;
+	height:19px;
+	font-weight:800;
+    color: black;
+    background-color: white;
+	margin-top:5px;
+	border-bottom: 2px solid #000;
+}
+/*form title/instruction text*/
+table.formSectionHead {
+    padding:2px 4px 2px 4px;
+	font-size:12pt;
+	width:100%;
+	height:19px;
+	font-weight:800;
+    color: black;
+    background-color: white;
+	margin-top:5px;
+	border-bottom: 2px solid #000;
+}
+table.formDesc {
+    padding:2px 4px 2px 4px;
+	font-size:12pt;
+	width:100%;
+	color:#000000;
+    background-color: transparent;
+	margin-top:1px;
+}
+table.formInput {
+    padding:1px;
+	font-size:12pt;
+    width:100%;
+    color:#000000;
+    background-color: transparent;
+}
+table.formInput tr.printSpaceUnder > td
+{
+    padding-bottom: 1em;
+}
+
+td.tanHead {
+    padding:2px 4px 2px 4px;
+	color:#000000;
+	background-color: transparent;
+}
+tr.tanHead {
+    padding:2px 4px 2px 4px;
+    color:#000000;
+    background-color: transparent;
+}
+
+div.formTitle {
+    font-size:20pt;
+    font-weight:800;
+}
+
+
+
+
+
+.boldItalicText {
+    font-weight:300;
+    font-size:8pt;
+    font-family:verdana,helvetica,arial;
+    color:#000000;
+    font-weight: bold;
+    font-style: italic;
+}
+.italicText {
+    font-weight:300;
+    font-size:8pt;
+    font-family:verdana,helvetica,arial;
+    color:#000000;
+    font-style: italic;
+}
+input[type="checkbox"] {
+    border: solid black thin;
+	padding-bottom: 0px;
+}
+input[checked] {
+    border: solid black thin;
+    content: "X";   /* check mark character */
+    padding-bottom: 3px;
+}
+input[type="radio"] {
+    margin-right: 4px;
+}
+
+p {margin:.5; padding: .5;}
+
+.noprint { display:none;}
+.printTeammemberUnderline {
+	border-bottom: thin solid black;
+	height: 15px;
+	padding-left: 8px;
+	padding-right: 5px;
+}
+
+.srsLabel{
+    margin-left: 4px;
+}
+
+.srsDescription{
+	margin-left: 4px;
+}
+
+.srsCheckboxLabel{
+}
+
+.srsCheckboxDescription{
+}
+
+
+
+
+
+@page {
+    @bottom-left {
+        content: flow(footer);
+    }
+    @top-right {
+        content: flow(header);
+	    text-align:right;
+	    padding-right:20px;
+	    border: solid 1;
+    }
+}
+#printFooter {
+    prince-flow: static(footer);
+}
+#printHeader {
+    prince-flow: static(header);
+}
+
+.printFooterLine1 {
+    font-weight:600;
+    font-size:5pt;
+    font-family:verdana,helvetica,arial;
+    color:#000000;
+}
+.printFooterLine2 {
+    font-weight:400;
+    font-size:6pt;
+    font-family:verdana,helvetica,arial;
+    color:#000000;
+}
+
+.printFooterStatus {
+    font-weight:800;
+    font-size:9pt;
+    font-family:verdana,helvetica,arial;
+    color:#000000;
+}
+
+table.print {
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	border-collapse: collapse;
+}
+table.print th {
+	border-width: thin thin thin thin;
+	padding: 3px 3px 3px 3px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	-moz-border-radius: 3px 3px 3px 3px;
+}
+table.print td {
+	border-width: thin thin thin thin;
+	padding: 3px 3px 3px 3px;
+	border-style: solid solid solid solid;
+	border-color: black black black black;
+	-moz-border-radius: 3px 3px 3px 3px;
+}
+
+@page landscape {
+    size: US-Letter landscape;
+    margin: .25in .5in 1.35in .5in;
+}
+@page portrait {
+    size: US-Letter portrait;
+    margin: .5in .5in 1.35in .5in;
+}
+@page page9LandscapeIfsp {
+    size: US-Letter landscape;
+    margin: .25in .5in 1.35in .5in;
+    @bottom-left {
+        content: flow(printFooterNoStatus);
+    }
+}
+#printFooterNoStatus {
+    prince-flow: static(printFooterNoStatus);
+}
+
+@page page1LandscapeNoStatus {
+    size: US-Letter landscape;
+    margin: .25in .5in 1.35in .5in;
+    @bottom-left {
+        content: flow(printFooterNoStatus);
+    }
+}
+
+div.page1 { page: landscape; }
+div.page2 { page: landscape; }
+div.page3 { page: landscape; }
+div.page4 { page: landscape; }
+div.page4am { page: landscape; }
+div.page5 { page: landscape; }
+div.page6 { page: landscape; }
+div.page7 { page: landscape; }
+div.page8 { page: landscape; }
+div.page8mips { page: landscape; }
+div.page8am { page: landscape; }
+div.page9 { page: landscape; }
+
+div.page1Landscape { page: landscape; }
+div.page1LandscapeNoStatus { page: page1LandscapeNoStatus; }
+div.page2Landscape { page: landscape; }
+div.page3Landscape { page: landscape; }
+div.page4Landscape { page: landscape; }
+div.page5Landscape { page: landscape; }
+div.page6Landscape { page: landscape; }
+div.page7Landscape { page: landscape; }
+div.page8Landscape { page: landscape; }
+div.page9Landscape { page: landscape; }
+div.page9LandscapeIfsp { page: page9LandscapeIfsp; }
+
+div.page1Portrait { page: portrait; }
+div.page2Portrait { page: portrait; }
+div.page3Portrait { page: portrait; }
+div.page4Portrait { page: portrait; }
+div.page5Portrait { page: portrait; }
+div.page6Portrait { page: portrait; }
+div.page7Portrait { page: portrait; }
+div.page8Portrait { page: portrait; }
+div.page9Portrait { page: portrait; }
+div.pageSupp { page: portrait; }
+
+ul.bullet { list-style-type: disc }
+
+
+
+
+.srsLabel{
+	margin-left: 4px;
+	font-weight:800;
+}
+
+.srsDescription{
+	margin-left: 4px;
+}
+
+.srsCheckboxLabel{
+    font-weight:400;
+}
+
+.srsCheckboxDescription{
+}
+
+.srsLabelNoBold {
+    margin-left: 25px;
+}
+
+
+.print_bgWhite   {font-weight:500; font-size:8pt; font-family:verdana,helvetica,arial; color:#000000;}
+.print_bgGreyBold   {background-color: rgb(204, 204, 204); font-weight:800; font-size:11pt; font-family:verdana,helvetica,arial; color:#000000;}
+.print_bgGreyBoldGoal   {background-color: rgb(204, 204, 204); font-weight:800; color:#000000;}
+.print_bgGreySmall   {background-color: rgb(204, 204, 204); font-weight:300; font-size:9pt; font-family:verdana,helvetica,arial; color:#000000;}
+.print_bgGreySmallGoal   {background-color: rgb(204, 204, 204); font-weight:300; color:#000000;}
+
+.print_bgWhiteSmall   {background-color: #FFFFFF; font-weight:300; font-size:9pt; font-family:verdana,helvetica,arial; color:#000000;}
+.print_bgWhiteSmallGoal   {background-color: #FFFFFF; font-weight:300; color:#000000;}
+.print_bgWhiteMed   {background-color: #FFFFFF; font-weight:300; font-size:11pt; font-family:verdana,helvetica,arial; color:#000000;}
+.print_bgWhiteMedGoal   {background-color: #FFFFFF; font-weight:300;color:#000000;}
+.print_bgWhiteLarge   {background-color: #FFFFFF; font-weight:800; font-size:12pt; font-family:verdana,helvetica,arial; color:#000000;}
+
+
+.printBoldLabel {
+    font-weight:800;
+}
+
+.printIndent {
+    margin:5px 0 0 30px;
+}
+.printIndentCell {
+    padding-left:30px;
+}
+
+.noBold {
+    font-weight:normal;
+}
+
+.printBoldLabeWithBorder {
+    font-weight:800;
+    border-bottom:1px solid #333;
+    display:block;
+}
+.printBoldLabeWithBorderWidth {
+    font-weight:800;
+    border-bottom:1px solid #333;
+    display:block;
+    width:700px;
+}
+.printBoldLabeWithBorderWidthLandscape {
+    font-weight:800;
+    border-bottom:1px solid #333;
+    display:block;
+    width:950px;
+}
+.printEditor {
+	padding-left:20px;
+}
+
+.confidential {
+    float:right;
+    color:#fff;
+    background-color:#aaa;
+    border:1px solid #333;
+    padding:5px 10px;
+}
+
+#override-colorme {
+    display:none;
+}
+
+.make-strong-print {
+	font-weight:bold;
+}
+
+.pagebreak-print {
+	page-break-before: always;
+}
+.tinyMceEditor p {
+    margin:0;
+    padding:0;
+}
+.tinyMceEditor ol{
+    margin-top: 3px;
+}
+.tinyMceEditor ul{
+    margin-top: 5px;
+}
+table.printGrey {
+    background: #666;
+    color: #fff;
+    width:100%;
+}
+#district-use-only {
+	border-top:1px solid #000;
+	border-left:1px solid #000;
+}
+#district-use-only td {
+	border-right:1px solid #000;
+	border-bottom:1px solid #000;
+}
+#district-use-only .small-head {
+	font-size:10px;
+	margin:0;
+	padding:2px;
+}
+#district-use-only .small-head-color {
+	background-color:#eee;
+}
+#district-use-only .no-bott-border {
+	border-bottom:none;
+}
+#district-use-only .add-height {
+	height:25px;
+}
+.printNoLink {
+	text-decoration:none;
+	color:#000;
+}

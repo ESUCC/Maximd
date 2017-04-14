@@ -1,0 +1,107 @@
+<?php 
+    $view = $this->element->page->getView();
+    
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_031; ?>
+<?= $this->element->page; ?>
+    
+<table class="formInput" style="margin-top:1px;">    
+<?php if('print' != $view->mode) { ?> 
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>
+<?php } ?>    
+    <tr>
+        <td>
+            <? echo "Your child has been referred to the Early Development Network (EDN). ".
+                $view->db_form_data['name_district'] . " proposes to conduct a multidisciplinary evaluation of".
+                "your child to determine eligibility for Early Development Network services.";
+            ?>
+		</td>
+   </tr>
+    <tr>
+        <td>1. Explanation of why the district proposes to evaluate your child:
+        <?php echo $this->element->explanation; ?>
+            <p>The multidisciplinary evaluation process must be completed within 45 calendar days from the time the
+                referral was received by the Early Development Network. If exceptional family circumstances exist,
+                the evaluation and assessment process may be delayed.</p>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td style="width:635px">Following is a description of the components of the multidisciplinary evaluation
+            which the district proposes to conduct:</td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap;"><strong><em>Adaptive Development</em></strong><br>
+            Multidisciplinary Evaluation Description:</td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->element->academic; ?></td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap;"><strong><em>Cognitive</em></strong><br>
+            Multidisciplinary Evaluation Description:</td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->element->intellectual; ?></td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap;"><strong><em>Physical Development (Including Vision and
+                    Hearing)</em></strong><br>
+            Multidisciplinary Evaluation Description:</td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->element->perceptual; ?></td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap;"><strong><em>Social and Emotional Development</em></strong><br>
+            Multidisciplinary Evaluation Description:</td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->element->social; ?></td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap;"><strong><em>Speech and Language (Communication)
+                    Development</em></strong><br>
+            Multidisciplinary Evaluation Description:</td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->element->speech; ?></td>
+    </tr>
+    <tr>
+        <td style="white-space: nowrap;"><strong><em>Other</em></strong><br>
+            Multidisciplinary Evaluation Description:</td>
+    </tr>
+    <tr>
+        <td>
+            <?php echo $this->element->other; ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <p>If your child is determined eligible for EDN services, a child assessment will be conducted to identify
+                your child’s unique strengths and needs in all areas of development and the early intervention services
+                appropriate to meet those needs. Consent is required prior to completing your child’s assessment. The
+                assessment of your child must include:</p>
+            <ul style="list-style:none;">
+                <li>(a) a review of the results of the evaluation, if conducted;</li>
+                <li>(b) observations of your child; and</li>
+                <li>(c) the identification of your child's needs in each of the developmental areas within the context
+                    of your family's routines and activities.</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+

@@ -1,0 +1,98 @@
+<?php 
+$view = $this->element->page->getView();
+	   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_004; ?>
+<?= $this->element->page; ?>
+<?= $this->element->dob; ?>
+
+<table class="formTitleHead">
+    <tr>
+        <td class="printBoldLabeWithBorderWidthLandscape"><?php echo $this->translate('Present Level of Academic Achievement and Functional Performance'); ?></td>
+    </tr>
+    <?php if(0) { ?>
+    <tr>
+        <td>
+<form method="post" action="/file-upload/loadfile" id="fileUploaderForm"
+	enctype="multipart/form-data" >
+	<fieldset>
+		<legend>Form Post Test</legend>
+		<input name="uploadedfile" multiple="true" type="file" id="uploader"
+			dojoType="dojox.form.Uploader" label="Select Some Files" >
+		<input type="submit" label="Submit" dojoType="dijit.form.Button" onClick="dijit.byId('uploader').upload();" />
+		<div id="files" dojoType="dojox.form.uploader.FileList"
+			uploaderId="uploader"></div>
+	</fieldset>
+</form>
+		</td>
+    </tr>
+    <tr>
+        <td class="">
+        	<?
+        	echo $this->element->pdf_filepath_present_lev_perf; 
+        	$info = pathinfo($this->element->pdf_filepath_present_lev_perf->getValue());
+        	?>
+        	<table style="background-color:grey;" >
+        	<tr>
+        		<td width="*" >
+				<div id="pdf_filepath_present_lev_perf-button" style="text-align:center;background-color:grey;"
+					<?php if('edit' == $view->mode) { ?> 
+						onclick="javascript:showPdfDialog('pdf_filepath_present_lev_perf')"
+					<?php } ?>
+					>
+					<span id="pdf_filepath_present_lev_perf-text">
+					<?php 
+					if('' == $this->element->pdf_filepath_present_lev_perf->getValue()) { 
+						echo 'Click to insert pdf';
+						$checkBoxStyle = "display:none;";
+					} elseif('edit' == $view->mode) {
+						echo 'PDF will be attached to end of printed document: ('.
+							$this->element->pdf_filepath_present_lev_perf->getValue(),'.'.$info['extension'].')<br/>'.
+							'Click to upload a different PDF.';
+						$checkBoxStyle = "";
+					} else {
+						echo 'PDF will be attached to end of printed document: ('.
+							$this->element->pdf_filepath_present_lev_perf->getValue(),'.'.$info['extension'].')';
+						$checkBoxStyle = "";
+					}
+					?>
+					</span>
+				</div>
+				</td>
+				<?php if('edit' == $view->mode) { ?>
+				<td id="pdf_filepath_present_lev_perf-remove" style="<?= $checkBoxStyle ?>">
+					<input type="button" onclick="clearPdfFileValue('pdf_filepath_present_lev_perf');" value="Remove">
+				</td>
+				<?php } ?>
+        	</tr>
+        	</table>
+		</td>
+    </tr>
+    <?php } ?>
+</table>
+
+<table class="formInput">        
+     <tr class="bgLight2">
+    	<td>
+    		<?php echo $this->translate('Present level description'); ?>:
+    	</td>
+    </tr>
+    <?php if ('print' != $view->mode) : ?>
+    <tr>
+        <td>
+            <?php echo $this->element->addressed_physical_education; ?>
+        </td>
+    </tr>
+    <?php endif; ?>
+     <tr>
+        <td style="">
+        	<?php $this->element->present_lev_perf->removeDecorator('label'); ?>
+            <?php echo $this->element->present_lev_perf->getDescription(); ?>
+            <?php if ('print' == $view->mode) echo '<br />'; ?> 
+            <?php echo $this->element->present_lev_perf; ?>
+        </td>
+    </tr>
+</table>   
+
+<?php //echo $this->element->debugger;

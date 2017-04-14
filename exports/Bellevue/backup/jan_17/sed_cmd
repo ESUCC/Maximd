@@ -1,0 +1,2 @@
+sed -i -e 's/<\/strong>//g' SRS.txt
+sed -i -e 's/<strong>//g' filename

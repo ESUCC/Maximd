@@ -1,0 +1,11 @@
+<?php
+echo '<div class="page1Portrait">';
+echo $this->header;
+echo $this->footer;
+echo $this->student_header;
+echo $this->pages [1] . '</div>'; // end page 1 div
+echo '<div class="page2Portrait" style="page-break-before: always;">';
+echo str_replace('Revocation', 'Prior Written Notice: Revocation', $this->header);
+echo $this->footer;
+echo $this->student_header_026;
+echo $this->pages[2].'</div>';

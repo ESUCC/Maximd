@@ -1,0 +1,98 @@
+<?php
+$view = $this->element->page->getView();
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+
+    <br />
+<?php
+if('print' == $view->mode || 'view' == $view->mode) {
+    $tablePrinted = false;
+    for ($i = 1; $i <= $view->db_form_data['team_members']['count']; $i++) {
+        if(!$tablePrinted) {
+            echo '<table class="formInput" style="width:100%;" border="0">
+			<tr>
+				<th colspan="5" style="text-align:left;">
+					Team Members Present at the Meeting
+				</th>
+			</tr>
+		    <tr class="tanHead">
+		        <td class="printCellUnderline" style="width:33%;">
+		            Print Name
+		        </td>
+		        <td class="printCellUnderline" style="width:33%;">
+		            Role/Other
+		        </td>
+		        <td class="printCellUnderline" style="width:33%;">
+		            Address and Phone
+		        </td>
+		    </tr>
+			';
+            $tablePrinted = true;
+        }
+        if(isset($view->db_form_data['team_members_'.$i])) {
+            echo $view->form->getSubForm('team_members_'.$i);
+        }
+    }
+    if($tablePrinted) {
+        echo '</table>';
+    }
+} else {
+    echo $this->subform($view, 'team_members');
+}
+
+
+echo "<br />";
+
+if('print' == $view->mode || 'view' == $view->mode) {
+    $tablePrinted = false;
+    for ($i = 1; $i <= $view->db_form_data['team_other']['count']; $i++) {
+        if(!$tablePrinted) {
+            echo '<table class="formInput" style="width:100%;" border="0">
+					<tr>
+						<th colspan="4" style="text-align:left;">
+							Others who are part of the Child/Family Team
+						</th>
+					</tr>
+				    <tr class="tanHead printBoldLabel">
+				        <td style="width:20%">
+				            Name
+				        </td>
+				        <td style="width:20%">
+				            Role
+				        </td>
+				        <td style="width:40%">
+				            Address and Phone
+				        </td>
+				        <td style="width:20%">
+				            Family initial for copy of pages sent
+				        </td>
+				        <td class="noprint noview">
+				            Remove
+				        </td>
+				    </tr>
+						';
+            $tablePrinted = true;
+        }
+        if(isset($view->db_form_data['team_other_'.$i])) {
+            echo $view->form->getSubForm('team_other_'.$i);
+        }
+    }
+    if($tablePrinted) {
+        echo '</table>';
+    }
+} else {
+    echo $this->subform($view, 'team_other');
+}
+
+if('edit' == $view->mode) {
+    ?>
+    <script type="text/javascript">
+        var previousTeamMembers = <?php echo $view->previousTeamMembers; ?>;
+    </script>
+<?php
+}
+
+//echo $view->previousTeamMembers; ?>

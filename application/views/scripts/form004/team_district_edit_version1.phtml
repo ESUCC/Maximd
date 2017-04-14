@@ -1,0 +1,63 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<? $view = $this->element->rownumber->getView(); ?>
+
+<table class="formInput" id="team_district_<?= $rowNum; ?>">
+	<?php if('print' != $view->mode && 1 == $rowNum) { ?>
+	    <tr class="bgLight2 bts">
+	        <td>
+	            #
+	        </td>
+	        <td>
+	            <?php echo $this->translate('Participant Name(s)'); ?>
+	        </td>
+	        <td style="white-space: nowrap;">
+	            <?php echo $this->translate('Position/Relationship To Student'); ?>
+	        </td>
+	        <td>
+	            <?php echo $this->translate('Other'); ?>
+	        </td>
+    		<td><?php echo $this->translate('Date'); ?></td>
+	        <td>
+	            <?php echo $this->translate('Remove'); ?>
+	        </td>
+		</tr>
+	<?php } ?>
+    <tr id="RS<?= $rowNum; ?>">
+        <td style="width: 4%">
+            <?= $rowNum; ?>.
+            
+        </td>
+        <td style="width: 24%">
+            <div id="team_district_<?= $rowNum; ?>-participant_name-colorme" class="printTeammemberUnderline colorme">
+            <?= $this->element->participant_name; ?>
+            <?= $this->element->id_iep_team_district; ?>
+            </div>
+        </td>
+        <td style="width: 30%">
+            <div id="team_district_<?= $rowNum; ?>-relationship_desc-colorme" class="colorme">
+            <?= $this->element->relationship_desc; ?>
+            </div>
+        </td>
+        <td align="left" style="width: 35%">
+            <div id="team_district_<?= $rowNum; ?>-relationship_other-colorme" class="colorme"
+        		<?php 
+        		// fade the element if 'other' is not selected
+        		if($this->element->relationship_desc->getValue() != 'Other (Please Specify)') echo ' style="display:none;"'; ?> 
+            >
+            <?= $this->element->relationship_other; ?>
+            </div>
+        </td>
+        <td>
+        	<span class="page1_date_conference" style="white-space: nowrap">
+            <?php if (strlen($view->db_form_data['date_conference']) > 0) { ?>
+            <?php echo substr($view->db_form_data['date_conference'], 5, 2) . '/' . substr($view->db_form_data['date_conference'], 8, 2) . '/' . substr($view->db_form_data['date_conference'], 0, 4); ?>
+            <?php } ?>
+            </span>
+        </td>
+        <td class="noprint" style="padding-right:20px;width: 7%;" align="right">
+            <div id="team_district_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+	</tr>
+</table>

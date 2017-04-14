@@ -1,0 +1,89 @@
+<?php 
+   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+   	
+	// get the view into a variable
+	$view = $this->element->page->getView();
+?>
+<?= $this->element->id_form_034; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr class="noprint">
+        <td>Prior Written Notice</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+   <tr class="noprint">
+      <td>
+        <div id="date_notice-colorme" class="colorme">
+        <?php echo $this->element->date_notice; ?>
+        </div>
+      </td>
+   </tr>
+   <tr>
+        <td>
+            <div id="dates_wrapper-colorme" class="colorme"> 
+        	After a careful review of the educational program for your child, the <?php echo $view->db_form_data['name_district']; ?> proposes to discontinue special education services for your child.
+            <?php if ('print' == $view->mode) { ?>
+            <br /><br />
+            <?php } ?>
+	    </div>
+        	<p class="printBoldLabel">A description of the action proposed or refused by the school district or approved cooperative:</p>
+        	<?php echo $this->element->describe_action
+        	; ?>
+            <?php if ('print' == $view->mode) { ?>
+            <br />            
+            <?php } ?>
+        </td>
+    </tr>    
+    <tr>
+		<td>
+			<p class="printBoldLabel">The School District proposes refuses this action for the following reasons:</p>
+			<?php echo $this->element->describe_reason; ?>
+            <?php if ('print' == $view->mode) { ?>
+            <br />            
+            <?php } ?>
+		</td>
+    </tr>
+    <tr>
+		<td>
+			<p class="printBoldLabel">Other options the IEP team considered and reasons why those options were rejected:</p>
+		<?php echo $this->element->options_other; ?>
+            <?php if ('print' == $view->mode) { ?>
+            <br />            
+            <?php } ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p class="printBoldLabel">This action is based on the evaluation procedure, assessment, record, or reports described below:</p>
+			<?php echo $this->element->justify_action; ?>	
+            <?php if ('print' == $view->mode) { ?>
+            <br />            
+            <?php } ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p class="printBoldLabel">Other Factors which are relevant to the school districts proposal refusal are:</p>
+			<?php echo $this->element->other_factors; ?>	
+            <?php if ('print' == $view->mode) { ?>
+            <br />            
+            <?php } ?>
+		</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td colspan="2">
+		Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individual with Disabilities Education Act (IDEA). If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:
+		</td>
+    </tr>
+    <tr>
+		<td><?php echo $this->element->contact_name; ?></td>
+		<td><?php echo $this->element->contact_num; ?></td>
+    </tr>
+</table> 
+		
+<?php echo $this->additionalResources(); ?>

@@ -1,0 +1,199 @@
+CREATE FUNCTION createiepteammembers(integer) RETURNS boolean
+    AS $_$DECLARE
+    v_form_id alias for $1;
+
+BEGIN
+    --
+    -- UPDATE LANGUAGE TABLE WITH ALL POSSIBLE VALUES
+    -- ===========================================================================
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 1, 'Parent');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 2, 'Student (whenever appropriate, or if the student is 16 years of age or older)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 3, 'Regular education teacher');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 4, 'Special education teacher or provider');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 5, 'School district representative');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 6, 'Individual to interpret evaluation results');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 7, 'Service agency representative (If child is receiving services from an approved Service Agency)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 8, 'Nonpublic representative (if student is attending a nonpublic school)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 9, 'Other agency representative (when transition services are being provided or will be provided by another agency for children age 14 and older)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 10,'Speech Language Pathologist');
+    -- ===========================================================================
+
+   RETURN true;
+END;
+$_$
+    LANGUAGE plpgsql;
+
+CREATE FUNCTION createiepteammembers(bigint) RETURNS boolean
+    AS $_$DECLARE
+    v_form_id alias for $1;
+
+BEGIN
+    --
+    -- UPDATE LANGUAGE TABLE WITH ALL POSSIBLE VALUES
+    -- ===========================================================================
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 1, 'Parent');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 2, 'Student (whenever appropriate, or if the student is 16 years of age or older)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 3, 'Regular education teacher');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 4, 'Special education teacher or provider');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 5, 'School district representative');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 6, 'Individual to interpret evaluation results');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 7, 'Service agency representative (If child is receiving services from an approved Service Agency)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 8, 'Nonpublic representative (if student is attending a nonpublic school)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 9, 'Other agency representative (when transition services are being provided or will be provided by another agency for children age 14 and older)');
+        insert into iep_team_member (id_form_004, sortnum, positin_desc) VALUES (v_form_id, 10,'Speech Language Pathologist');
+    -- ===========================================================================
+
+   RETURN true;
+END;
+$_$
+    LANGUAGE plpgsql;
+--
+--
+-- THIS IS A DUPE UPDATE
+-- THIS FUNCTION RUNS WHEN THE USER HITS UPDATE ON A FINALIZED IEP
+--
+--
+--
+--
+CREATE OR REPLACE FUNCTION "dupe_iep_full"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK            alias for $1;
+    SESS_ID_USER        alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    v_arr text[];
+
+    INSERT_RESULT       record;
+    v_old_iep           record;
+    v_new_iep           record;
+    v_new_pg            record;
+    v_new_ac            record;
+    v_student           record;
+    v_select_result     record;
+    newPK               bigint;
+    daysValue           integer;
+    oldDaysValue        varchar;
+    pg6Other            varchar;
+    pg6RelatedOther     varchar;
+    v_participantNames  varchar;
+    v_transition_plan   boolean;
+BEGIN 
+    TABLE_NAME          := ''iep_form_004'';
+    TABLE_PK_NAME       := ''id_form_004'';
+    FIELDS_ELIMINATE    := ''{id_form_004, status, timestamp_last_mod, timestamp_created}''; -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+    
+
+    --
+    -- GET A COPY OF THE OLD IEP
+    --
+    SELECT INTO v_old_iep * FROM iep_form_004 where id_form_004 = TABLE_PK;
+    --RAISE NOTICE ''version_number: %'', v_old_iep.version_number;
+
+    --
+    -- GET A COPY OF THE STUDENT RECORD
+    -- used for transition plan duping
+    --
+    SELECT INTO v_student date_part(''year'',age(dob)) as years, date_part(''month'',age(dob)) as months, date_part(''day'',age(dob)) as days FROM iep_student where id_student = v_old_iep.id_student;
+    IF(v_student.years >= 16 OR (v_student.years = 15 and v_student.days > 1)) THEN
+        v_transition_plan := true;
+    ELSE
+        v_transition_plan := false;
+    END IF;
+
+
+    --
+    -- DUPE THE IEP AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+
+    --RAISE NOTICE ''resOID: %'', INSERT_RESULT.resOID;
+    
+    SELECT INTO v_new_iep page_status, participant_names, primary_service_days_value, primary_service_dpw, id_form_004, related_service_drop, primary_disability_drop FROM iep_form_004 WHERE oid = cast_bigint_to_oid(INSERT_RESULT.resOID
+    );
+    newPK              := v_new_iep.id_form_004;
+
+
+    --RAISE NOTICE ''primary_service_days_value: %'', v_new_iep.primary_service_days_value;
+    --RAISE NOTICE ''prog_mod_dpw: %'', v_new_iep.primary_service_dpw;
+    daysValue              := v_new_iep.primary_service_days_value;
+    oldDaysValue           := v_new_iep.primary_service_dpw;
+    IF(daysValue is null and oldDaysValue is not null) THEN
+        daysValue := oldDaysValue;
+        --RAISE NOTICE ''is null'';
+    END IF;
+
+    --RAISE NOTICE ''page_status: %'', v_new_iep.page_status;
+
+    
+    -- ======================================================================
+    -- IF primary_disability_drop IS Other (Please Specify)
+    -- THEN CLEAR THE FIELD
+    -- ======================================================================
+    pg6Other           := v_new_iep.primary_disability_drop;
+    IF(pg6Other = ''Other (Please Specify)'') THEN
+        pg6Other           := NULL;
+    END IF;
+    -- ======================================================================
+    
+    
+    --
+    -- 20060105 - code to remove the Educator of the hearing impaired on duped ieps from v1
+    --
+    IF(v_old_iep.version_number = 1) THEN
+        SELECT INTO v_select_result clearcolumn(v_new_iep.participant_names, 10);
+        v_participantNames := v_select_result.clearcolumn;
+    ELSE
+        v_participantNames := v_new_iep.participant_names;
+    END IF;
+
+
+
+    -- build the empty team member rows and populate
+    SELECT INTO v_select_result createiepteammembers(newPK);
+    IF(v_old_iep.version_number = 1) THEN
+
+    ELSE
+        perform dupe_iep_participants($1, newPK);
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    
+    UPDATE iep_form_004 
+        SET 
+            id_author = $2, 
+            id_author_last_mod = $2,
+            version_number = v_old_iep.version_number,
+            page_status = ''11111111''
+        WHERE id_form_004 = newPK;
+
+    SELECT INTO v_new_iep dupe_iep_goals_full(TABLE_PK, newPK) as check;
+    --SELECT INTO v_new_pg dupe_iep_progress_reports(TABLE_PK, newPK) as check;
+
+    SELECT INTO v_new_ac dupe_iep_accom_checklist(TABLE_PK, newPK) as check;
+    
+    --
+    -- dupe related tables in new zf structure
+    --
+    IF(v_old_iep.version_number >= 9) THEN
+        perform dupe_related_table(TABLE_PK, newPK, ''form_004_related_service'', ''id_form_004_related_service'', ''{id_form_004_related_service, timestamp_last_mod, timestamp_created}'');
+        perform dupe_related_table(TABLE_PK, newPK, ''form_004_supp_service'', ''id_form_004_supp_service'', ''{id_form_004_supp_service, timestamp_last_mod, timestamp_created}'');
+        perform dupe_related_table(TABLE_PK, newPK, ''form_004_prog_mods'', ''id_form_004_prog_mods'', ''{id_form_004_prog_mods, timestamp_last_mod, timestamp_created}'');
+        perform dupe_related_table(TABLE_PK, newPK, ''form_004_assist_tech'', ''id_form_004_assist_tech'', ''{id_form_004_assist_tech, timestamp_last_mod, timestamp_created}'');
+        perform dupe_related_table(TABLE_PK, newPK, ''form_004_school_supp'', ''id_form_004_school_supp'', ''{id_form_004_school_supp, timestamp_last_mod, timestamp_created}'');
+    ELSE
+    	
+    END IF;
+
+    if(v_transition_plan) THEN
+        SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''iep_form_004_secondary_goal'', ''id_form_004_secondary_goal'', ''id_form_004'', ''{id_form_004_secondary_goal}'') as check; -- 20080121 jlavere removed service_start, service_end
+    END IF;
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+--SELECT dupe_iep_full('2', '1000254');
+--SELECT dupe_iep_full('1378352', '1000254');

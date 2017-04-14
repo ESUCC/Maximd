@@ -1,0 +1,11 @@
+<form action="/student/charts/student/<?php 
+    echo $this->student;
+    if(isset($this->view_chart_id))
+    {
+        echo "/view_chart_id/" . $this->view_chart_id;	
+    } 
+?>" id="myform" method="post">
+<?php
+echo $this->form;
+?>
+</form>

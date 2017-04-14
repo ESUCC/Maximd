@@ -1,0 +1,27 @@
+<?php ?>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'edit',
+    'id' => $this->id,
+    ));?>">Edit Survey</a>
+</div>
+<div>Take Survey (Preview)</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'take',
+    'id' => $this->id,
+    ));?>">Take Survey</a>
+</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'editrespondents',
+    'id' => $this->id,
+    ));?>">Edit Respondents</a>
+</div>
+
+<BR/>
+
+<?= $this->errorMsg; ?>

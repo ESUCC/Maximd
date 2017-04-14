@@ -1,0 +1,58 @@
+<?php 
+ $formatFields = array(
+        'id_student' => array('SRS Student ID', 'searchId'),
+        'name_full' => array('Name', 'searchName'),
+        'name_county' => array('County', 'searchCounty'),
+        'name_district' => array('District', 'searchDistrict'),
+        'name_school' => array('School', 'searchSchool'),
+        'role' => array('User Role', 'searchUserRole'),
+        'manager' => array('Case Manager', 'searchCaseMGR'),
+        'address' => array('Address', 'searchAddress'),
+        'phone' => array('Phone', 'searchPhone'),
+        'iep' => array('IEP/IFSP* Due Date', 'searchIEP'),
+        'mdt' => array('MDT/Det. Notice* Due Date', 'searchMDT'),
+         'age' => array('Age', 'searchId'),
+         'dob' => array('Date of Birth', 'searchMDT'),
+         );
+?>
+<?php echo $this->doctype('XHTML1_STRICT'); 
+      $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8'); 
+      $config = Zend_Registry::get('config');
+$refreshCode = '?refreshCode=' . $config->externals->refresh;
+
+// try to remove these
+$this->headLink()->appendStylesheet('/css/srs_style_additions.css'.$refreshCode, 'print'); // custom additions    
+$this->headLink()->appendStylesheet('/css/srs_style_forms.css'.$refreshCode, 'print'); // custom additions
+
+
+$this->headLink()->appendStylesheet('/stylesheets/srs/css/srs_site.css'.$refreshCode, 'print');
+?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<?php echo $this->headMeta(); 
+		      echo $this->headTitle() , "\n\t";
+		      ?>
+		      <link href="/js/dojo_development/dojo_source/dojo/resources/dojo.css" media="screen,print" rel="stylesheet" type="text/css" />
+<link href="/js/dojo_development/dojo_source/dojo/../dijit/themes/tundra/tundra.css" media="screen,print" rel="stylesheet" type="text/css" />
+<link href="/css/srs_style_additions.css?refreshCode=<?php echo $refreshCode; ?>" media="screen,print" rel="stylesheet" type="text/css" />
+<link href="/css/srs_style_forms.css?refreshCode=<?php echo $refreshCode; ?>" media="screen,print" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/srs/css/srs_site.css?refreshCode=<?php echo $refreshCode; ?>" media="print" rel="stylesheet" type="text/css" />
+		<script type="text/javascript">
+	        window.print();
+		</script>
+	</head>
+	<body>
+<div style="border:1px dashed #ccc;margin:10px;width:850px;padding:10px;">
+<ul id="searchPseudoTable" class="pseudoTable">
+    <li class="head">
+        <ul>
+        <?php foreach ($this->formatFields AS $field) : 
+            if (!empty($field)) : ?>
+            <li class="<?php echo $formatFields[$field][1]; ?>"><?php echo $formatFields[$field][0]; ?></li>
+        <?php endif; ?>
+        <?php endforeach; ?>
+        </ul>
+    </li>
+<?php echo $this->partialLoop('partials/print-student-search-results.phtml',$this->results); ?>
+</ul>
+</div>

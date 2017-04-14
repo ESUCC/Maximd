@@ -1,0 +1,59 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+<table class="formInput" style="width:775px;" cellpadding="0" cellspacing="0" id="home_community_<?= $rowNum; ?>">
+    <tr>
+		<td style="width:5px;">
+		<?php echo $this->element->id_form_013_home_community; ?>
+		<div>
+			<?php echo $this->element->id_form_013_home_community; ?>
+			<?= $rowNum; ?>.
+		</div>
+		</td>
+		<td style="width:100px;" colspan="2">
+		<strong><?php echo $this->element->home_service->getLabel(); ?></strong>
+		<div id="home_community_<?= $rowNum; ?>-home_service-colorme" class="colorme">
+			<?php echo $this->element->home_service; ?>
+		</div>
+		</td>
+		<td style="width:100px;">
+		<strong><?php echo $this->element->home_how_much->getLabel(); ?></strong>
+		<div id="home_community_<?= $rowNum; ?>-home_how_much-colorme" class="colorme">
+			<?php echo $this->element->home_how_much; ?>
+		</div>
+		</td>
+		<td style="width:200px;">
+		<strong><?php echo $this->element->home_to_help_with_outcome->getLabel(); ?></strong>
+		<div id="home_community_<?= $rowNum; ?>-home_to_help_with_outcome-colorme" class="colorme">
+			<?php echo $this->element->home_to_help_with_outcome; ?>
+		</div>
+		</td>
+		<td class="smallInput noprint" style="width:75px;">
+		<div id="home_community_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+        <?php echo $this->element->remove_row; ?>
+        </div>
+		</td>
+    </tr>
+    <tr>
+        <td style="width:5px;">
+            &nbsp;
+        </td>
+        <td style="width:100px;">
+		<strong><?php echo $this->element->home_start->getLabel(); ?></strong> <br />
+		<span  id="home_community_<?= $rowNum; ?>-home_start-colorme" class="colorme">
+		<?php echo $this->element->home_start; ?>
+		</span> / 
+		<td style="width:100px;">
+		<strong><?php echo $this->element->home_end->getLabel(); ?></strong>
+		<div id="home_community_<?= $rowNum; ?>-home_end-colorme" class="colorme">
+		<?php echo $this->element->home_end; ?>
+		</div>
+		</td>
+		<td style="width:100px;" colspan="3">
+		<strong><?php echo $this->element->home_funding_source->getLabel(); ?></strong>
+		<div id="home_community_<?= $rowNum; ?>-home_funding_source-colorme" class="colorme">
+			<?php echo $this->element->home_funding_source; ?>
+		</div>
+		</td>
+    </tr>
+</table>
+<br />

@@ -1,0 +1,42 @@
+<?php 
+   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_022; ?>
+<?= $this->element->page; ?>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+	<td>
+		<table  style="background:#EEE8CD; margin:0px;padding:0px;">
+			<tr>
+				<td>This is not an official MDT form. This MDT data card is 
+				designed solely for the purpose of recording data from an MDT 
+				created outside the SRS system for use by the NSSRS report. 
+				</td>
+			</tr>
+		</table>
+	</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <?php echo $this->element->date_mdt; ?>
+        </td>
+    </tr>    
+	<tr>
+		<td>
+		<table class="formInput">
+			<tr>
+				<td><?php echo $this->element->disability_primary; ?></td> 
+			</tr>
+			<tr>
+				<td><?php echo $this->element->initial_verification_date?></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+

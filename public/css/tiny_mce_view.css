@@ -1,0 +1,9 @@
+p {
+	margin-bottom:-.75em;
+}
+table {
+	width: auto;
+}
+table p {
+	margin-bottom:0px;
+}

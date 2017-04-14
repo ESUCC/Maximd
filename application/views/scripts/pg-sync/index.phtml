@@ -1,0 +1,36 @@
+<form action="/pg-sync/" method="post">
+<div style="clear:both;">
+<?php
+	echo $this->formSelect('database_action', $this->database_action, '', array('summary'=>'Summary', 'diff'=>'Difference', 'run'=>'Run'));
+	echo $this->formSubmit('submit', 'Submit');
+?>
+</div>
+
+<div style="float:left;">
+<?php
+	echo "From database: " . $this->from_database;
+	echo "<BR />";
+	echo "<pre>";
+	print_r ( $this->fromConf );
+	echo "</pre>";
+?>
+</div>
+<div style="float:left;">
+<?php
+	echo "To database: " .  $this->to_database;
+	echo "<BR />";
+	echo "<pre>";
+	print_r ( $this->toConf );
+	echo "</pre>";
+?>
+</div>
+
+<div style="clear:both;">
+<?php
+	echo "<pre>";
+	echo $this->result;
+	echo "</pre>";
+?>
+</div>
+
+</form>

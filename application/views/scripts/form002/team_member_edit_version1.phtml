@@ -1,0 +1,93 @@
+<?php
+    $rowNum = $this->element->rownumber->getValue(); 
+    $view = $this->element->rownumber->getView();
+    $add = '';
+    if('print' == $view->mode) {
+    	$add = ' border="1" cellpadding="1" ';
+    }
+?>
+<table class="formInput" <?php echo $add; ?> style="width:100%;" cellpadding="0" cellspacing="0" id="team_member_<?= $rowNum; ?>">
+	<?php if(1 == $rowNum) { ?>
+	    <tr class="bgLight2 bts">
+	        <td style="width: 20px">
+	            #
+	        </td>
+	        <td style="width: 200px">
+	            <?php echo $this->translate('Name'); ?>
+	        </td>
+	        <td style="width: 100px">
+	            <?php echo $this->translate('Position on MDT'); ?>
+	        </td>
+	        <td>
+	            <?php echo $this->translate('I agree with the MDT decision'); ?>
+	        </td>
+			<? if('edit' == $view->mode) { ?>        
+	        <td style="text-align: right;"><?php echo $this->translate('Remove Row'); ?></td>
+	        <?php } ?>
+		</tr>
+	<?php } ?>
+    <?
+    $underlineStyle = '';
+    if(('view' == $view->mode || 'print' == $view->mode) &&  null != $this->element->team_member_name->getValue())
+    {
+        // underline the div
+        $underlineStyle = 'border-bottom-style:solid;border-width:1px;'; 
+    }
+    $showRow = true;
+    if(('view' == $view->mode || 'print' == $view->mode) &&  null === $this->element->team_member_name->getValue())
+    {
+    	if($view->form->print_blank_rows->getValue()) {
+    		$showRow = true;
+    	} else {
+    		$showRow = false;
+    	}
+        	
+    }
+    if($showRow)
+    {
+    	
+	    ?>
+	    <tr id="RS<?= $rowNum; ?>">
+	        <td style="width: 20px">
+	            <?= $rowNum; ?>.
+	            <?= $this->element->id_form_002_team_member; ?>
+	        </td>
+	        <td style="width:200px;<?= $underlineStyle; ?>">
+	        	<div id="team_member_<?= $rowNum; ?>-team_member_name-colorme" class="colorme">
+	            <?= $this->element->team_member_name; ?>
+	            </div>
+	        </td>
+	        <td style="width:200px;<?= $underlineStyle; ?>">
+	        	<div id="team_member_<?= $rowNum; ?>-team_member_position-colorme" class="colorme">
+	            <?= $this->element->team_member_position; ?>
+	            </div>
+	        </td>
+	        <td>
+	        	<div id="team_member_<?= $rowNum; ?>-team_member_agree-colorme" class="colorme">
+	            <?
+	            if('print' == $view->mode)
+	            {
+	                if(null === $this->element->team_member_agree->getValue())
+	                {
+	                	// if not filled in, print out the radio buttons
+	                    echo $this->element->team_member_agree; 
+	                } else {
+	                	// if filled in, just print the response
+	                	echo $this->element->team_member_agree->getMultiOption((int) $this->element->team_member_agree->getValue());
+	                }
+	            } else {
+	            	echo $this->element->team_member_agree;
+	            }
+	            ?>
+	            </div>
+	        </td>
+			<? if('edit' == $view->mode) { ?>        
+	        <td class="noprint" style="padding-right:20px;" align="right" >
+	        	<div id="team_member_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+	            <?= $this->element->remove_row; ?>
+	            </div>
+	        </td>
+	        <?php } ?>
+		</tr>
+	<?php } ?>
+</table>

@@ -1,0 +1,464 @@
+@CHARSET "UTF-8";
+
+table {
+    border-spacing:0;
+    border-collapse:collapse;
+	width:100%;
+} 
+table td {vertical-align:text-top;}
+
+/* standard spacing for text left of input */
+label {padding-right:12px;}
+/* standard spacing for text right of input */
+label input {margin-right:6px}
+
+/* indents and align bullet text to the right of a bullet */
+.sc_bulletInputLeft {display:block;padding-left:20px;}
+.sc_bulletInputLeft input {margin-left:-20px;}
+
+
+table.formTitleHead span.menuTextLink,
+table.sc_subSectionHead span.menuTextLink {font-size:11px; float:right;}
+
+.sectionSubText {font-size:11px; float:right;}
+
+.sc_inlineText {display:inline; margin-left:4px;} /* form4 page5 */
+
+.sc_spanRow {padding:4px 0} /* simulate cell padding when span or div is used instead */
+
+
+
+/*Dojo override*/
+.RichTextEditable { background-color:#FFF; border-top:1px solid #CCC;}
+tr.sc_richTextBox .RichTextEditable {border:none;}
+
+
+
+/* 20070611 jlavere BEGIN - add code to allow easier navigation of related progress reports */
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+/* Table placed just below progress report tabs */
+table.formTabTable {
+    width:100%; 
+    height: 15px; 
+    font-weight:800; 
+    font-size: 7pt; 
+    font-family:verdana,helvetica,arial; 
+    color: black; 
+    background-color: white; 
+    margin-top:5px;
+	border-bottom: 2px solid #000;
+}
+
+.basictab{
+padding: 3px 0;
+margin-left: 0;
+font: 10px Verdana;
+border-bottom: 1px solid gray;
+list-style-type: none;
+text-align: left; /*set to left, center, or right to align the menu as desired*/
+line-height:2.5em;
+}
+
+.basictab li{
+display: inline;
+margin: 0;
+}
+
+.basictab li a{
+text-decoration: none;
+padding: 3px 7px;
+margin-right: 3px;
+border: 1px solid gray;
+border-bottom: none;
+background-color: #f6ffd5;
+color: #2d2b2b;
+}
+
+.basictab li a:visited{
+color: #2d2b2b;
+}
+
+.basictab li a:hover{
+background-color: #DBFF6C;
+color: black;
+}
+
+.basictab li a:active{
+color: black;
+}
+
+.basictab li.selected a{ /*selected tab effect*/
+position: relative;
+top: 1px;
+padding-top: 4px;
+background-color: #CCDDFF;
+color: black;
+}
+
+.basictab li.draft a{ /*selected tab effect*/
+position: relative;
+top: 1px;
+padding-top: 4px;
+background-color: #DDDDBB;
+color: black;
+}
+
+.basictab li.final a{ /*selected tab effect*/
+position: relative;
+top: 1px;
+padding-top: 4px;
+background-color: #3366CC;
+color: white;
+}
+
+/* 20070611 jlavere END - add code to allow easier navigation of related progress reports */
+#searchContainer {
+    border:1px solid #AAAAAA;
+    padding: 0 0 10px 0;
+    background:url('../images/bg-highlight.png') repeat-x scroll 50% top #eee;
+    margin: 20px auto;
+    width:780px;
+}
+
+#searchStudents {
+    border:1px solid #AAAAAA;
+    font-size:14px;
+    background-color:#3366cc;
+    color:#fff;
+    padding:7px 10px;
+    margin:2px 5px;
+}
+.searchPageHeader {
+    border:1px solid #AAAAAA;
+    font-size:14px;
+    background-color:#3366cc;
+    color:#fff;
+    padding:7px 10px;
+    margin:2px 5px;
+}
+
+.searchButton {
+    float:left;
+    margin:0 0 0 20px;
+}
+.searchHr {
+    clear:both;
+    border-bottom:1px dashed #aaa;
+    margin:0 10px 10px 10px;
+    padding:0;
+}
+#search-fields-contain {
+    float:left;
+}
+#search-fields-contain select {
+	margin-right:20px;
+}
+.search-by-field {
+    margin:10px 0 0 10px;
+    padding:0;
+}
+.search-by-field li {
+    text-align:left;
+    list-style:none;
+}
+.search-by-field li .sub {
+    clear:both;
+    display:block;
+    padding:0;
+}
+.search-by-field li .sub li {
+    float:left;
+    width:220px;
+    padding:3px 5px;
+
+}
+#advanced-options-contain {
+    float:right;
+    width:300px;
+}
+.advanced-options {
+    margin:10px 10px 0 15px;
+    padding:5px;
+    background-color:#ccc;
+    clear:both;
+}
+.advanced-options li {
+    text-align:left;
+    list-style:none;
+}
+.advanced-options li .sub {
+    clear:both;
+    display:block;
+    padding:0;
+    margin:0;
+}
+.advanced-options li .sub li {
+    float:left;
+    padding:3px 5px;
+}
+.advanced-options li .sub li.fieldLabelLeft {
+    width:50px;
+}
+.advanced-options li .sub li.valueLeft {
+    width:210px;
+}
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/*
+  The following zoom:1 rule is specifically for IE6 + IE7.
+  Move to separate stylesheet if invalid CSS is a problem.
+*/
+
+.clearfix {
+  zoom: 1;
+}
+
+#searchResults {
+    margin:30px 0;
+    min-height:300px;
+}
+
+.pseudoTable {
+    margin:0;
+    padding:0;
+}
+
+.pseudoTable li {
+    display:block;
+    clear:both;
+}
+
+.pseudoTable li ul {
+    display:block;
+    clear:both;
+    padding-left:0;
+}
+
+.pseudoTable li.head {
+    font-size:12px;
+    font-weight:bold;
+    border-bottom: 1px dashed #cdcdcd;
+}
+
+.pseudoTable li.head ul li {
+    color:#666;
+    min-width:75px;
+}
+
+.pseudoTable li.head:before, .pseudoTable:before, .pseudoTable li.odd:before, .pseudoTable li.even:before,
+.pseudoTable li.head:after, .pseudoTable:after, .pseudoTable li.even:after, .pseudoTable li.odd:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.pseudoTable li.head:after, .pseudoTable:after, .pseudoTable li.even:after, .pseudoTable li.odd:after {
+  clear: both;
+}
+
+.pseudoTable li ul li {
+    float:left;
+    padding:5px 5px;
+    margin:2px;
+    text-align:left;
+    clear:none;
+    min-width:15px;
+}
+
+.pseudoTable .even {
+    background-color:#e8e8e8;
+}
+
+#searchPseudoTable li ul li {
+    font-size:8pt;
+}
+
+#searchPseudoTable .searchName {
+    min-width:120px;
+}
+
+#searchPseudoTable .searchCounty {
+    min-width:75px;
+    display: none;
+}
+
+#searchPseudoTable .searchDistrict {
+    min-width:155px;
+}
+
+#searchPseudoTable .searchSchool {
+    min-width:50px;
+}
+
+#searchPseudoTable .searchUserRole {
+    min-width:70px;
+    display:none;
+}
+#searchPseudoTable .searchStudentOptions {
+    min-width:70px;
+    float: right;
+}
+#searchPseudoTable .searchCaseMGR {
+    min-width:100px;
+}
+#searchPseudoTable .searchAddress {
+    width:250px;
+}
+#searchPseudoTable .searchPhone {
+    min-width:100px;
+}
+#searchPseudoTable .searchIEP {
+    min-width:100px;
+}
+#searchPseudoTable .searchMDT {
+    min-width:175px;
+}
+
+.btsRed {
+    color: #FF0000;
+    font-family: verdana,helvetica,arial;
+    font-size: 8pt;
+    font-weight: 300;
+}
+
+.btsOrange {
+    color: #FF6600;
+    font-family: verdana,helvetica,arial;
+    font-size: 8pt;
+    font-weight: 300;
+}
+
+.paginator {
+   color:#666;
+   font-size:14px;
+   text-align:center;
+   margin:20px 0;
+}
+
+.paginator li {
+   list-style:none;
+   display:inline;
+}
+
+.paginator li {
+   text-decoration:none;
+   padding:2px 5px;
+   cursor:pointer;
+}
+
+.paginator li.current {
+   font-size:18px;
+   margin-top:-5px;
+   font-weight:bold;
+}
+
+.paginator li.current span {
+   padding:2px 10px;
+}
+
+.paginator li a {
+   color:#999;
+}
+
+.loading {
+    background-color:#fff;
+    width:100%;
+    min-height:288px;
+    position:absolute; 
+    border:1px solid #777;
+    opacity:0.7;
+    filter:alpha(opacity=70);
+    text-align:center;
+    display:none;
+    z-index:100;
+}
+
+.loading div {
+    background-color:#fff;
+    text-align:center;
+    width:100%;
+    padding-top:125px;
+}
+
+.error, .notice, .success {
+    padding:0.8em;
+    margin-bottom:1em;
+    border:2px solid #ddd;
+}
+.errors, .error {
+    background:#fbe3e4;
+    color:#8a1f11;
+    border-color:#fbc2c4;
+}
+input[readonly="readonly"]
+{
+    background-color:#999;
+}
+.notice {background:#fff6bf;color:#514721;border-color:#ffd324;}
+.success {background:#e6efc2;color:#264409;border-color:#c6d880;}
+.info {background:#d5edf8;color:#205791;border-color:#92cae4;}
+.error a, .alert a {color:#8a1f11;}
+.notice a {color:#514721;}
+
+#district-use-only {
+	border-top:1px solid #000;
+	border-left:1px solid #000;
+}
+#district-use-only td {
+	border-right:1px solid #000;
+	border-bottom:1px solid #000;
+}
+#district-use-only .small-head {
+	font-size:10px;
+	margin:0;
+	padding:2px;
+}
+#district-use-only .small-head-color {
+	background-color:#eee;
+}
+#district-use-only .no-bott-border {
+	border-bottom:none;
+}
+#district-use-only .add-height {
+	height:25px;
+}
+
+legend {
+    border:1px solid #AAAAAA;
+    font-size:14px;
+    background-color:#3366cc;
+    color:#fff;
+    padding:7px 10px;
+    margin:2px 5px;
+    width:96%;
+}
+#form029_page_1 .formTitleHead {
+	font-size:1em;
+}

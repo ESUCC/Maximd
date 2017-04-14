@@ -1,0 +1,22 @@
+<li class="<?php echo ($this->partialCounter%2==0) ? 'even' : 'odd'; ?>">
+		<ul>
+			<li class="date"><?php echo date('m/d/Y h:i:s', strtotime($this->timestamp_created)); ?></li>
+			<li class="user"><?php echo (0 == $this->id_gaurdian) ? $this->id_author : $this->id_gaurdian; ?></li>
+			<li class="type"><?php 
+				switch ($this->type) {
+					case '1':
+						echo 'viewed record';
+						break;	
+					case '2':
+						echo 'viewed record with edit privs';
+						break;
+					case '3':
+						echo 'saved record';
+						break;
+					case '4':
+						echo 'deleted record';
+						break;
+				}
+			?></li>
+		</ul>
+</li>

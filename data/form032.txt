@@ -1,0 +1,268 @@
+CREATE TABLE iep_form_032 (
+    id_form_032 integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_student integer,
+    name_first character varying,
+    name_middle character varying, 
+    name_last character varying,   
+    id_county character(2),
+    id_district character(4),
+    id_school character(3),
+    name_county character varying,
+    name_district character varying,
+    name_school character varying,
+    id_case_mgr integer, 
+    name_case_mgr character varying, 
+    name_list_guardian character varying, 
+    checkout_id_user integer,
+    checkout_time integer,
+    zend_checkout_user integer,
+    zend_checkout_time timestamp without time zone,
+    title character varying,
+    form_editor_type character varying,
+    page_status character varying,
+    finalized_date date,
+    finalized_student_name character varying,
+    finalized_grade character varying,
+    finalized_age integer,
+    finalized_gender character varying,
+    finalized_parents character varying,
+    finalized_id_county character(2),
+    finalized_id_district character(4),
+    finalized_id_school character(3),
+    finalized_address character varying,
+    finalized_dob character varying,
+    form_version character varying,
+    form_document_root character varying,
+    version_number integer,
+    utf8header boolean,
+    date_notice date,
+    notice_to character varying,  
+    meeting_type character varying,
+    meeting_type_eligible_iep boolean,
+    meeting_type_eligible_ifsp boolean,
+    meeting_is_turing_16 boolean,
+    meeting_transition_conference boolean,
+    general_ed character varying, 
+    special_ed character varying,
+    school_rep character varying, 
+    indv_eval_results character varying,
+    indv_spc_knowledge character varying,
+    service_rep character varying,
+    part_c_coordinator character varying,
+    other_attendees character varying,
+    other_staff character varying, 
+    meeting_location_date date,
+    meeting_location_time character varying,
+    meeting_location_place character varying, 
+    change_name character varying,
+    change_phone_email character varying,
+    copy_of_rights boolean
+);
+
+ALTER TABLE iep_form_032 ADD COLUMN address character varying;
+ALTER TABLE iep_form_032 ADD COLUMN iep_meeting character varying;
+ALTER TABLE iep_form_032 ADD COLUMN general_ed character varying;
+ALTER TABLE iep_form_032 ADD COLUMN special_ed character varying;
+ALTER TABLE iep_form_032 ADD COLUMN school_rep character varying;
+ALTER TABLE iep_form_032 ADD COLUMN other_attendees character varying;
+ALTER TABLE iep_form_032 ADD COLUMN other_staff character varying;
+ALTER TABLE iep_form_032 ADD COLUMN contact_name character varying;
+ALTER TABLE iep_form_032 ADD COLUMN contact_num character varying;
+ALTER TABLE iep_form_032 ADD COLUMN rights_contact character varying;
+ALTER TABLE iep_form_032 ADD COLUMN rights_contact_num character varying;
+ALTER TABLE iep_form_032 ADD COLUMN attend boolean;
+ALTER TABLE iep_form_032 ADD COLUMN schedule_meeting character varying;
+ALTER TABLE iep_form_032 ADD COLUMN parent_date_1 date;
+ALTER TABLE iep_form_032 ADD COLUMN school_contact character varying;
+ALTER TABLE iep_form_032 ADD COLUMN response_address character varying;
+ALTER TABLE iep_form_032 ADD COLUMN city_state_zip character varying;
+ALTER TABLE iep_form_032 ADD COLUMN school_phone character varying;
+ALTER TABLE iep_form_032 ADD COLUMN date_sent date;
+ALTER TABLE iep_form_032 ADD COLUMN signature_on_file boolean;
+ALTER TABLE iep_form_032 ADD COLUMN dob date;
+ALTER TABLE iep_form_032 ADD COLUMN grade text;
+ALTER TABLE iep_form_032 ADD COLUMN id_case_mgr_old integer;
+ALTER TABLE iep_form_032 ADD COLUMN on_off_checkbox boolean;
+ALTER TABLE iep_form_032 ADD COLUMN on_off_checkbox_page_4 boolean;
+ALTER TABLE iep_form_032 ADD COLUMN consent_give boolean;
+ALTER TABLE iep_form_032 ADD COLUMN consent_deny boolean;
+ALTER TABLE iep_form_032 ADD COLUMN p4_signature_on_file boolean;
+ALTER TABLE iep_form_032 ADD COLUMN p4_parent_date_1 date;
+ALTER TABLE iep_form_032 ADD COLUMN p4_signature_on_file_other character varying;
+ALTER TABLE iep_form_032 ADD COLUMN consent_deny_records boolean;
+ALTER TABLE iep_form_032 ADD COLUMN zend_checkout_time timestamp without time zone;
+ALTER TABLE iep_form_032 ADD COLUMN zend_checkout_user integer;
+ALTER TABLE iep_form_032 ADD COLUMN voluntary_consent boolean;
+ALTER TABLE iep_form_032 ADD COLUMN pdf_archived boolean DEFAULT false;
+ALTER TABLE iep_form_032 ADD COLUMN use_g_filter boolean;
+ALTER TABLE iep_form_032 ADD COLUMN form_editor_type character varying DEFAULT 'tinyMce'::character varying;
+ALTER TABLE iep_form_032 ADD COLUMN other_attendees_sp_knowledge character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_date character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_student_name character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_dob date;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_grade character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_age character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_gender character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_parents character varying;
+ALTER TABLE iep_form_032 ADD COLUMN suspended_id_county character(2);
+ALTER TABLE iep_form_032 ADD COLUMN suspended_id_district character(4);
+ALTER TABLE iep_form_032 ADD COLUMN suspended_id_school character(3);
+ALTER TABLE iep_form_032 ADD COLUMN suspended_address character varying;
+ALTER TABLE iep_form_032 ADD COLUMN ifsp_type character varying;
+ALTER TABLE iep_form_032 ADD COLUMN meeting_type_2_options character varying;
+ALTER TABLE iep_form_032 ADD COLUMN eval_persons character varying;
+ALTER TABLE iep_form_032 ADD COLUMN service_coordinator character varying;
+ALTER TABLE iep_form_032 ADD COLUMN erly_int_svcs character varying;
+ALTER TABLE iep_form_032 ADD COLUMN other_family_mbr character varying;
+ALTER TABLE iep_form_032 ADD COLUMN advocate character varying;
+ALTER TABLE iep_form_032 ADD COLUMN rights_name character varying;
+ALTER TABLE iep_form_032 ADD COLUMN rights_phone character varying;
+
+ALTER TABLE public.iep_form_032 OWNER TO postgres;
+
+--
+-- Name: iep_form_032_id_form_032_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE iep_form_032_id_form_032_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.iep_form_032_id_form_032_seq OWNER TO postgres;
+
+--
+-- Name: iep_form_032_id_form_032_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE iep_form_032_id_form_032_seq OWNED BY iep_form_032.id_form_032;
+
+
+--
+-- Name: iep_form_032_id_form_032_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('iep_form_032_id_form_032_seq', 1, true);
+
+--
+-- Name: id_form_025; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY iep_form_032 ALTER COLUMN id_form_032 SET DEFAULT nextval('iep_form_032_id_form_032_seq'::regclass);
+
+CREATE SEQUENCE form_032_other_attendee_id_form_032_other_attendee_seq;
+
+CREATE TABLE form_032_other_attendee (
+    id_form_032_other_attendee integer DEFAULT nextval('form_032_other_attendee_id_form_032_other_attendee_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_032 integer DEFAULT nextval('iep_form_032_id_form_032_seq'),
+    other_type character varying,
+    other_name character varying
+);
+
+ALTER TABLE iep_absence ADD COLUMN id_form_032 integer;
+
+CREATE TABLE form_032_agency_representitive (
+    id_form_032_agency_representitive integer NOT NULL,
+    id_form_032 integer,
+    id_student integer,
+    id_author integer,
+    id_author_last_mod integer,
+    timestamp_created timestamp without time zone DEFAULT ('now'::text)::timestamp(6) with time zone,
+    timestamp_last_mod timestamp without time zone DEFAULT ('now'::text)::timestamp(6) with time zone,
+    representitive_name character varying,
+    status character varying,
+    consent_invite boolean,
+    consent_release boolean,
+    release_records_all boolean,
+    release_records_scholastic_grades boolean,
+    release_records_psychological_evaluations boolean,
+    release_records_activity_records boolean,
+    release_records_discipline_records boolean,
+    release_records_health_records boolean,
+    release_records_standardized_test_scores boolean,
+    release_records_special_educational_records boolean,
+    release_records_other boolean,
+    release_records_other_description character varying
+);
+ALTER TABLE public.form_032_agency_representitive OWNER TO postgres;
+ALTER TABLE iep_team_member_input ADD COLUMN id_form_032 integer;
+
+--
+-- Name: form_032_agency_representitiv_id_form_032_agency_representi_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE form_032_agency_representitiv_id_form_032_agency_representi_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.form_032_agency_representitiv_id_form_032_agency_representi_seq OWNER TO postgres;
+
+--
+-- Name: form_032_agency_representitiv_id_form_032_agency_representi_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE form_032_agency_representitiv_id_form_032_agency_representi_seq OWNED BY form_032_agency_representitive.id_form_032_agency_representitive;
+
+
+--
+-- Name: id_form_032_agency_representitive; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE form_032_agency_representitive ALTER COLUMN id_form_032_agency_representitive SET DEFAULT nextval('form_032_agency_representitiv_id_form_032_agency_representi_seq'::regclass);
+
+
+--
+-- Name: form_032_agency_representitive_id_form_032_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace:
+--
+
+CREATE INDEX form_032_agency_representitive_id_form_032_idx ON form_032_agency_representitive USING btree (id_form_032);
+
+
+--
+-- Name: form_032_agency_representitive; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE form_032_agency_representitive FROM PUBLIC;
+REVOKE ALL ON TABLE form_032_agency_representitive FROM postgres;
+GRANT ALL ON TABLE form_032_agency_representitive TO postgres;
+GRANT SELECT ON TABLE form_032_agency_representitive TO stylesoft;
+GRANT SELECT ON TABLE form_032_agency_representitive TO stylescope;
+
+ALTER TABLE iep_form_032 ADD COLUMN combined_transition_conference BOOLEAN;
+
+alter table iep_form_032 add on_off_contact_attempts boolean;
+CREATE SEQUENCE form_032_contact_attempts_id_form_032_contact_attempts_seq;
+
+CREATE TABLE form_032_contact_attempts (
+    id_form_032_contact_attempts integer DEFAULT nextval('form_032_contact_attempts_id_form_032_contact_attempts_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_032 integer DEFAULT nextval('iep_form_032_id_form_032_seq'),
+    contact_attempt_date_attempt date,
+    contact_attempt_comments text
+);
+
+ALTER TABLE ONLY form_032_contact_attempts
+    ADD CONSTRAINT fk_id_form_032 FOREIGN KEY (id_form_032) REFERENCES iep_form_032(id_form_032) ON UPDATE CASCADE ON DELETE RESTRICT;

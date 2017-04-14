@@ -1,0 +1,9 @@
+-- SRSSUPP-774 Form029_p4 - Minor updates
+ALTER TABLE iep_form_029 ADD COLUMN attend_no_response BOOLEAN;
+ALTER TABLE iep_form_029 ADD COLUMN signature_on_file_v10 CHARACTER VARYING;
+ALTER TABLE iep_form_029 ADD COLUMN sig_no_explain TEXT;
+
+-- END SRSSUPP-774
+
+-- SRSSUPP-767 Updates for Form029 Notice of Meeting
+ALTER TABLE iep_form_029 ADD COLUMN meeting_is_turing_16_mdt BOOLEAN;

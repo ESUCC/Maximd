@@ -1,0 +1,245 @@
+<div>Edit Survey</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'preview',
+    'id' => $this->id,
+    ));?>">Take Survey (Preview)</a>
+</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'take',
+    'id' => $this->id,
+    ));?>">Take Survey</a>
+</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'editrespondents',
+    'id' => $this->id,
+    ));?>">Edit Respondents</a>
+</div>
+
+<BR/>
+
+<form enctype="application/x-www-form-urlencoded" action="/survey/save" method="post" name="">
+
+<?= $this->surveyForm->survey_name ?><BR>
+
+
+<?
+    //
+    // 
+    //
+    if($this->qCount > 0 && 'edit' == $this->surveyForm->status->getValue()) // and form is valid
+    {
+        ?>
+        <div>
+            <a href="<?php echo $this->url(array(
+            'controller' => 'survey',
+            'action' => 'opensurvey',
+            ));?>">Publish this survey</a>
+        </div>
+        <?
+    } elseif($this->qCount > 0 && 'edit' == $this->surveyForm->status->getValue()) { // and form is NOT valid
+        echo "<div>This survey cannot be published until it's valid</div>";
+    } elseif('take' == $this->surveyForm->status->getValue()) {
+        echo "<div>Close this survey</div>";
+    }
+
+?>
+
+
+<?= $this->surveyForm->submit ?>
+
+<?php $this->dojo()->enable() ?>
+
+<?php if (isset($this->qCount)) { ?>
+    <?php if($this->qCount < 1) { ?>
+    
+        <div>This survey has no questions</div>
+        <div id="question_header_bar" style="background-color:#C0C0C0;"><a href="/survey/addquestion/id/<?= $this->id; ?>/addquestion/true">Add question</a></div>
+
+    <?php } else { ?>
+        <?php
+            $i =0;
+        ?>
+        <div><?= $this->qCount.' questions' ?></div>
+        <?php $height_px = 582 * $this->qCount; ?>
+        <div style="height:<?= $height_px; ?>px;">
+        <ul>
+        <? $idArr = array(); ?>
+
+        <? if(1) { ?>
+
+                <? $q = $this->qData->getItem($this->id); ?>
+                <? $i = 1; ?>
+                
+                <? foreach($this->qData as $q) { ?>
+
+                    <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" style="background-color:#ccc;text-align:center;margin-top:5px;" class="borderContainerSmall">
+                        <a href="/survey/addquestion/id/<?= $this->id; ?>/add_before_id/<?= $q['sort_id']; ?>">Add question here</a>
+                    </div>
+
+                    <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" class="borderContainerSmall">
+                        <B>Question <?= $i ?></B> (<a href="/survey/deletequestion/id/<?= $this->id; ?>/id_delete/<?= $q['id_neb_survey_question']; ?>">Delete this question</a>)
+                        <?= $this->formHidden('id_neb_survey_question_'.$i, $q['id_neb_survey_question']); ?>
+                        <?= $this->formHidden('db_question_type_'.$i, $q['question_type']); ?>
+                    </div>
+
+                    <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" class="borderContainerMed">
+                        <div dojoType="dijit.layout.ContentPane" splitter="true" region="left" style="width: 400px;">
+                            <B>Question Type</B><? echo $this->questionTypes($i, $q['question_type']); ?>
+                        </div>                        
+                        <div dojoType="dijit.layout.ContentPane" splitter="true" region="center" style="text-align:center">
+                            <B>Preview</B>
+                        </div>
+                    </div>
+
+
+                    <div style="position: relative; width: 99%; height: 300px; border: 1px #ccc solid;">
+                      <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" class="borderContainer">
+                        <div dojoType="dijit.layout.ContentPane" splitter="true" id="left_<?= $i ?>" region="left" style="background-color:#99CCFF;width: 400px;">
+
+                            <? // LEFT ?>
+                            <? if(0) { ?>
+                            <div id="question_title" style="height:42px;">
+                                <B>Title:</B><BR><?= $this->formText('question_title_'.$i, $q['question_title'], array('size'=>46)); ?>
+                            </div>
+                            <? } ?>
+                            <div id="question_body" style="height:100px;">
+                                <B>Question Text:</B><BR>
+                                <?
+                                    $desc = new  Zend_Form_Element_Textarea('question_text_'.$i);
+                                    $desc->setRequired(true)
+                                    ->setValue($q['question_text'])
+                                    ->setAttrib('rows', 3)
+                                    ->setAttrib('cols', 40)
+                                    ->setAttrib('onBlur', "survey_view_refresh_question({$i}, '{$q['question_type']}', 1);")
+                                    ->setDecorators(array('ViewHelper' , 'Errors'));
+                                    echo $desc;
+                                    
+                                    // below code works locally but fails on xanthos because it can't find the formTextArea helper
+                                    //$this->formTextArea('question_text_'.$i, $q['question_text'], array('rows'=>3, 'cols'=>40));
+                                    
+                                ?>
+                            </div>
+
+                            <? if('' == $q['question_type'] || 'mc_one' == $q['question_type'] || 'mc_many' == $q['question_type']) { ?>
+                                <div id="question_answers_<?= $i ?>" style="height:130px;">
+                                    <B>Answers:</B><BR>
+                                <?
+                                    $desc = new  Zend_Form_Element_Textarea('answers_'.$i);
+                                    $desc->setRequired(true)
+                                    ->setValue($q['answers'])
+                                    ->setAttrib('rows', 4)
+                                    ->setAttrib('cols', 40)
+                                    ->setAttrib('onBlur', "survey_view_refresh_question({$i}, '{$q['question_type']}', 1);")
+                                    ->setDecorators(array('ViewHelper' , 'Errors'));
+                                    echo $desc;
+
+                                    // below code works locally but fails on xanthos because it can't find the formTextArea helper
+                                    //$this->formTextArea('answers_'.$i, $q['answers'], array('rows'=>4, 'cols'=>40));
+                                    
+                                ?>
+
+                                </div>
+                            <? } ?>
+                            
+                            <div id="question_options_<?= $i ?>">
+                                
+                            </div>
+    
+                        </div>
+                        
+                        
+                        <? //<div dojoType="dijit.layout.ContentPane" splitter="true" region="center">&nbsp;</div> ?>
+                        <? // ?>
+                        <? // VIEW QUESTION ?>
+                        <? // ?>
+                        <div dojoType="dijit.layout.ContentPane" id="right_<?= $i ?>" splitter="true" region="center" style="">
+                                
+                            <div style="text-align:center;border: solid 1px grey;padding: 2px 2px 2px 2px">
+                                <div id="take_suvey_question_<?= $i ?>" style="height:22px;text-align:left;">
+                                    <B><?= $i . '. ' . $q['question_text']; ?></B>
+                                </div>
+                                <div id="take_survey_answer" style="text-align:left;">                                    
+                                <? if('mc_one' == $q['question_type']) { ?>
+                                    
+                                    <? // for each return delimited value, output a radio button ?>
+                                    <?
+                                        $answersArr = explode("\n", trim($q['answers']));
+                                        $answersArr = array_map('trim', $answersArr);
+
+                                        $dropdown= new Zend_Form_Element_Radio('take_survey_answer_'.$i);
+                                        $dropdown->setMultiOptions($answersArr)
+                                        ->setDecorators(array('ViewHelper' , 'Errors'));
+                                        echo $dropdown;
+                                    ?>
+                                    
+                                <? } elseif('mc_many' == $q['question_type']) { ?>
+                                    
+                                    <? // for each return delimited value, output a checkbox ?>
+                                    <?
+                                        $answersArr = explode("\n", trim($q['answers']));
+                                        $answersArr = array_map('trim', $answersArr);
+                                        
+                                        $dropdown= new Zend_Form_Element_MultiCheckbox('take_survey_answer_'.$i);
+                                        $dropdown->setMultiOptions($answersArr)
+                                        ->setDecorators(array('ViewHelper' , 'Errors'));
+                                        echo $dropdown;
+                                    ?>
+                                    
+                                <? } elseif('text_box' == $q['question_type']) { ?>
+                                    
+                                    <?
+                                        $dropdown= new Zend_Form_Element_TextArea('take_survey_answer_'.$i);
+                                        $dropdown->setAttrib('rows', 4)
+                                        ->setValue("\n\n\n")
+                                        ->setAttrib('style', 'width:380px')
+                                        ->setAttrib('dojoType', "dijit.form.Textarea")
+                                        ->setDecorators(array('ViewHelper' , 'Errors'));
+                                        echo $dropdown;
+                                    ?>
+
+                                <? } ?>
+                                </div>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                        <? if($i == $this->qCount) { ?>
+                            <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" style="background-color:#ccc;text-align:center;" class="borderContainerSmall">
+                                <a href="/survey/addquestion/id/<?= $this->id; ?>/add_after_id/<?= $q['sort_id']; ?>">Add question here</a>
+                            </div>
+                        <? } ?>
+                    </div>
+
+                    <? $i++ ?>
+        <? } ?>            
+            <? } ?>
+        </ul>
+        </div>
+        <?= $this->formHidden('qCount', $this->qCount); ?>
+    <?php } ?>
+<?php } ?>
+
+
+<?= $this->surveyForm->id ?>
+<?= $this->surveyForm->id_county ?>
+<?= $this->surveyForm->id_district ?>
+<?= $this->surveyForm->id_school ?>
+</form>
+
+<UL>
+<li>pagenate?</li>
+<li>validation on edit survey</li>
+</ul>
+
+
+
+                    
+                    

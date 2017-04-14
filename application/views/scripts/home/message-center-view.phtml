@@ -1,0 +1,129 @@
+<?
+function buildOptionList($pkey, $keyName, $currentValue="") {
+
+    global $DOC_ROOT, $area;
+
+    $arrLabel = array("View Message", "Delete Message");
+    $arrValue = array("view", "delete");
+
+    $strHTMLSelect = "<select name='option'";
+    $strHTMLSelect .= " onChange=\"javascript:if(this.value) { window.location.href = '/home/message-center-'+this.value+'?id=".$pkey."'; }\">";
+
+    if (empty($currentValue)) {
+        $strHTMLSelect .= "<option value=\"\" selected=\"selected\">Choose...</option>";
+    }
+
+    $count = count($arrLabel);
+
+    for ($i = 0; $i < $count; $i++) {
+        if ($currentValue == $arrValue[$i]) {
+            $strHTMLSelect .= "<option value=\"$arrValue[$i]\" selected=\"selected\">$arrLabel[$i]</option>";
+        } else {
+            $strHTMLSelect .= "<option value=\"$arrValue[$i]\">$arrLabel[$i]</option>";
+        }
+    }
+
+    $strHTMLSelect .= "</select>";
+
+    return $strHTMLSelect;
+}
+
+?><script type="text/javascript">
+    $(document).ready(function () {
+        $('#srs_mainPane').css('margin-left', "10px");
+    });
+</script>
+
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationSubmenu('home');
+            } ?>
+        </td>
+    </tr>
+</table>
+<!--<table>-->
+<!--    <tr>-->
+<!--        <td class="bts" nowrap="nowrap">-->
+<!--            <span class="btsb">Sent To</span>:&nbsp;--><?// echo $this->name_full . " ($this->pkey)"; ?>
+<!--        </td>-->
+<!--        --><?// if ($this->pkey) { ?>
+<!--            <td class="bts" align="right" style="width:100%">-->
+<!--                <span class="btsb">Options</span>:&nbsp;-->
+<!--            </td>-->
+<!--            <td class="bts">-->
+<!--                --><?//= buildOptionList($this->pkey, 'message', $this->message['status'], 'view') ?>
+<!--            </td>-->
+<!--        --><?// } ?>
+<!--    </tr>-->
+<!--</table>-->
+<!--<table>-->
+<!--    <tr>-->
+<!--        --><?// if (empty($this->pkey)) { ?>
+<!--            <td align="right" style="width:100%; padding-right:4px;">-->
+<!--                <a accesskey="c" href="javascript:recordAction(document.forms[0], 'cancel');">-->
+<!--                    <img src="images/button_cancel.gif" alt="Cancel" title="Cancel (shortcut key = C)">-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        --><?// } else { ?>
+<!--            <td align="right" style="width:100%; padding-right:4px;">-->
+<!--                <a accesskey="d" href="javascript:recordAction(document.forms[0], 'done');">-->
+<!--                    <img src="images/button_done.gif" alt="Done" title="Done (shortcut key = D)">-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        --><?// } ?>
+<!--        --><?// if (empty($this->pkey)) { ?>
+<!--            <td align="right" class="bt">-->
+<!--                <span id="print">-->
+<!--                    <a>-->
+<!--                        <img src="images/button_print_off.gif" alt="Print" title="Record must be saved before it can be printed.">-->
+<!--                    </a>-->
+<!--                </span>-->
+<!--            </td>-->
+<!--        --><?// } else { ?>
+<!--            <td align="right" class="bt">-->
+<!--                <span id="print">-->
+<!--                    <a accesskey="p" href="javascript:print('--><?// echo "$DOC_ROOT/srs.php?area=$area&sub=$sub&$keyName=$this->pkey&page=$page&option=print"; ?><!--', '--><?// echo $this->pkey; ?><!--', 'scrollbars=1,status=1,toolbar=1,resizable=1,location=1,width=800,top=10,left=10');">-->
+<!--                        <img src="images/button_print.gif" alt="Print" title="Print (shortcut key = P)">-->
+<!--                    </a>-->
+<!--                </span>-->
+<!--            </td>-->
+<!--        --><?// } ?>
+<!--    </tr>-->
+<!--</table>-->
+<!---->
+<!--<table border="0" class="formInput" style="margin-top:1px;">-->
+<!--    <tr>-->
+<!--        <td class="p2424" style="width:635px">-->
+<!--            Sent: --><?//= $this->message['timestamp_created'] ?>
+<!--        </td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td class="p2424" style="width:635px">From: System</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td class="p2424" style="width:635px">Subject: --><?//= $this->message['subject'] ?><!--</td>-->
+<!--    </tr>-->
+<!--    --><?// if (!empty($this->message['link'])) { ?>
+<!--        <tr>-->
+<!--            <td class="p2424" style="width:635px">Quick Link: <a href="--><?// echo ($this->message['link']); ?><!--" class="btsLBlue" style="text-decoration:underline;" title="Quick Link">Click here</a></td>-->
+<!--        </tr>-->
+<!--    --><?// } ?>
+<!--    <tr>-->
+<!--        <td class="p0404" style="padding-top:4px;">-->
+<!--            --><?// echo ($this->message['message']); ?>
+<!--        </td>-->
+<!--    </tr>-->
+<!--</table>-->
+<?
+echo $this->form_message;

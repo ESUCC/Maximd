@@ -1,0 +1,180 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_029; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Response Form</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+    	<td>
+			<table class="formInput" style="width:100%">
+				<tr>
+				<td>Student's Name:
+					<strong>
+					<?php 
+					$view = $this->element->page->getView();
+					echo ($view->db_form_data['student_data']['name_student']);
+					?>
+					</strong> 
+				</td>
+				<td><?php echo $this->element->date_sent; ?></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->attend; ?>
+			<?php 
+			if('print' == $view->mode && '' == $this->element->schedule_meeting->getValue())
+			{
+				echo "___________________________________________________________________________________<BR />";
+				echo "___________________________________________________________________________________<BR /><BR />";
+				
+			} else {
+				echo $this->element->schedule_meeting;
+			}
+			
+			?>
+			<?php echo $this->element->attend_no_response; ?>
+		</td>
+    </tr>
+    <tr>
+    	<td>I have been fully informed of all information relevant to the proposed 
+    	meeting and I understand the purpose of the meeting. I have also been 
+    	provided a copy of my parental rights and procedural safeguards.
+    	<br/>
+    	<?php if('print' == $view->mode) { ?>
+	        <table class="formInput" style="margin-top:1px;">
+	            <tr>
+	                <?php 
+	                if('YES' == $this->element->signature_on_file_v10->getValue()) {
+	                    echo '<td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Signature on File:</td>
+	                          <td width="225" valign="bottom" style="white-space: nowrap;">';
+                        echo 'Yes';
+                        echo '<hr size="1" /></td>';
+	                } elseif ('NO' == $this->element->signature_on_file_v10->getValue()) {
+	                    echo '<td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Signature on File:</td>
+	                          <td width="225" valign="bottom" style="white-space: nowrap;">';
+	                    echo 'NO';
+                        echo '<hr size="1" /></td>';
+	                } else {
+	                    echo '<td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Parent Signature:</td>
+	                          <td width="225" valign="bottom" style="white-space: nowrap;"> &nbsp; <hr size="1" /></td>';
+	                }
+	                ?>
+	                <td width="50" valign="bottom" align="right" style="height:25px;white-space: nowrap;">Date:</td>
+	                <td width="225" valign="bottom" align="left" style="white-space: nowrap;">
+	                <?php 
+	                if(strlen($this->element->parent_date_1->getValue()) > 0) {
+                        echo $this->element->parent_date_1->getValue();
+                        echo '<hr size="1" />';
+	                } else {
+                        echo '<hr size="1" />';
+	                }
+	                ?></td>
+	            </tr>
+	             <?php if('NO' == $this->element->signature_on_file_v10->getValue()) : ?>
+	                <tr>
+	                <td colspan="2">No signature explanation: <br />
+	                <?php 
+	                if(strlen($this->element->sig_no_explain->getValue()) > 0) {
+                        echo $this->element->sig_no_explain->getValue();
+	                } 
+	                ?></td>
+	                </tr>
+	                <?php endif; ?>
+	        </table>
+        <?php } else { ?>
+	    	<table class="formInput" style="width:100%;">
+		    	<tr>
+		    		<td>Parent Signature: ____________________</td>
+                </tr>
+                <tr>
+		    		<td>Signature on File:</td>
+		    	</tr>
+                <tr>
+		    		<td><?php echo $this->element->signature_on_file_v10; ?></td>
+		    	</tr>
+		    	<tr>
+		    		<td><?php echo $this->element->parent_date_1; ?></td>
+		    	</tr>
+		    	<tr>
+		    	    <td>
+		    	     (If No selected above, please explain) <br />
+		    	     <?php echo $this->element->sig_no_explain; ?>
+		    	    </td>
+		    	</tr>
+	    	</table>
+    	<?php } ?>
+    	</td>
+    </tr>
+</table> 
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Please sign and date this form and return it to:</td>
+	<?php if('edit' == $view->mode) { ?>
+    <TD>
+		<div id="iep_form_029_returninfo_saved" style="font-size:10px;">
+	            <a href="javascript:void(0);" class="myrecords_edit_link" >Replace With Template</a> - 
+	            <a href="javascript:void(0);" class="myrecords_add_link" >Add to Templates</a>
+        </div>
+    </TD>
+	<?php } ?>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+			<table class="formInput" id="iep_form_029_returninfo">
+				<tr>
+					<td><?php echo $this->element->school_contact; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->response_address; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->city_state_zip; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->school_phone; ?></td>
+				</tr>
+			</table>
+		</td>
+    </tr>
+</table>
+<div style="page-break-before: always;">
+<table class="formSectionHeadBlue <?php if(!$this->element->on_off_contact_attempts->getValue() && 'print' == $view->mode) { echo 'noprint'; } ?>" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>Parental Contact Documentation</td>
+	</tr>
+</table>
+<table class="formInput noprint" style="margin-top:1px;">     
+	    <tr>
+			<td>
+			<div>
+			<?php echo $this->element->on_off_contact_attempts; ?> &nbsp; <?php echo $this->element->on_off_contact_attempts->getDescription(); ?>
+			</div>
+			</td>
+	    </tr>
+	</table>
+<?php if(!$this->element->on_off_contact_attempts->getValue() && 'print' == $view->mode) { 
+	// do not print if box is not checked.
+	// we output this in edit mode so that it can dynamically appear
+	?>
+<?php } else { ?>
+	<div>
+	<?php echo $this->subform($view, 'contact_attempts', true, true, true, false, false);?>
+	</div>
+<?php } ?>
+</div>

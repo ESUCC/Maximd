@@ -1,0 +1,61 @@
+<?php $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+
+<?php if('print' != $view->mode && 'view' != $view->mode) { ?>
+<table class="formInput" style="width:100%;" border="1" id="team_other_<?= $rowNum; ?>">
+<?php } ?>
+
+<?php if(('print' != $view->mode && 'view' != $view->mode) && 1 == $rowNum) { ?>
+    <tr class="tanHead">
+        <td style="width:20%">
+            Name
+        </td>
+        <td style="width:20%">
+            Role
+        </td>
+        <td style="width:40%">
+            Address and Phone
+        </td>
+        <td style="width:20%">
+            Family initial for copy of pages sent
+        </td>
+        <td class="noprint noview">
+            Remove
+        </td>
+    </tr>
+    <?php } ?>
+    
+    <tr>
+        <td style="width:20%;vertical-align: top;">
+            <div id="team_other_<?= $rowNum; ?>-tmo_name-colorme" class="colorme">
+            <?php echo $this->element->tmo_name; ?>
+            <?php echo $this->element->id_ifsp_team_other; ?>
+            </div>
+        </td>
+        <td valign="top" style="width:20%;vertical-align: top;">
+            <div id="team_other_<?= $rowNum; ?>-tmo_role-colorme" class="colorme">
+            <?php echo $this->element->tmo_role; ?>
+            </div>
+        </td>
+        <td valign="top" style="width:40%;vertical-align: top;">
+            <div id="team_other_<?= $rowNum; ?>-tmo_address-colorme" class="colorme">
+            <?php echo $this->element->tmo_address; ?>
+            </div>
+        </td>
+        <td valign="top" style="width:20%;vertical-align: top;">
+            <div id="team_other_<?= $rowNum; ?>-tmo_initial-colorme" class="colorme">
+            <?php echo $this->element->tmo_initial; ?>
+            </div>
+        </td>
+        <td class="noprint noview" width="20%" style="vertical-align: top;" align="center" >
+            <div id="ifsp_parents_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+    </tr>
+<?php 
+
+if('print' != $view->mode && "view" != $view->mode) { 
+	?>
+</table>
+<?php } ?>

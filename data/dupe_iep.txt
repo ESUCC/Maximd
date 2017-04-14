@@ -1,0 +1,429 @@
+abort;
+begin;
+-- function used to dupe INTO the zend framework from the zend framework
+-- function ALSO used to dupe INTO the zend framework from an old iep, thus the version checks
+DROP FUNCTION "dupe_iep_goals"( integer, integer );
+CREATE FUNCTION "dupe_iep_goals"( integer, integer ) RETURNS boolean AS $_$DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    newOID              bigint;
+    
+    
+BEGIN 
+    TABLE_NAME          := 'iep_form_004_goal';
+    TABLE_PK_NAME       := 'id_form_004_goal';
+    FIELDS_ELIMINATE    := '{id_form_004_goal, progress_date1, progress_date2, progress_date3, progress_date4, progress_date5, progress_date6, bug2465_checkedreal, timestamp_last_mod, timestamp_created}';
+    
+    FOR REC_GOAL IN SELECT * FROM iep_form_004_goal WHERE id_form_004 = PK_IEP_OLD order by id_form_004_goal asc LOOP
+
+        --RAISE NOTICE 'dupe goal: %', REC_GOAL.id_form_004_goal;
+        --
+        -- DUPE THE GOAL AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_GOAL.id_form_004_goal, FIELDS_ELIMINATE) as resOID;
+        newOID              := INSERT_RESULT.resOID;
+        --RAISE NOTICE 'id_form_004: %', $2;
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new goal with the id of the new iep it will be on
+        --
+        UPDATE iep_form_004_goal SET original_iep_id = id_form_004, id_form_004 = $2, savetype = 'dupefunction', eval_procedure=replace(REC_GOAL.eval_procedure, '|', E'\n') WHERE oid = newOID and id_student = REC_GOAL.id_student;
+
+    END LOOP;    
+    RETURN true;
+END;
+$_$ LANGUAGE 'plpgsql';
+
+
+DROP FUNCTION "dupe_iep_zend_to_zend"( integer, integer );
+CREATE FUNCTION "dupe_iep_zend_to_zend"( integer, integer ) RETURNS integer AS $_$DECLARE
+    TABLE_PK            alias for $1;
+    SESS_ID_USER        alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    v_arr text[];
+
+    INSERT_RESULT       record;
+    v_old_iep           record;
+    v_new_iep           record;
+    v_new_pg            record;
+    v_new_ac            record;
+    v_student           record;
+    v_select_result     record;
+    newPK               integer;
+    daysValue           integer;
+    oldDaysValue        varchar;
+    pg6Other            varchar;
+    pg6RelatedOther     varchar;
+    v_participantNames  varchar;
+    v_transition_plan   boolean;
+    v_transportation    integer;
+    insert_id           bigint;
+    
+    TEMP_STR            varchar;
+    COUNTER             integer;
+    TEMP_NAME           varchar[];
+    TEMP_TYPE           varchar[];
+    TEMP_OTHER          varchar[];
+
+    TEMP_R_FRMDATE      varchar[];
+    TEMP_R_TODATE       varchar[];
+    TEMP_R_FRMDATE_NULL date[];
+    TEMP_R_TODATE_NULL  date[];
+    TEMP_R_LOCATION     varchar[];
+    TEMP_R_TPD          varchar[];
+    TEMP_R_TPD_UNIT     varchar[];
+    TEMP_R_DPW          varchar[];
+    TEMP_R_MPY          varchar[];
+    TEMP_R_CALENDAR     varchar[];
+    
+    
+    
+BEGIN 
+    TABLE_NAME          := 'iep_form_004';
+    TABLE_PK_NAME       := 'id_form_004';
+    
+    -- 20090901 jlavere - clear mips section (fape_consent, pg6_doc_signed_parent, pg6_date_doc_signed_parent, pg6_no_sig_explanation)
+    --
+    FIELDS_ELIMINATE    := '{supports_location_other, ass_tech_location_other, prog_mod_location_other, supp_service_location_other, related_service_location_other, timestamp_created, id_form_004, date_conference, date_doc_signed_parent, doc_signed_parent, recieve_electronic_copy, status, primary_service_location_other, extracurricular_nonacademic, necessary_action, received_copy, lps_sig_understand_process, lps_sig_participated, lps_sig_agree, lps_sig_no_agree_reason, lps_sig_understand_purpose, lps_sig_understand_covers, lps_sig_understand_receive, lps_sig_received_rights, no_sig_explanation, page_status, primary_service_from, primary_service_to, related_service_from_date, related_service_to_date, supp_service_from_date, supp_service_to_date, prog_mod_from_date, prog_mod_to_date, ass_tech_from_date, ass_tech_to_date, supports_from_date, supports_to_date, primary_disability_drop_other, fape_consent, pg6_doc_signed_parent, pg6_date_doc_signed_parent, pg6_no_sig_explanation, effect_from_date, effect_to_date, transition_date1, transition_date2, transition_date3, primary_service_from, primary_service_to, parental_rights}'; -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+    
+
+    --
+    -- GET A COPY OF THE OLD IEP
+    --
+    SELECT INTO v_old_iep * FROM iep_form_004 where id_form_004 = TABLE_PK;
+    --RAISE NOTICE 'tran plan: %', v_old_iep.transition_plan;
+    
+    
+    
+    --
+    -- GET A COPY OF THE STUDENT RECORD
+    -- used for TRANSITION PLAN duping
+    --
+    SELECT INTO v_student date_part('year',age(dob)) as years, date_part('month',age(dob)) as months, date_part('day',age(dob)) as days FROM iep_student where id_student = v_old_iep.id_student;
+    IF('t' = v_old_iep.transition_plan OR v_student.years >= 16 OR (v_student.years = 15 and v_student.days > 1)) THEN
+        v_transition_plan := true;
+    ELSE
+        v_transition_plan := false;
+    END IF;
+
+    --RAISE NOTICE 'v_transition_plan: %', v_transition_plan;
+
+
+    --
+    -- DUPE THE IEP AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+
+    --RAISE NOTICE 'resOID: %', INSERT_RESULT.resOID;
+    insert_id := CAST(INSERT_RESULT.resOID AS oid);
+    
+    SELECT INTO v_new_iep participant_names, primary_service_days_value, primary_service_dpw, id_form_004, related_service_drop, primary_disability_drop FROM iep_form_004 WHERE oid = insert_id;
+    newPK              := v_new_iep.id_form_004;
+    RAISE NOTICE 'newPK: %', newPK;
+
+    --RAISE NOTICE 'primary_service_days_value: %', v_new_iep.primary_service_days_value;
+    --RAISE NOTICE 'prog_mod_dpw: %', v_new_iep.primary_service_dpw;
+    daysValue              := v_new_iep.primary_service_days_value;
+    oldDaysValue           := v_new_iep.primary_service_dpw;
+    IF(daysValue is null and oldDaysValue is not null and oldDaysValue != '') THEN
+        daysValue := oldDaysValue;
+        --RAISE NOTICE 'is null';
+    END IF;
+
+
+    
+    -- ======================================================================
+    -- IF primary_disability_drop IS Other (Please Specify)
+    -- THEN CLEAR THE FIELD
+    -- ======================================================================
+    pg6Other           := v_new_iep.primary_disability_drop;
+    IF(pg6Other = 'Other (Please Specify)') THEN
+        pg6Other           := NULL;
+    END IF;
+    -- ======================================================================
+    -- RAISE NOTICE 'pg6Other: %', pg6Other;
+
+    -- ======================================================================
+    -- IF related_service_drop contains Other (Please Specify)
+    -- THEN CLEAR THOSE OCCURANCES
+    -- contents of the Other field are ALWAYS cleared in the update below - 20050106 - jlavere 
+    -- ======================================================================
+        pg6RelatedOther           := v_new_iep.related_service_drop;
+        pg6RelatedOther           := replace(pg6RelatedOther, 'Other (Please Specify)',  '');
+        pg6RelatedOther           := replace(pg6RelatedOther, 'Sign Language Interpreter',  'Interpreting Services');
+
+    -- ======================================================================
+    -- RAISE NOTICE 'pg6RelatedOther: %', pg6RelatedOther;
+    
+    
+    --
+    -- 20060105 - code to remove the Educator of the hearing impaired on duped ieps from v1
+    --
+    IF(v_old_iep.version_number = 1) THEN
+        SELECT INTO v_select_result clearcolumn(v_new_iep.participant_names, 10);
+        v_participantNames := v_select_result.clearcolumn;
+    ELSE
+        v_participantNames := v_new_iep.participant_names;
+    END IF;
+    --RAISE NOTICE 'v_participantNames: %', v_participantNames;
+
+
+
+    -- build the empty team member rows and populate
+    SELECT INTO v_select_result createiepteammembers(newPK);
+    IF(v_old_iep.version_number = 1) THEN
+        --v_arr := string_to_array(v_new_iep.participant_names, ';');
+
+        --RAISE NOTICE 'v_old_iep row 1 data: %', v_arr[0];
+
+    ELSE
+        perform dupe_iep_participants($1, newPK);
+    END IF;
+
+    IF(v_old_iep.transportation_yn = 't') THEN
+        v_transportation := 1;
+    ELSEIF(v_old_iep.transportation_yn = 'f') THEN
+        v_transportation := 0;
+    ELSE
+        v_transportation := null;
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    -- 20090223 - jlavere - utf8 added 
+    --
+    --    RAISE NOTICE '_______________________________________new v_transportation: %', v_transportation;
+    
+    UPDATE iep_form_004 
+        SET 
+            version_number = 11,
+            form_editor_type = 'tinyMce',
+            utf8header = true,
+            page_status = '0110101',
+            id_author = $2, 
+            id_author_last_mod = $2, 
+            primary_disability_drop = pg6Other, 
+            related_service_drop = pg6RelatedOther,
+
+            primary_service_days_value = daysValue,
+            primary_service_dpw = '',
+            participant_names = v_participantNames,
+
+            transition_plan = v_transition_plan,
+            transportation_yn = v_transportation,
+
+            related_service = ''
+        WHERE id_form_004 = newPK;
+
+    SELECT INTO v_new_iep dupe_iep_goals(TABLE_PK, newPK) as check;
+    SELECT INTO v_new_ac dupe_iep_accom_checklist(TABLE_PK, newPK) as check;
+    --SELECT INTO v_new_pg dupe_iep_progress_reports(TABLE_PK, newPK) as check;
+    
+    --
+    -- dupe related tables in new zf structure
+    --
+    IF(v_old_iep.version_number >= 9) THEN
+        perform dupe_related_table(TABLE_PK, newPK, 'iep_team_other', 'id_iep_team_other', '{id_iep_team_other, timestamp_last_mod, timestamp_created}');
+        perform dupe_related_table(TABLE_PK, newPK, 'iep_team_district', 'id_iep_team_district', '{id_iep_team_district, timestamp_last_mod, timestamp_created}');
+
+        perform dupe_related_table(TABLE_PK, newPK, 'form_004_related_service', 'id_form_004_related_service', '{id_form_004_related_service, timestamp_last_mod, timestamp_created, related_service_from_date, related_service_to_date}');
+        perform dupe_related_table(TABLE_PK, newPK, 'form_004_supp_service', 'id_form_004_supp_service', '{id_form_004_supp_service, timestamp_last_mod, timestamp_created, supp_service_from_date, supp_service_to_date}');
+        perform dupe_related_table(TABLE_PK, newPK, 'form_004_prog_mods', 'id_form_004_prog_mods', '{id_form_004_prog_mods, timestamp_last_mod, timestamp_created, prog_mod_from_date, prog_mod_to_date}');
+        perform dupe_related_table(TABLE_PK, newPK, 'form_004_assist_tech', 'id_form_004_assist_tech', '{id_form_004_assist_tech, timestamp_last_mod, timestamp_created, assist_tech_from_date, assist_tech_to_date}');
+        perform dupe_related_table(TABLE_PK, newPK, 'form_004_school_supp', 'id_form_004_school_supp', '{id_form_004_school_supp, timestamp_last_mod, timestamp_created, school_supp_from_date, school_supp_to_date}');
+    ELSE
+        -- convert old inline data arrays to related rows
+        -- dupe page 1 - Others as determined by the parent
+        COUNTER:=1;
+        if ('|'=substring(v_old_iep.participant_names_par from LENGTH(v_old_iep.participant_names_par) for 1)) THEN
+            TEMP_NAME := regexp_split_to_array(substring(v_old_iep.participant_names_par from 1 for LENGTH(v_old_iep.participant_names_par)-1), E'\\|');
+        ELSE 
+            TEMP_NAME := regexp_split_to_array(v_old_iep.participant_names_par, E'\\|');
+        END IF;
+        TEMP_TYPE := regexp_split_to_array(v_old_iep.participant_type_par, E'\\|');
+        TEMP_OTHER := regexp_split_to_array(v_old_iep.participant_other_par, E'\\|');
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into iep_team_other (id_form_004, sortnum, participant_name, relationship_desc, relationship_other) VALUES (newPK, COUNTER, TEMP_NAME[COUNTER], TEMP_TYPE[COUNTER], TEMP_OTHER[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+        -- dupe page 1 - Others as determined by the district
+        COUNTER:=1;
+        if ('|'=substring(v_old_iep.participant_names_dis from LENGTH(v_old_iep.participant_names_dis) for 1)) THEN
+            TEMP_NAME := regexp_split_to_array(substring(v_old_iep.participant_names_dis from 1 for LENGTH(v_old_iep.participant_names_dis)-1), E'\\|');
+        ELSE 
+            TEMP_NAME := regexp_split_to_array(v_old_iep.participant_names_dis, E'\\|');
+        END IF;
+        TEMP_TYPE := regexp_split_to_array(v_old_iep.participant_type_dis, E'\\|');
+        TEMP_OTHER := regexp_split_to_array(v_old_iep.participant_other_dis, E'\\|');
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into iep_team_district (id_form_004, sortnum, participant_name, relationship_desc, relationship_other) VALUES (newPK, COUNTER, TEMP_NAME[COUNTER], TEMP_TYPE[COUNTER], TEMP_OTHER[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+        -- page 6
+        -- dupe page 6 - related services
+        TEMP_NAME := regexp_split_to_array(v_old_iep.related_service_drop, E'\\|');
+        TEMP_R_FRMDATE  := regexp_split_to_array(v_old_iep.related_service_from_date, E'\\|');
+        TEMP_R_TODATE   := regexp_split_to_array(v_old_iep.related_service_to_date, E'\\|');
+
+        TEMP_R_LOCATION := regexp_split_to_array(v_old_iep.related_service_location, E'\\|');
+        TEMP_R_TPD      := regexp_split_to_array(v_old_iep.related_service_tpd, E'\\|');
+        TEMP_R_TPD_UNIT := regexp_split_to_array(v_old_iep.related_service_tpd_unit, E'\\|');
+        TEMP_R_DPW      := regexp_split_to_array(v_old_iep.related_service_dpw, E'\\|');
+        TEMP_R_MPY      := regexp_split_to_array(v_old_iep.related_service_mpy, E'\\|');
+        TEMP_R_CALENDAR := regexp_split_to_array(v_old_iep.related_service_calendar, E'\\|');
+        COUNTER:=1;
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            if(''=TEMP_R_FRMDATE[COUNTER]) THEN
+                TEMP_R_FRMDATE[COUNTER] := null;
+            END IF;
+            if(''=TEMP_R_TODATE[COUNTER]) THEN
+                TEMP_R_TODATE[COUNTER] := null;
+            END IF;
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into form_004_related_service
+                    (id_form_004, related_service_drop, related_service_from_date, related_service_to_date, related_service_location, related_service_tpd, related_service_tpd_unit, related_service_dpw, related_service_mpy, related_service_calendar)
+                    VALUES
+                    (newPK, TEMP_NAME[COUNTER], cast(TEMP_R_FRMDATE[COUNTER] as date), cast(TEMP_R_TODATE[COUNTER] as date), TEMP_R_LOCATION[COUNTER], TEMP_R_TPD[COUNTER], TEMP_R_TPD_UNIT[COUNTER], TEMP_R_DPW[COUNTER], TEMP_R_MPY[COUNTER], TEMP_R_CALENDAR[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+        -- dupe page 6 - supp_service
+        TEMP_NAME := regexp_split_to_array(v_old_iep.supp_service, E'\\|');
+        TEMP_R_FRMDATE  := regexp_split_to_array(v_old_iep.supp_service_from_date, E'\\|');
+        TEMP_R_TODATE   := regexp_split_to_array(v_old_iep.supp_service_to_date, E'\\|');
+        TEMP_R_LOCATION := regexp_split_to_array(v_old_iep.supp_service_location, E'\\|');
+        TEMP_R_TPD      := regexp_split_to_array(v_old_iep.supp_service_tpd, E'\\|');
+        TEMP_R_TPD_UNIT := regexp_split_to_array(v_old_iep.supp_service_tpd_unit, E'\\|');
+        TEMP_R_DPW      := regexp_split_to_array(v_old_iep.supp_service_dpw, E'\\|');
+        TEMP_R_MPY      := regexp_split_to_array(v_old_iep.supp_service_mpy, E'\\|');
+        TEMP_R_CALENDAR := regexp_split_to_array(v_old_iep.supp_service_calendar, E'\\|');
+        COUNTER:=1;
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            if(''=TEMP_R_FRMDATE[COUNTER]) THEN
+                TEMP_R_FRMDATE[COUNTER] := null;
+            END IF;
+            if(''=TEMP_R_TODATE[COUNTER]) THEN
+                TEMP_R_TODATE[COUNTER] := null;
+            END IF;
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into form_004_supp_service
+                    (id_form_004, supp_service, supp_service_from_date, supp_service_to_date, supp_service_location, supp_service_tpd, supp_service_tpd_unit, supp_service_days_unit, supp_service_mpy, supp_service_calendar)
+                    VALUES
+                    (newPK, TEMP_NAME[COUNTER], cast(TEMP_R_FRMDATE[COUNTER] as date), cast(TEMP_R_TODATE[COUNTER] as date), TEMP_R_LOCATION[COUNTER], TEMP_R_TPD[COUNTER], TEMP_R_TPD_UNIT[COUNTER], TEMP_R_DPW[COUNTER], TEMP_R_MPY[COUNTER], TEMP_R_CALENDAR[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+        -- dupe page 6 - prog_mod
+        TEMP_NAME := regexp_split_to_array(v_old_iep.prog_mod, E'\\|');
+        TEMP_R_FRMDATE  := regexp_split_to_array(v_old_iep.prog_mod_from_date, E'\\|');
+        TEMP_R_TODATE   := regexp_split_to_array(v_old_iep.prog_mod_to_date, E'\\|');
+        TEMP_R_LOCATION := regexp_split_to_array(v_old_iep.prog_mod_location, E'\\|');
+        TEMP_R_TPD      := regexp_split_to_array(v_old_iep.prog_mod_tpd, E'\\|');
+        TEMP_R_TPD_UNIT := regexp_split_to_array(v_old_iep.prog_mod_tpd_unit, E'\\|');
+        TEMP_R_DPW      := regexp_split_to_array(v_old_iep.prog_mod_dpw, E'\\|');
+        TEMP_R_MPY      := regexp_split_to_array(v_old_iep.prog_mod_mpy, E'\\|');
+        TEMP_R_CALENDAR := regexp_split_to_array(v_old_iep.prog_mod_calendar, E'\\|');
+        COUNTER:=1;
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            if(''=TEMP_R_FRMDATE[COUNTER]) THEN
+                TEMP_R_FRMDATE[COUNTER] := null;
+            END IF;
+            if(''=TEMP_R_TODATE[COUNTER]) THEN
+                TEMP_R_TODATE[COUNTER] := null;
+            END IF;
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into form_004_prog_mods
+                    (id_form_004, prog_mod, prog_mod_from_date, prog_mod_to_date, prog_mod_location, prog_mod_tpd, prog_mod_tpd_unit, prog_mod_days_unit, prog_mod_mpy, prog_mod_calendar)
+                    VALUES
+                    (newPK, TEMP_NAME[COUNTER], cast(TEMP_R_FRMDATE[COUNTER] as date), cast(TEMP_R_TODATE[COUNTER] as date), TEMP_R_LOCATION[COUNTER], TEMP_R_TPD[COUNTER], TEMP_R_TPD_UNIT[COUNTER], TEMP_R_DPW[COUNTER], TEMP_R_MPY[COUNTER], TEMP_R_CALENDAR[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+        -- dupe page 6 - ass_tech
+        TEMP_NAME := regexp_split_to_array(v_old_iep.ass_tech, E'\\|');
+        TEMP_R_FRMDATE  := regexp_split_to_array(v_old_iep.ass_tech_from_date, E'\\|');
+        TEMP_R_TODATE   := regexp_split_to_array(v_old_iep.ass_tech_to_date, E'\\|');
+        TEMP_R_LOCATION := regexp_split_to_array(v_old_iep.ass_tech_location, E'\\|');
+        TEMP_R_TPD      := regexp_split_to_array(v_old_iep.ass_tech_tpd, E'\\|');
+        TEMP_R_TPD_UNIT := regexp_split_to_array(v_old_iep.ass_tech_tpd_unit, E'\\|');
+        TEMP_R_DPW      := regexp_split_to_array(v_old_iep.ass_tech_dpw, E'\\|');
+        TEMP_R_MPY      := regexp_split_to_array(v_old_iep.ass_tech_mpy, E'\\|');
+        TEMP_R_CALENDAR := regexp_split_to_array(v_old_iep.ass_tech_calendar, E'\\|');
+        COUNTER:=1;
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            if(''=TEMP_R_FRMDATE[COUNTER]) THEN
+                TEMP_R_FRMDATE[COUNTER] := null;
+            END IF;
+            if(''=TEMP_R_TODATE[COUNTER]) THEN
+                TEMP_R_TODATE[COUNTER] := null;
+            END IF;
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into form_004_assist_tech
+                    (id_form_004, ass_tech, assist_tech_from_date, assist_tech_to_date, assist_tech_location, assist_tech_tpd, assist_tech_tpd_unit, assist_tech_days_unit, assist_tech_mpy, assist_tech_calendar)
+                    VALUES
+                    (newPK, TEMP_NAME[COUNTER], cast(TEMP_R_FRMDATE[COUNTER] as date), cast(TEMP_R_TODATE[COUNTER] as date), TEMP_R_LOCATION[COUNTER], TEMP_R_TPD[COUNTER], TEMP_R_TPD_UNIT[COUNTER], TEMP_R_DPW[COUNTER], TEMP_R_MPY[COUNTER], TEMP_R_CALENDAR[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+        -- dupe page 6 - supp
+        TEMP_NAME := regexp_split_to_array(v_old_iep.supports, E'\\|');
+        TEMP_R_FRMDATE  := regexp_split_to_array(v_old_iep.supports_from_date, E'\\|');
+        TEMP_R_TODATE   := regexp_split_to_array(v_old_iep.supports_to_date, E'\\|');
+        TEMP_R_LOCATION := regexp_split_to_array(v_old_iep.supports_location, E'\\|');
+        TEMP_R_TPD      := regexp_split_to_array(v_old_iep.supports_tpd, E'\\|');
+        TEMP_R_TPD_UNIT := regexp_split_to_array(v_old_iep.supports_tpd_unit, E'\\|');
+        TEMP_R_DPW      := regexp_split_to_array(v_old_iep.supports_dpw, E'\\|');
+        TEMP_R_MPY      := regexp_split_to_array(v_old_iep.supports_mpy, E'\\|');
+        TEMP_R_CALENDAR := regexp_split_to_array(v_old_iep.supports_calendar, E'\\|');
+        COUNTER:=1;
+        WHILE TEMP_NAME[COUNTER] is not null LOOP
+            if(''=TEMP_R_FRMDATE[COUNTER]) THEN
+                TEMP_R_FRMDATE[COUNTER] := null;
+            END IF;
+            if(''=TEMP_R_TODATE[COUNTER]) THEN
+                TEMP_R_TODATE[COUNTER] := null;
+            END IF;
+            IF TEMP_NAME[COUNTER] != '' THEN
+                insert into form_004_school_supp
+                    (id_form_004, supports, school_supp_from_date, school_supp_to_date, school_supp_location, school_supp_tpd, school_supp_tpd_unit, school_supp_days_unit, school_supp_mpy, school_supp_calendar)
+                    VALUES
+                    (newPK, TEMP_NAME[COUNTER], cast(TEMP_R_FRMDATE[COUNTER] as date), cast(TEMP_R_TODATE[COUNTER] as date), TEMP_R_LOCATION[COUNTER], TEMP_R_TPD[COUNTER], TEMP_R_TPD_UNIT[COUNTER], TEMP_R_DPW[COUNTER], TEMP_R_MPY[COUNTER], TEMP_R_CALENDAR[COUNTER]);
+            END IF;
+            COUNTER := COUNTER+1;
+        END LOOP;
+        
+    END IF;
+    
+    if(v_transition_plan) THEN
+        SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, 'iep_form_004_secondary_goal', 'id_form_004_secondary_goal', 'id_form_004', '{id_form_004_secondary_goal}') as check; -- 20080121 jlavere removed service_start, service_end
+    END IF;
+    --RAISE NOTICE 'check: %', v_new_iep.check;
+    RETURN newPK;
+END;
+$_$ LANGUAGE 'plpgsql';
+
+SELECT dupe_iep_zend_to_zend('1424968', '1000254');
+
+--select form_editor_type from iep_form_004 where id_form_004 = 1417637;

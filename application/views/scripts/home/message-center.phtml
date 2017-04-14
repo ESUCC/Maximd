@@ -1,0 +1,259 @@
+<?
+$this->jQuery()->addJavascriptFile($this->baseUrl() . '/js/custom/custom_functions.js');
+
+function buildOptionList($pkey, $keyName, $currentValue="") {
+
+    global $DOC_ROOT, $area;
+
+    $arrLabel = array("View Message", "Delete Message");
+    $arrValue = array("view", "delete");
+
+    $strHTMLSelect = "<select name='option'";
+    $strHTMLSelect .= " onChange=\"javascript:if(this.value) { window.location.href = '/home/message-center-'+this.value+'?id_message=".$pkey."'; }\">";
+
+    if (empty($currentValue)) {
+        $strHTMLSelect .= "<option value=\"\" selected=\"selected\">Choose...</option>";
+    }
+
+    $count = count($arrLabel);
+
+    for ($i = 0; $i < $count; $i++) {
+        if ($currentValue == $arrValue[$i]) {
+            $strHTMLSelect .= "<option value=\"$arrValue[$i]\" selected=\"selected\">$arrLabel[$i]</option>";
+        } else {
+            $strHTMLSelect .= "<option value=\"$arrValue[$i]\">$arrLabel[$i]</option>";
+        }
+    }
+
+    $strHTMLSelect .= "</select>";
+
+    return $strHTMLSelect;
+}
+
+?><script type="text/javascript">
+    $(document).ready(function () {
+        $('#srs_mainPane').css('margin-left', "10px");
+    });
+</script>
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php } ?>
+
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationSubmenu('home');
+            } ?>
+        </td>
+    </tr>
+</table>
+<h1>Message List</h1>
+<?//= $this->searchForm; ?>
+<?php if (isset($this->results)) { ?>
+    <?php if (count($this->results) < 1) { ?>
+        <div>No results matched your search</div>
+    <?php } else { ?>
+        <form id="messages" enctype="application/x-www-form-urlencoded" method="post" action="/home/message-center">
+            <div><?= count($this->results).' results' ?></div>
+            <?= $this->formHidden('page', $this->page); ?>
+            <?= $this->formHidden('formName', 'messages'); ?>
+            <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+            <table id="result">
+                <tr>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th>Sent</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <?php
+
+                $rownum = 0;
+                //      	foreach ($this->results as $k => $r) {
+                foreach($this->paginator as $k => $r) {
+                    $rowClassAddition = ($rownum++ % 2) ? 'evenrow' : 'oddrow';
+                    ?>
+                    <tr class="result <? echo $rowClassAddition; ?>">
+                        <td>System</td>
+                        <td><?= $r['subject'] ?></td>
+                        <td><?= $r['timestamp_created'] ?></td>
+                        <td><?= buildOptionList($r['id_message'], 'message')?></td>
+                    </tr>
+                <?php } ?>
+            </table>
+        </form>
+    <?php } ?>
+<?php } ?>
+
+<h1>DD Students Turning Nine in the next two weeks</h1>
+<?
+$formHelper = new Form_Form002();
+$form002 = $formHelper->edit_p3_v1();
+$disabilityOptions = $form002->getElement('disability_primary')->getMultiOptions();
+
+?>
+<?php if (isset($this->students)) { ?>
+    <?php if (count($this->students) < 1) { ?>
+        <div>No students matched your search</div>
+    <?php } else { ?>
+        <form id="students" enctype="application/x-www-form-urlencoded" method="post" action="/home/message-center">
+            <div><?= count($this->students).' students' ?></div>
+            <?= $this->formHidden('page', $this->page_student); ?>
+            <?= $this->formHidden('formName', 'students'); ?>
+            <?= $this->paginationControl($this->paginator_student, 'Sliding', 'pagination.phtml'); ?>
+            <table id="result">
+                <tr>
+                    <th>Student Name</th>
+                    <th>DOB</th>
+                    <th>&nbsp;</th>
+                </tr>
+                <?php
+
+                $rownum = 0;
+                foreach($this->paginator_student as $k => $r) {
+                    $rowClassAddition = ($rownum++ % 2) ? 'evenrow' : 'oddrow';
+                    if('' != $r['name_middle']) {
+                        $name = $r['name_first'] . ' ' . $r['name_middle'] . ' ' . $r['name_last'];
+                    } else {
+                        $name = $r['name_first'] . ' ' . $r['name_last'];
+                    }
+
+                    ?>
+                    <tr class="result <? echo $rowClassAddition; ?>">
+                        <td><?= $name ?></td>
+                        <td><?= $r['dob'] ?></td>
+                        <td><?= $disabilityOptions[$r['primary_disability']] ?></td>
+                        <td><?//= buildOptionList($r['id_message'], 'message')?></td>
+                    </tr>
+                <?php } ?>
+            </table>
+        </form>
+    <?php } ?>
+<?php } ?>
+
+
+<?php //if (isset($this->myTransferRequests)) { ?>
+<!--    --><?php //if (count($this->myTransferRequests) < 1) { ?>
+<!--        <div>No myTransferRequests matched your search</div>-->
+<!--    --><?php //} else { ?>
+<!--        <form id="myTransferRequests" enctype="application/x-www-form-urlencoded" method="post" action="/home/message-center">-->
+<!--            <div>--><?//= count($this->myTransferRequests).' myTransferRequests' ?><!--</div>-->
+<!--            --><?//= $this->formHidden('page', $this->page_student); ?>
+<!--            --><?//= $this->formHidden('formName', 'myTransferRequests'); ?>
+<!--            --><?//= $this->paginationControl($this->paginator_student, 'Sliding', 'pagination.phtml'); ?>
+<!--            <table id="result">-->
+<!--                <tr>-->
+<!--                    <th>Student Name</th>-->
+<!--                    <th>DOB</th>-->
+<!--                    <th>&nbsp;</th>-->
+<!--                </tr>-->
+<!--                --><?php
+//
+//                $rownum = 0;
+//                foreach($this->myTransferRequests as $k => $r) {
+//                    $rowClassAddition = ($rownum++ % 2) ? 'evenrow' : 'oddrow';
+//                    if('' != $r['name_middle']) {
+//                        $name = $r['name_first'] . ' ' . $r['name_middle'] . ' ' . $r['name_last'];
+//                    } else {
+//                        $name = $r['name_first'] . ' ' . $r['name_last'];
+//                    }
+//
+//                    ?>
+<!--                    <tr class="result --><?// echo $rowClassAddition; ?><!--">-->
+<!--                        <td>--><?//= $name ?><!--</td>-->
+<!--                        <td>--><?//= $r['dob'] ?><!--</td>-->
+<!--                        <td>--><?//= $disabilityOptions[$r['primary_disability']] ?><!--</td>-->
+<!--                        <td>--><?////= buildOptionList($r['id_message'], 'message')?><!--</td>-->
+<!--                    </tr>-->
+<!--                --><?php //} ?>
+<!--            </table>-->
+<!--        </form>-->
+<!--    --><?php //} ?>
+<?php //} ?>
+
+
+<div style="">
+    <div style="" class="clearfix">
+        <h3>Confirm Transfer Requests</h3>
+
+        <div style="padding:10px">
+            <? if (count($this->myTransferRequests) > 0) { ?>
+                <table border="0">
+                    <tr>
+                        <th>Created</th>
+                        <th>From District</th>
+                        <th>From School</th>
+                        <th>To District</th>
+                        <th>To School</th>
+                        <th style="width:200px;">Students</th>
+                        <th>Actions</th>
+                    </tr>
+                    <? foreach ($this->myTransferRequests as $tr) { ?>
+                        <TR>
+                            <td><?= date('m/d/Y', strtotime($tr['timestamp_created'])); ?></td>
+                            <td><?= $tr['name_district_from']; ?></td>
+                            <td><?= $tr['name_school_from']; ?></td>
+                            <td><?= $tr['name_district_to']; ?></td>
+                            <td><?= $tr['name_school_to']; ?></td>
+                            <td><?= str_replace(
+                                    ':',
+                                    ' ',
+                                    str_replace('|', '<br />', trim($tr['student_name_list'], '|'))
+                                ); ?></td>
+                            <td>
+                                <a href="/student/confirm-transfer/id_transfer_request/<?= $tr['id_transfer_request']; ?>/confirmTransferAction/confirm">Confirm</a>
+                                |
+                                <a href="/student/confirm-transfer/id_transfer_request/<?= $tr['id_transfer_request']; ?>/confirmTransferAction/delete">Delete</a>
+                            </td>
+                        </TR>
+                    <? } ?>
+                </table>
+            <? } else { ?>
+                <div class="message">You have no transfer requests at this time.</div>
+            <? } ?>
+        </div>
+    </div>
+    <div style="" class="clearfix">
+        <h3>Recently Confirmed Transfer Requests</h3>
+
+        <div style="padding:10px">
+            <? if (count($this->myRecentlyChangedTransferRequests) > 0) { ?>
+                <table border="0">
+                    <tr>
+                        <th>Created</th>
+                        <th>From District</th>
+                        <th>From School</th>
+                        <th>To District</th>
+                        <th>To School</th>
+                        <th>Students</th>
+                    </tr>
+                    <? foreach ($this->myRecentlyChangedTransferRequests as $tr) { ?>
+                        <TR>
+                            <td><?= date('m/d/Y', strtotime($tr['timestamp_created'])); ?></td>
+                            <td><?= $tr['name_district_from']; ?></td>
+                            <td><?= $tr['name_school_from']; ?></td>
+                            <td><?= $tr['name_district_to']; ?></td>
+                            <td><?= $tr['name_school_to']; ?></td>
+                            <td><?= str_replace(
+                                    ':',
+                                    ' ',
+                                    str_replace('|', ', ', trim($tr['student_name_list'], '|'))
+                                ); ?></td>
+                        </TR>
+                    <? } ?>
+                </table>
+            <? } else { ?>
+                <div class="message">You have no transfer requests at this time.</div>
+            <? } ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,196 @@
+<?
+$this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
+?>
+<script type="text/javascript">
+    $(function () {
+
+		$('#submit').click(function() {
+
+			if ($('#status').val() == 'Removed' || $('#status').val() == 'Inactive') {
+				if ($('#status-error')) {
+					$('#status-error').remove();
+				}
+				
+				var hasActivePrivileges = true;
+				$.ajax({
+					async: false,
+	                type: 'POST',
+	                dataType: 'json',
+	                url: '/personnel/has-active-privileges/id_personnel/' + $('#id_personnel').val(),
+	                success: function (json) {
+	                	hasActivePrivileges = json.response;
+	                },
+	                error: function () {
+	                    console.debug('error');
+	                }
+	            });
+				if (true == hasActivePrivileges) {
+	                $('#status-colorme').append('<span id="status-error" style="color:#c00;"> &nbsp; You cannot delete or inactivate a personnel record that still has active privileges.</span>');
+	                return false;
+	            } else if ($('#status').val() == 'Removed') {
+		            	var confirmed = confirm("Warning: Removing Personnel cannot be undone, Are you sure that you wish to permanently delete this personnel record?");
+						if (confirmed)
+							return true;
+						else
+							return false;
+	            } else {
+		            return true;
+	            }
+			}
+		});
+        
+        $('#send_login_info').click(function () {
+            $('#send-login-info-message').html('Preparing an email with your login info...');
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/personnel/send-login-info/id_personnel/' + $('#id_personnel').val(),
+                success: function (json) {
+                    if (true == json.response) {
+                        $('#send-login-info-message').html('A message with your login info has been sent to your email (' + json.email + ').');
+                    } else {
+                        $('#send-login-info-message').html('There was an error sending your login info.');
+                    }
+                },
+                error: function () {
+                    console.debug('error');
+                }
+            });
+        });
+    });
+</script>
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl() . '/css/privilege_list.css', 'screen');
+$this->headLink()->appendStylesheet($this->baseUrl() . '/css/privilege_detail.css', 'screen');
+$this->jQuery()->addJavascriptFile($this->baseUrl() . '/js/personnel-privileges.js');
+$this->jQuery()->addJavascriptFile($this->baseUrl() . '/js/personnel-student-chart-template.js');
+$this->jQuery()->addJavascriptFile($this->baseUrl() . '/js/personnel-privilege-actions.js');
+
+?>
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationSubmenu('personnel');
+            } ?>
+        </td>
+    </tr>
+</table>
+<div class="clearfix sectionContainer">
+    <h3 class="blueHeadline"><?= $this->viewOnly ? 'View' : 'Edit' ?> Personnel</h3>
+
+    <div class="sectionContainer">
+        <div class="message"><? if (isset($this->message)) {
+                echo $this->message;
+            } ?></div>
+    </div>
+    <?= $this->form_personnel ?>
+
+    <h3 class="blueHeadline">Privilege List</h3>
+
+    <div>
+        <div class="message"><? if (isset($this->message)) {
+                echo $this->message;
+            } ?></div>
+        <dl>
+            <dd id="add-privilege"></dd>
+        </dl>
+        <dl class="list-container">
+            <dd>
+                <fieldset>
+                    <div class="wrapperDiv">
+                        <dl class="zend_form">
+                            <span class="column_name_county">County</span>
+                            <span class="column_name_district">District</span>
+                            <span class="column_name_school">School</span>
+                            <span class="column_role">Role</span>
+                            <span class="column_status">Status</span>
+                            <span class="column_links">Actions</span>
+                        </dl>
+                    </div>
+                </fieldset>
+            </dd>
+            <?php foreach ($this->privileges as $key => $priv) { ?>
+                <dd id="personnel_privilege<?= $priv['id_privileges'] ?>">
+                    <fieldset>
+                        <div class="wrapperDiv">
+                            <dl class="zend_form">
+                                <span class="column_name_county"><?= $priv['name_county']; ?>&nbsp;</span>
+                                <span class="column_name_district"><?= $priv['name_district']; ?>&nbsp;</span>
+                                <span class="column_name_school"><?= $priv['name_school']; ?>&nbsp;</span>
+                                <span class="column_role"><?= $priv['class_description']; ?>&nbsp;</span>
+                                <span class="column_status"><?= $priv['status']; ?>&nbsp;</span>
+                        <span class="column_links">
+                            <?
+                            if($priv['access']) {
+                                switch($priv['status']) {
+                                    case 'Active':
+                                        echo '<a class="btn-update-privilege" href="/personnel/update-privilege/id_privileges/'.$priv['id_privileges'].'/status/Inactive">Inactivate</a> | ';
+                                        echo '<a class="btn-delete-privilege" href="/personnel/delete-privilege/id_privileges/'.$priv['id_privileges'].'">Remove</a>';
+                                        break;
+                                    case 'Inactive':
+                                        echo '<a class="btn-update-privilege" href="/personnel/update-privilege/id_privileges/'.$priv['id_privileges'].'/status/Active">Activate</a> | ';
+                                        echo '<a class="btn-delete-privilege" href="/personnel/delete-privilege/id_privileges/'.$priv['id_privileges'].'">Remove</a>';
+                                        break;
+                                }
+                            }
+                            ?>
+                        </span>
+                            </dl>
+                        </div>
+                    </fieldset>
+                </dd>
+            <?php } ?>
+        </dl>
+    </div>
+
+    <? if(count($this->templates)) { ?>
+    <div>
+        <h3 class="blueHeadline">Template List</h3>
+        <dl class="list-container">
+            <dd>
+                <fieldset>
+                    <div class="wrapperDiv">
+                        <dl class="zend_form">
+                            <span class="column_goal_desc">Goal Description</span>
+                            <span class="column_chart_type">Chart Type</span>
+                            <span class="column_links">Actions</span>
+                        </dl>
+                    </div>
+                </fieldset>
+            </dd>
+            <?php foreach ($this->templates as $key => $template) { ?>
+                <dd id="student_chart_template_<?= $template['id_student_chart_template'] ?>">
+                    <fieldset>
+                        <div class="wrapperDiv">
+                            <dl class="zend_form">
+                                <span class="column_goal_desc"><?= $template['goal_desc']; ?>&nbsp;</span>
+                                <span class="column_chart_type"><?= $template['chart_type']; ?>&nbsp;</span>
+                            <span class="column_links">
+                                <a class="btn-remove-student-chart-template"
+                                   href="/personnel/delete-student-chart-template/id_student_chart_template/<?= $template['id_student_chart_template']; ?>">Remove</a>
+                            </span>
+                            </dl>
+                        </div>
+                    </fieldset>
+                </dd>
+            <?php } ?>
+        </dl>
+    </div>
+    <? } else { ?>
+        <div>
+            <h3 class="blueHeadline">No Templates</h3>
+        </div>
+    <? } ?>
+</div>
+
+

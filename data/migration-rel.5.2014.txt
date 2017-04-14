@@ -1,0 +1,10 @@
+alter table iep_district add column use_fte_report boolean;
+
+alter table iep_form_004 add column fte_special_education_time varchar;
+alter table iep_form_004 add column fte_qualifying_minutes integer;
+alter table iep_form_004 add column fte_minutes_per_week integer;
+alter table iep_form_004 add column fte_total_qualifying_min_se integer;
+alter table iep_form_004 add column fte_total_qualifying_min_re integer;
+
+alter table public.form_004_related_service add column fte_special_education_time varchar;
+alter table public.form_004_related_service add column fte_qualifying_minutes integer;

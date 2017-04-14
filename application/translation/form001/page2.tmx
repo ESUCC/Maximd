@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Notice and Consent for Initial Evaluation Continued">
+           <tuv xml:lang="es"><seg>La continuaci&#xF3;n del consentimiento para una evaluacion inicial </seg></tuv>
+           <tuv xml:lang="en"><seg>Notice and Consent for Initial Evaluation Continued</seg></tuv>
+       </tu>
+       <tu tuid="Following is a description of the components of the multidisciplinary evaluation which the district proposes to conduct">
+           <tuv xml:lang="es"><seg>A continuaci&#xF3;n se presenta una descripci&#xF3;n de los componentes de la evaluaci&#xF3;n multidisciplinaria que el distrito propone llevar a cabo. </seg></tuv>
+           <tuv xml:lang="en"><seg>Following is a description of the components of the multidisciplinary evaluation which the district proposes to conduct</seg></tuv>
+       </tu>
+       <tu tuid="Multidisciplinary Evaluation Description">
+           <tuv xml:lang="es"><seg>Descripci&#xF3;n de la evaluaci&#xF3;n multidisciplinaria</seg></tuv>
+           <tuv xml:lang="en"><seg>Multidisciplinary Evaluation Description</seg></tuv>
+       </tu>
+       <tu tuid="Parents of children with disabilities">
+           <tuv xml:lang="es"><seg>Los padres de ni&#xF1;os con discapacidades tienen derechos que est&#xE1;n protegidos bajo las garant&#xED;as de procedimiento de la la Ley para Individuos con Discapacidades  (IDEA -Individuals with Disabilities Act). Una copia de sus derechos como padres se encuentra adjunta. Si tiene alguna pregunta sobre esta notificaci&#xF3;n o sobre sus derechos, usted puede contactar a</seg></tuv>
+           <tuv xml:lang="en"><seg>Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individuals with Disabilities Act (IDEA). A copy of your parental rights is enclosed. If you have any questions regarding this notice or your rights you may contact</seg></tuv>
+       </tu>
+       <tu tuid="Records provided">
+           <tuv xml:lang="es"><seg>Needs translation.</seg></tuv>
+           <tuv xml:lang="en"><seg>Records for your child are no longer needed to provide educational services to your child when five (5) years has passed since the record was last created or revised and your child has moved to the next building level except records designated in Board policy as a permanent individual record, and is subject to destruction once that period is elapsed.</seg></tuv>
+       </tu>
+       <tu tuid="Name">
+           <tuv xml:lang="es"><seg>Nombre</seg></tuv>
+           <tuv xml:lang="en"><seg>Name</seg></tuv>
+       </tu>
+       <tu tuid="Phone Number">
+           <tuv xml:lang="es"><seg>N&#xFA;mero telef&#xF3;nico</seg></tuv>
+           <tuv xml:lang="en"><seg>Phone Number</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Speech and Language">
+           <tuv xml:lang="es"><seg>Del Habla e Idioma</seg></tuv>
+           <tuv xml:lang="en"><seg>Speech and Language</seg></tuv>
+       </tu>
+       <tu tuid="Social and Emotional">
+           <tuv xml:lang="es"><seg>Social y Emocional</seg></tuv>
+           <tuv xml:lang="en"><seg>Social and Emotional</seg></tuv>
+       </tu>
+       <tu tuid="Perceptual and Motor">
+           <tuv xml:lang="es"><seg>Peceptual y motriz</seg></tuv>
+           <tuv xml:lang="en"><seg>Perceptual and Motor</seg></tuv>
+       </tu>
+       <tu tuid="Intellectual">
+           <tuv xml:lang="es"><seg>Intelectual</seg></tuv>
+           <tuv xml:lang="en"><seg>Intellectual</seg></tuv>
+       </tu>
+       <tu tuid="Academic">
+           <tuv xml:lang="es"><seg>Acad&#xE9;mico</seg></tuv>
+           <tuv xml:lang="en"><seg>Academic</seg></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg/></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+   </body>
+</tmx>

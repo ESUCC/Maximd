@@ -1,0 +1,108 @@
+
+DROP FUNCTION "dupe_ifsp"( bigint, integer, varchar, varchar, varchar, integer );
+CREATE OR REPLACE FUNCTION "dupe_ifsp"( bigint, integer, varchar, varchar, varchar, integer ) RETURNS integer AS $$DECLARE
+    TABLE_PK            alias for $1;
+    SESS_ID_USER        alias for $2;
+    NEW_IFSP_TYPE       alias for $3;
+    TABLE_NAME          alias for $4;
+    TABLE_PK_NAME       alias for $5;
+    FULL_UPDATE       alias for $6;
+
+    FIELDS_ELIMINATE    varchar[];
+    
+    v_arr text[];
+
+    INSERT_RESULT       record;
+    v_old_iep           record;
+    v_new_iep           record;
+    v_student           record;
+    v_select_result     record;
+    newPK               bigint;
+    daysValue           integer;
+    oldDaysValue        varchar;
+    pg6Other            varchar;
+    pg6RelatedOther     varchar;
+    v_participantNames  varchar;
+    v_transition_plan   boolean;
+BEGIN 
+
+
+    IF ( 1 = FULL_UPDATE) THEN
+
+        -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+        -- also, make sure you have the TABLE_PK_NAME field name in this FIELDS_ELIMINATE list
+        FIELDS_ELIMINATE    := '{' || TABLE_PK_NAME || ', timestamp_created, timestamp_last_mod}'; 
+
+        --
+        -- DUPE THE IFSP AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+        --    RAISE NOTICE 'resOID: %', INSERT_RESULT.resOID;
+        --
+        -- GET OID AS REFRENCE
+        --
+        SELECT INTO v_new_iep id_form_013 FROM iep_form_013 WHERE oid = CAST(INSERT_RESULT.resOID as oid);
+        newPK              := v_new_iep.id_form_013;
+
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        --
+        UPDATE iep_form_013 
+            SET 
+                id_form_013_duped_from = $1,
+                status = 'Draft',
+                id_author = $2, 
+                id_author_last_mod = $2,
+                version_number = 9,
+                ifsptype = $3
+            WHERE id_form_013 = newPK;
+    
+    
+    
+    
+    ELSE
+    
+        -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+        -- also, make sure you have the TABLE_PK_NAME field name in this FIELDS_ELIMINATE list
+        FIELDS_ELIMINATE    := '{' || TABLE_PK_NAME || ', timestamp_created, timestamp_last_mod, id_form_013_duped_from, date_notice, meeting_date, meeting_date_sent, parent_understand_content, parent_understand_distribition, parent_date_1, parent_sig_1_on_file, parent_date_2, parent_sig_2_on_file, date_family_concerns, date_child_strengths, dev_vision_date, dev_hearing_date, dev_health_status_date, dev_cognitive_date, dev_communication_date, dev_social_date, dev_self_help_date, dev_fine_motor_date, dev_gross_motor_date}'; 
+
+        --
+        -- DUPE THE IFSP AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+        --    RAISE NOTICE 'resOID: %', INSERT_RESULT.resOID;
+        --
+        -- GET OID AS REFRENCE
+        --
+        SELECT INTO v_new_iep id_form_013 FROM iep_form_013 WHERE oid = CAST(INSERT_RESULT.resOID as oid);
+        newPK              := v_new_iep.id_form_013;
+        
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        --
+        UPDATE iep_form_013 
+            SET 
+                page_status = '000010110',
+                status = 'Draft',
+                id_author = $2, 
+                id_author_last_mod = $2,
+                version_number = 9,
+                ifsptype = $3
+            WHERE id_form_013 = newPK;
+    
+    END IF;
+    
+    --
+    -- DUPLICATE THE SUB FORMS
+    --
+    SELECT INTO v_new_iep duplicate_sub_rows_additional_where(TABLE_PK, newPK, 'ifsp_goals', 'id_ifsp_goals', 'id_form_013', '{id_ifsp_goals}', 'status is null') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, 'ifsp_parents', 'id_ifsp_parents', 'id_form_013', '{id_ifsp_parents}') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, 'ifsp_services', 'id_ifsp_services', 'id_form_013', '{id_ifsp_services}') as check; -- 20080121 jlavere removed service_start, service_end
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, 'ifsp_team_members', 'id_ifsp_team_members', 'id_form_013', '{id_ifsp_team_members}') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, 'ifsp_team_other', 'id_ifsp_team_other', 'id_form_013', '{id_ifsp_team_other}') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, 'ifsp_tran_plan_participants', 'id_ifsp_tran_plan_participants', 'id_form_013', '{id_ifsp_tran_plan_participants}') as check;
+
+    RETURN newPK;
+END;
+$$ LANGUAGE 'plpgsql';
+

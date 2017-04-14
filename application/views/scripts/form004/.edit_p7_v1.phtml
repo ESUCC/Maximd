@@ -1,0 +1,119 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo $this->element->id_form_004;
+echo $this->element->page;
+echo $this->element->dob;
+?>
+    <table class="formTitleHead">
+        <tr>
+            <td><?php echo $this->translate('Transportation'); ?></td>
+        </tr>
+    </table>
+
+    <table class="formInput noBorder">
+        <tr>
+            <td colspan="2"><?php
+                echo $this->element->transportation_yn;
+                ?></td>
+        </tr>
+        <tr>
+            <td><?php
+                echo $this->element->transportation_why;
+                ?>  </td>
+        </tr>
+    </table>
+
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('special education transportation'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->transportation_desc; ?>
+            </td>
+        </tr>
+    </table>
+
+    <table class="formSectionHead">
+        <tr>
+            <td><?php echo $this->translate('Assessment'); ?></td>
+        </tr>
+    </table>
+    <table class="sc_formInputBlock">
+        <tr>
+            <td>
+                <?php
+                if ('print' == $view->mode) {
+                    echo $this->element->assessment_accom->getValue();
+                } else {
+                    echo $this->element->assessment_accom;
+                }
+
+                ?></td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php
+                if ('print' == $view->mode) {
+                    // Commenting out per Wades request.
+                    // if('The child will participate in district-wide assessment WITH accommodations, as specified:' != $this->element->assessment_accom->getValue()) {
+                    echo $this->element->assessment_accom->getValue();
+                    // }
+                } else {
+                    echo $this->element->assessment_desc;
+                }
+                ?>
+                <?php // Commenting out per Wades request.
+                if ($view->db_form_data['student_data']['id_county'] == "99" && $view->db_form_data['student_data']['id_district'] == "9999") {
+                    if ('print' == $view->mode) {
+                        if ('The child will participate in district-wide assessment WITH accommodations, as specified:' == $this->element->assessment_accom->getValue(
+                            )
+                        ) {
+                            echo $this->element->district_assessments->getValue();
+                        }
+                    } else {
+                        echo $this->element->district_assessments;
+                    }
+                }
+                ?>
+            </td>
+        </tr>
+    </table>
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('academic and functional performance'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->assessment_alt; ?>
+            </td>
+        </tr>
+    </table>
+
+<?php if (!$view->lps || 10 <= $view->version) { ?>
+    <table class="formTitleHead">
+        <tr>
+            <td><?php echo $this->translate('Extended School Year Services'); ?></td>
+        </tr>
+    </table>
+    <table class="formInput noBorder">
+        <tr>
+            <td><?php
+                echo $this->element->ext_school_year_yn;
+                ?></td>
+        </tr>
+    </table>
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('child will participate'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->ext_school_year_desc; ?>
+            </td>
+        </tr>
+    </table>
+<?php } ?>

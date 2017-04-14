@@ -1,0 +1,43 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_029; ?>
+<?= $this->element->page; ?>
+
+<?php if('print' != $view->mode) { ?>
+	<table cellspacing="0" cellpadding="0" class="formTitleHead">
+	   <tr>
+	        <td>Team Member Absences</td>
+	    </tr>
+	</table>
+	
+	<table class="formInput" style="margin-top:1px;">     
+	    <tr>
+			<td>
+			<div>
+			<?php echo $this->element->on_off_checkbox; ?>
+			</div>
+			</td>
+	    </tr>
+	</table> 
+<?php } ?>
+
+<?php if(!$this->element->on_off_checkbox->getValue() && 'print' == $view->mode) { ?>
+	<table class="formInput noprint" cellspacing="5">
+		<tr>
+        	<td align="left">No Team Member Absences have been entered.</td>
+        </tr>
+	</table>
+<?php } ?>
+
+<?php if(!$this->element->on_off_checkbox->getValue() && 'print' == $view->mode) { 
+	// do not print if box is not checked.
+	// we output this in edit mode so that it can dynamically appear
+	?>
+<?php } else { ?>
+	<div id="subformToChange" style="<? if(!$this->element->on_off_checkbox->getValue()) echo "visibility:hidden;"; ?>">
+	<?php echo $this->subform($view, 'team_member_absences', true, true, true, true, true);?>
+	</div>
+<?php } ?>

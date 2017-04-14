@@ -1,0 +1,4 @@
+2004-08-24 23:21:55	Unknown ID	error mail result = 1
+2004-08-24 23:21:55	Unknown ID	
+2004-08-24 23:21:56	Unknown ID	error mail result = 1
+2004-08-24 23:21:56	Unknown ID	

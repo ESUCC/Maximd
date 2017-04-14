@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+#srs_mainPane {
+	margin-left:0;
+}
+
+.removeFormat {
+	display:none;
+}
+
+#format-container {
+	width:370px;
+}
+
+/*.ui-state-default {*/
+    /*background: none !important;*/
+    /*background-color: #555 !important;*/
+    /*color: #FFF !important;*/
+/*}*/

@@ -1,0 +1,44 @@
+<? $rowNum = $this->element->rownumber->getValue(); 
+$view = $this->element->rownumber->getView();
+
+?>
+<table class="formInput" style="width:100%;" border="0" id="iep_form_018_team_member_<?= $rowNum; ?>">
+    <tr>
+        <td colspan="2" class="noprint" style="text-align: left;">
+            <?php echo "Team Member $rowNum"; ?>
+        </td>
+        <td colspan="1" class="noprint nodialog" style="text-align: right;">
+            <div id="iep_form_018_team_member_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" width="33%" nowrap="nowrap"> 
+            <div id="iep_form_018_team_member_<?= $rowNum; ?>-name_or_position-colorme" class="colorme">
+            <? echo $this->element->name_or_position; ?>
+            </div>                
+        </td>
+        <td align="left" width="33%" nowrap="nowrap"> 
+            <div id="iep_form_018_team_member_<?= $rowNum; ?>-phone-colorme" class="colorme">
+            <? echo $this->element->phone; ?>
+            </div>                
+        </td>
+        <td align="left" width="33%" nowrap="nowrap"> 
+            <div id="iep_form_018_team_member_<?= $rowNum; ?>-email-colorme" class="colorme">
+            <? echo $this->element->email; ?>
+            </div> 
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" class="noprint nodialog" style="text-align: right;">
+            <?php if('edit' == $view->mode) { ?>
+            <div id="iep_form_018_team_member_saved_<?= $rowNum; ?>" style="font-size:10px;">
+	            <a href="javascript:void(0);" class="myrecords_edit_link" >Replace With Saved Record</a> - 
+	            <a href="javascript:void(0);" class="myrecords_add_link" >Add to Saved Records</a>
+            </div>
+            <?php } ?>
+        </td>
+    </tr>
+</table>
+<hr />

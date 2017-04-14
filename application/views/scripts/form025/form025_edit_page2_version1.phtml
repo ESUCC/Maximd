@@ -1,0 +1,130 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_025; ?>
+<?=$this->element->page; ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+        <td>PROCEDURAL SAFEGUARDS (Parental Rights)</td>
+</table>
+<table>
+    <tr>
+        <td>Both state and federal laws concerning the education of children with disabilities
+            include many parental rights. These laws also require that the school follow certain
+            procedures to make sure you know your rights and have an opportunity to exercise those rights. A copy of
+            these procedural safeguards shall be given to parents one time a year.
+            A copy shall also be given to the parents:
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                <li>
+                    upon initial referral or parental request for evaluation;
+                </li>
+                <li>
+                    upon request by a parent;
+                </li>
+                <li>
+                    upon receipt of the school district of the first occurrence of the filing of a complaint under 92 NAC 51-
+                    009.11 and the first occurrence filing of a special education due process case under 92 NAC 55;
+                    and
+                </li>
+                <li>
+                    in accordance with the discipline procedures in 92 NAC 51-016.
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td><?=$this->element->parental_rights_included?></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            <table class="formInput" style="text-wrap: none;width: 600px">
+                <tr>
+                    <td align="left" class="printBoldLabel"><?
+                        echo $this->element->school_district_rep_name->getLabel();
+                        $this->element->school_district_rep_name->removeDecorator('label');
+                    ?></td>
+                    <td align="left"><?=$this->element->school_district_rep_name ?></td>
+                    <td align="left" class="printBoldLabel"><?
+                        echo $this->element->school_district_rep_number->getLabel();
+                        $this->element->school_district_rep_number->removeDecorator('label');
+                    ?></td>
+                    <td align="left"><?=$this->element->school_district_rep_number ?></td>
+                </tr>
+                <tr>
+                    <td align="left" class="printBoldLabel"><?
+                        echo $this->element->parent_name_sig_line->getLabel();
+                        $this->element->parent_name_sig_line->removeDecorator('label');
+                    ?></td>
+                    <td align="left"><?=$this->element->parent_name_sig_line ?></td>
+                    <td align="left" class="printBoldLabel"><?
+                        echo $this->element->parent_name_sig_line_date->getLabel();
+                        $this->element->parent_name_sig_line_date->removeDecorator('label');
+                    ?></td>
+                    <td align="left"><?=$this->element->parent_name_sig_line_date ?></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <? if('print'==$view->mode) {
+            $width = "100%";
+        } else {
+            $width = "70%";
+        }
+    ?>
+    <tr>
+        <td align="center">
+            <table style="border: 1px solid black;width:<?=$width?>;">
+                <tr>
+                    <td align="center"><strong>Response Form</strong></td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 10px;">Please return this response form to the school, or bring it with you to the meeting:</td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;"><?=$this->element->able_to_attend?></td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;"><?=$this->element->unable_to_attend?></td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;"><?=$this->element->parental_sig_on_file?></td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 10px;" class="printCellUnderline"><?=$this->element->parent_signed_name .'&nbsp;&nbsp;' . $this->element->parent_signed_date?></td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <?
+    if('print'==$view->mode){ //PRINT ?>
+        <? if(1==$this->element->parental_sig_on_file->getValue()) { ?>
+        <tr>
+            <td>Signature on File</td>
+        </tr>
+        <? } else { ?>
+        <tr>
+            <table width="100%">
+                <tr>
+                    <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderline">&nbsp;</td>
+                    <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderline">&nbsp;</td>
+                </tr>
+            </table>
+        </tr>
+        <? } ?>
+    <? } ?>
+    <? if('print'!=$view->mode || ('print'==$view->mode && ''!=$this->element->date_response_received->getValue())) { ?>
+    <tr>
+        <td><?=$this->element->date_response_received?></td>
+    </tr>
+    <? } ?>
+</table>

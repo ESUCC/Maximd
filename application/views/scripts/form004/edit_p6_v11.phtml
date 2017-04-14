@@ -1,0 +1,375 @@
+<?php
+
+$this->headLink()->appendStylesheet('/css/chosen.css', 'screen');
+$this->jQuery()->addJavascriptFile('/js/jquery_addons/chosen.jquery.js');
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+$view = $this->element->page->getView();
+echo '<input type="hidden" name="effect_to_date" id="effect_to_date" value="' . $view->db_form_data['effect_to_date'] . '" />';
+?>
+
+<?= $this->element->id_form_004; ?>
+<?= $this->element->id_student; ?>
+<?= $this->element->date_conference; // placed for use building the location menus on subforms ?>
+<?= $this->element->page; ?>
+<?= $this->element->dob; ?>
+<?= $this->element->submit; ?>
+
+    <table class="formTitleHead">
+        <tr>
+            <td><?php echo $this->translate('IEP Info'); ?></td>
+        </tr>
+    </table>
+    <table class="formInput">
+        <tr class="bgLight2">
+            <td align="left">
+                <B><?php echo $this->translate('Primary Disability (from most recent finalized MDT)'); ?>:</B>
+                <?
+                $studentId = $this->element->id_student->getValue();
+                if (!empty($studentId)) {
+                    $form002Obj = new Model_Table_Form002();
+                    $form002 = $form002Obj->mostRecentFinalForm($this->element->id_student->getValue());
+                    if (!empty($form002->disability_primary)) {
+                        $form002Form = new Form_Form002();
+                        $pageThree = $form002Form->edit_p3_v1();
+                        echo $pageThree->getElement('disability_primary')->getMultiOption($form002->disability_primary);
+                    }
+                }
+                ?>
+            </td>
+        </tr>
+    </table>
+<?php $showPdAndHideExpandedOptions = $this->element->expanded_options->getValue() == 't' ? true : false; ?>
+    <table class="sc_subSectionHead">
+        <tr>
+            <td><?php echo $this->translate('Services'); ?></td>
+        </tr>
+    </table>
+    <table class="formInput">
+        <tr class="bgLight2">
+            <td>
+                <span class="btsb"><?php echo $this->translate('Special Education Service'); ?></span>
+                <span class="btsRed">based on peer reviewed research to the extent practicable</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php echo $this->translate('statement of special education and related services'); ?>.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if('print' != $view->mode && isset($this->element->expanded_options)) echo $this->element->expanded_options; ?>
+           
+                <div id="showPrimaryDisabilityText" style="<? if('print' == $view->mode && $showPdAndHideExpandedOptions) echo 'display:none;'; ?>">
+			         <?= $this->element->primary_disability; ?>
+                </div>
+            </td>
+        </tr>
+    </table>
+    
+    <div id="showExpanedOptions" style="">
+    <table class="formInput" style="<? if('print' == $view->mode && !$showPdAndHideExpandedOptions) echo 'display:none;'; ?>">
+    	<tr>
+    		<td>
+                <?php echo $this->printBold($view->mode, $this->element->reg_edu_student_services->getLabel()); ?>
+    			<?php echo $this->element->reg_edu_student_services; ?>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+                <?php echo $this->printBold($view->mode, $this->element->not_reg_edu_student_services->getLabel()); ?>
+    			<?php echo $this->element->not_reg_edu_student_services; ?>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+                <?php echo $this->printBold($view->mode, $this->element->other_services->getLabel()); ?>
+    			<?php echo $this->element->other_services; ?>
+    		</td>
+    	</tr>
+    </table>
+    </div>
+
+    <table class="formInput noBorder">
+        <tr class="bglight">
+            <td colspan="2" class="sc_richTextBox">
+                <?= $this->element->primary_disability_drop; ?>
+            </td>
+        </tr>
+        <tr class="bglight">
+            <td colspan="2">
+                <div id="dates_wrapper-colorme" class="colorme">
+                    <?php echo $this->translate(
+                        'Duration Dates From'
+                    ); ?> <?= $this->element->primary_service_from; ?> <?php echo $this->translate('to'); ?>
+                    <?= $this->element->primary_service_to; ?>
+                </div>
+            </td>
+        </tr>
+        <tr class="bglight">
+            <td colspan="2">
+                <?php
+                if (empty($view->db_form_data['date_conference'])) {
+                    $this->element->primary_service_location->setAttrib('disable', 'disable');
+                    $this->element->primary_service_location->addMultiOption('', 'Please enter the date of conference');
+                }
+                echo $this->element->primary_service_location;
+                ?>
+            </td>
+            <td colspan="1" style="float:left;">
+                <? if ($this->element->fte_qualifying_minutes) { ?>
+                    <?= $this->element->fte_qualifying_minutes; ?>
+                <? } ?>
+            </td>
+        </tr>
+        <tr class="bglight">
+            <td nowrap="nowrap">
+                <div id="tpd_wrapper-colorme" class="colorme">
+                    <?= $this->element->primary_service_tpd; ?>&nbsp;
+                    <?= $this->element->primary_service_tpd_unit; ?>
+                </div>
+                <div id="days_wrapper-colorme" class="colorme">
+                    <?= $this->element->primary_service_days_value; ?>&nbsp;
+                    <?= $this->element->primary_service_days_unit; ?>
+                </div>
+            </td>
+        </tr>
+        <tr class="bglight">
+            <td colspan="2">
+                <?= $this->element->primary_service_calendar; ?>
+            </td>
+        </tr>
+        <? if ($this->element->fte_special_education_time) { ?>
+            <tr class="bglight">
+                <td colspan="2">
+                    <?= $this->element->fte_special_education_time; ?>
+                </td>
+            </tr>
+        <? } ?>
+    </table>
+<?php
+//
+// related_services subform
+//
+echo $this->subform($view, 'related_services');
+
+//
+// supplemental services subform
+//
+echo $this->subform($view, 'supp_services');
+//
+// program modification subform
+//
+echo $this->subform($view, 'program_modifications');
+echo $this->subform($view, 'accomodations_checklist');
+//
+//  Assistive Technology Devices or Services subform
+//
+echo "<div style='display:none'>";
+echo $this->subform($view, 'assist_tech');
+echo "</div>";
+//
+//   Supports for School Personnel subform
+//
+echo $this->subform($view, 'school_supp');
+?>
+<?php if (!$view->lps) { ?>
+    <table class="formSectionHead">
+        <tr>
+            <td><?php echo $this->translate('SESIS Information'); ?></td>
+        </tr>
+    </table>
+    <table class="formInput">
+        <tr class="bgLight2">
+            <td colspan="3">
+                <?php echo $this->translate('Percent of time child spends in:'); ?>
+            </td>
+        </tr>
+        <tr class="bgLight2">
+            <td class="tanHead">
+                A. <?php echo $this->translate('Special Education and Related Services'); ?>
+            </td>
+            <td class="tanHead">
+                B. <?php echo $this->translate('Regular Education'); ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="tanHead">
+                <?php if ('edit' != $view->mode) {
+                    echo $this->element->special_ed_peer_percent->getLabel() . ' ' .
+                        $this->element->special_ed_peer_percent->getValue() . '%';
+                } else {
+                    echo $this->element->special_ed_peer_percent;
+                }
+                ?>
+
+                <?php if ('edit' != $view->mode) {
+                    echo '<BR />' . $this->element->special_ed_non_peer_percent->getLabel() . ' ' .
+                        $this->element->special_ed_non_peer_percent->getValue() . '%';
+                } else {
+                    echo $this->element->special_ed_non_peer_percent;
+                }
+                ?>
+            </td>
+            <td class="tanHead">
+                <?php if ('edit' != $view->mode) {
+                    echo $this->element->reg_ed_percent->getLabel() . ' ' .
+                        $this->element->reg_ed_percent->getValue() . '%';
+                } else {
+                    echo $this->element->reg_ed_percent;
+                }
+                ?>
+            </td>
+        </tr>
+    </table>
+
+<?php } ?>
+
+<?php if ($view->displayFteReport && $this->element->fte_minutes_per_week) { ?>
+    <table class="formSectionHead">
+        <tr>
+            <td><?php echo $this->translate('FTE Summary'); ?></td>
+        </tr>
+    </table>
+    <table class="formInput">
+        <tr class="bgLight2">
+            <td colspan="1" style="width: 30px">
+                <? echo $this->element->fte_minutes_per_week; ?>
+            </td>
+            <td colspan="2">
+                <?php echo $this->translate('Total Minutes in School Per Week'); ?>
+            </td>
+        </tr>
+        <? if ($this->element->fte_minutes_per_week) { ?>
+            <tr class="bgLight2">
+                <td colspan="1" style="width: 30px">
+                    <div id="gen_ed"><?
+                    echo $this->element->fte_minutes_per_week->getValue() - ($view->fte_total_qualifying_min_re + $view->fte_total_qualifying_min_se);
+                    ?></div>
+                </td>
+                <td colspan="2">
+                    <?php echo $this->translate('Gen Ed'); ?>
+                </td>
+            </tr>
+        <? } ?>
+        <tr class="bgLight2">
+            <td colspan="1">
+                <div id="fte_total_qualifying_min_se">
+                    <?= $view->fte_total_qualifying_min_se ?>
+                </div>
+            </td>
+            <td colspan="2">
+                <?php echo $this->translate('Total Minutes - SPED w/ Gen Ed Peers'); ?>
+            </td>
+        </tr>
+        <tr class="bgLight2">
+            <td colspan="1">
+                <div id="fte_total_qualifying_min_re">
+                    <?= $view->fte_total_qualifying_min_re ?>
+                </div>
+            </td>
+            <td colspan="2">
+                <?php echo $this->translate('Total Minutes - SPED'); ?>
+            </td>
+        </tr>
+        <tr class="bgLight2">
+            <td colspan="1">
+                <HR/>
+                <div id="fte_percent">
+                    <?= round(
+                    ($view->fte_total_qualifying_min_se + $view->fte_total_qualifying_min_re) / $this->element->fte_minutes_per_week->getValue(
+                    ),
+                    2
+                ) ?>
+                </div>
+            </td>
+            <td colspan="2">
+                <?php echo $this->translate('F.T.E.'); ?>
+            </td>
+        </tr>
+    </table>
+<?php } ?>
+
+    <div id="showHideMips">
+        <table class="formSectionHead">
+            <tr>
+                <td><?php echo $this->translate('MIPS Consent Form'); ?> </td>
+            </tr>
+        </table>
+        <table class="formInput">
+            <tr class="bgLight2">
+                <td><?php echo $this->translate('student is receiving'); ?></td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $this->element->fape_consent; ?>
+                </td>
+            </tr>
+        </table>
+
+        <table class="formSectionHead">
+            <tr>
+                <td><?php echo $this->translate('Parent Signature'); ?>:</td>
+            </tr>
+        </table>
+        <table class="formInput noBorder">
+            <tr>
+                <td>
+                    <?= $this->element->pg6_doc_signed_parent; ?><br/>(<?php echo $this->translate(
+                        'indicate that signature is on file'
+                    ); ?>)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $this->element->pg6_date_doc_signed_parent; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="colorme" id="pg6_no_sig_explanation-colorme">
+                        <table>
+                            <tr>
+                                <td><?php echo $this->translate('No Signature Explanation'); ?></td>
+                                <td>
+                                    <?= $this->element->pg6_no_sig_explanation; ?>
+                                </td>
+                                <td width="250">
+                                    (<?php echo $this->translate('please explain'); ?>)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+<?php /* Commenting out, not ready for production */
+if ('production' !== APPLICATION_ENV) {
+    ?>
+    <div class="page6" style="page-break-before: always;">
+        <table class="formSectionHead" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="btb"><?php echo $this->translate(
+                        'Permission to Access Public Benefits or Insurance'
+                    ); ?></td>
+            </tr>
+        </table>
+        <table class="formInput" style="width:75%">
+            <tr>
+                <td colspan="2">Please click the appropriate box below to include a Written Notification to Access a
+                    Child's or Parent's Public Benefits or Insurance
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $this->element->print_english_permission_to_access; ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $this->element->print_spanish_permission_to_access; ?></td>
+            </tr>
+        </table>
+    </div>
+<?
+}

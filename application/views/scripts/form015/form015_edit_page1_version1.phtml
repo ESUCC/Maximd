@@ -1,0 +1,62 @@
+<?php 
+    $view = $this->element->page->getView();
+    
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_015; ?>
+<?= $this->element->page; ?>
+    
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notice and Consent for Initial Evaluation</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+    <tr>
+        <td>
+			<strong><?php echo $view->db_form_data['name_district']; ?></strong> proposes to conduct a multidisciplinary evaluation of your child. The district proposes to evaluate your child because:
+		</td>
+   </tr>
+    <tr>
+        <td>1. Explanation of why the district proposes to evaluate your child:
+        <?php echo $this->element->explanation; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>2. Any options the district considered:
+        <?php echo $this->element->form_options; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>3. Reasons why the above options were rejected:
+        <?php echo $this->element->reasons; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>4. This proposal is based on the evaluation procedures, tests, records, or reports described below:
+        <?php echo $this->element->proposal; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>5. Any other factors relevant to this proposal:
+        <?php echo $this->element->other_factors; ?>
+        </td>
+    </tr>
+    <tr>
+        <td><?php /* 6. The estimated amount of time for completing the multidisciplinary evaluation 
+            and making the verification decision is <?php echo $this->element->days; ?><BR>
+	        */ ?>
+	        The amount of time for completing the multidisciplinary evaluation and making the verification 
+	        decision is: 45 calendar days from the time the referral was made to the public 
+	        agency unless the family finds it necessary to delay the school district.
+            <BR><BR>If exceptional circumstances exist, please include an explanation below.
+            <?php echo $this->element->amount_time; ?>
+        </td>
+    </tr>
+</table> 

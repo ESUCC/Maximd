@@ -1,0 +1,54 @@
+<?php 
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_030; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Notification of Individualized Family Service Plan Meeting Continued</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td colspan="6" >If the above date, time, or place is not agreeable 
+        to you; or if you have any questions regarding your rights, please contact:
+        </td>
+    </tr>
+    <tr align="center">
+        <td nowrap="nowrap"><?php echo $this->element->contact_name; ?></td>
+        <td nowrap="nowrap"><?php echo $this->element->contact_num; ?></td>
+    </tr>
+</table>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Procedural Safeguards to Protect Parents' Rights</td>
+
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td colspan="6" >Both state and federal laws concerning the education 
+        of children with disabilities include many parental rights. Receiving notices of 
+        action the school wants to take in regard to your child and being part of your 
+        child's education planning team are examples of the rights these laws give you. 
+        These laws also require that the school follow certain procedures to make sure 
+        you know your rights and have an opportunity to exercise those rights.
+        </td>
+    </tr>
+    <?php /*
+    	   * Removing Per SRSSUPP-705
+    	   * 
+    <tr>
+        <td colspan="6" ><a href="https://iepweb02.unl.edu/form003/resourcepdf/document/PARENTSRIGHTS.pdf" target="_blank">A copy of your rights</a> is provided with this Notice. You should read them carefully, and if you have any questions regarding your rights, you may contact:</td>
+
+    </tr>
+    <tr align="center">
+        <td nowrap="nowrap"><?php echo $this->element->rights_contact; ?></td>
+        <td nowrap="nowrap"><?php echo $this->element->rights_contact_num; ?></td>
+    </tr>
+          */ 
+    ?>
+</table>

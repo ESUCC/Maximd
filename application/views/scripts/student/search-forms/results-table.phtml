@@ -1,0 +1,25 @@
+<?php if ($this->maxResultsExceeded) : ?>
+<div class="notice">Your search returned more than the maximum allowed result set of 2500.  Please add additional search fields to further narrow your search result set.</div>
+<?php endif; ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml', array('key' => $this->key)); ?>
+<ul id="searchPseudoTable" class="pseudoTable">
+    <li class="search-result-row head">
+        <ul>
+            <?php foreach ($this->formatFields AS $field => $fieldInfo) :
+            if (!empty($field)) : ?>
+                <li class="<?php echo $fieldInfo['cssClass']; ?>">
+                    <?php echo $fieldInfo['label']; ?>
+                    <?php //echo $this->sortDirectionHelper($field, $this->{$field.'Sort'}); ?>
+                </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <li class="status">Status</li>
+            <li>Action</li>
+        </ul>
+    </li>
+
+    <? //Zend_Debug::dump($this->paginator->getCurrentItems()); ?>
+
+    <?php echo $this->partialLoop('student/search-forms/result-row.phtml', $this->paginator->getCurrentItems()); ?>
+</ul>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml', array('key' => $this->key)); ?>

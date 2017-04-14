@@ -1,0 +1,134 @@
+<?php 
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_019; ?>
+<?= $this->element->page; ?>
+    
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>FUNCTIONAL ASSESSMENT / BEHAVIOR PLAN</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+    <tr>
+        <td class="make-strong-print">DESCRIPTION OF PROBLEM BEHAVIOR BASED UPON DIRECT OBSERVATION:</td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->fa_desc_of_problem; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">BASELINE INFORMATION (Frequency, duration, intensity, latency, etc.): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->fa_baseline_info; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">SPECIFIC ANTECEDENT(S) TO THE BEHAVIOR(S) DESCRIBED ABOVE (Include all 
+        possible influencing factors: setting events, medications, homelife, etc.): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->fa_specific_antecedents; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">CURRENT CONSEQUENCE(S) FOR THE BEHAVIOR(S): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->fa_current_consequences; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">FUNCTION OF THE PROBLEM BEHAVIOR(S) (What does the student seek to GAIN or AVOID?): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->fa_function_of_the_problem; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">APPROPRIATE ALTERNATIVE BEHAVIOR(S) WHICH WILL PROVIDE THE SAME FUNCTION: </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->fa_appropriate_alternative; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">BEHAVIORAL GOAL(S) / OBJECTIVE(S) INCORPORATING THE DESIRED REPLACEMENT BEHAVIORS </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->bi_behavioral_goal; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">LIST/DESCRIBE A DATA COLLECTION SYSTEM TO MONITOR REPLACEMENT BEHAVIOR(S) 
+        AND TO DOCUMENT PROGRESS TOWARD DESIRED CRITERIA: </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->bi_list_data; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">BEHAVIOR MANAGEMENT SYSTEM (Description of positive behavioral intervention, 
+        strategies, and supports to address the behavior and reinforce the replacement 
+        behaviors): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->bi_behavior_management; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">SKILL BUILDING (For example, problem solving; conflict resolution; decision-making; 
+        negotiation/mediation; social skills training; relaxation/impulse/anger control skills; 
+        time-management/organizational skills; self-advocacy skills, cognitive restructuring; 
+        self-monitoring/instruction; role-play; generalization skills.): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->bi_skill_building; ?></td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">MODIFICATIONS (For example, program; curricular; instructional materials; seating; 
+        removing seductive items; restricting access to environment(s); alternative site for 
+        instruction to reduce stressors/stimulation.): </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->bi_modifications; ?></td>
+    </tr>
+    <tr>
+        <td>
+        <div id="adp_wrapper-colorme" class="colorme">
+	        <span class="make-strong-print">ALTERNATIVE DISCIPLINE PLAN <?php echo $this->element->bi_alternative_discipline; ?> 
+	        (if yes, describe below)</span>
+	        <br/><br/>
+	        <?php echo $this->element->bi_alternative_discipline_reason; ?>
+	    </div>
+	    </td>
+    </tr>
+    <tr>
+        <td>
+        <div id="ci_wrapper-colorme" class="colorme">
+	        <span class="make-strong-print">CRISIS INTERVENTION PLAN <?php echo $this->element->bi_crisis_intervention; ?> (if yes, describe below)</span>
+	        <br/><BR/>
+	        <?php echo $this->element->bi_crisis_intervention_reason; ?>
+        </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="make-strong-print">RESPONSIBILITIES FOR IMPLEMENTATION </td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->bi_responsibilities; ?></td>
+    </tr>
+</table> 
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>PERSON RESPONSIBLE</td>
+        <td>RESPONSIBILITIES</td>
+    </tr>
+</table>
+<table class="formInput" cellspacing="0" cellpadding="0">
+   <tr><td><?php echo $this->element->per_resp_informing_parties; ?></td></TR>
+   <tr><td><?php echo $this->element->per_resp_monitoring_progress; ?></td></TR>
+   <tr><td><?php echo $this->element->per_resp_modifying_materials; ?></td></TR>
+   <tr><td><?php echo $this->element->per_resp_other; ?></td></TR>
+</table>
+

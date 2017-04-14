@@ -1,0 +1,22 @@
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+    <tr>
+        <td></td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;" border="0">
+    <tr>
+        <td nowrap="nowrap" style="width:33%"><span class="btsb">Dear</span>:&nbsp;<?php echo $this->element->parent_names; ?></td>
+        <td nowrap="nowrap" style="width:*; text-align:right"><span class="btsb">Date</span>:&nbsp;<?php echo $this->element->date_notice; ?></td>
+    </tr>
+</table>
+
+<?php echo $this->element->submit; ?>
+<?
+$view = $this->element->page->getView();
+echo $this->partial('form033/staticInfo.phtml', array(
+    'action' => $view->action,
+    'mode' => $view->mode,
+    'form' => $view->form
+));
+

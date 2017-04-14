@@ -1,0 +1,19 @@
+<?php   
+    echo '<div class="page1Portrait">';
+    echo $this->header;
+
+    $dateNotice = '';
+    if (strlen($this->db_form_data['date_notice']) > 0)
+    {
+       $date = new Zend_Date($this->db_form_data['date_notice'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
+       $dateNotice = $date->toString(Zend_Date::MONTH . '/' . Zend_Date::DAY . '/' . Zend_Date::YEAR);
+    }
+    echo '<div class="formDate" style="margin-top:20px;">Date Notice: <B>' . $dateNotice . '</B></div><BR>';
+    echo $this->footer;
+    //echo $this->student_header;
+    echo $this->pages [1] . '</div>';
+	echo '<div class="page2Portrait" ';
+    if (strlen($this->db_form_data['on_off_checkbox_page_4']) < 1) {
+        echo 'style="page-break-before: always;"';
+    }
+    echo '>'.$this->pages[2].'</div>';

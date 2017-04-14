@@ -1,0 +1,27 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+<table class="formInput" style="width:100%;" cellpadding="0" cellspacing="0" id="contact_attempts_<?= $rowNum; ?>" style="margin-top:1px;" width="60%">
+	<tr>
+        <td>
+        Date of Attempt: <br />
+        <?php echo $this->element->id_form_029_contact_attempts; ?>
+        
+		<div id="contact_attempts_<?= $rowNum; ?>-contact_attempt_date_attempt-colorme" class="colorme">
+		<?php echo $this->element->contact_attempt_date_attempt; ?>
+		</div>
+		</td>
+		<td class="smallInput noprint" style="width:100px;">
+		<div id="contact_attempts_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+        <?= $this->element->remove_row; ?>
+        </div>
+		</td>
+    </tr>
+    <tr>
+    	<td colspan="3">
+    	Attempt Comments: <br />
+    	<div id="contact_attempts_<?= $rowNum; ?>-contact_attempt_comments-colorme" class="colorme">
+		<?php echo $this->element->contact_attempt_comments; ?>
+		</div>
+    	</td>
+    </tr>
+</table>

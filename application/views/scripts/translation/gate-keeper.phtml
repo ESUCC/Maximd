@@ -1,0 +1,31 @@
+<?php $count = 1; ?>
+    <?php foreach ($this->element->getElements() AS $element) : ?>
+        <?php if ($element->getBelongsTo() == 'Keys') : ?>
+            <tr>
+                <td>Translation Key: <strong><?php echo $element->getValue(); ?></strong><?php echo $element; ?>
+                    <table id="<?php $element->getName(); ?>">
+        <?php endif; ?>
+        <?php if ($element->getBelongsTo() == 'Locale_en') : 
+        $checkBoxName = 'en_flag_'.$count;
+        ?>
+            <tr>
+                <td>English: <br />
+                <?php echo $element; ?></td>
+                <td>Flag As Out of Date: <br />
+                <?php echo $this->element->$checkBoxName; ?>
+                </td>
+            </tr>
+        <?php endif; ?>
+        <?php if ($element->getBelongsTo() == 'Locale_es') :
+        $checkBoxName = 'es_flag_'.$count;
+        $count++;
+        ?>
+            <tr>
+                <td>Spanish: <br />
+                <?php echo $element; ?></td>
+                <td>Flag As Out of Date: <br />
+                <?php echo $this->element->$checkBoxName; ?>
+                </td>
+            </tr></table></td></tr>
+        <?php endif; ?>
+<?php endforeach; ?>

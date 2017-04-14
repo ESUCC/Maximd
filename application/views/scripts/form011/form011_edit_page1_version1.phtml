@@ -1,0 +1,126 @@
+<?php 
+    $view = $this->element->page->getView();
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_011; ?>
+<?= $this->element->page; ?>
+    
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr class="noprint">
+        <td>Notification of Multidisciplinary Team (MDT) Conference</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+   <tr>
+        <td>
+            <?php 
+            if('print' == $view->mode)
+            {
+                echo "<B>" . $this->element->date_notice->getLabel() . "</B> ";
+                echo $this->element->date_notice->getValue();
+            } else {
+                echo $this->element->date_notice;
+            }
+            ?>
+        </td>
+    </tr>    
+    <tr>
+		<td><?php
+            if('print' == $view->mode) { ?>
+            <br />
+            <?php } ?>
+			<strong>Proposed Conference Date, Time and Location:</strong>
+			<div id="dates_wrapper-colorme" class="colorme">
+            <?php 
+            if('print' == $view->mode)
+            {
+                echo "<BR /><B>" . $this->element->mdt_conf_date->getLabel() . "</B> ";
+                echo $this->element->mdt_conf_date->getValue();
+            } else {
+                echo $this->element->mdt_conf_date;
+            }
+            ?>
+            <?php 
+            if('print' == $view->mode)
+            {
+                echo "<B>" . $this->element->mdt_conf_time->getLabel() . "</B> ";
+                echo $this->element->mdt_conf_time->getValue();
+            } else {
+                echo $this->element->mdt_conf_time;
+            }
+            ?>
+            <?php 
+            if('print' == $view->mode)
+            {
+                echo "<B>" . $this->element->mdt_conf_loc->getLabel() . "</B> ";
+                echo $this->element->mdt_conf_loc->getValue() . "<BR /><BR />";
+            } else {
+                echo $this->element->mdt_conf_loc;
+            }
+            ?>
+			</div>
+			<p>The results of the evaluation of your child are now available. We must meet with you 
+			to review these results for your child to determine, with your input, whether your child 
+			meets the criteria to qualify for special education services. It is very important that 
+			you attend this meeting. You may bring other individuals with you who are knowledgeable 
+			about your child or his or her needs.</p>
+            <?php if ('print' == $view->mode) { ?>
+                    <br />
+                    <?php } ?>
+			<table class="formInput">
+	    		<tr>
+	    			<td><?php echo $this->element->general_ed; ?>
+                    <?php if ('print' == $view->mode) { ?>
+                    <br />
+                    <?php } ?>
+                    </td>
+	    		</tr>
+	    		<tr>
+	    			<td><?php echo $this->element->special_ed; ?>
+                    <?php if ('print' == $view->mode) { ?>
+                    <br />
+                    <?php } ?>
+                    </td>
+	    		</tr>
+	    		<tr>
+	    			<td><?php echo $this->element->school_rep; ?>
+                    <?php if ('print' == $view->mode) { ?>
+                    <br />
+                    <?php } ?>
+                    </td>
+	    		</tr>
+	    	
+			<tr>
+			    <td>
+				<div class="colorme printBoldLabel">4. And the following individuals who can help explain the evaluation 
+				results and other individuals who have special knowledge or expertise 
+				regarding your child or services that may be needed:</div>
+				<?php echo $this->element->other_attendees; ?>
+                <?php if ('print' == $view->mode) { ?>
+                    <br />
+                    <?php } ?>
+			    </td>
+			</tr>
+			<tr>
+			    <td>
+				<div class="colorme printBoldLabel">5. Others:</div>
+				<?php echo $this->element->other_staff; ?>
+                <?php if ('print' == $view->mode) { ?>
+                    <br />
+                    <?php } ?>
+			    </td>
+			</tr>
+			
+			</table>
+		</td>
+    </tr>
+</table> 
+<table class="formInput">
+    <tr>
+        <td><?php echo $this->element->rights_contact; ?></td>
+        <td><?php echo $this->element->rights_contact_num; ?></td>
+    </tr>
+</table>
+

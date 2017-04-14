@@ -1,0 +1,25 @@
+<?php if ($this->pageCount) :
+?>
+<ul class="paginator clearfix">
+  <?php if (isset($this->previous)) : ?>
+  <li><a href="javascript:runSearchCall('<?php echo $this->url(array('page' => $this->previous, 'key' => $this->key)); ?>');">&lt; Previous</a></li>
+  <?php else : ?>
+  <li><span class="disabled">&lt; Previous</span></li>
+  <?php endif; ?>
+  <?php foreach ($this->pagesInRange AS $page) : ?>
+  <?php if ($page != $this->current) : ?>
+  <li>
+  <a href="javascript:runSearchCall('<?php echo $this->url(array('page' => $page, 'key' => $this->key)); ?>');"><?php echo $page; ?></a>
+  <?php else : ?>
+  <li class="current">
+  <span><?php echo $page; ?></span>
+  <?php endif; ?>
+  </li>
+  <?php endforeach; ?>
+  <?php if (isset($this->next)) : ?>
+  <li><a href="javascript:runSearchCall('<?php echo $this->url(array('page' => $this->next, 'key' => $this->key)); ?>');">Next &gt;</a></li>
+  <?php else : ?>
+  <li><span class="disabled">Next &gt;</span></li>
+  <?php endif; ?>
+</ul>
+<?php endif; ?>

@@ -1,0 +1,37 @@
+<html>
+    <head>
+    	<?php echo $this->headScript(); ?>
+		<script type="text/javascript">
+			function parseAndUpdate(elementName, html, formNumber, document) {
+			    var settings = { 
+			       invalid_elements : "script,object,embed,link,style,form,input,iframe",
+			       valid_elements:"a[href],img[src],li,ul,ol,span,div,p,br,blockquote,h1,h2,h3,h4,h5,h6,strong/b,em/i,li,ul,ol"
+			    };
+			
+			    var schema = new tinymce.html.Schema(settings);
+			    var parser = new tinymce.html.DomParser({}, schema);
+			    var serializer = new tinymce.html.Serializer({}, schema);
+			
+			    serializer.serialize(parser.parse(html));
+
+			    $.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: '/form'+formNumber+'/update-element-value/element/'+elementName+'/document/'+document,
+					data: {value:serializer.serialize(parser.parse(html))}
+				});
+						    
+			}
+			$().ready(function() {
+				<?php foreach ($this->toFilter AS $key => $value) { ?>
+					parseAndUpdate('<?php echo $key; ?>', $('#<?php echo $key; ?>').html(), '<?php echo $this->formNumber; ?>', '<?php echo $this->document; ?>');
+				<?php } ?>
+			});
+		</script>
+</head>
+<body>
+	<?php foreach ($this->toFilter AS $key => $value) { ?>
+		<div id="<?php echo $key; ?>"><?php echo $value?></div>
+	<?php } ?>
+</body>
+</html>

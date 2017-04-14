@@ -1,0 +1,162 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+
+?>
+<?= $this->element->id_form_029; ?>
+<?= $this->element->page; ?>
+
+<?php if('print' != $view->mode) { ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notice of Meeting</td>
+    </tr>
+</table>
+<?php } ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+            <?php 
+              if('print' != $view->mode) {
+                echo $this->element->date_notice;
+              }
+            ?>
+        </td>
+    </tr>
+    <tr>
+		<td> Notice to<?php if ($view->mode != 'print') : ?> (Parents)<?php endif; ?> <?php echo $this->element->notice_to; ?> on behalf of <strong><?php echo $view->db_form_data['student_data']['name_student']; ?></strong></td>
+    </tr>
+    <tr>
+    	<td>The parent of a child with a disability must be afforded the opportunity to participate in meetings with respect to the identification, evaluation, and educational placement of the child and the provision of Free and Appropriate Public Education (FAPE) to the child. Each district must provide notice consistent with 92 NAC 51-007.06A1 and 007.06B to ensure that parents of children with disabilities have the opportunity to participate in meetings.</td>
+ 	</tr>
+</table>
+<br />
+<table class="formInput" style="margin-top:1px;"> 
+ 	<tr>
+ 		<td><strong><?php echo $view->db_form_data['name_district']; ?></strong> would like to schedule a meeting with you to complete the following action in regard to your child:</td>
+ 	</tr>
+</table>
+<table class="formSectionHeadBlue noprint" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>MDT and IEP Combined</td>
+	</tr>
+</table>
+<?php $meeting_type = explode('<br/>', str_replace('</span></div>', '', str_replace('<div class="colorme" id="meeting_type-colorme"><span>', '', $this->element->meeting_type))); ?>
+<div class="colorme" id="meeting_type-colorme">
+<?php if(('print' == $view->mode && $this->element->meeting_type->getValue() == '3') || $view->mode != 'print') : ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td><?php echo $meeting_type[0]; ?></td>
+    </tr>
+    <?php if(('print' == $view->mode && $this->element->meeting_type_eligible_iep->getValue() == 't') || $view->mode != 'print') : ?>
+    <tr>
+    	<td style="padding-left:25px;"><?php echo $this->element->meeting_type_eligible_iep; ?></td>
+    </tr>
+    <?php endif; ?>
+    <?php if(('print' == $view->mode && $this->element->meeting_is_turing_16_mdt->getValue() == 't') || $view->mode != 'print') : ?>
+    <tr>
+    	<td style="padding-left:50px;">
+    		<?php echo $this->element->meeting_is_turing_16_mdt; ?>
+    	</td>
+    </tr>
+    <?php endif; ?>
+</table>
+<?php endif; ?>
+<table class="formSectionHeadBlue noprint" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>Notice of IEP Meeting</td>
+	</tr>
+</table>
+<?php if(('print' == $view->mode && $this->element->meeting_type->getValue() == '2') || $view->mode != 'print') : ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td><?php echo $meeting_type[1]; ?><br />
+    		<ul>
+    			<li>Your child's Academic achievement and functional performance</li>
+				<li>Any special education and related services and supplementary aids and services which your child may require</li>
+				<li>Appropriate annual goals</li>
+				<li>The extent of your child's participation in the general curriculum and/or necessary modifications</li>
+    		</ul>
+    	</td>
+    </tr>
+    <?php if(('print' == $view->mode && $this->element->meeting_is_turing_16->getValue() == 't') || $view->mode != 'print') : ?>
+    <tr>
+    	<td style="padding-left:25px;">
+    		<?php echo $this->element->meeting_is_turing_16; ?>
+    	</td>
+    </tr>
+    <?php endif; ?>
+</table>
+<?php endif; ?>
+</div>
+<table class="formInput" style="margin-top:1px;">    
+	<tr>
+		<td>In addition to you, the parent, and your child (if appropriate), the following people will be in attendance at the meeting<?php if ($view->mode != 'print') : ?> (include names of who will be attending)<?php endif; ?>.</td>
+	</tr>
+	<tr>
+		<td><?php echo $this->element->general_ed->getLabel(); ?><?php if ($view->mode != 'print'): ?><br /><?php endif; ?><strong><?php echo $this->element->general_ed; ?></strong></td>
+	</tr>
+	<tr>
+		<td><?php echo $this->element->special_ed->getLabel(); ?><?php if ($view->mode != 'print'): ?><br /><?php endif; ?><strong><?php echo $this->element->special_ed; ?></strong></td>
+	</tr>
+	<tr>
+		<td><?php echo $this->element->school_rep->getLabel(); ?><?php if ($view->mode != 'print'): ?><br /><?php endif; ?><strong><?php echo $this->element->school_rep; ?></strong></td>
+	</tr>
+	<tr>
+		<td><?php echo $this->element->indv_eval_results->getLabel(); ?><?php if ($view->mode != 'print'): ?><br /><?php endif; ?><strong><?php echo $this->element->indv_eval_results; ?></strong></td>
+	</tr>
+	<tr>
+		<td><?php echo $this->element->indv_spc_knowledge->getLabel(); ?><?php if ($view->mode != 'print'): ?><br /><?php endif; ?><strong><?php echo $this->element->indv_spc_knowledge; ?></strong></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+	<tr>
+		<td colspan="2" width="300px" class="noprint">Other</td>
+</table>
+<div id="other_attendee_parent" style="width:600px;">
+<?php echo $this->subform($view, 'other_attendee', false, false, false); ?>
+</div>
+<?php echo $view->form->getSubForm('other_attendee'); ?>
+<table class="<?php echo ($view->mode == 'print') ? 'formTitleHead' : 'formSectionHeadBlue'; ?>" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>Meeting Time / Location / Place</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top:1px;">   
+	<tr>
+		<td colspan="3"><strong>The Meeting has been scheduled for:</strong></td>
+	</tr>
+	<tr>
+		<td><strong>Date: <?php echo $this->element->meeting_location_date; ?></strong></td>
+		<td><strong>Time: <?php echo $this->element->meeting_location_time; ?></strong> </td>
+		<td><strong>Place: <?php echo $this->element->meeting_location_place; ?></strong></td>
+	</tr>
+	<tr>
+		<td colspan="3">If the above date, time or place is not agreeable to you and you would like to change the meeting, please contact:</td>
+	</tr>
+	<tr>
+		<td colspan="3"><?php echo $this->element->change_name; ?> at <?php echo $this->element->change_phone_email; ?></td>
+	</tr>
+</table>
+<table class="<?php echo ($view->mode == 'print') ? 'formTitleHead' : 'formSectionHeadBlue'; ?>" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>Parental Safeguards</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top:1px;"> 
+	<tr>
+		<td><?php echo $this->element->copy_of_rights; ?></td>
+	</tr>
+	<tr>
+		<td>PROCEDURAL SAFEGUARDS (Parent Rights)
+Both state and federal laws concerning the education of children with disabilities include many parental rights. These laws also require that the school follow certain procedures to make sure you know your rights and have an opportunity to exercise those rights. A copy of these procedural safeguards shall be given to parents one time a year. A copy shall also be given to the parents:<br />
+			<ul>
+				<li>upon initial referral or parental request for evaluation;</li>
+				<li>upon request by a parent;</li>
+				<li>upon receipt by the school district or approved cooperative of the first occurrence of the filing of a complaint under 92 NAC 51-009.11 and the first occurrence filing a special education due process case under 92 NAC 55; and</li>
+				<li>in accordance with the discipline procedures in 92 NAC 51-016.</li>
+			</ul>
+		</td>
+	</tr>
+</table>

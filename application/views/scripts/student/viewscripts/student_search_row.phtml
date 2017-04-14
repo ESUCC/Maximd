@@ -1,0 +1,23 @@
+<div id="student_search_row-<?=$this->element->id_student_search_rows->getValue();?>" style="padding-top:10px;">
+	<div style="clear:both;">
+	    <div style="float:left;">
+	        <?= $this->element->id_student_search_rows; ?>
+	        <select name="search_field[]">
+        	<?php 
+	        	foreach($this->element->search_field->getMultiOptions() as $key => $value) {
+	        		echo "<option value=\"{$key}\">{$value}</option>";
+	        	}
+        	?>
+       		</select>
+	    </div>
+	    <div style="float:left;padding-left:5px;">
+	        <?= $this->element->search_value; ?>
+	    </div>
+	    <div style="float:right;" class="student_search_row-remove_row">
+	        <a href="javascript:void(0);" onclick="removeSearchRow('<?= $this->element->id_student_search_rows->getValue(); ?>');">Remove Row</a>
+	    </div> 
+	</div>
+</div>
+
+
+

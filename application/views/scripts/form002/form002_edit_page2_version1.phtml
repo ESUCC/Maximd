@@ -1,0 +1,89 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_002; ?>
+<?= $this->element->page; ?>
+
+<?php if('print' != $view->mode) { ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+	<tr>
+		<td><?php echo $this->translate?><?php echo $this->translate('Check all that apply to this MDT Report'); ?></td>
+	</tr>
+</table>
+<?php } ?>
+
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b4b; ?>
+		
+		<p><i><?php echo $this->translate('assessment was not conducted'); ?></i></p>
+		<?php
+		echo $this->element->mdt_00602b4b_text; ?>
+		</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b1c; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b5; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b6; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b7; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b8; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b9; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b10; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00602b11; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->translate('interpreting evaluation data'); ?>:<br />
+		<div style="padding-left: 20px">
+	        <?php echo $this->element->mdt_00602c1; ?>
+	        </div>
+		<?php echo $this->translate('and'); ?><br />
+		<div style="padding-left: 20px">
+	        <?php echo $this->element->mdt_00602c2; ?>
+	        </div>
+		</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td><?php echo $this->element->mdt_00603c; ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+	<tr>
+		<td></td>
+	</tr>
+</table>

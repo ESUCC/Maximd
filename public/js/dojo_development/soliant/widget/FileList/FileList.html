@@ -1,0 +1,25 @@
+<div dojoType="soliant.widget.FileList">
+	<table dojoAttachPoint="${baseClass}Container">
+		<tr>
+			<td colspan="3">
+				<div dojoAttachPoint="${baseClass}Uploader"></div>
+			</td>
+		</tr>
+		<tr class="${baseClass}Header">
+			<td class="${baseClass}HeaderDelete" dojoAttachPoint="${baseClass}HeaderDelete">Delete</td>
+			<td class="${baseClass}HeaderFilename">Filename</td>
+			<td class="${baseClass}HeaderPreview">Preview</td>
+		</tr>
+		<tr>
+			<td>
+				<div>
+					<div dojoAttachPoint="${baseClass}DeleteButton"
+						dojoAttachEvent="onclick:delete" 
+						class="dijitFileInput dijitFileInputButton DeleteButton">Delete</div>
+
+				</div>
+			</td>
+			<td colspan="2"></td>
+		</tr>
+	</table>
+</div>

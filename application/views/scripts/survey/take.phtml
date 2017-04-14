@@ -1,0 +1,172 @@
+<?php ?>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'edit',
+    'id' => $this->id,
+    ));?>">Edit Survey</a>
+</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'preview',
+    'id' => $this->id,
+    ));?>">Take Survey</a>
+</div>
+<div>Take Survey</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'survey',
+    'action' => 'editrespondents',
+    'id' => $this->id,
+    ));?>">Edit Respondents</a>
+</div>
+
+<BR/>
+
+<form enctype="application/x-www-form-urlencoded" action="/survey/savetake" method="post" name="">
+
+<? //= $this->surveyForm; ?>
+<?= $this->surveyForm->submit ?>
+
+<?php $this->dojo()->enable() ?>
+
+<?php if (isset($this->qCount)) { ?>
+    <?php if($this->qCount < 1) { ?>
+    
+        <div>This survey has no questions</div>
+        <div id="question_header_bar" style="background-color:#C0C0C0;"><a href="/survey/addquestion/id/<?= $this->id; ?>/addquestion/true">Add question here</a></div>
+
+    <?php } else { ?>
+        <?php
+            $i =0;
+        ?>
+        <div><?= $this->qCount.' questions' ?></div>
+        <? $height_px = 582 * $this->qCount; ?>
+        <div style="height:<?= $height_px; ?>px;">
+        <ul>
+        <? $idArr = array(); ?>
+
+        <? if(0) { ?>
+
+            <?php foreach ($this->questions as $k => $q) { ?>
+                <? $idArr[] = $q['id_neb_survey_question']; ?>
+                <? $i++; ?>
+            <?php } ?>
+
+            <?php  $this->tabContainer()->captureStart('pastebin_'.$q['id_neb_survey_question'], array('class' => 'paste-tab')) ?>
+            <?php echo $this->contentPane('pastebinpane_'.$q['id_neb_survey_question'], '', array(
+                //'title'       => 'Active Pastes',
+                'class'       => 'tab',
+                'style'       => 'style="height:500px;"',
+                'href'        => $this->url(
+                    array(
+                        'controller' => 'paste',
+                        'action'     => 'active',
+                        'format'     => 'ajax',
+                        'id'         => $q['id_neb_survey_question'],
+                        'idarr'      => $idArr
+                    ),
+                    'default',
+                    true
+                ),
+                'parseOnLoad' => true)) ?>
+            <?php echo $this->tabContainer()->captureEnd('pastebin_'.$q['id_neb_survey_question']) ?>
+
+        <? } elseif(1) { ?>
+
+                <? $q = $this->data->getItem($this->id); ?>
+                <? $i = 1; ?>
+                
+                <? //var_dump($this->data); ?>
+                <? foreach($this->data as $q) { //print_r($q); ?>
+
+                    <div style="position: relative; width: 99%; height: 300px; border: 1px #ccc solid;">
+                      <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" class="borderContainer">
+                        <?= $this->formHidden('id_neb_survey_question_'.$i, $q['id_neb_survey_question']); ?>
+                        <? if(isset($q['id_neb_survey_response'])) echo $this->formHidden('id_neb_survey_response_'.$i, $q['id_neb_survey_response']); ?>
+                        <?= $this->formHidden('db_question_type_'.$i, $q['question_type']); ?>
+                        
+                        
+                        <? //<div dojoType="dijit.layout.ContentPane" splitter="true" region="center">&nbsp;</div> ?>
+                        <? // ?>
+                        <? // VIEW QUESTION ?>
+                        <? // ?>
+                        <div dojoType="dijit.layout.ContentPane" id="right_<?= $i ?>" splitter="true" region="center" style="">
+                                
+                            <div style="text-align:center;border: solid 1px grey;padding: 2px 2px 2px 2px">
+                                <div id="take_suvey_question_<?= $i ?>" style="height:22px;text-align:left;">
+                                    <B><?= $i . '. ' . stripslashes($q['question_text']); ?></B>
+                                </div>
+                                <div id="take_survey_answer" style="text-align:left;">                                    
+                                <? if('mc_one' == $q['question_type']) { ?>
+                                    
+                                    <? // for each return delimited value, output a radio button ?>
+                                    <?
+                                        $answersArr = explode("\n", trim(stripslashes($q['answers'])));
+                                        $answersArr = array_map('trim', $answersArr);
+                                        $save = $answersArr;
+                                        $dropdown= new Zend_Form_Element_Radio('take_survey_answer_'.$i);
+                                        $dropdown->setMultiOptions(array_combine($answersArr,$answersArr))
+                                        ->setDecorators(array('ViewHelper' , 'Errors'));
+                                        if(isset($q['response_answer'])) 
+                                        {
+                                            $dropdown->setValue($q['response_answer']);
+                                            //echo "response: " . $q['response_answer'] . "<BR>";
+                                        }
+                                        echo $dropdown;
+                                    ?>
+                                    
+                                <? } elseif('mc_many' == $q['question_type']) { ?>
+                                    
+                                    <? // for each return delimited value, output a checkbox ?>
+                                    <?
+                                        $answersArr = explode("\n", trim(stripslashes($q['answers'])));
+                                        $answersArr = array_map('trim', $answersArr);
+                                        $dropdown= new Zend_Form_Element_MultiCheckbox('take_survey_answer_'.$i);
+                                        $dropdown->setMultiOptions(array_combine($answersArr,$answersArr))
+                                        ->setDecorators(array('ViewHelper' , 'Errors'));
+                                        if(isset($q['response_answer'])) $dropdown->setValue($q['response_answer']);
+                                        echo $dropdown;
+                                    ?>
+                                    
+                                <? } elseif('text_box' == $q['question_type']) { ?>
+                                    
+                                    <?
+                                        $dropdown= new Zend_Form_Element_Textarea('take_survey_answer_'.$i);
+                                        $dropdown->setAttrib('rows', 4)
+                                        ->setValue("\n\n\n")
+                                        ->setAttrib('style', 'width:380px')
+                                        ->setAttrib('dojoType', "dijit.form.Textarea")
+                                        ->setDecorators(array('ViewHelper' , 'Errors'));
+                                        if(isset($q['response_answer'])) $dropdown->setValue($q['response_answer']);
+                                        echo $dropdown;
+                                    ?>
+
+                                <? } ?>
+                                </div>
+                            </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <? $i++ ?>
+        <? } ?>            
+            <? } ?>
+        </ul>
+        </div>
+        <?= $this->formHidden('qCount', $this->qCount); ?>
+        <?= $this->formHidden('id_neb_survey_distribute', $this->id_neb_survey_distribute); ?>
+    <?php } ?>
+<?php } ?>
+
+<?= $this->surveyForm->id ?>
+<?= $this->surveyForm->id_county ?>
+<?= $this->surveyForm->id_district ?>
+<?= $this->surveyForm->id_school ?>
+
+</form>
+
+                    
+                    
+<? print_r($save);

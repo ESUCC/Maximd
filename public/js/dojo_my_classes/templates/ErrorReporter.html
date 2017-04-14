@@ -1,0 +1,68 @@
+<!--<div id="dialogOne" dojoType="dijit.Dialog" title="Error Report">
+	<?php 
+		$keyName = $view->db_form_data['form_config']['key_name'];
+		$formId = $view->form->getValue($keyName);
+		$personnelTable = new Model_Table_PersonnelTable();
+		$uName = Zend_Auth::getInstance()->getIdentity();
+		$user = $personnelTable->getNameByUsername($uName);//->select()->from('iep_personnel')->where('username = ?', Zend_Auth::getInstance()->getIdentity())->query()->fetchAll();
+		?>
+	<div dojoType="dijit.form.Form" id="errorReport" jsId="errorReport" encType="multipart/form-data" action="" method=""> 
+		<?= $this->formHidden('error_formId', $formId); ?>
+		<?= $this->formHidden('error_page', $view->page); ?>
+		<script type="text/javascript">
+			dojo.require("dijit.form.Textarea");
+	    </script>
+	    <div>User: <?= $user?></div>
+	    <div>Form: <?= substr($keyName, -3, 3)?></div>
+	    <div>Form ID: <?= $formId?></div>
+	    <div>Please describe the issue you are having:</div> 
+		<textarea id="error_description" name="error_description" dojoType="dijit.form.Textarea"></textarea>
+		<button id="buttonOne" dojoType="dijit.form.Button" type="button">
+		    Submit Report
+		    <script type="dojo/method" event="onClick" args="evt">
+        		//dijit.byId('errorReport').submit();
+    			// send to server to be saved
+				dijit.byId('dialogOne').hide();
+                var xhrArgs = {
+        			form: dojo.byId('errorReport'),
+                    handleAs : "json",
+                    url: '/error-reporting/report',
+                    // sync: wait2finish,
+                    sync : true,
+                    load: function(data, ioArgs) {
+			        	var returneditems = data.items;
+						console.debug('success', returneditems);
+						dijit.byId('dialogResultSuccess').show();
+					},
+                    error: function(data, ioArgs) {
+			            //var returneditems = data.items;
+						console.debug('error');
+						dijit.byId('dialogResultError').show();
+					}
+                };
+                var deferred = dojo.xhrPost(xhrArgs); 
+
+    		</script>
+		</button>
+	</div>
+</div>
+<div id="dialogResultSuccess" dojoType="dijit.Dialog" title="Error Result">
+	Success	
+	<button id="dialogResultSuccess-button" dojoType="dijit.form.Button" type="button">
+	    Close<br />
+	    <script type="dojo/method" event="onClick" args="evt">
+        	dijit.byId('dialogResultSuccess').hide();
+    	</script>
+	</button>
+</div>
+<div id="dialogResultError" dojoType="dijit.Dialog" title="Error Result">
+	Error - Please contact an administrator.<br />
+	<button id="dialogResultError-button" dojoType="dijit.form.Button" type="button">
+	    Close
+	    <script type="dojo/method" event="onClick" args="evt">
+        	dijit.byId('dialogResultError').hide();
+    	</script>
+	</button>
+</div>
+<a href="javascript:void(0);" onclick="dijit.byId('dialogOne').show();">Submit Error Report</a>
+-->

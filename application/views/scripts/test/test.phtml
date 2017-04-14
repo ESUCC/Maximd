@@ -1,0 +1,42 @@
+<script type="text/javascript">
+<!-- 
+//-->
+</script>
+<button dojoType="soliant.form.Button" ">
+Make Gorillas
+    <script type="dojo/method" event="onClick" args="evt">
+    	dijit.byId('tc_tab1').setTitle('Gorillas');
+    	dijit.byId('tc_tab2').setTitle('Gorillas');
+    	dijit.byId('tc_tab3').setTitle('Gorillas');
+    	</script>
+</button>
+
+<div style="width: 500px; height: 360px">
+    <div dojoType="soliant.layout.TabContainer" id="tc" style="width: 100%; height: 100%;">
+        <div dojoType="dijit.layout.ContentPane" id="tc_tab1" title="My first tab" selected="true">
+            <div id="articles" dojoType="soliant.complex.DataList" title="DataList Example" cells="caption,description,info" dataUrl="/test/page{page}"></div>
+        </div>
+        <div dojoType="dijit.layout.ContentPane" id="tc_tab2" title="My second tab">
+            Lorem ipsum and all around...
+        </div>
+        <div dojoType="dijit.layout.ContentPane" id="tc_tab3" title="My last tab" closable="true">
+            Lorem ipsum and all around - last...
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+.row-cell-caption { font-size: 1.2em; letter-spacing: .05em;
+               font-weight: bold; color: #707070; }
+.row-cell-description { font-size: .8em; color: #303030; }
+.row-cell-info { font-size: .8em; color: #303030; text-align: right;
+            margin-top: .2em; float: left; padding-left: .1em; }
+.row-cell-links { font-size: .8em; color: #303030; text-align: right;
+             margin-top: .2em; padding-right: .1em;
+             border-top: 1px dotted gray; }
+</style>
+</head>
+
+
+

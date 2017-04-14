@@ -1,0 +1,1459 @@
+--\i '/var/www/html/srs/archive/dupe_iep.txt'
+--\i '/usr/apachesecure0/htdocs/srs/archive/dupe_iep.txt'
+-- local
+-- \i /usr/local/zend/apache2/htdocs/srs-zf/data/dupe_iep.txt
+-- select dupe_iep_full(1000254, 2);
+
+
+DROP FUNCTION "cast_varchar_to_oid"(varchar);
+create function cast_varchar_to_oid(varchar) returns oid as 'DECLARE
+	input alias for $1;
+BEGIN
+	return (input::int::oid);
+END;' language 'plpgsql' with(isstrict,iscachable);
+
+DROP FUNCTION "cast_bigint_to_oid"(bigint);
+create function cast_bigint_to_oid(bigint) returns oid as 'DECLARE
+	input alias for $1;
+BEGIN
+	return (input::oid);
+END;' language 'plpgsql' with(isstrict,iscachable);
+
+
+
+
+--
+-- WHEN PASSED AN ARRAY OF FORM '{ele1,ele2,ele3,...,elen}' 
+-- function will loop until GET_ELEMENT is found or end of array is reached
+--
+DROP FUNCTION "element_in_array"(varchar[], varchar);
+create function element_in_array(varchar[], varchar) returns boolean as 'DECLARE
+    CHECK_ARRAY alias for $1;
+    GET_ELEMENT alias for $2;
+    i integer;
+BEGIN 
+    i := 1;
+    WHILE (CHECK_ARRAY[i] is not null) LOOP
+        IF (CHECK_ARRAY[i] = GET_ELEMENT) THEN
+            RETURN true;
+        END IF;
+        i := i+1;
+    END LOOP;
+    RETURN false;
+END;' language 'plpgsql' with(isstrict,iscachable);
+
+
+--
+-- RETURNS array '{ele1,ele2,ele3,...,elen}' of field names
+-- of field names for specified table WITHOUT 
+-- fields listed in the FIELDS_ELIMINATE array
+--
+
+DROP FUNCTION "dupe_iep_accom_checklist"( integer, integer );
+CREATE FUNCTION "dupe_iep_accom_checklist"( integer, integer ) RETURNS boolean AS 'DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    IEP_REC         record;
+    newOID              bigint;
+    recIdStudent        integer;
+    idCheck             integer;
+    
+    
+BEGIN 
+    TABLE_NAME          := ''iep_accom_checklist'';
+    TABLE_PK_NAME       := ''id_accom_checklist'';
+    FIELDS_ELIMINATE    := ''{id_accom_checklist, timestamp_last_mod, timestamp_created}'';
+
+    FOR REC_GOAL IN SELECT * FROM iep_accom_checklist WHERE id_form_004 = PK_IEP_OLD LOOP
+
+        idCheck              := REC_GOAL.id_accom_checklist;
+        
+        SELECT INTO IEP_REC id_student from iep_form_004 WHERE id_form_004 = PK_IEP_OLD;
+        recIdStudent              := IEP_REC.id_student;
+        
+        -- DUPE THE GOAL AND GET OID AS REFRENCE
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, idCheck, FIELDS_ELIMINATE) as resOID;
+
+        newOID              := INSERT_RESULT.resOID;
+
+        --RAISE NOTICE ''newOID: %'', newOID;
+        --RAISE NOTICE ''recIdStudent: %'', recIdStudent;
+
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new goal with the id of the new iep it will be on
+        UPDATE iep_accom_checklist SET id_form_004 = $2 WHERE oid = newOID;
+
+        SELECT INTO INSERT_RESULT * from iep_accom_checklist WHERE oid = newOID and id_student = recIdStudent;
+        --RAISE NOTICE ''new ID id_accom_checklist: %'', INSERT_RESULT.id_accom_checklist;
+
+    END LOOP;    
+    RETURN true;
+END;
+' LANGUAGE 'plpgsql';
+
+
+
+
+DROP FUNCTION "table_field_names_less"(varchar, varchar[], varchar);
+create function table_field_names_less(varchar, varchar[], varchar) returns varchar as 'DECLARE
+    TABLE_NAME          alias for $1;
+    FIELDS_ELIMINATE    alias for $2;
+    TEXT_PREFIX         alias for $3;
+
+    FIELD_NAMES         varchar[];
+    ssSearch            record;
+    TEMP_FIELD_NAME     varchar;
+    RETTEXT             varchar;
+    i                   integer;
+
+BEGIN 
+    i := 1;
+
+    FOR ssSearch IN 
+    SELECT 
+            a.attname AS field
+        FROM 
+            pg_class c, 
+            pg_attribute a, 
+            pg_type t, 
+            pg_tables 
+        WHERE 
+            c.relname = pg_tables.tablename
+            AND pg_tables.tablename like TABLE_NAME 
+            and a.attnum > 0
+            and a.attrelid = c.oid
+            and a.atttypid = t.oid
+        ORDER BY pg_tables.tablename, field
+    LOOP
+        TEMP_FIELD_NAME := ssSearch.field;
+        --RAISE NOTICE ''field: %'', TEMP_FIELD_NAME;
+        IF( not element_in_array(FIELDS_ELIMINATE, TEMP_FIELD_NAME) ) THEN
+            IF(i = 1) THEN
+                RETTEXT := TEXT_PREFIX || TEMP_FIELD_NAME;
+            ELSE
+                RETTEXT := RETTEXT || '','' || TEXT_PREFIX || TEMP_FIELD_NAME;
+            END IF;
+        END IF;
+        i := i + 1;
+    END LOOP;
+   
+    RETURN RETTEXT; 
+
+END;' language 'plpgsql' with(isstrict,iscachable);
+
+--
+-- USING THE ABOVE FUNCTIONS, DUPE_ROW WILL INSERT A ROW
+-- IN THE SAME TABLE WITH FIELDS LISTED IN THE FIELDS_ELIMINATE ARRAY REMOVED 
+-- FROM THE INSERT STMT
+--
+DROP FUNCTION "dupe_row"(varchar, varchar, integer, varchar[] );
+CREATE FUNCTION "dupe_row"(varchar, varchar, integer, varchar[] ) RETURNS varchar AS 'DECLARE
+    TABLE_NAME          alias for $1;
+    TABLE_PK_NAME       alias for $2;
+    TABLE_PK            alias for $3;
+    FIELDS_ELIMINATE    alias for $4;
+
+    a_output varchar;
+    
+    TABLE_FIELDS varchar;
+    VALUE_FIELDS varchar;
+
+    resOID varchar;
+BEGIN 
+    a_output := '''';
+    TABLE_FIELDS := table_field_names_less(TABLE_NAME, FIELDS_ELIMINATE, '''');
+    VALUE_FIELDS := table_field_names_less(TABLE_NAME, FIELDS_ELIMINATE, ''frm.'');
+--    RAISE NOTICE ''TABLE_FIELDS: %'', TABLE_FIELDS;
+--    RAISE NOTICE ''VALUE_FIELDS: %'', VALUE_FIELDS;
+
+    a_output := ''INSERT INTO '' || TABLE_NAME || '' ('' || TABLE_FIELDS || '') '' || ''select '' || VALUE_FIELDS || '' FROM '' || TABLE_NAME || '' frm WHERE frm.'' || TABLE_PK_NAME || '' = '' || TABLE_PK || '';'';
+--    RAISE NOTICE ''a_output: %'', a_output;
+    EXECUTE a_output; 
+    
+    GET DIAGNOSTICS resOID = RESULT_OID;
+    RETURN resOID;
+END;
+' LANGUAGE 'plpgsql';
+
+DROP FUNCTION "dupe_iep"( integer, integer );
+CREATE FUNCTION "dupe_iep"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK            alias for $1;
+    SESS_ID_USER        alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    v_arr text[];
+
+    INSERT_RESULT       record;
+    v_old_iep           record;
+    v_new_iep           record;
+    v_new_pg            record;
+    v_new_ac            record;
+    v_student           record;
+    v_select_result     record;
+    newPK               integer;
+    daysValue           integer;
+    oldDaysValue        varchar;
+    pg6Other            varchar;
+    pg6RelatedOther     varchar;
+    v_participantNames  varchar;
+    v_transition_plan   boolean;
+BEGIN 
+    TABLE_NAME          := ''iep_form_004'';
+    TABLE_PK_NAME       := ''id_form_004'';
+    
+    -- 20090901 jlavere - clear mips section (fape_consent, pg6_doc_signed_parent, pg6_date_doc_signed_parent, pg6_no_sig_explanation)
+    --
+    FIELDS_ELIMINATE    := ''{supports_location_other, ass_tech_location_other, prog_mod_location_other, supp_service_location_other, related_service_location_other, timestamp_created, id_form_004, date_conference, date_doc_signed_parent, doc_signed_parent, status, primary_service_location_other, extracurricular_nonacademic, necessary_action, received_copy, lps_sig_understand_process, lps_sig_participated, lps_sig_agree, lps_sig_no_agree_reason, lps_sig_understand_purpose, lps_sig_understand_covers, lps_sig_understand_receive, lps_sig_received_rights, no_sig_explanation, page_status, primary_service_from, primary_service_to, related_service_from_date, related_service_to_date, supp_service_from_date, supp_service_to_date, prog_mod_from_date, prog_mod_to_date, ass_tech_from_date, ass_tech_to_date, supports_from_date, supports_to_date, primary_disability_drop_other, fape_consent, pg6_doc_signed_parent, pg6_date_doc_signed_parent, pg6_no_sig_explanation}''; -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+    
+
+    --
+    -- GET A COPY OF THE OLD IEP
+    --
+    SELECT INTO v_old_iep * FROM iep_form_004 where id_form_004 = TABLE_PK;
+    --RAISE NOTICE ''tran plan: %'', v_old_iep.transition_plan;
+    
+    
+    
+    --
+    -- GET A COPY OF THE STUDENT RECORD
+    -- used for TRANSITION PLAN duping
+    --
+    SELECT INTO v_student date_part(''year'',age(dob)) as years, date_part(''month'',age(dob)) as months, date_part(''day'',age(dob)) as days FROM iep_student where id_student = v_old_iep.id_student;
+    IF(''t'' = v_old_iep.transition_plan OR v_student.years >= 16 OR (v_student.years = 15 and v_student.days > 1)) THEN
+        v_transition_plan := true;
+    ELSE
+        v_transition_plan := false;
+    END IF;
+
+    --RAISE NOTICE ''v_transition_plan: %'', v_transition_plan;
+
+
+    --
+    -- DUPE THE IEP AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+
+    --RAISE NOTICE ''resOID: %'', cast_varchar_to_oid(INSERT_RESULT.resOID);
+    
+    SELECT INTO v_new_iep participant_names, primary_service_days_value, primary_service_dpw, id_form_004, related_service_drop, primary_disability_drop FROM iep_form_004 WHERE oid = cast_varchar_to_oid(INSERT_RESULT.resOID);
+    newPK              := v_new_iep.id_form_004;
+
+
+    --RAISE NOTICE ''primary_service_days_value: %'', v_new_iep.primary_service_days_value;
+    --RAISE NOTICE ''prog_mod_dpw: %'', v_new_iep.primary_service_dpw;
+    daysValue              := v_new_iep.primary_service_days_value;
+    oldDaysValue           := v_new_iep.primary_service_dpw;
+    IF(daysValue is null and oldDaysValue is not null) THEN
+        daysValue := oldDaysValue;
+        --RAISE NOTICE ''is null'';
+    END IF;
+
+
+    
+    -- ======================================================================
+    -- IF primary_disability_drop IS Other (Please Specify)
+    -- THEN CLEAR THE FIELD
+    -- ======================================================================
+    pg6Other           := v_new_iep.primary_disability_drop;
+    IF(pg6Other = ''Other (Please Specify)'') THEN
+        pg6Other           := NULL;
+    END IF;
+    -- ======================================================================
+    -- RAISE NOTICE ''pg6Other: %'', pg6Other;
+
+    -- ======================================================================
+    -- IF related_service_drop contains Other (Please Specify)
+    -- THEN CLEAR THOSE OCCURANCES
+    -- contents of the Other field are ALWAYS cleared in the update below - 20050106 - jlavere 
+    -- ======================================================================
+        pg6RelatedOther           := v_new_iep.related_service_drop;
+        pg6RelatedOther           := replace(pg6RelatedOther, ''Other (Please Specify)'',  '''');
+        pg6RelatedOther           := replace(pg6RelatedOther, ''Sign Language Interpreter'',  ''Interpreting Services'');
+
+    -- ======================================================================
+    -- RAISE NOTICE ''pg6RelatedOther: %'', pg6RelatedOther;
+    
+    
+    --
+    -- 20060105 - code to remove the Educator of the hearing impaired on duped ieps from v1
+    --
+    IF(v_old_iep.version_number = 1) THEN
+        SELECT INTO v_select_result clearcolumn(v_new_iep.participant_names, 10);
+        v_participantNames := v_select_result.clearcolumn;
+    ELSE
+        v_participantNames := v_new_iep.participant_names;
+    END IF;
+    --RAISE NOTICE ''v_participantNames: %'', v_participantNames;
+
+
+
+    -- build the empty team member rows and populate
+    SELECT INTO v_select_result createiepteammembers(newPK);
+    IF(v_old_iep.version_number = 1) THEN
+        --v_arr := string_to_array(v_new_iep.participant_names, '';'');
+
+        --RAISE NOTICE ''v_old_iep row 1 data: %'', v_arr[0];
+
+    ELSE
+        perform dupe_iep_participants($1, newPK);
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    -- 20090223 - jlavere - utf8 added 
+    --
+    UPDATE iep_form_004 
+        SET 
+            utf8header = true, 
+            page_status = ''0110101'',
+            id_author = $2, 
+            id_author_last_mod = $2, 
+            primary_disability_drop = pg6Other, 
+            related_service_drop = pg6RelatedOther,
+
+            primary_service_days_value = daysValue,
+            primary_service_dpw = '''',
+            participant_names = v_participantNames,
+
+            transition_plan = v_transition_plan,
+
+            related_service = ''''
+        WHERE id_form_004 = newPK;
+
+    SELECT INTO v_new_iep dupe_iep_goals(TABLE_PK, newPK) as check;
+    SELECT INTO v_new_ac dupe_iep_accom_checklist(TABLE_PK, newPK) as check;
+    --SELECT INTO v_new_pg dupe_iep_progress_reports(TABLE_PK, newPK) as check;
+    
+    if(v_transition_plan) THEN
+        SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''iep_form_004_secondary_goal'', ''id_form_004_secondary_goal'', ''id_form_004'', ''{id_form_004_secondary_goal}'') as check; -- 20080121 jlavere removed service_start, service_end
+    END IF;
+    --RAISE NOTICE ''check: %'', v_new_iep.check;
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+
+--select dupe_iep(1001032, 1000254);
+
+
+
+CREATE or replace  FUNCTION dupe_related_table(bigint, bigint, varchar, varchar, varchar[]) RETURNS boolean
+    AS $_$DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          alias for $3;
+    TABLE_PK_NAME       alias for $4;
+    FIELDS_ELIMINATE    alias for $5;
+    
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    newOID              bigint;
+    
+    a_output            varchar;
+    b_output            varchar;
+    fieldname_test            varchar;
+BEGIN     
+	b_output := 'SELECT ' || TABLE_PK_NAME || ' as pk, id_student FROM ' || TABLE_NAME || ' WHERE id_form_004 = ' || PK_IEP_OLD || ' ORDER BY timestamp_created';
+	RAISE NOTICE 'b_output: %', b_output;
+    FOR REC_GOAL IN EXECUTE b_output LOOP
+        --RAISE NOTICE 'id_form_004: %', $2;
+        --RAISE NOTICE 'TABLE_NAME: %', $3;
+        --RAISE NOTICE 'TABLE_PK_NAME: %', $4;
+        --RAISE NOTICE 'FIELDS_ELIMINATE: %', $5;
+        --RAISE NOTICE 'pk: %', REC_GOAL.pk;
+        
+
+        --
+        -- DUPE THE GOAL AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_GOAL.pk, FIELDS_ELIMINATE) as resOID;
+        newOID              := INSERT_RESULT.resOID;
+
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new goal with the id of the new iep it will be on
+        --
+        a_output := 'UPDATE ' || TABLE_NAME || ' SET id_form_004 = ' || PK_IEP_NEW || ' WHERE oid = ' || newOID || ' and id_student = ' || REC_GOAL.id_student || ';';
+        --RAISE NOTICE 'a_output: %', a_output;
+
+        if REC_GOAL.id_student is not null THEN
+            RAISE NOTICE 'A_output: %', a_output;
+            EXECUTE a_output;
+        ELSE
+            RAISE NOTICE 'REC_GOAL.id_student: %', REC_GOAL.id_student;
+        END IF;
+
+        
+
+    END LOOP;    
+    RETURN true;
+END;
+$_$
+    LANGUAGE plpgsql;
+
+
+
+DROP FUNCTION "dupe_iep_goals_full"( integer, integer );
+CREATE or replace  FUNCTION dupe_iep_goals_full(integer, integer) RETURNS boolean
+    AS $_$DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    newOID              integer;
+    
+    
+BEGIN 
+    TABLE_NAME          := 'iep_form_004_goal';
+    TABLE_PK_NAME       := 'id_form_004_goal';
+    FIELDS_ELIMINATE    := '{id_form_004_goal, bug2465_checkedreal, timestamp_last_mod, timestamp_created}';
+    
+    FOR REC_GOAL IN SELECT * FROM iep_form_004_goal WHERE id_form_004 = PK_IEP_OLD ORDER BY id_form_004_goal LOOP
+
+        --
+        -- DUPE THE GOAL AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_GOAL.id_form_004_goal, FIELDS_ELIMINATE) as resOID;
+        newOID              := INSERT_RESULT.resOID;
+        --RAISE NOTICE 'id_form_004: %', $2;
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new goal with the id of the new iep it will be on
+        --
+        UPDATE iep_form_004_goal SET original_iep_id = id_form_004, id_form_004 = $2, savetype = 'dupefunction' WHERE oid = newOID and id_student = REC_GOAL.id_student;
+
+    END LOOP;    
+    RETURN true;
+END;
+$_$
+    LANGUAGE plpgsql;
+
+CREATE or replace  FUNCTION dupe_iep_goals_full(bigint, bigint) RETURNS boolean
+    AS $_$DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    newOID              bigint;
+
+
+BEGIN
+    TABLE_NAME          := 'iep_form_004_goal';
+    TABLE_PK_NAME       := 'id_form_004_goal';
+    FIELDS_ELIMINATE    := '{id_form_004_goal, bug2465_checkedreal, timestamp_last_mod, timestamp_created}';
+
+    FOR REC_GOAL IN SELECT * FROM iep_form_004_goal WHERE id_form_004 = PK_IEP_OLD ORDER BY id_form_004_goal LOOP
+
+        --
+        -- DUPE THE GOAL AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_GOAL.id_form_004_goal, FIELDS_ELIMINATE) as resOID;
+        newOID              := INSERT_RESULT.resOID;
+        --RAISE NOTICE 'id_form_004: %', $2;
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new goal with the id of the new iep it will be on
+        --
+        UPDATE iep_form_004_goal SET original_iep_id = id_form_004, id_form_004 = $2, savetype = 'dupefunction' WHERE oid = newOID and id_student = REC_GOAL.id_student;
+
+    END LOOP;
+    RETURN true;
+END;
+$_$
+    LANGUAGE plpgsql;
+
+
+
+
+--
+-- 20090205 jlavere - updated utf8 default
+--
+DROP FUNCTION "dupe_mdt"( integer, integer );
+CREATE FUNCTION "dupe_mdt"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK                    alias for $1;
+    SESS_ID_USER                alias for $2;
+
+    TABLE_NAME                  varchar;
+    TABLE_PK_NAME               varchar;
+    FIELDS_ELIMINATE            varchar[];
+    
+    INSERT_RESULT               record;
+    v_old_mdt                   record;
+    newPK                       integer;
+    v_mdt_00603f2f              boolean;
+    v_mdt_00603f2f_correctable  boolean;
+    
+BEGIN 
+    TABLE_NAME          := ''iep_form_002'';
+    TABLE_PK_NAME       := ''id_form_002'';
+    FIELDS_ELIMINATE    := ''{id_form_002, date_provided, timestamp_created, date_mdt, date_notice, status, initial_verification}'';
+    
+    --
+    -- GET A COPY OF THE OLD MDT
+    --
+    SELECT INTO v_old_mdt * FROM iep_form_002 where id_form_002 = TABLE_PK;
+    RAISE NOTICE ''version_number: %'', v_old_mdt.version_number;
+
+    --
+    -- DUPE THE MDT AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+    SELECT INTO INSERT_RESULT id_form_002 FROM iep_form_002 WHERE oid = cast_varchar_to_oid(INSERT_RESULT.resOID);
+    
+    newPK              := INSERT_RESULT.id_form_002;
+    --RAISE NOTICE ''newPK: %'', newPK;
+
+
+    IF(v_old_mdt.version_number = 1) THEN
+        v_mdt_00603f2f := null;
+        v_mdt_00603f2f_correctable := null;
+        
+    ELSE
+        v_mdt_00603f2f := v_old_mdt.mdt_00603f2f;
+        v_mdt_00603f2f_correctable := v_old_mdt.mdt_00603f2f_correctable;
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    UPDATE iep_form_002 
+        SET 
+            utf8header = true, 
+            page_status = ''0110'', 
+            team_member_agree = '';;;;;;;;;;;;'', 
+            id_author = SESS_ID_USER, 
+            id_author_last_mod = SESS_ID_USER,
+
+            mdt_00603f2f      = v_mdt_00603f2f,
+            mdt_00603f2f_correctable      = v_mdt_00603f2f_correctable,
+            mdt_00603f2g          = null,
+            disability_mhmo       = null,
+            disability_mhsp       = null,
+            disability_hi_detail  = null
+
+        WHERE id_form_002 = newPK;
+
+    --SELECT INTO INSERT_RESULT dupe_iep_goals(TABLE_PK, newPK) as check;
+    -- 
+    -- above line removed as thought to be the culprit of dupe iep goals
+    -- jlavere 20051020
+    --
+    --RAISE NOTICE ''check: %'', INSERT_RESULT.check;
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+
+DROP FUNCTION "dupe_iep_progress_reports"( integer, integer );
+CREATE or Replace FUNCTION dupe_iep_progress_reports(integer, integer) RETURNS boolean
+    AS $_$DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    REC_FORM_010        record;
+    OLD_PR              record;
+    REC_GOAL            record;
+    REC_GOAL_PROG       record;
+    INSERT_RESULT       record;
+    newOID              integer;
+    
+    
+BEGIN 
+    TABLE_NAME          := 'iep_form_010';
+    TABLE_PK_NAME       := 'id_form_010';
+    FIELDS_ELIMINATE    := '{id_form_010, timestamp_last_mod, timestamp_created}';
+    
+    FOR REC_FORM_010 IN SELECT * FROM iep_form_010 WHERE id_form_004 = PK_IEP_OLD LOOP
+		--
+		-- FOR EACH FORM 010 (PR)
+
+		SELECT INTO OLD_PR * FROM iep_form_010 where id_form_010 = REC_FORM_010.id_form_010;
+		
+        -- DUPE THE PR AND GET OID AS REFRENCE
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_FORM_010.id_form_010, FIELDS_ELIMINATE) as resOID;
+        newOID := INSERT_RESULT.resOID;
+
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new PR with the id of 
+        -- the new iep it will be attached to and the version number because it has a default 
+        UPDATE iep_form_010 SET 
+        	id_form_004 = $2,
+        	version_number = REC_FORM_010.version_number 
+        WHERE oid = newOID and id_student = REC_FORM_010.id_student;
+		
+		-- each PR has attached goals and goal progress
+		FOR REC_GOAL IN SELECT * FROM iep_form_004_goal WHERE id_form_004 = PK_IEP_OLD  and lower(status) != 'deleted' LOOP
+		
+--			INSERT INTO iep_form_004_goal (id_author_last_mod, id_student, id_form_004_goal, id_form_010, id_form_004) 
+--				VALUES (REC_GOAL.id_author_last_mod, REC_GOAL.id_student, REC_GOAL.id_student, REC_FORM_010.id_form_010, REC_GOAL.id_form_004);
+			RAISE NOTICE 'REC_GOAL.id_author_last_mod: %', REC_GOAL.id_author_last_mod;
+			RAISE NOTICE 'REC_GOAL.id_student: %', REC_GOAL.id_student;
+			RAISE NOTICE 'REC_GOAL.id_student: %', REC_GOAL.id_student;
+			RAISE NOTICE 'REC_FORM_010.id_form_010: %', REC_FORM_010.id_form_010;
+			RAISE NOTICE 'REC_GOAL.id_form_004: %', REC_GOAL.id_form_004;
+		END LOOP;
+		
+    END LOOP;    
+    RETURN true;
+END;
+$_$
+    LANGUAGE plpgsql;
+
+CREATE OR Replace FUNCTION "dupe_mdt_full"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK                    alias for $1;
+    SESS_ID_USER                alias for $2;
+
+    TABLE_NAME                  varchar;
+    TABLE_PK_NAME               varchar;
+    FIELDS_ELIMINATE            varchar[];
+    
+    INSERT_RESULT               record;
+    v_old_mdt                   record;
+    newPK                       integer;
+    v_mdt_00603f2f              boolean;
+    v_mdt_00603f2f_correctable  boolean;
+    
+BEGIN 
+    TABLE_NAME          := ''iep_form_002'';
+    TABLE_PK_NAME       := ''id_form_002'';
+    FIELDS_ELIMINATE    := ''{id_form_002, timestamp_created, status}'';
+    
+    --
+    -- GET A COPY OF THE OLD MDT
+    --
+    SELECT INTO v_old_mdt * FROM iep_form_002 where id_form_002 = TABLE_PK;
+    RAISE NOTICE ''version_number: %'', v_old_mdt.version_number;
+
+    --
+    -- DUPE THE MDT AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+    SELECT INTO INSERT_RESULT id_form_002 FROM iep_form_002 WHERE oid = INSERT_RESULT.resOID;
+    
+    newPK              := INSERT_RESULT.id_form_002;
+    --RAISE NOTICE ''newPK: %'', newPK;
+
+
+    IF(v_old_mdt.version_number = 1) THEN
+        v_mdt_00603f2f := null;
+        v_mdt_00603f2f_correctable := null;
+        
+    ELSE
+        v_mdt_00603f2f := v_old_mdt.mdt_00603f2f;
+        v_mdt_00603f2f_correctable := v_old_mdt.mdt_00603f2f_correctable;
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    UPDATE iep_form_002 
+        SET 
+            page_status = ''1111'', 
+            id_author = SESS_ID_USER, 
+            id_author_last_mod = SESS_ID_USER
+            
+        WHERE id_form_002 = newPK;
+
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+--select dupe_row('iep_form_004', 'id_form_004', 1015241, '{id_form_004,date_conference,participant_names_par,participant_dates_par, status, page_status}');
+--select dupe_row('iep_form_002', 'id_form_002', 1006322, '{id_form_002, date_provided, timestamp_created, date_mdt, date_notice, status, id_author, id_author_last_mod}');
+--select dupe_row('iep_form_002', 'id_form_002', 1006324, '{id_form_002}');
+--delete from iep_form_004 where id_student = 1000098 and status = 'Draft';
+
+--select dupe_iep(1015332, 1000254);
+--select table_field_names_less2('iep_form_004', '{id_form_004,date_conference,participant_names_par,participant_dates_par, status, page_status}', '');
+--select table_field_names_less('iep_form_004', '{id_form_004,date_conference,participant_names_par,participant_dates_par, status, page_status}', '');
+
+
+
+
+
+--
+DROP FUNCTION "each_element"(integer, varchar, varchar, varchar, integer);
+CREATE FUNCTION "each_element"(integer, varchar, varchar, varchar, integer) RETURNS varchar AS 'DECLARE
+    rowCount        alias for $1;
+    unitTextArr     alias for $2;
+    wArr            alias for $3;
+    mArr            alias for $4;
+    retFlag            alias for $5;
+
+	THISCHAR varchar;
+	THISVALw varchar;
+	THISVALm varchar;
+	
+	newRWArr varchar;
+	retArr varchar;
+BEGIN 
+	newRWArr := '''';
+	retArr := '''';
+	IF (rowCount >= 1) THEN 
+		FOR i IN 1..rowCount LOOP
+			THISCHAR := split_part(unitTextArr,''|'',i);
+			THISVALw := split_part(wArr,''|'',i);
+			THISVALm := split_part(mArr,''|'',i);
+			
+			--
+			-- check to make sure we have the right identifier
+			--
+			IF (THISCHAR is null) THEN 
+				IF (THISVALm is not null) THEN
+					THISCHAR := ''m'';
+				ELSE
+					THISCHAR := ''w'';
+				END IF;
+			END IF;
+			--
+			-- prep the unit array
+			--
+			IF (newRWArr = '''') THEN
+				newRWArr := THISCHAR;
+			ELSE 
+				newRWArr := newRWArr || ''|'' || THISCHAR;
+			END IF;
+			
+			--RAISE NOTICE ''i is %'', i;
+			--RAISE NOTICE ''THISCHAR is %'', THISCHAR;
+			--RAISE NOTICE ''THISVALw is %'', THISVALw;
+			--RAISE NOTICE ''THISVALm is %'', THISVALm;
+	
+	
+			if (THISCHAR = ''w'') THEN
+				IF (retArr = '''') THEN
+					retArr := THISVALw;
+				ELSE 
+					retArr := retArr || ''|'' || THISVALw;
+				END IF;
+			ELSIF (THISCHAR = ''m'') THEN
+				IF (retArr = '''') THEN
+					retArr := THISVALm;
+				ELSE 
+					retArr := retArr || ''|'' || THISVALm;
+				END IF;
+			END IF;
+		END LOOP;
+	END IF;
+	IF (retFlag = 0) THEN
+		return retArr;
+	ELSE 
+		return newRWArr;
+	END IF;
+END;
+' LANGUAGE 'plpgsql';
+
+--DROP FUNCTION "unravel"(text);
+--create function unravel(text) returns SETOF varchar as '
+--declare
+--    v_list alias for $1;
+--    v_delim text := '';'';
+--    v_arr text[];
+--begin
+--    v_arr := string_to_array(v_list, v_delim);
+--    for i in array_lower(v_arr, 1)..array_upper(v_arr, 1) loop
+--        return next v_arr[i]::varchar;
+--    end loop;
+--    return;
+--end;
+--' LANGUAGE 'plpgsql';
+
+
+--
+-- clearColumn
+-- select * from something('element 1;element 2;element 3;element 4', 1);
+-- returns  'element 2;element 3;element 4;'
+--
+DROP FUNCTION "clearcolumn"(text, integer);
+create function clearcolumn(text, integer) returns varchar as '
+declare
+    v_list alias for $1;
+    v_clearColumn alias for $2;
+    v_delim text := '';'';
+    v_arr text[];
+    v_retString varchar := '''';
+begin
+    v_arr := string_to_array(v_list, v_delim);
+    for i in array_lower(v_arr, 1)..array_upper(v_arr, 1) loop
+        IF (v_clearColumn = i) THEN
+            v_retString := v_retString || '';'';
+        ELSE 
+            v_retString := v_retString || v_arr[i]::varchar || '';'';
+        END IF;
+    end loop;
+    return v_retString;
+end;
+' LANGUAGE 'plpgsql';
+
+--select * from clearcolumn('1;3;4;5', 1);
+--select * from clearcolumn('Jane Student;;Mrs. Zapata;Deb Malone;jfdkjallw;q;w;e;r;Educator of the hearing impaired;y;x;', 10);
+
+
+
+DROP FUNCTION "dupe_iep_participants"( integer, integer );
+CREATE FUNCTION "dupe_iep_participants"( integer, integer ) RETURNS boolean AS 'DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    REC_PAR            record;
+    INSERT_RESULT       record;
+    newOID              integer;
+    
+    
+BEGIN 
+    TABLE_NAME          := ''iep_form_004_goal'';
+    TABLE_PK_NAME       := ''id_form_004_goal'';
+    FIELDS_ELIMINATE    := ''{id_form_004_goal, progress_date1, progress_date2, progress_date3, progress_date4, progress_date5, progress_date6, bug2465_checkedreal, timestamp_last_mod, timestamp_created}'';
+    
+    FOR REC_PAR IN SELECT * FROM iep_team_member WHERE id_form_004 = PK_IEP_OLD LOOP
+
+        update iep_team_member set participant_name = REC_PAR.participant_name where id_form_004 = PK_IEP_NEW and sortnum = REC_PAR.sortnum;
+
+    END LOOP;    
+    RETURN true;
+END;
+' LANGUAGE 'plpgsql';
+
+DROP FUNCTION "dupe_iep_participants"( bigint, bigint );
+CREATE FUNCTION "dupe_iep_participants"( bigint, bigint ) RETURNS boolean AS 'DECLARE
+    PK_IEP_OLD          alias for $1;
+    PK_IEP_NEW          alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+
+    REC_PAR            record;
+    INSERT_RESULT       record;
+    newOID              integer;
+
+
+BEGIN
+    TABLE_NAME          := ''iep_form_004_goal'';
+    TABLE_PK_NAME       := ''id_form_004_goal'';
+    FIELDS_ELIMINATE    := ''{id_form_004_goal, progress_date1, progress_date2, progress_date3, progress_date4, progress_date5, progress_date6, bug2465_checkedreal, timestamp_last_mod, timestamp_created}'';
+
+    FOR REC_PAR IN SELECT * FROM iep_team_member WHERE id_form_004 = PK_IEP_OLD LOOP
+
+        update iep_team_member set participant_name = REC_PAR.participant_name where id_form_004 = PK_IEP_NEW and sortnum = REC_PAR.sortnum;
+
+    END LOOP;
+    RETURN true;
+END;
+' LANGUAGE 'plpgsql';
+
+
+
+DROP FUNCTION "dupe_ifsp"( integer, integer, varchar, varchar, varchar, integer );
+CREATE FUNCTION "dupe_ifsp"( integer, integer, varchar, varchar, varchar, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK            alias for $1;
+    SESS_ID_USER        alias for $2;
+    NEW_IFSP_TYPE       alias for $3;
+    TABLE_NAME          alias for $4;
+    TABLE_PK_NAME       alias for $5;
+    FULL_UPDATE       alias for $6;
+
+--    TABLE_NAME          varchar;
+--    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    v_arr text[];
+
+    INSERT_RESULT       record;
+    v_old_iep           record;
+    v_new_iep           record;
+    v_student           record;
+    v_select_result     record;
+    newPK               integer;
+    daysValue           integer;
+    oldDaysValue        varchar;
+    pg6Other            varchar;
+    pg6RelatedOther     varchar;
+    v_participantNames  varchar;
+    v_transition_plan   boolean;
+BEGIN 
+
+
+    IF ( 1 = FULL_UPDATE) THEN
+
+        -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+        -- also, make sure you have the TABLE_PK_NAME field name in this FIELDS_ELIMINATE list
+        FIELDS_ELIMINATE    := ''{'' || TABLE_PK_NAME || '', timestamp_created, timestamp_last_mod}''; 
+
+        --
+        -- DUPE THE IFSP AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+        --    RAISE NOTICE ''resOID: %'', INSERT_RESULT.resOID;
+        --
+        -- GET OID AS REFRENCE
+        --
+        SELECT INTO v_new_iep id_form_013 FROM iep_form_013 WHERE oid = cast_varchar_to_oid(INSERT_RESULT.resOID);
+        newPK              := v_new_iep.id_form_013;
+
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        --
+        UPDATE iep_form_013 
+            SET 
+                id_form_013_duped_from = $1,
+                status = ''Draft'',
+                id_author = $2, 
+                id_author_last_mod = $2,
+                ifsptype = $3
+            WHERE id_form_013 = newPK;
+    
+    
+    
+    
+    ELSE
+    
+        -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+        -- also, make sure you have the TABLE_PK_NAME field name in this FIELDS_ELIMINATE list
+        FIELDS_ELIMINATE    := ''{'' || TABLE_PK_NAME || '', timestamp_created, timestamp_last_mod, id_form_013_duped_from, date_notice, meeting_date, meeting_date_sent, parent_understand_content, parent_understand_distribition, parent_date_1, parent_sig_1_on_file, parent_date_2, parent_sig_2_on_file, date_family_concerns, date_child_strengths, dev_vision_date, dev_hearing_date, dev_health_status_date, dev_cognitive_date, dev_communication_date, dev_social_date, dev_self_help_date, dev_fine_motor_date, dev_gross_motor_date}''; 
+
+        --
+        -- DUPE THE IFSP AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+        --    RAISE NOTICE ''resOID: %'', INSERT_RESULT.resOID;
+        --
+        -- GET OID AS REFRENCE
+        --
+        SELECT INTO v_new_iep id_form_013 FROM iep_form_013 WHERE oid = cast_varchar_to_oid(INSERT_RESULT.resOID);
+        newPK              := v_new_iep.id_form_013;
+        
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        --
+        UPDATE iep_form_013 
+            SET 
+                page_status = ''000010110'',
+                status = ''Draft'',
+                id_author = $2, 
+                id_author_last_mod = $2,
+                ifsptype = $3
+            WHERE id_form_013 = newPK;
+    
+    END IF;
+    
+    --
+    -- DUPLICATE THE SUB FORMS
+    --
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''ifsp_goals'', ''id_ifsp_goals'', ''id_form_013'', ''{id_ifsp_goals}'') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''ifsp_parents'', ''id_ifsp_parents'', ''id_form_013'', ''{id_ifsp_parents}'') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''ifsp_services'', ''id_ifsp_services'', ''id_form_013'', ''{id_ifsp_services}'') as check; -- 20080121 jlavere removed service_start, service_end
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''ifsp_team_members'', ''id_ifsp_team_members'', ''id_form_013'', ''{id_ifsp_team_members}'') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''ifsp_team_other'', ''id_ifsp_team_other'', ''id_form_013'', ''{id_ifsp_team_other}'') as check;
+    SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''ifsp_tran_plan_participants'', ''id_ifsp_tran_plan_participants'', ''id_form_013'', ''{id_ifsp_tran_plan_participants}'') as check;
+
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+
+
+DROP FUNCTION "duplicate_sub_rows"( integer, integer, varchar, varchar, varchar, varchar[]);
+CREATE FUNCTION "duplicate_sub_rows"( integer, integer, varchar, varchar, varchar, varchar[]) RETURNS boolean AS 'DECLARE
+    --
+    -- GIVEN PK_RECORD_OLD AND PK_RECORD_NEW (IDS FROM THE SAME PARENT TABLE, PARENT TABLE NAME IS NOT NEEDED)
+    -- DUPLICATE RECORDS FROM CHILD TABLE (TABLE_NAME) WITH PARENT_KEY_NAME = PK_RECORD_OLD
+    -- AND UPDATE THEM WITH TO HAVE PARENT_KEY_NAME = PK_RECORD_NEW
+
+    PK_RECORD_OLD       alias for $1;
+    PK_RECORD_NEW       alias for $2;
+    TABLE_NAME          alias for $3; -- DUPE THE RECORDS IN THIS TABLE
+    TABLE_PK_NAME       alias for $4; -- PRIMARY KEY IN THE TABLE WHERE DUPING WILL OCCUR
+    PARENT_KEY_NAME     alias for $5; -- NAME OF THE FIELD THAT CONTAINS THE PK_RECORD_OLD VALUE
+    FIELDS_ELIMINATE    alias for $6; -- FIELDS TO NULL WHEN DUPLICATING THE RECORD
+    
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    newOID              bigint;
+    
+    cmd                 varchar;
+BEGIN 
+    cmd := ''SELECT '' || TABLE_PK_NAME || '' as var_recordid FROM '' || TABLE_NAME || '' WHERE '' || PARENT_KEY_NAME || '' = '' || PK_RECORD_OLD;
+    --RAISE NOTICE ''cmd: %'', cmd;
+
+    FOR REC_GOAL IN EXECUTE cmd LOOP
+        
+        --
+        -- DUPE THE RECORD AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_GOAL.var_recordid, FIELDS_ELIMINATE) as resOID;
+        newOID := INSERT_RESULT.resOID;
+
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new sub record with the id of its new parent record
+        --
+        cmd := ''UPDATE '' || TABLE_NAME || '' SET '' || PARENT_KEY_NAME || ''='' || PK_RECORD_NEW || '' WHERE oid = '' || newOID;
+        --RAISE NOTICE ''sub cmd: %'', cmd;
+        EXECUTE cmd;
+
+    END LOOP;
+    RETURN true;
+END;
+' LANGUAGE 'plpgsql';
+
+
+DROP FUNCTION "duplicate_sub_rows_additional_where"( bigint, bigint, varchar, varchar, varchar, varchar[], varchar);
+CREATE FUNCTION "duplicate_sub_rows_additional_where"( bigint, bigint, varchar, varchar, varchar, varchar[], varchar) RETURNS boolean AS 'DECLARE
+    --
+    -- GIVEN PK_RECORD_OLD AND PK_RECORD_NEW (IDS FROM THE SAME PARENT TABLE, PARENT TABLE NAME IS NOT NEEDED)
+    -- DUPLICATE RECORDS FROM CHILD TABLE (TABLE_NAME) WITH PARENT_KEY_NAME = PK_RECORD_OLD
+    -- AND UPDATE THEM WITH TO HAVE PARENT_KEY_NAME = PK_RECORD_NEW
+
+    PK_RECORD_OLD       alias for $1;
+    PK_RECORD_NEW       alias for $2;
+    TABLE_NAME          alias for $3; -- DUPE THE RECORDS IN THIS TABLE
+    TABLE_PK_NAME       alias for $4; -- PRIMARY KEY IN THE TABLE WHERE DUPING WILL OCCUR
+    PARENT_KEY_NAME     alias for $5; -- NAME OF THE FIELD THAT CONTAINS THE PK_RECORD_OLD VALUE
+    FIELDS_ELIMINATE    alias for $6; -- FIELDS TO NULL WHEN DUPLICATING THE RECORD
+    ADDITIONAL_WHERE    alias for $7; -- ADDITIONAL WHERE CLAUSE
+
+    REC_GOAL            record;
+    INSERT_RESULT       record;
+    newOID              bigint;
+
+    cmd                 varchar;
+BEGIN
+    cmd := ''SELECT '' || TABLE_PK_NAME || '' as var_recordid FROM '' || TABLE_NAME || '' WHERE '' || PARENT_KEY_NAME || '' = '' || PK_RECORD_OLD || '' AND ('' || ADDITIONAL_WHERE || '' )'';
+    RAISE NOTICE ''cmd: %'', cmd;
+
+    FOR REC_GOAL IN EXECUTE cmd LOOP
+
+        --
+        -- DUPE THE RECORD AND GET OID AS REFRENCE
+        --
+        SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, REC_GOAL.var_recordid, FIELDS_ELIMINATE) as resOID;
+        newOID := INSERT_RESULT.resOID;
+
+        --
+        -- UPDATE FIELDS WITH NEW DATA
+        -- specifically, update the new sub record with the id of its new parent record
+        --
+        cmd := ''UPDATE '' || TABLE_NAME || '' SET '' || PARENT_KEY_NAME || ''='' || PK_RECORD_NEW || '' WHERE oid = '' || newOID;
+        --RAISE NOTICE ''sub cmd: %'', cmd;
+        EXECUTE cmd;
+
+    END LOOP;
+    RETURN true;
+END;
+' LANGUAGE 'plpgsql';
+
+
+
+
+
+
+--begin;
+--select dupe_ifsp('8089', '1000254', 'Periodic', 'iep_form_013', 'id_form_013');
+--select dupe_row('ifsp_goals', 'id_ifsp_goals', '4613', '{id_form_013,date_notice}');
+
+--select dupe_iep_progress_reports('1173613', '1216975');
+
+
+CREATE OR REPLACE FUNCTION "dupe_functional_assessment"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK                    alias for $1;
+    SESS_ID_USER                alias for $2;
+
+    TABLE_NAME                  varchar;
+    TABLE_PK_NAME               varchar;
+    FIELDS_ELIMINATE            varchar[];
+    
+    INSERT_RESULT               record;
+    v_old_fa                   record;
+    newPK                       integer;
+    v_fa_00603f2f              boolean;
+    v_fa_00603f2f_correctable  boolean;
+    
+BEGIN 
+    TABLE_NAME          := ''iep_form_019'';
+    TABLE_PK_NAME       := ''id_form_019'';
+    FIELDS_ELIMINATE    := ''{id_form_019, timestamp_created, date_notice, status}'';
+    
+    --
+    -- GET A COPY OF THE OLD FA
+    --
+    SELECT INTO v_old_fa * FROM iep_form_019 where id_form_019 = TABLE_PK;
+
+    --
+    -- DUPE THE FA AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+    
+    --
+    -- THIS CODE WRITES OVER THE EXISTING INSERT_RESULT,
+    -- BUT THIS IS OK, BECAUSE ALL WE WANT TO RETAIN IS THE ID_FORM_019
+    --
+    SELECT INTO INSERT_RESULT id_form_019 FROM iep_form_019 WHERE oid = INSERT_RESULT.resOID;
+    
+    newPK              := INSERT_RESULT.id_form_019;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    UPDATE iep_form_019 
+        SET 
+            page_status = ''0'', 
+            id_author = SESS_ID_USER, 
+            id_author_last_mod = SESS_ID_USER
+
+        WHERE id_form_019 = newPK;
+
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+
+
+DROP FUNCTION "dupe_iep_zend"( integer, integer );
+CREATE FUNCTION "dupe_iep_zend"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK            alias for $1;
+    SESS_ID_USER        alias for $2;
+
+    TABLE_NAME          varchar;
+    TABLE_PK_NAME       varchar;
+    FIELDS_ELIMINATE    varchar[];
+    
+    v_arr text[];
+
+    INSERT_RESULT       record;
+    v_old_iep           record;
+    v_new_iep           record;
+    v_new_pg            record;
+    v_new_ac            record;
+    v_student           record;
+    v_select_result     record;
+    newPK               integer;
+    daysValue           integer;
+    oldDaysValue        varchar;
+    pg6Other            varchar;
+    pg6RelatedOther     varchar;
+    v_participantNames  varchar;
+    v_transition_plan   boolean;
+BEGIN 
+    TABLE_NAME          := ''iep_form_004'';
+    TABLE_PK_NAME       := ''id_form_004'';
+    
+    -- 20090901 jlavere - clear mips section (fape_consent, pg6_doc_signed_parent, pg6_date_doc_signed_parent, pg6_no_sig_explanation)
+    --
+    FIELDS_ELIMINATE    := ''{supports_location_other, ass_tech_location_other, prog_mod_location_other, supp_service_location_other, related_service_location_other, timestamp_created, id_form_004, date_conference, date_doc_signed_parent, doc_signed_parent, status, primary_service_location_other, extracurricular_nonacademic, necessary_action, received_copy, lps_sig_understand_process, lps_sig_participated, lps_sig_agree, lps_sig_no_agree_reason, lps_sig_understand_purpose, lps_sig_understand_covers, lps_sig_understand_receive, lps_sig_received_rights, no_sig_explanation, page_status, primary_service_from, primary_service_to, related_service_from_date, related_service_to_date, supp_service_from_date, supp_service_to_date, prog_mod_from_date, prog_mod_to_date, ass_tech_from_date, ass_tech_to_date, supports_from_date, supports_to_date, primary_disability_drop_other, fape_consent, pg6_doc_signed_parent, pg6_date_doc_signed_parent, pg6_no_sig_explanation}''; -- primary_disability_drop_other} <- dont leave a space here, ie dont do this ->(primary_disability_drop_other })
+    
+
+    --
+    -- GET A COPY OF THE OLD IEP
+    --
+    SELECT INTO v_old_iep * FROM iep_form_004 where id_form_004 = TABLE_PK;
+    --RAISE NOTICE ''tran plan: %'', v_old_iep.transition_plan;
+    
+    
+    
+    --
+    -- GET A COPY OF THE STUDENT RECORD
+    -- used for TRANSITION PLAN duping
+    --
+    SELECT INTO v_student date_part(''year'',age(dob)) as years, date_part(''month'',age(dob)) as months, date_part(''day'',age(dob)) as days FROM iep_student where id_student = v_old_iep.id_student;
+    IF(''t'' = v_old_iep.transition_plan OR v_student.years >= 16 OR (v_student.years = 15 and v_student.days > 1)) THEN
+        v_transition_plan := true;
+    ELSE
+        v_transition_plan := false;
+    END IF;
+
+    --RAISE NOTICE ''v_transition_plan: %'', v_transition_plan;
+
+
+    --
+    -- DUPE THE IEP AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+
+    --RAISE NOTICE ''resOID: %'', INSERT_RESULT.resOID;
+    
+    SELECT INTO v_new_iep participant_names, primary_service_days_value, primary_service_dpw, id_form_004, related_service_drop, primary_disability_drop FROM iep_form_004 WHERE oid = cast_varchar_to_oid(INSERT_RESULT.resOID);
+    newPK              := v_new_iep.id_form_004;
+
+
+    --RAISE NOTICE ''primary_service_days_value: %'', v_new_iep.primary_service_days_value;
+    --RAISE NOTICE ''prog_mod_dpw: %'', v_new_iep.primary_service_dpw;
+    daysValue              := v_new_iep.primary_service_days_value;
+    oldDaysValue           := v_new_iep.primary_service_dpw;
+    IF(daysValue is null and oldDaysValue is not null) THEN
+        daysValue := oldDaysValue;
+        --RAISE NOTICE ''is null'';
+    END IF;
+
+
+    
+    -- ======================================================================
+    -- IF primary_disability_drop IS Other (Please Specify)
+    -- THEN CLEAR THE FIELD
+    -- ======================================================================
+    pg6Other           := v_new_iep.primary_disability_drop;
+    IF(pg6Other = ''Other (Please Specify)'') THEN
+        pg6Other           := NULL;
+    END IF;
+    -- ======================================================================
+    -- RAISE NOTICE ''pg6Other: %'', pg6Other;
+
+    -- ======================================================================
+    -- IF related_service_drop contains Other (Please Specify)
+    -- THEN CLEAR THOSE OCCURANCES
+    -- contents of the Other field are ALWAYS cleared in the update below - 20050106 - jlavere 
+    -- ======================================================================
+        pg6RelatedOther           := v_new_iep.related_service_drop;
+        pg6RelatedOther           := replace(pg6RelatedOther, ''Other (Please Specify)'',  '''');
+        pg6RelatedOther           := replace(pg6RelatedOther, ''Sign Language Interpreter'',  ''Interpreting Services'');
+
+    -- ======================================================================
+    -- RAISE NOTICE ''pg6RelatedOther: %'', pg6RelatedOther;
+    
+    
+    --
+    -- 20060105 - code to remove the Educator of the hearing impaired on duped ieps from v1
+    --
+    IF(v_old_iep.version_number = 1) THEN
+        SELECT INTO v_select_result clearcolumn(v_new_iep.participant_names, 10);
+        v_participantNames := v_select_result.clearcolumn;
+    ELSE
+        v_participantNames := v_new_iep.participant_names;
+    END IF;
+    --RAISE NOTICE ''v_participantNames: %'', v_participantNames;
+
+
+
+    -- build the empty team member rows and populate
+    SELECT INTO v_select_result createiepteammembers(newPK);
+    IF(v_old_iep.version_number = 1) THEN
+        --v_arr := string_to_array(v_new_iep.participant_names, '';'');
+
+        --RAISE NOTICE ''v_old_iep row 1 data: %'', v_arr[0];
+
+    ELSE
+        perform dupe_iep_participants($1, newPK);
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    -- 20090223 - jlavere - utf8 added 
+    --
+    UPDATE iep_form_004 
+        SET 
+            version_number = 9, 
+            utf8header = true, 
+            page_status = ''0110101'',
+            id_author = $2, 
+            id_author_last_mod = $2, 
+            primary_disability_drop = pg6Other, 
+            related_service_drop = pg6RelatedOther,
+
+            primary_service_days_value = daysValue,
+            primary_service_dpw = '''',
+            participant_names = v_participantNames,
+
+            transition_plan = v_transition_plan,
+
+            related_service = ''''
+        WHERE id_form_004 = newPK;
+
+    SELECT INTO v_new_iep dupe_iep_goals(TABLE_PK, newPK) as check;
+    SELECT INTO v_new_ac dupe_iep_accom_checklist(TABLE_PK, newPK) as check;
+    --SELECT INTO v_new_pg dupe_iep_progress_reports(TABLE_PK, newPK) as check;
+    
+    if(v_transition_plan) THEN
+        SELECT INTO v_new_iep duplicate_sub_rows(TABLE_PK, newPK, ''iep_form_004_secondary_goal'', ''id_form_004_secondary_goal'', ''id_form_004'', ''{id_form_004_secondary_goal}'') as check; -- 20080121 jlavere removed service_start, service_end
+    END IF;
+    --RAISE NOTICE ''check: %'', v_new_iep.check;
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+
+-- function used to dupe INTO the zend framework from old srs
+DROP FUNCTION "dupe_mdt_zend"( integer, integer );
+CREATE FUNCTION "dupe_mdt_zend"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK                    alias for $1;
+    SESS_ID_USER                alias for $2;
+
+    TABLE_NAME                  varchar;
+    TABLE_PK_NAME               varchar;
+    FIELDS_ELIMINATE            varchar[];
+    
+    INSERT_RESULT               record;
+    v_old_mdt                   record;
+    newPK                       integer;
+    v_mdt_00603f2f              boolean;
+    v_mdt_00603f2f_correctable  boolean;
+    
+BEGIN 
+    TABLE_NAME          := ''iep_form_002'';
+    TABLE_PK_NAME       := ''id_form_002'';
+    FIELDS_ELIMINATE    := ''{id_form_002, date_provided, timestamp_created, date_mdt, date_notice, status, initial_verification}'';
+    
+    --
+    -- GET A COPY OF THE OLD MDT
+    --
+    SELECT INTO v_old_mdt * FROM iep_form_002 where id_form_002 = TABLE_PK;
+    RAISE NOTICE ''version_number: %'', v_old_mdt.version_number;
+
+    --
+    -- DUPE THE MDT AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+    SELECT INTO INSERT_RESULT id_form_002 FROM iep_form_002 WHERE oid = cast_bigint_to_oid(INSERT_RESULT.resOID);
+    
+    newPK              := INSERT_RESULT.id_form_002;
+    --RAISE NOTICE ''newPK: %'', newPK;
+
+
+    IF(v_old_mdt.version_number = 1) THEN
+        v_mdt_00603f2f := null;
+        v_mdt_00603f2f_correctable := null;
+        
+    ELSE
+        v_mdt_00603f2f := v_old_mdt.mdt_00603f2f;
+        v_mdt_00603f2f_correctable := v_old_mdt.mdt_00603f2f_correctable;
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    UPDATE iep_form_002 
+        SET 
+            version_number = 9, 
+            utf8header = true, 
+            page_status = ''0110'', 
+            team_member_agree = '';;;;;;;;;;;;'', 
+            id_author = SESS_ID_USER, 
+            id_author_last_mod = SESS_ID_USER,
+
+            mdt_00603f2f      = v_mdt_00603f2f,
+            mdt_00603f2f_correctable      = v_mdt_00603f2f_correctable,
+            mdt_00603f2g          = null,
+            disability_mhmo       = null,
+            disability_mhsp       = null,
+            disability_hi_detail  = null
+
+        WHERE id_form_002 = newPK;
+
+    --SELECT INTO INSERT_RESULT dupe_iep_goals(TABLE_PK, newPK) as check;
+    -- 
+    -- above line removed as thought to be the culprit of dupe iep goals
+    -- jlavere 20051020
+    --
+    --RAISE NOTICE ''check: %'', INSERT_RESULT.check;
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';
+
+
+
+
+-- function used to dupe INTO the zend framework from old srs
+DROP FUNCTION "dupe_mdt_zend_to_zend"( integer, integer );
+CREATE OR REPLACE FUNCTION "dupe_mdt_zend_to_zend"( integer, integer ) RETURNS integer AS 'DECLARE
+    TABLE_PK                    alias for $1;
+    SESS_ID_USER                alias for $2;
+
+    TABLE_NAME                  varchar;
+    TABLE_PK_NAME               varchar;
+    FIELDS_ELIMINATE            varchar[];
+    
+    INSERT_RESULT               record;
+    v_old_mdt                   record;
+    newPK                       integer;
+    v_mdt_00603f2f              boolean;
+    v_mdt_00603f2f_correctable  boolean;
+    
+BEGIN 
+    TABLE_NAME          := ''iep_form_002'';
+    TABLE_PK_NAME       := ''id_form_002'';
+    FIELDS_ELIMINATE    := ''{id_form_002, date_provided, timestamp_created, date_mdt, date_notice, status, initial_verification}'';
+    
+    --
+    -- GET A COPY OF THE OLD MDT
+    --
+    SELECT INTO v_old_mdt * FROM iep_form_002 where id_form_002 = TABLE_PK;
+    RAISE NOTICE ''version_number: %'', v_old_mdt.version_number;
+
+    --
+    -- DUPE THE MDT AND GET OID AS REFRENCE
+    --
+    SELECT INTO INSERT_RESULT dupe_row(TABLE_NAME, TABLE_PK_NAME, TABLE_PK, FIELDS_ELIMINATE) as resOID;
+    SELECT INTO INSERT_RESULT id_form_002 FROM iep_form_002 WHERE oid = CAST(INSERT_RESULT.resOID AS oid);
+    
+    newPK              := INSERT_RESULT.id_form_002;
+    --RAISE NOTICE ''newPK: %'', newPK;
+
+
+    IF(v_old_mdt.version_number = 1) THEN
+        v_mdt_00603f2f := null;
+        v_mdt_00603f2f_correctable := null;
+        
+    ELSE
+        v_mdt_00603f2f := v_old_mdt.mdt_00603f2f;
+        v_mdt_00603f2f_correctable := v_old_mdt.mdt_00603f2f_correctable;
+    END IF;
+
+    --
+    -- UPDATE FIELDS WITH NEW DATA
+    --
+    UPDATE iep_form_002 
+        SET 
+            version_number = 10,
+            utf8header = true, 
+            page_status = ''0110'', 
+            team_member_agree = '';;;;;;;;;;;;'', 
+            id_author = SESS_ID_USER, 
+            id_author_last_mod = SESS_ID_USER,
+
+            mdt_00603f2f      = v_mdt_00603f2f,
+            mdt_00603f2f_correctable      = v_mdt_00603f2f_correctable,
+            mdt_00603f2g          = null,
+            disability_mhmo       = null,
+            disability_mhsp       = null,
+            disability_hi_detail  = null
+
+        WHERE id_form_002 = newPK;
+
+    --SELECT INTO INSERT_RESULT dupe_iep_goals(TABLE_PK, newPK) as check;
+    -- 
+    -- above line removed as thought to be the culprit of dupe iep goals
+    -- jlavere 20051020
+    --
+    --RAISE NOTICE ''check: %'', INSERT_RESULT.check;
+    RETURN newPK;
+END;
+' LANGUAGE 'plpgsql';

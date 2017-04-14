@@ -1,0 +1,159 @@
+<? $view = $this->element->rownumber->getView();
+$rowNum = $this->element->rownumber->getValue(); ?>
+<div <?php if (1) { echo 'style="page-break-before: always;"'; } ?>>
+<div class="confidential printonly">Confidential</div>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+   <?php if('print' == $view->mode) { ?>
+		<td>Goal #<?=$rowNum?><?php if('t'==$this->element->goal_met->getValue()) echo ": <B>GOAL MET</B>"; ?></td>
+   <?php } else { ?>
+		<td><?=$view->db_form_data['ifsptype']?> IFSP</td>
+   <?php } ?>
+       <td align="right" class="noprint">
+            <div id="iep_form_013_goal_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            <?= $this->element->id_ifsp_goals; ?>
+            </div>
+       </td>
+    </tr>
+</table>
+
+<table class="formInput" cellspacing="0" cellpadding="0">
+   <tr>
+        <td class="printBoldLabel">Goal / Outcome</td>
+        <td class="noprint" style="text-align:right;">
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_met-colorme" class="colorme">
+            <?php echo $this->element->goal_met; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_outcome-colorme" class="colorme">
+            <?php echo $this->element->goal_outcome; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<?php if('print' != $view->mode) echo "<hr />" ?>
+<table class="formInput" cellspacing="0" cellpadding="0">
+   <tr>
+        <td class="printBoldLabel">Child / Family strengths and resources related to this goal:</td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_strengths-colorme" class="colorme">
+            <?php echo $this->element->goal_strengths; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<?php if('print' != $view->mode) echo "<hr />" ?>
+<table class="formInput" cellspacing="0" cellpadding="0">
+   <tr>
+        <td class="printBoldLabel">What will be done / by whom:</td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_what_done-colorme" class="colorme">
+            <?php echo $this->element->goal_what_done; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<?php echo "<hr />" ?>
+<?php if('print' == $view->mode) { ?>
+<table class="formInput">
+    <tr>
+        <td class="printBoldLabel">
+			Progress will be reviewed
+        </td>
+        <td class="" style="width:200px;">
+			<?php echo $this->element->goal_prog_often->getValue(); ?>
+        </td>
+        <td class="printBoldLabel"> by </td>
+        <td  class="" style="width:200px;">
+            <?php echo $this->element->goal_prog_whom->getValue(); ?>
+        </td>
+        <td class="printBoldLabel"> through </td>
+        <td  class="" style="width:200px;">
+            <?php echo $this->element->goal_prog_measured->getValue(); ?>
+        </td>
+    </tr>
+</table>
+<?php } else { ?>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_prog_often-colorme" class="colorme">
+            <?php echo $this->element->goal_prog_often; ?>
+            </div> 
+            <div style="text-align:center;">
+            (How Often)
+            </div>
+        </td>
+        <td> by </td>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_prog_whom-colorme" class="colorme">
+            <?php echo $this->element->goal_prog_whom; ?>
+            </div>
+            <div style="text-align:center;">
+            (By Whom)
+            </div>
+        </td>
+        <td> through </td>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_prog_measured-colorme" class="colorme">
+            <?php echo $this->element->goal_prog_measured; ?>
+            </div>
+            <div style="text-align:center;">
+            (How Measured)
+            
+            </div>
+        </td>
+    </tr>
+</table>
+<?php } ?>
+<?php echo "<hr />" ?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->element->goal_review_date; ?></td>
+    </tr>
+</table>
+<?php echo $this->ifspGoalHistory($view, $this, 'goal_progress_show_ifsps', 'goal_progress_print_ifsps', 'goal_review_date', 'goal_progress', 'ifsp_goals', $rowNum) ?>
+<table class="formInput" cellspacing="0" cellpadding="0">
+   <tr>
+        <td class="printBoldLabel">How much progress <span class="noprint">(Please include Dates)</span>:</td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_progress-colorme" class="colorme">
+            <?php echo $this->element->goal_progress; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<?php if('print' != $view->mode) echo "<hr />" ?>
+<table class="formInput" cellspacing="0" cellpadding="0">
+   <tr>
+        <td class="printBoldLabel">Next Steps / Comments:</td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td>
+            <div id="ifsp_goals_<?= $rowNum; ?>-goal_comments-colorme" class="colorme">
+            <?php echo $this->element->goal_comments; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+</div>

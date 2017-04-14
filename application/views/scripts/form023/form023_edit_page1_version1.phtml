@@ -1,0 +1,55 @@
+<?php
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_023; ?>
+<?= $this->element->page; ?>
+<?php $viewMode = trim($this->element->mode->getValue()); ?>
+    
+  <table class="formInput" style="margin-top:1px;">
+    <tr>
+      <td class="tanHead">This is not an official IEP or IFSP form. This IEP/IFSP data card is designed solely for the purpose of recording data from an IEP or IFSP created outside the SRS system for use by the NSSRS report.</td>
+    </tr>
+  </table>
+  <table class="formInput" style="margin-top:1px;">
+  	<tr class="noprint">
+        <td colspan="2">
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php echo $this->element->date_conference; ?>
+        </td>
+    </tr>    
+    <tr>
+      <td width="200px" align="right" nowrap>Not with regular education peers:</td>
+      <td>%<?php echo $this->element->special_ed_non_peer_percent; ?></td>
+    </tr>
+    <tr>
+      <td width="200px" align="right" nowrap>DOB:</td>
+      <td><?php echo $view->db_form_data['student_data']['dob']; ?></td>
+    </tr>
+    <tr>
+      <td width="200px" align="right" nowrap>Age at submission:</td>
+      <td><?php echo $view->db_form_data['student_data']['age_at_submission']; ?></td>
+    </tr>
+    <tr>
+      <td width="200px" align="right" nowrap>Primary:</td>
+      <td><?php  echo $this->element->service_where; ?></td>
+    </tr>
+  </table>
+  <table class="formSectionHead">
+    <tr>
+      <td>Special Education Service</td>
+    </tr>
+  </table>
+  <div class="checkboxTableFix">
+          <?php if($viewMode != 'print' || $this->element->service_ot->isChecked()) {echo $this->element->service_ot;} ?>
+	      <?php if($viewMode != 'print' || $this->element->service_pt->isChecked()) {echo $this->element->service_pt;} ?>
+	      <?php if($viewMode != 'print' || $this->element->service_slt->isChecked()) {echo $this->element->service_slt;} ?>
+	      <?php if($viewMode != 'print' || $this->element->service_none->isChecked()) {echo $this->element->service_none;} ?>
+	      <span style="visibility:hidden;">&nbsp;</span>
+	      &nbsp;&nbsp;
+  </div>

@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Goal description">
+           <tuv xml:lang="es"><seg>Cada objetivo deber&#xE1; propiciar que el ni&#xF1;o se involucre en su programa general de estudios y deber&#xE1; cubrir cada una de las otras necesidades del ni&#xF1;o. Seg&#xFA;n corresponda a los ni&#xF1;os de educaci&#xF3;n preescolar, cada objetivo o punto de referencia deber&#xE1;n estar relacionados para permitir que el ni&#xF1;o participe en actividades apropiadas.</seg></tuv>
+           <tuv xml:lang="en"><seg>Each goal should be related to enabling the 
+            child to be involved in or progress in the general curriculum, 
+            and should be related to meeting each of the child's other needs. 
+            As appropriate, for preschool children, each objective or 
+            benchmark should be related to enabling the child to participate 
+            in appropriate activities</seg></tuv>
+       </tu>
+       <tu tuid="Measurable Annual Goals (Including Academic and Functional Goals)">
+           <tuv xml:lang="es"><seg>Objetivos medibles anuales  (Incluyendo objetivos funcionales y acad&#xE9;micos)</seg></tuv>
+           <tuv xml:lang="en"><seg>Measurable Annual Goals (Including Academic and Functional Goals)</seg></tuv>
+       </tu>
+       <tu tuid="Goal Helper">
+           <tuv xml:lang="es"><seg>Auxiliar de objetivos</seg></tuv>
+           <tuv xml:lang="en"><seg>Goal Helper</seg></tuv>
+       </tu>
+       <tu tuid="Goal Additional">
+           <tuv xml:lang="es"><seg>SPANISH:Se deber&#xE1; utilizar una p&#xE1;gina adicional para cada objetivo y los objetivos de los servicios de transici&#xF3;n pueden registrarse en esta p&#xE1;gina</seg></tuv>
+           <tuv xml:lang="en"><seg>An additional page should be used for each goal, and goals for transition services can be recorded on this page</seg></tuv>
+       </tu>
+       <tu tuid="Will the child be taking alternate assessments?">
+           <tuv xml:lang="es"><seg>&#xBF;El ni&#xF1;o tendr&#xE1; que realizar evaluaciones alternas?</seg></tuv>
+           <tuv xml:lang="en"><seg>Will the child be taking alternate assessments?</seg></tuv>
+       </tu>
+       <tu tuid="NOTE: This section is only required if the student is taking alternate assessments">
+           <tuv xml:lang="es"><seg>NOTA: Esta secci&#xF3;n se requiere s&#xF3;lo en caso de que el estudiante est&#xE9; realizando evaluaciones alternas</seg></tuv>
+           <tuv xml:lang="en"><seg>NOTE: This section is only required if the student is taking alternate assessments</seg></tuv>
+       </tu>
+       <tu tuid="Progress Report">
+           <tuv xml:lang="es"><seg>Informe de progreso</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Report</seg></tuv>
+       </tu>
+       <tu tuid="Schedule">
+           <tuv xml:lang="es"><seg>Horario</seg></tuv>
+           <tuv xml:lang="en"><seg>Schedule</seg></tuv>
+       </tu>
+       <tu tuid="Restore dates from schedule">
+           <tuv xml:lang="es"><seg>Restituir las fechas del horario</seg></tuv>
+           <tuv xml:lang="en"><seg>Restore dates from schedule</seg></tuv>
+       </tu>
+       <tu tuid="Evaluation Procedures">
+           <tuv xml:lang="es"><seg>Procedimientos de evaluaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Evaluation Procedures</seg></tuv>
+       </tu>
+       <tu tuid="Person Responsible">
+           <tuv xml:lang="es"><seg>Persona responsable</seg></tuv>
+           <tuv xml:lang="en"><seg>Person Responsible</seg></tuv>
+       </tu>
+       <tu tuid="Progress">
+           <tuv xml:lang="es"><seg>Progreso</seg></tuv>
+           <tuv xml:lang="en">Progress<seg/></tuv>
+       </tu>
+       <tu tuid="scheduled review dates">
+           <tuv xml:lang="es"><seg>Por favor ingrese las fechas de revisi&#xF3;n programadas, las fechas en que realmente se llevaron acabo las revisiones y los logros ser&#xE1;n registrados como parte del informe de progreso</seg></tuv>
+           <tuv xml:lang="en"><seg>Please enter scheduled review dates, actual review dates and achievements will be recorded as part of the progress report</seg></tuv>
+       </tu>
+       <tu tuid="Date">
+           <tuv xml:lang="es"><seg>Fecha</seg></tuv>
+           <tuv xml:lang="en"><seg>Date</seg></tuv>
+       </tu>
+       <tu tuid="Statement of how student's progress">
+           <tuv xml:lang="es"><seg>Se les har&#xE1; llegar a los padres un informe sobre c&#xF3;mo progresan los alumnos: (por ejemplo, informes de progreso, cartas, llamadas telef&#xF3;nicas, etc.)</seg></tuv>
+           <tuv xml:lang="en"><seg>Statement of how student's progress will be reported to parents: 
+            (i.e., progress reports, letters, phone calls, etc.)</seg></tuv>
+       </tu>
+       <tu tuid="Alternate Assessments:">
+           <tuv xml:lang="es"><seg>Evaluaciones alternas:</seg></tuv>
+           <tuv xml:lang="en"><seg>Alternate Assessments:</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+       <tu tuid="ShortTerm Objectives Or Benchmarks">
+           <tuv xml:lang="es"><seg>Objetivos o puntos de referencia a corto plazo</seg></tuv>
+           <tuv xml:lang="en"><seg>Short-Term Objectives or Benchmarks</seg></tuv>
+       </tu>
+       <tu tuid="If other, please specify:">
+           <tuv xml:lang="es"><seg>Si otro, por favor especifique:</seg></tuv>
+           <tuv xml:lang="en"><seg>If other, please specify:</seg></tuv>
+       </tu>
+       <tu tuid="Teacher Observation">
+           <tuv xml:lang="es"><seg>Observaciones del profesor</seg></tuv>
+           <tuv xml:lang="en"><seg>Teacher Observation</seg></tuv>
+       </tu>
+       <tu tuid="Written Performance">
+           <tuv xml:lang="es"><seg>Rendimiento de escritura</seg></tuv>
+           <tuv xml:lang="en"><seg>Written Performance</seg></tuv>
+       </tu>
+       <tu tuid="Oral Performance">
+           <tuv xml:lang="es"><seg>Rendimiento oral</seg></tuv>
+           <tuv xml:lang="en"><seg>Oral Performance</seg></tuv>
+       </tu>
+       <tu tuid="Criterion Reference Test">
+           <tuv xml:lang="es"><seg>Prueba de criterio establecido</seg></tuv>
+           <tuv xml:lang="en"><seg>Criterion Reference Test</seg></tuv>
+       </tu>
+       <tu tuid="Parent Report">
+           <tuv xml:lang="es"><seg>Informe de los padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Report</seg></tuv>
+       </tu>
+       <tu tuid="Time Sample">
+           <tuv xml:lang="es"><seg>Muestra de tiempo</seg></tuv>
+           <tuv xml:lang="en"><seg>Time Sample</seg></tuv>
+       </tu>
+       <tu tuid="Report Cards">
+           <tuv xml:lang="es"><seg>Boletas de calificaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Report Cards</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en">Other<seg/></tuv>
+       </tu>
+       <tu tuid="Parent">
+           <tuv xml:lang="es"><seg>Padre/Madre</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent</seg></tuv>
+       </tu>
+       <tu tuid="Classroom Teacher">
+           <tuv xml:lang="es"><seg>Profesor de la clase</seg></tuv>
+           <tuv xml:lang="en"><seg>Classroom Teacher</seg></tuv>
+       </tu>
+       <tu tuid="SPED Teacher">
+           <tuv xml:lang="es"><seg>Profesor de educaci&#xF3;n especial (SPED)</seg></tuv>
+           <tuv xml:lang="en"><seg>SPED Teacher</seg></tuv>
+       </tu>
+       <tu tuid="Speech-Language Pathologist">
+           <tuv xml:lang="es"><seg>Pat&#xF3;logo del habla y lenguaje</seg></tuv>
+           <tuv xml:lang="en"><seg>Speech-Language Pathologist</seg></tuv>
+       </tu>
+       <tu tuid="Deaf/Hard of Hearing Specialist">
+           <tuv xml:lang="es"><seg>Especialista en sordera o problemas de audici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Deaf/Hard of Hearing Specialist</seg></tuv>
+       </tu>
+       <tu tuid="Early Childhood Specialist">
+           <tuv xml:lang="es"><seg>Especialista de preescolares</seg></tuv>
+           <tuv xml:lang="en"><seg>Early Childhood Specialist</seg></tuv>
+       </tu>
+       <tu tuid="Occupational Therapist">
+           <tuv xml:lang="es"><seg>Terapeuta ocupacional</seg></tuv>
+           <tuv xml:lang="en"><seg>Occupational Therapist</seg></tuv>
+       </tu>
+       <tu tuid="Physical Therapist">
+           <tuv xml:lang="es"><seg>Terapeuta f&#xED;sico</seg></tuv>
+           <tuv xml:lang="en"><seg>Physical Therapist</seg></tuv>
+       </tu>
+       <tu tuid="Audiologist">
+           <tuv xml:lang="es"><seg>Audi&#xF3;logo</seg></tuv>
+           <tuv xml:lang="en"><seg>Audiologist</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Evaluation Procedure Other:">
+           <tuv xml:lang="es"><seg>Otro procedimiento de evaluaci&#xF3;n:</seg></tuv>
+           <tuv xml:lang="en"><seg>Evaluation Procedure Other:</seg></tuv>
+       </tu>
+       <tu tuid="Person Responsible Other:">
+           <tuv xml:lang="es"><seg>Otra persona responsable:</seg></tuv>
+           <tuv xml:lang="en"><seg>Person Responsible Other:</seg></tuv>
+       </tu>
+       <tu tuid="Measurable Annual Goals:">
+           <tuv xml:lang="es"><seg>Objetivos medibles anuales :</seg></tuv>
+           <tuv xml:lang="en"><seg>Measurable Annual Goals:</seg></tuv>
+       </tu>
+       <tu tuid="Short Term Objectives:">
+           <tuv xml:lang="es"><seg>Objetivos a corto plazo:</seg></tuv>
+           <tuv xml:lang="en"><seg>Short Term Objectives:</seg></tuv>
+       </tu>
+       <tu tuid="Progress Date 1:">
+           <tuv xml:lang="es"><seg>Fecha de progreso 1:</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Date 1:</seg></tuv>
+       </tu>
+       <tu tuid="Progress Date 2:">
+           <tuv xml:lang="es"><seg>Fecha de progreso 2:</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Date 1:</seg></tuv>
+       </tu>
+       <tu tuid="Progress Date 3:">
+           <tuv xml:lang="es"><seg>Fecha de progreso 3:</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Date 1:</seg></tuv>
+       </tu>
+       <tu tuid="Progress Date 4:">
+           <tuv xml:lang="es"><seg>Fecha de progreso 4:</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Date 1:</seg></tuv>
+       </tu>
+       <tu tuid="Progress Date 5:">
+           <tuv xml:lang="es"><seg>Fecha de progreso 5:</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Date 1:</seg></tuv>
+       </tu>
+       <tu tuid="Progress Date 6:">
+           <tuv xml:lang="es"><seg>Fecha de progreso 6:</seg></tuv>
+           <tuv xml:lang="en"><seg>Progress Date 1:</seg></tuv>
+       </tu>
+       <tu tuid="Statement of progress:">
+           <tuv xml:lang="es"><seg>Informe de progreso:</seg></tuv>
+           <tuv xml:lang="en"><seg>Statement of progress:</seg></tuv>
+       </tu>
+       <tu tuid="Goal">
+           <tuv xml:lang="es"><seg>Objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Goal</seg></tuv>
+       </tu>
+       <tu tuid="Check and save to remove tab:">
+           <tuv xml:lang="es"><seg>Seleccionar y guardar para eliminar la pesta&#xF1;a:</seg></tuv>
+           <tuv xml:lang="en"><seg>Check and save to remove tab:</seg></tuv>
+       </tu>
+       <tu tuid="Add Goal">
+           <tuv xml:lang="es"><seg>Agregar objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Add Goal</seg></tuv>
+       </tu>
+       <tu tuid="Measurable Annual Goal">
+           <tuv xml:lang="es"><seg>Objetivo medible anual:</seg></tuv>
+           <tuv xml:lang="en"><seg>Measurable Annual Goal</seg></tuv>
+       </tu>
+       <tu tuid="PROGRESS REPORT">
+           <tuv xml:lang="es"><seg>INFORME DE PROGRESO</seg></tuv>
+           <tuv xml:lang="en"><seg>PROGRESS REPORT</seg></tuv>
+       </tu>
+       <tu tuid="Evaluation Procedures/Instruments">
+           <tuv xml:lang="es"><seg>Procedimientos/Instrumentos de evaluaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Evaluation Procedures/Instruments</seg></tuv>
+       </tu>
+       <tu tuid="Person(s) Responsible">
+           <tuv xml:lang="es"><seg>Persona(s) responsable(s)</seg></tuv>
+           <tuv xml:lang="en"><seg>Person(s) Responsible</seg></tuv>
+       </tu>
+       <tu tuid="Review Dates">
+           <tuv xml:lang="es"><seg>Fechas de revisi&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Review Dates</seg></tuv>
+       </tu>
+       <tu tuid="Goals">
+           <tuv xml:lang="es"><seg>Objetivos</seg></tuv>
+           <tuv xml:lang="en"><seg>Goals</seg></tuv>
+       </tu>
+       <tu tuid="Goal">
+           <tuv xml:lang="es"><seg>Objetivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Goal</seg></tuv>
+       </tu>
+   </body>
+</tmx>

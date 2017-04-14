@@ -1,0 +1,12 @@
+<form action="/form<?= $this->formNum; ?>/<?= $this->formAction; ?>" id="myform" method="post" style="height:350px;">
+	
+	<div style="text-align:center;margin-left: auto;margin-right:auto;margin-top:70px;width:400px;">
+		<div style="clear:both;"><B><?= $this->message; ?></B></div>
+		<span style="float-left;width:100px;"><?= $this->formSubmit("cancel", "Cancel", array('onClick'=>"javascript:history.back(2);")); ?></span>
+		<span style="float-right;width:100px;"><?= $this->formSubmit("confirm", "Confirm"); ?></span>
+	</div>
+    <?php 
+    echo $this->formHidden('document', $this->document);
+    echo $this->formHidden('page', $this->page);
+    ?>
+</form>

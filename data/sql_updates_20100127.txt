@@ -1,0 +1,106 @@
+
+-- add status to iep_accom_checklist so they can be marked deleted but retained 
+alter table iep_accom_checklist add column status varchar default 'Active';
+
+CREATE TABLE form_002_team_member (
+	id_form_002_team_member serial,
+	id_student integer,
+	status varchar default 'Active',
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    id_form_002 integer NOT NULL,
+	team_member_name varchar,
+	team_member_position varchar,
+	team_member_agree boolean,
+	sortnum integer
+) with oids;
+
+
+CREATE TABLE form_002_supplemental_form (
+    id_form_002_supplemental_form serial,
+    id_student integer NOT NULL,
+    status character varying DEFAULT 'Active'::character varying NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    checkout_id_user integer,
+    checkout_time integer,
+    id_form_002 integer NOT NULL,
+    title character varying,
+    text character varying,
+	sortnum integer
+) with oids;
+
+
+alter table iep_team_member_input add column status varchar default 'Draft';
+alter table iep_absence add column display_team_member_input boolean;
+
+alter table iep_form_015 add column days integer;
+
+alter table iep_form_001 add column rejected_reasons varchar;
+
+CREATE OR REPLACE FUNCTION ifsp_master_parent(integer) RETURNS integer
+    AS $_$DECLARE ret integer; 
+BEGIN 
+
+SELECT INTO ret CASE 
+    WHEN (id_form_013_duped_from is not null and (select 1 from iep_form_013 where id_form_013 = f.id_form_013_duped_from) > 0 ) 
+        THEN ifsp_master_parent(id_form_013_duped_from) 
+    WHEN (id_form_013_duped_from is not null) 
+        THEN '-2' 
+    ELSE $1
+    END as parentExists FROM iep_form_013 f WHERE id_form_013 = $1; 
+
+RETURN ret; 
+
+END;$_$
+LANGUAGE plpgsql;
+
+
+alter table iep_form_003 add column voluntary_consent boolean;
+alter table iep_absence add column input_information varchar;
+
+
+
+
+alter table iep_form_004_goal_progress add column progress_chart_id integer;
+
+CREATE TABLE student_chart (
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    id_student_chart serial NOT NULL,
+    id_student integer,
+    chart_type character varying DEFAULT 'simplechart'::character varying,
+    goal_desc character varying,
+    label_x character varying,
+    label_y character varying,
+    data_x character varying,
+    data_y character varying,
+    data_type_x character varying DEFAULT 'date'::character varying,
+    data_type_y character varying DEFAULT 'float'::character varying,
+    secondary_plot_charts character varying,
+    chart_color character varying DEFAULT 'black'::character varying
+);
+
+
+
+alter table iep_goal_domain add column id_goal_domain serial;
+alter table iep_goal_standard add column id_goal_standard serial;
+alter table iep_goal_condition add column id_goal_condition serial;
+alter table iep_goal_objective add column id_goal_objective serial;
+alter table iep_goal_topic add column id_goal_topic serial;
+alter table iep_goal_subtopic add column id_goal_subtopic serial;
+
+
+CREATE TABLE editor_save_log (
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    id_editor_save_log serial NOT NULL,
+    form_number integer,
+    id_form integer,
+    field_name varchar,
+    field_value varchar
+);
+

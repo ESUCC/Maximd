@@ -1,0 +1,90 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_018; ?>
+<?= $this->element->page; ?>
+    
+<table class="formInput">     
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+    <tr>
+        <td>
+            <?php echo $this->element->date_graduation; ?>
+        </td>
+    </tr>    
+</table>
+
+<?php echo $this->subform($view, 'iep_form_018_goal', true); ?>
+
+
+<table class="formTitleHead">
+   <tr>
+        <td>Part 2: Summary of Performance</td>
+    </tr>
+</table>
+
+<table class="formInput">     
+    <tr>
+		<td class="tanHead">
+		This section includes information on academic achievement and 
+		functional performance, as well as accommodations and supports.
+		</td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->summary_of_performance; ?></td>
+    </tr>
+</table> 
+
+
+<?php echo $this->subform($view, 'iep_form_018_agency', true); ?>
+
+<?php echo $this->subform($view, 'iep_form_018_team_member', true); ?>
+
+<table class="formInput">
+    <tbody><tr><td colspan="2" class="tanHead">
+        <b>Note to Student: For additional copies of records or to update 
+        your personal contact information call:</b>
+    </td></tr>
+    <tr>
+        <td align="left">
+            <?php echo $this->element->school_district_contact; ?>
+        </td>
+        <td align="left">
+            <?php echo $this->element->school_district_contact_phone; ?>
+        </td>
+    </tr>
+    <tr><td align="center" valign="bottom" height="40px" colspan="2">
+        <b>Notice to Students and Parents of Post-School Follow-Up</b>
+    </td></tr>
+    <tr><td align="left" colspan="2">
+        <div id="sop_wrapper-colorme" class="colorme">
+        As part of the federal Individuals with Disabilities Act 2004, all states 
+        are required to collect information on students with disabilities after 
+        leaving high school. In Nebraska, the data will be used to improve statewide 
+        services and to provide feedback to school districts to help them improve 
+        program to prepare student for life after high school. In order to collect 
+        this data, you will be asked to provide information before you leave high 
+        school on how you can be contacted in the future. Approximately one year 
+        after high school, you will be contacted by phone to gather information 
+        regarding your employment and educational experiences.<BR/><BR/>
+        
+        <b>The student and/or parent was provided a copy of this Summary of Performance on: </b>
+        <?php echo $this->element->date_summary_performance; ?><BR/>
+        <b>By: </b>
+        <?php echo $this->element->name_summary_performance; ?>        
+        <b>(Name)</b>
+        </div>
+    </td></tr>
+</tbody></table>
+
+
+<div dojoType="dijit.Dialog" id="dialog__dataAssisstant__iep_form_018_agency" title="Password Reset"
+    execute="alert('submitted w/args:\n' + dojo.toJson(arguments[0], true));">
+    <h3>Data Assistant - Community Contact</h3>
+    <?php echo $this->subform($view, 'iep_form_018_agency'); ?>
+</div>

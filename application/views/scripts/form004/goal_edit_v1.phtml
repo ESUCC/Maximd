@@ -1,0 +1,269 @@
+<? 
+    $rowNum = $this->element->rownumber->getValue(); 
+    $view = $this->element->rownumber->getView();
+?>
+<? if('edit' == $view->mode) { ?>
+<table>
+    <tr>
+        <td align="right" colspans="2" class="noprint">
+            <div id="iep_form_004_goal_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+	    </td>
+	</tr>
+</table>
+<? } ?>
+<table class="formInput sc_commentText">        
+     <tr class="bgLight2">
+    	<td>
+			<?php echo $this->translate('Goal description'); ?>.
+    	</td>
+    </tr>
+</table>  
+<table class="formTitleHead" width="100%" style="margin-top:0;">
+	<tr>
+        <td>
+        	<?php echo $this->translate('Measurable Annual Goals (Including Academic and Functional Goals)'); ?>
+		</td>
+		<td align="right">
+			<div style="display: none;">
+	            <?php echo $this->element->rownumber; ?>
+			</div>
+        	<?= $this->element->id_form_004_goal; ?>
+
+			<?php $takeLink = $this->url(array(
+			'controller' => 'form004',
+			'action' => 'goalhelper',
+			'id_student' => $view->db_form_data['student_data']['id_student'],
+            'goalnum' => $rowNum,
+            'runType' => 'Goal_Helper',
+			), null, true); // 3rd param removes default values ?>
+            
+            <?php 
+            if('edit' == $view->mode)
+            {
+            	?><span onClick="<? echo "javascript:createWindow2('".$this->url_server .  $takeLink."','Goal_Helper','960','780','no','no');"; ?>" align="right" class="menuTextLink"><a href="javascript:;"><?php echo $this->translate('Goal Helper'); ?></a></span><?php
+            }
+            ?>
+	        
+
+        </td>
+    </tr>
+</table>
+
+<table class="sc_formInputBlock">        
+     <tr class="bgLight3">
+    	<td>
+    		<?php echo $this->translate('Goal Additional'); ?>.
+    	</td>
+    </tr>
+     <tr class="sc_richTextBox">
+        <td>
+            <div id="iep_form_004_goal_<?= $rowNum; ?>-measurable_ann_goal-colorme" class="colorme">
+        	<?php echo $this->element->measurable_ann_goal; ?>
+        	</div> 
+        </td>
+    </tr>
+</table>   
+
+<table class="sc_subSectionHead">
+    <tr>
+        <td><?php echo $this->translate('ShortTerm Objectives Or Benchmarks'); ?></td>
+        <td>
+            <?php $takeLink = $this->url(array(
+            'controller' => 'form004',
+            'action' => 'goalhelper',
+            'id_student' => $view->db_form_data['student_data']['id_student'],
+            'goalnum' => $rowNum,
+            'runType' => 'Obj_Helper',
+            ), null, true); // 3rd param removes default values ?>
+
+            <?php 
+            if('edit' == $view->mode)
+            {
+                ?><span onClick="<? echo "javascript:createWindow2('".$this->url_server .  $takeLink."','Obj_Helper','960','780','yes','yes');"; ?>"  class="menuTextLink"><a href="javascript:;"><?php echo $this->translate('Goal Helper'); ?></a></span><?php
+            }
+            ?>
+
+            
+
+		</td>
+    </tr>
+</table>
+
+<table class="formInput noBorder">        
+     <tr>
+    	<td>
+    		<?php echo $this->translate('Will the child be taking alternate assessments?'); ?>
+	        <div id="iep_form_004_goal_<?= $rowNum; ?>-alternate_assessments-colorme" class="colorme">
+    				<?php echo $this->element->alternate_assessments; ?>
+    		</div>
+    	</td>
+    </tr>
+</table>  
+<table class="sc_formInputBlock">        
+     <tr class="bgLight3">
+    	<td>
+			<span style="color: red; font-style:italic; "><?php echo $this->translate('NOTE: This section is only required if the student is taking alternate assessments'); ?>.</span>
+    	</td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <div id="iep_form_004_goal_<?= $rowNum; ?>-short_term_obj-colorme" class="colorme">
+            <?php echo $this->element->short_term_obj; ?>
+            </div> 
+        </td>
+    </tr>
+</table>  
+
+<table class="sc_subSectionHead">
+    <tr>
+        <td><?php echo $this->translate('Progress Report'); ?></td>
+    </tr>
+</table>
+
+<table class="formInput noBorder">        
+     <tr class="bgLight2">
+    	<td colspan="2">
+    		<B>(I) <?php echo $this->translate('Schedule'); ?></B>
+    	</td>
+    </tr>
+     <tr>
+        <td>
+            <div id="iep_form_004_goal_<?= $rowNum; ?>-schedule-colorme" class="colorme">
+            <?php echo $this->element->schedule; ?> 
+            </div>
+        </td>
+        <td>
+            <? if('edit' == $view->mode) { ?>
+            <a href="javascript:void(0);" onClick="javacsript:modified();restoreScheduleDates('<?php echo $this->element->rownumber->getValue(); ?>');"><?php echo $this->translate('Restore dates from schedule'); ?></a>
+            <? } ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+        	<div id="iep_form_004_goal_<?= $rowNum; ?>-time-length">
+	        	<table class="formInput noBorder" >
+	        		<tr>
+	        			<td>
+	        			<div id="iep_form_004_goal_<?= $rowNum; ?>-schedule_other-colorme" class="colorme">		
+	            		<?php echo $this->element->schedule_other; ?>
+	        			</div>
+	        			</td>
+	        		</tr>
+	        	</table>
+        	</div>
+        </td>
+    </tr>
+    <tr class="bgLight2">
+    	<td colspan="2">
+    		<table class="formInput" class="bgLight2">
+    			<tr>
+			    	<td width="50%">
+			    		<B>(II) <?php echo $this->translate('Evaluation Procedures'); ?></B>
+			    	</td>
+			    	
+			    	<td width="50%">
+			    		<B>(III) <?php echo $this->translate('Person Responsible'); ?></B>
+			    	</td>
+			    </tr>
+	    	</table>
+    	</td>
+    </tr>
+    
+    <tr>
+	    <td colspan="2">
+	    	<table class="formInput">
+	    		<tr>
+			        <td width="50%" >
+			        	<div>
+				            <div id="iep_form_004_goal_<?= $rowNum; ?>-eval_procedure-colorme" class="colorme">
+				            <?php echo $this->element->eval_procedure; ?>
+				            </div>  
+				            <br/>   
+				            <div id="otherEvalProc<?= $rowNum; ?>">
+					            <div id="iep_form_004_goal_<?= $rowNum; ?>-eval_procedure_other-colorme" class="colorme">
+					            <?php echo $this->element->eval_procedure_other; ?>
+				            	</div> 
+				            </div>  
+			            </div> 
+			        </td>        
+			
+			        <td width="50%" >
+				        <div>
+				        	<div id="iep_form_004_goal_<?= $rowNum; ?>-person_responsible-colorme" class="colorme">
+				            <?php echo $this->element->person_responsible; ?>
+				            </div>        
+							<br/>
+							<div id="otherPersonResp<?= $rowNum; ?>">
+								<div id="iep_form_004_goal_<?= $rowNum; ?>-person_responsible_other-colorme" class="colorme">
+								<?php echo $this->element->person_responsible_other; ?>
+								</div>
+							</div>
+						</div>        
+			        </td>
+			    </tr>
+	    	</table>
+    	</td>
+    </tr>
+    
+    <tr class="bgLight2">
+    	<td colspan="2">
+    		<B>(IV) <?php echo $this->translate('Progress'); ?></B><br/>
+			<?php echo $this->translate('scheduled review dates'); ?>.
+    	</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <table class="formInput" style="text-align: center;">
+                <tr>
+                    <td>
+                    <div id="iep_form_004_goal_<?= $rowNum; ?>-progress_date1-colorme" class="colorme">
+                    <?php echo $this->translate('Date'); ?><?php echo $this->element->progress_date1; ?>
+                    </div>
+                    </td>       
+                    <td>
+                    <div id="iep_form_004_goal_<?= $rowNum; ?>-progress_date2-colorme" class="colorme">
+                    <?php echo $this->translate('Date'); ?><?php echo $this->element->progress_date2; ?>
+                    </div>
+                    </td>       
+                    <td>
+                    <div id="iep_form_004_goal_<?= $rowNum; ?>-progress_date3-colorme" class="colorme">
+                    <?php echo $this->translate('Date'); ?><?php echo $this->element->progress_date3; ?>
+                    </div>
+                    </td>       
+                    <td>
+                    <div id="iep_form_004_goal_<?= $rowNum; ?>-progress_date4-colorme" class="colorme">
+                    <?php echo $this->translate('Date'); ?><?php echo $this->element->progress_date4; ?>
+                    </div>
+                    </td>       
+                    <td>
+                    <div id="iep_form_004_goal_<?= $rowNum; ?>-progress_date5-colorme" class="colorme">
+                    <?php echo $this->translate('Date'); ?><?php echo $this->element->progress_date5; ?>
+                    </div>
+                    </td>       
+                    <td>
+                    <div id="iep_form_004_goal_<?= $rowNum; ?>-progress_date6-colorme" class="colorme">
+                    <?php echo $this->translate('Date'); ?><?php echo $this->element->progress_date6; ?>
+                    </div>
+                    </td>       
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table class="sc_formInputBlock">        
+    <tr class="bgLight3">
+        <td>
+            <?php echo $this->translate('Statement of how student\'s progress'); ?>:
+        </td>
+    </tr>
+    <tr class="sc_richTextBox">
+        <td>
+            <div id="iep_form_004_goal_<?= $rowNum; ?>-stmt_of_progress-colorme" class="colorme">
+            <?php echo $this->element->stmt_of_progress; ?>        
+            </div>
+        </td>
+    </tr>
+</table>

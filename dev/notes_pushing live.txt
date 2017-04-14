@@ -1,0 +1,18 @@
+
+
+
+--
+-- jesse syncing from local machine
+-- notice that it excludes the bootstrap.php file
+--
+rsync -zrpt --delete-after -e "ssh" --exclude=bootstrap.php --exclude=.DS_Store /Applications/ZendServer/apache2/htdocs/neb_srs/ root@iepweb02.unl.edu:/var/www/html/neb_srs/
+
+enter password for iepweb02
+
+
+-- clear data from dev IEP
+update iep_form_004 set 
+	doc_signed_parent = null, 
+	received_copy = null, 
+	necessary_action = null 
+	where id_form_004 = '1255692';

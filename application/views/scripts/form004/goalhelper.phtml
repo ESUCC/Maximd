@@ -1,0 +1,282 @@
+<form name="formGoal" method="post">
+
+
+<table class="formSectionHead">
+	<tr>
+		<td colspan="3" class="p2424"><div style="border-bottom:1px solid #000;font-weight:bold;width:95%;">Goal Condition</div></td>
+	</tr>
+</table>
+<table class="formDesc">
+	<tr>
+		<td colspan="3">Search by domain, or enter a condition code:</td>
+	</tr>
+</table>
+<table class="formInput">
+	<tr>
+		<td valign="top">
+		<table class="formInput">
+			<tr>
+				<td valign="top">Domain<BR>
+				<?php 
+				    //echo $this->formSelect('domainSelect', $value, $att, $options);
+				    $select = new Zend_Form_Element_Select('domainSelect');
+                    $select->setAttrib('onChange', 'chooseConDomain()');
+                    $select->setValue($this->domainSelect);
+                    $select->setMultiOptions(
+				        array(
+				            '' => 'Choose Domain',
+							'AD' => 'Across Domains',
+							'BD' => 'Behavior Disorder',
+							'BE' => 'Business Education',
+							'DL' => 'Domestic Living',
+							'EC' => 'Early Childhood',
+							'FC' => 'Family & Consumer Science',
+							'GC' => 'General Community',
+							'HI' => 'Hearing (no conditions)',
+							'HL' => 'Healthy Living Styles',
+							'IT' => 'Industrial Technology',
+							'LT' => 'Literacy',
+							'MA' => 'Mathematics',
+							'MO' => 'Motor',
+							'PE' => 'Physical Education',
+							'RL' => 'Recreation/Leisure',
+							'SL' => 'Speech/Language',
+							'TR' => 'Transition',
+							'VH' => 'Vision',
+							'VO' => 'Vocational',
+				        ));
+				    echo $select;
+				?>
+            </td>
+			</tr>
+			<? 
+			 if($this->db_form_data['student_data']['id_county'] == "55" && $this->db_form_data['student_data']['id_district'] == "0001") {
+			     $titleDisplay = "Condition Code<BR>";
+			     $codeDisplay = "type=\"text\"";
+			 } else {
+			     $titleDisplay = "";
+			     $codeDisplay = "type=\"hidden\"";
+			 } 
+			 ?>
+			<tr>
+				<td valign="top"><? echo $titleDisplay; ?> <input
+					<? echo $codeDisplay; ?> name="conditionCode" id="conditionCode" size="12"
+					value="<?php echo $this->conditionCode;?>"></td>
+			</tr>
+		</table>
+		</td>
+		<td>
+		<table class="formInput">
+			<tr>
+				<td align="left">
+				<SELECT SIZE="6" NAME="conditionSelect"
+					CLASS="saveHistory" onChange="selectCondition(this.value);">
+					<?
+					if(count($this->conditionCodeArrData) > 0) { 
+					    for($h = 0; $h < count($this->conditionCodeArrData); $h++) {  
+					            echo "<OPTION LABEL=\"".$this->conditionCodeArrData[$h]['condition_text']."\" VALUE=\"".$this->conditionCodeArrData[$h]['condition_code']."\">".$this->conditionCodeArrData[$h]['condition_text']."</option>\n";
+					    } 
+					} elseif($this->conditionCodeCount == '0') {
+    					echo "<OPTION VALUE=\"\">No records found";
+					} elseif($this->conditionCodeCount == '') {
+	       				echo "<OPTION VALUE=\"\">...waiting for domain";
+					}
+					?>
+				</SELECT></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+    <table class="formSectionHead">
+            <tr>
+                    <td colspan="3" class="p2424"><div style="border-bottom:1px solid #000;font-weight:bold;width:95%;">Goal Content</div></td>
+            </tr>
+    </table>
+    <table class="formDesc">
+            <tr>
+                    <td colspan="3">Search by domain and topic, or enter a objective code:</td>
+            </tr>
+    </table>
+    <table class="formInput">
+            <tr>
+                    <td valign="top">
+                            <table class="formInput">
+                                    <tr>
+                                            <td valign="top">Domain<BR>
+                                                    <SELECT NAME="objDomainSelect" ID="objDomainSelect" CLASS=saveHistory onChange="bRelate(this.form,3,this.selectedIndex,0,0)">
+                                                            <OPTION VALUE="">Choose Domain
+                                                            <?      
+                                                            for($h = 0; $h < count($this->domainArrData); $h++) {  
+                                                            	if($this->objDomainSelect == $this->domainArrData[$h]['domain_code'])
+                                                            	{
+                                                            		$selected = ' selected="selected" ';
+//                                                                    $selected = "";
+                                                            	} else {
+                                                            		$selected = "";
+                                                            	}
+                                                                echo "<OPTION VALUE=\"".$this->domainArrData[$h]['domain_code']."\" ".$selected.">".$this->domainArrData[$h]['domain_description']."\n";
+                                                            } ?>
+                                                    </SELECT>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                            <td valign="top">Topic<BR>
+                                                <SELECT NAME="topicSelect" ID="topicSelect" CLASS=saveHistory onChange="bRelate2(this.form,4,this.selectedIndex,0,0)">
+                                                    <OPTION VALUE="">...waiting for Domain
+                                                </SELECT>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                            <td valign="top">Subtopic<BR>
+                                                <SELECT NAME="subtopicSelect" ID="subtopicSelect" CLASS=saveHistory onChange="//bRelate3(this.form,6,this.selectedIndex,0,0)">
+                                                    <OPTION VALUE="">...waiting for Topic
+                                                </SELECT>
+                                            </td>
+                                    </tr>
+                                    <? if($this->db_form_data['student_data']['id_county'] == "55" && $this->db_form_data['student_data']['id_district'] == "0001") {
+                                            $titleDisplay = "Objective Code<BR>";
+                                            $codeDisplay = "type=\"text\"";
+                                       } else {
+                                            $titleDisplay = "";
+                                            $codeDisplay = "type=\"hidden\"";
+                                       } ?>
+                                    <tr>
+                                            <td valign="top"><? echo $titleDisplay; ?>
+                                                    <input <? echo $codeDisplay; ?> name="objectiveCode" size="12" value="<? echo $this->objectiveCode; ?>">
+                                            </td>
+                                    </tr>
+                            </table>
+                    </td>
+                    <td>
+                            <table class="formInput">
+                                    <tr>
+                                            <td align="left">
+                                                    
+                                                    <SELECT SIZE=6 NAME="objectiveSelect" CLASS=saveHistory onChange="selectObjective(this.value);">
+                                                    <?      if(count($this->objCodeArrData) > 0) { 
+                                                                    for($h = 0; $h < count($this->objCodeArrData); $h++) {  
+                                                                            echo "<OPTION VALUE=\"".$this->objCodeArrData[$h]['objective_code']."\">".$this->objCodeArrData[$h]['objective_description']."\n";
+                                                                    } 
+                                                            } elseif($this->objCodeCount == '0') {
+                                                                echo "<OPTION VALUE=\"\">No records found";
+                                                            } elseif($this->objCodeCount == '') {
+                                                                echo "<OPTION VALUE=\"\">...waiting for domain, topic and subtopic";
+                                                            }  ?>
+
+                                                    </SELECT>
+                                            </td>
+                                    </tr>
+                            </table>
+                    </td>
+            </tr>
+    </table>
+
+    <table class="formSectionHead">
+            <tr>
+                    <td colspan="3" class="p2424"><div style="border-bottom:1px solid #000;font-weight:bold;width:95%;">Standard of Performance</div></td>
+            </tr>
+    </table>
+    <table class="formDesc">
+            <tr>
+                    <td colspan="3">Select a standard domain:</td>
+            </tr>
+    </table>
+    <table class="formInput">
+            <tr>
+                    <td valign="top">
+                            <table class="formInput">
+                                    <tr>
+                                            <td valign="top">Standard<BR>
+							                <?php 
+							                    //echo $this->formSelect('domainSelect', $value, $att, $options);
+							                    $select = new Zend_Form_Element_Select('standardMenu');
+							                    $select->setValue($this->standardMenu);
+							                    $select->setMultiOptions(
+							                        array(
+							                            '' => 'Choose Standard',
+							                            'BE' => 'Business Education',
+							                            'FN' => 'Functional',
+							                            'GN' => 'General',
+                                                        'LT' => 'Literacy',
+                                                        'MO' => 'Motor',
+							                            'SL' => 'Speech/Language',
+							                            'VI' => 'Vision',
+							                        ));
+							                    echo $select;
+							                ?>
+                                            </td>
+                                    </tr>
+                                    <? if($this->db_form_data['student_data']['id_county'] == "55" && $this->db_form_data['student_data']['id_district'] == "0001") {
+                                            $titleDisplay = "Standard Code<BR>";
+                                            $codeDisplay = "type=\"text\"";
+                                       } else {
+                                            $titleDisplay = "";
+                                            $codeDisplay = "type=\"hidden\"";
+                                       } ?>
+                                    <tr>
+                                            <td valign="top"><? echo $titleDisplay; ?>
+                                                    <input <? echo $codeDisplay; ?> name="standardCode" size="12" value="<? echo $this->standardCode; ?>">
+                                            </td>
+                                    </tr>
+                            </table>
+                    </td>
+                    <td>
+                            <table class="formInput">
+                                    <tr>
+                                            <td align="left">
+                                                    
+                                                    <SELECT  SIZE=6 NAME="selectStandard" CLASS=saveHistory onChange="selectAStandard(this.value);">
+                                                    <?      
+                                                            if(count($this->standardCodeArrData) > 0) { 
+                                                                for($h = 0; $h < count($this->standardCodeArrData); $h++) {  
+                                                                    echo "<OPTION LABEL=\"".$this->standardCodeArrData[$h]['standard_description']."\" VALUE=\"".$this->standardCodeArrData[$h]['standard_code']."\">".$this->standardCodeArrData[$h]['standard_description']."</option>\n";
+                                                                } 
+                                                            } elseif(count($this->standardCodeArrData) == '0') {
+                                                                echo "<OPTION VALUE=\"\">No records found";
+                                                            } elseif(count($this->standardCodeArrData) == '') {
+                                                                echo "<OPTION VALUE=\"\">...waiting for domain";
+                                                            }  ?>
+                                                    </SELECT>
+                                            </td>
+                                    </tr>
+                            </table>
+                    </td>
+            </tr>
+    </table>
+
+    <table class="" width="100%">
+            <tr>
+                    <td valign="top">
+                        <span id="displayCon"><? if($this->displayConHid != ''){ echo $this->displayConHid; } ?></span>
+                        <B><span id="displayName"><? echo $this->db_form_data['student_data']['name_first']; ?></span></B>
+                        <span id="displayObj"><? if($this->displayObjHid != ''){ echo $this->displayObjHid; } ?></span>
+                        <span id="displayStd"> <? if($this->displayStandardHid != ''){ echo $this->displayStandardHid; } ?></span>
+                    </td>
+            </tr>
+            <tr>
+                    <td align="center">
+                        <button type="button" name="Search" onClick="conSearch(this.form)">Search</button>
+                        <button type="button" name="insertButton" id="insertButton" onClick="insertGoalText('<?= $this->goalnum; ?>', '<?= $this->runType; ?>');">Insert</button>
+                        <button type="button" name="cancelButton" id="insertButton" onClick="window.close();">Close</button>
+                    </td>
+            </tr>
+    </table>
+
+	<input type="hidden" name="displayStandardHid" value="<? echo $this->displayStandardHid; ?>"/>
+	<input type="hidden" name="displayStandardValHid" value="<? echo $this->displayStandardValHid; ?>"/>
+	
+	<input type="hidden" name="displayConHid" value="<? echo $this->displayConHid; ?>"/>
+	<input type="hidden" name="displayConValHid" value="<? echo $this->displayConValHid; ?>"/>
+	
+	<input type="hidden" name="displayObjHid" value="<? echo $this->displayObjHid; ?>"/>
+	<input type="hidden" name="displayObjValHid" value="<? echo $this->displayObjValHid; ?>"/>
+	
+	<input type="hidden" name="student" value="<? echo $this->student; ?>"/>
+	<input type="hidden" name="studentName" value="<? echo $this->db_form_data['student_data']['name_first']; ?>"/>
+
+	<input type="hidden" id="resetTopicSelect" value="<?php echo $this->topicSelect; ?>" />
+	<input type="hidden" id="resetSubtopicSelect" value="<?php echo $this->subtopicSelect; ?>" />
+
+</form>
+<? //Zend_Debug::dump($this->db_form_data);

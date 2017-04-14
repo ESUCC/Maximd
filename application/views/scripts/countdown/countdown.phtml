@@ -1,0 +1,100 @@
+countdown = <?=$this->diff?>;
+startcountdown = <?=$this->diff?>;
+
+var start = new Date().getTime();
+
+function convert_to_time(secs) {
+    secs = parseInt(secs);
+    hh = secs / 3600;
+    hh = parseInt(hh);
+    mmt = secs - (hh * 3600);
+    mm = mmt / 60;
+    mm = parseInt(mm);
+    ss = mmt - (mm * 60);
+    if (hh > 23) {
+        dd = hh / 24;
+        dd = parseInt(dd);
+        hh = hh - (dd * 24);
+    } else {
+        dd = 0;
+    }
+    if (ss < 10) {
+        ss = "0" + ss;
+    }
+    if (mm < 10) {
+        mm = "0" + mm;
+    }
+    if (hh < 10) {
+        hh = "0" + hh;
+    }
+    if (dd == 0) {
+        return (hh + ":" + mm + ":" + ss);
+    } else {
+        if (dd > 1) {
+            return (dd + " days " + hh + ":" + mm + ":" + ss);
+        } else {
+            return (dd + " day " + hh + ":" + mm + ":" + ss);
+        }
+    }
+}
+
+// Our function that will do the actual countdown
+function do_cd() {
+    var deferred = false;
+    if (countdown < 0) {
+        var savebtn = document.getElementById('navPage');//select in left helper
+        if (savebtn) {
+            savebtn.focus();
+
+            var form_num = document.getElementById('form_number').value;
+            var wait2finish = true;
+
+            // saving of page required
+            deferred = conditionalSave(null, false, "/form" + form_num + "/jsonupdateiep");
+            if (false != deferred) {
+                deferred.addCallback(function (data) {
+                    // add page submit to callback stack
+                    // will be called when save finishes
+                    // what about errors?
+                    // I think even if it errors, it calls the submit
+                    document.getElementById("mode").value = 'view';
+                    document.forms['myform'].submit();
+                });
+            } else {
+                // callback not needed
+                // switch to view mode
+                document.getElementById("mode").value = 'view';
+                document.forms['myform'].submit();
+            }
+        }
+    } else {
+
+        // restore regular coloring
+        $('.colorme').removeClass("changedOrange").removeClass("changedRed");
+
+        // color active field
+        if(countdown < 60 && $(document.activeElement)) {
+            $(document.activeElement).closest('.colorme').addClass('changedRed');
+        } else if(countdown < 5*60 && $(document.activeElement)) {
+            $(document.activeElement).closest('.colorme').addClass('changedOrange');
+        }
+
+        // set the display
+        document.getElementById('cd').innerHTML = convert_to_time(countdown);
+        // pause before updating display by calling this functin again
+        setTimeout('do_cd()', 1000);
+    }
+    var elapsedSeconds = (new Date().getTime() - start) / 1000;
+    countdown = startcountdown - elapsedSeconds;
+}
+
+function reset_cd(diff) {
+    countdown = diff;
+    startcountdown = diff;
+    start = new Date().getTime();
+}
+
+document.write("<div id='cd'></div>\n");
+do_cd();
+
+<? exit(); ?>

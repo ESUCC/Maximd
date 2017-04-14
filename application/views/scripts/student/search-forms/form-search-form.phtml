@@ -1,0 +1,22 @@
+<form id="formSearchForm" name="formSearchForm" action="" method="post">
+    <?= $this->element->student; ?>
+    <table style="width: 900px;">
+        <tr>
+            <td style="padding-left: 12px">Select form type</td>
+            <td>Select status</td>
+            <td>Max Records</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="padding-left: 10px"><?php echo $this->element->formType; ?></td>
+            <td><?php echo $this->element->searchStatus; ?></td>
+            <td><?php echo $this->element->maxRecs; ?></td>
+            <td>
+                <?php echo $this->element->archivedOnly; ?>
+                <?php echo $this->element->hideSuspended; ?>
+
+            </td>
+        </tr>
+    </table>
+</form>
+

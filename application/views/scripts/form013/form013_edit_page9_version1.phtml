@@ -1,0 +1,146 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+    
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>PARENTS /FAMILY INFORMED CONSENT</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;"> 
+    <tr>
+        <td>
+            <p>The early intervention services will be provided as described in the IFSP and must begin no later than 30 days from the date of my/our written consent. I/We understand that the IFSP will be reviewed at least every six (6) months.</p>
+            <ul>
+                <li>I/We understand that a copy of the IFSP, evaluation, child assessment and family assessment will be distributed within 7 calendar days.</li>
+                <li>I/We understand that my/our consent is voluntary and that I/we may revoke consent at any time.</li>
+                <li>I/We have been informed of the determination(s) of the IFSP team in my/our native language or other mode of communication.</li>
+                <li>I/We understand we can accept or decline any service listed in the IFSP without jeopardizing receipt of other services we accept in the plan.</li>    
+            </ul>
+        </td>
+    </tr>
+</table>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>PARENT / GUARDIAN SIGNATURE</td>
+    </tr>
+</table>
+<?php 
+$borderStyleLine1 = "";
+$printBorderStyleLine1 = false;
+if('print'==$view->mode && '' ==$this->element->parent_sig_1->getValue()) {
+    $borderStyleLine1 = "width:400px; border-bottom:thin solid #000000;";
+    $printBorderStyleLine1 = true;
+}
+$borderStyleLine2 = "";
+$printBorderStyleLine2 = false;
+if('print'==$view->mode && '' ==$this->element->parent_sig_2->getValue()) {
+    $borderStyleLine2 = "width:400px; border-bottom:thin solid #000000;";
+    $printBorderStyleLine2 = true;
+}
+?>
+<table class="formInput" style="margin-top:1px;">   
+    <tr>
+        <td colspan="3"><strong><span style="font-size:1.1em;">I/We understand the plan and parental rights and give permission to implement this IFSP, and give consent for all services in the IFSP.</span></strong></td>
+    </tr>  
+    <tr>
+        <td style="<?= $borderStyleLine1; ?>"><?php 
+        if($printBorderStyleLine1) {
+        } else {
+            echo $this->element->parent_sig_1->getLabel() ."<br/>". $this->element->parent_sig_1;
+        }
+        ?></td>
+        <td><?php echo $this->element->parent_date_1->getLabel() ."<br/>". $this->element->parent_date_1; ?></td>
+        <?php $this->element->parent_sig_1_on_file->removeDecorator('Label'); ?>
+        <td><div id="parent_sig_1_on_file-colorme" class="colorme"> <span id="parent_sig_1_on_file-label"><?php echo $this->element->parent_sig_1_on_file->getLabel() ."</span><br/>". $this->element->parent_sig_1_on_file; ?></div></td>
+    </tr>
+    <tr>
+        <td style="<?= $borderStyleLine2; ?>"><?php 
+        if($printBorderStyleLine2) {
+        } else {
+            echo $this->element->parent_sig_2->getLabel() ."<br/>". $this->element->parent_sig_2;
+        }
+        ?>        
+        </td>
+        <td><?php echo $this->element->parent_date_2->getLabel() ."<br/>". $this->element->parent_date_2; ?></td>
+        <?php $this->element->parent_sig_2_on_file->removeDecorator('Label'); ?>        <td><div id="parent_sig_2_on_file-colorme" class="colorme"> <span id="parent_sig_2_on_file-label"><?php echo $this->element->parent_sig_2_on_file->getLabel() ."</span><br/>". $this->element->parent_sig_2_on_file; ?></div></td>
+    </tr>
+</table> 
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>(If 'No' selected above, please explain) <br />
+        <?php if('print'==$view->mode && '' ==$this->element->parent_sig_on_file_explain->getValue()) { ?>
+        <br /><br />
+        <?php } else { ?>
+        <?php echo $this->element->parent_sig_on_file_explain; ?></td>
+        <?php } ?>
+    </tr>
+</table> 
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>Any Comments:<br />
+        <?php if('print'==$view->mode && '' ==$this->element->parent_comments->getValue()) { ?>
+        <br /><br />
+        <?php } else { ?>
+        <?php echo $this->element->parent_comments; ?></td>
+        <?php } ?>
+    </tr>
+</table> 
+
+<?php 
+$borderStyleLine1 = "";
+$printBorderStyleLine1 = false;
+if('print'==$view->mode && '' ==$this->element->parent_sig_1_frequency->getValue()) {
+    $borderStyleLine1 = "width:400px; border-bottom:thin solid #000000;";
+    $printBorderStyleLine1 = true;
+}
+$borderStyleLine2 = "";
+$printBorderStyleLine2 = false;
+if('print'==$view->mode && '' ==$this->element->parent_sig_2_frequency->getValue()) {
+    $borderStyleLine2 = "width:400px; border-bottom:thin solid #000000;";
+    $printBorderStyleLine2 = true;
+}
+?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td><strong><span style="font-size:1.1em;">I/We do not agree with the proposed IFSP as written. However, I/we do consent to the following services/frequency:</span></strong><br />
+        <?php if('print'==$view->mode && '' ==$this->element->frequency_consent->getValue()) { ?>
+        <br /><br />
+        <?php } else { ?>
+        <?php echo $this->element->frequency_consent; ?></td>
+        <?php  } ?>
+    </tr>
+</table> 
+
+<table class="formInput" style="margin-top:1px;">   
+    <tr>
+        <td style="<?= $borderStyleLine1; ?>"><?php 
+        if($printBorderStyleLine1) {
+        } else {
+            echo $this->element->parent_sig_1_frequency->getLabel() ."<br/>". $this->element->parent_sig_1_frequency;
+        }
+        ?></td>
+        <td><?php echo $this->element->parent_date_1_frequency->getLabel() ."<br/>". $this->element->parent_date_1_frequency; ?></td>
+        <?php $this->element->parent_sig_1_on_file_frequency->removeDecorator('Label'); ?>
+        <td><div id="parent_sig_1_on_file_frequency-colorme" class="colorme"> <span id="parent_sig_1_on_file_frequency-label"><?php echo $this->element->parent_sig_1_on_file_frequency->getLabel() ."</span><br/>". $this->element->parent_sig_1_on_file_frequency; ?></div></td>
+    </tr>
+    <tr>
+        <td style="<?= $borderStyleLine2; ?>"><?php 
+        if($printBorderStyleLine2) {
+        } else {
+            echo $this->element->parent_sig_2_frequency->getLabel() ."<br/>". $this->element->parent_sig_2_frequency;
+        }
+        ?>        
+        </td>
+        <td><?php echo $this->element->parent_date_2_frequency->getLabel() ."<br/>". $this->element->parent_date_2_frequency; ?></td>
+        <?php $this->element->parent_sig_2_on_file_frequency->removeDecorator('Label'); ?>        <td><div id="parent_sig_2_on_file_frequency-colorme" class="colorme"> <span id="parent_sig_2_on_file_frequency-label"><?php echo $this->element->parent_sig_2_on_file_frequency->getLabel() ."</span><br/>". $this->element->parent_sig_2_on_file_frequency; ?></div></td>
+    </tr>
+</table> 
+

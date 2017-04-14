@@ -1,0 +1,48 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>
+        	Title
+        	<?= $this->element->id_form_018_supp; ?>
+        </td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+    	<td style="width: 70%;">
+    		&nbsp;
+    	</td>
+    	<td class="noprint" style="padding-right:10px; width: 30%;" align="right" >
+            <div id="iep_form_018_suppform_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">   
+    <tr>
+		<td style="">
+			<div id="iep_form_018_suppform_<?= $rowNum; ?>-title-colorme" class="colorme">
+			<?php echo $this->element->title; ?>
+			</div>
+		</td>
+    </tr>
+</table>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Content</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td style="">
+			<div id="iep_form_018_suppform_<?= $rowNum; ?>-text_content-colorme" class="colorme">
+        	<?php echo $this->element->text_content; ?>
+        	</div> 
+        </td>
+    </tr>
+</table>  

@@ -1,0 +1,236 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = true;
+
+--
+-- Name: iep_form_031; Type: TABLE; Schema: public; Owner: jlavere; Tablespace:
+--
+
+CREATE TABLE iep_form_031 (
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    checkout_id_user integer,
+    checkout_time integer,
+    id_form_031 serial NOT NULL,
+    id_student integer NOT NULL,
+    name_first character varying,
+    name_middle character varying,
+    name_last character varying,
+    id_county character(2) NOT NULL,
+    id_district character(4) NOT NULL,
+    name_district character varying,
+    id_school character(3) NOT NULL,
+    name_school character varying,
+    id_case_mgr integer,
+    name_case_mgr character varying,
+    name_list_guardian character varying,
+    date_notice date,
+    form_document_root character varying,
+    form_version character varying DEFAULT '8/01'::character varying,
+    page_status character varying(10),
+    explanation character varying,
+    options character varying,
+    reasons character varying,
+    proposal character varying,
+    other_factors character varying,
+    amount_time character varying,
+    academic character varying,
+    intellectual character varying,
+    perceptual character varying,
+    social character varying,
+    speech character varying,
+    other character varying,
+    contact_name character varying,
+    contact_num character varying,
+    consent character varying,
+    no_consent_reason character varying,
+    consent_date date,
+    signature_on_file boolean,
+    form_options text,
+    dob date,
+    grade text,
+    id_case_mgr_old integer,
+    version_number integer,
+    utf8header boolean,
+    zend_checkout_time timestamp without time zone,
+    zend_checkout_user integer,
+    days integer,
+    pdf_archived boolean DEFAULT false,
+    finalized_date character varying,
+    finalized_student_name character varying,
+    finalized_dob date,
+    finalized_grade character varying,
+    finalized_age character varying,
+    finalized_gender character varying,
+    finalized_parents character varying,
+    finalized_id_county character(2),
+    finalized_id_district character(4),
+    finalized_id_school character(3),
+    finalized_address character varying,
+    use_g_filter boolean,
+    form_editor_type character varying DEFAULT 'testEditor'::character varying,
+    suspended_date character varying,
+    suspended_student_name character varying,
+    suspended_dob date,
+    suspended_grade character varying,
+    suspended_age character varying,
+    suspended_gender character varying,
+    suspended_parents character varying,
+    suspended_id_county character(2),
+    suspended_id_district character(4),
+    suspended_id_school character(3),
+    suspended_address character varying
+);
+
+
+ALTER TABLE public.iep_form_031 OWNER TO jlavere;
+
+--
+-- Name: iep_form_031_pkey; Type: CONSTRAINT; Schema: public; Owner: jlavere; Tablespace:
+--
+
+ALTER TABLE ONLY iep_form_031
+    ADD CONSTRAINT iep_form_031_pkey PRIMARY KEY (id_form_031);
+
+
+--
+-- Name: form_031_student_idx; Type: INDEX; Schema: public; Owner: jlavere; Tablespace:
+--
+
+CREATE INDEX form_031_student_idx ON iep_form_031 USING btree (id_student);
+
+
+--
+-- Name: form_version_number; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER form_version_number BEFORE INSERT ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE form_version_number();
+
+
+--
+-- Name: iep_form_031_lookup_dob; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_dob BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_dob('');
+
+
+--
+-- Name: iep_form_031_lookup_grade; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_grade BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_grade('');
+
+
+--
+-- Name: iep_form_031_lookup_id_case_mgr; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_id_case_mgr BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_id_case_mgr('');
+
+
+--
+-- Name: iep_form_031_lookup_id_county; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_id_county BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_id_county('');
+
+
+--
+-- Name: iep_form_031_lookup_id_district; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_id_district BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_id_district('');
+
+
+--
+-- Name: iep_form_031_lookup_id_school; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_id_school BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_id_school('');
+
+
+--
+-- Name: iep_form_031_lookup_name_case_m; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_name_case_m BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_name_case_mgr('');
+
+
+--
+-- Name: iep_form_031_lookup_name_distri; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_name_distri BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_name_district('');
+
+
+--
+-- Name: iep_form_031_lookup_name_first; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_name_first BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_name_first('');
+
+
+--
+-- Name: iep_form_031_lookup_name_last; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_name_last BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_name_last('');
+
+
+--
+-- Name: iep_form_031_lookup_name_middle; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_name_middle BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_student_name_middle('');
+
+
+--
+-- Name: iep_form_031_lookup_name_school; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_lookup_name_school BEFORE INSERT OR UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE lookup_name_school('');
+
+
+--
+-- Name: iep_form_031_modtime; Type: TRIGGER; Schema: public; Owner: jlavere
+--
+
+CREATE TRIGGER iep_form_031_modtime BEFORE UPDATE ON iep_form_031 FOR EACH ROW EXECUTE PROCEDURE modtime('');
+
+
+--
+-- Name: fk_id_student; Type: FK CONSTRAINT; Schema: public; Owner: jlavere
+--
+
+ALTER TABLE ONLY iep_form_031
+    ADD CONSTRAINT fk_id_student FOREIGN KEY (id_student) REFERENCES iep_student(id_student) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- Name: iep_form_031; Type: ACL; Schema: public; Owner: jlavere
+--
+
+REVOKE ALL ON TABLE iep_form_031 FROM PUBLIC;
+REVOKE ALL ON TABLE iep_form_031 FROM jlavere;
+GRANT ALL ON TABLE iep_form_031 TO jlavere;
+
+
+--
+-- PostgreSQL database dump complete
+--

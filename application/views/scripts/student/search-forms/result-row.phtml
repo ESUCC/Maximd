@@ -1,0 +1,198 @@
+<?php
+$view = Zend_Layout::getMvcInstance()->getView();
+?>
+<li class="search-result-row <?php //echo ($this->partialCounter % 2 == 0) ? 'even' : 'odd'; ?>">
+    <ul>
+        <?php foreach ($view->formatFields AS $field => $fieldInfo):
+            if (!empty($field)) : ?>
+                <li class="<?php echo $fieldInfo['cssClass']; ?>">
+                    <?php
+
+                    if (isset($fieldInfo['cssClass']) && 'date' == $fieldInfo['cssClass'] && '' != $this->$field) {
+                        echo date('m/d/Y', strtotime($this->$field));
+                    } elseif (isset($fieldInfo['cssClass']) && 'formname' == $fieldInfo['cssClass']) {
+                    if('017' == $this->form_no) {
+                             
+                            echo trim($this->$field, '"') . ' (' . $this->title . ')';
+                        } else {
+                            echo trim($this->$field, '"');
+                        }
+
+                    } else {
+                        echo $this->$field;
+                    }
+                    ?>
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <li class="status""><?php echo $this->formStatusSimple($this); ?></li>
+        <li><?php
+        if ($this->IsOldStyleForm($this->form_no) && !$this->IsDemoStudent($view->student['id_county'], $view->student['id_district'], $view->student['id_school'])) {
+            echo $this->formMenuOld($this->id_student, $this);
+        } else {
+            echo $this->formMenu($this->id_student, $this); 
+        } ?></li>
+    </ul>
+</li>
+<?
+/**
+ * Display related Progress Reports
+ */
+if ('004' == $this->form_no && 'Archived' != $this->status) {
+    $form010Obj = new Model_Table_Form010();
+    $progressReports = $form010Obj->fetchAll("id_form_004 = '" . $this->id . "'", 'date_notice asc');
+    if (count($progressReports) > 0) {
+        foreach ($progressReports as $pr) {
+            if($view->options['hideSuspended'] && 'Suspended' == $pr->status) {
+                continue;
+            }
+            $prStdObj = new stdClass;
+            foreach ($pr as $name => $value) {
+                $prStdObj->$name = $value;
+            }
+            $prStdObj->date_created = $pr->timestamp_created;
+            $prStdObj->form_no = '010';
+            $prStdObj->date = $prStdObj->date_notice;
+            $prStdObj->id = $prStdObj->id_form_010;
+            $prStdObj->formname = 'Progress Report';
+            $prStdObj->filePath = '';
+            ?>
+            <li class="search-result-row" \>
+                <ul>
+                    <?php foreach ($view->formatFields AS $field => $fieldInfo):
+                        if (!empty($field)) : ?>
+                            <? if ($fieldInfo['cssClass'] == 'formname') { ?>
+                                <li class="<?php echo $fieldInfo['cssClass'] ?>-indented">
+                            <? } elseif (isset($fieldInfo['cssClass'])) { ?>
+                                <li class="<?php echo $fieldInfo['cssClass'] ?>">
+                            <? } elseif (!isset($fieldInfo['cssClass'])) { ?>
+                                <li>
+                            <? } ?>
+                            <?php
+                            if (isset($fieldInfo['cssClass']) && 'date' == $fieldInfo['cssClass'] && '' != $prStdObj->$field) {
+                                echo date('m/d/Y', strtotime($prStdObj->$field));
+                            } elseif (isset($fieldInfo['cssClass']) && 'formname' == $fieldInfo['cssClass']) {
+                                echo trim($prStdObj->$field, '"');
+                            } else {
+                                echo $prStdObj->$field;
+                            }
+                            ?>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <li class="status"><?php echo $this->formStatusSimple($prStdObj); ?></li>
+                    <li><?php echo $this->formMenu($this->id_student, $prStdObj); ?></li>
+                </ul>
+            </li>
+        <? } ?>
+    <? } ?>
+<?
+} elseif ('004' == $this->form_no && ('Archived' == $this->status && (APPLICATION_ENV == 'production' || APPLICATION_ENV == 'iepweb03'))) {
+
+    $archiveConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/archive.ini', APPLICATION_ENV);
+    $archiveDb = Zend_Db::factory($archiveConfig->dbArchive);
+
+    if (isset($this->id)) {
+        $select = new Zend_Db_Select($archiveDb);
+        $select->from('iep_form_010');
+        $select->where("id_form_004 = '" . $this->id . "'", 'date_notice asc');
+        $progressReports = $archiveDb->query($select)->fetchAll();
+        if (count($progressReports) > 0) {
+            foreach ($progressReports as $pr) {
+                if ($view->options['hideSuspended'] && 'Suspended' == $pr->status) {
+                    continue;
+                }
+                $prStdObj = new stdClass;
+                foreach ($pr as $name => $value) {
+                    $prStdObj->$name = $value;
+                }
+                $prStdObj->date_created = isset($pr->timestamp_created) ? $pr->timestamp_created : '';
+                $prStdObj->form_no = '010';
+                $prStdObj->date = $prStdObj->date_notice;
+                $prStdObj->id = $prStdObj->id_form_010;
+                $prStdObj->formname = 'Progress Report';
+                $prStdObj->filePath = '';
+                ?>
+                <li class="search-result-row" \>
+                <ul>
+                    <?php foreach ($view->formatFields AS $field => $fieldInfo):
+                        if (!empty($field)) : ?>
+                            <? if ($fieldInfo['cssClass'] == 'formname') { ?>
+                                <li class="<?php echo $fieldInfo['cssClass'] ?>-indented">
+                            <? } elseif (isset($fieldInfo['cssClass'])) { ?>
+                                <li class="<?php echo $fieldInfo['cssClass'] ?>">
+                            <? } elseif (!isset($fieldInfo['cssClass'])) { ?>
+                                <li>
+                            <? } ?>
+                            <?php
+                            if (isset($fieldInfo['cssClass']) && 'date' == $fieldInfo['cssClass'] && '' != $prStdObj->$field) {
+                                echo date('m/d/Y', strtotime($prStdObj->$field));
+                            } elseif (isset($fieldInfo['cssClass']) && 'formname' == $fieldInfo['cssClass']) {
+                                echo trim($prStdObj->$field, '"');
+                            } else {
+                                echo $prStdObj->$field;
+                            }
+                            ?>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <li class="status"><?php echo $this->formStatusSimple($prStdObj); ?></li>
+                    <li><?php echo $this->formMenu($this->id_student, $prStdObj); ?></li>
+                </ul>
+            </li>
+        <? } ?>
+        <? } ?>
+    <? } ?>
+<?
+} elseif ('013' == $this->form_no) {
+
+    $sessUser = new Zend_Session_Namespace ('user');
+    $privCheck = new My_Classes_privCheck($sessUser->user->privs);
+
+    $form013Obj = new Model_Table_Form013();
+    if ($privCheck->getMinPriv() == UC_PG) {
+        $ifspForms = $form013Obj->getArchivedIfsps($this->id, true);
+    } else {
+        $ifspForms = $form013Obj->getArchivedIfsps($this->id, false);
+    }
+    if (count($ifspForms) > 0) {
+        foreach ($ifspForms as $ifspArr) {
+            $ifsp = new stdClass;
+            foreach ($ifspArr as $name => $value) {
+                $ifsp->$name = $value;
+            }
+            $ifsp->date_created = $ifsp->date_notice;
+            $ifsp->date = $ifsp->timestamp_created;
+            $ifsp->formname = 'IFSP (Archived)';
+            $ifsp->filePath = '';
+            ?>
+            <li class="search-result-row" \>
+                <ul>
+                    <?php foreach ($view->formatFields AS $field => $fieldInfo):
+                        if (!empty($field)) : ?>
+                            <? if ($fieldInfo['cssClass'] == 'formname') { ?>
+                                <li class="<?php echo $fieldInfo['cssClass'] ?>-indented">
+                            <? } elseif (isset($fieldInfo['cssClass'])) { ?>
+                                <li class="<?php echo $fieldInfo['cssClass'] ?>">
+                            <? } elseif (!isset($fieldInfo['cssClass'])) { ?>
+                                <li>
+                            <? } ?>
+                            <?php
+                            if (isset($fieldInfo['cssClass']) && 'date' == $fieldInfo['cssClass'] && '' != $ifsp->$field) {
+                                echo date('m/d/Y', strtotime($ifsp->$field));
+                            } elseif (isset($fieldInfo['cssClass']) && 'formname' == $fieldInfo['cssClass']) {
+                                echo trim($ifsp->$field, '"');
+                            } else {
+                                echo $ifsp->$field;
+                            }
+                            ?>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <li class="status"><?php echo $this->formStatusSimple($ifsp); ?></li>
+                    <li><?php echo $this->formMenu($this->id_student, $ifsp); ?></li>
+                </ul>
+            </li>
+        <? } ?>
+    <? } ?>
+<? } ?>

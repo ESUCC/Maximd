@@ -1,0 +1,52 @@
+    abort;
+    begin;
+    
+    
+    select count(1) from iep_student;
+    select count(1) from iep_student where id_county='77' and id_district='0027'; --29564
+    select count(1) from iep_student where id_county='77' and id_district='0027' and data_source is null;
+    update iep_student set data_source = 'PPN' where id_county='77' and id_district='0027' and data_source is null;
+    select count(1) from iep_student where id_county='77' and id_district='0027' and data_source is null;
+    select count(1) from iep_student where id_county='77' and id_district='0027' and id_student_local is null;
+    
+    select count(distinct id_student_local)  from iep_student where id_county='77' and id_district='0027'; -- 25772 
+    
+    -- count and id_student_local
+    -- select count(1), s.id_student_local from iep_student s where id_county='77' and id_district='0027' and 
+    --    (select count(1) from iep_student where id_county='77' and id_district='0027' and iep_student.id_student_local = s.id_student_local) > 1 group by s.id_student_local order by count desc;
+
+    
+    -- count of dupe id_locals in PPN grouped by count
+    --select count(1) from (select count(1), s.id_student_local from iep_student s where id_county='77' and id_district='0027' and 
+    --  (select count(1) from iep_student where id_county='77' and id_district='0027' and iep_student.id_student_local = s.id_student_local) > 1 group by s.id_student_local order by count desc) as studentlist;
+    
+    select count(1) from (
+        -- student local ids that have dupes
+        select distinct(s.id_student_local) from iep_student s where id_county='77' and id_district='0027' and 
+            (select count(1) from iep_student where id_county='77' and id_district='0027' and iep_student.id_student_local = s.id_student_local) > 1 group by s.id_student_local
+    ) as studentlist;
+    
+    
+    
+    -- merge all duplicates in PPN
+    select merge_dupe_students_idstudentlocal(id_student_local, 'PPN') from (
+        -- student local ids that have dupes
+        select distinct(s.id_student_local) from iep_student s where id_county='77' and id_district='0027' and 
+            (select count(1) from iep_student where id_county='77' and id_district='0027' and iep_student.id_student_local = s.id_student_local and iep_student.id_student_local is not null) > 1 group by s.id_student_local
+    ) as studentlist;
+    
+    
+    
+    select count(1) from iep_student where id_county='77' and id_district='0027'; -- is (25785)
+    select count(1) from iep_student where id_county='77' and id_district='0027' and data_source is null;
+    select count(1) from iep_student where id_county='77' and id_district='0027' and id_student_local is null;
+    
+    
+    select count(distinct id_student_local)  from iep_student where id_county='77' and id_district='0027';
+
+    select id_student, id_student_local, form_count(id_student) as form_count, status, name_first, name_last from iep_student where id_county='77' and id_district='0027' order by id_student_local;
+    
+    
+    
+    
+    

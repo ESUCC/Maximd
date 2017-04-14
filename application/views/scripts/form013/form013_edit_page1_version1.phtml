@@ -1,0 +1,261 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+    
+<?php 
+if('' == $view->db_form_data['ifsptype']) {
+	$displayStyle = "display:none;";
+	$ifspChooserDisplayStyle = "";
+} else {
+	$displayStyle = "";
+	$ifspChooserDisplayStyle = "display:none;";
+}
+?>
+<div id="ifsptypeselect" style="<? echo $ifspChooserDisplayStyle; ?>">
+<?php echo $this->element->ifsptype; ?>
+</div>
+
+<div id="ifsptypechosen" style="clear:both;<? echo $displayStyle; ?>">
+
+	<table class="formSectionHead">
+	    <tr>
+	        <td><?php echo $view->db_form_data['ifsptype']; ?> IFSP</td>
+	    </tr>
+	</table>
+	
+	<table class="formInput thinInput" cellpadding="0" cellspacing="0" border="0">
+	  <tr> 
+	    <td align="right" style="white-space:nowrap;" ><div class="colorme"><span class="printBoldLabel boldLabel">Child's Name:</span></div></td>
+	    <td><?php echo $view->db_form_data['student_data']['name_student']; ?></td>
+	    <td align="right" style="white-space:nowrap;" ><div class="colorme"><span class="printBoldLabel boldLabel">Phone:</span></div></td>
+	    <td><?php echo $view->db_form_data['student_data']['phone']; ?></td>
+	  </tr>
+	
+	  <tr> 
+	    <td align="right" style="white-space:nowrap;" ><div class="colorme"><span class="printBoldLabel boldLabel">Child's Birthdate:</span></div></td>
+	    <td><?php echo $view->db_form_data['student_data']['dob']; ?></td>
+<!--	    <td align="right" style="white-space:nowrap;" ><span class="boldLabel colorme">SSN</span></td>-->
+	    <td><?php $this->element->ssn_form->removeDecorator('label'); echo $this->element->ssn_form; ?></td>
+	  </tr>
+	
+	  <tr> 
+	    <td align="right" style="white-space:nowrap;" ><div class="colorme"><span class="printBoldLabel boldLabel">Age:</span></div></td> <td><?php echo $view->db_form_data['student_data']['age']; ?></td>
+	    <td align="right" style="white-space:nowrap;" >
+<!--        --><?php //if('print' == $view->mode) { ?>
+<!--        		--><?php //$this->element->medicaid_form->removeDecorator('label'); ?>
+<!--        		<span class="printBoldLabel colorme">Medicaid #</span>-->
+<!--        --><?php //} else {
+//	    		$this->element->medicaid_form->removeDecorator('label'); ?>
+<!--	    		<span class="printBoldLabel boldLabel colorme">Medicaid #</span>-->
+<!--	    --><?php //}?>
+	    </td><td>
+	    <?php echo $this->element->medicaid_form; ?>
+	    </td>
+	  </tr>
+	
+	  <tr> 
+        <td align="right" style="white-space:nowrap;" ><div class="colorme"><span
+             class="printBoldLabel boldLabel">Date of Referral to Early Intervention:</span></div></td>
+        <td><?php echo $view->db_form_data['student_data']['ei_ref_date']; ?></td>
+	    <td align="right" ><div class="colorme"><span class="printBoldLabel boldLabel">Address:</span></div></td><td> <?php echo $view->db_form_data['student_data']['address']; ?></td>
+	  </tr>
+	
+	  <tr> 
+	    <td align="right" style="white-space:nowrap;" >
+        <?php if('print' == $view->mode) { ?>
+        <?php $this->element->family_lang->removeDecorator('label'); ?>
+        <span class="printBoldLabel colorme">Family's Language Choice</span></td>     
+        <?php } else {?>
+        <?php $this->element->family_lang->removeDecorator('label'); ?>
+        <span class="printBoldLabel boldLabel colorme">Family Language</span></td>        
+        <?php } ?>
+        <td>
+	    <?php echo $this->element->family_lang; ?>
+	    </td>
+	    <?php $this->element->eval_date->removeDecorator('label');?>
+	    <td align="right" style="white-space:nowrap;" >
+	    	<span class="boldLabel colorme">
+	    		<?php echo $this->linkRelatedForm015($view->db_form_data['student_data']['id_student'], 'Date of Consent for Evaluation'); ?>
+	    	</span>
+	    </td>
+	    <td><?php echo $this->element->eval_date; ?></td>
+	  </tr>
+        <tr>
+            <td align="right" style="white-space:nowrap;">
+                <?php $this->element->family_lang_second->removeDecorator('label'); ?>
+                <span class="printBoldLabel boldLabel colorme">Additional Language</span></td>
+            <td>
+                <?php echo $this->element->family_lang_second; ?>
+            </td>
+            <?php $this->element->eval_date->removeDecorator('label'); ?>
+            <td align="right" style="white-space:nowrap;">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+        <?php if('print' == $view->mode) { ?>
+        	<td align="right" style="white-space:nowrap;" >
+	        <span class="printBoldLabel colorme">Family would like an interpreter:</span>
+	        </td>
+	        <td>
+	        	<?php 
+	        		switch($this->element->interpreter->getValue()) { 
+				         case '1':
+				            echo 'Yes';
+				         break; 
+				         case '0': 
+				            echo 'No';
+				         break; 
+		        	} 
+		        ?>
+	        </td>
+         <?php } else { ?>
+         	<td align="right" style="white-space:nowrap;" >
+         		<?php $this->element->interpreter->removeDecorator('label'); ?>
+         		<span class="printBoldLabel boldLabel colorme">Family would like an interpreter:</span>
+         	</td>
+         	<td>
+	    		<?php echo $this->element->interpreter; ?>
+	        </td>
+        <?php } ?>
+	    <td align="right" style="white-space:nowrap;" >
+	    	<span class="boldLabel colorme">
+	    		<?php echo $this->linkRelatedForm002($view->db_form_data['student_data']['id_student'], 'Date MDT'); ?>
+	    	</span>
+	    </td>
+	    <td>
+	        <?php $this->element->date_mdt->removeDecorator('label');echo $this->element->date_mdt; ?>
+	    </td>
+	  </tr>
+	</table>
+	<?php echo $this->subform($view, 'ifsp_parents'); ?>
+	
+	<table class="formSectionHead" cellspacing="0" cellpadding="0">
+	    <tr>
+	        <td>Services Coordinator / Case Manager Information</td>
+	    </tr>
+	</table>
+	<table class="formInput" style="margin-top: 1px;" border="0">
+	    <tr>
+	        <td  class="tanHead" colspan="3">
+	            If you have any questions about this plan or any of the people working with your child,
+	            please call the person listed as the Services Coordinator / Case Manager.
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>
+	        <?php echo $this->element->sc_name; ?>
+	        </td>
+	        <td>
+	        <?php echo $this->element->sc_phone; ?>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td style="vertical-align: top">
+	        <?php echo $this->element->sc_agency; ?>
+	        </td>
+	        <td>
+	        <?php echo $this->element->sc_address; ?>
+	        </td>
+	    </tr>
+	</table>
+	
+	<table class="formSectionHead" cellspacing="0" cellpadding="0">
+	    <tr>
+	        <td>IFSP Meeting Dates</td>
+	    </tr>
+	</table>
+	<table class="formInput" style="margin-top: 1px;" border="0">
+	    <tr class="tanHead">
+	        <td class="printBoldLabel">
+	            Type
+	        </td>
+<!--	        <td class="printBoldLabel">-->
+<!--	            Secondary Role-->
+<!--	        </td>-->
+	        <td class="printBoldLabel">
+	            Date
+	        </td>
+	        <td class="noprint printBoldLabel">
+	            Auto Fill
+	        </td>
+	        <td class="printBoldLabel">
+	            Date Sent
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>
+	        <?php echo $view->db_form_data['ifsptype']; ?>
+	        </td>
+<!--	        <td>-->
+<!--	        --><?php //echo $this->element->ifsptype_secondary_role; ?>
+<!--	        </td>-->
+	        <td>
+	        <?php echo $this->element->meeting_date; ?>
+	        </td>
+	        <td class="noprint">
+	        <?php echo $this->element->autofill_meeting_date; ?>
+	        </td>
+	        <td>
+	        <?php echo $this->element->meeting_date_sent; ?>
+	        </td>
+	    </tr>
+	</table>
+	
+	<table class="formSectionHead" cellspacing="0" cellpadding="0">
+	    <tr>
+	        <td>IFSP Previous Meeting Dates</td>
+	    </tr>
+	</table>
+    <table class="formInput" cellspacing="0" cellpadding="0">
+        <tr class="tanHead">
+        	<?php if('edit' == $view->mode) { ?>
+            <td class="printBoldLabel">
+                Print?
+            </td>
+            <?php } ?>
+            <td class="printBoldLabel">
+                Type
+            </td>
+            <td class="printBoldLabel">
+                Date
+            </td>
+            <td class="printBoldLabel">
+                Date Sent
+            </td>
+        </tr>
+    <?php
+	if (isset($view->db_form_data['previousMeetingDates']) && count($view->db_form_data['previousMeetingDates']) > 0){
+		//$checkedToPrint = explode("\n", trim($view->db_form_data['previous_dates_hide_print_ids']));
+		
+	    foreach(array_reverse($view->db_form_data['previousMeetingDates']) as $meetingDate) {
+//            if('Annual' == $meetingDate['ifsptype']) {
+//                continue;
+//            }
+	    	$checked = ""; 
+	    	$printCss = "noprint"; // do not print is default
+	    	if(substr_count($view->db_form_data['previous_dates_hide_print_ids'], $meetingDate['id_form_013']."\n") > 0) {
+	    		$checked = " checked";
+	    		$printCss = ""; // print lines that are checked
+	    	}
+	    	echo "<tr class=\"".$printCss."\">";
+        	if('edit' == $view->mode) {
+        		echo "<td><input $checked type=\"checkbox\" name=\"previous_dates_hide_print_ids[]\" value=\"".$meetingDate['id_form_013']."\"></td>";
+        	}
+			echo "<td>".$meetingDate['ifsptype']."</td>";
+			echo "<td>".$meetingDate['meeting_date']."</td>";
+			echo "<td>".$meetingDate['meeting_date_sent']."</td>";
+			echo "</tr>";
+	    } 
+	} else echo "<tr><TD colspan='3'>No previous meeting dates found.</td></tr>";
+    
+    ?>
+    </table>
+
+</div>
+
+<?php //Zend_Debug::dump($view->db_form_data); ?>
+

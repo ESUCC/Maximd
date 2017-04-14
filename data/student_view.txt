@@ -1,0 +1,39 @@
+Drop VIEW view_student;
+
+CREATE VIEW view_student AS
+    SELECT *,
+       
+    CASE WHEN name_middle is null THEN name_first || ' ' || name_middle || ' ' || name_last
+        ELSE name_first || ' ' || name_last
+    END as name_student,
+    
+    CASE WHEN id_student_local is null THEN id_student
+        ELSE id_student_local
+    END as student_display,
+    
+    date_part('year',age(dob)) as age,
+    
+    -- if student is more than 15 years and 1 day old, force the transition plan on page 5 of IEP
+    case when date_trunc('day', date_trunc('day', dob) + interval '15 years 1 day' ) <= date_trunc('day', now()) THEN 'true' ELSE 'false' END as force_tran_plan,
+    
+    CASE WHEN address_street2 IS NOT NULL THEN address_street1 || ' ' || address_street2 || ' ' || address_city || ', ' || address_state || ' ' || address_zip ELSE address_street1 || ' ' || address_city || ', ' || address_state || ' ' || address_zip END AS address,
+       
+    get_most_recent_mdt_disability_primary(id_student) as most_recent_dis,
+    get_most_recent_mdt_date_conference(id_student) as most_recent_date_mdt,
+    get_most_recent_iep_date_conference(id_student) as most_recent_date_iep,
+    
+    get_name_county(id_county) as name_county,
+    get_name_district(id_county, id_district) as name_district,
+    get_name_school(id_county, id_district, id_school) as name_school,
+    --get_name_school_nonpublic(nonpubcounty, nonpubdistrict, nonpubschool) as nonpublicschool_name,
+    get_name_personnel(id_case_mgr) as name_case_mgr,
+    get_name_personnel(id_ei_case_mgr) as name_ei_case_mgr,
+    get_name_personnel(id_ser_cord) as name_ser_cord,
+    
+    get_guardian_names(id_student) as parents
+    
+       
+FROM iep_student
+WHERE status = 'Active';
+
+	

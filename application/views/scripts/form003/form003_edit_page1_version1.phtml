@@ -1,0 +1,173 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+
+?>
+<?= $this->element->id_form_003; ?>
+<?= $this->element->page; ?>
+
+<?php if('print' != $view->mode) { ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notification of Individualized Education Program Meeting</td>
+    </tr>
+</table>
+<?php } ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+            <?php 
+              if('print' != $view->mode) {
+                echo $this->element->date_notice;
+              }
+            ?>
+        </td>
+    </tr>
+    <tr>
+		<td> 
+              <?php if (strlen($this->element->notice_to->getValue()) < 1) { ?>
+              <?php $this->element->notice_to->setValue($view->notice_to_pre); ?>
+              <?php } ?>
+            <?php
+		      if('print' == $view->mode) {
+		      	$this->element->notice_to->removeDecorator('label');
+		      	echo "<B>To:</B> " . $this->element->notice_to->getValue();
+		      } else {
+		      	echo $this->element->notice_to;
+		      }
+		    ?>
+		</td>
+    </tr>
+    <tr>
+        <td>
+            <?php if (strlen($this->element->address->getValue()) < 1) { ?>
+            <?php $this->element->address->setValue($view->address_pre); ?>
+            <?php } ?>
+            <?php 
+              if('print' == $view->mode) {
+                $this->element->address->removeDecorator('label');
+                echo "<B>Address:</B> " . $this->element->address->getValue();
+              } else {
+                echo $this->element->address;
+              }
+            ?>
+        </td>
+	</tr>
+	<tr>
+		<td>
+		<strong>On Behalf of:</strong>
+		<?php
+		$view = $this->element->page->getView();
+		echo ($view->db_form_data['student_data']['name_student']);
+		?>
+        <div class="noprint">An Individualized Education Program meeting has been scheduled for (proposed meeting date, time and place)</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		<?php echo $this->printBoldElementContent($view->mode, $this->element->iep_meeting, false); ?><BR />
+		</td>
+    </tr>
+    <tr>
+    	<td>
+    	We must meet with you to develop your child's education plan. It is very 
+    	important that you attend this meeting. With your input, we can develop 
+    	an individualized education plan that is appropriate for your child. If 
+    	you would like, you may review your child's education records prior to 
+    	the meeting. At the IEP meeting we will be discussing:<BR />
+
+        <ol>
+    	  <li>Your child's Academic achievement and functional performance</li>
+    	  <li>Any special education and related services and supplementary aids and services which your child may require</li>
+    	  <li>Appropriate annual goals</li>
+    	  <li>The extent of your child's participation in the general curriculum and/or necessary modifications</li>
+        </ol>
+    	
+
+    	In addition to yourself, the following people will be in attendance at the 
+    	IEP meeting:
+    	<table class="formInput">
+    		<tr>
+    			<td>
+                <ol class="form003-additioanl-attendance">
+                  <li style="margin:2px 0;">
+                     <div id="general_ed-colorme" class="colorme">
+    			<?php 
+	              if('print' == $view->mode) {
+	                echo "A general education teacher of your child: <B>" . $this->element->general_ed->getValue() . "</B>";
+	              } else {
+                    echo "A general education teacher of your child:";
+	                echo $this->element->general_ed;
+	              }
+    			?>
+                    </div>
+                  </li>
+                  <li style="margin:2px 0;">
+                     <div id="special_ed-colorme" class="colorme">
+    			<?php 
+                  if('print' == $view->mode) {
+                    echo "A special education teacher: <B>" . $this->element->special_ed->getValue() . "</B>";
+                  } else {
+                    echo "A special education teacher:";
+                    echo $this->element->special_ed;
+                  }
+                ?>
+                    </div>
+                 </li>
+                 <li style="margin:2px 0;">
+                    <div id="school_rep-colorme" class="colorme">
+               <?php 
+                  if('print' == $view->mode) {
+                    echo "A school representative: <B>" . $this->element->school_rep->getValue() . "</B>";
+                  } else {
+                    echo "A school representative:";
+                    echo $this->element->school_rep;
+                  }
+                ?>
+                    </div>
+                 </li>
+                <li style="margin:2px 0;">
+                    <div id="other_attendees-colorme" class="colorme">
+                        Individuals who can help explain the evaluation results:
+		            <?php 
+	                  if('print' == $view->mode) {
+	                    echo "<B>" . $this->element->other_attendees->getValue() . "</B>";
+	                  } else {
+	                    echo $this->element->other_attendees;
+	                  }
+                    ?>
+                    </div>
+                  </li>
+                <li style="margin:2px 0;">
+                    <div id="other_attendees-colorme" class="colorme">
+                        Individuals who have special knowledge or expertise regarding your child or services that may be needed
+		            <?php
+	                  if('print' == $view->mode) {
+	                    echo "<B>" . $this->element->other_attendees_sp_knowledge->getValue() . "</B>";
+	                  } else {
+	                    echo $this->element->other_attendees_sp_knowledge;
+	                  }
+                    ?>
+                    </div>
+                  </li>
+                 </ol>
+                </td>
+            </tr>
+    	</table>
+    	
+    	In addition to the people we have invited, at your discretion, you may invite 
+    	other individuals who have knowledge or special expertise regarding your child. 
+    	The determination of whether the person has special knowledge or expertise will 
+    	be made by the party inviting the individual to be a member of the IEP team.
+    	<BR /><BR />
+		<span style="">If your child will turn at least 16 during this IEP (or younger if appropriate)</span>, the 
+		local school district will begin to help him/her to plan for the future after leaving 
+		school. The needs of your child in this area will be addressed at our meeting. Your 
+		child is invited to this meeting. Staff from other agencies which may be able to provide 
+		appropriate services also will be at our meeting. 
+		<?php //echo $this->element->other_staff; ?>
+    	</td>
+    </tr>
+</table> 
+<?php //print_r($view->db_form_data['student_data']); ?>

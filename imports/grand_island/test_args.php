@@ -1,0 +1,1 @@
+#!/usr/bin/php<?php$_Passed_Options = $_SERVER[argv];$_Student_File = $_Passed_Options[1];$_Parent_File =  $_Passed_Options[2];echo $_Student_File;echo $_Parent_File;?>

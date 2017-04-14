@@ -1,0 +1,104 @@
+<div class="header">
+    <h1>Header</h1>
+    <div class="loginBox">
+        <?php echo $this->loginForm; ?>
+    </div><!-- end loginBox -->
+</div><!-- end header -->
+
+<div class="contentMain">
+    <center><B><?php echo $this->profileUpdateMessage; ?></B></center>
+	<?php echo $this->userProfileForm; ?>
+</div><!-- end content -->
+
+
+<?php 
+    //
+    // display files that the user has requested
+    //
+    if($this->displayFileRequests)
+    {
+        echo "<table width=100%>";
+        echo "<tr>";
+        echo "<td>File Requested</td>";
+        echo "<td>Status</td>";
+        echo "<td>Keyword Count</td>";
+        echo "</tr>";
+        foreach($this->myFileRequests as $fileRequest)
+        {
+            echo "<tr>";
+
+            echo "<td>";
+            echo date('m/d/Y g:i a', strtotime($fileRequest['timestamp_created']));
+            echo "</td>";
+
+            if($fileRequest['complete']) {
+                echo "<td>";
+                echo "<a href=\"profile/getfile?id=".$fileRequest['id_file_request']."\">Download File " . $fileRequest['id_file_request'] . "</a>";
+                echo "</td>";
+
+                echo "<td>";
+                echo $fileRequest['keword_count'];
+                echo "</td>";
+
+            } else {
+                echo "<td>";
+                echo "Your file is still being processed";
+                echo "</td>";
+
+                echo "<td>";
+                echo "&nbsp";
+                echo "</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    }
+?>
+
+
+
+<?php if(count($this->resultRowCounter) > 0) { ?>
+<form action="" method="post">
+<table border="1" style="width:100%">
+	<TR>
+		<TH>
+		    <input type="button" value="Uncheck All" onclick="javascript:uncheckAllCheckboxes('download', 1, <?php echo $this->resultRowCounter-1; ?>);" id="Uncheck All" name="Uncheck All" />
+        </TH>
+		<TH>
+		    <input type="button" value="Check All" onclick="javascript:checkAllCheckboxes('download', 1, <?php echo $this->resultRowCounter-1; ?>);" id="Check All" name="Check All" />
+		</TH>
+		<th>&nbsp;</th>
+	</TR>
+
+	<TR>
+		<TH>Download</TH>
+		<TH>Keyword Count</TH>
+		<TH>Search Criteria</TH>
+		<TH>Full Category</TH>
+	</TR>
+
+
+    <?php echo $this->mySubcategoriesForm; ?>
+	<?php echo $this->formHidden('resultRowCounter', $this->resultRowCounter); ?>
+	<TR>
+		<TD>
+		    <input type="button" value="Uncheck All" onclick="javascript:uncheckAllCheckboxes('download', 1, <?php echo $this->resultRowCounter-1; ?>);" id="Uncheck All" name="Uncheck All" />
+        </TD>
+		<TD>
+		    <input type="button" value="Check All" onclick="javascript:checkAllCheckboxes('download', 1, <?php echo $this->resultRowCounter-1; ?>);" id="Check All" name="Check All" />
+		</TD>
+		<TD>&nbsp;</TD>
+	</TR>
+
+	<TR>
+		<TD colspan="3">
+			<input type="button" value="Download" onclick="javascript:this.form.action='profile/downloadfile'; this.form.submit();" id="Download" name="Download" />
+		</TD>
+	</TR>
+</table>
+</form>
+<?php } ?>
+<!--<div class="footer">-->
+<!--	<h3>Footer</h3>-->
+<!--</div>-->
+<!-- end footer -->

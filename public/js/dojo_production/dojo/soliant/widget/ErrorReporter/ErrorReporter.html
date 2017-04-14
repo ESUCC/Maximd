@@ -1,0 +1,22 @@
+<div dojoType="soliant.widget.ErrorReporter">
+    
+	<button dojoType="dijit.form.Button" dojoattachevent="onClick: showErrorReportDialog" type="button">Report Error</button>
+    
+    <div dojoType="dijit.Dialog" title="Error Report" dojoAttachPoint="dialogOne">
+	    <div dojoType="dijit.form.Form" dojoAttachPoint="formOne">
+		    <div>User: ${user}</div>
+		    <div>Form: ${keyName}</div>
+		    <div >Form ID: ${formId}</div>
+		    <div>Please provide a complete description of the problems you are having.</div> 
+			
+			<textarea id="errorDescription" name="errorDescription" dojoType="dijit.form.Textarea" style="min-height:100px;"></textarea>
+			<button dojoType="dijit.form.Button" dojoattachevent="onClick: closeDialog">Cancel</button>
+			<button dojoType="dijit.form.Button" dojoattachevent="onClick: saveErrorReport">Submit</button>
+			
+			<input type="hidden" id="formNumber" name="formNumber" value="${keyName}" dojoType="dijit.form.TextBox">
+			<input type="hidden" id="formId" name="formId" value="${formId}" dojoType="dijit.form.TextBox">
+			<input type="hidden" id="pageNumber" name="pageNumber" value="${pageNumber}" dojoType="dijit.form.TextBox">
+			<input type="hidden" id="studentId" name="studentId" value="${studentId}" dojoType="dijit.form.TextBox">
+	    </div>
+	</div>
+</div>
