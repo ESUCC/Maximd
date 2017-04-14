@@ -41,7 +41,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     public function loginOldSite()
     {
         // new HTTP request to old site
-        $oldSiteClient = new Zend_Http_Client('https://iep.esucc.org/logon.php?option=1', $this->httpParams);
+        $oldSiteClient = new Zend_Http_Client('https://iep.unl.edu/logon.php?option=1', $this->httpParams);
         $oldSiteClient->setMethod(Zend_Http_Client::POST);
         $oldSiteClient->setCookieJar();
         $oldSiteClient->setParameterPost('userName', 'archiver');
