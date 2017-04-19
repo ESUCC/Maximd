@@ -101,7 +101,11 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
         */
         if (false == $this->usersession->parent) {
             $privCheck = new My_Classes_privCheck($this->usersession->user->privs);
-            if (2 != $privCheck->getMinPriv() && 1 != $privCheck->getMinPriv()) {
+    
+     /*    if (2 != $privCheck->getMinPriv() && 1 != $privCheck->getMinPriv()) {
+           Mike changed this for jira SRS-14 on APril 18th for the live site.
+    */   
+            if($privCheck->getMinPriv() > 3 ){
                 $this->view->showAll = true; 
             } else {
                 $this->view->showAll = false;

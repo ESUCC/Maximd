@@ -50,7 +50,7 @@ class Form_Form028 extends Form_AbstractForm {
 		$this->today_date->addDecorator((array('colorme' => 'HtmlTag')), array ('tag' => 'span', 'class' => 'colorme', 'id'  => 'today_date' . '-colorme') );
 		$this->today_date->removeDecorator('Label');
 
-		$this->parent_concerns = $this->buildEditor('parent_concerns', array('Label'=>'Parent Concerns:'));
+		$this->parent_concerns = $this->buildEditor('parent_concerns', array('Label'=>'Parent Input:'));
 		$this->parent_concerns->addErrorMessage('You must enter a value for parent concerns.');
 		
 		$this->present_levels_of_education_performance = $this->buildEditor('present_levels_of_education_performance', array('Label'=>'Present Levels of Education Performance:'));
