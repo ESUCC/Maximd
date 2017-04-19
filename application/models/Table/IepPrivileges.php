@@ -19,6 +19,26 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
     //
     // get method 
     //
+    /*
+     * Mike added the setDemo function 4-18-2017 so that people without any privileges can at 
+     * last login.
+     * 
+     */
+    public function setDemo($id_personnel){
+        $data=array(
+            'id_personnel' =>$id_personnel,
+            'id_county'=>'99',
+            'id_district'=>'6666',
+            'class'=>'7',
+            'status'=>'Active',
+            'id_school'=>'001'  );
+    
+    
+         
+    
+        $this->insert($data);
+    }
+    
     static public function getPrivilegesByUser($id) {
         
         try

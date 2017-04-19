@@ -359,14 +359,23 @@ class Form_Form002 extends Form_AbstractForm {
 		$this->educationalneeds_cognitive_dev->addValidator(new My_Validate_EditorNotEmptyIf('educationalneeds_ddview', "t"), true);
 		
 // 		$this->educationalneeds_fine_dev = new App_Form_Element_TestEditor('educationalneeds_fine_dev', array('label'=>'2. Fine and Gross Motor Development'));
+		/*
+		 * Mike Change 4-28-2017 per jira SRS-52
 		$this->educationalneeds_fine_dev = $this->buildEditor('educationalneeds_fine_dev', array('label'=>'2. Fine and Gross Motor Development'));
+		*/
+		$this->educationalneeds_fine_dev = $this->buildEditor('educationalneeds_fine_dev', array('label'=>'2. Physical Development'));
+		
 		$this->educationalneeds_fine_dev->setRequired(false);
         $this->educationalneeds_fine_dev->setAllowEmpty(false);
         $this->educationalneeds_fine_dev->removeEditorEmptyValidator();
 		$this->educationalneeds_fine_dev->addValidator(new My_Validate_EditorNotEmptyIf('educationalneeds_ddview', "t"), true);
 		
 // 		$this->educationalneeds_lang_dev = new App_Form_Element_TestEditor('educationalneeds_lang_dev', array('label'=>'3. Language Development'));
+		/* Mike changed this 4-18-2017 per jira SRS-52
 		$this->educationalneeds_lang_dev = $this->buildEditor('educationalneeds_lang_dev', array('label'=>'3. Language Development'));
+		*/
+		$this->educationalneeds_lang_dev = $this->buildEditor('educationalneeds_lang_dev', array('label'=>'3. Communication Development'));
+		
 		$this->educationalneeds_lang_dev->setRequired(false);
         $this->educationalneeds_lang_dev->setAllowEmpty(false);
         $this->educationalneeds_lang_dev->removeEditorEmptyValidator();
@@ -380,7 +389,11 @@ class Form_Form002 extends Form_AbstractForm {
 		$this->educationalneeds_social_dev->addValidator(new My_Validate_EditorNotEmptyIf('educationalneeds_ddview', "t"), true);
 		
 // 		$this->educationalneeds_self_help_skills = new App_Form_Element_TestEditor('educationalneeds_self_help_skills', array('label'=>'5. Self Help Skills'));
+		/* Mike changed this 4-18-2017 per jira SRS-52
 		$this->educationalneeds_self_help_skills = $this->buildEditor('educationalneeds_self_help_skills', array('label'=>'5. Self Help Skills'));
+		*/
+		$this->educationalneeds_self_help_skills = $this->buildEditor('educationalneeds_self_help_skills', array('label'=>'5. Adaptive Development'));
+		
 		$this->educationalneeds_self_help_skills->setRequired(false);
         $this->educationalneeds_self_help_skills->setAllowEmpty(false);
         $this->educationalneeds_self_help_skills->removeEditorEmptyValidator();
@@ -583,6 +596,8 @@ class Form_Form002 extends Form_AbstractForm {
     /**
      * @return array
      */
+   
+   /* Mike changed this April 18th per jira SRS-43 
     function getPrimaryDisabilityOptions()
     {
         $multiOptions = array('' => 'Choose...', 'AU' => 'Autism (AU)', 'BD' => 'Behavioral Disorder (BD)', 'DB' => 'Deaf Blindness (DB)', 'HI' => 'Hearing Impairment (HI)',
@@ -591,4 +606,14 @@ class Form_Form002 extends Form_AbstractForm {
             'DD' => 'Developmental Delay (DD)');
         return $multiOptions;
     }
+    */ 
+	
+	function getPrimaryDisabilityOptions()
+	{
+	    $multiOptions = array('' => 'Choose...', 'AU' => 'Autism (AU)', 'BD' => 'Behavioral Disorder (BD)', 'DB' => 'Deaf Blindness (DB)', 'HI' => 'Hearing Impairment (HI)',
+	        'MH' => 'Intellectual Disability (ID)', 'MULTI' => 'Multiple Impairment (MULTI)', 'OI' => 'Orthopedic Impairment (OI)', 'OHI' => 'Other Health Impairment (OHI)',
+	        'SLD' => 'Specific Learning Disability (SLD)', 'SLI' => 'Speech Language Impairment (SLI)', 'TBI' => 'Traumatic Brain Injury (TBI)', 'VI' => 'Visual Impairment (VI)',
+	        'DD' => 'Developmental Delay (DD)');
+	    return $multiOptions;
+	}
 }
