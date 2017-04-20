@@ -40,14 +40,14 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
     	$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 
 		$this->returnText .= '<ul id="nav">';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=home&sub=home\');">Home</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=home&sub=home\');">Home</a></li>';
 		$this->returnText .= '  <li '.(($controllerName != 'translation') ? 'class="current"' : '').'><a href="javascript:checkEditedStatus(\'/student/search\');">Students</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=personnel&sub=list\');">Personnel</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=school&sub=list\');">Schools</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=district&sub=list\');">Districts</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=admin&sub=server\');">Admin</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=reports&sub=reports\');">Reports</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=help&sub=tutorials\');">Help</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=personnel&sub=list\');">Personnel</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=school&sub=list\');">Schools</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=district&sub=list\');">Districts</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=admin&sub=server\');">Admin</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=reports&sub=reports\');">Reports</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=help&sub=tutorials\');">Help</a></li>';
 		//$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\''.$config->DOC_ROOT .'personnel/stylescope\');">Stylescope</a></li>';
 		if ($admin)
 		    $this->returnText .= '  <li '.(($controllerName == 'translation') ? 'class="current"' : '').'><a href="/translation">Translation</a></li>';
@@ -66,19 +66,19 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
         }
 
 
-        $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=home&sub=home">Home</a></li>';
+        $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=home&sub=home">Home</a></li>';
         $this->returnText .= '  <li '.(($controllerName == 'student') ? 'class="current"' : '').'><a href="/student/search">Students</a></li>';
 
         if(!$parent) {
-            $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.unl.edu/srs.php?area=personnel&sub=list">Personnel</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=school&sub=list">Schools</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=district&sub=list">Districts</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=admin&sub=server">Admin</a></li>';
+            $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.esucc.org/srs.php?area=personnel&sub=list">Personnel</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=school&sub=list">Schools</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=district&sub=list">Districts</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=admin&sub=server">Admin</a></li>';
             $this->returnText .= '  <li><a href="/report">Reports</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=help&sub=tutorials">Help</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=help&sub=tutorials">Help</a></li>';
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
         }
-        //$this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=help&sub=tutorials">Help</a></li>';
+        //$this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=help&sub=tutorials">Help</a></li>';
         if(!$parent) {
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
         }
