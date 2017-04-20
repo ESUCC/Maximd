@@ -89,11 +89,26 @@ class App_Auth_Authenticator {
 				return false;
 			}
 
-			if (count($user->privs) <= 0 )
+		/*	Mike change this 4-18-2017 in order to allow users that
+		 *  have no privileges but are still active to login 
+		 * if (count($user->privs) <= 0 )
 			{
 				$this->errorMessage = self::ERR_NO_PRIVS;
 				return false;
-			}
+			}*/
+			
+			if (count($user->privs) <= 0 )
+			{
+			   	$addFalsePriv=new Model_Table_IepPrivileges();
+			    $addFalsePriv->setDemo($user->user['id_personnel']);
+			    $user = $refMethod->invoke(null, $username);
+			    //$this->errorMessage = self::ERR_NO_PRIVS;
+			    //return false;
+			} 
+			
+			
+			
+			
 			return $user;			
 		}
 		return false;	
