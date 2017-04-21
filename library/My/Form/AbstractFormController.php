@@ -1547,12 +1547,28 @@ END;
 		
 		$formData = $modelobj->find ( $request->document );
 		
+		/* Mike added this 4-18-2017 so that we can delete cards  anytime we want
+		 * This is jira ticket SRS-42
+		*/
+		
+		
+		
 		if ('Final' == $formData ['status'] && 'Admin' != $this->getAccess ( $formData ['id_student'], $this->usersession )->description) {
-			$this->_helper->viewRenderer ( 'errorgoback', 'html', true );
+		
+		    if(isset($formData['id_form_022'])||(isset($formData['id_form_023']))) {
+		       // do nothing 
+		    }
+		    else {
+		    $this->_helper->viewRenderer ( 'errorgoback', 'html', true );
 			$this->view->message = "This form has already been finalized and cannot be deleted.";
 			echo $this->view->render ( 'errorgoback.phtml' );
 			return;
-		}
+		    }
+		  }
+		
+		
+		
+		
 		if (isset ( $request->cancel ) && $request->cancel == "Cancel") {
 			$this->_redirector->gotoSimple ( 'edit', 'form' . $this->getFormNumber (), null, array ('document' => $request->document, 'page' => $this->view->page ) );
 			return;

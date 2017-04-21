@@ -782,8 +782,14 @@ class StudentController extends My_Form_AbstractFormController
             $form->setDisabledValues();
             if($formValid) {
                 // valid to save
+                
+                
                 $data = $form->getValues();
-
+                if($data['grade']!='EI 0-2'){
+                    $data['id_ser_cord']=NULL;
+                    $data['id_ei_case_mgr']=NULL;
+                    // writevar($data,'this is the data after');
+                }
                 // submitted update address is valid and is different from database
                 if(''!=$postData['confirm_email'] && $postData['confirm_email']==$postData['email_address']) {
                     // update email

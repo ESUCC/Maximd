@@ -39,7 +39,7 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
     {
     	$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 
-		$this->returnText .= '<ul id="nav">';
+		$this->returnText .= '<ul id="nav">'; 
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=home&sub=home\');">Home</a></li>';
 		$this->returnText .= '  <li '.(($controllerName != 'translation') ? 'class="current"' : '').'><a href="javascript:checkEditedStatus(\'/student/search\');">Students</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=personnel&sub=list\');">Personnel</a></li>';

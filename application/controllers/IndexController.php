@@ -128,7 +128,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
     		$this->_redirect('https://iep.esucc.org/srs.php?area=home&sub=home&option=1');
     	} else {
     		$this->_redirect('/home');
-    	}
+    	} 
 		            	
     }
     
