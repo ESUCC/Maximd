@@ -20,7 +20,8 @@ class Form032Controller extends My_Form_AbstractFormController {
         parent::setFormNumber('032');
         parent::setModelName('Model_Form032');
         parent::setFormClass('Form_Form032');
-        parent::setFormTitle('Notice of Meeting (IFSP)');
+     //   parent::setFormTitle('Notice of Meeting (IFSP)');
+        parent::setFormTitle('Notice of Meeting (Part C)');
         parent::setFormRev('08/08');
     }
 

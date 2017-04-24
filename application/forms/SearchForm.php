@@ -94,7 +94,10 @@ class Form_SearchForm extends Zend_Form {
                     ),
                     'PART C FORMS' => array(
                         '013' => "IFSP",
-                        '032' => "Notice of Meeting (IFSP)",
+                       /* '032' => "Notice of Meeting (IFSP)",
+                        * Mike changed this 4-18-2017 jira SRS-50
+                        */
+                        '032' => "Notice of Meeting (Part C)",
                         '014' => "Notification of IFSP Meeting (Outdated)",
                         '016' => "Notice and Consent for Initial Placement (IFSP)",
                         '027' => "Notice and Consent for Early Intervention Initial Screening",
@@ -333,7 +336,11 @@ class Form_SearchForm extends Zend_Form {
             ),
             'PART C FORMS' => array(
                 '013' => "IFSP",
-                '032' => "Notice of Meeting (IFSP)",
+              /* '032' => "Notice of Meeting (IFSP)",
+               * Mike changed this 4-18-2017 jira ticket SRS-50
+               * 
+               */
+                '032' => "Notice of Meeting (Part C)",
                 '014' => "Notification of IFSP Meeting (Outdated)",
                 '016' => "Notice and Consent for Initial Placement (IFSP)",
                 '027' => "Notice and Consent for Early Intervention Initial Screening",

@@ -1,0 +1,65 @@
+<?$auth = Zend_Auth::getInstance();?>
+<style>
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 10px;
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 90px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+
+</style>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+                <?php // if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <?php //if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+        </td>
+    </tr>
+</table>
+
+<div style="position: relative; width: 100%; height: 300px; padding: 10px 0;">
+
+<h1><strong>Access Denied (952)</strong></h1><br>
+<strong>
+ <?php echo $this->note; ?><p> Please contact the SRS Help Desk if you need access to this function.<br>
+<br>
+For assistance, please contact us at <a href="mailto:mdanahy@esucc.org">mdanahy@esucc.org</a>
+<br><a href="/student/search">Return to Student Search Page</a>
+</strong>
+
+</div>
+
+<?php die();?>

@@ -63,7 +63,19 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         if (isset($formAccessArr[$form->status]['view']) && $formAccessArr[$form->status]['view']) {
             $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
         }
-        if('Draft'==$form->status) {
+   
+    // Mike changed this 4-18-2017 as per jira SRS-42
+    //    if('Draft'==$form->status) {
+           if('Draft'==$form->status||$form->form_no=='023'|| $form->form_no=='022') {    
+            
+                if($form->form_no=='023' || $form->form_no=='022'){
+                    $formAccessArr[$form->status]['delete']=true;
+                } 
+    
+                // end of Mike change
+                
+                
+                
             if (isset($formAccessArr[$form->status]['edit']) && $formAccessArr[$form->status]['edit']) {
                 $options[] = '<option href="/form'.$form->form_no.'/edit/document/'.$form->id.'/page/1">Edit</option >';
             }
