@@ -8,7 +8,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	
 	protected $primaryKeyName;
 	protected $modelName;
-	public $formNumber;
+	public $formNumber; 
 	protected $formClass;
 	protected $title;
 	public $subFormsArray = array ();
@@ -18,7 +18,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	protected $subFormsForDuping;
 	
 	public function setFormNumber($formNumber) {
-		$this->formNumber = $formNumber;
+		$this->formNumber = $formNumber;  
 	}
 	public function getFormNumber() {
 		return $this->formNumber;
@@ -63,10 +63,10 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	public function preDispatch() {
 
         /**
-         * run application level preDispatch to setup
+         *    run application level preDispatch to setup
          * initial email and other global config options
          */
-        parent::preDispatch();
+        parent::preDispatch();  
 
 		// ===============================================================================================================
 		// archiver access
@@ -77,9 +77,9 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
             $archiveConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/archive.ini', APPLICATION_ENV);
 
             // log in the archive user
-			$auth = new App_Auth_Authenticator();
+			$auth = new App_Auth_Authenticator(); 
 			$user = $auth->getCredentials($archiveConfig->siteAccess->username, $archiveConfig->siteAccess->password);
-			if($user)
+			if($user) 
 			{
 				App_Helper_Session::grantSiteAccess($user, false);
 			}
@@ -1723,6 +1723,8 @@ END;
 	
 	public function createAction() {
 
+	    
+	    
 		$createOldForms = Zend_Registry::get('create-old-forms');
 		$studentObj = new Model_Table_StudentTable();
 		$student = $studentObj->studentInfo($this->getRequest()->student);
@@ -1775,6 +1777,7 @@ END;
 		$formObj = new $modelName ();
 		$current = $formObj->find ( $newId )->current ();
 		$current->version_number = $this->version;
+	
 		if (isset ( $this->preCreateRequirementsArray )) {
 			// these are chosen by the user in preCreateRequirements
 			foreach ( $this->preCreateRequirementsArray as $key => $value ) {
@@ -1797,6 +1800,7 @@ END;
 		// validate user can 
 		
 
+	    
 		$modelName = "Model_Table_Form" . $this->getFormNumber ();
 		$formObj = new $modelName ();
 		$formObj->checkoutComplete ( $this->getRequest ()->document );
