@@ -53,10 +53,29 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             $accessArrayObj = new $accessArrayClassName ();
         }
    //     echo '<pre>' . print_r($accessArrayClassName, true) . '</pre>';
+      
+        
+      /* Mike changed this 4-24-2017 to the uncommented code per jira SRS-57 
+       * if(!empty($form->form_no)) {
+            $formKey = 'form_' . $form->form_no;
+            $formAccessArr = $accessArrayObj->$formKey;
+        }*/
+        
         if(!empty($form->form_no)) {
             $formKey = 'form_' . $form->form_no;
             $formAccessArr = $accessArrayObj->$formKey;
-        } else {
+        
+            if(isset($formAccessArr['Final']['dupe_form_004'])) {
+                $form004DupMenu= new Model_Table_Form004();
+                $continue=$form004DupMenu->removeDupeMenu($id_student);
+                $formAccessArr['Final']['dupe_form_004'] = $continue;
+                // $this->writevar1($formAccessArr,'this is the form access array');
+                //$this->writevar1($formAccessArr['Final']['dupe_form_004'],'this is the form access array that was built');
+            }
+        
+        }
+        // Mike changed the above to this 4-24-2017 srs-17
+        else {
             $formAccessArr = array();
         }
 
