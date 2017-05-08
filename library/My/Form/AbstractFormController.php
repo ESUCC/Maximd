@@ -1921,6 +1921,13 @@ END;
 		$modelform = new $modelName ( $this->getFormNumber (), $this->usersession );
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true );
 
+		// Mike added this 4-24-2017 so that no 2 people can edit a form together.
+		if(isset($dbData[0]['message'])) {
+		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
+		    	
+		}
+		// end of Mike Add
+		
 		// store the list of subforms
 		// used in addSubformRow
 		$dbData ['subformIndexToModel'] = $modelform->subformIndexToModel;

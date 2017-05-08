@@ -266,6 +266,9 @@ class Model_AbstractForm
         		// in persistData in the zend html form definition
         		$result = $this->table->checkout($id, $this->usersession->sessIdUser);
         		if(false !== $result) $this->db_form_data['zend_checkout_time'] = $this->convertDatePostgresToJavascript($result);
+        	// Mike added return false 4-24-2017 it was in iepweb03 but not here jira
+        	// ticket SRS-46
+        	 return false;
         	}
         }
 	}
