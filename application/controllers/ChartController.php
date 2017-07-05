@@ -10,7 +10,7 @@ class ChartController extends App_Zend_Controller_Action_Abstract {
 	    $tk = new Model_Table_IepSession();
 		$session = $tk->getSessionBySessId($this->getRequest()->getParam('PHPSESSID'));
 		
-    	//https://iepweb02.esucc.org/chart/chart/PHPSESSID/gu94io8esn5glvtu3g1umbouc4/chartid/3282
+    	//https://iepweb02.unl.edu/chart/chart/PHPSESSID/gu94io8esn5glvtu3g1umbouc4/chartid/3282
 		//Zend_Debug::dump($this->getRequest()->getParam('PHPSESSID'));
 		// all controllers that extend App_Zend_Controller_Action_Abstract
 		// require user to be logged in
