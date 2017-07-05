@@ -56,6 +56,25 @@ class Model_Table_Form004 extends Model_Table_AbstractIepForm
         	return false;
         }
     }
+    
+    function removeDupeMenu($id_student){
+        $stmt = $this->db->query("SELECT status from iep_form_004 where id_student= ?",$id_student);
+        $result=$stmt->fetchAll();
+        $t_f=true;
+    
+        foreach($result as $reslt){
+            //      $this->writevar1($reslt['status'],'this is the result');
+            if ($reslt['status']!='Final'){
+                $t_f=false;
+            }
+        }
+        // $this->writevar1($t_f,'this is the boolean in the model returned');
+        return $t_f;
+    
+         
+    }
+    
+    
     function buildFteMinutes($iep)
     {
         $this->spEdTime = 0;

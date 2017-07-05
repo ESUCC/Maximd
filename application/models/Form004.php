@@ -23,16 +23,41 @@ class Model_Form004 extends Model_AbstractForm
 	
 	public function find($id, $accessMode = "view", $page =1, $versionNumber = 1, $checkout = 0)
 	{
-//		try {
-			if(false === parent::buildDbForm($id, $accessMode, $page, $versionNumber, $checkout))
-			{
-				return false;
-			}
+
+
+
+
+	    /*
+	     * Mike replaced this with the catch try
+	     if(false === parent::buildDbForm($id, $accessMode, $page, $versionNumber, $checkout))
+	     {
+	      
+	     return false;
+	     }
+	     */
+	     
+	    try {
+	        	
+	        $this->buildDbForm($id, $accessMode, $page, $versionNumber, $checkout);
+	        	
+	        	
+	        	
+	    }
+	    catch (App_Exception_Checkout $e) {
+	        //	    $this->writevar1($e->getMessage(),'this is the error message');
+	        //    $this->view->scott=$e->getMessage();
+	        $t[0]['message']=$e->getMessage();
+	        return $t;
+	    }
+
 //		} catch (App_Exception_NoAccess $e) {
 //			Zend_Debug::dump('gorilla');
 //			return $e;
 //		}
 
+			
+			
+			
         // transition plan -- force true when student is over 15 years 1 day
         /*
         if(true == $this->db_form_data['student_data']['force_tran_plan'])
