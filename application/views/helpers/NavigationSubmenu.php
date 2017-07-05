@@ -42,6 +42,10 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
+           
+            // Mike added this Jul 5th for password change
+            $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword">Changes Password</a></li>';
+            
         }
         $this->returnText .= '</ul>';
         return $this->returnText;
@@ -75,6 +79,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="/personnel/edit/id_personnel/'.$session->sessIdUser.'">Edit Profile</a></li>';
 //            $this->returnText .= '  <li><a href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">Password</a></li>';
             $this->returnText .= '  <li><a href="https://docs.google.com/forms/d/1qwgwOVAAcLCgn9JR8FbBnEOLGLH3c-hWpM5HxNbvgOo/viewform">Suggestions</a></li>';
+            
         }
         $this->returnText .= '</ul>';
         return $this->returnText;

@@ -1,0 +1,43 @@
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+ <table border="0">
+        <!-- logo row -->
+        <?php $this->_helper->layout()->disableLayout();?>
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                  //  echo $this->navigationTopTabs('simple');
+                } ?>
+            </td> 
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                  //  echo $this->navigationSubmenu('district');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<script>
+
+<script type="text/javascript">
+$("document").ready(function() {
+	$("#password").css("width","80%");
+	$("#password_confirm".css("width","80%"))
+}
+	 
+</script>
+
+<H2><Center>Change Password for <?php echo $this->fullName.". "?>
+  Passwords must match and be six or more characters.</h2>
+<br>
+<br>
+
+
+<?php echo $this->messages; ?>
+<br>
+ <?php  echo $this->form ?>
+    
+
+
