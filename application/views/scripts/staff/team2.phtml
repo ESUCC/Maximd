@@ -1,0 +1,477 @@
+<html>
+
+<link href="/css/w3.css" media="screen" rel="stylesheet" type="text/css">
+<body class="w3-container">
+<center>
+
+
+ <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+               echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    
+                   
+                 echo   $this->navigationSubmenu('Student');
+                } ?>
+            </td>
+        </tr>
+        
+    </table><p><p><br><br>
+     <div id="insertHere"></div>
+    <br>
+    
+    <style>
+#mainFooter {
+   top:0px;
+   height: 0px;
+   padding: 0px;
+   
+}
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 90px;
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+
+ 
+    </style>
+    <?php 
+    
+    
+    
+    $Stu_id_county= $_SESSION["user"]["user"]->user["id_county"]; 
+    $Stu_id_district = $_SESSION["user"]["user"]->user["id_district"];
+    
+$cnt=count($this->schoolName);
+for ($x=0;$x<$cnt;$x++){
+ 
+   if($this->districtList[0]['id_school']==$this->schoolName[$x]['id_school']) {
+        /*
+         * Mike wants to check to see if this staff member has the rights to 
+         * add students to his/her team.
+         * $_SESSION['user']['user']->privs[0]['class'];
+         */
+       $canEdit='no';
+        foreach($_SESSION['user']['user']->privs as $rights){
+           
+            // This checks for the case managers, school admin and school asst admin
+            if ($this->schoolName[$x]['id_district']==$rights['id_district']&&
+                $this->schoolName[$x]['id_county']==$rights['id_county']&&
+                $this->schoolName[$x]['id_school']==$rights['id_school']&& 
+                $rights['class']<=6) $canEdit='yes';
+           
+           // This check for the dist admin and associate dist admins
+            if ($this->schoolName[$x]['id_district']==$rights['id_district']&&
+                $this->schoolName[$x]['id_county']==$rights['id_county']&&
+                $rights['class']<=3) $canEdit='yes';
+        }
+       
+       
+        echo "<h2><center>".$this->schoolName[$x]['name_school']."</h2></center>";
+           }
+   } 
+   if($canEdit=='yes') $disable="";
+    
+   if($canEdit=='no') $disable='disabled='.'"disabled"';
+  
+   
+   $school_sv=$this->id_school;
+   $county_sv=$this->id_county;
+   $district_sv=$this->id_district;
+   $user_id=$this->user_id;
+   
+   ?>
+  
+  <select onChange="window.location.href=this.value">
+<option value=''>Please Select A School</option>
+  
+   <?php 
+$cnt=count($this->schoolName);
+for ($x=0;$x<$cnt;$x++){
+?>
+
+
+<option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team2','id_personnel'=>$user_id, 
+                    'id_county'=>$county_sv,
+                     'id_district'=>$district_sv,
+                     'id_school'=>$this->schoolName[$x]['id_school']));?>"><?php echo $this->schoolName[$x]['name_school'] ?>
+                     </option>
+         
+         
+      
+    
+ 
+<?php  
+} ?>
+</select><br>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <br>
+
+<div class="w3-col w3-border w3-round-xlarge  w3-border-black w3-striped w3-grey w3-center" style="width:25%"><b>List of Teachers</b><p>
+<i>Teachers in Blue are Administrators</i>
+ <style>
+
+
+ th {
+   	text-align: left;
+    font-size:0.70em;
+    }
+    
+    
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+	
+}
+tr a:hover{
+	background: #FFF999;
+}
+
+a:active {
+    text-decoration: underline
+}
+
+.Mike tr:hover{
+	background: #FFF999;
+}
+ 
+
+   </style>
+
+   <p><table>
+   
+   <tr><th><h3>List of Teachers</H3></th></tr></table>
+   <table>
+   <?php 
+   $school_sv=$this->id_school;
+   $county_sv=$this->id_county;
+   $district_sv=$this->id_district;
+   $user_id=$this->user_id;
+   
+echo ('<table  class="w3-table w3-bordered w3-round-xlarge w3-striped Mike">');
+ 
+    $incStaff=1;
+   
+    $count=count($this->districtAdmin);
+    
+    foreach($this->districtAdmin as $Admin)
+    {
+        $fullName= ($Admin['name_first']." ".$Admin['name_last']."   ");
+        $staffId=$Admin['id_personnel'];
+        $adminID=$staffId;
+        
+        $schId=$this->districtList[0]['id_school']; 
+     
+        
+      // writevar($fullName,'this is the full name');?>
+      
+        <th><font color="blue"> <a href="https://iepweb02.esucc.org/staff/team2/id_personnel/<?php echo $staffId;?>/id_county/<?php echo $county_sv?>/id_district/<?php echo $district_sv?>/id_school/<?php echo $schId ?>"> <?php echo $staffId." ". $fullName;?></th></tr>
+    
+ 
+ <?php
+    } ?>
+    </font>
+    <?php 
+  
+   foreach($this->paginator as $staffMember ){
+    //   $fullName= ($this->paginator['name_first']." ".$this->paginator['name_last']."   ");
+    //   $staffId=$this->paginator['id_personnel'];
+    //   $schId=$this->paginator['id_school'];
+       
+   
+  
+   
+   /*
+   for($x=0;$x<$count;$x++) { 
+       $fullName= ($this->paginator[$x]['name_first']." ".$this->paginator[$x]['name_last']."   "); 
+       $staffId=$this->paginator[$x]['id_personnel'];
+       $schId=$this->paginator[$x]['id_school'];
+       */
+   
+       ?>
+       <th> <a href="https://iepweb02.esucc.org/staff/team2/id_personnel/<?php echo $staffMember['id_personnel']?>/id_county/<?php echo $county_sv?>/id_district/<?php echo $district_sv?>/id_school/<?php echo $school_sv ?>"> 
+            <?php echo $staffMember['id_personnel']." ". $staffMember['name_first']." ".$staffMember['name_last'];?></th></tr>
+       
+       <?php  } ?>
+       
+     <?php echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team2'));
+   
+   ?>
+   
+   
+   </table>
+   
+   
+   
+  </div>
+  
+  
+  
+  <!-- This ENDS the LIST OF TEACHERS   NOW GET THE LIST OF STUDENTs -->
+  
+  
+  <style>
+   td {
+   	text-align: left;
+   }
+
+   </style>
+   
+  <div class=" w3-col w3-border" style="width:2%"><p>
+  </p></div>
+   
+   <div class=" w3-col  w3-light-red w3-border w3-round-xlarge  w3-grey w3-border-black" style="width:38%"><p>
+   <p><table>
+    
+   <tr><th><h4><center>List of Students on <?php echo $this->staffMemberFullName; echo "'s team";?></center></H4></th></tr></table>
+  
+   <style>
+  
+ td {
+   	text-align: left;
+    font-size:0.70em;
+    }
+    
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+}
+
+  
+td:hover{
+	background: #FFF999;
+}
+   
+
+   </style>
+  
+  
+  <form action ="https://iepweb02.esucc.org/staff/updates/" method="post">
+   <table  class="w3-table w3-bordered w3-round-xlarge w3-striped Mike">
+  
+   <?php $count=count($this->studentsOfTeam);
+   
+   $all=$this->studentsOfTeam;
+ 
+  
+  
+  
+  $trackTotal=0;
+   
+   $nameDist='';
+   foreach($this->studentsOfTeam as $team) {
+       $display='no';
+       $cboxE='';
+       $cboxV='';
+       $cboxC='';
+        
+       if($team['flag_edit']==1) $cboxE='checked';
+       if($team['flag_view']==1) $cboxV='checked';
+       if($team['flag_create']==1) $cboxC='checked';
+        $team['exists']='yes';
+       
+            
+           ?>
+          <tr><td>
+                     
+                     <?php 
+                 // NOTE: in order to get the list of all the students even outside the district the id_district and id_county must
+                 // be taken out of model_table_iep_students function  sql statement of the getTeamStudents function.  
+                 
+                 if($team['id_district']<>$district_sv || $team['id_county']<>$county_sv) {
+                     $color="red";
+                     $display='no';
+                  /*   foreach($this->nameDistricts as $distName){
+                         if($team['id_district']==$distName['id_district'] && $team['id_county']== $distName['id_county']) {
+                             $nameDist=$distName['name_district'];
+                             
+                         }
+                  } */
+                 }
+                   else
+                   {
+                             $color="blue";
+                             $nameDist='';
+                             $display='yes';
+                    }
+                     
+             if($display=='yes') {        
+             echo ("<tr><td><font color=\"$color\">".$team['id_student'].' ');
+             echo ("</th><td><b>".$team['name_first'].' '.$team['name_last'].'</b> '.$nameDist." ".$team['id_district'].' '.$team['id_county']); ?></font></td>
+              <td><input  type ="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo $team['id_student']?>"></td>
+             <td>  <input type="checkbox" <?php echo $disable ?>  name="<?php echo("E_".$team['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</td>
+              <td>  <input type="checkbox" <?php echo $disable ?> name="<?php echo("V_".$team['id_student'])?>" value="1"<?php echo($cboxV)?>>view</td>
+              <td>  <input type="checkbox" <?php echo $disable ?> name="<?php echo("C_".$team['id_student'])?>" value="1"<?php echo($cboxC)?>>create</td>
+             <td>  <input type ="hidden" name="<?php echo("X_".$team['id_student'])?>" value="<?php echo $team['exists']?>"></td></tr>
+         
+       
+  <?php
+              $trackTotal=$trackTotal+1;
+             }  // only display those in the district
+   }
+   ?>
+ 
+   </table><p><br>
+   
+   <table  class="w3-table w3-bordered w3-round-xlarge w3-light-blue Mike">
+   
+   <tr><td><center><h2></h2><u>List of Students not on <?php echo $this->staffMemberFullName; echo "'s team:";?></u></h2></center></td></tr><br>
+   </table>
+   
+   <table  class="w3-table w3-bordered w3-round-xlarge w3-striped Mike">
+   <?php 
+   
+   
+   
+   
+   foreach($this->paginator1 as $listStudent ) {
+   
+       $cboxE='';
+       $cboxV='';
+       $cboxC='';
+       $listStudent['exists']='no'; 
+       
+       
+       $view='no';
+       $insideInc=0;
+       foreach($this->studentsOfTeam as $team ){
+           
+           if($team['id_student']==$listStudent['id_student'])
+           {
+              $insideInc=1;
+              $view='no';
+              $listStudent['exists']='yes';
+           }
+           else 
+           {
+               if($insideInc!=1)
+               $view='yes';
+               
+           }
+           
+       }
+        
+       
+            
+           ?>
+          
+                     
+ <?php 
+          
+          
+                 
+       //  if($view=='yes'){
+             echo ("<tr><td>".$listStudent['id_student'].' '."</td>");
+             echo ("</td><td>".$listStudent['name_first'].' '.$listStudent['name_last']); 
+             echo ($listStudent['id_district'].' '); ?>
+             
+            <td><input  type ="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo $listStudent['id_student']?>"></td>
+             <td>  <input type="checkbox"  <?php echo $disable ?>  name="<?php echo("E_".$listStudent['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</td>
+              <td>  <input type="checkbox" <?php echo $disable ?> name="<?php echo("V_".$listStudent['id_student'])?>" value="1"<?php echo($cboxV)?>>view</td>
+              <td>  <input type="checkbox" <?php echo $disable ?> name="<?php echo("C_".$listStudent['id_student'])?>" value="1"<?php echo($cboxC)?>>create</td>
+             <td>  <input type ="hidden" name="<?php echo("X_".$listStudent['id_student'])?>" value="<?php echo$listStudent['exists']?>"></td></tr>
+       
+       
+            <?php  
+           $trackTotal=$trackTotal+1;
+   //    }// end of the student list of people not in iep_student_team
+   } // end of this paginator
+   
+   
+   echo $this->paginationControl($this->paginator1,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team2')); ?>
+   </table>
+   <input type="hidden" name="id_district" value ="<?php echo $district_sv?>">
+   <input type="hidden" name="id_county" value ="<?php echo $county_sv?>">
+   <input type="hidden" name="total_count" value =<?php echo $trackTotal?>>
+  
+   <input type="hidden" name="id_personnel" value = <?php echo $this->staffMemberId ?>>
+   <input type="hidden" name="id_school" value = <?php echo $school_sv ?>>
+       </tr>
+       <?php if($canEdit=='yes') {?>
+    <input type="submit" value="SAVE"><p>
+      </form></tr>
+      <?php }?>
+   
+   
+   
+   </table>
+  <br>
+   
+  </div>
+   
+  
+   
+   
+ <br>
+ 
+</div>
+<br>
+
+ 

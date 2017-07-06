@@ -1,0 +1,187 @@
+
+
+
+
+<html>
+
+
+
+<body>
+
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php  }?> 
+
+
+    <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?> 
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<style>
+
+/* body {
+	width: 70%;
+	margin: 0 auto;
+	padding: 10%;
+	line-height: 1.6;
+} */
+.flex-container {
+	display:-webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin: 1em 0;
+	flex-flow: row wrap-reverse;
+}  	
+</style>
+
+<style style="text/css">
+  	.hoverTable{
+		width:100%; 
+		border-collapse:collapse; 
+	}
+	.hoverTable td{ 
+		padding:7px; 
+	}
+	/* Define the default color for all the table rows */
+	
+	/* Define the hover highlight color for the table row */
+    .hoverTable tr:hover {
+          background-color: #ffff99;
+    }
+</style>
+
+
+<section class="flex-container">
+<div class="box flex1">
+<h1><b><center>Status of Staff at Other Schools</center></b></h1><br><p>
+
+<head>
+
+<table>
+<?php 
+ foreach($this->schools as $schools){ ?>
+<tr><td><?php echo $schools['name_school']?><td>     
+<td><a href=https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
+"/id_school/".$schools['id_school']."/status/true"?>> Active</a></td>
+
+
+
+<td><a href=https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
+"/id_school/".$schools['id_school'].
+   "/status/false"?>>Inactive</td></a>
+   
+ <td><a href=https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
+   "/id_school/".$schools['id_school'].
+   "/status/removed"?>>Removed</a></td></tr>
+ 
+ <?php  
+ 
+ }
+ 
+ $x=0;?>
+ </table>
+ </div>
+ 
+ 
+
+
+<div class="box flex2">
+<h1><b><center>List of Staff at <?php echo $this->schoolName?> School</center></b></h1><br>
+<table>
+<tr><th>NAME</th><th>District Name</th><th>Class Value</th><th>School Id</th><th>Status<th></tr>
+
+<br>
+<form action="https://iepweb02.esucc.org/personnelm/updatePrivs/" method="post">
+<?php foreach($this->staffListb as $staff)
+  {
+      $fname=$staff['name_first'];
+      $lname=$staff['name_last'];
+      $fullName=$fname." ".$lname;
+      $id=$staff['id_personnel'];
+      $t=$staff['class'];
+      $name='';
+      switch ($t){
+          case 2: $name='District Manager';
+          break;
+          case 3: $name='Associate District Manager';
+          break;
+          case 4: $name='School Manager';
+          break;
+          case 5: $name='Assistant School Manager';
+          break;
+          case 6: $name='Case Manager';
+          break;
+          case 7: $name='School Staff';
+          break;
+          case 8: $name='Specialist';
+          break;
+          case 10: $name='Service Coordinator';
+          break;
+      }
+    if($staff['status']!='') {
+     $status=$staff['status'];
+     $checkA='';
+     $checkI='';
+     $checkR='';
+     
+      switch($status){
+          case 'Active': $checkA="checked";
+          break;
+          case 'Inactive':$checkI="checked";
+          break;
+          case 'Removed' :$checkR="checked";
+          break;
+          
+      }
+     
+     
+     
+     ?>
+      
+<tr><td><a href=https://iepweb02.esucc.org/personnel/edit/id_personnel/<?php echo $staff['id_personnel']?>>
+        <?php echo $fullName?></a></td><td><?php echo $staff['name_district']?></td><td><?php echo $name?></td><td>
+        
+        <td> <input type ="hidden" name="<?php echo ("ID_".$x)?>"value="<? echo $staff['id_personnel']?>"></td>
+        <td> <input type ="hidden" name="<?php echo ("CLASS_".$x)?>"value="<? echo $staff['class']?>"></td>
+        <td><input type ="radio" name="<?php echo ("S_".$x)?>"value="Active"<?php echo $checkA?>>Active</td>
+        <td><input type ="radio" name="<?php echo ("S_".$x)?>"value="Inactive"<?php echo $checkI?>>InActive</td>
+        <td><input type ="radio" name="<?php echo ("S_".$x)?>"value="Removed"<?php echo $checkR?>>Removed</td>
+        
+        <td><?php // echo $staff['status']?></td></tr>      
+       
+        <?php // echo $staff['status']?>
+  
+  <?php 
+    $x=$x+1;
+    }
+  }
+  $count=$x-1;
+   ?>
+   
+   <tr><td> <input type ="hidden" name="id_county" value="<?php echo $this->countyId?>"></td>
+    <td> <input type ="hidden" name="count" value="<?php echo $count?>"></td>
+   <td> <input type ="hidden" name="id_district" value="<?php echo $this->districtId?>"></td>
+    <td><input type ="hidden" name="id_school" value="<?php echo $this->schoolId?>"></td>
+    <td><input type ="hidden" name="name_district" value="<?php echo $this->schoolName?>"></td> </tr> 
+    <tr><td><input type="submit" value="SAVE"></td></tr>
+    <td></Form></tr>
+</table>
+</div>
+
+</section>
+
+

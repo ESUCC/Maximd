@@ -1,0 +1,45 @@
+
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php  }?> 
+
+
+    <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?> 
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+<h3>Please Select a District </h3><br>
+
+
+<?php 
+
+foreach ($this->privileges as $privilege)
+{
+    $privilege['id_school']='001';
+    if($privilege['name_district'])
+    { 
+        if(($privilege['class']==2 || $privilege['class']==2 )&& $privilege['status']=='Active'){    
+              $privilege['id_school']='001';
+        }
+         ?>   <a href="https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $privilege['id_county']?>/id_district/<?php echo $privilege['id_district']?>/id_school/<?php echo $privilege['id_school']?>/status/true"><?php echo $privilege['name_district']." ".$privilege['name_school']?></a><p>
+         
+            
+<?php      
+    }
+}?>
+
+
+      

@@ -1,0 +1,203 @@
+<html>
+
+<!--  <link rel="stylesheet" href="https://mike-dev.aapnebraska.org/css/w3.css"> -->
+<link href="/css/w3.css" media="screen" rel="stylesheet" type="text/css">
+<body class="w3-container">
+<center>
+<h2> District  <?php echo $this->somedata[0]['name_district']; ?></h2><p></center>
+
+ <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    
+                   
+                  echo   $this->navigationSubmenu('Student');
+                } ?>
+            </td>
+        </tr>
+    </table><p><p><br><br>
+    
+    
+<div class=" w3-col  w3-light-green w3-border w3-round-xlarge w3-border-black" style="width:12%"><p>
+   <p><table>
+   
+   <tr><th><h3>List of teachers</H3></th></tr></table>
+   <table>
+   <?php 
+
+echo ('<table  class="w3-table w3-bordered w3-round-xlarge w3-striped ">');
+ 
+    $incStaff=1;
+    $staffCnt=count($this->districtList);
+    
+    // This will get the first student from each batch
+    $allStudents=$this->STeamlist;
+    $seed=$allStudents[0]['id_student'];
+   writevar($seed,'this is the seed'); 
+  
+   
+   foreach($this->paginator as $person) { 
+       $fullName= ($person['name_first']." ".$person['name_last']."   "); 
+      
+       ?>
+       <tr>
+       
+     
+       <th> <a href="https://iepweb02.esucc.org/staff/team/id_student/<?php echo $seed; ?>/id_personnel/<?php echo $person['id_personnel'] ?>"> <?php echo $person['id_personnel']." ". $fullName;?></th></tr>
+       
+       <?php }
+       
+       echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'))?>
+   
+   
+   
+   </table>
+   
+  </div>
+  
+  <style>
+   td {
+   	text-align: left;
+   }
+   </style>
+   
+   <?php 
+ //  FIND out the persons first and last names
+ $firstName='';$lastName='';
+ 
+   foreach($this->districtList as $staff) {
+       if ($staff['id_personnel']==$this->user_id) {
+           $firstName=$staff['name_first'];
+           $lastName=$staff['name_last'];
+       }
+        
+   }
+  
+   if($firstName ==''){ $firstName='No FirstName'; }
+   if($lastName =='') { $lastName='No LastName';}
+    
+   
+   ?>
+   
+   
+   
+  <div class="w3-col w3-striped w3-light-gray w3-center w3-border w3-round-xlarge w3-border-black"style="width:40%">
+  <h3 class="w3-light-green"><i>Students on :<?php echo $firstName." ".$lastName."'s Team"?></h3><p>
+  
+  <?php 
+  $all=$this->Teamlist;
+  //$all=$this->studentList;
+  $x=0;
+  $numberStu=count($all); ?>
+  
+  
+ <?php  echo("<table>"); 
+ $x=0;
+ $districtStuList=$this->studentList;
+ //writevar($districtStuList[$x]['name_last'],'this is the student list'); die();// this is array[x][' '] 
+ $x=0;
+ $totalStus=count($this->teacherView);
+ $all=$this->teacherView;
+ ?>
+ 
+ 
+ 
+ 
+ 
+ 
+ <form action ="https://iepweb02.esucc.org/staff/updates/" method="post">
+ <table>
+ <?php 
+ $trackTotal=0;
+ for($x=0;$x<$totalStus;$x++)
+
+ {
+     
+     $cboxE='';
+     $cboxV='';
+     $cboxC='';
+     
+     if($all[$x]['flag_edit']==1) $cboxE='checked';
+     if($all[$x]['flag_view']==1) $cboxV='checked';
+     if($all[$x]['flag_create']==1) $cboxC='checked';
+         
+     if($all[$x]['exists']=='yes') {
+       
+         ?>
+              <tr><th>
+              
+              <?php 
+              
+      echo ("<tr><th>".$all[$x]['id_student'].' ');
+      echo ("</th><th>".$all[$x]['name_first'].' '.$all[$x]['name_last']); ?></th>
+     <th>  <input  type ="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo$all[$x]['id_student']?>"></th>
+      <th>  <input type="checkbox" name="<?php echo("E_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</th>
+       <th>  <input type="checkbox" name="<?php echo("V_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxV)?>>view</th>
+       <th>  <input type="checkbox" name="<?php echo("C_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxC)?>>create</th>
+      <th>  <input type ="hidden" name="<?php echo("X_".$all[$x]['id_student'])?>" value="<?php echo$all[$x]['exists']?>"></th></tr>
+<?php 
+      $trackTotal=$trackTotal+1;
+      
+     }
+ }
+ 
+ ?></table><table>
+ <tr>-------------- Students Not On <?php echo $firstName." ".$lastName."'s"?>Team ------------------</tr>
+ 
+ <?php 
+ 
+// writevar($all,'this is all');
+ 
+ //for($x=0;$x<$totalStus;$x++) {
+ //writevar($all,'this is all the students in team view');
+ 
+ for($x=0;$x<$totalStus;$x++) {
+     $cboxE='';
+     $cboxV='';
+     $cboxC='';
+      
+     if($all[$x]['flag_edit']==1) $cboxE='checked';
+     if($all[$x]['flag_view']==1) $cboxV='checked';
+     if($all[$x]['flag_create']==1) $cboxC='checked';
+      
+     ?><tr><th><?php
+      if($all[$x]['exists']=='no'){
+       echo ("<tr><td>".$all[$x]['id_student'].' ');
+       echo ("</td><td>".$all[$x]['name_first'].' '.$all[$x]['name_last']); ?></th>
+       <th>  <input  type ="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo$all[$x]['id_student']?>"></th>
+         <th>  <input type="checkbox" name="<?php echo("E_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</th>
+         <th>  <input type="checkbox" name="<?php echo("V_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxV)?>>view</th>
+         <th>  <input type="checkbox" name="<?php echo("C_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxC)?>>create</th>
+         <th>  <input type ="hidden" name="<?php echo("X_".$all[$x]['id_student'])?>" value="<?php echo$all[$x]['exists']?>"></th></tr>
+ <?php 
+      $trackTotal=$trackTotal+1; //writevar($trackTotal,'this is the no loop and the total of tracktotal');
+     
+      }
+      }
+ 
+  ?>
+ 
+   </table>
+   
+   
+    <input type="hidden" name="id_personnel" value = <?php echo $this->user_id ?>>
+    <input type="hidden" name="total_count" value = <?php echo $trackTotal?>>
+    <input type="submit" value="SUBMIT"><p>
+   </form></tr>
+  
+  
+   
+   
+  
+      
+
+

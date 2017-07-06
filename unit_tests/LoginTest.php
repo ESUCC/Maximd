@@ -60,7 +60,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     public function loginIepweb02Site()
     {
         // new HTTP request to new
-        $newSiteClient = new Zend_Http_Client('https://iepweb03.esucc.org/login', $this->httpParams);
+        $newSiteClient = new Zend_Http_Client('https://iepweb02.esucc.org/login', $this->httpParams);
         $newSiteClient->setMethod(Zend_Http_Client::POST);
         $newSiteClient->setCookieJar();
         $newSiteClient->setParameterPost('email', 'archiver');
@@ -79,7 +79,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     public function loginIepweb03Site()
     {
         // new HTTP request to new
-        $newSiteClient = new Zend_Http_Client('https://iepweb03.esucc.org/login', $this->httpParams);
+        $newSiteClient = new Zend_Http_Client('https://iepweb02.esucc.org/login', $this->httpParams);
         $newSiteClient->setMethod(Zend_Http_Client::POST);
         $newSiteClient->setCookieJar();
         $newSiteClient->setParameterPost('email', 'archiver');

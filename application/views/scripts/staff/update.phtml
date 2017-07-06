@@ -1,0 +1,73 @@
+<html>
+<style>
+       .test-element{>
+           float: left;
+           width: auto;"chec
+           margin-left: 20em;
+      
+       </style>
+<body>
+<center>
+<h2> District  <?php echo $this->somedata[0]['name_district']; ?></h2>
+<h2> Student  <?php  echo ($this->somedata[0]['name_first']." ".$this->somedata[0]['name_last']); ?></h2>
+
+</center>
+
+
+
+
+
+
+<div class="test-element">
+
+
+
+<?php 
+   foreach($this->districtList as $person) { 
+      // echo ($person['name_last'] ."  ".$person['name_first']."<p>");
+   ?>
+
+
+       
+       <b>
+      
+      
+</style>
+<table>
+      
+      <?php  $checke='0'; $checkv='';$checkc='';
+           if ((($this->staffMemberRights[0]['flag_edit']== '1')) 
+              && ($this->staffMemberRights[0]['id_personnel']== $person['id_personnel'])) $checke="checked";
+            
+              $checkv='0';
+              if ((($this->staffMemberRights[0]['flag_view']== '1'))
+                  && ($this->staffMemberRights[0]['id_personnel']== $person['id_personnel'])) $checkv="checked";
+              
+               $checkc='0';
+               if ((($this->staffMemberRights[0]['flag_create']== '1'))
+                   && ($this->staffMemberRights[0]['id_personnel']== $person['id_personnel'])) $checkc="checked";
+                  
+             ?>
+             
+             <tr><th width="90pts" align="left">
+             <?php 
+             echo ("<b>".$person['name_first']." ".$person['name_last']."   ");
+          
+       ?>
+       <form action="<?php echo $this->url(array('controller'=>'staff','action'=>'update'))?>" method="post">
+         </th>
+         <th><input type="checkbox" name="<?php echo $person['id_personnel']."[]"?>" value="" <?php echo $checke?>>edit</th>
+         <th><input type="checkbox" name="<?php echo $person['id_personnel']."[]"?>" value=""<?php echo $checkv?>>view</th>
+          <th><input type="checkbox" name="<?php echo $person['id_personnel']."[]"?>" value=""<?php echo $checkc?>>create</th></tr> 
+            <input type="submit" value="Submit">
+       </form>
+       
+       <?php } ?>
+            
+        
+  
+  
+ 
+<div>
+
+</body>

@@ -1108,7 +1108,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		
 		
 		imagepng ( $im, $_SERVER ['DOCUMENT_ROOT'] . 'temp/' . substr ( $url [1], strrpos ( $url [1], '/' ) + 1 ) . '.png' );
-		return '<img class="form010Chart" src="http://iepweb02.unl.edu/temp/' . substr ( $url [1], strrpos ( $url [1], '/' ) + 1 ) . '.png">';
+		return '<img class="form010Chart" src="http://iepweb02.esucc.org/temp/' . substr ( $url [1], strrpos ( $url [1], '/' ) + 1 ) . '.png">';
 	}
 	
 	public function archiveAction() {

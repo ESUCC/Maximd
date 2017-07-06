@@ -1,0 +1,88 @@
+
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php  }?> 
+
+
+    <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?> 
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+    
+    <style>
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 90px;
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+    
+    </style>
+<h2>Please Select a District to edit a staff member's team of students </h2><br>
+<select onChange="window.location.href=this.value">
+<option value=''>Please Select A District</option>
+ 
+<?php 
+
+foreach ($this->privileges as $privilege)
+{
+    $privilege['id_school']='001';
+    if($privilege['name_district'])
+    { 
+        if(($privilege['class']==2 || $privilege['class']==3 )&& $privilege['status']=='Active'){    
+              $privilege['id_school']='001';
+        }
+         ?>   
+         
+             <option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team2','id_county'=>$privilege['id_county'],
+                        'id_district'=>$privilege['id_district'],
+                       'id_school'=>$privilege['id_school'],
+                       'status'=>'true'));?>"><?php  echo $privilege['name_district'];?>
+             </option>
+<?php      
+    }
+}?>
+</select>
+
+      

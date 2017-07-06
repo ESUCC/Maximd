@@ -42,7 +42,9 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
 		$this->returnText .= '<ul id="nav">'; 
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=home&sub=home\');">Home</a></li>';
 		$this->returnText .= '  <li '.(($controllerName != 'translation') ? 'class="current"' : '').'><a href="javascript:checkEditedStatus(\'/student/search\');">Students</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=personnel&sub=list\');">Personnel</a></li>';
+		
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=personnel&sub=list\');">Personnel</a></li>';                                                                                                               		
+		
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=school&sub=list\');">Schools</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=district&sub=list\');">Districts</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=admin&sub=server\');">Admin</a></li>';
@@ -70,7 +72,10 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
         $this->returnText .= '  <li '.(($controllerName == 'student') ? 'class="current"' : '').'><a href="/student/search">Students</a></li>';
 
         if(!$parent) {
+            
+            $this->returnText .= ' <li><a href="https://iepweb02.esucc.org/personnelm">PersonnelM</a></li>';
             $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.esucc.org/srs.php?area=personnel&sub=list">Personnel</a></li>';
+            
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=school&sub=list">Schools</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=district&sub=list">Districts</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=admin&sub=server">Admin</a></li>';

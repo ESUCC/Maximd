@@ -58,8 +58,16 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $this->returnText .= '<ul id="nav2">';
         $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
         if(!$session->parent) {
+            
+            // Mike added this 7-5-2017 in order to get the new privileges to work
+            // It skips the first one so you will not get two
             $this->returnText .= '  <li><a href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege</a></li>';
+            $this->returnText .= '  <li ><a class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privileges</a></li>';
+            
         }
+        
+     
+        
         if($admin) {
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
         }

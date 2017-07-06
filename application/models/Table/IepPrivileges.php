@@ -5,6 +5,7 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
  
     protected $_name = 'iep_privileges';
     protected $_primary = 'id_privileges';
+    protected $_sequence = 'iep_priv_id_priv_seq';
     
     public function init() {
     
@@ -15,7 +16,41 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
         $this->className = get_class($this);
 
     }
-        
+       
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
+    public function updatePrivilegesByUserM($id,$id_county,$id_district,$class,$id_school) {
+    
+         
+    
+        $data=array(
+            'id_personnel' =>$id,
+            'id_county'=>$id_county,
+            'id_district'=>$id_district,
+            'class'=>$class,
+            'status'=>'Active',
+            'id_school'=>$id_school  );
+    
+       //  $this->writevar1($data,'this is the data');
+          
+         
+    
+        $this->insert($data);
+         
+    
+    
+    
+    }
+    
     //
     // get method 
     //
