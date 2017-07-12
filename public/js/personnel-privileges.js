@@ -3,7 +3,7 @@ $(function() {
      * override main cancel/done button
      */
     $('#cancel').click(function() {
-        window.location.href = 'https://iep.esucc.org/srs.php?area=personnel&sub=list';
+        window.location.href = 'https://iep.unl.edu/srs.php?area=personnel&sub=list';
         return false;
     });
     /**
