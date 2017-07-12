@@ -238,6 +238,8 @@ class Model_Table_PersonnelTable extends Model_Table_AbstractIepForm
         /**
          * limit types
          */
+        
+       
         switch($type) {
             case 'editPersonnel':
             case 'removePrivilege':

@@ -6,13 +6,23 @@ class PersonnelmController extends My_Form_AbstractFormController
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
     
     public function updateprivsAction()
     {
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout()->disableLayout();
 
-        include("Writeit.php");
+    //    include("Writeit.php");
         
         $changePrivs=$this->_getAllParams();
 
@@ -98,6 +108,23 @@ class PersonnelmController extends My_Form_AbstractFormController
        $schoolList= new Model_Table_School();
        $listOfSchools= $schoolList->districtSchools($id_county,$id_district);
        $this->view->schools=$listOfSchools;
+       
+       
+       $privileges= $privs= $_SESSION["user"]["user"]->privs;
+        $this->writevar1($privileges,'these are the privileges');
+        
+        foreach($privileges as $p)
+        {
+            $this->writevar1($p['class'],'this the users class');
+        }
+        
+        $this->view->privsUser=$privileges;
+       
+       
+       
+       
+       
+       
        echo $this->view->render('personnelm/indexb.phtml');
 
 

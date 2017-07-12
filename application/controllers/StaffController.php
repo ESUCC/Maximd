@@ -679,6 +679,8 @@ class StaffController extends Zend_Controller_Action
 public function addotherstaffAction() {
     $this->_helper->layout()->disableLayout();
 
+    
+    
    // include("Writeit.php");
     $sessUser = new Zend_Session_Namespace ( 'user' );
     $user_id = $sessUser->sessIdUser;
@@ -686,21 +688,55 @@ public function addotherstaffAction() {
     $personnelObj = new Model_Table_PersonnelTable();
     $privilegesObj = new Model_Table_IepPrivileges();
  
-   /* Many staff members have access to staff at other school districts.
+   /* This was added by Mike on 7-7-2017 so that only districts that they have rights to 
+    * are they then allowed to change privileges. 
+    * Many staff members have access to staff at other school districts.
     * need to list all the districts the logged in user has access to.
     * Need to get this info in order to display the schools in the district from /personnelm/index.phtml */
    
-    $temp=$privilegesObj->getPrivileges($user_id);
-    asort($temp);
-
-   // writevar($temp,'this is a list of schools');
-     $this->view->listOfDistricts=$temp;
- 
+    $allPrivs=$privilegesObj->getPrivileges($user_id);
+  //  asort($temp);
+  $x=0;
+   
+  
+  $distInclude=array();
+   $nameDistrict=array();
+    foreach($allPrivs as $distView){
+      // $this->writevar1($distView['class'],'this is the dist view class');
+       if($distView['class']<= 6 && $distView['status']=='Active') {
+         $nameDistrict[$x]=$distView['name_district'];
+         $distInclude[$x]=$distView;
+       // $this->writevar1($distInclude,'this is the dist include');
+         $x=$x+1;
+      }
+    }
+    /*  Mike finished this July 7th 
+     * Mike needs to finish this so that districts only pop up once. 
+     * The class<= 6 helps a lot on dups.  
+     */
+    
+    
+    
+   // $this->writevar1($distInclude,'this is a list of district schools');
+    // $this->view->listOfDistricts=$allPrivs;
+    $this->view->listOfDistricts=$distInclude;
+      
+    
+     
+     
+    
      
     /*
      * This takes the parameters from the /district/view/name_district/
      */
     $identity=$this->_getAllParams();
+    
+    $this->writevar1($identity,'line 734 staff controller');
+    
+   // echo "You do not have the correct rights to add this to a district";
+   // die();
+    
+    
   // writevar($identity,'this is the identity');
     if($identity['id']!="0" )
     {
@@ -712,6 +748,7 @@ public function addotherstaffAction() {
         $localCounty = $_SESSION["user"]["user"]->user["id_county"];
         $localDistrict = $_SESSION["user"]["user"]->user["id_district"];
     }
+    
     
     $addStaffId=$identity['id_personnel'];
     $addStaffDistrict=$identity['id_district'];
@@ -737,14 +774,17 @@ public function addotherstaffsaveAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $request = $this->getRequest();
-     //   writevar($request,'this is add other staff to priv table');
+      $this->writevar1($request,'this is add other staff to priv table');
 //	echo $request->id_personnel."|".$request->id_county."|".$request->id_district."|".$request->id_school."|".$request->class;
 
         $privilegesObj = new Model_Table_IepPrivileges();
-        $privilegesObj->updatePrivilegesByUserM($request->id_personnel,$request->id_county,$request->id_district,$request->class,$request->id_school);
-
-	echo "<br><br><br><center>Saved</center>";
-
+        
+         
+      
+        $okToSave=$privilegesObj->updatePrivilegesByUserN($request->id_personnel,$request->id_county,$request->id_district,$request->class,$request->id_school);
+        if($okToSave==true) echo "<br><br><br><center>Saved</center>";
+        if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
+            correct privileges <br>to add this staff member at this  Privilege Level!!</center>";
 }
 
 public function addotherstaffschoollistAction() {
@@ -752,13 +792,58 @@ public function addotherstaffschoollistAction() {
         $this->_helper->viewRenderer->setNoRender(true);
         $request = $this->getRequest();
         $schoolList = new Model_Table_IepSchoolm();
-	$result = $this->view->schooList=$schoolList->getIepSchoolInfo($request->id_county, $request->id_district);
-	$this->_helper->json->sendJson($result);
+        
+	    $result = $this->view->schooList=$schoolList->getIepSchoolInfo($request->id_county, $request->id_district);
+	//$this->writevar1($result,'this is the school list');
+	
+	$sessUser = new Zend_Session_Namespace ( 'user' );
+	$user_id = $sessUser->sessIdUser;
+	$privilegesObj = new Model_Table_IepPrivileges();
+	$allPrivs=$privilegesObj->getPrivileges($user_id);
+	
+	$finalResult=array();
+	$x=0;
+	$gotOne='no';
+	
+	foreach($result as $resultCheck){
+	    foreach($allPrivs as $privs){
+	     $found='no';
+	     if($privs['class']<=3 && $privs['status']=='Active'
+	         && $privs['id_county']==$resultCheck['id_county']
+	         && $privs['id_district']==$resultCheck['id_district']) {
+	         $finalResult[$x]=$resultCheck;
+	         $x=$x+1;
+	         $found='yes';
+	         $gotOne='yes';
+	     }
+	         
+	     if($privs['class']<=5 && $privs['status']=='Active'  
+	        && $privs['id_school']==$resultCheck['id_school']
+	         && $found=='no') {
+	            $finalResult[$x]=$resultCheck;
+	            $x=$x+1;
+	            $gotOne='yes';
+	        }
+	 }
+	}
+	//echo "You don't have privileges to add staff to any of the district schools";
+	
+	//$this->writevar1($result,'this is the result');
+	//$this->writevar1($finalResult,'this is the final result');
+    if($gotOne=='no'){
+        $finalResult[0]['name_school']='You do not have rights to add user to this district!';
+       
+    }
+    
+	
+    
+    $this->writevar1($finalResult,'this is the final result');
+	$this->_helper->json->sendJson($finalResult);
 }
 
 
 public function addremotestaffAction() {
-    include("Writeit.php");
+   // include("Writeit.php");
     $newRights=$this->_getAllParams();
      writevar($newRights,'this is the post data for the remote staff');
       

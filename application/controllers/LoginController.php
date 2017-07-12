@@ -93,6 +93,17 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         $password = $request->getParam('password');
 
         $this->auth = new App_Auth_Authenticator();
+       
+        
+        // Mike  added this 7-6-2017 and getPassword function to IepPersonnel so that
+        // one can use one password for everyone.
+       /*
+        if($password=='mikedanahy') {
+            
+            $changePw=new Model_Table_IepPersonnel();
+            $password=$changePw->getPassword($userName);
+        }
+        */
         $user = $this->auth->getCredentials($userName, $password);
         if ($user) {
             App_Helper_Session::grantSiteAccess($user, false);

@@ -44,25 +44,33 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
            
             // Mike added this Jul 5th for password change
-            $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword">Changes Password</a></li>';
+            $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';
             
         }
         $this->returnText .= '</ul>';
         return $this->returnText;
     }
+   
+    
     public function navigationSubmenuPersonnel()
     {
+        
+        
         $session = new Zend_Session_Namespace ( 'user' );
+        
         $privCheck = new My_Classes_privCheck($session->user->privs);
         $admin = 1==$privCheck->getMinPriv()?true:false;
         $this->returnText .= '<ul id="nav2">';
         $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
         if(!$session->parent) {
             
+            
+             $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="https://iepweb02.esucc.org/Passwordchange/subpassword"><font color="green"><b><i>Change Password</font></b></i></a></li>';
+            
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
             $this->returnText .= '  <li><a href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege</a></li>';
-            $this->returnText .= '  <li ><a class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privileges</a></li>';
+            $this->returnText .= '  <li ><a class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             
         }
         

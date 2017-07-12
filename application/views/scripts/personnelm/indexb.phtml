@@ -1,6 +1,9 @@
 <?if (!isset($this->area) || $this->area == ""){?>
 
 <?php
+
+
+
 $first_n=$_SESSION['user']['user']->user['name_first'];
 $last_n=$_SESSION['user']['user']->user['name_last'];
 $staff_id=$_SESSION['user']['user']->user['id_personnel'];
@@ -290,7 +293,7 @@ $linkPrivileges='https://iepweb02.esucc.org/staff/addotherstaff/id_personnel/'.$
 <tr><td><?php echo $schools['name_school']?></td><td style="padding: 2px;">
  <select id="sortby">
    <option value="/personnelm/indexb/id_county/<?=$schools['id_county']?>/id_district/<?=$schools['id_district']?>/id_school/<?=$schools['id_school']?>/status/true"> Select Staff Status</option>
-   <option value="/personnelm/indexb/id_county/<?=$schools['id_county']?>/id_district/<?=$schools['id_district']?>/id_school/<?=$schools['id_school']?>/status/true"> Active Staff</option>
+   <option  value="/personnelm/indexb/id_county/<?=$schools['id_county']?>/id_district/<?=$schools['id_district']?>/id_school/<?=$schools['id_school']?>/status/true"> Active Staff</option>
   <option value="/personnelm/indexb/id_county/<?=$schools['id_county']?>/id_district/<?=$schools['id_district']?>/id_school/<?=$schools['id_school']?>/status/false"> Inactive Staff</option>
   <option value="/personnelm/indexb/id_county/<?=$schools['id_county']?>/id_district/<?=$schools['id_district']?>/id_school/<?=$schools['id_school']?>/status/removed"> Removed Staff</option>
  </select>
@@ -344,8 +347,8 @@ $linkPrivileges='https://iepweb02.esucc.org/staff/addotherstaff/id_personnel/'.$
       $t=$staff['class'];
       $name='';
       switch ($t){
-          case 2: $name='District Manager';
-          break;
+      //    case 2: $name='District Manager';
+      //    break;
           case 3: $name='Associate District Manager';
           break;
           case 4: $name='School Manager';
@@ -376,21 +379,37 @@ $linkPrivileges='https://iepweb02.esucc.org/staff/addotherstaff/id_personnel/'.$
           break;
           
       }
+      
      
-     
-     
+      
+      $privileges=$_SESSION['user']['user']->privs;
+      
+      $disabled=" ";
+      foreach($privileges as $privs){
+          if($privs['class']==1 && $privs['status']=='Active') $disabled=" ";
+          
+          if($privs['id_county']==$this->countyId && $privs['id_district']==$this->districtId
+            && $privs['class']<=3 && $privs['status']=='Active' ){ $disabled=" "; }
+         
+          if($privs['id_county']==$this->countyId && $privs['id_district']==$this->districtId
+                && $privs['schoolId']==$this->schoolId && $privs['class']<=5 
+                && $privs['status']=='Active' ){$disabled=" ";}
+      }
+          
      ?>
       
      <tr>
         <td><a href=/personnelm/edit/id_personnel/<?php echo $staff['id_personnel']?>><?php echo $fullName?></a></td>
         <td><?php echo $staff['name_district']?></td>
         <td><?php echo $name?>
-            <input type ="hidden" name="<?php echo ("ID_".$x)?>"value="<? echo $staff['id_personnel']?>">
-            <input type ="hidden" name="<?php echo ("CLASS_".$x)?>"value="<? echo $staff['class']?>">
+            <input   type ="hidden" name="<?php echo ("ID_".$x)?>"value="<? echo $staff['id_personnel']?>">
+            <input  type ="hidden" name="<?php echo ("CLASS_".$x)?>"value="<? echo $staff['class']?>">
         <td><?=$staff['id_school']?></td>
-        <td><input type ="radio" name="<?php echo ("S_".$x)?>"value="Active"<?php echo $checkA?>>Active
-            <input type ="radio" name="<?php echo ("S_".$x)?>"value="Inactive"<?php echo $checkI?>>InActive
-            <input type ="radio" name="<?php echo ("S_".$x)?>"value="Removed"<?php echo $checkR?>>Removed
+      
+      
+        <td><input<?php echo $disabled ?> type ="radio" name="<?php echo ("S_".$x)?>"value="Active"<?php echo $checkA?>>Active
+            <input <?php echo $disabled ?> type ="radio" name="<?php echo ("S_".$x)?>"value="Inactive"<?php echo $checkI?>>InActive
+            <input <?php echo $disabled ?> type ="radio" name="<?php echo ("S_".$x)?>"value="Removed"<?php echo $checkR?>>Removed
         </td>
      </tr>  
 
@@ -409,7 +428,7 @@ $linkPrivileges='https://iepweb02.esucc.org/staff/addotherstaff/id_personnel/'.$
 <input type = "hidden" name="id_school" value="<?php echo $this->schoolId?>">
 <input type = "hidden" name="name_district" value="<?php echo $this->schoolName?>">
 <input type = "hidden" name="status" value="<?php echo $this->status?>">
-<?if ($x != 0){?><div style="float: right"><button class="ui-button ui-widget ui-corner-all PersonnelSave" style="padding: 2px 5px; margin: 10px; margin-right: 30px;">  Save  </button></div><?}?>
+<?if ($x != 0){?><div style="float: right"><button  <?php echo $disabled ?> class="ui-button ui-widget ui-corner-all PersonnelSave" style="padding: 2px 5px; margin: 10px; margin-right: 30px;">  Save  </button></div><?}?>
 </form>
 
 

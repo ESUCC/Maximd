@@ -6,8 +6,8 @@
  * /scrtips/helpers/NavigationSubmenu.php links pending the user we are 
  * working with instead of using the session variables.  
  */
-$first_n=$this->userInfo['name_first'];
-$last_n=$this->userInfo['name_last'];
+$first_n=rtrim($this->userInfo['name_first']);
+$last_n=rtrim($this->userInfo['name_last']);
 $staff_id=$this->userInfo['id_personnel'];
 $district_id=$this->userInfo['id_district'];
 $county_id=$this->userInfo['id_county']; 
@@ -39,7 +39,7 @@ $("document").ready(function() {
 	.attr("rel","<?php echo $linkPWchange?>")
 	.attr("href","<?php echo "#"?>")
 	.attr("title","<?php echo $completeName?>")
-	.text("Change Password for  <?php echo $completeName  ?>");
+	.html("<font color=\"green\"><i><b>Change Passwords for  <?php echo $completeName  ?></font></i></b>");
 // end of mike add 
 })
 
