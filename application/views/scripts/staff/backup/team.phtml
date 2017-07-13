@@ -1,0 +1,507 @@
+<html>
+
+<!--  <link rel="stylesheet" href="https://mike-dev.aapnebraska.org/css/w3.css"> -->
+<link href="/css/w3.css" media="screen" rel="stylesheet" type="text/css">
+<body class="w3-container">
+<center>
+<h2> District  <?php echo $this->somedata[0]['name_district']; ?></h2><p></center>
+
+ <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    
+                   
+                  echo   $this->navigationSubmenu('Student');
+                } ?>
+            </td>
+        </tr>
+    </table><p><p><br><br>
+           
+<?php  $Stu_id=$this->somedata[0]['id_student'];
+$Stu_id_county=$this->somedata[0]['id_county']; 
+$Stu_id_district=$this->somedata[0]['id_district'];
+$seed_id=$Stu_id;
+?>
+<!--  
+  <div class="w3-row">
+  <div class="w3-col m4 l3">
+    <p>12 columns on a small screen, 4 on a medium screen, and 3 on a large screen.</p>
+  </div>
+  <div class="w3-col m8 l9">
+    <p>12 columns on a small screen, 8 on a medium screen, and 9 on a large screen.</p>
+  </div>
+</div>
+
+
+ <div class="w3-row">
+    <div class="w3-col w3-container w3-green" style="width:20%"><p>20%</p></div>
+    <div class="w3-col w3-container w3-blue" style="width:60%"><p>60%</p></div>
+    <div class="w3-col w3-container w3-red" style="width:20%"><p>20%</p></div>
+</div> 
+-->
+<div class="w3-col w3-border w3-round-xlarge w3-striped w3-light-blue w3-center" style="width:15%"><b>List of Student</b><p>
+<!--   <div class="w3-col w3-border w3-round-xlarge w3-striped l2 w3-light-blue w3-center"><b></b><p>List of Students</b></p>
+  -->
+  <style>
+  
+ th {
+   	text-align: left;
+    font-size:0.70em;
+    }
+    
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+}
+ 
+
+   </style>
+ 
+ 
+  <?php 
+//  $all=$this->studentList;
+  $all=$this->studentList;
+  $x=0;
+  $numberStu=count($all); 
+  echo("<table>");
+ 
+  
+ //$this->view->paginator2 = $paginator2;
+  
+  $x=0;
+  
+  
+  
+ //for($x=0;$x<$numberStu;$x++):
+ 
+ foreach($this->paginator2 as $pg2){
+    echo "<tr><th>";
+     
+     ?>
+  
+  
+   <a href="https://iepweb02.unl.edu/staff/team/id_student/<?php echo $pg2['id_student']?>/id_personnel/<?php echo $this->user_id?>">
+      <?php echo $pg2['id_student']." ". $pg2['name_first']." ".$pg2['name_last']?></a>
+      </th></tr>
+ 
+    <?php 
+    
+} ?><center><?php echo $this->paginationControl($this->paginator2,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'));
+ 
+ 
+ 
+  
+  ?>
+  
+  
+  
+  
+  
+  
+  </table>
+
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="w3-col w3-lightblue w3-center w3-striped w3-border w3-border-red  w3-round-xlarge"style="width:30%">
+ <form action ="https://iepweb02.unl.edu/staff/update/" method="post">
+<table><tr>
+
+<h3 class="w3-text-shadow w3-light-blue"> <i>Student:</i> <?php  echo ($this->somedata[0]['name_first']." ".$this->somedata[0]['name_last']); ?></h3></tr>
+<?php 
+
+echo ('<table  class="w3-table w3-bordered w3-striped w3-border-green">');
+ 
+    $incStaff=1;
+    $staffCnt=count($this->districtList);
+    
+   foreach($this->districtList as $person) { 
+     
+       $checkv='';
+       $checke='';
+       $checkc='';
+      // echo ($person['name_last'] ."  ".$person['name_first']."<p>");
+     
+     //  $personRights=$this->staffMemberRights;
+      
+       $p['exists']="no";
+       $stopLoop="no";
+       
+       foreach($this->staffMemberRights as $personRights) {
+           
+        
+           // this block checks to see if the entries in iep_team_members exist
+           
+           if( ($personRights['id_personnel']== $person['id_personnel'] && $stopLoop=="no")) {
+                 
+                $p['exists']='yes';
+                $stopLoop="yes";
+                 $checkc='';
+                 $checke=''; 
+                 $checkv='';
+           
+           
+             if ((($personRights['flag_edit']== '1')) 
+              && ($personRights['id_personnel']== $person['id_personnel'])) {
+                   $checke="checked";
+            }
+            
+              
+             
+             if ((($personRights['flag_view']== '1'))
+                  && ($personRights['id_personnel']== $person['id_personnel'])) {
+                      
+                      $checkv="checked";
+                  }
+                  
+             if ((($personRights['flag_create']== '1'))
+                      && ($personRights['id_personnel']== $person['id_personnel'])) {
+                  
+                          $checkc="checked";
+                      }
+                        
+                  
+             }
+             
+            
+       }
+             
+             $fullName= ($person['id_personnel']." ".$person['name_first']." ".$person['name_last']."   ");
+           
+             
+         //   writevar($person['id_personnel'],'this is the id of the personnel'); 
+         //   writevar($p['exists'],'this is to see if anything exists');
+       
+             
+            if ($p['exists']=='yes'){
+                
+            
+          ?>
+      
+       
+           <tr>
+        
+          <th> <input type ="hidden" name="id_student "  value="<? echo  $Stu_id?>">  <?php echo $fullName;?></th>
+          <th> <input type ="hidden" name="<?php echo( $incStaff."_");?>id_personnel"  value="<? echo  $person['id_personnel']?>"></th>
+           <th>  <input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</th>
+          <th><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="0"<?php echo $checkv?>>view</th>
+          <th><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="0"<?php echo $checkc?>>create</th>
+           
+          <th><input type="hidden" name=" <?php echo ("X_".$person['id_personnel'])?>"value=<?php echo $p['exists']?>></th></tr>
+         
+       <?php $incStaff=$incStaff+1;}?>
+       
+      
+       <?php 
+    
+  
+  }   
+  ?>
+  </table><table>
+  <tr>Teachers not part of <?php echo ($this->somedata[0]['name_first']." ".$this->somedata[0]['name_last']);  ?>'s team</tr>
+ 
+ <?php 
+  $staffCnt=count($this->districtList);
+  
+  foreach($this->paginator as $person) {
+       
+      $checkv='';
+      $checke='';
+      $checkc='';
+      // echo ($person['name_last'] ."  ".$person['name_first']."<p>");
+       
+      //  $personRights=$this->staffMemberRights;
+  
+      $p['exists']="no";
+      $stopLoop="no";
+      foreach($this->staffMemberRights as $personRights) {
+           
+  
+          // this block checks to see if the entries in iep_team_members exist
+           
+          if( ($personRights['id_personnel']== $person['id_personnel'] && $stopLoop=="no")) {
+               
+              $p['exists']='yes';
+              $stopLoop="yes";
+              $checkc='';
+              $checke='';
+              $checkv='';
+               
+               
+              if ((($personRights['flag_edit']== '1'))
+                  && ($personRights['id_personnel']== $person['id_personnel'])) {
+                      $checke="checked";
+                  }
+  
+  
+                   
+                  if ((($personRights['flag_view']== '1'))
+                      && ($personRights['id_personnel']== $person['id_personnel'])) {
+  
+                          $checkv="checked";
+                      }
+  
+                      if ((($personRights['flag_create']== '1'))
+                          && ($personRights['id_personnel']== $person['id_personnel'])) {
+  
+                              $checkc="checked";
+                          }
+  
+  
+          }
+           
+  
+      }
+       
+      $fullName= ($person['id_personnel']." ".$person['name_first']." ".$person['name_last']."   ");
+       
+       
+      //   writevar($person['id_personnel'],'this is the id of the personnel');
+      //   writevar($p['exists'],'this is to see if anything exists');
+      
+      ?>
+       <?php if ($p['exists']=='no'){ ?>
+         
+             <tr>
+          
+            <th> <input type ="hidden" name="id_student "  value="<? echo  $Stu_id ?>">  <?php echo $fullName;?></th>
+             <th>  <input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</th>
+            <th><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1"<?php echo $checkv?>>view</th>
+            <th><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1"<?php echo $checkc?>>create</th>
+             <th> <input type ="hidden" name="<?php echo( $incStaff."_");?>id_personnel"  value="<? echo  $person['id_personnel']?>"></th>
+            <th><input type="hidden" name=" <?php echo ("X_".$person['id_personnel'])?>"value=<?php echo $p['exists']?>></th></tr><p>
+           
+         
+         <?php $incStaff=$incStaff+1; }?>
+         
+         <?php 
+      
+    
+    }?>
+    <center><?php echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'));
+    
+  
+     $x = count($this->staffMemberRights);
+     ?>
+     </table>
+    <input type="hidden" name="id_district" value ="<?php echo $Stu_id_district?>">
+    <input type="hidden" name="id_county" value ="<?php echo $Stu_id_county?>">
+    <input type="hidden" name="count" value =<?php echo $staffCnt?>>
+    <input type="hidden" name="id_student" value =<?php echo $Stu_id?>>
+    <input type="hidden" name="id_personnel" value = <?php echo $this->id_user ?>></tr>
+    <input type="submit" value="SAVE"><p>
+   </form></tr>
+   
+   
+  
+  
+   
+   </table><br><p><br>
+   </div>
+  
+ 
+   <div class="  w3-col l1 w3-light-purple"style="width:2%"> </p>
+</div>
+   
+   
+   <div class=" w3-col  w3-light-green w3-border w3-round-xlarge w3-border-black" style="width:12%"><p>
+   <p><table>
+   
+   <tr><th><h3>List of teachers</H3></th></tr></table>
+   <table>
+   <?php 
+
+echo ('<table  class="w3-table w3-bordered w3-round-xlarge w3-striped ">');
+ 
+    $incStaff=1;
+    $staffCnt=count($this->districtList);
+    
+   foreach($this->paginator as $person) { 
+       $fullName= ($person['name_first']." ".$person['name_last']."   "); 
+      
+       ?>
+       <tr>
+       
+     
+       <th> <a href="https://iepweb02.unl.edu/staff/team/id_student/<?php echo $seed_id; ?>/id_personnel/<?php echo $person['id_personnel'] ?>"> <?php echo $person['id_personnel']." ". $fullName;?></th></tr>
+       
+       <?php }
+       
+       echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'))?>
+   
+   
+   
+   </table>
+   
+  </div>
+  
+  <style>
+   td {
+   	text-align: left;
+   }
+   </style>
+   
+   <?php 
+ //  FIND out the persons first and last names
+ $firstName='';$lastName='';
+ 
+   foreach($this->districtList as $staff) {
+       if ($staff['id_personnel']==$this->user_id) {
+           $firstName=$staff['name_first'];
+           $lastName=$staff['name_last'];
+       }
+        
+   }
+  
+   if($firstName ==''){ $firstName='No FirstName'; }
+   if($lastName =='') { $lastName='No LastName';}
+    
+   
+   ?>
+   
+   
+   
+  <div class="w3-col w3-striped w3-light-gray w3-center w3-border w3-round-xlarge w3-border-black"style="width:40%">
+  <h3 class="w3-light-green"><i>Students on :<?php echo $firstName." ".$lastName."'s Team"?></h3><p>
+  
+  <?php 
+  $all=$this->STeamlist;
+  //$all=$this->studentList;
+  $x=0;
+  $numberStu=count($all); ?>
+  
+  
+ <?php  echo("<table>"); 
+ $x=0;
+ $districtStuList=$this->studentList;
+ //writevar($districtStuList[$x]['name_last'],'this is the student list'); die();// this is array[x][' '] 
+ $x=0;
+ $totalStus=count($this->teacherView);
+ $all=$this->teacherView;
+ ?>
+ 
+ 
+ 
+ 
+ 
+ 
+ <form action ="https://iepweb02.unl.edu/staff/updates/" method="post">
+ <table>
+ <?php 
+ $trackTotal=0;
+ for($x=0;$x<$totalStus;$x++)
+
+ {
+     
+     $cboxE='';
+     $cboxV='';
+     $cboxC='';
+     
+     if($all[$x]['flag_edit']==1) $cboxE='checked';
+     if($all[$x]['flag_view']==1) $cboxV='checked';
+     if($all[$x]['flag_create']==1) $cboxC='checked';
+         
+     if($all[$x]['exists']=='yes') {
+       
+         ?>
+              <tr><th>
+              
+              <?php 
+              
+      echo ("<tr><th>".$all[$x]['id_student'].' ');
+      echo ("</th><th>".$all[$x]['name_first'].' '.$all[$x]['name_last']); ?></th>
+     <th>  <input  type ="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo$all[$x]['id_student']?>"></th>
+      <th>  <input type="checkbox" name="<?php echo("E_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</th>
+       <th>  <input type="checkbox" name="<?php echo("V_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxV)?>>view</th>
+       <th>  <input type="checkbox" name="<?php echo("C_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxC)?>>create</th>
+      <th>  <input type ="hidden" name="<?php echo("X_".$all[$x]['id_student'])?>" value="<?php echo$all[$x]['exists']?>"></th></tr>
+<?php 
+      $trackTotal=$trackTotal+1;
+      
+     }
+ }
+ 
+ ?></table><table>
+ <tr>-------------- Students Not On <?php echo $firstName." ".$lastName."'s"?>Team ------------------</tr>
+ 
+ <?php 
+ 
+// writevar($all,'this is all');
+ 
+ //for($x=0;$x<$totalStus;$x++) {
+ //writevar($all,'this is all the students in team view');
+ 
+ for($x=0;$x<$totalStus;$x++) {
+     $cboxE='';
+     $cboxV='';
+     $cboxC='';
+      
+     if($all[$x]['flag_edit']==1) $cboxE='checked';
+     if($all[$x]['flag_view']==1) $cboxV='checked';
+     if($all[$x]['flag_create']==1) $cboxC='checked';
+      
+     ?><tr><th><?php
+      if($all[$x]['exists']=='no'){
+       echo ("<tr><td>".$all[$x]['id_student'].' ');
+       echo ("</td><td>".$all[$x]['name_first'].' '.$all[$x]['name_last']); ?></th>
+       <th>  <input  type ="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo$all[$x]['id_student']?>"></th>
+         <th>  <input type="checkbox" name="<?php echo("E_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</th>
+         <th>  <input type="checkbox" name="<?php echo("V_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxV)?>>view</th>
+         <th>  <input type="checkbox" name="<?php echo("C_".$all[$x]['id_student'])?>" value="1"<?php echo($cboxC)?>>create</th>
+         <th>  <input type ="hidden" name="<?php echo("X_".$all[$x]['id_student'])?>" value="<?php echo$all[$x]['exists']?>"></th></tr>
+ <?php 
+      $trackTotal=$trackTotal+1; //writevar($trackTotal,'this is the no loop and the total of tracktotal');
+     
+      }
+      }
+ 
+  ?>
+ 
+   </table>
+   
+   
+    <input type="hidden" name="id_personnel" value = <?php echo $this->user_id ?>>
+    <input type="hidden" name="total_count" value = <?php echo $trackTotal?>>
+    <input type="submit" value="SUBMIT"><p>
+   </form></tr>
+   
+   
+   
+  
+      
+
+

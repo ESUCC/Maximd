@@ -1,0 +1,57 @@
+<div id="StaffDiv"> 
+
+<form action ="#" id="StaffForm"> 
+<input type="hidden" id="id_personnel" name="id_personnel" value="<?=$this->identityRemote['id_personnel']?>">
+<div id='label_district'><b>District:</b></div>
+<select id="id_district" name="id_district">
+<option value="">Choose...</option>
+<?foreach($this->listOfDistricts as $districts){?>
+  <option value="<?=$districts['id_county']?>|<?=$districts['id_district']?>"><?=$districts['name_county']?> - <?=$districts['name_district']?></option>
+<?}?>  
+</select> 
+<br><br>
+ <div id='label_school' style='display: none'><b>Schools:</b></div>
+ <select id="id_school" name="id_school" style='display: none'></select> <div id="schoolload"></div>
+
+<div id="GrandPriv" style='display: none'>
+<br>
+
+
+<?php 
+$allowChangeSA=false;
+$allowChangeDM=false;
+
+$listPrivs=$_SESSION['user']['user']->privs;
+foreach($listPrivs as $privilege) {
+    if($privilege['class']==1) $allowChangeSA=true;
+
+}
+?>
+
+
+
+  <b>Grant <?=$this->identityRemote['name_first']." ".$this->identityRemote['name_last']?> from <?=$this->identityRemoteDistrict[0]['name_district']?>
+     access to <span id="SchoolName"></span> district staff</b>
+<br><br>
+
+  <input type="radio" id="class" name="class" value="2" checked> District Manager<br>
+ 
+ 
+  
+  <input type="radio" id="class" name="class" value="3"> Associate District Manager<br>
+  
+  <input type="radio" id="class" name="class" value="4"> School Manager<br>
+  <input type="radio" id="class" name="class" value="5"> Assistant School Manager<br>
+  <input type="radio" id="class" name="class" value="6"> Case Manager<br>
+  <input type="radio" id="class" name="class" value="8"> Consultant<br>
+  <input type="radio" id="class" name="class" value="7"> School Staff/Teacher<br>
+  <input type="radio" id="class" name="class" value="10"> Service Coordinator
+  
+</form>
+<br>
+<br>
+<hr>
+<button class="ui-button ui-widget ui-corner-all StaffSave" style="padding: 2px;">Save</button>
+</div>
+<?php //}?>
+</div>

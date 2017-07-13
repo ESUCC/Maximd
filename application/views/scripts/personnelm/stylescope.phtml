@@ -1,0 +1,17 @@
+<?php
+	echo $this->navigationTopTabs();
+
+	// build unique id for this user
+	// update user record
+	// load related data based on unique id
+	$usersession = new Zend_Session_Namespace ( 'user' );
+	if(!isset($usersession->user->stylescopeKey)) {
+		$usersession->user->stylescopeKey = uniqid('', true);
+		$perObj = new Model_Table_PersonnelTable();
+		$result = $perObj->update(array('stylescope_key'=>$usersession->user->stylescopeKey), 'id_personnel=\''.$this->id_personnel.'\'');
+		
+	}
+	
+	?><iframe src="http://stylescope.unl.edu/sree/Reports?op=vs&path=/CaseManagerViewsheet1&VSPARAM_personnel_key=<?= $usersession->user->stylescopeKey; ?>" width="100%" height="600px">
+  <p>Your browser does not support iframes.</p>
+</iframe>

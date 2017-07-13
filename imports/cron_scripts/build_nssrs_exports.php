@@ -104,7 +104,7 @@ if(!$result = sqlExec($getDistrictsToBuild, $errorID = "", $errorMsg = "")) {
 
         
         $subject = "{$ad['county_name']} - {$ad['district_name']} NSSRS FILE " . date_massage("yesterday");
-        $from = "nssrs@iep.esucc.org";
+        $from = "nssrs@iep.unl.edu";
         $to = $ad['email_nssrs']; //'mdanahy@esucc.org';
 
         #$result = mail( $to, $subject, $logContent);

@@ -39,12 +39,70 @@ class PasswordchangeController extends App_Zend_Controller_Action_Abstract
            }
        }
     
+       
+       function writevar1($var1,$var2) {
+       
+           ob_start();
+           var_dump($var1);
+           $data = ob_get_clean();
+           $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+           $fp = fopen("/tmp/textfile.txt", "a");
+           fwrite($fp, $data2);
+           fclose($fp);
+       }
+       
        // This is the function work added by Maxim Jun14 Mike 
        public function changepasswordAction()
        {
            $this->_helper->layout()->disableLayout();
            $postData = $this->getRequest()->getParams();
-           if(!isset($postData['newPassword']))
+          // mike
+        //   $this->writevar1($postData,'this is the posted data');
+           $personnelInfo= new Model_Table_IepPersonnel();
+           $personInfo=$personnelInfo->getIepPersonnel($postData['id_personnel']);
+          // $this->writevar1($personInfo,'this is the persons info');
+           
+           
+           /* Mike added this 7-6-2017  in order to prevent unauthorized users from changing the 
+              password for everyone.  
+              
+           */
+           $allowChange=false;
+          
+           $idUser=$_SESSION['user']['id_personnel'];
+           $listPrivs=$_SESSION['user']['user']->privs;
+           $distId=$personInfo['id_district'];
+           $countyId=$personInfo['id_county'];
+           $schoolId=$personInfo['id_school'];
+            
+           foreach($listPrivs as $privilege) {
+               if($privilege['class']==1) $allowChange=true;
+                
+               // Check to see if a dist admin or assoc dist admin
+               if($distId==$privilege['id_district'] && $countyId==$privilege['id_county']
+                   && $privilege['class']<=3 && $privilege['status']=='Active') {
+                       $allowChange=true;
+                   }
+               // Check to see if School Admin or Assit School Admin
+                   if($distId==$privilege['id_district'] && $countyId==$privilege['id_county']
+                       && $privilege['class']<=5 && $privilege['status']=='Active' 
+                       && $privilege['id_school']==$schoolId) 
+                       {
+                           $allowChange=true;
+                       }
+                 // Check to see if it the user who is logged in
+                     if($idUser==$postData['id_personnel']) $allowChange=true;
+                  
+                    }
+           
+           
+           // end mike
+           
+          
+        if($allowChange==true) {
+          
+            
+            if(!isset($postData['newPassword']))
            {
                $form = new My_Form_PasswordChangeForm();
                $fullName=$postData['name_first']." ".$postData['name_last'];
@@ -78,6 +136,25 @@ class PasswordchangeController extends App_Zend_Controller_Action_Abstract
                }
                die;
            }
+        } 
+        if($allowChange==false) {
+            
+            $message='You dont have the correct rights to change the password.';
+            $success=0;
+            echo "<h2><center> $message</center></h2>";
+            die();
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                echo Zend_Json::encode(
+                   array(
+                    'success' => $success,
+                    'message' => $message
+                     )
+                   );
+            }
+            else {
+                $this->addGlobalMessage($message);
+              }
+        }
        }
        public function index2Action()
        {

@@ -17,6 +17,17 @@ class Model_Table_School extends Model_Table_AbstractIepForm
     protected $_name = 'iep_school';
     protected $_primary = array('id_county', 'id_district', 'id_school');
 
+    // Mike D built this function 9-29-2016
+    public function districtSchools($id_county,$id_dist){
+         
+        $all = $this->fetchAll($this->select()
+            ->where('id_county = ?',$id_county)
+            ->where('id_district = ?',$id_dist));
+    
+        return $all->toArray();
+        // return $all;
+    }
+    
     function getSchool($idCounty, $idDistrict, $idSchool)
     {
         $table = new $this->className();

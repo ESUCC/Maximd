@@ -5,6 +5,7 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
  
     protected $_name = 'iep_privileges';
     protected $_primary = 'id_privileges';
+    protected $_sequence = 'iep_priv_id_priv_seq';
     
     public function init() {
     
@@ -15,7 +16,128 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
         $this->className = get_class($this);
 
     }
+       
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
+    public function updatePrivilegesByUserM($id,$id_county,$id_district,$class,$id_school) {
+    
+         
+    
+        $data=array(
+            'id_personnel' =>$id,
+            'id_county'=>$id_county,
+            'id_district'=>$id_district,
+            'class'=>$class,
+            'status'=>'Active',
+            'id_school'=>$id_school  );
+        $this->insert($data);
+    }
+    
+    //Added 7-12-2017 in order to make staff active or inactive
+    public function updatePrivs($arrayPrivs){
+        $x=0;
+        //  writevar($arrayPrivs,'this is the privileges');die();
+        While($x <=$arrayPrivs['count']){
+            $id="ID_".$x;
+            $class="CLASS_".$x;
+            $status="S_".$x;
+            /*       writevar($arrayPrivs[$id],'this is the person');
+             writevar($arrayPrivs[$class],'this is the class');
+             writevar($arrayPrivs[$status],'this is the status');
+             writevar($arrayPrivs['id_county'],'this is the id_county');
+             writevar($arrayPrivs['id_district'],'this is the id_district');
+             writevar($arrayPrivs['id_school'],'this is the id_school');
+             */
+            $this->updatePrivilegesByUserM2($arrayPrivs[$id],$arrayPrivs['id_county'],$arrayPrivs['id_district'],$arrayPrivs['id_school'],
+                $arrayPrivs[$class],$arrayPrivs[$status]);
+    
+            $x=$x+1;
+        }
+         
+    }
+    // Mike added 7-12-2017
+    public function updatePrivilegesByUserM2($id,$idCounty,$idDistrict,$idSchool,$class,$status){
+    
+        $data=array(
+            'status'=>$status
+        );
+    
+        $where = array(
+            'id_personnel =?'=>$id,
+            'id_district =?'=>$idDistrict,
+            'id_school =?'=>$idSchool,
+            'id_county =?'=>$idCounty,
+            'class =?'=>$class );
+        //   writevar($data,'this is the data');
+        //  writevar($where,'this is the where clause');
+        $this->update($data,$where);
+         
+    
+    }
+    public function updatePrivilegesByUserN($id,$id_county,$id_district,$class,$id_school) {
+    
+        $allowChange=false;
         
+        $listPrivs=$_SESSION['user']['user']->privs;
+        
+        foreach($listPrivs as $priv) {
+        if($priv['class']==1 and $priv['status']=='Active') $allowChange=true;
+         
+          // check to see if Dm
+        if($priv['id_district']==$id_district && $priv['id_county']==$id_county
+           && $priv['class']==2 && $priv['status']=='Active' && ($class !=2 && $class !=1))$allowChange=true;
+          
+          // check the  Associate District Manager
+        if($priv['id_district']==$id_district && $priv['id_county']==$id_county
+                  && $priv['class']==3 && $priv['status']=='Active' 
+                  && $class !=2 && $class !=1 && $class !=3) $allowChange=true;
+        
+        // check the School Manager          
+        if($priv['id_district']==$id_district && $priv['id_county']==$id_county
+                      && $priv['class']==4 && $priv['status']=='Active'
+                      && $class !=2 && $class !=1 && $class !=3 
+                      && $class !=4 && $id_school==$priv['id_school']) $allowChange=true;
+        
+        // Check associate school manger              
+        if($priv['id_district']==$id_district && $priv['id_county']==$id_county
+            && $priv['class']==5 && $priv['status']=='Active'
+            && $class !=2 && $class !=1 && $class !=3
+            && $class !=4 && $class !=5 && $id_school==$priv['id_school']) $allowChange=true;
+                      
+         }
+        
+        
+        
+       
+        
+    
+        $data=array(
+            'id_personnel' =>$id,
+            'id_county'=>$id_county,
+            'id_district'=>$id_district,
+            'class'=>$class,
+            'status'=>'Active',
+            'id_school'=>$id_school  );
+        
+        if($allowChange==true){
+            $this->insert($data);
+            return true;
+        }
+        
+        if($allowChange==false){
+            return false;
+        }
+    }
+    
     //
     // get method 
     //
