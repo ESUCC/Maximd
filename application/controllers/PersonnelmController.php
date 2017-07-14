@@ -113,10 +113,7 @@ class PersonnelmController extends My_Form_AbstractFormController
        $privileges= $privs= $_SESSION["user"]["user"]->privs;
         $this->writevar1($privileges,'these are the privileges');
         
-        foreach($privileges as $p)
-        {
-            $this->writevar1($p['class'],'this the users class');
-        }
+      
         
         $this->view->privsUser=$privileges;
        
@@ -151,7 +148,7 @@ class PersonnelmController extends My_Form_AbstractFormController
         $temp=$privilegesObj->getPrivileges($id_personnel);
          
         $newTemp[0]=$temp[0];
-        //   writevar($temp,'lets make sure we got it.');
+          //writevar($temp,'lets make sure we got it.');
          
         $x=0;
         foreach($temp as $temporary){

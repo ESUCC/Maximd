@@ -8,7 +8,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	
 	protected $primaryKeyName;
 	protected $modelName;
-	public $formNumber; 
+	public $formNumber;
 	protected $formClass;
 	protected $title;
 	public $subFormsArray = array ();
@@ -17,8 +17,22 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	
 	protected $subFormsForDuping;
 	
+	public function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+	
+	
+	
+	
 	public function setFormNumber($formNumber) {
-		$this->formNumber = $formNumber;  
+		$this->formNumber = $formNumber;
 	}
 	public function getFormNumber() {
 		return $this->formNumber;
@@ -50,6 +64,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		$this->view->title = $title;
 	}
 	public function getFormTitle() {
+	   //$this->writevar1($this->title,'this is the title line 67');
 		return $this->title;
 	}
 	
@@ -63,10 +78,10 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	public function preDispatch() {
 
         /**
-         *    run application level preDispatch to setup
+         * run application level preDispatch to setup
          * initial email and other global config options
          */
-        parent::preDispatch();  
+        parent::preDispatch();
 
 		// ===============================================================================================================
 		// archiver access
@@ -77,9 +92,9 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
             $archiveConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/archive.ini', APPLICATION_ENV);
 
             // log in the archive user
-			$auth = new App_Auth_Authenticator(); 
+			$auth = new App_Auth_Authenticator();
 			$user = $auth->getCredentials($archiveConfig->siteAccess->username, $archiveConfig->siteAccess->password);
-			if($user) 
+			if($user)
 			{
 				App_Helper_Session::grantSiteAccess($user, false);
 			}
@@ -447,7 +462,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// retrieve data from the request
 		$request = $this->getRequest ();
 		$post = $this->getRequest ()->getPost ();
-		
+		$this->writevar1($post,'this is the posted data');
 		$this->view->document = $request->document;
 		$this->view->page = $request->page;
 		
@@ -466,7 +481,8 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// get request
 		$request = $this->getRequest ();
 		$post = $this->getRequest ()->getPost ();
-		
+		$this->writevar1($request,'this is the request');
+		$this->writevar1($post,'this is the post');
 		$changePageAction = $post ['changePageAction'];
 		$mode = $post ['mode'] != '' ? $post ['mode'] : 'view';
 		
@@ -1546,29 +1562,23 @@ END;
 		$modelobj = new $modelName ( $this->getFormNumber (), $this->usersession );
 		
 		$formData = $modelobj->find ( $request->document );
+	    
+		// Mike added this 3-14-2017 so that we can delete it anytime we want
+		if(isset($formData['id_form_023'])) {
+		    $formData['status']='Draft';
+		}
 		
-		/* Mike added this 4-18-2017 so that we can delete cards  anytime we want
-		 * This is jira ticket SRS-42
-		*/
-		
-		
+		if(isset($formData['id_form_022'])) {
+		    $formData['status']='Draft';
+		}
+		// End of Mike add
 		
 		if ('Final' == $formData ['status'] && 'Admin' != $this->getAccess ( $formData ['id_student'], $this->usersession )->description) {
-		
-		    if(isset($formData['id_form_022'])||(isset($formData['id_form_023']))) {
-		       // do nothing 
-		    }
-		    else {
-		    $this->_helper->viewRenderer ( 'errorgoback', 'html', true );
+			$this->_helper->viewRenderer ( 'errorgoback', 'html', true );
 			$this->view->message = "This form has already been finalized and cannot be deleted.";
 			echo $this->view->render ( 'errorgoback.phtml' );
 			return;
-		    }
-		  }
-		
-		
-		
-		
+		}
 		if (isset ( $request->cancel ) && $request->cancel == "Cancel") {
 			$this->_redirector->gotoSimple ( 'edit', 'form' . $this->getFormNumber (), null, array ('document' => $request->document, 'page' => $this->view->page ) );
 			return;
@@ -1723,8 +1733,6 @@ END;
 	
 	public function createAction() {
 
-	    
-	    
 		$createOldForms = Zend_Registry::get('create-old-forms');
 		$studentObj = new Model_Table_StudentTable();
 		$student = $studentObj->studentInfo($this->getRequest()->student);
@@ -1777,7 +1785,6 @@ END;
 		$formObj = new $modelName ();
 		$current = $formObj->find ( $newId )->current ();
 		$current->version_number = $this->version;
-	
 		if (isset ( $this->preCreateRequirementsArray )) {
 			// these are chosen by the user in preCreateRequirements
 			foreach ( $this->preCreateRequirementsArray as $key => $value ) {
@@ -1800,7 +1807,6 @@ END;
 		// validate user can 
 		
 
-	    
 		$modelName = "Model_Table_Form" . $this->getFormNumber ();
 		$formObj = new $modelName ();
 		$formObj->checkoutComplete ( $this->getRequest ()->document );
@@ -1915,19 +1921,28 @@ END;
 		// build the model
 		$modelName = $this->getModelName ();
 
+		//$this->writevar1($modelName,'this is the model name line 1924');
+		// return Model_Form008
+		
 		// get the db record for this form (and subforms)
 		// including subform data (related table rows)
 		// also including student data
 		$modelform = new $modelName ( $this->getFormNumber (), $this->usersession );
-		$dbData = $modelform->find ( $document, $mode, 'all', null, true );
-
-		// Mike added this 4-24-2017 so that no 2 people can edit a form together.
-		if(isset($dbData[0]['message'])) {
-		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
-		    	
-		}
-		// end of Mike Add
 		
+		//$this->writevar1($modelform,'this is the model Form linke 1931');
+		// looks like the form
+		
+		
+		//$this->writevar1($document,'this is the document line 1934');
+		//$this->writevar1($mode,'this is the mode line 1935');
+		// this returns the document id and the mode of edit
+		
+		
+		
+		$dbData = $modelform->find ( $document, $mode, 'all', null, true ); 
+       
+		$this->writevar1($dbData,'this is the dbData line 1936');
+         
 		// store the list of subforms
 		// used in addSubformRow
 		$dbData ['subformIndexToModel'] = $modelform->subformIndexToModel;
@@ -1947,11 +1962,15 @@ END;
 
 		// get the version number
 		if (isset ( $dbData ['version_number'] )) {
-			$this->view->version = $dbData ['version_number'];
+			$this->view->version = $dbData['version_number'];
 		}
 		
 		// old site is for form versions 1-8
 		// redirect there if version is not greater or equal to 9
+		
+		$this->writevar1($dbData['version_number'],'this is the version number line 1971');
+		// this is coming back as null thus it goes into the loop below.
+		
 		if (9 > $dbData ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
 				$this->_redirect('https://iep.unl.edu/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
@@ -2053,7 +2072,6 @@ END;
 	}
 	
 	public function buildZendForm($formClass, $data, $version, $config, $currentPage = null) {
-
         $appconfig = Zend_Registry::get ( 'config' );
         $refreshCode = '?refreshCode=' . $appconfig->externals->refresh;
 
@@ -2150,7 +2168,7 @@ END;
 		
 		// get requested page, if any				   
 		$this->view->page = ($this->getRequest ()->getParam ( 'page' ) > 0) ? $this->getRequest ()->getParam ( 'page' ) : $this->startPage;
-		
+		//$this->writevar1($this->view->page,'this is the view page');
 		// set form title
 		$this->view->headTitle ( ' - ' . $this->getFormTitle () . ' Page ' . $this->view->page );
 		

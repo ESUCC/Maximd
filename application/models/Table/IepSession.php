@@ -5,6 +5,18 @@ class Model_Table_IepSession extends Zend_Db_Table_Abstract {
     protected $_name = 'iep_session';
     protected $_primary = 'id_session';
     
+    
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     static public function getSessionByToken($token)
     {
 
