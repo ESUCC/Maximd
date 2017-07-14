@@ -21,10 +21,23 @@ class Model_Form008 extends Model_AbstractForm
      */
 	var $db_form_data = array();
 	
+	public function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+	
 	public function find($id, $accessMode = "view", $page =1, $versionNumber = 1, $checkout = 0)
 	{
+	     
 		if(false === parent::buildDbForm($id, $accessMode, $page, $versionNumber, $checkout))
 		{
+		    
 			return false;
 		}
 

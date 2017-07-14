@@ -15,7 +15,17 @@ class IndexController extends App_Zend_Controller_Action_Abstract
      * @return void
      */
 	
-	
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
 	public function preDispatch() {
 		// load jquery
 		$this->view->jQuery()->enable();
@@ -60,6 +70,11 @@ class IndexController extends App_Zend_Controller_Action_Abstract
 			// this is the session record for the iep.unl.edu site
 			$tk = new Model_Table_IepSession();
 			$session = $tk->getSessionByToken($token);
+			
+			
+			$this->writevar1($session,'this is the session variable indexcontroller');
+			
+			
 			if($session) {
 				if($parent) {
 					// get personnel record

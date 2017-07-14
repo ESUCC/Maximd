@@ -147,7 +147,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         App_Helper_Session::cleanSessionForReuse();
         Zend_Session::destroy(1);
         if ('production' == APPLICATION_ENV) {
-             $this->_redirect('http://iep.unl.edu/');
+             $this->_redirect('https://iep.unl.edu/');
         } else {
             $this->_helper->redirector('index', 'index');
         }
