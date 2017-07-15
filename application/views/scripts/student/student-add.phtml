@@ -1,0 +1,743 @@
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<?$auth = Zend_Auth::getInstance();?>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationSubmenu('student'); ?>
+        </td>
+    </tr>
+</table>
+
+<style>
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+#mainFooter{
+	 height: 0px;
+    padding-bottom: 0; 
+	
+}
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+
+
+
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    var id_county = "";
+    var id_district = "";
+
+    $( "#tabs" ).tabs();
+
+    $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy', changeYear:true, changeMonth: true });
+
+    var validator = $("#studentForm").validate({
+             rules: {
+                date_web_notify: {
+                  yearUS: true,
+                  required: true,
+                  minlength: 10
+                },
+                name_first: {
+                  required: true,
+                  minlength: 2
+                },
+                name_last: {
+                  required: true,
+                  minlength: 2
+                },
+                id_county_school: {
+                  required: true
+                },
+                id_district_school: {
+                  required: true
+                },
+                id_school: {
+                  required: true
+                },
+                case_manager: {
+                  required: true
+                },
+                pub_school_student: {
+                  required: true
+                },
+                dob: {
+                  yearUS: true,
+                  required: true,
+                  minlength: 10
+                },
+                grade: {
+                  required: true
+                },
+                ethnic_group: {
+                  required: true
+                },
+                primary_language: {
+                  required: true
+                },
+                gender: {
+                  required: true
+                },
+                ell_student: {
+                  required: true
+                },
+                ward: {
+                  required: true
+                },
+                address_street1: {
+                  required: true,
+                  minlength: 5
+                },                
+                address_city: {
+                  required: true,
+                  minlength: 1
+                },
+                address_state: {
+                  required: true
+                },
+                address_zip: {
+                  zipcodeUS: true,
+                  required: true,
+                  minlength: 5,
+                  maxlength: 10
+                },
+		alternate_assessment: {
+                  required: true
+                },
+                phone: {
+                  phoneUS: true,
+                  maxlength: 12,
+                  minlength: 0
+                },
+                email_address: {
+                  email: true,
+                  required: { 
+                    depends: function(element) {
+                     return $("#email_address_confirm").is(":filled");
+                    }                    
+                  }
+                },
+                email_address_confirm: {
+                  email: true,
+                  required: {  
+                    depends: function(element) {
+                     return $("#email_address").is(":filled");
+                    }
+                  },
+                  equalTo: "#email_address", 
+                }
+           },
+           submitHandler: function(form) {
+             $("div.error").hide();
+             return false;
+           },
+           highlight: function (element, required) {
+              $(element).css('border', '2px solid #FDADAF');
+           },
+           unhighlight: function (element, errorClass, validClass) {
+             $(element).css('border', '');
+           }
+    });
+
+    $.validator.addMethod("yearUS", function(value, element) {
+        return this.optional(element) || /\d{2}\/\d{2}\/\d{4}$/.test(value)
+    }, "Please enter a valid Date");
+
+    $.validator.addMethod("zipcodeUS", function(value, element) {
+        return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+    }, "The specified US ZIP Code is invalid");
+
+    $.validator.addMethod('phoneUS', function (value, element) {
+       return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
+    }, "Please enter a valid phone number");
+
+
+    $(document).on("click", ".tabGo", function () {
+	var page = Number($(this).attr("rel"));
+        if (!$("#studentForm").valid()) return false
+        $("#tabs").tabs('select', page); // For only Jquery UI version 1.8
+        validator.resetForm();
+        return false;
+    });
+
+    $(document).on("tabsselect", "#tabs" , function( event, ui ) {
+        if (!$("#studentForm").valid()) return false;
+        validator.resetForm();
+    });
+
+    $(document).on("change", ":input" , function( event, ui ) {
+        $(this).valid();
+    });
+
+    $( "#tabs" ).on( "tabsselect", function( event, ui ) {
+        if (!$("#studentForm").valid()) return false;
+        validator.resetForm();
+    });
+
+
+    $(document).on("change keyup focusout", "#dob", function () {
+       var date_birth = $("#dob").val();
+       if (Number(get_current_age(date_birth)) > 0) $("#age").html(get_current_age(date_birth)); else $("#age").html("");
+       return false;
+    });
+
+    $(document).on("change keyup focusout", "#pub_school_student", function () {
+
+	if ($("#pub_school_student").val() == "No"){
+	    $(".pub_school_student_area").css("display", "table-row");
+            $("#parental_placement").rules( "add", { required: true });
+            $("#nonpubcounty").rules( "add", { required: true });
+            $("#nonpubdistrict").hide();
+	    $("#title_nonpubdistrict").hide();
+            $("#nonpubschool").hide();
+	    $("#title_nonpubschool").hide();
+	  } else {
+	    $(".pub_school_student_area").css("display", "none");
+            $("#parental_placement").prop('selectedIndex', 0);
+            $("#nonpubcounty").prop('selectedIndex', 0);
+            $("#nonpubdistrict").empty().append('<option value="">Choose...</option>');
+            $("#nonpubschool").empty().append('<option value="">Choose...</option>');
+
+            $("#parental_placement").rules( "remove" );
+            $("#nonpubcounty").rules( "remove" );
+            $("#nonpubdistrict").rules( "remove" );
+            $("#nonpubschool").rules( "remove" );
+	}
+
+       return false;
+    });
+
+   function get_current_age(date) {
+     return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
+   }
+
+    $(document).on("keyup change", "#studentForm input, #studentForm select", function () {
+        $(".StudentEditSave, .StudentEditCancel").prop("disabled", false);
+        return false;
+    });
+
+    $(document).on("click", ".StudentEditCancel", function () {
+        $("#studentForm").trigger('reset');
+	$("#age").html("");
+        $(".StudentEditSave, .StudentEditCancel").prop("disabled", true);
+        $( ":input" ).css('border', '');
+        $("#case_manager").empty().hide();
+        $("#title_case_manager").hide();
+        validator.resetForm();
+        return false;
+    });
+
+
+    $(document).on("change", "#unique_id_state", function () {
+       $("#nssrsload").html('<i class="fa fa-spinner fa-pulse"></i>');
+
+       var data_var = Array;
+
+       data_var["unique_id_state"] = $("#unique_id_state").val();
+
+       $.ajax({
+          type       : "GET",
+          url        : "/student/checknssrs",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+
+		if (Number(response.count) > 0) $("#unique_id_state").val("").css('border', '2px solid #FDADAF');
+                $("#nssrsload").html('');
+          }
+        });
+      return false;
+    });
+
+
+    $(document).on("click", ".StudentEditReturn", function () {
+	var url = $(this).attr('rel');
+	if ((!$(".StudentEditSave").prop("disabled") && confirm("You haven't saved your changes. Are you sure you want to Exit?")) || $(".StudentEditSave").prop("disabled")) window.location.replace(url);
+        return false;
+    });
+
+    $(document).on("change keyup", "#id_county_school", function () {
+      $("#districtstudentload").html('<i class="fa fa-spinner fa-pulse"></i>');
+      $("#id_district_school").empty().hide();
+      $("#title_district_school").show();
+      $("#id_school").empty().hide();
+      $("#title_school").hide();
+      $("#case_manager").empty().hide();
+      $("#title_case_manager").hide();
+
+      var id_county = $(this).val();
+
+      if (Number(id_county) > 0) {
+       var data_var = Array;
+       data_var['id_county'] = id_county;
+
+       $.ajax({
+          type       : "POST",
+          url        : "/student/listdistrict/",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+            if (response.length > 0){
+              $("#id_district_school").append('<option value="">Choose...</option>');
+  	      $.each(response, function (key, val) { $("#id_district_school").append("<option value='"+val.id_district+"'>"+val.name_district+"</option>");  });
+              $("#districtstudentload").html('');
+              $("#id_district_school").show();
+            } else {
+              $("#districtstudentload").html('');
+              $("#id_district_school").hide();
+              $("#title_district_school").hide();
+            }
+          }
+        });
+       } else {
+         $("#districtstudentload").html('');
+         $("#id_district_school").hide();
+         $("#title_district_school").hide();
+       }
+        return false;
+    });
+
+    $(document).on("change keyup", "#id_district_school", function () {
+      $("#schoolload").html('<i class="fa fa-spinner fa-pulse"></i>');
+      $("#id_school").empty().hide();
+      $("#title_school").show();      
+      $("#case_manager").empty().hide();
+      $("#title_case_manager").hide();
+
+
+      var id_county = $("#id_county_school").val();
+      var id_district = $(this).val();
+
+      if (Number(id_district) > 0) {
+       var data_var = Array;
+       data_var['id_district'] = id_district;
+       data_var['id_county'] = id_county;
+
+       $.ajax({
+          type       : "POST",
+          url        : "/student/listschool/",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+            if (response.length > 0){
+              $("#id_school").append('<option value="">Choose...</option>');
+  	      $.each(response, function (key, val) { $("#id_school").append("<option value='"+val.id_school+"'>" + val.name_school + "</option>");  });
+              $("#schoolload").html('');
+              $("#id_school").show(); 
+            } else {
+              $("#schoolload").html('');
+              $("#id_school").hide();
+              $("#title_school").hide();
+
+            }
+          }
+        });
+       } else {
+         $("#schoolload").html('');
+         $("#id_school").hide();
+         $("#title_school").hide();
+       }
+        return false;
+    });
+
+
+    $(document).on("change keyup", "#id_school", function () {
+      $("#managersload").html('<i class="fa fa-spinner fa-pulse"></i>');
+      $("#case_manager").empty().hide();
+      $("#title_case_manager").show();
+
+      var id_school = $(this).val();
+
+      if (Number(id_school) > 0) {
+       var data_var = Array;
+       data_var['id_school'] = id_school;
+
+       $.ajax({
+          type       : "POST",
+          url        : "/student/listmanagers/",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+            if (response.length > 0){
+              $("#case_manager").append('<option value="">Choose...</option>');
+  	      $.each(response, function (key, val) { $("#case_manager").append("<option value="+val.id_personnel+">" + val.name_last + " " + val.name_first + "</option>");  });
+              $("#managersload").html('');
+              $("#case_manager").show(); 
+            } else {
+              $("#managersload").html('');
+              $("#case_manager").hide();
+              $("#title_case_manager").hide();
+
+            }
+          }
+        });
+       } else {
+
+         $("#managersload").html('');
+         $("#case_manager").hide();
+         $("#title_case_manager").hide();
+
+       }
+        return false;
+     });
+
+    $(document).on("change keyup", "#nonpubcounty, #nonpubdistrict", function () {
+
+       var rel = $(this).attr("rel");
+       var url = "";
+       var id1 = "";
+       var id2 = "";
+       var loaddiv = "";
+       var divarea = "";
+
+       if ($("#nonpubcounty").val() != "" && $("#nonpubcounty").val() != "00") {
+	switch(rel) {
+          case 'NonPubCounty': 
+    	  default:
+	    loaddiv = "nonpubdistrictload";
+	    divarea = "nonpubdistrict";
+            var id1 = $(this).val();
+            url = "/student/listnonpublicdistricts/nonpubcounty/" + id1;
+            $("#"+divarea).hide();
+            $("#nonpubschool").hide();
+            $("#nonpubschool").empty().append('<option value="">Choose...</option>');
+	    $("#title_nonpubschool").hide();
+	    $("#title_" + divarea).show();    	    
+    	    break;
+          case 'NonPubDistrict': 
+	    loaddiv = "nonpubschoolload";
+	    divarea = "nonpubschool";
+            var id1 = $("#nonpubcounty").val();
+            var id2 = $(this).val();
+            url = "/student/listnonpublicschools/nonpubcounty/" + id1 + "/nonpubdistrict/" + id2;
+            $("#"+divarea).hide();
+	    //$("#title_" + divarea).hide();
+	    $("#title_" + divarea).show();    	    
+	    break;
+	}
+
+        $("#" + loaddiv).html('<i class="fa fa-spinner fa-pulse"></i>').show();
+
+       $.ajax({
+          type       : "GET",
+          url        : url,
+          crossDomain: true,
+          cache      : false,
+          dataType   : "json",
+          success    : function(response) {
+              $("#" + divarea).empty().append('<option value="">Choose...</option>');
+              $.each(response, function (key, val) { $("#" + divarea).append("<option value="+key+">" + val + "</option>");  });
+              $("#" + divarea).show().rules( "add", { required: true });
+              $("#" + loaddiv).html('');
+          }
+        });
+       } else {
+            $("#nonpubschool").hide().empty().append('<option value="">Choose...</option>').rules("remove");
+            $("#title_nonpubschool").hide();
+            $("#nonpubdistrict").hide().empty().append('<option value="">Choose...</option>').rules("remove");
+            $("#title_nonpubdistrict").hide();
+       }
+       return false;
+     });
+
+    $(document).on("change keyup", "#ward", function () {
+	if ($(this).val() == "Yes")
+	       $(".surrogate_area").css("display", "table-row");
+	    else {
+    	       $(".surrogate_area").css("display", "none");
+	       $("#ward_surrogate").prop("checked", false)
+	       $("#ward_surrogate_nn").prop("checked", false)
+	       $("#ward_surrogate_other").val("")
+	}
+
+       return false;
+    });
+
+
+
+    $(document).on("click", ".StudentEditSave", function () {
+       if ($("#studentForm").valid())  $("#studentForm")[0].submit();
+       return false;
+    });
+
+
+  });
+</script>
+
+
+<div style="margin-top: 20px;">
+
+<form action="/student/save" method="post" id="studentForm">
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Student Information</a></li>
+    <li><a href="#tabs-2">Student details</a></li>
+  </ul>
+
+<div style="margin: 15px; height: 30px; border-bottom: 1px solid #a0a0a0; padding: 5px 0;">
+   <div style="position: absolute; left: 20px;">
+    <small><b>Note:</b> Fields followed by an asterisk * are required</small>
+   </div><div style="position: absolute; right: 20px;">
+    <button rel="/student/search/" class="ui-button ui-widget ui-corner-all StudentEditReturn" style="padding: 2px;">Cancel</button>
+    <button class="ui-button ui-widget ui-corner-all StudentEditCancel" style="padding: 2px;" disabled>Revert</button>
+    <button class="ui-button ui-widget ui-corner-all StudentEditSave" style="padding: 2px;" disabled>Save</button>
+   </div>
+</div>
+
+ <div id="tabs-1">
+<table class="StudentForm">
+<tr><td colspan="2">
+Parent has been informated that this student record is contained on a secure web based server maintained by a system administrator who is not
+an employee of the school district but is bound by the requirements of The Family Rights and Privacey Act (FERPA).
+<br>&nbsp;
+</td></tr>
+<tr style="height: 35px; border-bottom: 1px solid #e0e0e0;"><td class="StudentFormTitle">Date Notified <sup>*</sup></td><td class="StudentFormValue"><input type="input" class="datepicker" id="date_web_notify" name="date_web_notify"></td></tr>
+<tr><td class="StudentFormTitle" style="width: 260px;">First Name <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="name_first" name="name_first"></td></tr>
+<tr><td class="StudentFormTitle">Middle Name </td><td class="StudentFormValue"><input type="input" id="name_middle" name="name_middle"></td></tr>
+<tr><td class="StudentFormTitle">Last Name <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="name_last" name="name_last"></td></tr>
+<tr><td class="StudentFormTitle">NSSRS ID# </td><td class="StudentFormValue"><input type="input" id="unique_id_state" name="unique_id_state"><span id="nssrsload"></span></td></tr>
+<tr><td class="StudentFormTitle">Exclude file from NSSRS Upload </td><td class="StudentFormValue"><input type="checkbox" id="exclude_from_nssrs_report" name="exclude_from_nssrs_report" style="width: 20px;"></td></tr>
+<tr><td class="StudentFormTitle">Resident County <sup>*</sup></td><td class="StudentFormValue"><select id="id_county_school" name="id_county_school"><option value="">Choose...</option>
+  <?php foreach ($this->county[0] as $k => $r) {?>
+   <option value="<?=$r['id_county']?>"><?=$r['name_county']?></option>
+  <?}?>
+</select></td></tr>
+<tr><td class="StudentFormTitle"><span id="title_district_school" style="display: none">District <sup>*</sup></span></td><td class="StudentFormValue"><select id="id_district_school" name="id_district_school" style="display: none;"><option value="" selected>Choose...</option></select><span id="districtstudentload"></span></td></tr>
+<tr><td class="StudentFormTitle"><span id="title_school" style="display: none">School <sup>*</sup></span></td><td class="StudentFormValue"><select id="id_school" name="id_school" style="display: none;"><option value="" selected>Choose...</option></select><span id="schoolload"></span></td></tr>
+<tr><td class="StudentFormTitle"><span id="title_case_manager" style="display: none">Case Manager <sup>*</sup></span></td><td class="StudentFormValue"><select id="case_manager" name="case_manager" style="display: none;"></select><div id="managersload"></div></td></tr>
+<tr><td colspan="2" style="text-align: right; border-top: 1px solid #a0a0a0; padding: 8px 0;">
+        <button class="ui-button ui-widget ui-corner-all tabGo" rel="1" style="padding: 2px;">Next <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+</td></tr>
+</table>
+
+  </div>
+  <div id="tabs-2">
+
+<table class="StudentForm">
+
+<tr><td class="StudentFormTitle" style="width: 260px;">Public school student <sup>*</sup></td><td class="StudentFormValue">
+    <select id="pub_school_student" name="pub_school_student">
+       <option value="" selected>Choose...</option>
+       <option>Yes</option>
+       <option>No</option>
+
+    </select></td></tr>
+
+<tr class="pub_school_student_area"><td class="StudentFormTitle" style="width: 260px;">Parental Placement <sup>*</sup></td><td class="StudentFormValue">
+    <select id="parental_placement" name="parental_placement">
+       <option value="" selected>Choose...</option>
+       <option value="2">Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on Equitable Service Plan</option>
+       <option value="1">Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on IEP</option>
+       <option value="0">Nonpublic Placement - Other than Parental Placement</option>
+    </select></td></tr>
+
+<tr class="pub_school_student_area"><td class="StudentFormTitle" style="width: 260px;">Non Public County <sup>*</sup></td><td class="StudentFormValue">
+    <select id="nonpubcounty" name="nonpubcounty" rel="NonPubCounty">
+       <option value="" selected>Choose...</option>
+       <option value="00">Home School</option>
+<?	foreach($this->nonpubcounty as $indx => $val) {?>
+	    <option value="<?=$indx?>"><?=$val?></option>
+<?	};?>
+    </select></div></td></tr>
+
+<tr class="pub_school_student_area"><td class="StudentFormTitle" style="width: 260px;"><span id="title_nonpubdistrict" style="display: none">Non Public District <sup>*</sup></span></td><td class="StudentFormValue">
+    <select id="nonpubdistrict" name="nonpubdistrict" rel="NonPubDistrict" style="display: none">
+       <option value="" selected>Choose...</option>
+    </select><div id="nonpubdistrictload"></td></tr>
+
+<tr class="pub_school_student_area"><td class="StudentFormTitle" style="width: 260px;"><span id="title_nonpubschool" style="display: none">Non Public School <sup>*</sup></span></td><td class="StudentFormValue">
+    <select id="nonpubschool" name="nonpubschool" rel="NonPubSchool" style="display: none">
+       <option value="" selected>Choose...</option>
+    </select><div id="nonpubschoolload"></td></tr>
+
+<tr><td class="StudentFormTitle">Date Of Birth <sup>*</sup></td><td class="StudentFormValue"><input type="input" class="datepicker" id="dob" name="dob"></td></tr>
+<tr><td class="StudentFormTitle">Age</td><td class="StudentFormValue"><span id="age"></span></td></tr>
+<tr><td class="StudentFormTitle">Grade <sup>*</sup></td><td class="StudentFormValue"><select id="grade" name="grade">
+       <option value="" selected>Choose...</option>
+       <option value="EI 0-2">EI 0-2</option>
+       <option value="ECSE">ECSE (Age 3-5)</option>
+       <option value="K">K</option>
+       <option value="1">1</option>
+       <option value="2">2</option>
+       <option value="3">3</option>
+       <option value="4">4</option>
+       <option value="5">5</option>
+       <option value="6">6</option>
+       <option value="7">7</option>
+       <option value="8">8</option>
+       <option value="9">9</option>
+       <option value="10">10</option>
+       <option value="11">11</option>
+       <option value="12">12</option>
+       <option value="12+">12+</option>
+</select></td></tr>
+<tr><td class="StudentFormTitle">Gender <sup>*</sup></td><td class="StudentFormValue">
+                                       <input type="radio" id="gender" name="gender" style="width: 20px;" value="Male"> Male
+                                       <input type="radio" id="gender" name="gender" style="width: 20px;" value="Female"> Female
+</td></tr>
+<tr><td class="StudentFormTitle">Ethnic Group <sup>*</sup></td><td class="StudentFormValue"><select id="ethnic_group" name="ethnic_group">
+      <option value="" selected>Choose...</option>
+      <option value="A">White, Not Hispanic</option>
+      <option value="B">Black, Not Hispanic</option>
+      <option value="C">Hispanic</option>
+      <option value="D">American Indian / Alaska Native</option>
+      <option value="E">Asian / Pacific Islander</option>
+</select></td></tr>
+<tr><td class="StudentFormTitle">Primary Language <sup>*</sup></td><td class="StudentFormValue"><select id="primary_language" name="primary_language">
+    <option value="" selected>Choose...</option>
+    <option value="English">English</option>
+    <option value="Afrikaans">Afrikaans</option>
+    <option value="Albanian">Albanian</option>
+    <option value="Amharic">Amharic</option>
+    <option value="Arabic">Arabic</option>
+    <option value="Bangle">Bangle</option>
+    <option value="Bhutanese">Bhutanese</option>
+    <option value="Bosnian">Bosnian</option>
+    <option value="Chinese">Chinese</option>
+    <option value="Croatian">Croatian</option>
+    <option value="Czech">Czech</option>
+    <option value="Danish">Danish</option>
+    <option value="Dari">Dari</option>
+    <option value="Dinka">Dinka</option>
+    <option value="Dutch">Dutch</option>
+    <option value="Farsi">Farsi</option>
+    <option value="Finnish">Finnish</option>
+    <option value="French">French</option>
+    <option value="German">German</option>
+    <option value="Gujarati">Gujarati</option>
+    <option value="Hindi">Hindi</option>
+    <option value="Hungarian">Hungarian</option>
+    <option value="Indonesian">Indonesian</option>
+    <option value="Italian">Italian</option>
+    <option value="Japanese">Japanese</option>
+    <option value="Khana">Khana</option>
+    <option value="Khmer">Khmer</option>
+    <option value="Korean">Korean</option>
+    <option value="Kurdish">Kurdish</option>
+    <option value="Latvian">Latvian</option>
+    <option value="Luganda">Luganda</option>
+    <option value="Lumasaba">Lumasaba</option>
+    <option value="Mandarin">Mandarin</option>
+    <option value="Nepalis">Nepalis</option>
+    <option value="Nuer">Nuer</option>
+    <option value="Nyanja">Nyanja</option>
+    <option value="Ogoni">Ogoni</option>
+    <option value="Oriya">Oriya</option>
+    <option value="Pashtu">Pashtu</option>
+    <option value="Persian">Persian</option>
+    <option value="Pilipino">Pilipino</option>
+    <option value="Polish">Polish</option>
+    <option value="Portuguese">Portuguese</option>
+    <option value="Punjabi">Punjabi</option>
+    <option value="Romanian">Romanian</option>
+    <option value="Russian">Russian</option>
+    <option value="Serbo-Croat">Serbo-Croat</option>
+    <option value="Sinhala">Sinhala</option>
+    <option value="Somali">Somali</option>
+    <option value="Spanish">Spanish</option>
+    <option value="Swahili">Swahili</option>
+    <option value="Tagalog">Tagalog</option>
+    <option value="Tajik">Tajik</option>
+    <option value="Tamil">Tamil</option>
+    <option value="Telegu">Telegu</option>
+    <option value="Thai">Thai</option>
+    <option value="Tigrbea">Tigrbea</option>
+    <option value="Tigrigna">Tigrigna</option>
+    <option value="Tonga">Tonga</option>
+    <option value="Tswana">Tswana</option>
+    <option value="Turkish">Turkish</option>
+    <option value="Ukrainian">Ukrainian</option>
+    <option value="Urdu">Urdu</option>
+    <option value="Vietnamese">Vietnamese</option>
+    <option value="Other">Other</option>
+</select></td></tr>
+<tr><td class="StudentFormTitle">ELL Student <sup>*</sup></td><td class="StudentFormValue">
+                                       <input type="radio" id="ell_student" name="ell_student" style="width: 20px;" value="Yes"> Yes
+                                       <input type="radio" id="ell_student" name="ell_student" style="width: 20px;" value="No"> No
+</td></tr>
+<tr><td class="StudentFormTitle">Ward Of State <sup>*</sup></td><td class="StudentFormValue">
+                                       <input type="radio" id="ward" name="ward" style="width: 20px;" value="Yes"> Yes
+                                       <input type="radio" id="ward" name="ward" style="width: 20px;" value="No"> No <small>Note: check Yes if this child a ward of the state or court</small>
+</td></tr>
+
+<tr class="surrogate_area" style="display: none"><td class="StudentFormTitle" style="width: 450px;">Has a surrogate parent been appointed?</td><td class="StudentFormValue">
+       <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="Yes"> Yes
+       <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="No"> No 
+</td></tr>
+<tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">If surrogate not needed, is it because parents are involved</td><td class="StudentFormValue">
+       <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="Yes"> Yes
+       <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="No"> No 
+</td></tr>
+<tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">Other reason that surrogate is not needed, please explain</td><td class="StudentFormValue"><input type="input" id="ward_surrogate_other" name="ward_surrogate_other"></td></tr>
+
+
+
+<tr><td class="StudentFormTitle">Street 1 <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_street1" name="address_street1"></td></tr>
+<tr><td class="StudentFormTitle">Street 2</td><td class="StudentFormValue"><input type="input" id="address_street2" name="address_street2"></td></tr>
+<tr><td class="StudentFormTitle">City <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_city" name="address_city"></td></tr>
+<tr><td class="StudentFormTitle">State <sup>*</sup></td><td class="StudentFormValue"><select id="address_state" name="address_state">
+       <option value="" selected>Choose...</option>
+       <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option><option value="DC">DC</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
+</select></td></tr>
+<tr><td class="StudentFormTitle">Zip  <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_zip" name="address_zip"> <small>zip or zip+4, example: 55555 or 55555-5555</small></td></tr>
+<tr><td class="StudentFormTitle">Phone</td><td class="StudentFormValue"><input type="input" id="phone" name="phone"> <small>include area code, example 123-222-3333</small></td></tr>
+<tr><td class="StudentFormTitle">Email</td><td class="StudentFormValue"><input type="input" id="email_address" name="email_address"></td></tr>
+<tr><td class="StudentFormTitle">Confirm Email</td><td class="StudentFormValue"><input type="input" id="email_address_confirm" name="email_address_confirm"></td></tr>
+<tr><td class="StudentFormTitle">Alternate Assessment <sup>*</sup></td><td class="StudentFormValue">
+                                       <input type="radio" id="alternate_assessment" name="alternate_assessment" style="width: 20px;" value="Yes"> Yes
+                                       <input type="radio" id="alternate_assessment" name="alternate_assessment" style="width: 20px;" value="No"> No
+</td></tr>
+
+<tr><td colspan="2" style="text-align: right; border-top: 1px solid #a0a0a0; padding-bottom: 8px; padding-top: 20px;">
+        <button class="ui-button ui-widget ui-corner-all tabGo" rel="0" style="padding: 2px;"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Previous</button>
+</td></tr>
+</table>
+
+ </div>
+
+
+</form>
+</div>
+
