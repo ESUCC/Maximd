@@ -38,6 +38,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $this->returnText .= '<ul id="nav2">';
         $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=list">Student List</a></li>';
         if(!$session->parent) {
+            $this->returnText .= '  <li '.(($actionName == 'studentadd') ? 'class="current"' : '').'><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
+            
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
