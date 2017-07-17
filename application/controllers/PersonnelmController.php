@@ -111,7 +111,7 @@ class PersonnelmController extends My_Form_AbstractFormController
        
        
        $privileges= $privs= $_SESSION["user"]["user"]->privs;
-        $this->writevar1($privileges,'these are the privileges');
+      //  $this->writevar1($privileges,'these are the privileges');
         
       
         
@@ -595,7 +595,14 @@ class PersonnelmController extends My_Form_AbstractFormController
                          */
                         
                         $found='false';
+                        
+                        
                         foreach($sessUserPrivileges as $sessUser){
+                          // Mike added this July 17th 2017 so that superadmins can get access to 
+                          // the edit function in personnelm
+                          
+                            if($sessUser['class']==1 && $sessUser['status']=='Active') $found=true;
+                          // End of Mike add July 17th.  
                             if($sessUser['id_district']==$districtUser && $sessUser['id_county']==$countyUser && $sessUser['class']<=3
                                 && $sessUser['status']=='Active') $found='true';
                         }
