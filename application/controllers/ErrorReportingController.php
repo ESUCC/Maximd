@@ -3,12 +3,12 @@
 class ErrorReportingController extends App_Zend_Controller_Action_Abstract {
 
     
-//    public function preDispatch() {
+//    public function preDispatch() {  
 //
 //	    $tk = new Model_Table_IepSession();
 //		$session = $tk->getSessionBySessId($this->getRequest()->getParam('PHPSESSID'));
 //		
-//		$sessObj = new Model_Table_IepSessionZend();
+//		$sessObj = new Model_Table_IepSessionZend(); 
 //		if($this->getRequest()->getParam('PHPSESSID')) {
 //			$sessionRec = $sessObj->getSessionRecordBySessId($this->getRequest()->getParam('PHPSESSID'));
 //			if('Active' != $sessionRec['status'] || true != $sessionRec['siteaccessgranted']) {

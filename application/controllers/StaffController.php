@@ -698,11 +698,13 @@ public function addotherstaffAction() {
   //  asort($temp);
   $x=0;
    
-  
+  $superAdmin=false;
   $distInclude=array();
    $nameDistrict=array();
     foreach($allPrivs as $distView){
-      // $this->writevar1($distView['class'],'this is the dist view class');
+       
+       if($distView['class']==1 && $distView['status']=='Active') $superAdmin=true;
+       
        if($distView['class']<= 6 && $distView['status']=='Active') {
          $nameDistrict[$x]=$distView['name_district'];
          $distInclude[$x]=$distView;
@@ -717,12 +719,20 @@ public function addotherstaffAction() {
     
     
     
-   // $this->writevar1($distInclude,'this is a list of district schools');
+    //$this->writevar1($distInclude,'this is a list of district schools');
     // $this->view->listOfDistricts=$allPrivs;
-    $this->view->listOfDistricts=$distInclude;
-      
+   
+    // Mike on 7-17-2017 encased this in superAdin or not
     
-     
+    if($superAdmin==false){
+        $this->view->listOfDistricts=$distInclude;
+    }
+    
+    if($superAdmin==true){
+        $allDist=new Model_Table_IepDistrict();
+        $allDistricts=$allDist->getAllDistricts();
+        $this->view->listOfDistricts=$allDistricts;
+    }
      
     
      
@@ -731,7 +741,7 @@ public function addotherstaffAction() {
      */
     $identity=$this->_getAllParams();
     
-    $this->writevar1($identity,'line 734 staff controller');
+   //:q! $this->writevar1($identity,'line 734 staff controller');
     
    // echo "You do not have the correct rights to add this to a district";
    // die();
@@ -782,7 +792,12 @@ public function addotherstaffsaveAction() {
          
       
         $okToSave=$privilegesObj->updatePrivilegesByUserN($request->id_personnel,$request->id_county,$request->id_district,$request->class,$request->id_school);
-        if($okToSave==true) echo "<br><br><br><center>Saved</center>";
+        if($okToSave==true) {
+            
+            // echo "<br><br><br><center>Saved</center>";
+           echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+           }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";
 }
@@ -805,9 +820,19 @@ public function addotherstaffschoollistAction() {
 	$x=0;
 	$gotOne='no';
 	
+	$superAdmin=false;
+	
+	
+	
 	foreach($result as $resultCheck){
 	    foreach($allPrivs as $privs){
 	     $found='no';
+	    
+	     // Mike added this July 17th in order for the list of schools to work
+	     // for the superadmin
+	     if($privs['class']==1 && $privs['status']=='Active') $superAdmin=true;
+	     // end of Mike add
+	     
 	     if($privs['class']<=3 && $privs['status']=='Active'
 	         && $privs['id_county']==$resultCheck['id_county']
 	         && $privs['id_district']==$resultCheck['id_district']) {
@@ -826,19 +851,25 @@ public function addotherstaffschoollistAction() {
 	        }
 	 }
 	}
+	
 	//echo "You don't have privileges to add staff to any of the district schools";
 	
 	//$this->writevar1($result,'this is the result');
-	//$this->writevar1($finalResult,'this is the final result');
-    if($gotOne=='no'){
+    $this->writevar1($finalResult,'this is the final result');
+    if($gotOne=='no'&& $superAdmin==false){
         $finalResult[0]['name_school']='You do not have rights to add user to this district!';
        
     }
     
 	
     
-    $this->writevar1($finalResult,'this is the final result');
-	$this->_helper->json->sendJson($finalResult);
+// Mike changed this Jul7 17th in order for the list of schools to come out for the 
+// superAdmin
+    if($gotOne!='no')
+    $this->_helper->json->sendJson($finalResult);
+    
+    if($superAdmin==true)
+      $this->_helper->json->sendJson($result);
 }
 
 
