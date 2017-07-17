@@ -72,7 +72,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
 			$session = $tk->getSessionByToken($token);
 			
 			
-			$this->writevar1($session,'this is the session variable indexcontroller');
+		//	$this->writevar1($session,'this is the session variable indexcontroller');
 			
 			
 			if($session) {

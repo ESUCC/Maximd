@@ -85,13 +85,16 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
     }
     public function updatePrivilegesByUserN($id,$id_county,$id_district,$class,$id_school) {
     
+        
         $allowChange=false;
         
         $listPrivs=$_SESSION['user']['user']->privs;
         
         foreach($listPrivs as $priv) {
-        if($priv['class']==1 and $priv['status']=='Active') $allowChange=true;
-         
+        if($priv['class']==1 and $priv['status']=='Active'){
+            die();
+            $allowChange=true;
+        }
           // check to see if Dm
         if($priv['id_district']==$id_district && $priv['id_county']==$id_county
            && $priv['class']==2 && $priv['status']=='Active' && ($class !=2 && $class !=1))$allowChange=true;

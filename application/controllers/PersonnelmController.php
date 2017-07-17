@@ -6,7 +6,7 @@ class PersonnelmController extends My_Form_AbstractFormController
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
-    function writevar1($var1,$var2) {
+    function writevar1($var1,$var2) { 
     
         ob_start();
         var_dump($var1);
@@ -140,13 +140,37 @@ class PersonnelmController extends My_Form_AbstractFormController
         $personnelObj = new Model_Table_PersonnelTable();
         $privilegesObj = new Model_Table_IepPrivileges();
         
+        
+        
+        
         // Many staff members have access to staff at other school districts.
         //Need to get this info in order to display the schools in the district from /personnelm/index.phtml
         
 
         // Mike added this 2-14-2017 because it was showing multiples of the same district in the pull down.
         $temp=$privilegesObj->getPrivileges($id_personnel);
+        
+       // $this->writevar1($temp,'these are the privs');
+      
+        
+       // Mike added 7-15-2017 to check to see if superuser or class==1
+       $this->view->superAmin=false;
+       $superAdmin=false;
          
+         foreach($temp as $tempo){
+           $this->writevar1($tempo['status'],$tempo['class'].' '.'this is the tempo');
+           if($tempo['class']==1){ 
+               
+               $superAdmin=true;
+               
+               $dists=new Model_Table_IepDistrict();  
+               $listOfDistricts=$dists->getAllDistricts();
+               $this->view->allDistricts=$listOfDistricts;
+               $this->view->superAdmin=true;
+           } 
+         }
+       // end of Mike add to check for superAdmin 
+        
         $newTemp[0]=$temp[0];
           //writevar($temp,'lets make sure we got it.');
          
@@ -166,23 +190,11 @@ class PersonnelmController extends My_Form_AbstractFormController
             }
         
         }
-        
-        
-        
-        
+         
         
         $this->view->privileges = $newTemp;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+  
+  
         foreach($this->view->privileges as $key => $priv) {
             $this->view->privileges[$key]['access'] = $personnelObj->validatePrivAccess(
                 $priv['id_county'],
