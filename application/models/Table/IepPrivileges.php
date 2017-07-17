@@ -92,7 +92,7 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
         
         foreach($listPrivs as $priv) {
         if($priv['class']==1 and $priv['status']=='Active'){
-            die();
+            
             $allowChange=true;
         }
           // check to see if Dm

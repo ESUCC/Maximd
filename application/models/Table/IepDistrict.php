@@ -22,7 +22,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         
         $db1= Zend_Registry::get('db');
         
-        $sqlst="select id_district,id_county,name_district from iep_district order by name_district";
+        $sqlst="select d.id_district,d.id_county,d.name_district,c.name_county from iep_district d,iep_county c where c.id_county=d.id_county order by name_district";
         $allDis = $db1->fetchAll($sqlst);
         
         
