@@ -481,8 +481,8 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// get request
 		$request = $this->getRequest ();
 		$post = $this->getRequest ()->getPost ();
-		$this->writevar1($request,'this is the request');
-		$this->writevar1($post,'this is the post');
+	//	$this->writevar1($request,'this is the request');
+	//	$this->writevar1($post,'this is the post');
 		$changePageAction = $post ['changePageAction'];
 		$mode = $post ['mode'] != '' ? $post ['mode'] : 'view';
 		
@@ -1968,7 +1968,7 @@ END;
 		// old site is for form versions 1-8
 		// redirect there if version is not greater or equal to 9
 		
-		$this->writevar1($dbData['version_number'],'this is the version number line 1971');
+	//	$this->writevar1($dbData['version_number'],'this is the version number line 1971');
 		// this is coming back as null thus it goes into the loop below.
 		
 		if (9 > $dbData ['version_number']) {

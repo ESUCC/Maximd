@@ -829,8 +829,8 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         $localVar = 'form' . substr('000' . $formNo, -3, 3);
         $modelName = 'Model_Table_Form' . substr('000' . $formNo, -3, 3);
         
-        $this->writevar1($modelName,'this is the model name');
-        $this->writevar1($localVar,'this is the localvar');
+      //  $this->writevar1($modelName,'this is the model name');
+     //   $this->writevar1($localVar,'this is the localvar');
         
         if (!is_null($this->$localVar)) {
             return $this->$localVar;
