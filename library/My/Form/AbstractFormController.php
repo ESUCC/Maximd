@@ -1941,7 +1941,7 @@ END;
 		
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true ); 
        
-		$this->writevar1($dbData,'this is the dbData line 1936');
+	//	$this->writevar1($dbData,'this is the dbData line 1936');
          
 		// store the list of subforms
 		// used in addSubformRow

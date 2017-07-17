@@ -38,7 +38,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $this->returnText .= '<ul id="nav2">';
         $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?&area=student&sub=list">Student List</a></li>';
         if(!$session->parent) {
-            $this->returnText .= '  <li '.(($actionName == 'studentadd') ? 'class="current"' : '').'><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
+          //  $this->returnText .= '  <li '.(($actionName == 'studentadd') ? 'class="current"' : '').'><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
+          // $this->returnText .= '  <li ><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
             
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
@@ -46,7 +47,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
            
             // Mike added this Jul 5th for password change
-            $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';
+          //  $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';
+            $this->returnText .= '  <li><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';
             
         }
         $this->returnText .= '</ul>';

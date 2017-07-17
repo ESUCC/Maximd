@@ -17,6 +17,21 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         fclose($fp);
     }
     
+    public function getAllDistricts()
+    {
+        
+        $db1= Zend_Registry::get('db');
+        
+        $sqlst="select id_district,id_county,name_district from iep_district order by name_district";
+        $allDis = $db1->fetchAll($sqlst);
+        
+        
+        $this->writevar1($allDis,'this is the list of Districts');
+        
+        return $allDis;
+        // return $row;
+    }
+    
     public function getIepDistrict($name_district)
     {
         

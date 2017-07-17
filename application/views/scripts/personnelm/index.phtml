@@ -231,8 +231,9 @@ $linkPrivileges='https://iepweb02.unl.edu/staff/addotherstaff/id_personnel/'.$st
 
 <?php 
 
-foreach ($this->privileges as $privilege)
-{
+if($this->superAdmin==false) {
+  foreach ($this->privileges as $privilege)
+  {
     $privilege['id_school']='001';
     if($privilege['name_district'])
     { 
@@ -248,8 +249,25 @@ foreach ($this->privileges as $privilege)
                        'status'=>'true'));?>"><?=$privilege['name_district'];?></option>       
             
 <?php      
-    }
-}?>
+   }    
+    
+  }
+}
+
+if ($this->superAdmin==true){
+   foreach($this->allDistricts as $dist) {
+       $dist['id_school']='001';
+    ?>
+    <option value="<?php echo $this->url(array('controller'=>'personnelm','action'=>'indexb',
+        'id_county'=>$dist['id_county'],
+        'id_district'=>$dist['id_district'],
+        'id_school'=>$dist['id_school'],
+        'status'=>'true'));?>"><?=$dist['name_district'];?></option>
+
+<?php
+  }
+}
+?>
 
 </select>
 <div id="dialog">
