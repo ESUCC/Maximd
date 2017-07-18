@@ -143,42 +143,41 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
         'unique_id_state'            => $options["unique_id_state"],  // int
         'exclude_from_nssrs_report'  => $options["exclude_from_nssrs_report"],    // boolean
         'id_school'                  => $options["id_school"],
-        'id_case_mgr'                => $options["case_manager"],
+        'id_case_mgr'                => $options["case_manager"], // int
         'pub_school_student'         => $options["pub_school_student"],  // boolean
-        'dob'                        => $options["dob"],
-        'grade'                      => $options["grade"],
-        'gender'                     => $options["gender"],
-        'ethnic_group'               => $options["ethnic_group"],
-        'primary_language'           => $options["primary_language"],
+        'dob'                        => $options["dob"], // date
+        'grade'                      => $options["grade"], // char
+        'gender'                     => $options["gender"], // char
+        'ethnic_group'               => $options["ethnic_group"], // char
+        'primary_language'           => $options["primary_language"], // char
         'ell_student'                => $options["ell_student"],   // boolean
         'ward'                       => $options["ward"],   // boolean
-        'address_street1'            => $options["address_street1"],
-        'address_street2'            => $options["address_street2"],
-        'address_city'               => $options["address_city"],
-        'address_state'              => $options["address_state"],
-        'address_zip'                => $options["address_zip"],
-        'phone'                      => $options["phone"],
-        'email_address'              => $options["email_address"],
+        'address_street1'            => $options["address_street1"], // char
+        'address_street2'            => $options["address_street2"], // char
+        'address_city'               => $options["address_city"], // char
+        'address_state'              => $options["address_state"], // char
+        'address_zip'                => $options["address_zip"], // char
+        'phone'                      => $options["phone"], // char
+        'email_address'              => $options["email_address"], // char
         'ward_surrogate'             => $options["ward_surrogate"],   // boolean
         'ward_surrogate_nn'          => $options["ward_surrogate_nn"],   // boolean
-        'ward_surrogate_other'       => $options["ward_surrogate_other"],
-        'program_provider_name'      => $options["program_provider_name"],
-        'program_provider_code'      => $options["program_provider_code"],
-        'program_provider_id_school' => $options["program_provider_id_school"],
-	'pub_school_student'         => $options["pub_school_student"]
+        'ward_surrogate_other'       => $options["ward_surrogate_other"], // char
+        'program_provider_name'      => $options["program_provider_name"], // char
+        'program_provider_code'      => $options["program_provider_code"], // char
+        'program_provider_id_school' => $options["program_provider_id_school"], // char
+	'pub_school_student'         => $options["pub_school_student"]  // boolean
    );
 
-     if ($options["sesis_exit_date"] != "") $data['sesis_exit_date'] = $options["sesis_exit_date"];
      if ($options["alternate_assessment"] != "") $data['alternate_assessment'] = $options["alternate_assessment"];   // boolean
      if ($options["parental_placement"] != "") $data['parental_placement'] = $options["parental_placement"];
      if ($options["nonpubcounty"] != "") $data['nonpubcounty'] = $options["nonpubcounty"];
      if ($options["nonpubdistrict"] != "") $data['nonpubdistrict'] = $options["nonpubdistrict"];
      if ($options["nonpubschool"] != "") $data['nonpubschool'] = $options["nonpubschool"];
 
-
-
      $db = Zend_Registry::get('db');
      $db->insert('iep_student', $data);
+
+    
      $id = $db->lastInsertId('iep_student', 'id_student');
 
      return $id;

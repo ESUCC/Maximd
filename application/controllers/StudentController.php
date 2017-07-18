@@ -125,16 +125,16 @@ class StudentController extends My_Form_AbstractFormController
 
     public function studentaddAction()
     {
-		$this->_helper->viewRenderer->setNoRender(true);
+	$this->_helper->viewRenderer->setNoRender(true);
 
-		// ----   Read all Privileges ------------------------
-		$x = 0;
-		$priv = Array();
-		$priv_student = 0;
-		while ($x < count($this->usersession->user->privs))
+        // ----   Read all Privileges ------------------------
+	$x = 0;
+	$priv = Array();
+	$priv_student = 0;
+	while ($x < count($this->usersession->user->privs))
         {
-	    	if (key($this->usersession->user->privs) >= 0) { $priv_student = 1; break; }
-        	    $x++;
+        	if (key($this->usersession->user->privs) >= 0) { $priv_student = 1; break; }
+		$x++;
         }
         // --------------------------------------------------------
        	if ($priv_student == 1)
@@ -154,10 +154,7 @@ class StudentController extends My_Form_AbstractFormController
 		$result = $nonpubcounty->getNonPublicCounties();
 		$this->view->nonpubcounty = $result;
 
-
     	        echo $this->view->render('student/student-add.phtml');
-
-	
 
 
 	   } else {
@@ -202,8 +199,6 @@ class StudentController extends My_Form_AbstractFormController
         $this->_helper->json->sendJson($result);
         return;
     }
-
-
 
 
     public function listschoolAction()
@@ -275,13 +270,13 @@ class StudentController extends My_Form_AbstractFormController
             $this->view->student = $request->id_student;
         }
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
+        header("Location:https://iep.esucc.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
         exit;
     }
 
     public function saveAction()
     {
-        $this->_helper->layout()->disableLayout();
+//        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
 	   	// ----   Read all Privileges ------------------------
@@ -321,10 +316,20 @@ class StudentController extends My_Form_AbstractFormController
 			$options['id_county'] = $this->usersession->user->user['id_county'];
 
 
+			if (!isset($options["exclude_from_nssrs_report"])) $options["exclude_from_nssrs_report"] = "No";
+			if (!isset($options["ward_surrogate"])) $options["ward_surrogate"] = "No";
+			if (!isset($options["ward_surrogate_nn"])) $options["ward_surrogate_nn"] = "No";
+
+			if (!isset($options["id_county_school"])) $options["id_county_school"] = "";
+			if (!isset($options["id_district_school"])) $options["id_district_school"] = "";
+			if (!isset($options["id_school"])) $options["id_school"] = "";
+			if (!isset($options["case_manager"])) $options["case_manager"] = 0; // int
+
 			if (!isset($options["program_provider_name"])) $options["program_provider_name"] = "";
 			if (!isset($options["program_provider_code"])) $options["program_provider_code"] = "";
 			if (!isset($options["program_provider_id_school"])) $options["program_provider_id_school"] = "";
 
+			if (!isset($options["unique_id_state"]) || $options["unique_id_state"] == "") $options["unique_id_state"] = 0;
 
 			if ($validator_date->isValid($options["date_web_notify"]) &&
 				strlen($options["name_first"]) > 2 &&
@@ -348,22 +353,22 @@ class StudentController extends My_Form_AbstractFormController
 				$validator_zip->isValid($options["address_zip"]) &&
 				($validator_phone->isValid($options["phone"]) || $options["phone"] == "") &&
 				(($validator_email->isValid($options["email_address"]) || $options["email_address"] == "") && ($validator_email->isValid($options["email_address_confirm"])
-					 || $options["email_address_confirm"] == "") && $options["email_address"] == $options["email_address_confirm"]) &&
-				($validator_date->isValid($options["sesis_exit_date"]) || $options["sesis_exit_date"] == "")
+					 || $options["email_address_confirm"] == "") && $options["email_address"] == $options["email_address_confirm"]) 
 			) 
 			{
 
-				$options["exclude_from_nssrs_report"] = (isset($options["exclude_from_nssrs_report"])) ? 'True' : 'False';
+				$options["exclude_from_nssrs_report"] = ($options["exclude_from_nssrs_report"] == "Yes") ? 'True' : 'False';
 				$options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
 				$options["ell_student"] = ($options["ell_student"] == "Yes") ? 'True' : 'False';
 				$options["ward"] = ($options["ward"] == "Yes") ? 'True' : 'False';
-				if (isset($options["alternate_assessment"])) $options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; else $options["alternate_assessment"] = "";
+				$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; 
 				$options["ward_surrogate"] = ($options["ward_surrogate"] == "Yes") ? 'True' : 'False';
 				$options["ward_surrogate_nn"] = ($options["ward_surrogate_nn"] == "Yes") ? 'True' : 'False';
 
 				$options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
 
-
+//				print_r($options);
+//				exit;
 
 				$studentQuery = new Model_Table_StudentFormAdd();
 				$result = $studentQuery->studentSave($options);  // Save data
@@ -371,20 +376,16 @@ class StudentController extends My_Form_AbstractFormController
 				header("Location: /student/edit/id_student/".$result);
 				exit;
 
-
 				//    $this->view->msg = "User ID: ".$result." was created";
 
-		 	} 
-			else 
-			{
-			   $this->view->msg = "Incorrect data";
+		 	} else {
+
+ 			    $this->view->msg = "Incorrect data";
+
 		 	}
+			echo $this->view->render('student/student-save.phtml');
 
-		    echo $this->view->render('student/student-save.phtml');
-
-	    } 
-		else 
-		{
+	       } else {
 	        echo $this->view->render('student/access-denied.phtml');
 	    }
 
@@ -415,7 +416,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        //header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
+        //header("Location:https://iep.esucc.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
         exit;
 
     }
@@ -436,12 +437,8 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
+        header("Location:https://iep.esucc.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
         exit;
-
-
-
-
 
 
         $formStudent = new Form_Student();
@@ -1009,7 +1006,7 @@ class StudentController extends My_Form_AbstractFormController
 
     public function editAction()
     {
-       //include("Writeit.php");
+       include("Writeit.php");
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();
@@ -1047,7 +1044,7 @@ class StudentController extends My_Form_AbstractFormController
             !('77' == $dbStudent['id_county'] && '0027' == $dbStudent['id_district']) &&
             '1010818' != $this->usersession->sessIdUser
             ) {
-            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.unl.edu/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
+            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.esucc.org/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
             $this->_redirector->gotoUrl($url);
             exit;
             }

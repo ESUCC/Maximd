@@ -16,44 +16,6 @@
     </tr>
 </table>
 
-<style>
-#srs_left .subBar_top {
-    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
-    height: 0px;
-    padding-bottom: 0; 
-}
-#mainFooter{
-	 height: 0px;
-    padding-bottom: 0; 
-	
-}
-#srs_left .subBar_btm {
-    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
-    height: 0px; 
-}
-#leftTop {
-    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
-    height: 2px;
-    padding: 0;
-}	
-
-#srs_left {
-    position: fixed;
-    top: 41px;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    width: 40px;
-    overflow: visible;
-    font-size: 1em;
-    color: #FFF;
-    border: none;
-}
-
-
-
-</style>
-
 <script type="text/javascript">
   $(document).ready(function () {
 
@@ -244,7 +206,7 @@
      return ((new Date().getTime() - new Date(date)) / (24 * 3600 * 365.25 * 1000)) | 0;
    }
 
-    $(document).on("keyup change", "#studentForm input, #studentForm select", function () {
+    $(document).on("keyup change focusout", "#studentForm input, #studentForm select", function () {
         $(".StudentEditSave, .StudentEditCancel").prop("disabled", false);
         return false;
     });
@@ -261,7 +223,7 @@
     });
 
 
-    $(document).on("change", "#unique_id_state", function () {
+    $(document).on("change keyup", "#unique_id_state", function () {
        $("#nssrsload").html('<i class="fa fa-spinner fa-pulse"></i>');
 
        var data_var = Array;
@@ -486,15 +448,15 @@
 	       $(".surrogate_area").css("display", "table-row");
 	    else {
     	       $(".surrogate_area").css("display", "none");
-	       $("#ward_surrogate").prop("checked", false)
-	       $("#ward_surrogate_nn").prop("checked", false)
+	       $("#ward_surrogate1").prop("checked", false)
+	       $("#ward_surrogate2").prop("checked", false)
+	       $("#ward_surrogate_nn1").prop("checked", false)
+	       $("#ward_surrogate_nn2").prop("checked", false)
 	       $("#ward_surrogate_other").val("")
 	}
 
        return false;
     });
-
-
 
     $(document).on("click", ".StudentEditSave", function () {
        if ($("#studentForm").valid())  $("#studentForm")[0].submit();
@@ -538,7 +500,7 @@ an employee of the school district but is bound by the requirements of The Famil
 <tr><td class="StudentFormTitle">Middle Name </td><td class="StudentFormValue"><input type="input" id="name_middle" name="name_middle"></td></tr>
 <tr><td class="StudentFormTitle">Last Name <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="name_last" name="name_last"></td></tr>
 <tr><td class="StudentFormTitle">NSSRS ID# </td><td class="StudentFormValue"><input type="input" id="unique_id_state" name="unique_id_state"><span id="nssrsload"></span></td></tr>
-<tr><td class="StudentFormTitle">Exclude file from NSSRS Upload </td><td class="StudentFormValue"><input type="checkbox" id="exclude_from_nssrs_report" name="exclude_from_nssrs_report" style="width: 20px;"></td></tr>
+<tr><td class="StudentFormTitle">Exclude file from NSSRS Upload </td><td class="StudentFormValue"><input type="checkbox" id="exclude_from_nssrs_report" value="Yes" name="exclude_from_nssrs_report" style="width: 20px;"></td></tr>
 <tr><td class="StudentFormTitle">Resident County <sup>*</sup></td><td class="StudentFormValue"><select id="id_county_school" name="id_county_school"><option value="">Choose...</option>
   <?php foreach ($this->county[0] as $k => $r) {?>
    <option value="<?=$r['id_county']?>"><?=$r['name_county']?></option>
@@ -703,12 +665,12 @@ an employee of the school district but is bound by the requirements of The Famil
 </td></tr>
 
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle" style="width: 450px;">Has a surrogate parent been appointed?</td><td class="StudentFormValue">
-       <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="Yes"> Yes
-       <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="No"> No 
+       <input type="radio" id="ward_surrogate1" name="ward_surrogate" style="width: 20px;" value="Yes"> Yes
+       <input type="radio" id="ward_surrogate2" name="ward_surrogate" style="width: 20px;" value="No"> No 
 </td></tr>
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">If surrogate not needed, is it because parents are involved</td><td class="StudentFormValue">
-       <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="Yes"> Yes
-       <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="No"> No 
+       <input type="radio" id="ward_surrogate_nn1" name="ward_surrogate_nn" style="width: 20px;" value="Yes"> Yes
+       <input type="radio" id="ward_surrogate_nn2" name="ward_surrogate_nn" style="width: 20px;" value="No"> No 
 </td></tr>
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">Other reason that surrogate is not needed, please explain</td><td class="StudentFormValue"><input type="input" id="ward_surrogate_other" name="ward_surrogate_other"></td></tr>
 
