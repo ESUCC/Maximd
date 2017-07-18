@@ -1,44 +1,39 @@
-<html>
+<?php $auth = Zend_Auth::getInstance(); ?>
 
-<!--  <link rel="stylesheet" href="https://mike-dev.aapnebraska.org/css/w3.css"> -->
-<link href="/css/w3.css" media="screen" rel="stylesheet" type="text/css">
-<body class="w3-container">
-<center>
-
- <table border="0"> 
+<table border="0"> 
         <!-- logo row -->
-        <?php $auth = Zend_Auth::getInstance(); ?>
-            <td colspan="2">
-                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+            <td>
+                <?php if ($auth->hasIdentity()) { 
                 echo $this->navigationTopTabs('simple');
                 } ?>
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
                 <?php if ($auth->hasIdentity()) {
-                    
-                   
                   echo   $this->navigationSubmenu('Student'); 
                 } ?>
             </td>
         </tr>
-    </table><p><p><br><br>
-     <!-- End of logo row -->
-     
+</table>
 <style>
+
 #srs_mainPane {
     top: 115px;
     border: none;
     overflow: visible;
-    margin-left: 90px;
+    margin-left: 10px; 
 }
 #srs_left .subBar_top {
     /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
     height: 0px;
     padding-bottom: 0; 
 }
-
+#mainFooter{
+	 height: 0px;
+    padding-bottom: 0; 
+	
+}
 #srs_left .subBar_btm {
     /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
     height: 0px; 
@@ -47,148 +42,270 @@
     /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
     height: 2px;
     padding: 0;
-}	
+}
 
-#srs_left {
-    position: fixed;
+
+
+.topMenu {
+    position: relative;
+    float: left;
+    margin: 20px;
+    margin-left: 0px;
+}
+
+.leftMenu {
+    position: relative;
+    width:28%;
+    min-height: 300px;    
+    float: left;
+    margin: 2px;
+    padding: 4px;
+    border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    border: 1px solid #fa0303;
+}
+
+.rightMenu {
+    position: relative;
+    width:68%;
+    min-height: 300px;
+    float: left;
+    margin: 2px;
+    padding: 4px;    
+    border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    border: 1px solid #fa0303;
+}
+
+.rightMenu select {
+    position: relative;
+    float: right;
+}
+
+#searchTable {
+    display: none;
+}
+
+#cancelSearch {
+    position: absolute;
     top: 41px;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    width: 40px;
-    overflow: visible;
-    font-size: 1em;
-    color: #FFF;
-    border: none;
-}    
-</style>        
-<?php // I dont thing this does much
+    right: 10px;
+    color: #a0a0a0;
+    cursor: pointer;
+}
+
+.studentList tr {
+    height: 24px;
+}
+
+.studentList th {
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 2px;
+}
+
+.studentList td {
+    margin: 2px;
+    padding: 6px;
+}
+
+.pagination {
+    font-size: 13px;
+    font-weight: 700;
+    background: #efefef;
+}
+
+.tableHeader {
+    height: 30px;
+    background: #efefef;
+    border-bottom: 1px solid #e0e0e0;
+}
 
 
-                
-$Stu_id= $this->studentId;
-                
+</style>
+
+<?
+    $all = $this->studentList;
+    $x=0;
+    $numberStu = count($all);
+    $studentList = Array();
+    $studentArray = "";
+?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+<?
+
+
+    foreach($all as $key => $val) {
+    	$studentList[] = [ $val['name_first'], $val['name_last'], $this->id_county, $this->id_district, $val['id_student'], $this->user_id, $val['id_school'] ];
+	$studentArray .= ", [ '".addslashes($val['name_first'])."', '". addslashes($val['name_last'])."', '".$this->id_county."', '".$this->id_district."', '".$val['id_student']."', '".$this->user_id."', '".$val['id_school']."']";
+    }
+    $studentArray = substr($studentArray, 2);
+
+?>
+        var studentsList = [ <?=$studentArray?> ];
+
+	$(document).on( "keyup", "#searchAlphabet", function() {
+	    var searchAlphabet = $.trim($("#searchAlphabet").val());
+	    var searchAlphabetLength = searchAlphabet.length;
+
+	    if (searchAlphabet == "") {
+		$("#searchAlphabet").val("");
+    		$("#searchTable").html("");		
+		$("#searchTable").hide();	        
+		$("#originalTable").show();
+	     } else if ( searchAlphabetLength > 0 && searchAlphabet != "") {
+		$("#originalTable").hide();
+		$("#searchTable").show();	        
+		var i = 0;
+		var color = "#FFFFFF";
+		var finded = 0;
+    		$("#searchTable").html("<table width='100%' id='findres' class='studentList'>")
+        		$.each(studentsList, function(indx, val) {
+			    color = (i % 2) ? "#FFFFFF" : "#F0F0F0";
+			    i++;
+			    if ((val[1].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
+				finded++;
+			        $("#findres").append('<tr bgcolor="' + color + '"><td><a href="/staff/team/id_county/' + val[2] + '/id_district/' + val[3] + '/id_student/' + val[4] + '/id_personnel/' + val[5] + '/id_school/' + val[6] + '">' + val[0] + ' ' + val[1] + '</a></td></tr>');
+			    } 
+			});
+
+		if (finded == 0) $("#findres").append('<tr><td><center><br><br>No matches<br><br></center></td></tr>');
+	    	$("#searchTable").append("</table>")
+	     } 
+
+    	    return false;
+	});
+
+	$(document).on( "click", "#cancelSearch", function() {
+	    $("#searchAlphabet").val("");
+	    $("#searchTable").html("");
+	    $("#searchTable").hide();	        
+	    $("#originalTable").show();
+    	    return false;
+	});
+
+
+	$(document).on( "change", "#student_options", function() {
+	    var url = $("#student_options").val();
+
+	    var regExMark = new RegExp("\/IEP\/|\/MDT\/|\/IFSP\/|\/Progress Report\/", "ig"); 
+	    if (url.match( regExMark )) { 
+		url = "/student/get-most-recent/" + url;
+	        $.ajax({
+			type: 'POST',
+	                dataType: 'json',
+	                url: url,
+    			success: function(response) {
+        		    if (response['success'] == '1') {
+                		window.location.href = response['url'];
+
+	            	      } else {
+	                	alert('The system was unable to locate the most recent form.');
+			    }
+			}		
+		    });
+    	    } else
+		 window.location = url;
+
+    	    return false;
+	});
+
+    });
+
+</script>
+
+<?
+$Stu_id = $this->studentId;
+
 $Stu_id_county=$this->somedata[0]['id_county']; 
 $Stu_id_district=$this->somedata[0]['id_district'];
 $seed_id=$Stu_id;
-
- ?><div id=Heading><?php 
- 
 $cnt=count($this->schoolName);
-for ($x=0;$x<$cnt;$x++){
- 
-   if($this->districtList[0]['id_school']==$this->schoolName[$x]['id_school']) {
-        echo "<h2><center>".$this->schoolName[$x]['name_school']." ".$this->schoolName[$x]['id_district']." ".$this->schoolName[$x]['id_county']
-             ." ".$this->schoolName[$x]['id_school']."</h2></center>";
-           }
-   } ?>
-   
-<br>
-<select onChange="window.location.href=this.value">
+
+$accessLevel = array( "1" => "System Admin", "2" => "District Manager", "3" => "Associate District Manager", "4" => "School Manager", "5" => "Associate School Manager",
+		      "6" => "Case Manager", "7" => "School Staff", "8" => "Specialist", "9" =>  "Parent/Guardian", "10" => "Service Coordinator" );
+?>
+
+<select onChange="window.location.href=this.value" class="topMenu">
 <option value=''>Please Select A School</option>
-<?php 
-$cnt=count($this->schoolName);
-
-
-for ($x=0;$x<$cnt;$x++){
-?>
-
-      
+<?for ($x=0;$x<$cnt;$x++){?>
   <option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team','id_county'=>$this->schoolName[$x]['id_county'],
-                        'id_district'=>$this->schoolName[$x]['id_district'],
-                       'id_school'=>$this->schoolName[$x]['id_school'],
-                       'status'=>'true'));?>"><?php  echo $this->schoolName[$x]['name_school']; ?></option>
-    
-    
- 
-<?php  
-} ?>
-
+                'id_district'=>$this->schoolName[$x]['id_district'], 'id_school'=>$this->schoolName[$x]['id_school'],
+                'status'=>'true'));?>"<?if ($this->districtList[0]['id_school']==$this->schoolName[$x]['id_school']){?> selected<?}?>>
+                <?=$this->schoolName[$x]['name_school']?></option>
+<?}?>
 </select>
-</div> 
-    <br>
-<div class="w3-col w3-border w3-round-xlarge w3-striped w3-light-blue w3-center" style="width:15%"><b>List of Students</b><p>
-<!--   <div class="w3-col w3-border w3-round-xlarge w3-striped l2 w3-light-blue w3-center"><b></b><p>List of Students</b></p>
-  -->
-  <style>
-  
- th {
-   	text-align: left;
-    font-size:0.70em;
-    }
-    
-a:link {
-    text-decoration: none;
+
+<br><br>
+<?
+for ($x=0;$x<$cnt;$x++){
+   if($this->districtList[0]['id_school']==$this->schoolName[$x]['id_school'])
+        echo "<center><h1>".$this->schoolName[$x]['name_school']."</h1></center>";
 }
-
-a:visited {
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-a:active {
-    text-decoration: underline;
-}
- 
-
-   </style>
- 
- 
-  <?php 
-//  $all=$this->studentList;
-  $all=$this->studentList;
-  $x=0;
-  $numberStu=count($all); 
-  
- 
-  
-  $x=0;
- 
-  
-  
- ?>
- 
- <table>
- <?php 
- 
- // This loop printes the list of students on the  left side of the screen only from school x
- foreach($this->paginator2 as $pg2) {
-    
-     ?>
-     <tr><th>
-   <a href="https://iepweb02.unl.edu/staff/team/id_county/<?php echo $this->id_county?>/id_district/<?php echo $this->id_district?>/id_student/<?php echo $pg2['id_student']?>/id_personnel/<?php echo $this->user_id?>/id_school/<?php echo $pg2['id_school']?>">
-      <?php echo $pg2['id_student']." ". $pg2['name_first']." ".$pg2['name_last'];?></a>
-      </th></tr>
- 
-    <?php 
-    
-} ?>
-
-<?php echo $this->paginationControl($this->paginator2,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'));
 ?>
+<br><br>
+
+
+
+<div class="leftMenu">
+<table class="studentList">
+<tr><th class="tableHeader">List of Students</th></tr>
+<tr><th>
+    <input type="text" value="" style="width: 99%;" id="searchAlphabet">
+    <div id="cancelSearch"><i class="fa fa-times"></i></div>
+</th></tr>
+</table>
+
+<div id="originalTable">
+<table class="studentList">
+<?
+$i = 1;
+foreach($this->paginator2 as $pg2) {
+    $color = ($i % 2) ? "#F0F0F0" : "#FFFFFF";
+    $i++;
+?>
+<tr bgcolor="<?=$color?>"><td>
+    <a href="/staff/team/id_county/<?=$this->id_county?>/id_district/<?=$this->id_district?>/id_student/<?=$pg2['id_student']?>/id_personnel/<?=$this->user_id?>/id_school/<?=$pg2['id_school']?>"><?=$pg2['name_first']." ".$pg2['name_last']?></a>
+</td></tr>
+<?
+}
+
+?>
+<tr><td class="pagination"><?php echo $this->paginationControl($this->paginator2,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'));?></td></tr>
 </table>
 </div>
 
+<div id="searchTable">
+    <center><i class="fa fa-spinner fa-pulse fa-2x fa-fw" style="margin: 20px auto;"></i></center>
+</div>
+
+</div>
+
+
+<div class="rightMenu">
+<form action ="/staff/update/" method="post">
+<table class="studentList">
+<tr class="tableHeader"><th colspan="2"><b>Student Team For </b> <?=$this->nameStudentFull?></th>
+<th colspan="2">
 
 
 
-<div class="w3-col  w3-center" style="width:5%"><p></div>
 
-<div class="w3-col w3-lightblue w3-center w3-striped w3-border w3-border-red  w3-round-xlarge"style="width:40%">
- <form action ="https://iepweb02.unl.edu/staff/update/" method="post">
-<table><tr>
+<?=$this->studentOptions($this->studentId, $this->id_district, $this->action)?>
 
-<h3 class="w3-text-shadow w3-light-blue"> <i>Student:</i> <?php  echo $this->nameStudentFull ?></h3></tr>
+</th>
+</tr>
+
+
+
+
 <?php 
 
-// This prints a list of staff members 
-// TWo outer loops bellow.  Loop one prints the staff members belonging to certain student
-//First outter loop
-echo ('<table  class="w3-table w3-bordered w3-striped w3-border-green">');
- 
     $incStaff=1;
     $staffCnt=count($this->districtList);
    // each person in the district in the privilege table
@@ -204,10 +321,8 @@ echo ('<table  class="w3-table w3-bordered w3-striped w3-border-green">');
     if($this->staffMemberRights!=NULL) {
 // This first inner loop will see if the staff member has rights
         foreach($this->staffMemberRights as $personRights) {
-           
-        
            // this block checks to see if the entries in iep_team_members exist
-           
+ 
            if( ($personRights['id_personnel']== $person['id_personnel'] && $stopLoop=="no")) {
                  $stat=$personRights['status'];
                 $p['exists']='yes';
@@ -221,9 +336,6 @@ echo ('<table  class="w3-table w3-bordered w3-striped w3-border-green">');
               && ($personRights['id_personnel']== $person['id_personnel'])) {
                    $checke="checked";
             }
-            
-              
-             
              if ((($personRights['flag_view']== '1'))
                   && ($personRights['id_personnel']== $person['id_personnel'])) {
                       
@@ -242,48 +354,41 @@ echo ('<table  class="w3-table w3-bordered w3-striped w3-border-green">');
        }  // end of the INNER loop
      
         $stopLoop='no';
-        
-             $fullName= ($person['id_personnel']."<b> ".$person['name_first']." ".$person['name_last']."</b> ".$person['class']." ".$person['name_district'].
-                         " ".$person['id_school']);
+    	    // $person['id_personnel'].
+             $fullName= ("<b> ".$person['name_first']." ".$person['name_last']."</b> - ".$accessLevel[$person['class']]); //." ".$person['name_district']." ".$person['id_school']);
            
         
              
-         // if the person is found we print it out to the screen and then go back and get the next staff member.    
-        if ($p['exists']=='yes'&& $stat=='Active'){
-        //    writevar($fullName,'this is the fullname');
+           // if the person is found we print it out to the screen and then go back and get the next staff member.    
+           if ($p['exists']=='yes'&& $stat=='Active'){
+           //    writevar($fullName,'this is the fullname');
+           $color = ($incStaff % 2) ? "#F0F0F0" : "#FFFFFF";
+
           ?>
       
-             <th> <input type ="hidden" name="id_student "  value="<? echo  $this->id_student ?>">  <?php echo $fullName;?></th>
-            
-            
-             <th>  <input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</th>
-             <th><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1"<?php echo $checkv?>>view</th>
-             <th><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1"<?php echo $checkc?>>create</th>
-             <th> <input type ="hidden" name="<?php echo( $incStaff."_");?>id_personnel"  value="<? echo  $person['id_personnel']?>"></th>
-             <th><input type="hidden" name=" <?php echo ("X_".$person['id_personnel'])?>"value=<?php echo $p['exists']?>></th></tr><p>
-              
-      
-       
-           
-           
-           
-           
-        
-          
-         
-       <?php $incStaff=$incStaff+1;  }?>
-       
-      
-       <?php 
+             <tr bgcolor="<?=$color?>">
+		<td>
+                   <input type="hidden" name="<?php echo ($incStaff."_");?>id_personnel" value="<?echo  $person['id_personnel']?>">
+	           <input type="hidden" name="<?php echo ("X_".$person['id_personnel'])?>" value="<?php echo $p['exists']?>">
+		   <?php echo $fullName;?></td>
+		<td><input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</td>
+		<td><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1" <?php echo $checkv?>>view</td>
+		<td><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1" <?php echo $checkc?>>create</td>
+	    </tr>
      
+             <?php $incStaff=$incStaff+1; 
+	   }
+       
          }
      }  // END OF OUTER FOREACH AS PERSON 
    
   ?>
-  
- 
-  </table><table>
-  <tr>Teachers not part of <?php echo $this->nameStudentFull;  ?>'s team</tr>
+  </table>
+
+<br><br>
+
+  <table class="studentList">
+  <tr class="tableHeader"><th colspan="4">Teachers not part of <?php echo $this->nameStudentFull;  ?>'s team</th></tr>
  
  <?php 
   $staffCnt=count($this->districtList);
@@ -330,65 +435,51 @@ echo ('<table  class="w3-table w3-bordered w3-striped w3-border-green">');
            
       }  // end of inner foreach personrights
       }
-      $fullName= ($person['id_personnel']."<b> ".$person['name_first']." ".$person['name_last']."</b> ".$person['class']." ".
-          $person['name_district']." ".$person['id_school']);
+      // $person['id_personnel'].
+      $fullName= ("<b> ".$person['name_first']." ".$person['name_last']."</b> - ".$accessLevel[$person['class']]); //." ".$person['name_district']." ".$person['id_school']);
 
-       if ($p['exists']=='no'|| $stat=='Removed') { ?>
+       if ($p['exists']=='no'|| $stat=='Removed') {
+
+
+      $color = ($incStaff % 2) ? "#F0F0F0" : "#FFFFFF";
+
+ ?>
          
-             <tr>
-          
-            <th> <input type ="hidden" name="id_student "  value="<? echo  $Stu_id ?>">  <?php echo $fullName;?></th>
-            
-            
-             <th>  <input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</th>
-            <th><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1"<?php echo $checkv?>>view</th>
-            <th><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1"<?php echo $checkc?>>create</th>
-             <th> <input type ="hidden" name="<?php echo( $incStaff."_");?>id_personnel"  value="<? echo  $person['id_personnel']?>"></th>
-            <th><input type="hidden" name=" <?php echo ("X_".$person['id_personnel'])?>"value=<?php echo $p['exists']?>></th></tr><p>
-           
-         
-         <?php $incStaff=$incStaff+1; }?>
-         
-         <?php 
-      
+             <tr bgcolor="<?=$color?>">
+		<td>
+		    <input type="hidden" name="<?php echo( $incStaff."_");?>id_personnel" value="<? echo  $person['id_personnel']?>">
+        	    <input type="hidden" name="<?php echo ("X_".$person['id_personnel'])?>" value=<?php echo $p['exists']?>>    
+		    <?php echo $fullName;?></td>
+		<td><input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</td>
+		<td><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1"<?php echo $checkv?>>view</td>
+		<td><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1"<?php echo $checkc?>>create</td>
+            </tr>
+          <?
+          $incStaff=$incStaff+1; 
+        }
   } // end of the outter person for each
+
+    $color = ($incStaff % 2) ? "#FFFFFF" :'#F0F0F0';
     ?>
-    <center><?php echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'));
-    
+    <tr><td colspan="4" style="padding: 6px 0;">
+        <input type="hidden" name="id_district" value = "<?php echo $this->id_district?>">
+        <input type="hidden" name="id_county" value = "<?php echo $this->id_county?>">
+        <input type="hidden" name="count" value="<?php echo $incStaff?>">
+        <input type="hidden" name="id_student" value="<?php echo $Stu_id?>">
+        <input type="hidden" name="id_personnel" value = "<?php echo $this->id_user ?>">
+	<input type="hidden" name="id_school" value = "<?php echo $this->id_school ?>">
+        <input type="submit" value="SAVE" style="float: right; margin-right: 30px;">
+    </td></tr>
+    <tr><td class="pagination" colspan="4">
+       <?php 
+         echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team'));
+         $incStaff=$incStaff-1; ?>
+    </td></tr>   
   
-     
-     ?>
-     
-     <?php $incStaff=$incStaff-1;?>
-     </table>
-    <input type="hidden" name="id_district" value ="<?php echo $this->id_district?>">
-    <input type="hidden" name="id_county" value ="<?php echo $this->id_county?>">
-    <input type="hidden" name="count" value =<?php echo $incStaff?>>
-    <input type="hidden" name="id_student" value =<?php echo $Stu_id?>>
-    <input type="hidden" name="id_personnel" value = <?php echo $this->id_user ?>>
-    <input type="hidden" name="id_school" value = <?php echo $this->id_school ?>>
-    </tr>
-    <input type="submit" value="SAVE"><p>
-   </form></tr>
-   
-   
-  
-  
-   
-   </table><br><p><br>
-   </div>
-  
-  
-      
-        
-      
-          
-    
-   
-  <!--  <link rel="stylesheet" href="https://mike-dev.aapnebraska.org/css/w3.css"> -->
-<link href="/css/w3.css" media="screen" rel="stylesheet" type="text/css">
-<body class="w3-container">
-<center>
+   </table>
+  </form>
 
 
- 
+</div>
+      
+<br><p><br>

@@ -540,6 +540,8 @@ class StaffController extends Zend_Controller_Action
         
         $student = new Model_Table_StudentTable2();
         $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);  
+        $this->view->studentList = $studentList;
+        
         
         $paginator2 = Zend_Paginator::factory($studentList);
         $paginator2->setCurrentPageNumber($this->_getParam('page'));
@@ -677,6 +679,10 @@ class StaffController extends Zend_Controller_Action
 
 
 public function addotherstaffAction() {
+    
+    die();
+    
+    
     $this->_helper->layout()->disableLayout();
 
     
@@ -780,7 +786,7 @@ public function addotherstaffAction() {
 }  // end of addotherstaffAction
 
 public function addotherstaffsaveAction() {
-     //   include("Writeit.php");
+        
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $request = $this->getRequest();
@@ -794,8 +800,13 @@ public function addotherstaffsaveAction() {
         $okToSave=$privilegesObj->updatePrivilegesByUserN($request->id_personnel,$request->id_county,$request->id_district,$request->class,$request->id_school);
         if($okToSave==true) {
             
-            // echo "<br><br><br><center>Saved</center>";
-           echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+            
+          // echo $this->url(array('controller'=>'personnelm','action'=>'edit','id_personnel',$request->id_personnel));
+            
+            
+            
+             echo "<br><br><br><center>Saved</center>";
+             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
            // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
@@ -803,6 +814,8 @@ public function addotherstaffsaveAction() {
 }
 
 public function addotherstaffschoollistAction() {
+    
+    
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $request = $this->getRequest();
