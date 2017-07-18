@@ -382,19 +382,22 @@ $linkPrivileges='https://iepweb02.esucc.org/staff/addotherstaff/id_personnel/'.$
       
      
       
-      $privileges=$_SESSION['user']['user']->privs;
+    // $privileges=$_SESSION['user']['user']->privs;
+      $privileges=$this->privsUser;
+      $disabled="disabled";
       
-      $disabled="disabled"; 
+      
       foreach($privileges as $privs){
           if($privs['class']==1 && $privs['status']=='Active') $disabled=" ";
           
           if($privs['id_county']==$this->countyId && $privs['id_district']==$this->districtId
             && $privs['class']<=3 && $privs['status']=='Active' ){ $disabled=" "; }
          
-          if($privs['id_county']==$this->countyId && $privs['id_district']==$this->districtId
-                && $privs['schoolId']==$this->schoolId && $privs['class']<=5 
-                && $privs['status']=='Active' ){$disabled=" ";}
-      }
+            if($privs['id_county']==$this->countyId && $privs['id_district']==$this->districtId
+                 && $privs['id_school']==$this->schoolId && $privs['class']<=5 && $privs['status']=='Active' )
+            {$disabled=" ";
+            }
+       }
           
      ?>
       

@@ -19,27 +19,48 @@ class PersonnelmController extends My_Form_AbstractFormController
     
     public function updateprivsAction()
     {
+        
+        
+        
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout()->disableLayout();
 
     //    include("Writeit.php");
         
         $changePrivs=$this->_getAllParams();
-
+        
+      // $this->writevar1($changePrivs['id_school'],"this is the privs line 32 ");
+        
+        
 // Mike added this 2-14-2017 so that only district and asst district admins can save these changes.
         $classLevel=5;
         $iep_priv = new Model_Table_PrivilegeTable();
         $UserPrivTable=$iep_priv->getUserInfo2($classLevel);
+        
         $proceed='no';
-  //      writevar($UserPrivTable,'this is the user privilege table.');
-     
+          
         
         foreach($UserPrivTable as $priv) {
+            
+            
+            // Mike added this 7-18-2017 so that superuser can save privs.
+            if($priv['class']==1 && $priv['status']=='Active') $proceed='yes';
+            
+            // Mike added this 7-17-2017 so that admin and assoc dist admin can save privileges
             if($priv['id_district']==$changePrivs['id_district'] and $priv['id_county']==$changePrivs['id_county']
                 and $priv['class']<=3 and $priv['status']=='Active')
             {
                 $proceed='yes';// This will allow one to edit the district page.
             }
+           
+            // Mike added this 7-18-2017 so that school mgr and assoc school mng can change privilege to
+            // their school
+            if($priv['id_district']==$changePrivs['id_district'] && $priv['id_county']==$changePrivs['id_county']
+                && $priv['id_school']==$changePrivs['id_school'] and $priv['class']<=5 && $priv['status']=='Active')
+            {
+                $proceed='yes';// This will allow one to edit the district page.
+            }
+            
             
         }
       //  writevar($changePrivs,'this is the change privis');
@@ -54,6 +75,7 @@ class PersonnelmController extends My_Form_AbstractFormController
 
     public function indexbAction()
     {
+        
     //    $this->_helper->layout()->disableLayout();
     //    $this->_helper->viewRenderer->setNoRender(false);
         $request = $this->getRequest();
@@ -94,7 +116,6 @@ class PersonnelmController extends My_Form_AbstractFormController
                $this->view->districtId=$schools['id_district'];
                $this->view->countyId=$schools['id_county'];
                $this->view->schoolId=$schools['id_school'];
-          //     writevar($schools['id_district'],'this is the schools');
            }
            }
       
@@ -111,8 +132,7 @@ class PersonnelmController extends My_Form_AbstractFormController
        
        
        $privileges= $privs= $_SESSION["user"]["user"]->privs;
-      //  $this->writevar1($privileges,'these are the privileges');
-        
+       
       
         
         $this->view->privsUser=$privileges;
@@ -158,7 +178,7 @@ class PersonnelmController extends My_Form_AbstractFormController
        $superAdmin=false;
          
          foreach($temp as $tempo){
-           $this->writevar1($tempo['status'],$tempo['class'].' '.'this is the tempo');
+         //  $this->writevar1($tempo['status'],$tempo['class'].' '.'this is the tempo');
            if($tempo['class']==1){ 
                
                $superAdmin=true;
@@ -169,6 +189,7 @@ class PersonnelmController extends My_Form_AbstractFormController
                $this->view->superAdmin=true;
            } 
          }
+         
        // end of Mike add to check for superAdmin 
         
         $newTemp[0]=$temp[0];
