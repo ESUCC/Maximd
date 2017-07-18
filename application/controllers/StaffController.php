@@ -358,7 +358,7 @@ class StaffController extends Zend_Controller_Action
             $this->writevar1($t,'this is a list of schools');
             $this->view->schoolName=$t;
             
-         
+          
                 
             // Get a list of teachers at a school from the iep_student_team table using the iep_personnel to get their names
           
@@ -493,7 +493,7 @@ class StaffController extends Zend_Controller_Action
                         $this->view->studentId=$studentList[$x]['id_student'];
                         $this->view->nameStudentFull=$nameStudent;
                         $found='true';
-                        
+                         
                     }
                     $x=$x+1;
                     
@@ -806,8 +806,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";
