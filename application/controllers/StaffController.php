@@ -358,7 +358,7 @@ class StaffController extends Zend_Controller_Action
             $this->writevar1($t,'this is a list of schools');
             $this->view->schoolName=$t;
             
-         
+          
                 
             // Get a list of teachers at a school from the iep_student_team table using the iep_personnel to get their names
           
@@ -493,7 +493,7 @@ class StaffController extends Zend_Controller_Action
                         $this->view->studentId=$studentList[$x]['id_student'];
                         $this->view->nameStudentFull=$nameStudent;
                         $found='true';
-                        
+                         
                     }
                     $x=$x+1;
                     
@@ -680,7 +680,7 @@ class StaffController extends Zend_Controller_Action
 
 public function addotherstaffAction() {
     
-    die();
+    
     
     
     $this->_helper->layout()->disableLayout();
