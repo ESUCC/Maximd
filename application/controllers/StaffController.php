@@ -680,7 +680,7 @@ class StaffController extends Zend_Controller_Action
 
 public function addotherstaffAction() {
     
-    die();
+    
     
     
     $this->_helper->layout()->disableLayout();
