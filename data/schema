@@ -1,8 +1,8 @@
-bash-3.2$ pg_dump -h iepdata01.esucc.org -d iep_db -U postgres -s
+bash-3.2$ pg_dump -h iepdata01.unl.edu -d iep_db -U postgres -s
 could not change directory to "/root"
 pg_dump: server version: 8.1.23; pg_dump version: 8.1.21
 pg_dump: aborting because of version mismatch  (Use the -i option to proceed anyway.)
-bash-3.2$ pg_dump -h iepdata01.esucc.org -d iep_db -U postgres -s -i
+bash-3.2$ pg_dump -h iepdata01.unl.edu -d iep_db -U postgres -s -i
 could not change directory to "/root"
 pg_dump: server version: 8.1.23; pg_dump version: 8.1.21
 pg_dump: proceeding despite version mismatch
