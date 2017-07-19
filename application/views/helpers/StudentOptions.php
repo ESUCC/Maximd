@@ -8,8 +8,21 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
      * 
      * @return string
      */
+    
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     public function StudentOptions($id_student, $id_district = false)
     {
+        
     	$limitedRollout = new Model_LimitedRollout(
     			Zend_Registry::get('limited-rollout'),
 				new Model_Table_IepStudent()
@@ -21,6 +34,7 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
         $student_auth = new App_Auth_StudentAuthenticator();
         $access = $student_auth->validateStudentAccess($id_student, new Zend_Session_Namespace('user'));
         
+        $this->writevar1($access,'this is the access ');
         if ('Team Member' == $access->description) {
             if ('viewaccess' == $access->access_level) {
                 $accessArrayClassName = 'App_Auth_Role_' . str_replace ( ' ', '', $access->description ) . 'View';
