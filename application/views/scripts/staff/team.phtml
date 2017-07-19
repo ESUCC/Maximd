@@ -17,7 +17,6 @@
         </tr>
 </table>
 <style>
-
 #srs_mainPane {
     top: 115px;
     border: none;
@@ -42,8 +41,20 @@
     /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
     height: 2px;
     padding: 0;
-}
+}	
 
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
 
 
 .topMenu {
@@ -270,7 +281,8 @@ foreach($this->paginator2 as $pg2) {
     $i++;
 ?>
 <tr bgcolor="<?=$color?>"><td>
-    <a href="/staff/team/id_county/<?=$this->id_county?>/id_district/<?=$this->id_district?>/id_student/<?=$pg2['id_student']?>/id_personnel/<?=$this->user_id?>/id_school/<?=$pg2['id_school']?>"><?=$pg2['name_first']." ".$pg2['name_last']?></a>
+    <a href="/staff/team/id_county/<?=$this->id_county?>/id_district/<?=$this->id_district?>/id_student/<?=$pg2['id_student']?>/id_personnel/<?=$this->user_id?>/id_school/<?=$pg2['id_school']?>"><font size="2pts"><?=$pg2['name_first']." ".$pg2['name_last']?></a>
+    
 </td></tr>
 <?
 }
@@ -290,13 +302,13 @@ foreach($this->paginator2 as $pg2) {
 <div class="rightMenu">
 <form action ="/staff/update/" method="post">
 <table class="studentList">
-<tr class="tableHeader"><th colspan="2"><b>Student Team For </b> <?=$this->nameStudentFull?></th>
+<tr class="tableHeader"><th colspan="2"><center><h2>Student Team For <font color="blue"> <?=$this->nameStudentFull?></font></h2></center></th>
 <th colspan="2">
 
 
 
 
-<?=$this->studentOptions($this->studentId, $this->id_district, $this->action)?>
+<?php //$this->studentOptions($this->studentId, $this->id_district, $this->action)?>
 
 </th>
 </tr>
@@ -352,6 +364,28 @@ foreach($this->paginator2 as $pg2) {
              }
                 
        }  // end of the INNER loop
+       
+    
+       
+       $privileges=$_SESSION['user']['user']->privs;
+      // $privileges=$this->privsUser;
+       $disabled="disabled";
+       
+       
+       foreach($privileges as $privs){
+           if($privs['class']==1 && $privs['status']=='Active') $disabled=" ";
+       
+           if($privs['id_county']==$this->id_county && $privs['id_district']==$this->id_district
+               && $privs['class']<=3 && $privs['status']=='Active' ){ $disabled=" "; }
+                
+               if($privs['id_county']==$this->id_county && $privs['id_district']==$this->id_district
+                   && $privs['id_school']==$this->id_school && $privs['class']<=5 && $privs['status']=='Active' )
+               {$disabled=" ";
+               }
+       }
+       
+       
+       
      
         $stopLoop='no';
     	    // $person['id_personnel'].
@@ -367,13 +401,12 @@ foreach($this->paginator2 as $pg2) {
           ?>
       
              <tr bgcolor="<?=$color?>">
-		<td>
-                   <input type="hidden" name="<?php echo ($incStaff."_");?>id_personnel" value="<?echo  $person['id_personnel']?>">
-	           <input type="hidden" name="<?php echo ("X_".$person['id_personnel'])?>" value="<?php echo $p['exists']?>">
-		   <?php echo $fullName;?></td>
-		<td><input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</td>
-		<td><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1" <?php echo $checkv?>>view</td>
-		<td><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1" <?php echo $checkc?>>create</td>
+		<td><input type="hidden" name="<?php echo ($incStaff."_");?>id_personnel" value="<?echo  $person['id_personnel']?>">
+	    <input type="hidden" name="<?php echo ("X_".$person['id_personnel'])?>" value="<?php echo $p['exists']?>">
+		   <font size="2pts"><?php echo $fullName;?></td>
+		<td><input type="checkbox" <?php echo $disabled?> name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>><font size="2pts">edit</td>
+		<td><input type="checkbox" <?php echo $disabled?> name="<?php echo ("V_".$person['id_personnel'])?>" value="1" <?php echo $checkv?>><font size="2pts">view</td>
+		<td><input type="checkbox" <?php echo $disabled?> name="<?php echo("C_". $person['id_personnel'])?>" value="1" <?php echo $checkc?>><font size="2pts">create</td>
 	    </tr>
      
              <?php $incStaff=$incStaff+1; 
@@ -388,7 +421,7 @@ foreach($this->paginator2 as $pg2) {
 <br><br>
 
   <table class="studentList">
-  <tr class="tableHeader"><th colspan="4">Teachers not part of <?php echo $this->nameStudentFull;  ?>'s team</th></tr>
+  <tr class="tableHeader"><th colspan="4"><center><h2>Teachers not part of <font color="blue"><?php echo $this->nameStudentFull;  ?>'s </font> team</center></h2></th></tr>
  
  <?php 
   $staffCnt=count($this->districtList);
@@ -448,11 +481,11 @@ foreach($this->paginator2 as $pg2) {
              <tr bgcolor="<?=$color?>">
 		<td>
 		    <input type="hidden" name="<?php echo( $incStaff."_");?>id_personnel" value="<? echo  $person['id_personnel']?>">
-        	    <input type="hidden" name="<?php echo ("X_".$person['id_personnel'])?>" value=<?php echo $p['exists']?>>    
-		    <?php echo $fullName;?></td>
-		<td><input type="checkbox" name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>>edit</td>
-		<td><input type="checkbox" name="<?php echo ("V_".$person['id_personnel'])?>" value="1"<?php echo $checkv?>>view</td>
-		<td><input type="checkbox" name="<?php echo("C_". $person['id_personnel'])?>" value="1"<?php echo $checkc?>>create</td>
+        	    <input type="hidden"  name="<?php echo ("X_".$person['id_personnel'])?>" value=<?php echo $p['exists']?>>    
+		   <font size="2pts"> <?php echo $fullName;?></font></td>
+		<td><input type="checkbox"<?php echo $disabled?>  name="<?php echo("E_". $person['id_personnel'])?>" value="1" <?php echo $checke?>><font size="2pts">edit</font></td>
+		<td><input type="checkbox" <?php echo $disabled?> name="<?php echo ("V_".$person['id_personnel'])?>" value="1"<?php echo $checkv?>><font size="2pts">view</font></td>
+		<td><input type="checkbox" <?php echo $disabled?> name="<?php echo("C_". $person['id_personnel'])?>" value="1"<?php echo $checkc?>><font size="2pts">create</font></td>
             </tr>
           <?
           $incStaff=$incStaff+1; 
@@ -468,7 +501,7 @@ foreach($this->paginator2 as $pg2) {
         <input type="hidden" name="id_student" value="<?php echo $Stu_id?>">
         <input type="hidden" name="id_personnel" value = "<?php echo $this->id_user ?>">
 	<input type="hidden" name="id_school" value = "<?php echo $this->id_school ?>">
-        <input type="submit" value="SAVE" style="float: right; margin-right: 30px;">
+        <input type="submit" <?php echo $disabled?>  value="SAVE" style="float: right; margin-right: 30px;">
     </td></tr>
     <tr><td class="pagination" colspan="4">
        <?php 

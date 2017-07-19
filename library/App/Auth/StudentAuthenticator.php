@@ -90,16 +90,17 @@ class App_Auth_StudentAuthenticator {
 					$formAccess->description = "Case Manager";
 					return $formAccess;
 					
-	//			} elseif(	7 == $priv['class'] && 
-	//						$priv['id_county'] == $student['id_county'] &&
-	//						$priv['id_district'] == $student['id_district'] &&
-	//						$priv['id_school'] == $student['id_school']
-	//						) {
-	//				$formAccess = new stdClass();
-	//				$formAccess->access_level	   = App_FormRoles::FORM_EDIT;
-	//				$formAccess->description = "Student Team";
-	//				return $formAccess;
-	//				
+		//		} elseif(	7 == $priv['class'] && 
+		//					$priv['id_county'] == $student['id_county'] &&
+		//					$priv['id_district'] == $student['id_district'] &&
+		//					$priv['id_school'] == $student['id_school']
+		//					) {
+		//			$formAccess = new stdClass();
+		//			$formAccess->access_level	   = App_FormRoles::FORM_EDIT;
+		//			$formAccess->description = "Student Team";
+					//$formAccess->description = "Team Member View";
+		//			return $formAccess;
+					
 	//			} elseif(	8 == $priv['class'] && 
 	//						$userObj->user->user['id_personnel'] == $student['id_ei_case_mgr']
 	//						) {

@@ -1,4 +1,4 @@
-<?php
+<?php  
 	
 class Model_Table_StudentTeam extends Zend_db_Table_Abstract
 { 

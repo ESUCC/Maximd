@@ -437,8 +437,8 @@ class StaffController extends Zend_Controller_Action
      $county_sv= $this->getRequest()->getParam('id_county');
      $district_sv = $this->getRequest()->getParam('id_district');
      $school_sv=$this->getRequest()->getParam('id_school');
-       
-       
+        
+     $this->writevar1($school_sv,'this is the school in staffcontroller');
      $schoolName = new Model_Table_School();
      $t=$schoolName->districtSchools($county_sv,$district_sv);
      $cnt=count($t);        
@@ -448,14 +448,14 @@ class StaffController extends Zend_Controller_Action
      $this->view->id_county=$county_sv;
      $this->view->id_school=$school_sv;
 
-       $student = new Model_Table_StudentTable2();
-       $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
+         $student = new Model_Table_StudentTable2();
+         $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
      //  writevar($studentList,'this is the student list');
       
        
        if($studentId==''){
            $studentId=$studentList[1]['id_student'];
-       }
+       } 
        
        
        $found='false';
@@ -806,8 +806,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";
