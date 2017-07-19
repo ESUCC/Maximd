@@ -77,7 +77,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
             $this->returnText .= '  <li><a href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege</a></li>';
-            $this->returnText .= '  <li ><a class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
+            $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             
         }
         

@@ -24,7 +24,6 @@ class StaffController extends Zend_Controller_Action
     
     public function indexAction() 
     {
-    //   include("Writeit.php");
        
         $sessUser = new Zend_Session_Namespace ( 'user' );
         $this->view->id_personnel = $sessUser->sessIdUser;
@@ -36,14 +35,33 @@ class StaffController extends Zend_Controller_Action
         $personnelObj = new Model_Table_PersonnelTable();
         $privilegesObj = new Model_Table_IepPrivileges();
         
-        
+         
         // Mike added this 2-14-2017 because it was showing multiples of the same district in the pull down.
         $temp=$privilegesObj->getPrivileges($id_personnel);
        
         $newTemp[0]=$temp[0];
-     //   writevar($temp,'lets make sure we got it.');
        
         $x=0;
+        
+        // Mike added this 7-19-2017 in order to Check for superadmin 
+        
+        $privileges=$_SESSION['user']['user']->privs;
+        // $privileges=$this->privsUser;
+        $superAdmin=false;
+         
+         
+        foreach($privileges as $privs){
+            if($privs['class']==1 && $privs['status']=='Active') $superAdmin=true;               
+        }
+        // End of Mike add 7-19-2017
+        
+        $this->view->superAdmin=$superAdmin;
+        $this->writevar1($superAdmin,'this is superadmin');
+        if($superAdmin == true){
+            $allDists=new Model_Table_IepDistrict();
+            $this->view->allDist =$allDists->getAllDistricts();
+        }
+        
         foreach($temp as $temporary){
             $found='no';
           //  writevar($temporary['name_district'],'name of the district');
