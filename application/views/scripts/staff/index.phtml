@@ -64,8 +64,23 @@
 <option value=''>Please Select A District</option>
 <?php 
 
+ 
+// Mike added this 7-19-2017 in order to get the list of districts to show up for superadmin
+if($this->superAdmin==true){
+    foreach($this->allDist as $districts){
+       ?> <option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team','id_county'=>$districts['id_county'],
+            'id_district'=>$districts['id_district'],
+            'id_school'=>'001',
+            'status'=>'true'));?>"><?=$districts['name_district'];?></option>
+    <?php }
+}  
+
+
+
+
+if ($this->superAdmin==false){
 foreach ($this->privileges as $privilege)
-{
+  {
     $privilege['id_school']='001';
     if($privilege['name_district']) 
     { 
@@ -80,7 +95,8 @@ foreach ($this->privileges as $privilege)
 <?php      
     }
     
-}?>
+  }
+ }?>
 </select>
  
 
