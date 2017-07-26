@@ -1,0 +1,241 @@
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#srs_mainPane').css('margin-left', "10px");
+    });
+</script>
+
+<style style="text/css">
+  	.hoverTable{
+		width:80%; 
+		border-collapse:collapse; 
+	}
+	.hoverTable td{ 
+		padding:7px; border:#4e95f4 1px solid;
+	}
+	/* Define the default color for all the table rows */
+	.hoverTable tr{
+		
+	}
+	/* Define the hover highlight color for the table row */
+    .hoverTable tr:hover {
+          background-color: #ffff99;
+    }
+    </style>
+<?php //writevar($this->person,'this is what is in the person array \n'); ?>
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php  }?> 
+
+    <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+ <?php if ($auth->hasIdentity()) { ?>
+
+    <table style=";" align="left" border="0">
+        <tr>
+            <td colspan="2" class="btsBig" align="center"><b>Welcome to the new SRS home page.</b><br><br>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" valign="top">
+                <table border="0" style="width:450px;">
+                    <?
+                    echo "<tr><td colspan=\"2\" class=\"btbRed\" >";
+                    // ADDED MESSAGE FOR NEW PRIVILAGE 030324-JL
+                    // ===========================================
+                    if(isset($option) && $option == 4) echo "To apply for a new privilege, select Edit Profile, then New Privilege.";
+                    // ===========================================
+                    echo "</tr></TD>";
+                    ?>
+                    <tr class="bgDark"><td align="center" nowrap="nowrap" style="height:19; width:10px;" colspan="2" class="menuTextBig"><B>Announcement Center</B></td><tr>
+                    <tr class="bgLGrey">
+                        <td align="center" nowrap="nowrap" style="height:19; width:1px;"><a href="/home/message-center" class="menuTextLinkBig" style="text-decoration:underline;"  >View Message Archive</a></td>
+                        <td align="center" nowrap="nowrap" style="height:19; width:1px;"><a href="/home/message-center" class="menuTextLinkBig" style="text-decoration:underline;"  >Search Message Archive</a></td>
+                    </tr>
+                    <tr class="btGrey"><td colspan="2" class="bts">Messages below were created in the last week or are required to stay posted. Click 'View Message Archive' to see all messages. Click 'Search Message Archive' to search all messages. </td></tr>
+                    <tr class="btGrey"><td colspan="2" class="bts"><img src='images/line_grey.gif' height=3 width='50%'></td></tr>
+                    <tr>
+                        <?
+                        if (isset($numRows) && $numRows) {
+                            for ($i = 0; $i < $numRows; $i++) {
+                                $arrData = pg_fetch_array($result, $i);
+                                if ($arrData['msg_type'] == "Warning") {
+                                    $cssClass = "btsbRed";
+                                } else {
+                                    $cssClass = "bts";
+                                }
+                                if($arrData['msg_type'] == "Announcement") {
+                                    $viewLink = " | <a href=\"srs.php?&area=home&sub=announcements&msgID=".$arrData['id_messages']."\"";
+                                    $viewLink .= windowStatus('View this announcement');
+                                    $viewLink .= ">View</a>";
+                                } else {
+                                    $viewLink = "&nbsp;";
+                                }
+                                echo "<tr><td class=\"$cssClass\" style=\"padding-left:{$padding}px;\"$arrNowrap[$j]>" . htmlEncode($arrData['msg_type']) . "</td><td class=\"$cssClass\" align=\"right\">".htmlEncode($arrData['create_date']).$viewLink."</tr>\n";
+                                echo "<tr><td class=\"$cssClass\" style=\"padding-left:{$padding}px;\"$arrNowrap[$j] colspan=\"2\">\t" . htmlEncode($arrData['msg_title']) . "</td></tr>\n";
+                                if($arrData['msg_type'] == "Warning") {
+                                    echo "<TR><td colspan=\"3\" class=\"$cssClass\" style=\"padding-left:{$padding}px;\"$arrNowrap[$j] >" . htmlEncode($arrData['message_text']) . "</td></TR>\n";
+                                }
+                                echo "<tr>\n<td colspan=\"" . (count($arrFieldLabels) + 1) . "\"><img src='images/line_grey.gif' height=1 width='100%'></td>\n</tr>\n";
+                            }
+                        }
+                        ?>
+                </table>
+            </td>
+        </tr>
+        <?php /*<tr>
+            <td align="right" colspan="2" class="btsBig"><BR><BR><i>This site is best viewed with a browser resolution of 1024x768 or greater.</i>
+            </td> */ ?> 
+        </tr>
+    </table>
+
+
+
+
+
+
+
+
+
+<style>
+
+
+
+
+
+body {
+	width: 80%;
+	margin: 0 auto;
+	padding: 5%;
+	line-height: 2.0;
+} 
+.flex-container {
+	display:-webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	margin: 1em 0;
+	flex-flow: column wrap-reverse;
+}
+
+</style>
+
+<h4><?php  echo $this->current_date_and_time; ?><br></h4>
+
+<div class="box flex1">
+        
+ <?php foreach ($this->districtList as $distList){
+    
+    if($distList['name_district']!=''){
+    ?>
+
+
+        
+ <b></b><a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"],
+                                          'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>">
+          <?php echo $this->escape($distList["name_district"]);}?></a></b><p>
+          
+<?php }?>    
+ 
+ 
+</div>          
+          
+
+   
+<div class="box flex2">
+<table class="hoverTable">
+
+<tr class="w3-blue">
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'name_district'));?>>District's Name</a></th>
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'phone_main'));?>>District Phone</a></th>
+<th><h4><u>County Name </th>
+
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'id_county'));?>>County ID</a></th>
+
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'id_district'));?>>District ID</a></th>
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'address_city'));?>>City</a></th>
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'address_zip'));?>>Zip Code</a></th>
+<th><h4><i><a href =<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'address_state'));?>>State</a></th>
+
+
+<th>&nbsp;</th>
+</tr>
+
+
+
+<?php //foreach($this->iep_district as $iep_districts) : 
+
+   foreach($this->paginator as $iep_districts) :?>
+<tr>
+<?php if(($this->person['edit']=='true' and $this->person['name_district']==$iep_districts->name_district and $this->person['edit'] == 'true') 
+           or ($this->person['class']=='1'))
+    {
+        $editAction='view';
+    }
+
+   else {
+       $editAction='view';
+    }
+?>
+
+<td><b><a href="<?php echo $this->url(array('controller'=>'district','action'=> $editAction,'name_district'=>$iep_districts->name_district,
+                  'id_district'=>$iep_districts->id_district,'id_county'=>$iep_districts->id_county));?>">
+<?php echo $this->escape($iep_districts->name_district);?></a></td>
+
+
+<?php //echo $this->escape($iep_districts->name_district); This is what it was?>
+<td><?php echo $this->escape($iep_districts->phone_main);?></td>
+
+<td id="county">
+<?php foreach($this->iep_county as $iep_countys) {
+   if ($this->escape($iep_districts->id_county)== $this->escape($iep_countys->id_county))
+   {
+       
+    echo $this->escape($iep_countys->name_county);
+}}?></td>
+
+<td><?php echo $this->escape($iep_districts->id_county);?></td>
+<td><?php echo $this->escape($iep_districts->id_district)?></td>
+<td><?php echo $this->escape($iep_districts->address_city)?></td>
+<td><?php echo $this->escape($iep_districts->address_zip)?></td>
+<td><?php echo $this->escape($iep_districts->address_state)?></td>
+
+
+<?php //<td><a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit', 'name_district'=>$iep_districts->name_district)); ">Edit</a></td> ?>
+
+<?php //<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'delete', 'id_district'=>$iep_districts->id_district));">Delete</a></td> ?>
+
+</tr> 
+
+<?php endforeach;?><center><?php echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'district'));
+
+/*echo $this->paginationControl(
+     // the paginator object
+     $this->paginator,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     'pagination.phtml',
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'district'
+     )
+ ); */ ?>
+ 
+ <br><br>
+</table></div></body>
+<?php }?>

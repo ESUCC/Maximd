@@ -1,0 +1,182 @@
+<?//=print_r($this->data)?>
+<div id="tabs">
+<form id="DistrictForm" action="#" method="post">
+<input type="hidden" name="id_district" value="<?=$this->data['id_district']?>" id="id_district" />
+<input type="hidden" name="id_county" value="<?=$this->data['id_county']?>" id="id_county" />
+  <ul>
+    <li><a href="#tabs-1">District Demographics to Change</a></li>
+    <li><a href="#tabs-2">District Settings</a></li>
+    <li><a href="#tabs-3">IEP Summary Form A</a></li>
+    <li><a href="#tabs-4">Optional Features</a></li>
+    <li><a href="#tabs-5">Transition</a></li>
+    <li><a href="#tabs-6">Services</a></li>
+    <li><a href="#tabs-7">Services2</a></li>
+  </ul>
+
+<div style="margin: 15px; height: 30px; border-bottom: 1px solid #a0a0a0; padding: 5px 0;">
+   <div style="position: absolute; left: 20px;">
+    <?php $today=date("Y-m-d");?>
+    <small><b>Note:</b> <?php echo $today;?> Fields followed by an asterisk * are required</small>
+   </div><div style="position: absolute; right: 20px;">
+    <button rel="/district/" class="ui-button ui-widget ui-corner-all DistrictEditReturn" style="padding: 2px;">Cancel</button>
+    <button class="ui-button ui-widget ui-corner-all DistrictEditCancel" style="padding: 2px;" disabled>Revert</button>
+    <button class="ui-button ui-widget ui-corner-all DistrictEditSave" style="padding: 2px;" disabled>Save</button>
+   </div>
+</div>
+
+<div id="tabs-1">
+
+<table class="DistrictTable">
+<tr><td class="labelText"><b>District Name</b><sup>*</sup></td><td class="fieldInput"><input  type="text" name="name_district" id="name_district" value="<?=$this->data['name_district']?>" /></td></tr>
+<tr><td class="labelText"><b>District Id</b></td><td class="fieldInput"><?=$this->data['id_district']?></td></tr>
+<tr><td class="labelText"><b>County Id</b></td><td class="fieldInput"><?=$this->data['id_county']?></td></tr>
+<tr><td class="labelText"><b>Status</b></td><td class="fieldInput"><select name="status" id="status">
+        <option<?if ($this->data['status'] == "Active"){?> selected<?}?>>Active</option>
+        <option<?if ($this->data['status'] == "Inactive"){?> selected<?}?>>Inactive</option>
+</select></td></tr>
+<tr><td class="labelText"><b>District Manager</b><sup>*</sup></td><td class="fieldInput">
+<select name="id_district_mgr" id="id_district_mgr">
+  <?php foreach ($this->acc_superviser as $k => $r) {?>
+   <option value="<?=$r['id_personnel']?>"<?if ($r['id_personnel'] == $this->data['id_district_mgr']){?> selected<?}?>><?=$r['name_first']?> <?=$r['name_last']?></option>
+  <?}?>
+</select>
+</td></tr>
+<tr><td class="labelText"><b>Account Supervisor</b><sup>*</sup></td><td class="fieldInput">
+<select name="id_account_sprv" id="id_account_sprv">
+  <?php foreach ($this->acc_superviser as $k => $r) {?>
+   <option value="<?=$r['id_personnel']?>"<?if ($r['id_personnel'] == $this->data['id_account_sprv']){?> selected<?}?>><?=$r['name_first']?> <?=$r['name_last']?></option>
+  <?}?>
+</select>
+</td></tr>
+<tr><td class="labelText"><b>Email Transfers To</b><sup>*</sup></td><td class="fieldInput">
+<select name="email_student_transfers_to" id="email_student_transfers_to">
+  <?php foreach ($this->acc_superviser as $k => $r) {?>
+   <option value="<?=$r['id_personnel']?>"<?if ($r['id_personnel'] == $this->data['email_student_transfers_to']){?> selected<?}?>><?=$r['name_first']?> <?=$r['name_last']?></option>
+  <?}?>
+</select>
+</td></tr>
+<tr><td class="labelText"><b>Address</b><sup>*</sup></td><td class="fieldInput"><input type="text" name="address_street1" id="address_street1" value="<?=$this->data['address_street1']?>" /></td></tr>
+<tr><td class="labelText"><b>Address 2</b></td><td class="fieldInput"><input type="text" name="address_street2" id="address_street2" value="<?=$this->data['address_street2']?>" /></td></tr>
+<tr><td class="labelText"><b>City</b><sup>*</sup></td><td class="fieldInput"><input type="text" name="address_city" id="address_city" value="<?=$this->data['address_city']?>" /></td></tr>
+<tr><td class="labelText"><b>State</b><sup>*</sup></td><td class="fieldInput"><input type="text" name="address_state" id="address_state" value="<?=$this->data['address_state']?>" /></td></tr>
+<tr><td class="labelText"><b>Zip Code</b><sup>*</sup></td><td class="fieldInput"><input type="text" name="address_zip" id="address_zip" value="<?=$this->data['address_zip']?>" /></td></tr>
+<tr><td class="labelText"><b>Phone</b><sup>*</sup></td><td class="fieldInput"><input type="text" name="phone_main" id="phone_main" value="<?=$this->data['phone_main']?>" /></td></tr>
+</table>
+
+</div><div id="tabs-2">
+
+<table class="DistrictTable">
+<tr><td class="labelText"><b>Start Month</b></td><td class="fieldInput"><input type="text" name="sch_yr_start_mth" id="sch_yr_start_mth" value="<?=$this->data['sch_yr_start_mth']?>" /></td></tr>
+<tr><td class="labelText"><b>Start Day</b></td><td class="fieldInput"><input type="text" name="sch_yr_start_day" id="sch_yr_start_day" value="<?=$this->data['sch_yr_start_day']?>" /></td></tr>
+<tr><td class="labelText"><b>End Month</b></td><td class="fieldInput"><input type="text" name="sch_yr_end_month" id="sch_yr_end_month" value="<?=$this->data['sch_yr_end_month']?>" /></td></tr>
+<tr><td class="labelText"><b>End Day</b></td><td class="fieldInput"><input type="text" name="sch_yr_end_day" id="sch_yr_end_day" value="<?=$this->data['sch_yr_end_day']?>" /></td></tr>
+<tr><td class="labelText"><b>Development Delay Cutoff Age</b></td><td class="fieldInput"><input type="text" name="dev_delay_cutoff_age" id="dev_delay_cutoff_age" value="<?=$this->data['dev_delay_cutoff_age']?>" /></td></tr>
+<tr><td class="labelText"><b>Resource 1</b></td><td class="fieldInput"><input type="text" name="add_resource1" id="add_resource1" value="<?=$this->data['add_resource1']?>" /></td></tr>
+<tr><td class="labelText"><b>Resource 2</b></td><td class="fieldInput"><input type="text" name="add_resource2" id="add_resource2" value="<?=$this->data['add_resource2']?>" /></td></tr>
+</table>
+
+</div><div id="tabs-3">
+<table class="DistrictTable">
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_special_considerations" id="iep_summary_special_considerations"<?=(($this->data['iep_summary_special_considerations'] == TRUE) ? " checked" : "");?>/></td><td class="labelText2"><b>Special Considerations</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_student_strengths" id="iep_summary_student_strengths"<?=(($this->data['iep_summary_student_strengths'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Student Strengths</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_parental_concerns" id="iep_summary_parental_concerns"<?=(($this->data['iep_summary_parental_concerns'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Parental Information</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_results_evaluation" id="iep_summary_results_evaluation"<?=(($this->data['iep_summary_results_evaluation'] == true) ? " checked" : "");?>/></td class="labelText2"><td><b>Results of Initial Evaluation</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_results_perf" id="iep_summary_results_perf"<?=(($this->data['iep_summary_results_perf'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Performance of any general state-district wide assessments</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_behavioral_strategies" id="iep_summary_behavioral_strategies"<?=(($this->data['iep_summary_behavioral_strategies'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Consideration of appropriate behavioral strategies</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_language_needs" id="iep_summary_language_needs"<?=(($this->data['iep_summary_language_needs'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Consideration of language needs</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_braille_instruction" id="iep_summary_braille_instruction"<?=(($this->data['iep_summary_braille_instruction'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Braille Instruction</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_comm_needs" id="iep_summary_comm_needs"<?=(($this->data['iep_summary_comm_needs'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Communication Needs</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_deaf_comm_needs" id="iep_summary_deaf_comm_needs"<?=(($this->data['iep_summary_deaf_comm_needs'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Deaf Hard of Hearing : Communication Needs</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_deaf_comm_opp" id="iep_summary_deaf_comm_opp"<?=(($this->data['iep_summary_deaf_comm_opp'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Deaf/Hard of Hearing Direct Communication</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_deaf_academic_lev" id="iep_summary_deaf_academic_lev"<?=(($this->data['iep_summary_deaf_academic_lev'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Deaf Hard of Hearing: Opportunities for Direct Instruction</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_assistive_tech" id="iep_summary_assistive_tech"<?=(($this->data['iep_summary_assistive_tech'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Considerations of Child's need for assistive Technology</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_present_lev_perf" id="iep_summary_present_lev_perf"<?=(($this->data['iep_summary_present_lev_perf'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Present level of Performance</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_goals" id="iep_summary_goals"<?=(($this->data['iep_summary_goals'] == true) ? " checked" : "");?>/></td><td class="labelTex2t"><b>Goals</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_measurable_ann_goal" id="iep_summary_measurable_ann_goal"<?=(($this->data['iep_summary_measurable_ann_goal'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Measuarable Annual Goals</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_short_term_obj" id="iep_summary_short_term_obj"<?=(($this->data['iep_summary_short_term_obj'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Short Term Objective</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_schedule" id="iep_summary_schedule"<?=(($this->data['iep_summary_schedule'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Schedule</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_person_responsible" id="iep_summary_person_responsible"<?=(($this->data['iep_summary_person_responsible'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Person Responsible</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_eval_procedure" id="iep_summary_eval_procedure"<?=(($this->data['iep_summary_eval_procedure'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Evaluation Procedure</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_progress" id="iep_summary_progress"<?=(($this->data['iep_summary_progress'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Progress</b></td></tr>
+</table>
+
+
+</div><div id="tabs-4">
+ 
+<table class="DistrictTable">
+<tr><td class="fieldInput2"><input type="checkbox" name="assurance_stmt" id="assurance_stmt"<?=(($this->data['assurance_stmt'] || $this->data['assurance_stmt'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Please Check Box if you Agree</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_edfi" id="use_edfi"<?=(($this->data['use_edfi'] || $this->data['use_edfi'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Adviser Data Publishing</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="publish_edfi" id="publish_edfi"<?=(($this->data['publish_edfi'] || $this->data['publish_edfi'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Publish to Staging Now</b></td></tr>
+
+<tr><td class="fieldInput2"><input type="checkbox" name="optional_features" id="optional_features"<?=(($this->data['optional_features'] || $this->data['optional_features'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Accept Optional Features</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_goal_helper" id="use_goal_helper"<?=(($this->data['use_goal_helper'] || $this->data['use_goal_helper'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Use Goal Helper</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_form_012" id="use_form_012"<?=(($this->data['use_form_012'] || $this->data['use_form_012'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Determination Notice</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_form_019" id="use_form_019"<?=(($this->data['use_form_019'] || $this->data['use_form_019'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Functional Assessment</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_form_020" id="use_form_020"<?=(($this->data['use_form_020'] || $this->data['use_form_020'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Specialized Transportation</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_form_021" id="use_form_021"<?=(($this->data['use_form_021'] || $this->data['use_form_021'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Asstive Tech Considerations</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_fte_report" id="use_fte_report"<?=(($this->data['use_fte_report'] || $this->data['use_fte_report'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Allow SRS to calculate FTE</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="fedrep_send_tonight" id="fedrep_send_tonight"<?=(($this->data['fedrep_send_tonight'] || $this->data['fedrep_send_tonight'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Send SPP Data to:</b></td></tr>
+<tr><td colspan="2" class="labelText2"><b>Fed Rep Email</b> <input type="text" name="fedrep_email" id="fedrep_email" value="<?=$this->data['fedrep_email']?>" /></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_accomodations_checklist" id="use_accomodations_checklist"<?=(($this->data['use_accomodations_checklist'] || $this->data['use_accomodations_checklist'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Accomondations Checklist</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="require_mips_validation" id="require_mips_validation"<?=(($this->data['require_mips_validation'] || $this->data['require_mips_validation'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Require MIPS when Appropriate</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_iep_benchmarks" id="use_iep_benchmarks"<?=(($this->data['use_iep_benchmarks'] || $this->data['use_iep_benchmarks'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Include benchmarks on progress reports</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_nssrs" id="use_nssrs"<?=(($this->data['use_nssrs'] || $this->data['use_nssrs'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Create NSSRS File</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_nssrs_overview" id="use_nssrs_overview"<?=(($this->data['use_nssrs_overview'] || $this->data['use_nssrs_overview'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Create NSSRS Overview file</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="nssrs_send_tonight" id="nssrs_send_tonight"<?=(($this->data['nssrs_send_tonight'] || $this->data['nssrs_send_tonight'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Send nssrs file tonight</b></td></tr>
+<tr><td colspan="2" class="labelText2"><b>NSSRS Email</b> <input type="text" name="email_nssrs" id="email_nssrs" value="<?=$this->data['email_nssrs']?>" /></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_zf_forms"<?=(($this->data['use_zf_forms'] || $this->data['use_zf_forms'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Use New Style Forms</b></td></tr>
+</table>
+
+
+</div><div id="tabs-5">
+
+<table class="DistrictTable">
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition" id="iep_summary_transition"<?=(($this->data['iep_summary_transition'] || $this->data['iep_summary_transition'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Transition</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_secgoals" id="iep_summary_transition_secgoals"<?=(($this->data['iep_summary_transition_secgoals'] || $this->data['iep_summary_transition_secgoals'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Post Secondary Goals</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_course_study" id="iep_summary_transition_16_course_study"<?=(($this->data['iep_summary_transition_16_course_study'] || $this->data['iep_summary_transition_16_course_study'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Course of Study</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_instruction" id="iep_summary_transition_16_instruction"<?=(($this->data['iep_summary_transition_16_instruction'] || $this->data['iep_summary_transition_16_instruction'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Statement of Needed Transition Service</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_rel_services" id="iep_summary_transition_16_rel_services"<?=(($this->data['iep_summary_transition_16_rel_services'] || $this->data['iep_summary_transition_16_rel_services'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Related Transition Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_comm_exp" id="iep_summary_transition_16_comm_exp"<?=(($this->data['iep_summary_transition_16_comm_exp'] || $this->data['iep_summary_transition_16_comm_exp'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Community Experiences</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_emp_options" id="iep_summary_transition_16_emp_options"<?=(($this->data['iep_summary_transition_16_emp_options'] || $this->data['iep_summary_transition_16_emp_options'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Employment and Adult Living Objectives</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_dly_liv_skills" id="iep_summary_transition_16_dly_liv_skills"<?=(($this->data['iep_summary_transition_16_dly_liv_skills'] || $this->data['iep_summary_transition_16_dly_liv_skills'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Daily Living Skills</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_func_voc_eval" id="iep_summary_transition_16_func_voc_eval"<?=(($this->data['iep_summary_transition_16_func_voc_eval'] || $this->data['iep_summary_transition_16_func_voc_eval'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Functional Vocational Evaluation</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_16_inter_agency_link" id="iep_summary_transition_16_inter_agency_link"<?=(($this->data['iep_summary_transition_16_inter_agency_link'] || $this->data['iep_summary_transition_16_inter_agency_link'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Interagency Linkages</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transition_activity" id="iep_summary_transition_activity"<?=(($this->data['iep_summary_transition_activity'] || $this->data['iep_summary_transition_activity'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Transition Activities</b></td></tr>
+</table>
+
+
+</div><div id="tabs-6">
+
+<table class="DistrictTable">
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_services" id="iep_summary_services"<?=(($this->data['iep_summary_services'] || $this->data['iep_summary_services'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_primary_disability" id="iep_summary_primary_disability"<?=(($this->data['iep_summary_primary_disability'] || $this->data['iep_summary_primary_disability'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Statement of Special Education and Related Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_primary_service" id="iep_summary_primary_service"<?=(($this->data['iep_summary_primary_service'] || $this->data['iep_summary_primary_service'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Primary Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_related_service" id="iep_summary_related_service"<?=(($this->data['iep_summary_related_service'] || $this->data['iep_summary_related_service'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Related Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_supp_service" id="iep_summary_supp_service"<?=(($this->data['iep_summary_supp_service']  || $this->data['iep_summary_supp_service'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Supplementary Aids and Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_prog_mod" id="iep_summary_prog_mod"<?=(($this->data['iep_summary_prog_mod'] || $this->data['iep_summary_prog_mod'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Program Modifications and Accommodations</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_modifications_accommodations" id="iep_summary_modifications_accommodations"<?=(($this->data['iep_summary_modifications_accommodations'] || $this->data['iep_summary_modifications_accommodations'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Modifications and Accommodations checklist</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_ass_tech" id="iep_summary_ass_tech"<?=(($this->data['iep_summary_ass_tech'] || $this->data['iep_summary_ass_tech'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Assistive Technology</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_supports" id="iep_summary_supports"<?=(($this->data['iep_summary_supports'] || $this->data['iep_summary_supports'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Supports for School Personnel</b></td></tr>
+</table>
+
+
+</div><div id="tabs-7">
+
+
+<table class="DistrictTable">
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_transportation" id="iep_summary_transportation"<?=(($this->data['iep_summary_transportation'] || $this->data['iep_summary_transportation'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Transportation</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_assessment" id="iep_summary_assessment"<?=(($this->data['iep_summary_assessment'] || $this->data['iep_summary_assessment'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Assessment</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_extended_school_services" id="iep_summary_extended_school_services"<?=(($this->data['iep_summary_extended_school_services'] || $this->data['iep_summary_extended_school_services'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Extended School Year Services</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_supplemental_pages" id="iep_summary_supplemental_pages"<?=(($this->data['iep_summary_supplemental_pages'] || $this->data['iep_summary_supplemental_pages'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Supplemental Pages</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="use_mips_consent_form" id="use_mips_consent_form"<?=(($this->data['iep_summary_supplemental_pages'] || $this->data['iep_summary_supplemental_pages'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Use Mips Consent Form</b></td></tr>
+<tr><td class="fieldInput2"><input type="checkbox" name="pref_district_imports" id="pref_district_imports"<?=(($this->data['pref_district_imports'] || $this->data['pref_district_imports'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>District to Import</b></td></tr>
+<tr><td colspan="2" class="labelText2"><b>District Import Code<b> <input type="text" name="district_import_code" id="district_import_code" value="<?=$this->data['district_import_code']?>"></td></tr>
+</table>
+
+
+  </div>
+</form>
+
+</div>
+ 
+<div id="successSave"></div>
