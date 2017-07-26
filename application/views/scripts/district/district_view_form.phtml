@@ -1,0 +1,47 @@
+<style>
+    .DistrictView tr td {
+	padding: 2px;
+    }
+
+</style>
+<script type="text/javascript">
+    $( "#accordion" ).accordion({  animate: 200, active: false, collapsible: true });
+</script>
+
+<table class="DistrictView">
+<tr><th colspan="2" class="DistrictViewTitle">District Demographics</th></tr>
+<tr><td class="labelText"><b>District Name</b></td><td><?=$this->data['name_district']?></td></tr>
+<tr><td class="labelText"><b>District Id</b></td><td><?=$this->data['id_district']?></td></tr>
+<tr><td class="labelText"><b>Status</b></td><td> <?=$this->data['status']?></td></tr>
+<tr><td class="labelText"><b>District Manager</b></td><td><?=$this->data['id_district_mgr_name']?></td></tr>
+<tr><td class="labelText"><b>Account Supervisor</b></td><td><?=$this->data['id_account_sprv_name']?></td></tr>
+<tr><td class="labelText"><b>Email Transfers To</b></td><td><?=$this->data['email_student_transfers_to_name']?></td></tr>
+<tr><td class="labelText"><b>Address</b></td><td><?=$this->data['address_street1']?></td></tr>
+<tr><td class="labelText"><b>Address 2</b></td><td><?=$this->data['address_street2']?></td></tr>
+<tr><td class="labelText"><b>City</b></td><td><?=$this->data['address_city']?></td></tr>
+<tr><td class="labelText"><b>State</b></td><td><?=$this->data['address_state']?></td></tr>
+<tr><td class="labelText"><b>Zip Code</b></td><td><?=$this->data['address_zip']?></td></tr>
+<tr><td class="labelText"><b>Phone</b></td><td><?=$this->data['phone_main']?></td></tr>
+<tr><td class="labelText"><b>Fed Rep Email</b></td><td><?=$this->data['fedrep_email']?></td></tr>
+</table>
+<br>
+
+<div id="accordion">
+<?foreach($this->schools as $key => $value) {?>
+  <h3><div class="ui-header"><?=$value["name_school"]?></div></h3>
+  <div class="schoolInfo">
+    <table class="schoolInfoTable">
+	<tr><td class="schoolInfoTableTitle">School ID</td><td><?=$value["id_school"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">Status</td><td><?=$value["status"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">District Manager</td><td><?=$this->managers[$value["id_school_mgr"]]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">Account Supervisor</td><td><?=$this->managers[$value["id_account_sprv"]]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">Street 1</td><td><?=$value["address_street1"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">Street 2</td><td><?=$value["address_street2"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">City</td><td><?=$value["address_city"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">State</td><td><?=$value["address_state"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">ZIP</td><td><?=$value["address_zip"]?></td></tr>
+	<tr><td class="schoolInfoTableTitle">Phone</td><td><?=$value["phone_main"]?></td></tr>
+    </table>
+  </div>
+<?};?>
+</div>

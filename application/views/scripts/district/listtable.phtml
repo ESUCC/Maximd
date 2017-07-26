@@ -1,0 +1,16 @@
+
+<p>
+<table>
+<tr><th>Table Name</th><th>Size of table</th></tr>
+<?php 
+$t=$this->tables;
+
+foreach($t as $tab){
+    echo "<tr><td>";
+    
+    echo ($tab['table_name']."</td><td> ".number_format($tab['pg_relation_size'])."</td></tr>");
+    
+    echo "<br>";
+}
+?>
+</table>

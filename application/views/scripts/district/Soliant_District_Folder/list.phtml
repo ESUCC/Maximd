@@ -1,0 +1,41 @@
+<div>District List</div>
+
+<?= $this->districtForm; ?><br/><br/>
+
+<?php if (isset($this->results)) { ?>
+  <?php if (count($this->results) < 1) { ?>
+    
+      <div>No results matched your search</div>
+
+  <?php } else { ?>
+  	<form id="Search" enctype="application/x-www-form-urlencoded" method="post" action="/district/list">
+      <div><?= count($this->results).' results' ?></div>
+      <?= $this->formHidden('page', $this->page); ?>
+      <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+      <table id="result">
+      <tr>
+          <th>County Name</th>
+          <th>County</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+      </tr>
+      <?php 
+      	
+      	$rownum = 0;
+//      	foreach ($this->results as $k => $r) {
+      	foreach($this->paginator as $k => $r) { ?>      
+          <tr>
+              <td><?= $r['name_district'] ?></td>
+              <td><?= $r['name_county'] ?></td>
+              <td><a href="/district/view/id_county/<?= $r['id_county'] ?>/id_district/<?= $r['id_district'] ?>">View</a></td>
+              <td><a href="/district/edit/id_county/<?= $r['id_county'] ?>/id_district/<?= $r['id_district'] ?>">Edit</a></td>
+          </tr>
+      <?php } ?>
+      </table>
+      </form>
+  <?php } ?>
+<?php } ?>
+
+<ul>
+
+</ul>

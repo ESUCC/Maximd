@@ -1,0 +1,63 @@
+<table class="ParentForm">
+<tr>
+ <th class="NameParent" colspan="2">
+  <b>Student:</b> <?=$this->student?>
+ </th>
+</tr>
+<?if ($this->print != "1"){?>
+<tr>
+ <th class="ParentButtons" colspan="2">
+  <button class="ui-button ui-widget ui-corner-all doneWindow" style="padding: 2px;">Done</button>
+  <button class="ui-button ui-widget ui-corner-all printWindow" style="padding: 2px;" rel="/parent/view/print/1/id_guardian/<?=$this->result["id_guardian"]?>/id_student/<?=$this->result["id_student"]?>/">Print</button>
+ </th>
+</tr>
+<?}?>
+
+<tr class="ParentHeader">
+ <td colspan="2">Parent Information</td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">First Name</td><td class="ParentFormValue"><?=$this->result["name_first"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Middle Name</td><td class="ParentFormValue"><?=$this->result["name_middle"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Last Name</td><td class="ParentFormValue"><?=$this->result["name_last"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Relation </td><td class="ParentFormValue"><?=$this->result["relation_to_child"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Street 1</td><td class="ParentFormValue"><?=$this->result["address_street1"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Street 2 </td><td class="ParentFormValue"><?=$this->result["address_street2"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">City</td><td class="ParentFormValue"><?=$this->result["address_city"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">State </td><td class="ParentFormValue"><?=$this->result["address_state"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Zip</td><td class="ParentFormValue"><?=$this->result["address_zip"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Home Phone </td><td class="ParentFormValue"><?=$this->result["phone_home"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Work Phone </td><td class="ParentFormValue"><?=$this->result["phone_work"]?></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Email </td><td class="ParentFormValue"><a href="mailto:<?=$this->result["email_address"]?>"><?=$this->result["email_address"]?></a></td>
+</tr>
+
+<?if ($this->print == "1"){?>
+<tr>
+ <td colspan="2" class="Printed"> <br>Printed by: <?=$this->fullname?> - <?=date("m/d/Y h:i A", time())?> CDT</td>
+</tr>
+<?}?>
+</table>
+
