@@ -34,7 +34,7 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
         $student_auth = new App_Auth_StudentAuthenticator();
         $access = $student_auth->validateStudentAccess($id_student, new Zend_Session_Namespace('user'));
         
-        $this->writevar1($access,'this is the access ');
+     //   $this->writevar1($access,'this is the access ');
         if ('Team Member' == $access->description) {
             if ('viewaccess' == $access->access_level) {
                 $accessArrayClassName = 'App_Auth_Role_' . str_replace ( ' ', '', $access->description ) . 'View';
@@ -70,6 +70,11 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
         if ($accessArrayObj->accessArray ['parents'] ['access']) {
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=parents">Parent/Guardians</option>';
         }
+        
+        // Mike took this out 7-25-2017 because it needs work
+      //  if ($accessArrayObj->accessArray ['parents'] ['access']) {
+       //     $options .= '<option value="/parent/search/id_student/'.$id_student.'/">Parent/Guardians</option>';
+      //  }
         if ($accessArrayObj->accessArray ['team'] ['access']) {
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=team">Student Team</option>';
         }

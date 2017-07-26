@@ -152,7 +152,7 @@ class StaffController extends Zend_Controller_Action
     
     public function updateStafAddAction()
     {
-        include ("Writeit.php");
+        //include ("Writeit.php");
         $user_id  = $_SESSION["user"]["user"]->user["id_personnel"];
         $Id=$this->_getAllParams();
     
@@ -441,22 +441,26 @@ class StaffController extends Zend_Controller_Action
         
     public function teamAction() 
     {
-  //   include("Writeit.php");
-   //  include("Writeit.php");
+
      $user_id=$this->getRequest()->getParam('id_personnel');
      
      // if coming from the index.phtml page there is no personnel id that is captured. Thus set one!
      if($user_id<1){
          $user_id  = $_SESSION["user"]["user"]->user["id_personnel"];
      } 
-  
+     
       
      $studentId=$this->getRequest()->getParam('id_student');
      $county_sv= $this->getRequest()->getParam('id_county');
      $district_sv = $this->getRequest()->getParam('id_district');
      $school_sv=$this->getRequest()->getParam('id_school');
-        
-     $this->writevar1($school_sv,'this is the school in staffcontroller');
+     
+     $menuLink=false;
+     if($studentId==null ) $menuLink=true;
+     $this->view->menuLink=$menuLink;
+  
+   
+   //  $this->writevar1($school_sv,'this is the school in staffcontroller');
      $schoolName = new Model_Table_School();
      $t=$schoolName->districtSchools($county_sv,$district_sv);
      $cnt=count($t);        
@@ -468,8 +472,8 @@ class StaffController extends Zend_Controller_Action
 
          $student = new Model_Table_StudentTable2();
          $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
-     //  writevar($studentList,'this is the student list');
-      
+        //  $this->writevar1($studentList,'this is the student list');
+         
        
        if($studentId==''){
            $studentId=$studentList[1]['id_student'];
@@ -488,7 +492,7 @@ class StaffController extends Zend_Controller_Action
   //     writevar($studentId,'this is the student id');
        $nameStudentFull= $studentName->fetchRow($studentName->select()
                                      ->where('id_student =?',$studentId));
-       $this->view->nameStudentFulla=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
+       $this->view->nameStudentFull=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
      //  writevar($this->view->nameStudentFulla,'this is the name of the student');
     //   
                 
@@ -527,7 +531,8 @@ class StaffController extends Zend_Controller_Action
              
             // This section means somebody clicked on one of the students in column 1.
            $studentData=$findName->studentInfo2($studentId);
-           $nameStudent=$studentData[0]['name_first']." ".$studentData[0]['name_last'];
+            $nameStudent=$studentData[0]['name_first']." ".$studentData[0]['name_last'];
+          
          //  writevar($studentData[0]['name_first'],'this is the student name');
            $this->view->nameStudentFull=$nameStudent;
             $this->view->user_id=$user_id; 
@@ -560,12 +565,85 @@ class StaffController extends Zend_Controller_Action
         $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);  
         $this->view->studentList = $studentList;
         
+        // Mike added 7-25-2017 in order to get the list of students
+        // for case managers.
+        $case_mgr=false;
+        $allowView=false;
+        $this->view->case_mgr=false;
+        
+        foreach($_SESSION["user"]["user"]->privs as $privs ) {
+            
+            if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv 
+                && $privs['id_school']==$school_sv && $privs['class']=='6' 
+                && $privs['status']=='Active') {
+                    $case_mgr=true;
+                    $this->view->case_mgr=$case_mgr;
+                    
+                   
+            }
+                
+            if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv
+                    && $privs['id_school']==$school_sv && $privs['class']<='6'
+                    && $privs['status']=='Active') {
+                        $allowView=true;
+                        
+            }
+            
+            
+            if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv
+               && $privs['class']<=3 && $privs['status']=='Active') {
+                   $allowView=true;
+               }
+               
+               
+                   
+               
+                
+        }
+        
+        $x=0;
+        
+        if($case_mgr==true){
+            
+            
+            
+            foreach($studentList as $stuList){
+                if ($stuList['id_case_mgr']==$_SESSION['user']['id_personnel']) {
+                    $studentListCaseMgr[$x]=$stuList;
+                    $x=$x+1;
+                    $this->writevar1($stuList,'this is the student list');
+                }
+            }
+            $studentList=$studentListCaseMgr;
+          //  $this->writevar1($studentListCaseMgr,'list of students for the case manager');
+            $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
+            if($menuLink==true) $this->view->nameStudentFull="Please Select a Student to the left!";
+                
+        
+        
+        }
+        
+        if($allowView==false){
+          
+            $studentList=null;
+            $studentList[0]['id_student']='00000000';
+            $studentList[1]['name_last']='You do not have rights to view students on this page';
+            $this->view->nameStudentFull="NO RIGHTS";
+            $this->view->user_id='0000';
+            $this->view->studentId='0000';
+            $this->view->studentId='0000';
+        }
+        
+        $this->view->allowView=$allowView;
+        
+       // End of Mike add 7-25-2017 case manager configuration
+    
         
         $paginator2 = Zend_Paginator::factory($studentList);
         $paginator2->setCurrentPageNumber($this->_getParam('page'));
         $paginator2->setItemCountPerPage(35);
         $this->view->paginator2 = $paginator2;       
-
+       
         
         // Get a list of all the team_members for a particular studetn
         $teamMembers = new Model_Table_StudentTeam(); 
@@ -824,8 +902,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";

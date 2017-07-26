@@ -27,6 +27,17 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
         fwrite($fp, $data2);
         fclose($fp);
     }
+     
+    public function getListOfAdmins($id_county,$id_district){
+        $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+        $database = Zend_Db::factory($dbConfig->db2);
+        $sql=$sql=('SELECT t.name_first,t.name_last,t.id_district,t.id_county,t.id_personnel,p.class
+               from iep_personnel t,iep_privileges p
+               where t.id_personnel=p.id_personnel and p.status=\'Active\' and p.id_county=\''.$id_county.'\'  and
+               p.id_district=\''.$id_district.'\'and (p.class=\'2\' or p.class=\'3\') order by t.name_last');
+        $result=$database->fetchAll($sql);
+        return $result;
+    }
     
     public function updatePrivilegesByUserM($id,$id_county,$id_district,$class,$id_school) {
     

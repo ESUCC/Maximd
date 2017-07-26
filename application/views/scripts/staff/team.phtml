@@ -267,8 +267,9 @@ for ($x=0;$x<$cnt;$x++){
 <table class="studentList">
 <tr><th class="tableHeader">List of Students</th></tr>
 <tr><th>
+<?php if ($this->allowView==true && $this->case_mgr==false){?>
     <input type="text" value="" style="width: 99%;" id="searchAlphabet">
-    <div id="cancelSearch"><i class="fa fa-times"></i></div>
+   <?php }?> <div id="cancelSearch"><i class="fa fa-times"></i></div>
 </th></tr>
 </table>
 
@@ -281,8 +282,13 @@ foreach($this->paginator2 as $pg2) {
     $i++;
 ?>
 <tr bgcolor="<?=$color?>"><td>
+    <?php if($this->allowView==true ){?>
     <a href="/staff/team/id_county/<?=$this->id_county?>/id_district/<?=$this->id_district?>/id_student/<?=$pg2['id_student']?>/id_personnel/<?=$this->user_id?>/id_school/<?=$pg2['id_school']?>"><font size="2pts"><?=$pg2['name_first']." ".$pg2['name_last']?></a>
-    
+    <?php }
+    else {
+     echo "<h2><b>".$pg2['name_last']."</b></h2>";   
+    }
+    ?>
 </td></tr>
 <?
 }
@@ -321,6 +327,12 @@ foreach($this->paginator2 as $pg2) {
     $incStaff=1;
     $staffCnt=count($this->districtList);
    // each person in the district in the privilege table
+   
+    
+    // Mike added this 7-25-2017
+   if($this->allowView==true){
+       
+   
    foreach($this->districtList as $person) {    
        $checkv='';
        $checke='';
@@ -379,7 +391,7 @@ foreach($this->paginator2 as $pg2) {
                && $privs['class']<=3 && $privs['status']=='Active' ){ $disabled=" "; }
                 
                if($privs['id_county']==$this->id_county && $privs['id_district']==$this->id_district
-                   && $privs['id_school']==$this->id_school && $privs['class']<=5 && $privs['status']=='Active' )
+                   && $privs['id_school']==$this->id_school && $privs['class']<=6 && $privs['status']=='Active' )
                {$disabled=" ";
                }
        }
@@ -398,7 +410,17 @@ foreach($this->paginator2 as $pg2) {
            //    writevar($fullName,'this is the fullname');
            $color = ($incStaff % 2) ? "#F0F0F0" : "#FFFFFF";
 
-          ?>
+      
+         //  if($this->nameStudentFull=='Please Select a Student to the left!') $disabled='disabled';
+          
+           if($this->menuLink==true && $this->case_mgr==true){
+            $disabled="disabled";
+           }
+           
+           ?>
+      
+      
+      
       
              <tr bgcolor="<?=$color?>">
 		<td><input type="hidden" name="<?php echo ($incStaff."_");?>id_personnel" value="<?echo  $person['id_personnel']?>">
@@ -414,6 +436,7 @@ foreach($this->paginator2 as $pg2) {
        
          }
      }  // END OF OUTER FOREACH AS PERSON 
+   } // end of Mike add 7-25-2017
    
   ?>
   </table>
@@ -424,7 +447,11 @@ foreach($this->paginator2 as $pg2) {
   <tr class="tableHeader"><th colspan="4"><center><h2>Teachers not part of <font color="blue"><?php echo $this->nameStudentFull;  ?>'s </font> team</center></h2></th></tr>
  
  <?php 
-  $staffCnt=count($this->districtList);
+ if($this->allowView==false){
+     $disabled="disabled";
+ }
+ 
+ $staffCnt=count($this->districtList);
   
   $countStaff=0;
   foreach($this->paginator as $person) 
@@ -476,7 +503,9 @@ foreach($this->paginator2 as $pg2) {
 
       $color = ($incStaff % 2) ? "#F0F0F0" : "#FFFFFF";
 
- ?>
+      if($this->menuLink==true) $disabled="disabled";
+     
+      ?>
          
              <tr bgcolor="<?=$color?>">
 		<td>

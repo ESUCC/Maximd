@@ -17,6 +17,33 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         fclose($fp);
     }
     
+    // Mike added this 7-24-2017 from Maxim so that the popup in the choose District School list would work
+    function getIepSchoolList($id_county, $id_district)
+    {
+        $db = Zend_Registry::get('db');
+        $select = $db->select()
+        ->from( 'iep_school' )
+        ->where('id_district = ?', $id_district)
+        ->where('id_county = ?', $id_county)
+        ->order(array('name_school asc'));
+    
+        $results = $db->fetchAll($select);
+    
+        return $results;
+    }
+    // Mike added this 7-24-2017 from Maxim so that the popup in the choose District School list would work
+    
+    function getIepManagersList()
+    {
+        $db = Zend_Registry::get('db');
+        $select = $db->select()
+        ->from( 'iep_personnel' )
+        ->where('class > 0');
+        $results = $db->fetchAll($select);
+    
+        return $results;
+    }
+    
     public function getAllDistricts()
     {
         
@@ -26,7 +53,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         $allDis = $db1->fetchAll($sqlst);
         
         
-        $this->writevar1($allDis,'this is the list of Districts');
+      //  $this->writevar1($allDis,'this is the list of Districts');
         
         return $allDis;
         // return $row;
