@@ -46,7 +46,10 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=personnel&sub=list\');">Personnel</a></li>';                                                                                                               		
 		
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=school&sub=list\');">Schools</a></li>';
+		
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=district&sub=list\');">Districts</a></li>';
+		
+		
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=admin&sub=server\');">Admin</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=reports&sub=reports\');">Reports</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.unl.edu/srs.php?area=help&sub=tutorials\');">Help</a></li>';
@@ -77,7 +80,11 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.unl.edu/srs.php?area=personnel&sub=list">Personnel</a></li>';
             
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=school&sub=list">Schools</a></li>';
+           
+            $this->returnText .= '  <li><a href="/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=district&sub=list">Districts</a></li>';
+            
+            
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=admin&sub=server">Admin</a></li>';
             $this->returnText .= '  <li><a href="/report">Reports</a></li>';
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=help&sub=tutorials">Help</a></li>';
