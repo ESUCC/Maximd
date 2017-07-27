@@ -10,10 +10,39 @@ require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 {
+    
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     public function studentFormCountyList($userid)
-    {
-
+    {   
+        //  Mike added July 27th the superuser function SRS-105
+        
         $db = Zend_Registry::get('db');
+        $superAdmin=false;
+        
+        foreach($_SESSION['user']['user']->privs as $privs){
+            if($privs['class']=='1' && $privs['status']=='Active') {
+              $superAdmin=true;
+              $select = $db->select()
+              ->from( array('c' => 'iep_county') , array('c.id_county', 'c.name_county'));
+              $county_row = $db->fetchAll($select);
+             
+           // $this->writevar1($county_row,'this is the county row');
+            
+            }
+        }
+ 
+        if($superAdmin==false) {
+        
         $county_row = array();
         $select = $db->select()
                    ->distinct()
@@ -22,16 +51,43 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                    ->where( 'r.id_personnel = ?', $userid )
                    ->order( 'c.name_county asc' );
         $county_row = $db->fetchAll($select);
-
+        }
+        
+        
+    //  $this->writevar1($select,'this is the sql command');
     return array($county_row);
     }
 
+    
+    
+    
     public function studentDistrictList($id_county, $userid)
     {
-
+        // Mike added July 27th the superuser function SRS-105
         $db = Zend_Registry::get('db');
-	$county_row = array();
-
+	
+        
+        $county_row = array();
+        
+        $superAdmin=false;
+        
+        foreach($_SESSION['user']['user']->privs as $privs){
+            if($privs['class']=='1' && $privs['status']=='Active') {
+                $superAdmin=true;
+                $select = $db->select()
+                ->from( array('d' => 'iep_district') , array('d.id_district', 'd.name_district'))
+                ->where('d.id_county = ?',$id_county);
+              
+                $district_row = $db->fetchAll($select);
+        
+               // $this->writevar1($county_row,'this is the county row');
+        
+            }
+        }
+        
+        
+         if($superAdmin==false){
+         
          $select = $db->select()
                    ->distinct()
                    ->from( array('r' => 'iep_privileges'), array() )
@@ -40,7 +96,10 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                    ->where( 'r.id_personnel = ?', $userid )
                    ->order( 'd.name_district asc' );
          $district_row = $db->fetchAll($select);
-
+         }
+         
+         
+      //   $this->writevar1($district_row,'this is hte list of districts');
       return array( $district_row );
     }
 

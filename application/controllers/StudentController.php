@@ -158,7 +158,7 @@ class StudentController extends My_Form_AbstractFormController
 	        $studentAddFormQuery = new Model_Table_StudentFormAdd();
 	        $result = $studentAddFormQuery->studentFormCountyList($userid); // Get result
 		$this->view->county = $result;
-
+     //  $this->writevar1($result,'this is a list of the counties');
 
 		// NonPublic schools
 		$nonpubcounty = new Model_Table_County();
