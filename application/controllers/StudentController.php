@@ -1,7 +1,7 @@
 <?php
 class StudentController extends My_Form_AbstractFormController
 {
- 
+ //Mike saved 7-26-2017 to compare with Maxim
     public function init(){
         $this->_redirector = $this->_helper->getHelper('Redirector');
 

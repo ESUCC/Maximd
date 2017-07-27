@@ -61,8 +61,14 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
     
     public function navigationSubmenuPersonnel()
     {
+        // Mike Added this July 26th so that New Privileges would show up only
+        // in the correct place.
         
-        
+        $showNewPrivs=false;
+        foreach($_SESSION['user']['user']->privs as $privs){
+           if ($privs['class'] <='5' && $privs['status']=='Active') $showNewPrivs=true;  
+        }
+        // End of Mike Add
         $session = new Zend_Session_Namespace ( 'user' );
         
         $privCheck = new My_Classes_privCheck($session->user->privs);
@@ -77,8 +83,13 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
             $this->returnText .= '  <li><a href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege</a></li>';
-            $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             
+// Mike added this July 26 so that only the New Privilege tab would show up
+// where appropriate
+            if($showNewPrivs==true){
+            $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
+            } 
+// End of Mike add            
         }
         
      

@@ -17,8 +17,13 @@ $linkPrivileges='https://iepweb02.unl.edu/staff/addotherstaff/id_personnel/'.$st
 ?>
 
 <script type="text/javascript">
+  
   $(document).ready(function () {
+	  // Mike added this 7-26-2017 Do not need the New Privilege tab
+	  
+	  $('#hideme').empty();
 
+   // End of Mike add
    $(".mike2").attr("href","<?php echo ""?>");
    $(".mike2").text("");
    $(".openWindow.mike").attr("rel","<?php echo $linkPrivileges?>").attr("href","<?php echo "#"?>").attr("title","<?php echo $completeName?>");
