@@ -176,9 +176,9 @@
        return false;
     });
 
-    $(document).on("change keyup focusout", "#pub_school_student", function () {
+    $(document).on("change keyup", "#pub_school_student", function () {
 
-	if ($("#pub_school_student").val() == "No"){
+	if ($(this).val() == "No"){
 	    $(".pub_school_student_area").css("display", "table-row");
             $("#parental_placement").rules( "add", { required: true });
             $("#nonpubcounty").rules( "add", { required: true });
@@ -223,26 +223,30 @@
     });
 
 
-    $(document).on("change keyup", "#unique_id_state", function () {
-       $("#nssrsload").html('<i class="fa fa-spinner fa-pulse"></i>');
+    $(document).on("focusout", "#unique_id_state", function () {
+	if (Number($("#unique_id_state").val() * 1) > 0) {
 
-       var data_var = Array;
+           $("#nssrsload").html('<i class="fa fa-spinner fa-pulse"></i>');
+           var data_var = Array;
+           data_var["unique_id_state"] = $("#unique_id_state").val();
+           $.ajax({
+              type       : "GET",
+              url        : "/student/checknssrs",
+              crossDomain: true,
+              cache      : false,
+              data       : data_var,
+              dataType   : "json",
+              success    : function(response) {
+			if (Number(response.count) > 0) { 
+			    $("#unique_id_state").val(""); //.css('border', '2px solid #FDADAF'); 
+			    $('<label id="unique_id_state_err" class="error" for="unique_id_state">This Number is being used by another student.</label>').insertAfter( '#unique_id_state' );
+			    var delayAlert = setInterval(function() { $("#unique_id_state_err").remove();  clearInterval(delayAlert); }, 2000);
+			}
+                        $("#nssrsload").html('');
+              }
+            });
 
-       data_var["unique_id_state"] = $("#unique_id_state").val();
-
-       $.ajax({
-          type       : "GET",
-          url        : "/student/checknssrs",
-          crossDomain: true,
-          cache      : false,
-          data       : data_var,
-          dataType   : "json",
-          success    : function(response) {
-
-		if (Number(response.count) > 0) $("#unique_id_state").val("").css('border', '2px solid #FDADAF');
-                $("#nssrsload").html('');
-          }
-        });
+	}
       return false;
     });
 
@@ -467,49 +471,6 @@
   });
 </script>
 
-<style>
-#srs_mainPane {
-    top: 115px;
-    border: none;
-    overflow: visible;
-    margin-left: 10px; 
-}
-#srs_left .subBar_top {
-    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
-    height: 0px;
-    padding-bottom: 0; 
-}
-#mainFooter{
-	 height: 0px;
-    padding-bottom: 0; 
-	
-}
-#srs_left .subBar_btm {
-    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
-    height: 0px; 
-}
-#leftTop {
-    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
-    height: 2px;
-    padding: 0;
-}	
-
-#srs_left {
-    position: fixed;
-    top: 41px;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    width: 40px;
-    overflow: visible;
-    font-size: 1em;
-    color: #FFF;
-    border: none;
-}
-</style>
-
-
-
 
 <div style="margin-top: 20px;">
 
@@ -563,19 +524,17 @@ an employee of the school district but is bound by the requirements of The Famil
 <table class="StudentForm">
 
 <tr><td class="StudentFormTitle" style="width: 260px;">Public school student <sup>*</sup></td><td class="StudentFormValue">
-    <select id="pub_school_student" name="pub_school_student">
-       <option value="" selected>Choose...</option>
-       <option>Yes</option>
-       <option>No</option>
-
-    </select></td></tr>
+   <input type="radio" id="pub_school_student" name="pub_school_student" style="width: 20px;" value="Yes"> Yes
+   <input type="radio" id="pub_school_student" name="pub_school_student" style="width: 20px;" value="No"> No
+</td></tr>
 
 <tr class="pub_school_student_area"><td class="StudentFormTitle" style="width: 260px;">Parental Placement <sup>*</sup></td><td class="StudentFormValue">
     <select id="parental_placement" name="parental_placement">
        <option value="" selected>Choose...</option>
-       <option value="2">Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on Equitable Service Plan</option>
-       <option value="1">Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on IEP</option>
-       <option value="0">Nonpublic Placement - Other than Parental Placement</option>
+       <option value="0">Not Applicable - Does not attend a Nonpublic School</option>
+       <option value="2">Nonpublic Placement - Other than Parental Placement</option>
+       <option value="3">Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on IEP</option>
+       <option value="4">Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on Equitable Service Plan</option>
     </select></td></tr>
 
 <tr class="pub_school_student_area"><td class="StudentFormTitle" style="width: 260px;">Non Public County <sup>*</sup></td><td class="StudentFormValue">
@@ -723,7 +682,7 @@ an employee of the school district but is bound by the requirements of The Famil
 <tr><td class="StudentFormTitle">Street 2</td><td class="StudentFormValue"><input type="input" id="address_street2" name="address_street2"></td></tr>
 <tr><td class="StudentFormTitle">City <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_city" name="address_city"></td></tr>
 <tr><td class="StudentFormTitle">State <sup>*</sup></td><td class="StudentFormValue"><select id="address_state" name="address_state">
-       <option value="" selected>Choose...</option>
+       <option value="NE" selected>NE</option>
        <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option><option value="DC">DC</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
 </select></td></tr>
 <tr><td class="StudentFormTitle">Zip  <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_zip" name="address_zip"> <small>zip or zip+4, example: 55555 or 55555-5555</small></td></tr>
