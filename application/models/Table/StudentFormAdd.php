@@ -35,7 +35,7 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
               $select = $db->select()
               ->from( array('c' => 'iep_county') , array('c.id_county', 'c.name_county'));
               $county_row = $db->fetchAll($select);
-            
+             
            // $this->writevar1($county_row,'this is the county row');
             
             }
