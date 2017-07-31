@@ -24,7 +24,7 @@
 
     $( "#tabs" ).tabs();
 
-    $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy', changeYear:true, changeMonth: true });
+    $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy', yearRange: "-50:+1", changeYear:true, changeMonth: true });
 
     var validator = $("#studentForm").validate({
              rules: {
@@ -149,15 +149,20 @@
 
     $(document).on("click", ".tabGo", function () {
 	var page = Number($(this).attr("rel"));
-        if (!$("#studentForm").valid()) return false
+
+        if ( !$("#studentForm").valid() || $("label").is("#unique_id_state_err") || $("i").is("#unique_id_state_load") ) return false
+
         $("#tabs").tabs('select', page); // For only Jquery UI version 1.8
         validator.resetForm();
+
+	$("#unique_id_state").remove();
         return false;
     });
 
     $(document).on("tabsselect", "#tabs" , function( event, ui ) {
-        if (!$("#studentForm").valid()) return false;
+        if ( !$("#studentForm").valid() || $("label").is("#unique_id_state_err") || $("i").is("#unique_id_state_load") ) return false
         validator.resetForm();
+	$("#unique_id_state").remove();
     });
 
     $(document).on("change", ":input" , function( event, ui ) {
@@ -222,11 +227,10 @@
         return false;
     });
 
-
     $(document).on("focusout", "#unique_id_state", function () {
 	if (Number($("#unique_id_state").val() * 1) > 0) {
 
-           $("#nssrsload").html('<i class="fa fa-spinner fa-pulse"></i>');
+           $("#nssrsload").html('<i class="fa fa-spinner fa-pulse" id="unique_id_state_load"></i>');
            var data_var = Array;
            data_var["unique_id_state"] = $("#unique_id_state").val();
            $.ajax({
@@ -239,8 +243,8 @@
               success    : function(response) {
 			if (Number(response.count) > 0) { 
 			    $("#unique_id_state").val(""); //.css('border', '2px solid #FDADAF'); 
-			    $('<label id="unique_id_state_err" class="error" for="unique_id_state">This Number is being used by another student.</label>').insertAfter( '#unique_id_state' );
-			    var delayAlert = setInterval(function() { $("#unique_id_state_err").remove();  clearInterval(delayAlert); }, 2000);
+			    $('<label id="unique_id_state_err" class="error" for="unique_id_state">NSSRS Number Exists</label>').insertAfter( '#unique_id_state' );
+			    var delayAlert = setInterval(function() { $("#unique_id_state_err").remove();  clearInterval(delayAlert); }, 4000);
 			}
                         $("#nssrsload").html('');
               }
@@ -248,6 +252,11 @@
 
 	}
       return false;
+    });
+
+    $(document).on("click", "#unique_id_state", function () {
+	$("#unique_id_state_err").remove();
+        return false;
     });
 
 
@@ -682,7 +691,7 @@ an employee of the school district but is bound by the requirements of The Famil
 <tr><td class="StudentFormTitle">Street 2</td><td class="StudentFormValue"><input type="input" id="address_street2" name="address_street2"></td></tr>
 <tr><td class="StudentFormTitle">City <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_city" name="address_city"></td></tr>
 <tr><td class="StudentFormTitle">State <sup>*</sup></td><td class="StudentFormValue"><select id="address_state" name="address_state">
-       <option value="NE" selected>NE</option>
+       <option value="" selected>Choose...</option>
        <option value="AL">AL</option><option value="AK">AK</option><option value="AZ">AZ</option><option value="AR">AR</option><option value="CA">CA</option><option value="CO">CO</option><option value="CT">CT</option><option value="DE">DE</option><option value="DC">DC</option><option value="FL">FL</option><option value="GA">GA</option><option value="HI">HI</option><option value="ID">ID</option><option value="IL">IL</option><option value="IN">IN</option><option value="IA">IA</option><option value="KS">KS</option><option value="KY">KY</option><option value="LA">LA</option><option value="ME">ME</option><option value="MD">MD</option><option value="MA">MA</option><option value="MI">MI</option><option value="MN">MN</option><option value="MS">MS</option><option value="MO">MO</option><option value="MT">MT</option><option value="NE">NE</option><option value="NV">NV</option><option value="NH">NH</option><option value="NJ">NJ</option><option value="NM">NM</option><option value="NY">NY</option><option value="NC">NC</option><option value="ND">ND</option><option value="OH">OH</option><option value="OK">OK</option><option value="OR">OR</option><option value="PA">PA</option><option value="RI">RI</option><option value="SC">SC</option><option value="SD">SD</option><option value="TN">TN</option><option value="TX">TX</option><option value="UT">UT</option><option value="VT">VT</option><option value="VA">VA</option><option value="WA">WA</option><option value="WV">WV</option><option value="WI">WI</option><option value="WY">WY</option>
 </select></td></tr>
 <tr><td class="StudentFormTitle">Zip  <sup>*</sup></td><td class="StudentFormValue"><input type="input" id="address_zip" name="address_zip"> <small>zip or zip+4, example: 55555 or 55555-5555</small></td></tr>
