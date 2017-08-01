@@ -49,7 +49,7 @@ class Form004Controller extends My_Form_AbstractFormController {
 			// in Model_Table_Form004
 			$newId = $formObj->dupeFull ( $this->getRequest ()->document );
 		} else {
-            // javascript:%20goToURLZend('http://iepweb02.unl.edu',%20'student',%20'form004/dupe',%20'document',%201392135,%20'/page//option/dupe_form_004');
+            // javascript:%20goToURLZend('http://iepweb02.esucc.org',%20'student',%20'form004/dupe',%20'document',%201392135,%20'/page//option/dupe_form_004');
             // option/dupe_form_004
 			$newId = $formObj->dupe ( $this->getRequest ()->document );
 		}

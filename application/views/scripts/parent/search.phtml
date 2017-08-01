@@ -17,34 +17,6 @@
     </tr>
 </table>
 
-<style>
-#srs_mainPane {
-    top: 115px;
-    border: none;
-    overflow: visible;
-    margin-left: 10px; 
-}
-#srs_left .subBar_top {
-    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
-    height: 0px;
-    padding-bottom: 0; 
-}
-#mainFooter{
-	 height: 0px;
-    padding-bottom: 0; 
-	
-}
-#srs_left .subBar_btm {
-    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
-    height: 0px; 
-}
-#leftTop {
-    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
-    height: 2px;
-    padding: 0;
-}
-
-</style>
 <script type="text/javascript">
   var current_url = "/parent/search/nb/1/";
   $(document).ready(function () {
@@ -236,13 +208,41 @@
 	}
 	return false;
     });
+
+
+        $(document).on( "change", "#student_options", function() {
+            var url = $("#student_options").val();
+
+            var regExMark = new RegExp("\/IEP\/|\/MDT\/|\/IFSP\/|\/Progress Report\/", "ig");
+            if (url.match( regExMark )) {
+                url = "/student/get-most-recent/" + url;
+                $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: url,
+                        success: function(response) {
+                            if (response['success'] == '1') {
+                                window.location.href = response['url'];
+
+                              } else {
+                                alert('The system was unable to locate the most recent form.');
+                            }
+                        }
+                    });
+            } else
+                 window.location = url;
+
+            return false;
+        });
+
+
 });
 </script>
 
 <?if ($this->id_student > 0){?>
 <div style="width: 90%; height: 20px; margin: 10px;">
   <div style="float: left;"><b>Student:</b> <?=$this->name_first?> <?=$this->name_last?> (<?=$this->id_student?>)</div>
-  <div style="float: right;"><?=$this->studentOptionsMenu($this->studentOptionsMenu_MultiOptions, $this->id_student);?></div>
+  <div style="float: right;">Student Options: <?=$this->studentOptions($this->id_student, $this->id_district, $this->action)?></div>
 </div>
 
 <?if ($this->priv_student == 1){?>
