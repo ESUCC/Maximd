@@ -1,6 +1,6 @@
-<div>
+<div> 
 <?php //$this->headScript()->appendFile('/js/jquery.js'); ?>
-<?php 
+<?php   
 // added spell checker option to config because of license trouble in dev env
 $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 $sessUser = new Zend_Session_Namespace('user');
@@ -62,12 +62,12 @@ $user = $personnelTable->getNameByUsername($uName);//->select()->from('iep_perso
 			<span class="btsb">Student</span>:&nbsp;<? echo $this->db_form_data['student_data']['name_student'] . " (".$this->db_form_data['student_data']['student_display'].")"; ?>
 		</td>
 		<td style="text-align:right;" class="bts">
-			<span class="btsb">Student Options</span>:&nbsp;
+			<span class="btsb">Student Options</span>:&nbsp; 
 			<?php echo $this->studentOptions($this->db_form_data['id_student'], $this->db_form_data['id_district']); ?>
 		</td>
 	</tr>
 	<?php $usersession = new Zend_Session_Namespace('user'); ?>
-	<?php echo $this->languageSelector(); ?>
+	<?php echo $this->languageSelector(); ?> 
 </table>
 
 <div id="serverInteractionProgressMsg" style="opacity: 0;"></div>

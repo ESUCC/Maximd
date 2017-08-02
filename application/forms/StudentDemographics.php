@@ -146,10 +146,13 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->parental_placement->setRequired(false);
         $this->parental_placement->setAllowEmpty(true);
         $this->parental_placement->getDecorator('label')->setOption('placement', 'prepend');
+//        $this->parental_placement->setSeparator('<br>');
         $this->parental_placement->addFilter(new Zend_Filter_Int());
         $this->parental_placement->setMultiOptions(array(
-            1 => 'Yes',
-            0 => 'No'
+	    0 => 'Not Applicable - Does not attend a Nonpublic School',
+            2 => 'Nonpublic Placement - Other than Parental Placement',           
+            3 => 'Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on IEP',
+	    4 => 'Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on Equitable Service Plan'
         ));
 
         $this->nonpubcounty = new App_Form_Element_Select('nonpubcounty', array('label' => 'Non Public County'));
@@ -254,9 +257,9 @@ class Form_StudentDemographics extends Form_AbstractForm {
 
         $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment', array('label' => 'Alternate assessment'));
         $this->alternate_assessment->getDecorator('label')->setOption('placement', 'prepend');
-//        $this->alternate_assessment->setAttrib('readonly', 'readonly');
+        $this->alternate_assessment->setAttrib('readonly', 'readonly');
         $this->alternate_assessment->addFilter(new Zend_Filter_Int());
-         $this->alternate_assessment->setMultiOptions(array(
+        $this->alternate_assessment->setMultiOptions(array(
             '1' => 'Yes',
             '0' => 'No'
         ));
@@ -660,8 +663,6 @@ class Form_StudentDemographics extends Form_AbstractForm {
         /**
          * alternate assessment
          */
-/*
-// Uncommited out 1-8-2016
         $modelForm004 = new Model_Table_Form004();
         $form004 = $modelForm004->mostRecentFinalForm($values['id_student'], 'date_conference');
         if(null != $form004) {
@@ -681,23 +682,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
                 case '':
                     break;
             }
-  
         }
- 
-// Mike Test as specified
-echo $form004->assessment_accom ."\n";
-$b= 'The child will participate in district-wide assessment WITH accommodations, as specified:';
-if ($form004->assessment_accom == $b)
- {
-   $this->alternate_assessment->setValue(0);
-   echo $b . "\n";
- }
-// end of Mike test.  $b is the only value coming into $form004->assessment_accom
-
-*/
-
-
-// end of the commented out.
 
         $this->setDisabledValues();
     }

@@ -5,7 +5,7 @@
  * @author jlavere
  * @version
  */
-
+ 
 require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_Parent extends Model_Table_AbstractIepForm
@@ -164,6 +164,8 @@ class Model_Table_Parent extends Model_Table_AbstractIepForm
 
         $key = $options["key"];
         if (Model_CacheManager::isCached(Zend_Registry::get('searchCache'), $key)) Model_CacheManager::removeCache(Zend_Registry::get('searchCache'), $key);
+
+
         return $id;
   	}
 }

@@ -43,7 +43,7 @@ class Form_Form018Agency extends Form_AbstractForm {
 		$this->agency->addErrorMessage("Agency must be entered.");
 		
 		$this->name_or_position = new App_Form_Element_Text('name_or_position', array('label'=>'Name/Position'));
-		$this->name_or_position->setDecorators(App_Form_DecoratorHelper::inlineElement());
+		//$this->name_or_position->setDecorators(App_Form_DecoratorHelper::inlineElement());
 		$this->name_or_position->setRequired(true);
 		$this->name_or_position->setAllowEmpty(false);
 		$this->name_or_position->setAttrib("style", "width:110px;");

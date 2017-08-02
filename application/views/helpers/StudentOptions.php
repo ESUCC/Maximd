@@ -57,7 +57,12 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
 	        }
         } else {
 	        if ($accessArrayObj->accessArray ['view'] ['access']) {
-	            $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=view">View Student</option>';
+	          
+	            // Mike added Jul 31 2017 so that the pull down menu would function to the new zend
+	               // $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=view">View Student</option>';
+	            
+	            $options .= '<option value="/student/view/id_student/'.$id_student.'">View Student</option>';
+	             
 	        }
 	        if ($accessArrayObj->accessArray ['edit'] ['access']) {
 	            $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=edit">Edit Student</option>';
@@ -68,7 +73,8 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=charting">Student Charting</option>';
         }
         if ($accessArrayObj->accessArray ['parents'] ['access']) {
-            $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=parents">Parent/Guardians</option>';
+            $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=parents">Parents/Guardians</option>';
+          //  $options .='<option value="/parent/search/id_student/'.$id_student.'">Parents/Guardians</option>';      
         }
         
         // Mike took this out 7-25-2017 because it needs work

@@ -19,8 +19,19 @@ class Model_Form018 extends Model_AbstractForm
      *
      * @var array
      */
-	var $db_form_data = array();
+	var $db_form_data = array(); 
 	
+	
+	public function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
 	public function find($id, $accessMode = "view", $page =1, $versionNumber = 1, $checkout = 0)
 	{
 		if(false === parent::buildDbForm($id, $accessMode, $page, $versionNumber, $checkout))
@@ -59,12 +70,18 @@ class Model_Form018 extends Model_AbstractForm
             
             // AGENCY
             $select         = $this->db_form->select()->where("lower(status) != 'deleted' OR status is null")->order('timestamp_created ASC');
+           $this->writevar1($select,'this is the select statement');
+           
             $subformRecords     = $this->db_form->findDependentRowset('Model_Table_Form018Agency', 'Model_Table_Form018', $select);
+          //  $this->writevar1($subformRecords,'this is sub form records');           
+            
             $this->db_form_data['iep_form_018_agency']['count'] = count($subformRecords);
             $this->db_form_data['iep_form_018_agency']['subformTitle'] = 'Part 3: Community Contacts';
             $rownum = 1;
             foreach($subformRecords as $db_row)
             {
+                $this->writevar1($db_row,'thjis is where we are supposed to add it');
+                
                 // add the db data for this subform to the main form data array
                 $this->db_form_data['iep_form_018_agency_'.$rownum] = $db_row->toArray();
                 // add a row number based on sort position - just used for user display

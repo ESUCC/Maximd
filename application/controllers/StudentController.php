@@ -1,7 +1,7 @@
 <?php
 class StudentController extends My_Form_AbstractFormController
 {
- //Mike saved 7-26-2017 to compare with Maxim
+ 
     public function init(){
         $this->_redirector = $this->_helper->getHelper('Redirector');
 
@@ -51,17 +51,6 @@ class StudentController extends My_Form_AbstractFormController
         );
     }
 
-    
-    function writevar1($var1,$var2) {
-    
-        ob_start();
-        var_dump($var1);
-        $data = ob_get_clean();
-        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
-        $fp = fopen("/tmp/textfile.txt", "a");
-        fwrite($fp, $data2);
-        fclose($fp);
-    }
 // Maxim modified this code October 20 2016
     public function logAction()
     {
@@ -158,7 +147,7 @@ class StudentController extends My_Form_AbstractFormController
 	        $studentAddFormQuery = new Model_Table_StudentFormAdd();
 	        $result = $studentAddFormQuery->studentFormCountyList($userid); // Get result
 		$this->view->county = $result;
-     //  $this->writevar1($result,'this is a list of the counties');
+
 
 		// NonPublic schools
 		$nonpubcounty = new Model_Table_County();
@@ -368,15 +357,15 @@ class StudentController extends My_Form_AbstractFormController
 			) 
 			{
 
-				$options["exclude_from_nssrs_report"] = ($options["exclude_from_nssrs_report"] == "Yes") ? 'True' : 'False';
+
+
+				$options["exclude_from_nssrs_report"] = ($options["exclude_from_nssrs_report"] == "Yes") ? 'True': 'False';
 				$options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
 				$options["ell_student"] = ($options["ell_student"] == "Yes") ? 'True' : 'False';
 				$options["ward"] = ($options["ward"] == "Yes") ? 'True' : 'False';
 				$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; 
 				$options["ward_surrogate"] = ($options["ward_surrogate"] == "Yes") ? 'True' : 'False';
 				$options["ward_surrogate_nn"] = ($options["ward_surrogate_nn"] == "Yes") ? 'True' : 'False';
-
-				$options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
 
 //				print_r($options);
 //				exit;
@@ -1017,7 +1006,7 @@ class StudentController extends My_Form_AbstractFormController
 
     public function editAction()
     {
-     //  include("Writeit.php");
+       include("Writeit.php");
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();
