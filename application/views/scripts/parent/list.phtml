@@ -5,7 +5,7 @@
 
 if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
 ?>
-
+ 
 <div style="margin: 8px;">Now showing <b><?=($page_real - 1) * $this->maxRecs + 1?></b> to <b><?if ($this->resultCount/$page_real < $this->maxRecs){?><?=$this->resultCount?><?}else{?><?=$this->maxRecs*$page_real?><?}?></b> of <b><?=$this->resultCount?></b> results.</div>
 
 <ul class="pseudoTable schoolTable">

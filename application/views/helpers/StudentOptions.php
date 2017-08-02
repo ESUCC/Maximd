@@ -73,7 +73,8 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=charting">Student Charting</option>';
         }
         if ($accessArrayObj->accessArray ['parents'] ['access']) {
-            $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=parents">Parent/Guardians</option>';
+           // $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=parents">Parents/Guardians</option>';
+            $options .='<option value="/parent/search/id_student/'.$id_student.'">Parent/Guardian</option>';      
         }
         
         // Mike took this out 7-25-2017 because it needs work

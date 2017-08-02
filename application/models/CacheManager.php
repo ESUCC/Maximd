@@ -19,6 +19,19 @@ class Model_CacheManager
      * 
      * @return bool
      */
+    
+    /*Remove Chache file by Key*/
+    // Mike  added this function 8-1-2017 in order to get the zend Parent Screen to work.
+    // Had to take it from the CacheManager from Maxim. 
+    
+    public static function removeCache(Zend_Cache_Core $cacheObject, $cacheKey)
+    {
+    
+        $cacheObject->remove($cacheKey);
+        return true;
+    }
+    
+    
     public static function isCached(Zend_Cache_Core $cacheObject, $cacheKey)
     {
         if(false !== $cacheObject->test($cacheKey))
