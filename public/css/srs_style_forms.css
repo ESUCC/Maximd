@@ -1,5 +1,5 @@
 @CHARSET "UTF-8";
- 
+
 table {
     border-spacing:0;
     border-collapse:collapse;
@@ -20,12 +20,19 @@ label input {margin-right:6px}
 table.formTitleHead span.menuTextLink,
 table.sc_subSectionHead span.menuTextLink {font-size:11px; float:right;}
 
+
+.navTopMenu {
+    border: 0px;
+    min-width: 1024px;	
+    width: 100%;
+
+}
+
 .sectionSubText {font-size:11px; float:right;}
 
 .sc_inlineText {display:inline; margin-left:4px;} /* form4 page5 */
 
 .sc_spanRow {padding:4px 0} /* simulate cell padding when span or div is used instead */
-
 
 
 /*Dojo override*/
@@ -116,21 +123,25 @@ color: white;
 
 /* 20070611 jlavere END - add code to allow easier navigation of related progress reports */
 #searchContainer {
-    border:1px solid #AAAAAA;
+    position: relative;
+    border: 1px solid #AAAAAA;
     padding: 0 0 10px 0;
     background:url('../images/bg-highlight.png') repeat-x scroll 50% top #eee;
-    margin: 20px auto;
-    width:780px;
+    margin: 5px 10px;
+    min-width: 780px;
+    width: 780px;
 }
 
-#searchStudents {
+#searchStudents, #searchSchools {
     border:1px solid #AAAAAA;
-    font-size:14px;
-    background-color:#3366cc;
-    color:#fff;
-    padding:7px 10px;
-    margin:2px 5px;
+    font-size: 14px;
+    background-color: #3366cc;
+    color: #fff;
+    padding: 7px 10px;
+    margin: 2px 5px;
+    clear: both;
 }
+
 .searchPageHeader {
     border:1px solid #AAAAAA;
     font-size:14px;
@@ -142,28 +153,42 @@ color: white;
 
 .searchButton {
     float:left;
-    margin:0 0 0 20px;
+    margin: 0 0 0 20px;
+    padding: 0px 3px;
 }
+
 .searchHr {
     clear:both;
     border-bottom:1px dashed #aaa;
     margin:0 10px 10px 10px;
     padding:0;
 }
+
+
 #search-fields-contain {
-    float:left;
+/*    float:left;*/
 }
 #search-fields-contain select {
 	margin-right:20px;
 }
+
 .search-by-field {
     margin:10px 0 0 10px;
     padding:0;
 }
+
+
 .search-by-field li {
     text-align:left;
     list-style:none;
 }
+
+.search-by-field .searchFieldItems {  /*  style li for School Fields */
+    text-align:left;
+    list-style:none;
+    margin: 5px;
+}
+
 .search-by-field li .sub {
     clear:both;
     display:block;
@@ -461,4 +486,124 @@ legend {
 }
 #form029_page_1 .formTitleHead {
 	font-size:1em;
+}
+div.divNotification {
+    font-size:14px;
+    background:#fff6bf;
+    color:#514721;
+    border-color:#ffd324;
+    text-align: center;
+}
+
+.SchoolForm {
+    width: 100%; 
+    margin: 5px;   
+}
+
+.SchoolForm .NameSchool{
+    width: 800px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.SchoolForm .NameSchool small{
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.SchoolForm .SchoolButtons{
+    text-align: right;
+    margin-right: 10px;
+    
+}
+
+.SchoolForm td, .SchoolForm th {
+    padding: 3px;
+    margin: 1px;   
+}
+
+.SchoolForm .SchoolHeader{
+    background: #a0a0a0;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+.SchoolForm .SchoolFormTitle{
+    width: 180px;    
+    background: #fafafa;
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.SchoolForm .SchoolFormValue{
+    background: #fafafa;
+}
+
+.SchoolFormValue input, .SchoolFormValue select {
+    width: 50%;
+}
+
+.SchoolFormValue .datepicker {
+    width: 95%;
+}
+
+
+.SchoolForm .Printed{
+    font-size: 10px;
+    text-align: center;
+    margin: 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.schoolTable .searchName {
+    width: 40%;
+}
+.schoolTable .searchDistrict {
+    width: 40%;
+}
+
+.schoolTable .searchCounty {
+    width: 10%;
+}
+
+.redAlert {
+    position: absolute;
+    display: none;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    padding: 20px;
+    font-weight: bold;
+    color: #F61818;
+    border: 1px solid #FEA2B8;
+    background-color: #FAE8ED;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.blueAlert {
+    position: absolute;
+    display: none;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    padding: 20px;
+    font-weight: bold;
+    color: #0FC330;
+    border: 1px solid #0FC330;
+    background-color: #D5FCDD;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.StudentForm tr td {
+    padding: 4px;
+
+}
+.pub_school_student_area {
+    display: none;
 }

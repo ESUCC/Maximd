@@ -8,8 +8,21 @@ class ParentController extends My_Form_AbstractFormController
         if($this->identity == false) { $this->_redirect('/'); }
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
+    
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     public function indexAction() { }
    
+    
     public function searchAction() 
     {
         $this->_helper->viewRenderer->setNoRender(true);
@@ -51,6 +64,7 @@ class ParentController extends My_Form_AbstractFormController
                 $session->searchKey = $options['key'];
             }
             $result = $parentQuery->parentList($options); // Get result
+          //  $this->writevar1($result,'here are the results');
             $this->view->id_student = $options['id_student'];
             $this->view->page = $options['page'];
             $this->view->maxResultsExceeded = $result[0];  // Max limit rows exceeded
@@ -59,19 +73,30 @@ class ParentController extends My_Form_AbstractFormController
             $this->view->maxRecs = $options['maxRecs'];
             $this->view->resultCount = $result[3];
             $this->view->results = $result[1];
-            // Generate pagination
+            
+          
+            
+            // Generate pagination 
             if(count($result[3]) > 0) 
             {
+                
+                $student=new Model_Table_IepStudent;
+                $StudentInfo=$student->getStudentForParentById($options['id_student']);
+                $caseMgr=$StudentInfo['id_case_mgr'];
+                $this->view->caseMgr=$caseMgr;
+                $this->view->studentInfo=$StudentInfo;
           	    $this->view->page = $options['page'];
           	    $paginator = Zend_Paginator::factory($this->view->resultCount);
           	    $paginator->setItemCountPerPage($options['maxRecs']);		// set number of pages in pagenator
           	    $paginator->setCurrentPageNumber($options['page']);			// put current page number into the pagenator
           	    $this->view->paginator = $paginator;					          // put the pagenator in the view
             }
-            echo $this->view->render('parent/list.phtml');
+             echo $this->view->render('parent/list.phtml');
         }
         else 
         {
+            
+            
             //	$OptionsMenu = new Zend_View_Helper_StudentOptions();
             //	$result = $OptionsMenu->StudentOptions($id_student, $id_district = false);
             //	print $result;
@@ -94,7 +119,14 @@ class ParentController extends My_Form_AbstractFormController
 	              if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) ) 
                       $this->view->priv_student = 1;
     	          }
-	    }
+    	            
+	       }
+	       $student=new Model_Table_IepStudent;
+	       $StudentInfo=$student->getStudentForParentById($id_student);
+	       $caseMgr=$StudentInfo['id_case_mgr'];
+	       
+            $this->view->caseMgr=$caseMgr;
+            $this->view->studentInfo=$StudentInfo;
             $this->view->id_student = $id_student;
             $this->view->name_first = $result['name_first'];
             $this->view->name_last = $result['name_last'];
@@ -143,6 +175,7 @@ class ParentController extends My_Form_AbstractFormController
         while ($x < count($this->usersession->user->privs))
         {
             $priv[$x] = array( key($this->usersession->user->privs), $this->usersession->user->privs[$x]['id_school'] );
+          //  $this->writevar1($priv[$x],'this is the privilege');
             $x++;
         }
  	$result = $parentQuery->studentDetails($options['id_student']); // Get result
@@ -152,15 +185,18 @@ class ParentController extends My_Form_AbstractFormController
         {
   	    foreach($priv_array as $key => $value) 
             {
+             // $this->writevar1($key," The value is ".$value);  
 	          if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) ) 
                   $priv_student = 1;
-    	    }
+                  
+            }
 	}
         // --------------------------------------------------------
-      
+     //   $this->writevar1($options,'this is the id guardian');
         if ( $options['id_guardian'] > 0) 
         {
             $result = $parentQuery->parentView($options); // Get Parent View result
+            $this->writevar1($result,'this is the result');
             $this->view->result = $result;
         }
         $result_student = $parentQuery->studentDetails($options['id_student']); // Get result
@@ -173,8 +209,9 @@ class ParentController extends My_Form_AbstractFormController
         $datetime = new DateTime();
         $this->view->CurrentSchoolYear = $datetime->format('Y');
         $this->view->fullname = $this->usersession->user->user['name_first'] . " " . $this->usersession->user->user['name_middle'] . " " . $this->usersession->user->user['name_last'];
-        if ($priv_student == 1) 
-            echo $this->view->render('parent/edit.phtml');
+       // $this->writevar1($priv_student,'this is hte priv student');
+       // $this->writevar1($this->view->render('parent/edit.phtml'),'this is strange');
+        if ($priv_student == 1)  echo $this->view->render('parent/edit.phtml');
     }
     public function saveAction ()
     {
@@ -186,6 +223,8 @@ class ParentController extends My_Form_AbstractFormController
 	$options = Array();
 	$options_reports = Array();
         $request = $this->_request->getParams();
+        $this->writevar1($request,'this is the request');
+        
 	foreach ($request as $nameField => $valueField)
         {
 	  $value = urldecode($nameField);

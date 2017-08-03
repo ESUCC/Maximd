@@ -1,3 +1,23 @@
+<style>
+.TableList {
+    width: 100%;
+    min-width: 100%;
+    border: 4px solid LightSkyblue;
+    font-size: 12px;
+}
+
+.TableList td, .TableList th {
+    padding: 4px;
+    border: 2px solid LightSkyblue;
+    font-size: 12px;
+	width:380px;
+}
+
+.TableList .TableRow:hover {
+    background-color: #F4A460;
+}
+
+</style>
 <?php if ($this->resultCount > $this->maxRecs) echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>
 <?php if ($this->resultCount < 1) { ?>
 <br><br><center>No results matched your search</center>
@@ -9,7 +29,11 @@ if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
 <div style="margin: 8px;">Now showing <b><?=($page_real - 1) * $this->maxRecs + 1?></b> to <b><?if ($this->resultCount/$page_real < $this->maxRecs){?><?=$this->resultCount?><?}else{?><?=$this->maxRecs*$page_real?><?}?></b> of <b><?=$this->resultCount?></b> results.</div>
 
 <ul class="pseudoTable schoolTable">
-    <li class="head">
+
+  
+
+
+<!-- -- <li class="head">
         <ul class="odd">
 	    <li class="parentName">Name</li>
 	    <li class="parentAddress">Address</li>
@@ -19,28 +43,92 @@ if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
         </ul>
 
     </li>
-    <?php foreach ($this->results as $k => $r) { ?>
-    <li>
-        <ul class="odd">
-	    <li class="parentName"><?=$r['name_last'] ?>, <?=$r['name_first'] ?></li>
-	    <li class="parentAddress"><?=$r['address_street1'] ?><?if ($r['address_street2'] != ""){?> <?=$r['address_street2']?><?}?>, <?=$r['address_city'] ?>, <?=$r['address_state'] ?>, <?=$r['address_zip'] ?></li>
-	    <li class="parentHPhone"><?=$r['phone_home'] ?></li>
-	    <li class="parentWPhone"><?=$r['phone_work'] ?></li>
-	    <li class="parentEmail"><a href="mailto:<a href="mailto:<?=$r['email_address'] ?>"><?=$r['email_address'] ?></a></li>
+    
+    --->
+    <table class="TableList">
+    
+    <tr class="TableList">
+    <th class="TableList">Name</th>
+    <th class="TableList">Status</th>
+    <th class="TableList">Address</th>
+    <th class="TableList">City</th>
+    <th class="TableList">State</th>
+    <th class="TableList">Zip</th>
+    <th class="TableList">Home Phone</th>
+    <th class="TableList">Work Phone</th>
+    <th class="TableList">Email</th>
+    <th class="TableList">Choose Option</th>
+      </tr>
+    
+    
+    <?php 
+    $schl=$this->studentInfo['id_school'];
+    $dist=$this->studentInfo['id_district'];
+    $county=$this->studentInfo['id_county'];
+    $menuControl=0;
+    $privileges=$_SESSION['user']['user']->privs;
+    foreach($privileges as $privs){
+        if($privs['class']<=3) {
+            $menuControl=1;
+        }
+        
+        
+        // Check to see if the sm or asm have access
+        if(($privs['class']==4 || $privs['class']==5) && $privs['id_school']==$schl
+            && $privs['id_county']==$county && $privs['id_district']==$dist) {
+             $menuControl=1;   
+        }
+        
+        
+    }
+    // Check to see if the case manager is the students case 
+    if($_SESSION['user']['id_personnel']==$this->caseMgr){
+        $menuControl=1;
+    }
+?>
+<?php     
+
+ 
+ foreach ($this->results as $k => $r) { ?>
+    
+        <tr class="TableList TableRow">
+	    <td class="parentName"><?=$r['name_last'] ?>, <?=$r['name_first'] ?></td>
+	    <td> <?=$r['status'] ?></td>
+	    
+	    <td class="parentAddress"><?=$r['address_street1'];if ($r['address_street2'] != "")$r['address_street2'];?></td>
+	    <td> <?=$r['address_city']?></td>
+	    <td> <?=$r['address_state']?></td>
+	    <td> <?=$r['address_zip']?></td>
+	    
+	    <td class="parentHPhone"><?=$r['phone_home'] ?></td>
+	    <td class="parentWPhone"><?=$r['phone_work'] ?></td>
+	    <td class="parentEmail"><a href="mailto:<a href="mailto:<?=$r['email_address'] ?>"><?=$r['email_address'] ?></a></td>
 	    <?if ($this->priv_student == 1){?>
-	    <li class="parentOption">
+	    <td class="parentOption">
                  <select id="parent_options" class="studentOptions openWindow" title="<?=$r['name_first'] ?> <?=$r['name_last'] ?>">
                     <option value="">Choose...</option>
                     <option value="/parent/view/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">View</option>
+                   
+                   <?php if ($menuControl==1) {?>
                     <option value="/parent/edit/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">Edit</option>
+                    
                     <!-- Delete implemented as editable Status action -->
-                    <option value="/parent/log/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">ParentLog</option>
-                </select>
+                      <?php }?>
+                 </select>      
+          </tr>
 	    <?}?>
-	   </li>
-        </ul> 
-    </li>
+	
+      
+   
     <?php } ?>
-</ul>
+    </table>
+
+
+
+
+
+
+
+
 <?php } ?>
 <?php if ($this->resultCount > $this->maxRecs) echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>

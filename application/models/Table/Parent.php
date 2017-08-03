@@ -36,14 +36,22 @@ class Model_Table_Parent extends Model_Table_AbstractIepForm
 
             $db = Zend_Registry::get('db');
 
-            $select = $db->select()
-                         ->from( 'iep_guardian',
-                                    array('*')
-                         )
-	       ->where('iep_guardian.id_student = ?', $options['id_student'])
-               ->where('iep_guardian.status = ?', 'Active')
-	       ->order('name_last asc');
+            
+            // Mike made this change 8-2-2017 so that we can see all the 
+            //inactive and active parents.
+            
+          //  $select = $db->select()
+          //               ->from( 'iep_guardian',
+          //                          array('*'))
+         //  ->where('iep_guardian.id_student = ?', $options['id_student'])
+          //  ->where('iep_guardian.status = ?', 'Active')    
+	      // ->order('name_last asc');
 
+	       
+	       $select="select * from iep_guardian where (status='Active' or status='Inactive' or status='Remove') and id_student='".$options['id_student']."'order by status,name_last";
+	      
+	       
+	       
             $stmt = $db->query($select);
 
             if (!Model_CacheManager::isCached(Zend_Registry::get('searchCache'), $options['key'])) {
@@ -72,6 +80,12 @@ class Model_Table_Parent extends Model_Table_AbstractIepForm
 
     public function parentView($options)
     {
+        
+        /* Mike changed 8-3-2017 
+       ->where('iep_guardian.status != ?', 'Removed'); 
+         from ->where('iep_guardian.status = ?', 'Active');
+         This way we can decide on the remove status latter.  In the db it 
+       */
             $db = Zend_Registry::get('db');
             $select = $db->select()
                          ->from( 'iep_guardian',
@@ -79,7 +93,7 @@ class Model_Table_Parent extends Model_Table_AbstractIepForm
                          )
 	       ->where('iep_guardian.id_student = ?', $options['id_student'])
 	       ->where('iep_guardian.id_guardian = ?', $options['id_guardian'])
-               ->where('iep_guardian.status = ?', 'Active');
+               ->where('iep_guardian.status != ?', 'Removed');
      	    $result = $db->fetchRow($select);
 
 	return $result;

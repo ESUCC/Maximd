@@ -24,6 +24,17 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
         return $result[0];
         
     }
+    
+    public function getStudentForParentById($id){
+        $db = Zend_Registry::get('db');
+        $select = $db->select('name_first, name_middle, name_last,id_case_mgr,id_district,id_county,id_school')
+        ->from( 'iep_student' )
+        ->where( "id_student = ?", $id);
+        $result = $db->fetchrow($select);
+        
+        return $result;
+    }
+    
 	public function studentPersonnelAccess($id_student, $id_personnel, $checkout = true, $writeLog = false)
 	{
 		$sessUser = new Zend_Session_Namespace('user');
