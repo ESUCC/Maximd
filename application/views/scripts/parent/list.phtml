@@ -9,6 +9,7 @@ if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
 <div style="margin: 8px;">Now showing <b><?=($page_real - 1) * $this->maxRecs + 1?></b> to <b><?if ($this->resultCount/$page_real < $this->maxRecs){?><?=$this->resultCount?><?}else{?><?=$this->maxRecs*$page_real?><?}?></b> of <b><?=$this->resultCount?></b> results.</div>
 
 <ul class="pseudoTable schoolTable">
+<?php echo $this->caseMgr ?>
     <li class="head">
         <ul class="odd">
 	    <li class="parentName">Name</li>
@@ -19,7 +20,23 @@ if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
         </ul>
 
     </li>
-    <?php foreach ($this->results as $k => $r) { ?>
+    <?php 
+    
+    $menuControl=0;
+    $privileges=$_SESSION['user']['user']->privs;
+    foreach($privileges as $privs){
+        if($privs['class']<=5) {
+            $menuControl=1;
+        }
+    }
+    
+    if($_SESSION['user']['id_personnel']==$this->caseMgr){
+        $menuControl=1;
+    }
+    
+    
+    
+    foreach ($this->results as $k => $r) { ?>
     <li>
         <ul class="odd">
 	    <li class="parentName"><?=$r['name_last'] ?>, <?=$r['name_first'] ?></li>
@@ -32,9 +49,14 @@ if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
                  <select id="parent_options" class="studentOptions openWindow" title="<?=$r['name_first'] ?> <?=$r['name_last'] ?>">
                     <option value="">Choose...</option>
                     <option value="/parent/view/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">View</option>
+                   
+                   <?php if ($menuControl==1) {?>
                     <option value="/parent/edit/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">Edit</option>
+                  
                     <!-- Delete implemented as editable Status action -->
-                    <option value="/parent/log/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">ParentLog</option>
+                      <?php }?>
+                     <option value="/parent/log/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">ParentLog</option>
+                     
                 </select>
 	    <?}?>
 	   </li>

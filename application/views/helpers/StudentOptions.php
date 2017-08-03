@@ -34,6 +34,20 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
         $student_auth = new App_Auth_StudentAuthenticator();
         $access = $student_auth->validateStudentAccess($id_student, new Zend_Session_Namespace('user'));
         
+        /* Mike added 8-2-2017 this section so that it would be able to get the Student's Team and Team's Students link ii
+         * in the student pull down.
+         */
+        $studentDemo=new Model_Table_IepStudent();
+        $demographics=$studentDemo->getUserById($id_student);
+        $cty=$demographics['id_county'];
+        $dist=$demographics['id_district'];
+        $school=$demographics['id_school'];
+        // End Mike Add
+        
+        
+        
+        
+        
      //   $this->writevar1($access,'this is the access ');
         if ('Team Member' == $access->description) {
             if ('viewaccess' == $access->access_level) {
@@ -73,16 +87,20 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=charting">Student Charting</option>';
         }
         if ($accessArrayObj->accessArray ['parents'] ['access']) {
+            $options .= '<option style="color: green;" value="/parent/search/id_student/'.$id_student.'/">Parent/Guardians</option>';
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=parents">Parents/Guardians</option>';
-          //  $options .='<option value="/parent/search/id_student/'.$id_student.'">Parents/Guardians</option>';      
         }
         
-        // Mike took this out 7-25-2017 because it needs work
-      //  if ($accessArrayObj->accessArray ['parents'] ['access']) {
-       //     $options .= '<option value="/parent/search/id_student/'.$id_student.'/">Parent/Guardians</option>';
-      //  }
+        
+        
         if ($accessArrayObj->accessArray ['team'] ['access']) {
+            
+            
+            // Mike added this 8-3-2017 so that we have both for the time 
+            $staff_id=$_SESSION["user"]["user"]->user["id_personnel"];
+            $options .= '<option style="color: green;" value="/staff/team/id_county/'.$cty.'/id_district/'.$dist.'/id_student/'.$id_student.'/id_personnel/'.$staff_id.'/id_school/'.$school.'">Student\'s Team</option></font>';
             $options .= '<option value="'.$iepUrls['studentOptions'].$id_student.'&option=team">Student Team</option>';
+            
         }
         
         if ($accessArrayObj->accessArray ['forms'] ['access']) {

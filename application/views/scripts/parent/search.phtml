@@ -6,7 +6,7 @@
 <table border="0"> 
     <!-- logo row -->
     <tr>
-        <td>
+        <td> 
 		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
 	</td>
     </tr>
@@ -147,6 +147,7 @@
 	$(".ParentEditSave, .ParentEditCancel").prop("disabled", true);
 	return false;
     });
+    
     $(document).on("click", ".ParentEditSave", function () {
       if ($("#ParentEditForm").valid()) {
        var data_var = Array;
@@ -239,13 +240,79 @@
 });
 </script>
 
+<style>
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 10px; 
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+#mainFooter{
+	 height: 0px;
+    padding-bottom: 0; 
+	
+}
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+</style>
+
+
 <?if ($this->id_student > 0){?>
 <div style="width: 90%; height: 20px; margin: 10px;">
   <div style="float: left;"><b>Student:</b> <?=$this->name_first?> <?=$this->name_last?> (<?=$this->id_student?>)</div>
   <div style="float: right;">Student Options: <?=$this->studentOptions($this->id_student, $this->id_district, $this->action)?></div>
 </div>
 
-<?if ($this->priv_student == 1){?>
+
+<?php 
+$allowCreate=0;
+$privileges=$_SESSION['user']['user']->privs;
+foreach($privileges as $privs){
+  if($privs['class']<=5) {
+       $allowCreate=1;
+  }   
+ }
+ 
+ if($_SESSION['user']['id_personnel']==$this->caseMgr){
+     $allowCreate=1;
+ }
+
+ echo $this->caseMgr;
+?>
+
+
+
+<!--  Mike adjusted 8-3-2017 was if ($this->priv_student == 1){  it did not work correctly -->
+
+<?if ($this->priv_student == $allowCreate){?>
+
+
+
 <div id="searchContainer" class="clearfix">
         <div style="padding:10px">
 	    Welcome to the Parent area. Choose from following options to manage the parents for this student. Each student must have at least 1 parent.
