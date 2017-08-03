@@ -290,19 +290,30 @@
 
 
 <?php 
+
+$schl=$this->studentInfo['id_school'];
+$dist=$this->studentInfo['id_district'];
+$county=$this->studentInfo['id_county'];
 $allowCreate=0;
 $privileges=$_SESSION['user']['user']->privs;
 foreach($privileges as $privs){
-  if($privs['class']<=5) {
+  if($privs['class']<=3) {
        $allowCreate=1;
-  }   
+  }
+  
+  // Check to see if the sm or asm have access
+  if(($privs['class']==4 || $privs['class']==5) && $privs['id_school']==$schl
+      && $privs['id_county']==$county && $privs['id_district']==$dist) {
+          $allowCreate=1;
+      }
+  
  }
  
  if($_SESSION['user']['id_personnel']==$this->caseMgr){
      $allowCreate=1;
  }
 
- echo $this->caseMgr;
+ 
 ?>
 
 

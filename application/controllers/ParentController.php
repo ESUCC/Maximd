@@ -84,6 +84,7 @@ class ParentController extends My_Form_AbstractFormController
                 $StudentInfo=$student->getStudentForParentById($options['id_student']);
                 $caseMgr=$StudentInfo['id_case_mgr'];
                 $this->view->caseMgr=$caseMgr;
+                $this->view->studentInfo=$StudentInfo;
           	    $this->view->page = $options['page'];
           	    $paginator = Zend_Paginator::factory($this->view->resultCount);
           	    $paginator->setItemCountPerPage($options['maxRecs']);		// set number of pages in pagenator
@@ -125,6 +126,7 @@ class ParentController extends My_Form_AbstractFormController
 	       $caseMgr=$StudentInfo['id_case_mgr'];
 	       
             $this->view->caseMgr=$caseMgr;
+            $this->view->studentInfo=$StudentInfo;
             $this->view->id_student = $id_student;
             $this->view->name_first = $result['name_first'];
             $this->view->name_last = $result['name_last'];

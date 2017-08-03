@@ -24,7 +24,10 @@
 </tr>
 
 <tr> 
- <td class="ParentFormTitle">Status <sup>*</sup></td><td class="ParentFormValue"><select name="status"><option<?if ($this->result["status"] == "Active"){?> selected<?}?>>Active</option><option<?if ($this->result["status"] == "Inactive"){?> selected<?}?>>Inactive</option></select></td>
+ <td class="ParentFormTitle">Status <sup>*</sup></td><td class="ParentFormValue"><select name="status"><option<?if ($this->result["status"] == "Active"){?> selected<?}?>>Active</option>
+ <option<?if ($this->result["status"] == "Inactive"){?> selected<?}?>>Inactive</option><option<?if ($this->result["status"] == "Remove"){?> selected<?}?>>Remove</option>
+ </select>
+ </td>      
 </tr>
 
 <tr>

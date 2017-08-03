@@ -48,7 +48,7 @@ class Model_Table_Parent extends Model_Table_AbstractIepForm
 	      // ->order('name_last asc');
 
 	       
-	       $select="select * from iep_guardian where (status='Active' or status='Inactive') and id_student='".$options['id_student']."'";
+	       $select="select * from iep_guardian where (status='Active' or status='Inactive' or status='Remove') and id_student='".$options['id_student']."'order by status,name_last";
 	      
 	       
 	       
