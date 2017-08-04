@@ -15,7 +15,7 @@ if($auth->hasIdentity()) {
 		<B>Logged In:&nbsp;</b><?php echo $session->user->user['name_first'] . ' '. $session->user->user['name_last']; ?><br />
 		<div style="">
 		  <?php if('production' == APPLICATION_ENV) { ?>
-		  <a href="https://iep.esucc.org/srs.php?area=logoff">Log Out</a> 
+		  <a href="https://iep.unl.edu/srs.php?area=logoff">Log Out</a> 
 		  <?php } else { ?>
 		  <a href="/login/logout">Log Out</a>
 		  <?php } ?>
