@@ -621,10 +621,14 @@ class StaffController extends Zend_Controller_Action
           
           //  $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
           
-            
-            if($menuLink==true) $this->view->nameStudentFull="Please Select a Student to the left!";
+            $listing=true;
+            if($menuLink==true) {
+                $this->view->nameStudentFull="Please Select a Student to the left!";
+                $listing=false;
                 
-        
+            }
+                
+        $this->view->initialListing=$listing;
         
         }
         
@@ -907,8 +911,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";

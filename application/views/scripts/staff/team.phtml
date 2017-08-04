@@ -328,9 +328,10 @@ foreach($this->paginator2 as $pg2) {
     $staffCnt=count($this->districtList);
    // each person in the district in the privilege table
    
-    
+     
     // Mike added this 7-25-2017
-   if($this->allowView==true){
+   
+   if($this->allowView==true  && $this->initialListing==true){
        
    
    foreach($this->districtList as $person) {    
