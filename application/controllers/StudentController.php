@@ -221,9 +221,13 @@ class StudentController extends My_Form_AbstractFormController
         $request = $this->getRequest();
         // Get data for Managers List
         $studentManagersListQuery = new Model_Table_StudentFormAdd();
+        
+        // Mike changed this on 8-4-2017 from
+        // $result = $studentManagersListQuery->studentManagersList($re... to the following
+        //the studentManagersListm was put in special just for 
         $result = $studentManagersListQuery->studentManagersList($request->id_county, $request->id_district, $request->id_school); // Get result
-
-        $this->_helper->json->sendJson($result[0]);
+        $this->writevar1($result,'this is the result');
+       $this->_helper->json->sendJson($result[0]);
 
         return;
     }

@@ -493,7 +493,7 @@ class StaffController extends Zend_Controller_Action
        $nameStudentFull= $studentName->fetchRow($studentName->select()
                                      ->where('id_student =?',$studentId));
        $this->view->nameStudentFull=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
-     //  writevar($this->view->nameStudentFulla,'this is the name of the student');
+      $this->writevar1($this->view->nameStudentFull,'this is the name of the student');
     //   
                 
                 
@@ -535,6 +535,7 @@ class StaffController extends Zend_Controller_Action
           
          //  writevar($studentData[0]['name_first'],'this is the student name');
            $this->view->nameStudentFull=$nameStudent;
+           $this->writevar1($nameStudent,'this is another full name of  the student');
             $this->view->user_id=$user_id; 
             $this->view->studentId=$studentId;
             $this->view->studentId=$studentData[0]['id_student'];
@@ -611,12 +612,16 @@ class StaffController extends Zend_Controller_Action
                 if ($stuList['id_case_mgr']==$_SESSION['user']['id_personnel']) {
                     $studentListCaseMgr[$x]=$stuList;
                     $x=$x+1;
-                    $this->writevar1($stuList,'this is the student list');
+                   // $this->writevar1($stuList,'this is the student list');
                 }
             }
             $studentList=$studentListCaseMgr;
           //  $this->writevar1($studentListCaseMgr,'list of students for the case manager');
-            $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
+       
+          
+          //  $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
+          
+            
             if($menuLink==true) $this->view->nameStudentFull="Please Select a Student to the left!";
                 
         

@@ -131,13 +131,44 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                    ->where('r.status = \'Active\' and p.id_county = \''.$id_county.'\' and ((p.id_district=\''.$id_district.'\' and r.id_school = \''.$id_school.'\' and r.class >= 4)
 											or (r.class = 2 or r.class = 3))')
                    ->order('p.name_first asc');
-
-        $result = $db->fetchAll($select);
-
+       
+                   
+       // Mike added this 8-4-2017 so that we only get  case managers at the school.
+       
+       $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel from iep_personnel p,iep_privileges r where p.id_personnel=r.id_personnel and r.class='6' and r.id_district='".
+                       $id_district."' and r.id_county='".$id_county."' and r.id_school='".$id_school."' order by p.name_last asc";
+                   
+        $result = $db->fetchAll($select2);
+        $this->writevar1($result,'this is the result');
         return array($result);
     }
 
-
+    /* This was added to test studentMangersList above
+    public function studentManagersListm($id_county, $id_district, $id_school)
+    {
+    
+        $db = Zend_Registry::get('db');
+       
+        
+        $select = $db->select()
+        ->distinct()
+        ->from( array('p' => 'iep_personnel'), array('p.id_personnel', 'p.name_first', 'p.name_last') )
+        ->joinLeft(array('r' => 'iep_privileges'), 'p.id_personnel = r.id_personnel', array() )
+        ->where('r.status = \'Active\' and p.id_county = \''.$id_county.'\' and ((p.id_district=\''.$id_district.'\' and r.id_school = \''.$id_school.'\' and r.class=\'6\')')
+                 ->order('p.name_first asc');
+   
+         
+    $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel from iep_personnel p,iep_privileges r where p.id_personnel=r.id_personnel and r.class='6' and r.id_district='".
+              $id_district."' and r.id_county='".$id_county."' and r.id_school='".$id_school."' order by p.name_last asc";
+    
+     //$this->writevar1($select2,'this is the select2 ');
+     
+     $result = $db->fetchAll($select2);
+     $this->writevar1(array($result),'this is the result after query old');
+     
+    return array($result);
+    }
+*/
     public function studentSesisList($do_action, $id_county, $id_district)
     {
 
