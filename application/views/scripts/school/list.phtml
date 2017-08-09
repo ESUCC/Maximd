@@ -1,41 +1,27 @@
-<div>School List</div>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>
+<?php if (count($this->resultCount) < 1) { ?>
+    <div>No results matched your search</div>
+<?php } else { ?>
 
-<?= $this->schoolForm; ?>
+<ul class="pseudoTable schoolTable">
+    <li class="head">
+        <ul class="odd">
+	    <li class="searchName"><a href="#" class="runSearchCall" rel="/school/search/page/<?=$this->page?>/nb/1/sort/<?if ($this->sort == 11){?>12<?}else{?>11<?}?>">School Name <?if ($this->sort == 12){?><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><?} else {?><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><?}?></a></li>
+	    <li class="searchDistrict"><a href="#" class="runSearchCall" rel="/school/search/page/<?=$this->page?>/nb/1/sort/<?if ($this->sort == 21){?>22<?}else{?>21<?}?>">District <?if ($this->sort == 22){?><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><?} else {?><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><?}?></a></li>
+	    <li class="searchCounty"><a href="#" class="runSearchCall" rel="/school/search/page/<?=$this->page?>/nb/1/sort/<?if ($this->sort == 31){?>32<?}else{?>31<?}?>">County <?if ($this->sort == 32){?><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><?} else {?><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><?}?></a></li>
+        </ul>
 
-<?php if (isset($this->results)) { ?>
-  <?php if (count($this->results) < 1) { ?>
-    
-      <div>No results matched your search</div>
-
-  <?php } else { ?>
-  	<form id="Search" enctype="application/x-www-form-urlencoded" method="post" action="/school/list">
-      <div><?= count($this->results).' results' ?></div>
-      <?= $this->formHidden('page', $this->page); ?>
-      <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
-      <table id="result">
-      <tr>
-          <th>County Name</th>
-          <th>District Name</th>
-          <th>School Name</th>
-          <th>&nbsp;</th>
-      </tr>
-      <?php 
-      	
-      	$rownum = 0;
-//      	foreach ($this->results as $k => $r) {
-      	foreach($this->paginator as $k => $r) {    ?>  
-          <tr>
-              <td><?= $r['name_county'] ?></td>
-              <td><?= $r['name_district'] ?></td>
-              <td><?= $r['name_school'] ?></td>
-              <td><a id="viewLink" href="/school/view/id_county/<?= $r['id_county'] ?>/id_district/<?= $r['id_district'] ?>/id_school/<?= $r['id_school'] ?>">View</a></td>
-              <td><a id="editLink" href="/school/edit/id_county/<?= $r['id_county'] ?>/id_district/<?= $r['id_district'] ?>/id_school/<?= $r['id_school'] ?>">Edit</a></td>
-          </tr>
-      <?php } ?>
-      </table>
-  <?php } ?>
-<?php } ?>
-
-<ul>
-
+    </li>
+    <?php foreach ($this->results as $k => $r) { ?>
+    <li>
+        <ul class="odd">
+	   
+	    <li class="searchName"><a href="#" rel="/school/view/id_county/<?=$r['id_county']?>/id_district/<?=$r['id_district']?>/id_school/<?=$r['id_school']?>" class="openWindow" title="<?=$r['name_school'] ?>"><?=$r['name_school'] ?></a></li>
+	    <li class="searchDistrict"><?=$r['name_district'] ?></li>
+	    <li class="searchCounty"><?=$r['name_county'] ?></li>
+        </ul>
+    </li>
+    <?php } ?>
 </ul>
+<?php } ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>

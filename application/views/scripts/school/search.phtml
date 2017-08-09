@@ -1,0 +1,329 @@
+<?php $auth = Zend_Auth::getInstance();?>
+
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+<style>
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+.clearfix tbody li:hover  {
+    background: 		#F4A460;
+    }
+	
+</style>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('school'); ?>
+	</td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+     var reports = Array;
+
+
+     openURL("/school/search/nb/1/");
+
+     function openURL(url){
+        $(".loading").clone().css("position", "absolute").css("top", "0px").css("bottom", "0px").css("left", "0px").css("margin-top", "110px").show().appendTo("#searchResults");
+        $("#searchResults").load(url, function() {
+         // Paginator Bug fix - href="javascript:XXX" -----
+         var uri = "";
+         var reg = /\'(.+)\'/i;
+         $(".paginator a").each( function(index, element) {
+          uri = $(element).attr("href").match(reg);
+          uri = uri[0].substring(1, uri[0].length - 1);
+          $(element).attr("rel", uri);
+          $(element).attr("href", "#");
+          $(element).attr("class", "runSearchCall");
+         });
+         // ----- END FIX --------------------------------   
+      
+      });
+
+     }
+
+    $(document).on("click", ".runSearchCall", function () {
+        var url = $(this).attr("rel");
+        openURL ( url );
+
+    });
+
+    $(document).on("click", ".openWindow", function () {
+	var title = $(this).attr("title");
+	var url = $(this).attr("rel");
+	$("#dialog").load( url, 
+           function() {
+
+	    if ($("input").is(".datepicker")) $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy' });
+
+	    if ($("form").is("#SchoolEditForm")){
+	      $("#SchoolEditForm").validate({
+		   rules: {
+		    name_school: {
+		      required: true,
+		      minlength: 2
+		    },
+		    address_city: {
+		      required: true,
+		      minlength: 1
+		    },
+		    address_street1: {
+		      required: true,
+		      minlength: 5
+		    },
+		    address_zip: {
+		      zipcodeUS: true,
+		      required: true,
+		      minlength: 5,
+		      maxlength: 10
+		    },
+		    address_state: {
+		      required: true,
+		      minlength: 2,
+		      maxlength: 2
+		    },
+		    phone_main: {
+		      required: true,
+		      phoneUS: true
+		    },
+		    minutes_per_week: {
+		      required: true,
+		      digits: true,
+  		      range: [0, 1000000],
+		    }
+	       },
+	       submitHandler: function(form) {
+	         $("div.error").hide();
+	 	 return false;
+	       },
+	       highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+	       },
+	       unhighlight: function (element, errorClass, validClass) {
+	        $(element).css('border', ''); 
+	       }
+	      });
+
+	      $.validator.addMethod("zipcodeUS", function(value, element) {
+		return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+	      }, "The specified US ZIP Code is invalid");
+
+	      $.validator.addMethod('phoneUS', function (value, element) {
+	        return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
+	      }, "Please enter a valid phone number");
+           }
+ 
+	 });
+
+
+        $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 900, height: 700, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); } } );
+        return false;
+
+    });
+
+    $(document).on("keyup", "#SchoolEditForm input", function () {
+	$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+	return false;
+    }); 
+
+    $(document).on("change", "#SchoolEditForm select", function () {
+	$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+	return false;
+    });
+
+
+    $(document).on("click", ".doneWindowConfirm", function () {
+	if (!$(".SchoolEditSave").prop("disabled") && confirm("You haven't saved your changes. Are you sure you want to Exit?")) $("#dialog").dialog( "close" ); else $("#dialog").dialog( "close" );
+	return false;
+    });
+
+    $(document).on("click", ".doneWindow", function () {
+	$("#dialog").dialog( "close" );
+	return false;
+    });
+
+    $(document).on("click", ".printWindow", function () {
+	var url = $(this).attr("rel");
+	window.open(url, '_blank');
+	return false;
+    });
+
+    $(document).on("click", ".SchoolEditCancel", function () {
+	$("#SchoolEditForm").trigger('reset');
+	$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", true);
+	return false;
+    });
+
+    $(document).on("click", ".SchoolEditSave", function () {
+
+
+      if ($("#SchoolEditForm").valid()) {
+
+       var data_var = Array;
+       data_var = {};
+
+       $("#SchoolEditForm input, #SchoolEditForm select").each( function(index, element) {
+	    if (!$(element).attr("name").match(/report_date/ig) && !$(element).attr("name").match(/select_year/ig)){
+	      data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+	    }
+       });
+
+       var data_reports = Array;
+       data_reports = {};
+
+       $.each(reports, function(index, element) {
+	      data_reports[index] =  [ encodeURIComponent(element[0]), encodeURIComponent(element[1]), encodeURIComponent(element[2]), encodeURIComponent(element[3]), encodeURIComponent(element[4]), encodeURIComponent(element[5]) ];
+       });
+
+       data_var["reports"] = data_reports;
+
+      $.ajax({
+	  type       : "POST",
+          url        : "/school/save",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+//          dataType   : "html",
+          success    : function(response) {
+
+            if (response.err == 1) $("#successSave").html(response.msg).removeClass("blueAlert").addClass("redAlert").show({ effect: "fade", duration: 500 });
+               else {
+                      $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                      $(".SchoolEditSave, .SchoolEditCancel").prop("disabled", true);
+               }
+
+            setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+
+//	    $("#successSave").html(response).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+
+          }
+      });
+     
+    }
+     return false;
+
+  });
+
+    $(document).on("change", ".SelectYear", function () {
+       var year = Number($(this).val());
+       var yearNext = year + 1;
+       var yearNext2 = year + 2;
+	$("#CurrentSchoolYearTitle").html(year+"-"+yearNext);
+	$("#NextSchoolYearTitle").html(yearNext+"-"+yearNext2);
+
+        $("input[name='report_date_0_1']").val(reports[year][0]);
+        $("input[name='report_date_1_1']").val(reports[year][1]);
+        $("input[name='report_date_2_1']").val(reports[year][2]);
+        $("input[name='report_date_3_1']").val(reports[year][3]);
+        $("input[name='report_date_4_1']").val(reports[year][4]);
+        $("input[name='report_date_5_1']").val(reports[year][5]);
+
+        $("input[name='report_date_0_2']").val(reports[year+1][0]);
+        $("input[name='report_date_1_2']").val(reports[year+1][1]);
+        $("input[name='report_date_2_2']").val(reports[year+1][2]);
+        $("input[name='report_date_3_2']").val(reports[year+1][3]);
+        $("input[name='report_date_4_2']").val(reports[year+1][4]);
+        $("input[name='report_date_5_2']").val(reports[year+1][5]);
+
+     return false;
+    })
+
+    $(document).on("change", ".datepicker", function () {
+      var valueField = $(this).val();
+      var nameField = $(this).attr("name").split("_");
+      var year = Number($(".SelectYear").val());
+      var yearNext = Number($(".SelectYear").val()) + 1;
+
+      if (Number(nameField[3]) == 1) reports[year][nameField[2]] = valueField;
+        else if (Number(nameField[3]) == 2) reports[yearNext][nameField[2]] = valueField;
+
+      $(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+
+     return false;
+    })
+
+   
+    
+
+});
+
+  
+</script>
+<script  type="text/javascript">
+
+
+   $("document").ready(function() {
+
+       	 
+
+
+        	$(".paginationControl").css("width","80%");
+        	 
+            $(".paginationControl").css("font-size",'14px');
+            $(".paginationControl").css("margin-bottom",'14px');
+            $(".paginationControl").css("margin-top",'14px');
+            $(".paginationControl").css("float",'left'); 
+
+         $(".clearfix").css("width","80%");
+       	$(".clearfix").css("border", "4px solid LightSkyblue");
+       	$(".clearfix th").css('width','50px');
+       	$(".clearfix td").css('width','50px');
+      	$(".clearfix").css("font-size","12px");
+        $(".clearfix a").css("color","MidnightBlue");
+ 
+        
+        });
+    </script>
+ <style type='text/css'>
+        .highlighted {
+            background-color: Red;
+        }
+   
+        	
+  li:hover  {
+    background: 		#F4A460;
+    </style>   
+
+
+ 
+<div id="searchResults" class="clearfix"></div>
+
+<div id="dialog"></div>
+

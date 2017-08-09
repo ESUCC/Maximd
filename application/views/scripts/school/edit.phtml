@@ -1,6 +1,137 @@
+<script type="text/javascript">
+     reports = Array;
+<?
+     $start_year = (!isset($this->reports[0]["year_identifier"])) ? $this->CurrentSchoolYear - 1 : $this->reports[0]["year_identifier"];
+     $reports = array();
+
+     foreach ($this->reports as $k => $r) 
+        $reports[$r["year_identifier"]] = array( $r["date_report1"], $r["date_report2"], $r["date_report3"], $r["date_report4"], $r["date_report5"], $r["date_report6"] );
+     
+     $i = 1;
+     for($x = $start_year; $x <= $this->CurrentSchoolYear +1; $x++){
+	if (isset($reports[$x])) {?>reports[<?=$x?>] = ["<?=$reports[$x][0]?>", "<?=$reports[$x][1]?>", "<?=$reports[$x][2]?>", "<?=$reports[$x][3]?>", "<?=$reports[$x][4]?>", "<?=$reports[$x][5]?>"];<?}
+          else {?>reports[<?=$x?>] = ["", "", "", "", "", ""];<?}
+	if ($x >= $this->CurrentSchoolYear){?>
+          $("input[name='report_date_0_<?=$i?>']").val(reports[<?=$x?>][0]);
+          $("input[name='report_date_1_<?=$i?>']").val(reports[<?=$x?>][1]);
+          $("input[name='report_date_2_<?=$i?>']").val(reports[<?=$x?>][2]);
+          $("input[name='report_date_3_<?=$i?>']").val(reports[<?=$x?>][3]);
+          $("input[name='report_date_4_<?=$i?>']").val(reports[<?=$x?>][4]);
+          $("input[name='report_date_5_<?=$i?>']").val(reports[<?=$x?>][5]);
+	<?
+	  $i = $i + 1;
+        }
+     }
+?>
+</script>
+<form action="#" id="SchoolEditForm">
+<input type="hidden" name="id_school" value="<?=$this->school["id_school"]?>">
+<input type="hidden" name="id_district" value="<?=$this->school["id_district"]?>">
+<input type="hidden" name="id_county" value="<?=$this->school["id_county"]?>">
+<table class="SchoolForm">
+<tr>
+<td colspan="2">
+<small><b>Note:</b> Fields followed by an asterisk * are required</small>
+</td>
+<td class="SchoolButtons" colspan="2" nowrap>
+    <button class="ui-button ui-widget ui-corner-all doneWindowConfirm" style="padding: 2px;">Done</button>
+    <button class="ui-button ui-widget ui-corner-all SchoolEditCancel" style="padding: 2px;" disabled>Revert</button>
+    <button class="ui-button ui-widget ui-corner-all SchoolEditSave" style="padding: 2px;" disabled>Save</button>
+    <button class="ui-button ui-widget ui-corner-all printWindow" style="padding: 2px;" rel="/school/view/print/1/id_school/<?=$this->school["id_school"]?>/id_district/<?=$this->school["id_district"]?>/id_county/<?=$this->school["id_county"]?>/">Print</button>
+</td>
+</tr>
+
+<tr class="SchoolHeader">
+ <td colspan="4">School Information</td>
+</tr>
+
+<tr>
+ <td class="SchoolFormTitle">County</td><td class="SchoolFormValue" colspan="3"><?=$this->county["name_county"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">District</td><td class="SchoolFormValue" colspan="3"><?=$this->district["name_district"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">School <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="name_school" name="name_school" value="<?=$this->school["name_school"]?>"></td>
+</tr>
+<tr>
+<td class="SchoolFormTitle">School ID</td><td class="SchoolFormValue" colspan="3"><?=$this->school["id_county"]?>-<?=$this->school["id_district"]?>-<?=$this->school["id_school"]?></td>
+<tr>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Status <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><select name="status"><option<?if ($this->school["id_school"] == "Active"){?> selected<?}?>>Active</option><option<?if ($this->school["id_school"] == "Inactive"){?> selected<?}?>>Inactive</option></select></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">School Manager <sup>*</sup></td><td class="SchoolFormValue" colspan="3"> <select name="schoolmng"><?foreach ($this->schoolmng as $k => $r){?><option value="<?=$r["id_personnel"]?>"<?if ($this->school["id_school_mgr"] == $r["id_personnel"]){?> selected<?}?>><?=$r["name_first"]?> <?=$r["name_middle"]?> <?=$r["name_last"]?></option><?}?></select></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Acct Supervisor <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><select name="schoolsprv"><?foreach ($this->schoolsprv as $k => $r){?><option value="<?=$r["id_personnel"]?>"<?if ($this->school["id_account_sprv"] == $r["id_personnel"]){?> selected<?}?>><?=$r["name_first"]?> <?=$r["name_middle"]?> <?=$r["name_last"]?></option><?}?></select></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Street 1 <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="address_street1" name="address_street1" value="<?=$this->school["address_street1"]?>"></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Street 2 <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="address_street2" name="address_street2" value="<?=$this->school["address_street2"]?>"></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">City <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="address_city" name="address_city" value="<?=$this->school["address_city"]?>"></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">State <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="address_state" name="address_state" value="<?=$this->school["address_state"]?>"> <small>2-letter state code</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">ZIP <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="address_zip" name="address_zip" value="<?=$this->school["address_zip"]?>"> <small>ZIP or ZIP+4</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Phone <sup>*</sup></td><td class="SchoolFormValue" colspan="3"><input type="input" id="phone_main" name="phone_main" value="<?=$this->school["phone_main"]?>"> <small>include area code, ex: 308-555-1234</small></td>
+</tr>
+</tr class="SchoolFormTitle"><td colspan="4">&nbsp;</td></tr>
+
+<tr class="SchoolHeader">
+ <td colspan="4">School Settings</td>
+</tr>
 
 
-<div>Edit School page</div>
-<div><a href="/school/view/id_county/<?= $this->countyID; ?>/id_district/<?= $this->districtID; ?>/id_school/<?= $this->schoolID; ?>">View</a></div>
-<BR/>
-<?= $this->schoolForm; ?>
+<?if (count($this->reports) > 0){?>
+<tr>
+ <td class="SchoolFormTitle">Select Year</td><td class="SchoolFormValue" colspan="3"><select class="SelectYear" name="select_year" notread>
+<?
+   for($x = $start_year; $x <= $this->CurrentSchoolYear; $x++){
+     ?><option value="<?=$x?>"<?if ($this->CurrentSchoolYear == $x){?> selected<?}?>><?=$x?> - <?=$x + 1?></option><?
+   }
+?>
+ </select></td>
+</tr>
+<?}?>
+<tr>
+ <td class="SchoolFormTitle">School Year</td><td class="SchoolFormValue" style="text-align: center; font-weight: bold;">
+  <span id="CurrentSchoolYearTitle"><?=$this->CurrentSchoolYear?> - <?=$this->CurrentSchoolYear + 1?></span>
+</td><td class="SchoolFormValue" style="text-align: center; font-weight: bold;">
+  <span id="NextSchoolYearTitle"><?=$this->CurrentSchoolYear + 1?> - <?=$this->CurrentSchoolYear + 2?></span>
+</td>
+<td></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 1</td><td class="SchoolFormValue"><input type="text" readonly name="report_date_0_1" class="datepicker" value=""></td><td class="SchoolFormValue"><input type="text" readonly name="report_date_0_2" class="datepicker"></td><td class="SchoolFormValue"><small>if required, sixth scheduled progress report date</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 2</td><td class="SchoolFormValue"><input type="text" readonly name="report_date_1_1" class="datepicker" value=""></td><td class="SchoolFormValue"><input type="text" readonly name="report_date_1_2" class="datepicker"></td><td class="SchoolFormValue"><small>first scheduled progress report date</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 3</td><td class="SchoolFormValue"><input type="text" readonly name="report_date_2_1" class="datepicker" value=""></td><td class="SchoolFormValue"><input type="text" readonly name="report_date_2_2" class="datepicker"></td><td class="SchoolFormValue"><small>second scheduled progress report date</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 4</td><td class="SchoolFormValue"><input type="text" readonly name="report_date_3_1" class="datepicker" value=""></td><td class="SchoolFormValue"><input type="text" readonly name="report_date_3_2" class="datepicker"></td><td class="SchoolFormValue"><small>third scheduled progress report date</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 5</td><td class="SchoolFormValue"><input type="text" readonly name="report_date_4_1" class="datepicker" value=""></td><td class="SchoolFormValue"><input type="text" readonly name="report_date_4_2" class="datepicker"></td><td class="SchoolFormValue"><small>fourth scheduled progress report date</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 6</td><td class="SchoolFormValue"><input type="text" readonly name="report_date_5_1" class="datepicker" value=""></td><td class="SchoolFormValue"><input type="text" readonly name="report_date_5_2" class="datepicker"></td><td class="SchoolFormValue"><small>if required, fifth scheduled progress report date</small></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Minutes Per Week <sup>*</sup></td><td colspan="2" class="SchoolFormValue"><input type="input" id="minutes_per_week" name="minutes_per_week" value="<?=$this->school["minutes_per_week"]?>"></td><td class="SchoolFormValue"><small>calculated number of minutes in 1 week for your school</small></td>
+</tr>
+</table>
+</form>
+<div id="successSave"></div>
