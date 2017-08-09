@@ -479,9 +479,10 @@ class StaffController extends Zend_Controller_Action
          $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
         //  $this->writevar1($studentList,'this is the student list');
          
-       
+       $subMenuLink==false;
        if($studentId==''){
            $studentId=$studentList[1]['id_student'];
+           $subMenuLink=true;
        } 
        
        
@@ -499,7 +500,7 @@ class StaffController extends Zend_Controller_Action
                                      ->where('id_student =?',$studentId));
        $this->view->nameStudentFull=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
        $this->view->idStudentFull=$nameStudentFull['id_student'];
-       $this->writevar1($nameStudentFull['id_student'],'this is the id of the student');
+     //  $this->writevar1($nameStudentFull['id_student'],'this is the id of the student');
       
     //   
                 
@@ -630,6 +631,16 @@ class StaffController extends Zend_Controller_Action
             }
             $studentList=$studentListCaseMgr;
            $this->view->studentList=$studentList;
+            
+            $checkHack=true;
+            foreach($this->view->studentList as $stu){
+                if($stu['id_student']==$studentId) $checkHack=false;
+            }
+            $this->writevar1($studentId,'this is the student id');
+            if ($checkHack==true && $subMenuLink==false) {
+                $this->_redirect( '/login/logout');
+              }
+            
          //   $this->writevar1($studentList,'this is the student list');
           //  $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
           
@@ -926,8 +937,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";

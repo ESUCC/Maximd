@@ -68,7 +68,7 @@ class Form_SearchForm extends Zend_Form {
                         '001' => "Notice and Consent for Initial Evaluation (IEP)",
                         '005' => "Notice and Consent for Initial Placement (IEP)",
                         '002' => "Multidisciplinary Evaluation Team (MDT) Report",
-                        '003' => "Notification of IEP Meeting",
+                 //       '003' => "Notification of IEP Meeting",
                         '004' => "Individual Education Program (IEP)",
                         '006' => "Notice and Consent for School Districts Decision",
                         '007' => "Notice and Consent for Reevaluation",
@@ -98,11 +98,11 @@ class Form_SearchForm extends Zend_Form {
                         * Mike changed this 4-18-2017 jira SRS-50
                         */
                         '032' => "Notice of Meeting (Part C)",
-                        '014' => "Notification of IFSP Meeting (Outdated)",
+                   //     '014' => "Notification of IFSP Meeting (Outdated)",
                         '016' => "Notice and Consent for Initial Placement (IFSP)",
                         '027' => "Notice and Consent for Early Intervention Initial Screening",
                         '031' => "Notice of Initial Eval and Child Assessment",
-                        '025' => "Notification Of Multidisciplinary Team Planning Meeting",
+                      //  '025' => "Notification Of Multidisciplinary Team Planning Meeting",
                         '015' => "Notice and Consent for Initial Evaluation (IFSP)",
                         '033' => "Annual Transition Notice",
                         
@@ -312,7 +312,7 @@ class Form_SearchForm extends Zend_Form {
                 '001' => "Notice and Consent for Initial Evaluation (IEP)",
                 '005' => "Notice and Consent for Initial Placement (IEP)",
                 '002' => "Multidisciplinary Evaluation Team (MDT) Report",
-                '003' => "Notification of IEP Meeting",
+                //'003' => "Notification of IEP Meeting",
                 '004' => "Individual Education Program (IEP)",
                 '006' => "Notice and Consent for School Districts Decision",
                 '007' => "Notice and Consent for Reevaluation",
@@ -341,11 +341,11 @@ class Form_SearchForm extends Zend_Form {
                * 
                */
                 '032' => "Notice of Meeting (Part C)",
-                '014' => "Notification of IFSP Meeting (Outdated)",
+         //       '014' => "Notification of IFSP Meeting (Outdated)",
                 '016' => "Notice and Consent for Initial Placement (IFSP)",
                 '027' => "Notice and Consent for Early Intervention Initial Screening",
                 '031' => "Notice of Initial Eval and Child Assessment",
-                '025' => "Notification Of Multidisciplinary Team Planning Meeting",
+         //      '025' => "Notification Of Multidisciplinary Team Planning Meeting",
                 '033' => "Annual Transition Notice",
                 '034' => "Prior Written Notice",
             ),

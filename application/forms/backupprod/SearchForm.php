@@ -68,7 +68,7 @@ class Form_SearchForm extends Zend_Form {
                         '001' => "Notice and Consent for Initial Evaluation (IEP)",
                         '005' => "Notice and Consent for Initial Placement (IEP)",
                         '002' => "Multidisciplinary Evaluation Team (MDT) Report",
-                        '003' => "Notification of IEP Meeting",
+                       // '003' => "Notification of IEP Meeting",
                         '004' => "Individual Education Program (IEP)",
                         '006' => "Notice and Consent for School Districts Decision",
                         '007' => "Notice and Consent for Reevaluation",

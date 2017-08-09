@@ -44,7 +44,7 @@ class My_View_Helper_StudentOptionsMenu extends Zend_View_Helper_Abstract
       //  $element->setAttrib('onchange', "javascript:if(this.value) location.href='/parent/search/'+this.value+'/id_student/'+$id_student;");
 //        $element->setValue($session->currentvalue);
         $element->setLabel('Options:');
-         $this->writevar1($element,'these re the elements');
+      //   $this->writevar1($element,'these re the elements');
         return $element;
 
     }
