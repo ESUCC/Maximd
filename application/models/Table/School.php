@@ -17,7 +17,21 @@ class Model_Table_School extends Model_Table_AbstractIepForm
     protected $_name = 'iep_school';
     protected $_primary = array('id_county', 'id_district', 'id_school');
 
-    // Mike added this 8-9-2017 to make the Edit school maxim pop up work
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    } 
+    
+    
+    
+    // Mike added this 8-9-2017 to make the Edit school maxim pop up work 
+    
     public function schoolList($options)
     {
     

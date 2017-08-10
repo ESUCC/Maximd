@@ -10,8 +10,18 @@ class SchoolController extends My_Form_AbstractFormController
 
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
 
-    public function searchAction() 
+    public function searchDISABLEAction() 
     {
        // include("Writeit.php");
         $options = array();
@@ -29,22 +39,25 @@ class SchoolController extends My_Form_AbstractFormController
         $options['districtUser'] = $this->usersession->user->user['id_district'];
         $this->countyID = $this->usersession->user->user['id_district'];
         $options['countyUser'] = $this->usersession->user->user['id_county'];
-	$userID = $this->usersession->user->user['id_personnel'];
+	    $userID = $this->usersession->user->user['id_personnel'];
 
 
 	// Check Permissions
         $options['privsAdmin'] = count($this->usersession->user->privs);
-    //   writevar($options,'this is the options');
+   //  $this->writevar1($options,'this is the options--privsAdmin');
     //    writevar($userID,'this is the user id');
 	$x=0;
 	while ($x < count($this->usersession->user->privs))
 	{
-	    $privs[$x] = array($this->usersession->user->privs[$x]['id_district'], $this->usersession->user->privs[$x]['id_county'], $this->usersession->user->privs[$x]['class']);
+	    $privs[$x] = array($this->usersession->user->privs[$x]['id_district'], 
+	        $this->usersession->user->privs[$x]['id_county'],
+	       // $this->usersession->user->privs[$x]['id_school'],
+	        $this->usersession->user->privs[$x]['class']);
 	    $x++;
 	}
-
+    //   $this->writevar1($privs,'these are the privs');
         $options['privsUser'] = $privs;
-     //   writevar($options,'these are the privs');
+    //    $this->writevar1($options,'these are the options');
        
         $session = new Zend_Session_Namespace('searchSchoolForm');
      //   writevar($session,'this is the session search page');
