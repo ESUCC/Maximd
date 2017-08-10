@@ -1,12 +1,13 @@
 <? $rowNum = $this->element->rownumber->getValue(); ?>
 <table class="formInput" style="width:100%;" border="0" id="iep_form_018_agency_<?= $rowNum; ?>">
-    <tr>
+    <tr> 
         <td colspan="2" class="noprint" style="text-align: left;">
-            <?php echo "Community Contact $rowNum"; ?>
+            <?php  echo "Community Contact $rowNum"; ?>
         </td>
         <td colspan="1" class="noprint" style="text-align: right;">
             <div id="community_contact_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
             <?= $this->element->remove_row; ?>
+            <?= $this->element->id_form_018_agency; ?>
             </div>
         </td>
         <td align="center" nowrap="nowrap">&nbsp;</td>

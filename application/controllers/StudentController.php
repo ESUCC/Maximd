@@ -1010,7 +1010,7 @@ class StudentController extends My_Form_AbstractFormController
 
     public function editAction()
     {
-       include("Writeit.php");
+     //  include("Writeit.php");
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();

@@ -78,7 +78,8 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
             
             $this->returnText .= ' <li><a href="https://iepweb02.unl.edu/personnelm"><font color="green"><b><i>Personnel</b></i></font></a></li>';
             $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.unl.edu/srs.php?area=personnel&sub=list">Personnel</a></li>';
-            
+           
+            //$this->returnText .= ' <li><a href="https://iepweb02.unl.edu/school/search"><font color="green"><b><i>Schools</b></i></font></a></li>';
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?area=school&sub=list">Schools</a></li>';
            
             $this->returnText .= '  <li><a href="/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';

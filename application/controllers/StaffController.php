@@ -479,9 +479,10 @@ class StaffController extends Zend_Controller_Action
          $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
         //  $this->writevar1($studentList,'this is the student list');
          
-       
+       $subMenuLink=false;
        if($studentId==''){
            $studentId=$studentList[1]['id_student'];
+           $subMenuLink=true;
        } 
        
        
@@ -499,7 +500,7 @@ class StaffController extends Zend_Controller_Action
                                      ->where('id_student =?',$studentId));
        $this->view->nameStudentFull=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
        $this->view->idStudentFull=$nameStudentFull['id_student'];
-       $this->writevar1($nameStudentFull['id_student'],'this is the id of the student');
+     //  $this->writevar1($nameStudentFull['id_student'],'this is the id of the student');
       
     //   
                 
@@ -618,7 +619,7 @@ class StaffController extends Zend_Controller_Action
         if($case_mgr==true){
             
             
-            
+            $studentListCaseMgr=null;
             foreach($studentList as $stuList){
                 if ($stuList['id_case_mgr']==$_SESSION['user']['id_personnel']) {
                     $studentListCaseMgr[$x]=$stuList;
@@ -629,7 +630,19 @@ class StaffController extends Zend_Controller_Action
             
             }
             $studentList=$studentListCaseMgr;
-           $this->view->studentList=$studentList;
+            $this->view->studentList=$studentList;
+            
+            $checkHack=true;
+            
+           foreach($this->view->studentList as $stu){
+                if($stu['id_student']==$studentId) $checkHack=false;
+            }
+            $this->writevar1($studentId,'this is the student id');
+            if ($checkHack==true && $subMenuLink==false) {
+                $this->_redirect( '/login/logout');
+              }
+              
+            
          //   $this->writevar1($studentList,'this is the student list');
           //  $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
           
