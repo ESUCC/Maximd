@@ -147,7 +147,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         App_Helper_Session::cleanSessionForReuse();
         Zend_Session::destroy(1);
         if ('production' == APPLICATION_ENV) {
-             $this->_redirect('https://iep.unl.edu/');
+             $this->_redirect('https://iep.esucc.org/');
         } else {
             $this->_helper->redirector('index', 'index');
         }
@@ -598,7 +598,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
             $message .= "\nFor future reference, your user name and password are included below:\n\n";
             $message .= "User Name: $newPersonnelRecord->user_name\n";
             $message .= "Password: {$userFormData['password']}\n\n";
-            $message .= "Once you're approved, you can use the following link to log on:\n\nhttps://iep.unl.edu/\n\n";
+            $message .= "Once you're approved, you can use the following link to log on:\n\nhttps://iep.esucc.org/\n\n";
             $message .= "To add a 'New Privilege'\n\n1) Logon using your current username and password.\n";
             $message .= "2) Then click on the Personnel tab.\n";
             $message .= "3) Now click on the 'New Privilege' link in the blue ribbon below the personnel tab.\n";
@@ -678,7 +678,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
             $message .= "with " . $this->getUserClassDescription($user_type) . " privileges at the following locations:\n\n";
             $message .= $destinationDistrict['name_district'] . " District\n$schoolTxt\n\n";
             $message .= "Please use the following link to access their personnel record if you would like to approve their request(s).\n\n";
-            $message .= " https://iep.unl.edu/goto.php?goto=area&personnel=sub&personnel=personnel&$newPersonnelId=option&edit\n\n";
+            $message .= " https://iep.esucc.org/goto.php?goto=area&personnel=sub&personnel=personnel&$newPersonnelId=option&edit\n\n";
             $message .= "If you have questions, you can contact {$userFormData['name_first']} {$userFormData['name_last']} at: {$userFormData['phone_work']}";
             if (!empty($userFormData['email_address'])) {
                 $message .= " or by email: {$userFormData['email_address']}.";

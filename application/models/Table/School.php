@@ -66,13 +66,16 @@ class Model_Table_School extends Model_Table_AbstractIepForm
             foreach($options['privsUser'] as $valPrivs){
                 list ($id_district, $id_county, $class) = $valPrivs;
                 $where_area .= "(iep_school.id_district='".$id_district."' AND iep_school.id_county='".$id_county."')";
+               // $this->writevar1($where_area,'this is the where area');
                 $x++;
                 if (count($options['privsUser']) != $x) $where_area .= " or ";
             }
-    
-            if (count($options['privsUser']) > 1) $select->where($where_area);
+             
+            // Mike changed this 8-10-2017 so that uers with 1 priv did not see all schools in NE
+           
+            if (count($options['privsUser']) > 0) $select->where($where_area);
             $stmt = $db->query($select);
-    
+           // $this->writevar1($where_area,'this is the sql where area statement');
     
             if (!Model_CacheManager::isCached(Zend_Registry::get('searchCache'), $options['key'])) {
                 $toCache = $stmt->fetchAll();
@@ -80,7 +83,7 @@ class Model_Table_School extends Model_Table_AbstractIepForm
                 Model_CacheManager::getCacheForKey(Zend_Registry::get('searchCache'), $options['key'], $toCache);
                 $newQuery = true;
             }
-    
+             
             // Read cache file
             $count = count($cacheResults = Model_CacheManager::getCacheForKey(Zend_Registry::get('searchCache'), $options['key'], false));
     
