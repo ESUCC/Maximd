@@ -21,7 +21,7 @@ class SchoolController extends My_Form_AbstractFormController
         fclose($fp);
     }
 
-    public function searchDISABLEAction() 
+    public function searchAction() 
     {
        // include("Writeit.php");
         $options = array();
@@ -153,20 +153,34 @@ class SchoolController extends My_Form_AbstractFormController
          $schools = Array();
  	 while ($x < count($this->usersession->user->privs))
 	 {
+	    
 	    // school manager (4) and associate school manager (5)
-            if (($this->usersession->user->privs[$x]['status'] == 'Active' && 
+            if ($this->usersession->user->privs[$x]['status'] == 'Active' && 
                 $this->usersession->user->privs[$x]['id_county'] == $options['id_county'] && 
-		$this->usersession->user->privs[$x]['id_district'] == $options['id_district'] && 
-		$this->usersession->user->privs[$x]['id_school'] == $options['id_school'] && 
-		($this->usersession->user->privs[$x]['class'] == 4 || $this->usersession->user->privs[$x]['class'] == 5)) || 
-		($this->usersession->user->privs[$x]['class'] == 2 || $this->usersession->user->privs[$x]['class'] == 3)) {
-        	    	$schools[] = $this->usersession->user->privs[$x]['class'];
-	    }
+		        $this->usersession->user->privs[$x]['id_district'] == $options['id_district'] && 
+		        $this->usersession->user->privs[$x]['id_school'] == $options['id_school'] && 
+		        $this->usersession->user->privs[$x]['class'] == 4 || $this->usersession->user->privs[$x]['class'] == 5)
+                  {  
+                    $schools[] = $this->usersession->user->privs[$x]['class'];
+	              }
+	        
+	         
+	    
 	   $x++;
 	 } 
 // --------------------------------------------------------
-
-	if ($classPriv == 2 || $classPriv == 3 || $school.length > 0)
+     $editSchool=false;
+     
+     foreach($_SESSION["user"]["user"]->privs as $privs ) {
+         if($privs['class']< 4 && $privs['id_county']==$options['id_county']
+             && $privs['id_district']==$options['id_district'] && $privs['status']=='Active')
+             $editSchool=true;
+     }
+     
+     
+	
+	
+	if ( $editSchool==true)
             echo $this->view->render('school/edit.phtml');
           else  echo $this->view->render('school/view.phtml');
 
