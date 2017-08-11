@@ -61,35 +61,35 @@ class Zend_View_Helper_FormMenuOld extends Zend_View_Helper_Abstract
         }
 
         if (isset($formAccessArr[$form->status]['view']) && $formAccessArr[$form->status]['view']) {
-            $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=view">View</option>';
+            $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=view">View</option>';
         }
         if('Draft'==$form->status) {
             if (isset($formAccessArr[$form->status]['edit']) && $formAccessArr[$form->status]['edit']) {
-            	$options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=edit">Edit</option>';
+            	$options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=edit">Edit</option>';
             }
             if (isset($formAccessArr[$form->status]['delete']) && $formAccessArr[$form->status]['delete']) {
-                $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=delete">Delete</option>';
+                $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=delete">Delete</option>';
             }
             if (isset($formAccessArr[$form->status]['finalize']) && $formAccessArr[$form->status]['finalize']) {
-                $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=finalize">Finalize</option>';
+                $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=finalize">Finalize</option>';
             }
         }
         if('Suspended'==$form->status) {
             if (isset($formAccessArr['Draft']['view']) && $formAccessArr['Draft']['view']) {
-                $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=view">View</option>';
+                $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=view">View</option>';
             }
             if (isset($formAccessArr['Draft']['delete']) && $formAccessArr['Draft']['delete']) {
-                $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=delete">Delete</option>';
+                $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=delete">Delete</option>';
             }
             if (isset($formAccessArr['Draft']['edit']) && $formAccessArr['Draft']['edit']) {
-                $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=resume">Resume Draft Status</option>';
+                $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=resume">Resume Draft Status</option>';
             }
         }
         if (isset($formAccessArr[$form->status]['log']) && $formAccessArr[$form->status]['log']) {
-            $options[] = '<option href="https://iep.esucc.org/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=log">Log</option>';
+            $options[] = '<option href="https://iep.unl.edu/srs.php?area=student&sub=form_'.$form->form_no.'&document='.$form->id.'&page=1&option=log">Log</option>';
         }
         if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
-            $options[] = '<option href="https://iep.esucc.org/form_print.php?form=form_'.$form->form_no.'&document='.$form->id.'">Print</option>';
+            $options[] = '<option href="https://iep.unl.edu/form_print.php?form=form_'.$form->form_no.'&document='.$form->id.'">Print</option>';
         }
         
         if($form->filePath) {
