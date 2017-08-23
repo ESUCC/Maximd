@@ -57,10 +57,15 @@
     height: 170px;
 }
 
+.optionInfo {
+    min-height: 170px;
+}
+
 .schoolInfoTable {
     width: 100%;
 
 }
+
 .DistrictView .DistrictViewTitle {
     font-size: 14px;
     font-weight: 700;
@@ -110,6 +115,20 @@
     cursor: pointer;
 }
 
+.Logo {
+    height: 150px;
+    width: auto;
+}
+
+#districtLogo {
+    position: relative;
+    margin: 10px;
+}
+
+#fileRemove {
+    display: none;
+}
+
 </style>
 
 <script src="/js/validate/jquery.validate.min.js"></script>
@@ -131,6 +150,7 @@
 <script type="text/javascript">
     $(document).ready(function() { 
 
+      var reports = Array;
       var districtsList = [ <?=$districtArray?> ];
       $("#searchAlphabet").val("");
 	
@@ -142,7 +162,7 @@
          $("#dialog").load( url,
            function() {
             $(".options").prop('selectedIndex',0);
-            $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 620, height: 550, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); }, buttons: { "Close": function() { $(this).dialog("close"); } } } );
+            $("#dialog").dialog({  show: { effect: "fade" }, hide: {effect: "fade", duration: 500}, width: 620, height: 550, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $( ".accordion" ).accordion('destroy'); $("#dialog").html(""); }, buttons: { "Close": function() { $(this).dialog("close"); } } } );
          });
         }
         return false;
@@ -251,13 +271,24 @@
         if ($("#DistrictForm").valid()) {
 
            var data_var = Array;
-           data_var = {};
+    	   data_var = {};
+
+	   var data_reports = Array;
+    	   data_reports = {};
 
            $("#DistrictForm input, #DistrictForm select").each( function(index, element) {
                     if($(element).attr('type') == "checkbox" && $(element).prop('checked')) data_var[encodeURIComponent($(element).attr("name"))] = '1';
                        else if($(element).attr('type') == "checkbox" && !$(element).prop('checked')) data_var[encodeURIComponent($(element).attr("name"))] = '0';
                        else data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
            });
+
+    	   $.each(reports, function(index, element) {
+        	  data_reports[index] =  [ encodeURIComponent(element[0]), encodeURIComponent(element[1]), encodeURIComponent(element[2]), encodeURIComponent(element[3]), encodeURIComponent(element[4]), encodeURIComponent(element[5]) ];
+           });
+
+	  data_var["reports"] = data_reports;
+
+	  console.log(data_var);
 
           $.ajax({
               type       : "POST",
@@ -272,7 +303,7 @@
                 if (response.err == 1) $("#successSave").html(response.msg).removeClass("blueAlert").addClass("redAlert").show({ effect: "fade", duration: 500 });
                    else {
                       $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
-                      $(".DistrictEditReturn, .DistrictEditCancel").prop("disabled", true);
+                      $(".DistrictEditSave, .DistrictEditCancel").prop("disabled", true); //.DistrictEditReturn, 
                    }
                    setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
 
@@ -285,6 +316,66 @@
         return false;
       });
 
+
+    $(document).on("change", "#fileToUpload", function() {
+	      var file_data = $("#fileToUpload").prop("files")[0]; 
+
+        if (typeof file_data != undefined && 
+              (file_data["type"] == "image/jpg" 
+              || file_data["type"] == "image/gif" 
+              || file_data["type"] == "image/jpeg" 
+              || file_data["type"] == "image/png")) {
+	          $("#districtLogo").html('<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>');
+	          var form_data = new FormData();          
+            form_data.append("file", file_data);            
+	          form_data.append("id_district", $("#id_district").val());
+            form_data.append("id_county", $("#id_county").val());
+            $.ajax({
+                url: "/district/uploadfile",
+		            dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,   
+                type: 'post',
+		            success: function (data) {
+			              $("#fileToUpload").val("");
+			              $("#districtLogo").html('<img src="' + data.msg + '" class="Logo">');
+			              $("#fileRemove").show();
+	              },
+		            error: function() {
+		                $("#fileToUpload").val("");
+		                $("#fileRemove").hide();
+		                $("#districtLogo").html('');
+		            }
+    	      });
+	      } else $("#fileToUpload").val("");
+
+	      return false;
+    });
+
+    $(document).on("click", "#fileRemove", function() {
+
+        var form_data = new FormData();                
+        form_data.append("id_district", $("#id_district").val());
+        form_data.append("id_county", $("#id_county").val());
+        $.ajax({
+            url: "/district/removefile",
+		        dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,   
+            type: 'post',
+		        success: function (data) {
+			          $("#fileToUpload").val("");
+			          $("#districtLogo").html("");
+			          $("#fileRemove").hide("");
+			          console.log(data);
+	          }
+        });
+	      return false;
+    });
 
     $(document).on( "click", "#cancelSearch", function() {
         $("#searchAlphabet").val("");
@@ -342,13 +433,10 @@
 	    return false;
     });
 
-
-
-
 });
 </script>
     
-    <table border="0">
+    <table class="navTopMenu">
         <!-- logo row -->
         <?php $auth = Zend_Auth::getInstance(); ?>
             <td>

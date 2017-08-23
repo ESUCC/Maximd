@@ -1,6 +1,12 @@
+
 <script type="text/javascript">
 
-    var descriptionsArr = {
+
+
+
+
+
+var descriptionsArr = {
         2:'<span style="text-decoration:underline;font-weight:bold;">District Manager</span><br><span style="font-weight:bold;">Description</span>: One District Manager is authorized for each district that is active in the system. The District Manager is the single point of contact and the person responsible for all activity within their district. The District Manager can authorize Associate District Managers (ADM’s) that share the same level of privileges with the exception of being able to authorize other ADM\'s. The District Manager is also responsible for designating a single person (themselves or one of the ADM’s) that is responsible for approving new account requests that come from schools in their district.<br><span style="font-weight:bold;">Authorization</span>: The School District Superintendent, for each district that wishes to participate, must complete a District Request &amp; Authorization Form (<a href="/pdf/district_rqst_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) that designates the person that will be the District Manager for their district. Once this document is received, the System Administrator will approve the new account request for the District Manager that has been authorized. If the District Manager needs to be changed, the Superintendent must complete a District Authorization Change Form (<a href="/pdf/district_change_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) and send it to the System Administrator.<br><span style="font-weight:bold;">Note</span>: If you are going to be the District Manager for your school district, please proceed with this process. Your request will be sent to the System Administrator, then when your paperwork is received, your account will be enabled.',
         3:'<span style="text-decoration:underline;font-weight:bold;">Associate District Manager (ADM)</span><br><span style="font-weight:bold;">Description</span>: Associate District Managers allow the duties of the District Manager to be delegated to other staff members at the district level. These people have privileges identical to the District Manager except as noted above. The District Manager determines their duties.<br><span style="font-weight:bold;">Authorization</span>: ADM’s are authorized by the District Manager for their district. Your request will be sent to this person for approval.',
         4:'<span style="text-decoration:underline;font-weight:bold;">School Manager</span><br><span style="font-weight:bold;">Description</span>: One School Manager is authorized for each school that is active in the system. The School Manager is the single point of contact and the person responsible for all activity within their school. The School Manager can authorize Associate School Managers (ASM’s) that share the same level of privileges with the exception of being able to authorize other ASM\'s. The School Manager is also responsible for designating a single person (themselves or one of the ASM’s) that is responsible for approving new account requests that come from people in their school.<br><span style="font-weight:bold;">Authorization</span>: The Principal, for each school that wishes to participate, must complete a School Request &amp; Authorization Form (<a href="/pdf/school_rqst_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) that designates the person that will be the School Manager for their school. Once this document is received, the District Manager will approve the new account request for the School Manager that has been authorized. If the School Manager needs to be changed, the Principal must complete a School Authorization Change Form (<a href="/pdf/school_change_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) and send it to the District Manager.<br><span style="font-weight:bold;">Note</span>: If you are going to be the School Manager for your school, please proceed with this process. Your request will be sent to the District Manager, then when your paperwork is received, your account will be enabled.',
@@ -11,6 +17,16 @@
         10:'<div class="btb" style="text-decoration:underline;">Service Coordinator</div> <span style="font-weight:bold;">Description</span>: Services coordination is available for children aged birth through two and families of these children. The services coordinator assists families of infants or toddlers in identifying needs through coordination of formal and informal supports.  The services coordinator acts as a liaison between service providers and schools to empower the family in taking the role of ensuring their needs are met by the special education service delivery system.<br> <p>Schools are responsible for assigning privileges to services coordinators within the SRS.</p> <span style="font-weight:bold;">Authorization</span>: The SRS permits schools to give privileges to services coordinators. Services coordinators may apply to and be approved by a school manager for an account/privilege at that school. Services coordinators must be assigned by the case manager to gain access to the child\'s records at that school by first clicking the students tab, then accessing the \'Edit Student\' page for that child, and finally assigning them to the service coordinator field.  This level of access will allow the services coordinators to view, edit, and print (Birth through 2) forms and view logs for those forms. <p>An individual with a services coordinator privilege can be added to the student team.  The services coordinator will be limited to viewing (Birth through 2) forms, unless edit access is granted by the early childhood case manager.</p> <div class="indentNewActBldUnd">Early Intervention Case Manager (EICM) Access</div> <div class="indentFlow">The early intervention case manager access (EICM) has been created to allow services coordinators, case, school, and district managers the ability to create, edit, view, print, and finalize (Birth through 2) forms and view logs for those forms.  This access also permits the individual assigned as the EICM to add and remove team members for early intervention.</div><br> <div class="indentFlow">The EICM position allows for additional access above a service coordinator role.  Access may include creating and finalizing forms or editing of the student team. Both levels of access allow the ability to view the MDT.</div><br> <div class="indentFlow">School districts may elect to choose this option when the services coordinator will be the case manager for that birth through aged two child.  This is essentially the same role performed by a case manager for children aged three to twenty-one.</div>'
     };
 
+
+
+
+
+
+
+
+
+
+    
     $(function () {
 
         var currentradio = $("input[name='user_type']:checked")[0];
@@ -67,13 +83,20 @@
 
     });
 </script>
+
 <?
+
+ 
 if (isset($this->msg)) {
     echo '<div class="btsRed">' . $this->msg . '</div>';
 }
 ?>
 <form method="post">
     <table style="width:800px;">
+       <tr>
+        <!--  <td> <a class="video" href="#">Video</a> -->
+         <a href="javascript:window.open('http://72.15.175.198/video/newaccount.html','_blank','location=yes,width=850,height=700,scrollbars=yes,status=yes')">Training Video</a>
+         </td></tr>
         <tr>
             <td colspan="2"><b>Step 1: What type of user are you?</b></td>
         </tr>
@@ -89,6 +112,7 @@ if (isset($this->msg)) {
                 <?= $this->form->getElement('submit') ?>
             </td>
         </tr>
+        
         <tr>
             <td colspan="2">
                 <div style="font-style: italic;">Note: Click or hover over the privilege levels to see a full description.</div>
@@ -102,5 +126,10 @@ if (isset($this->msg)) {
                 <div id="user_type_description"></div>
             </td>
         </tr>
+        <tr>
+        
     </table>
 </form>
+</body>
+<div id="dialog2">
+</div>

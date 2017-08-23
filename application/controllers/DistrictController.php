@@ -4,7 +4,7 @@ class DistrictController extends Zend_Controller_Action
 {
     // Mike on commit 12-12-2016
 // June 10th lat commit
-    public function init()  
+    public function init() 
     {
         ini_set('memory_limit', '-1');
         // $this->_redirector = $this->_helper->getHelper('Redirector');
@@ -125,7 +125,6 @@ class DistrictController extends Zend_Controller_Action
     public function indexAction()
     {
           
-        
       // include("Writeit.php");
     
         // $data = range(1,10);
@@ -133,11 +132,9 @@ class DistrictController extends Zend_Controller_Action
     
         $fieldname = $this->_getParam('fieldname');
         if ($fieldname == "") $fieldname = "name_district asc"; else $fieldname = $fieldname." asc";
-       // $this->writevar1($fieldname,'this is the field name');
+
         $iep_district = new Model_Table_IepDistrict();
         $data1 = $iep_district->fetchAll($iep_district->select()->order($fieldname));
-      
-       // $this->writevar1($data1,'this is the data');
         
         $paginator3 = Zend_Paginator::factory($data1);
         $paginator3->setCurrentPageNumber($this->_getParam('page'));
@@ -146,9 +143,7 @@ class DistrictController extends Zend_Controller_Action
     
         $iep_county = new Model_Table_IepCounty();
         $this->view->iep_county = $iep_county->fetchAll($iep_county->select());
-        
-      //  $this->writevar1($this->view->iep_county,'this is the list of the counties');
-        
+
         $this->view->ListDistricts = $data1;
     
         $iep_priv = new Model_Table_PrivilegeTable();
@@ -198,7 +193,7 @@ class DistrictController extends Zend_Controller_Action
 
     function editAction()
     {
-      // include("Writeit.php");
+        include("Writeit.php");
         
         $form = new My_Form_IepDistrictEdit();
         $form->submit->setLabel('Save');
@@ -439,6 +434,7 @@ class DistrictController extends Zend_Controller_Action
 // end of Mike add sort of
         $formData = $this->getRequest()->getPost();
 
+
         $district = new Model_Table_IepDistrict();
         $disTable=$district->getIepDistrictByID($id_county, $id_district);
         
@@ -451,6 +447,17 @@ class DistrictController extends Zend_Controller_Action
         
         $this->view->data = $disTable;
      
+	//  --- Get reports ----------------
+        $options['id_county'] = $id_county;
+        $options['id_district'] = $id_district;
+        $datetime = new DateTime();
+        $options['CurrentDistrictYear'] = $datetime->format('Y');
+        $result = $district->getIepDistrictReport($options); // Get District View result
+        $this->view->reports = $result;
+        $this->view->CurrentDistrictYear = $options['CurrentDistrictYear'];
+	// ----------------------------------
+
+
         $iep_priv = new Model_Table_PrivilegeTable();
 
         $this->view->acc_superviser = $district->getIepDistrictManagers($id_county, $id_district, 3);
@@ -490,45 +497,29 @@ class DistrictController extends Zend_Controller_Action
 
         $post = $this->getRequest()->getPost();
         $options = Array();
+        $options_reports = Array();
 
         foreach ($post as $nameField => $valueField){
-         $value = urldecode($nameField);
-         // Mike added this if May 11th to get the edfi publishing going. 
-         if ($nameField!='publish_edfi'){
-         $options[$value] = urldecode(strip_tags($valueField));
-         }
-         else {
-             $publish=urldecode(strip_tags($valueField));
-             $string='f';
-             $options['edfi_refresh']=$string;
-         }
-        }
-         
-        
+             $value = urldecode($nameField);
+    	     // Mike added this if May 11th to get the edfi publishing going. 
 
-        $district = new Model_Table_IepDistrict();
-        $district->updateIepDistrictForm($options);
-      
-         /* Mike added this if else 5-11-2017 so that publishing to advisor will show up as 
-         * a status message on the screen. 
-         */
-        if($publish==true){
-            $publishAdvisor= new Model_Table_EdfiAuto;
-         //   $publishAdvisor->advisorsetAction(0,0);
-         
-            // Mike needs to start here tomnorrow 5-11-2017
-            $msg2="District Information Saved and Data Published to Advisor Staging";
-            $jsonData2 = array ( 'msg' => $msg2 );
-            echo  $this->_helper->json->sendJson($jsonData2);
-            $publishAdvisor->advisorsetAction($id_county,$id_district);
-            $msg ='District Information Saved and Data Published to Advisor Staging';
+	    if ($nameField == "reports"){
+    	          foreach ($post["reports"] as $nameFieldReport => $valueFieldReport){
+        	      if ($valueFieldReport[0] != "" || $valueFieldReport[1] != "" || $valueFieldReport[2] != "" || $valueFieldReport[3] != "" || $valueFieldReport[4] != "" || $valueFieldReport[5] != "")
+                	  $options_reports [$nameFieldReport] = [ urldecode(strip_tags($valueFieldReport[0])), urldecode(strip_tags($valueFieldReport[1])), urldecode(strip_tags($valueFieldReport[2])), urldecode(strip_tags($valueFieldReport[3])), urldecode(strip_tags($valueFieldReport[4])), urldecode(strip_tags($valueFieldReport[5]))];
+        	  }
+
+             } else $options[$value] = urldecode(strip_tags($valueField));
         }
-         else {   
+         
+        $district = new Model_Table_IepDistrict();
+        $district->updateIepDistrictForm($options); // Save data
+	$district->saveIepDistrictReports($options, $options_reports);  // Save reports
+
         $msg = "District Information Saved!";
-         }
         
         $jsonData = array ( 'msg' => $msg ); // your json response
-         echo  $this->_helper->json->sendJson($jsonData);
+        echo  $this->_helper->json->sendJson($jsonData);
 
       } else echo $this->view->render('district/access-denied.phtml');
 
@@ -560,25 +551,94 @@ class DistrictController extends Zend_Controller_Action
         $disTable['email_student_transfers_to_name'] = $personnelInfo['name_first']." ".$personnelInfo['name_last']." <a href='mailto:".$personnelInfo['email_address']."'>".$personnelInfo['email_address']."</a>";
         $this->view->data = $disTable;
 
-
-	// JUNY 30, 2017
-	// get all Schools from county and district
+	      // JUNY 30, 2017
+	      // get all Schools from county and district
         $results = $district->getIepSchoolList($id_county, $id_district);
         $this->view->schools = $results;
 
-	// get all Managers 
+	      // get all Managers 
         $results = $district->getIepManagersList();
         $this->view->managers = $results;		
-	    foreach($results as $idx => $val) {
-		$res[$val["id_personnel"]] = $val["name_first"] . " " . $val["name_last"];
-	    }
+	      foreach($results as $idx => $val) {
+		        $res[$val["id_personnel"]] = $val["name_first"] . " " . $val["name_last"];
+	      }
 
-	$this->view->managers = $res;
+	      $this->view->managers = $res;
 
         echo $this->view->render('district/district_view_form.phtml');
-
     }
 
+    function uploadfileAction() {
+        $rnd = time();
+        $config = Zend_Registry::get ( 'config' );
+        $uploaddir = $config->IMG_ROOT;
+        $id_county = $_POST["id_county"];
+        $id_district = $_POST["id_district"];
+	      if ($_FILES) {
+	        $mimetype = $_FILES['file']['type'];
+	        $ext = explode( "/", $mimetype );
+	        if ($ext[1] == "jpeg") $ext[1] = "jpg";
+		$filename = $_POST["id_county"].$_POST["id_district"].".".$ext[1];
+	        $uploadfile = $uploaddir.$filename;
+
+    	        if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile) 
+            	    && $_POST["id_district"] != "" 
+            	    && $_POST["id_county"] != "" 
+            	    && ($_FILES["file"]["type"] == "image/gif" 
+            		|| $_FILES["file"]["type"] == "image/jpeg" 
+            		|| $_FILES["file"]["type"] == "image/jpg" 
+            		|| $_FILES["file"]["type"] == "image/png") ) { 
+                  $district = new Model_Table_IepDistrict();
+                  $district->updateImageLocation($id_county, $id_district, $filename);
+		  $msg = $config->IMG_LOCATION.$filename."?".$rnd;
+		} else $msg = "";
+
+        	$jsonData = array ( 'msg' => $msg ); 
+	        echo $this->_helper->json->sendJson($jsonData);
+	      }
+    }
+
+    function removefileAction() {
+        $config = Zend_Registry::get ( 'config' );
+        $uploaddir = $config->IMG_ROOT;
+	      $filename = $_POST["id_county"].$_POST["id_district"];
+        $id_county = $_POST["id_county"];
+        $id_district = $_POST["id_district"];
+
+        $district = new Model_Table_IepDistrict();
+        $imagefile = $district->getImageLocation($id_county, $id_district);
+
+        if (!empty($imagefile) && file_exists($uploaddir.$imagefile)) {
+          unlink($uploaddir.$imagefile);
+          $district->updateImageLocation($id_county, $id_district, '');
+          $jsonData = array ( 'msg' => 'ok' );
+        } else {
+          $jsonData = array ( 'msg' => 'File not found' );
+        }
+        
+	      echo $this->_helper->json->sendJson($jsonData);
+    }
+
+    function listfileAction() {
+        $rnd = time();
+        $config = Zend_Registry::get ( 'config' );
+        $uploaddir = $config->IMG_ROOT;
+	      $filename = $_POST["id_county"].$_POST["id_district"];
+        $id_county = $_POST["id_county"];
+        $id_district = $_POST["id_district"];
+
+        $district = new Model_Table_IepDistrict();
+        $imagefile = $district->getImageLocation($id_county, $id_district);
+
+        if (!empty($imagefile) && file_exists($uploaddir.$imagefile)) {
+          $jsonData = array ( 'status' => 'ok', 'msg' => $config->IMG_LOCATION.$imagefile."?".$rnd ); 
+        } else {
+          $jsonData = array ( 'status' => 'error', 'msg' => 'File not found'.$imagefile ); 
+        }
+        
+        echo $this->_helper->json->sendJson($jsonData);
+        return;
+    }
     
     /*
      * https://akrabat.com/exploring-zend-paginator/

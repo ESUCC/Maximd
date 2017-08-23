@@ -1345,7 +1345,7 @@ class StudentController extends My_Form_AbstractFormController
     }
 
     function doGroupAction() {
-        include("Writeit.php");
+       // include("Writeit.php");
         $errorMessage = '';
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);

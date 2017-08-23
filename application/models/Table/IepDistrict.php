@@ -17,6 +17,45 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         fclose($fp);
     }
     
+   // Mike added this from Maxim 8-23-2017 in order to get the new district edit screen to pop up.
+    function updateImageLocation($id_county, $id_district, $imagefile) {
+        $data = array(
+            'imagefile' => $imagefile
+        );
+        $where = "id_district = '$id_district' and id_county='$id_county' ";
+        $this->update($data, $where);
+    }
+    
+    function getImageLocation($id_county, $id_district) {
+        $select = $this->select()
+        ->from('iep_district', array('imagefile'))
+        ->where('id_district = ?', $id_district)
+        ->where('id_county = ?', $id_county);
+    
+        $imagefile = $this->fetchAll($select);
+    
+        return $imagefile[0]["imagefile"];
+    }
+    
+    public function getIepDistrictReport($options) {
+        $db = Zend_Registry::get('db');
+    
+        $select = $db->select()
+        ->from( 'iep_district_report_date', array('year_identifier', "to_char(date_report1, 'MM/DD/YYYY') as date_report1", "to_char(date_report2, 'MM/DD/YYYY') as date_report2", "to_char(date_report3, 'MM/DD/YYYY') as date_report3", "to_char(date_report4, 'MM/DD/YYYY') as date_report4", "to_char(date_report5, 'MM/DD/YYYY') as date_report5", "to_char(date_report6, 'MM/DD/YYYY') as date_report6") )
+        ->where( 'id_county = ?', $options['id_county'] )
+        ->where( 'id_district = ?', $options['id_district'] )
+        ->order('year_identifier asc')
+        ->limitPage(0, 20);
+        $stmt = $db->query($select);
+    
+        $reports_row = $stmt->fetchAll();
+    
+        return $reports_row;
+    }
+    
+    // end of Maxim adds 8-23-2017
+    
+    
     // Mike added this 7-24-2017 from Maxim so that the popup in the choose District School list would work
     function getIepSchoolList($id_county, $id_district)
     {
@@ -31,6 +70,76 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
     
         return $results;
     }
+    // Mike added this 8-23-2017 so that the pop up would save.  This is after modification 1 from 
+    //Maxim on the district edit page.
+    
+    public function saveIepDistrictReports($options, $options_reports) {
+    
+        $db = Zend_Registry::get('db');
+    
+        // Reports Save
+        foreach($options_reports as $index => $value){
+            $select = $db->select()
+            ->from( 'iep_district_report_date', 'count(*) as cnt')
+            ->where( 'id_county = ?', $options['id_county'] )
+            ->where( 'id_district = ?', $options['id_district'] )
+            ->where( 'year_identifier = ?', intval($index));
+            $report_row = $db->fetchRow($select);
+    
+    
+            $options_reports[$index][0] == "" ? $date1 = "" : $date1 = Zend_Locale_Format::getDate($options_reports[$index][0], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
+            $options_reports[$index][1] == "" ? $date2 = "" : $date2 = Zend_Locale_Format::getDate($options_reports[$index][1], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
+            $options_reports[$index][2] == "" ? $date3 = "" : $date3 = Zend_Locale_Format::getDate($options_reports[$index][2], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
+            $options_reports[$index][3] == "" ? $date4 = "" : $date4 = Zend_Locale_Format::getDate($options_reports[$index][3], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
+            $options_reports[$index][4] == "" ? $date5 = "" : $date5 = Zend_Locale_Format::getDate($options_reports[$index][4], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
+            $options_reports[$index][5] == "" ? $date6 = "" : $date6 = Zend_Locale_Format::getDate($options_reports[$index][5], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
+    
+            $date1 != "" ? $date_report1 = $date1["year"]."-".$date1["month"]."-".$date1["day"] : $date_report1 = NULL;
+            $date2 != "" ? $date_report2 = $date2["year"]."-".$date2["month"]."-".$date2["day"] : $date_report2 = NULL;
+            $date3 != "" ? $date_report3 = $date3["year"]."-".$date3["month"]."-".$date3["day"] : $date_report3 = NULL;
+            $date4 != "" ? $date_report4 = $date4["year"]."-".$date4["month"]."-".$date4["day"] : $date_report4 = NULL;
+            $date5 != "" ? $date_report5 = $date5["year"]."-".$date5["month"]."-".$date5["day"] : $date_report5 = NULL;
+            $date6 != "" ? $date_report6 = $date6["year"]."-".$date6["month"]."-".$date6["day"] : $date_report6 = NULL;
+    
+    
+            if ($report_row["cnt"] == 1){
+    
+                $data = array(
+                    'date_report1'     => $date_report1,
+                    'date_report2'     => $date_report2,
+                    'date_report3'     => $date_report3,
+                    'date_report4'     => $date_report4,
+                    'date_report5'     => $date_report5,
+                    'date_report6'     => $date_report6
+                );
+    
+                $where['id_county = ?'] = $options["id_county"];
+                $where['id_district = ?'] = $options["id_district"];
+                $where['year_identifier = ?'] = $index;
+                $db->update('iep_district_report_date', $data, $where);
+    
+            } else {
+    
+                $data = array(
+                    'date_report1'     => $date_report1,
+                    'date_report2'     => $date_report2,
+                    'date_report3'     => $date_report3,
+                    'date_report4'     => $date_report4,
+                    'date_report5'     => $date_report5,
+                    'date_report6'     => $date_report6,
+                    'id_county'        => $options["id_county"],
+                    'id_district'      => $options["id_district"],
+                    'year_identifier'  => $index
+                );
+    
+                $db->insert('iep_district_report_date', $data);
+            }
+    
+        }
+    
+    }
+    
+    
     // Mike added this 7-24-2017 from Maxim so that the popup in the choose District School list would work
     
     function getIepManagersList()

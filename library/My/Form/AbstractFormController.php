@@ -179,6 +179,8 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		return $access;
 	}
 	protected function buildSrsForm($document, $page, $raw = false) {
+	    
+	    
 		// I believe this function has been factored out
 		
 		// funciton still in use by the addrow calls
@@ -192,7 +194,6 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 
 		// version - determined by db or internally
 		$this->view->version = $this->version;
-		
 		// build the model
 		// including subform data (related table rows)
 		// also including student data
@@ -1611,7 +1612,7 @@ END;
 			} elseif ('jesselocal' == APPLICATION_ENV) {
 				$this->_redirector->gotoSimple ( 'forms', 'student', null, array ('student' => '1198891' ) );
 			} else {
-				$this->_redirect ( 'https://iep.unl.edu/srs.php?area=student&sub=student&student=' . $formData ['id_student'] . '&option=forms' );
+			  $this->_redirect ( 'https://iep.unl.edu/srs.php?area=student&sub=student&student=' . $formData ['id_student'] . '&option=forms' );
 			}
 			return;
 		}
@@ -1737,6 +1738,9 @@ END;
 		$studentObj = new Model_Table_StudentTable();
 		$student = $studentObj->studentInfo($this->getRequest()->student);
 		
+		$this->writevar1($createOldForms['forms'],'this is the create old forms');
+		//$this->writevar1($studentObj->isDemoStudent($student[0]['id_county'],$student[0]['id_district'],$student[0]['id_school']),'the student in abstractformcontroller');
+		$this->writevar1(in_array($this->getFormNumber(), $createOldForms['forms']),'this lets you know it is in the array array');
 		if (!$studentObj->isDemoStudent($student[0]['id_county'],$student[0]['id_district'],$student[0]['id_school']) && in_array($this->getFormNumber(), $createOldForms['forms'])) {
 			$this->_redirect('https://iep.unl.edu/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&student=' . $this->getRequest()->student . '&option=new');
 			exit;
@@ -2072,6 +2076,7 @@ END;
 	}
 	
 	public function buildZendForm($formClass, $data, $version, $config, $currentPage = null) {
+	    
         $appconfig = Zend_Registry::get ( 'config' );
         $refreshCode = '?refreshCode=' . $appconfig->externals->refresh;
 
