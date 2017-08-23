@@ -7,7 +7,7 @@ class PasswordchangeController extends App_Zend_Controller_Action_Abstract
     public function indexAction()
     {
         $this->_helper->layout()->disableLayout();
-        include("Writeit.php");
+      //  include("Writeit.php");
         $postData = $this->getRequest()->getParams();
         if(!isset($postData['password'])) $postData['password']='';
         if(!isset($postData['password_confirm'])) $postData['password_confirm']='';
@@ -50,6 +50,14 @@ class PasswordchangeController extends App_Zend_Controller_Action_Abstract
            fwrite($fp, $data2);
            fclose($fp);
        }
+       
+       public function playvideoAction() {
+         //  $this->_helper->layout()->disableLayout();
+           $this->_helper->layout->disableLayout();
+          // $this->_helper->viewRenderer->setNoRender(true);
+          
+       }
+       
        
        // This is the function work added by Maxim Jun14 Mike 
        public function changepasswordAction()

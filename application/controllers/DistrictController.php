@@ -1,7 +1,7 @@
 <?php
 
 class DistrictController extends Zend_Controller_Action
-{
+{ 
     // Mike on commit 12-12-2016
 // June 10th lat commit
     public function init()  
@@ -10,7 +10,7 @@ class DistrictController extends Zend_Controller_Action
         // $this->_redirector = $this->_helper->getHelper('Redirector');
         // $this->view->headLink()->appendStylesheet('/js/dijit/themes/soria/soria.css');
     } 
-
+ 
     function writevar1($var1,$var2) { 
     
         ob_start(); 

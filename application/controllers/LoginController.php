@@ -12,6 +12,24 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         $this->view->hideLeftBar = true;
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
+    public function playvideoAction() {
+       // $this->_helper->layout()->disableLayout();
+        $this->_helper->layout->disableLayout();
+      //   $this->_helper->viewRenderer->setNoRender(true);
+    
+    }
+     
     public function indexAction()
     {
 

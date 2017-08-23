@@ -70,7 +70,7 @@ class Model_Form018 extends Model_AbstractForm
             
             // AGENCY
             $select         = $this->db_form->select()->where("lower(status) != 'deleted' OR status is null")->order('timestamp_created ASC');
-           $this->writevar1($select,'this is the select statement');
+         //  $this->writevar1($select,'this is the select statement');
            
             $subformRecords     = $this->db_form->findDependentRowset('Model_Table_Form018Agency', 'Model_Table_Form018', $select);
           //  $this->writevar1($subformRecords,'this is sub form records');           
