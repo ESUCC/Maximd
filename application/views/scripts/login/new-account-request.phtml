@@ -1,39 +1,6 @@
-<iframe width="360" height="115" src="http://www.youtube.com/embed/78ZoEt-TJQc?rel=0" frameborder="0" allowfullscreen>
-</iframe>
-
- 
-
 
 <script type="text/javascript">
 
-$("document").ready(function() {
-	
-
-$(".video") 
-//.attr("rel","https://iepweb02.esucc.org/login/playvideo")
-.attr("rel","http://205.202.242.154/bootstrap/index2.html")
-.attr("href","#")
-.attr("title","Movie")
-.html("<font color=\"green\"><i><b>Watch Instructional Video </font></i></b>");
-//end of mike add
-});
-
-$(document).on("click", ".video", function () { 
-    var title = $(this).attr("title");
-    var url = $(this).attr("rel"); 
- //   console.log(url);
-    if (url != ""){
-     $("#dialog2").load( url,
-       function() {
-        $("#dialog2").dialog({  show: { effect: "fade", duration: 500 }, 
-                                      hide: {effect: "fade", duration: 500}, 
-                                      width: 950, height: 685, resizable : true, 
-                                      title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); } } );
-                             });
-    }
-    return false;
-
-  });
 
 
 
@@ -119,7 +86,7 @@ var descriptionsArr = {
 
 <?
 
-
+ 
 if (isset($this->msg)) {
     echo '<div class="btsRed">' . $this->msg . '</div>';
 }
@@ -128,7 +95,7 @@ if (isset($this->msg)) {
     <table style="width:800px;">
        <tr>
         <!--  <td> <a class="video" href="#">Video</a> -->
-         <a href="javascript:window.open('http://205.202.242.154/bootstrap/index2.html','mypopuptitle','width=600,height=400')">open popup</a>
+         <a href="javascript:window.open('http://72.15.175.198/video/newaccount.html','_blank','location=yes,width=850,height=700,scrollbars=yes,status=yes')">Training Video</a>
          </td></tr>
         <tr>
             <td colspan="2"><b>Step 1: What type of user are you?</b></td>
