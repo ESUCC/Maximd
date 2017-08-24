@@ -17,7 +17,16 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 	protected $_primary = 'id_student';
 	
 	 
-	 
+	function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	} 
 	 
 	
 	
@@ -56,16 +65,33 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 	
 	public function getStudentList($idCounty,$idDistrict,$idSchool)   // Written by Mike for staffController. teamAction to get just a list of students
 	{
-	    
-	    $studentsInfo=new Model_Table_StudentTable2();
+
+	    // 
+	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+	    $database = Zend_Db::factory($dbConfig->db2);
+	/*    $studentsInfo=new Model_Table_StudentTable2();
 	    $results=$studentsInfo->fetchAll($studentsInfo->select()
 	    ->where('id_county = ?',$idCounty)
 	    ->where('id_district = ?',$idDistrict)
 	    ->where('id_school = ?',$idSchool)
 	    ->where('status = ?', 'Active')
             ->order('name_last'));
-
-	    return $results->toArray();
+      //  $this->writevar1($results,'these are the results in the student list model StudentTable2');
+	   */
+	  
+	    $sql =('SELECT s.* ,p.name_first as cm_first,p.name_last as cm_last from iep_student s,iep_personnel p
+                where s.id_case_mgr=p.id_personnel and s.status=\'Active\' and 
+	            s.id_school=\''.$idSchool.'\' and s.id_county=\''.$idCounty.
+	            '\'and s.id_district=\''.$idDistrict.'\' order by s.name_last');
+	    
+	    
+	    
+	    
+	 //  $this->writevar1($sql,'this is the sql command');
+	    $results=$database->fetchAll($sql);
+    //    $this->writevar1($results,'these are the results');
+	    
+	    return $results;
 	   
 	    
 	}
