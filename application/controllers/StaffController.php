@@ -56,7 +56,7 @@ class StaffController extends Zend_Controller_Action
         // End of Mike add 7-19-2017
         
         $this->view->superAdmin=$superAdmin;
-        $this->writevar1($superAdmin,'this is superadmin');
+   //     $this->writevar1($superAdmin,'this is superadmin');
         if($superAdmin == true){
             $allDists=new Model_Table_IepDistrict();
             $this->view->allDist =$allDists->getAllDistricts();
@@ -373,7 +373,7 @@ class StaffController extends Zend_Controller_Action
             $schoolName = new Model_Table_School();
             $t=$schoolName->districtSchools($county_sv,$district_sv);
             $cnt=count($t);
-            $this->writevar1($t,'this is a list of schools');
+          //  $this->writevar1($t,'this is a list of schools');
             $this->view->schoolName=$t;
             
           
@@ -494,12 +494,18 @@ class StaffController extends Zend_Controller_Action
        
        
        //get the students name
+       $cseMgr= new Model_Table_IepPersonnel();
        $studentName= new Model_Table_StudentTable2();
   //     writevar($studentId,'this is the student id');
        $nameStudentFull= $studentName->fetchRow($studentName->select()
                                      ->where('id_student =?',$studentId));
        $this->view->nameStudentFull=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
        $this->view->idStudentFull=$nameStudentFull['id_student'];
+       $caseMgr=$cseMgr->getIepPersonnel($nameStudentFull['id_case_mgr']); 
+       $this->view->caseManager=$caseMgr['name_first'].' '.$caseMgr['name_last'];
+       
+     
+     
      //  $this->writevar1($nameStudentFull['id_student'],'this is the id of the student');
       
     //   
@@ -574,6 +580,7 @@ class StaffController extends Zend_Controller_Action
         $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);  
         $this->view->studentList = $studentList;
         
+        
         // Mike added 7-25-2017 in order to get the list of students
         // for case managers.
         $case_mgr=false;
@@ -637,7 +644,7 @@ class StaffController extends Zend_Controller_Action
            foreach($this->view->studentList as $stu){
                 if($stu['id_student']==$studentId) $checkHack=false;
             }
-            $this->writevar1($studentId,'this is the student id');
+         //   $this->writevar1($studentId,'this is the student id');
             if ($checkHack==true && $subMenuLink==false) {
                 $this->_redirect( '/login/logout');
               }
@@ -675,7 +682,7 @@ class StaffController extends Zend_Controller_Action
         
        // End of Mike add 7-25-2017 case manager configuration
     
-        
+      //  $this->writevar1($studentList,'list of the students');
         $paginator2 = Zend_Paginator::factory($studentList);
         $paginator2->setCurrentPageNumber($this->_getParam('page'));
         $paginator2->setItemCountPerPage(35);
@@ -923,7 +930,7 @@ public function addotherstaffsaveAction() {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $request = $this->getRequest();
-      $this->writevar1($request,'this is add other staff to priv table');
+      //$this->writevar1($request,'this is add other staff to priv table');
 //	echo $request->id_personnel."|".$request->id_county."|".$request->id_district."|".$request->id_school."|".$request->class;
 
         $privilegesObj = new Model_Table_IepPrivileges();
@@ -939,8 +946,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";
@@ -1001,7 +1008,7 @@ public function addotherstaffschoollistAction() {
 	//echo "You don't have privileges to add staff to any of the district schools";
 	
 	//$this->writevar1($result,'this is the result');
-    $this->writevar1($finalResult,'this is the final result');
+  //  $this->writevar1($finalResult,'this is the final result');
     if($gotOne=='no'&& $superAdmin==false){
         $finalResult[0]['name_school']='You do not have rights to add user to this district!';
        

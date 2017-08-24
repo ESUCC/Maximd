@@ -1,6 +1,6 @@
 <?php $auth = Zend_Auth::getInstance(); ?>
 
-<table border="0"> 
+<table border="0">  
         <!-- logo row -->
             <td>
                 <?php if ($auth->hasIdentity()) { 
@@ -279,12 +279,14 @@ for ($x=0;$x<$cnt;$x++){
 <?
 $i = 1;
 foreach($this->paginator2 as $pg2) {
+    $cseMgr=$pg2['cm_first'].' '.$pg2['cm_last'];
     $color = ($i % 2) ? "#F0F0F0" : "#FFFFFF";
     $i++;
 ?>
 <tr bgcolor="<?=$color?>"><td>
-    <?php if($this->allowView==true ){?>
-    <a href="/staff/team/id_county/<?=$this->id_county?>/id_district/<?=$this->id_district?>/id_student/<?=$pg2['id_student']?>/id_personnel/<?=$this->user_id?>/id_school/<?=$pg2['id_school']?>"><font size="2pts"><?=$pg2['name_first']." ".$pg2['name_last']?></a>
+    <?php if($this->allowView==true ){
+      ?>
+    <a href="/staff/team/id_county/<?=$this->id_county?>/id_district/<?=$this->id_district?>/id_student/<?=$pg2['id_student']?>/id_personnel/<?=$this->user_id?>/id_school/<?=$pg2['id_school']?>"><font size="2pts"><?=$pg2['name_first']." ".$pg2['name_last']?></a>  Case Mgr: <?php echo $cseMgr?>       
     <?php }
     else {
      echo "<h2><b>".$pg2['name_last']."</b></h2>";   
@@ -315,7 +317,8 @@ foreach($this->paginator2 as $pg2) {
 
 ?>
 <tr class="tableHeader"><th colspan="2"><center><h2>Student Team For <font color="blue"> <?=$this->nameStudentFull?></font></h2></center></th>
-<th colspan="2">
+<th colspan="2"><br>
+ Case Manager: <?php echo $this->caseManager?>
 
 
 
@@ -417,7 +420,7 @@ foreach($this->paginator2 as $pg2) {
                if($pupils['id_student']==$this->idStudentFull) {
                    $foundUnListedStudent=true;
                }
-               //    $this->_redirect('https://iep.unl.edu/srs.php?area=home&sub=home');
+               //    $this->_redirect('https://iep.esucc.org/srs.php?area=home&sub=home');
            }
           if($foundUnListedStudent==false)die();
        }
