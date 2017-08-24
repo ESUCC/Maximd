@@ -2107,7 +2107,12 @@ END;
 //			}
             $this->view->tinyMce = true;
             $this->view->headScript()->appendFile('/js/jquery.autoresize.js'.$refreshCode);
+            $this->view->headScript()->appendFile('/js/tiny_mce/tiny_mce.js'.$refreshCode);
+            
+            // Mike added this 8-24-2017 because the child strengths tnymce was not working
+            // correctly or not at all.  Fixes SRS-109
             $this->view->headScript()->appendFile('/js/tiny_mce/jquery.tinymce.js'.$refreshCode);
+            
             $this->view->headScript()->appendFile('/js/tinyMce.config.js'.$refreshCode);
             $tempForm->setEditorType('App_Form_Element_TestEditor');
 
@@ -2980,6 +2985,7 @@ END;
 			}
 		}
 		$this->view->headScript()->appendFile('/js/jquery/jquery-1.8.2.js');
+	 
 		$this->view->headScript()->appendFile('//tinymce.cachefly.net/4.1/tinymce.min.js');
 		$this->_helper->layout()->disableLayout();
 		$this->view->toFilter = $toFilter;
