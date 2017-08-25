@@ -420,7 +420,7 @@ foreach($this->paginator2 as $pg2) {
                if($pupils['id_student']==$this->idStudentFull) {
                    $foundUnListedStudent=true;
                }
-               //    $this->_redirect('https://iep.unl.edu/srs.php?area=home&sub=home');
+               //    $this->_redirect('https://iep.esucc.org/srs.php?area=home&sub=home');
            }
           if($foundUnListedStudent==false)die();
        }
@@ -529,7 +529,12 @@ foreach($this->paginator2 as $pg2) {
       // $person['id_personnel'].
       $fullName= ("<b> ".$person['name_first']." ".$person['name_last']."</b> - ".$accessLevel[$person['class']]); //." ".$person['name_district']." ".$person['id_school']);
 
-       if ($p['exists']=='no'|| $stat=='Removed') {
+      // Mike added the Inactive 8-25-2017
+       if ($p['exists']=='no'|| $stat=='Removed'|| $stat=='Inactive') {
+           
+       
+     // Mike added this 8-25-2017  need to check      
+           if($stat=='Inactive') $checke='';
 
 
       $color = ($incStaff % 2) ? "#F0F0F0" : "#FFFFFF";
