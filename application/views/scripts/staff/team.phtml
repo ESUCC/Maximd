@@ -1,6 +1,6 @@
 <?php $auth = Zend_Auth::getInstance(); ?>
 
-<table border="0">  
+<table border="0">   
         <!-- logo row -->
             <td>
                 <?php if ($auth->hasIdentity()) { 
@@ -312,21 +312,38 @@ foreach($this->paginator2 as $pg2) {
 <form action ="/staff/update/" method="post">
 <table class="studentList">
 
-<?php 
-
-
-?>
-<tr class="tableHeader"><th colspan="2"><center><h2>Student Team For <font color="blue"> <?=$this->nameStudentFull?></font></h2></center></th>
-<th colspan="2"><br>
- Case Manager: <?php echo $this->caseManager?>
 
 
 
 
-<?php //$this->studentOptions($this->studentId, $this->id_district, $this->action)?>
+<style>
+#student_options {
+	float:left;
+}
+.tableHeader {
+	float:center;
+	font-size: 14px;
+    font-weight: 700;
+    padding: 2px;
+}
+.casemgr {
+ margin: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 2px;
+    color:green;	
+</style>
 
-</th>
+
+<tr class="tableHeader"><td><center><h2>Student Team For <font color="blue"> <?=$this->nameStudentFull?></font></h2></td></center>
+<td><?=$this->studentOptions($this->studentId, $this->id_district, $this->action)?></td>
+
+<td >
+<font class="casemgr"> Student's Case Manager: <?php echo $this->caseManager?>
+
+</td>
 </tr>
+
 
 
 
