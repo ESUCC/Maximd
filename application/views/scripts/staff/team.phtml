@@ -1,6 +1,6 @@
 <?php $auth = Zend_Auth::getInstance(); ?>
 
-<table border="0">  
+<table border="0">   
         <!-- logo row -->
             <td>
                 <?php if ($auth->hasIdentity()) { 
@@ -312,21 +312,38 @@ foreach($this->paginator2 as $pg2) {
 <form action ="/staff/update/" method="post">
 <table class="studentList">
 
-<?php 
-
-
-?>
-<tr class="tableHeader"><th colspan="2"><center><h2>Student Team For <font color="blue"> <?=$this->nameStudentFull?></font></h2></center></th>
-<th colspan="2"><br>
- Case Manager: <?php echo $this->caseManager?>
 
 
 
 
-<?php //$this->studentOptions($this->studentId, $this->id_district, $this->action)?>
+<style>
+#student_options {
+	float:left;
+}
+.tableHeader {
+	float:center;
+	font-size: 14px;
+    font-weight: 700;
+    padding: 2px;
+}
+.casemgr {
+ margin: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 2px;
+    color:green;	
+</style>
 
-</th>
+
+<tr class="tableHeader"><td><center><h2>Student Team For <font color="blue"> <?=$this->nameStudentFull?></font></h2></td></center>
+<td><?=$this->studentOptions($this->studentId, $this->id_district, $this->action)?></td>
+
+<td >
+<font class="casemgr"> Student's Case Manager: <?php echo $this->caseManager?>
+
+</td>
 </tr>
+
 
 
 
@@ -529,7 +546,14 @@ foreach($this->paginator2 as $pg2) {
       // $person['id_personnel'].
       $fullName= ("<b> ".$person['name_first']." ".$person['name_last']."</b> - ".$accessLevel[$person['class']]); //." ".$person['name_district']." ".$person['id_school']);
 
-       if ($p['exists']=='no'|| $stat=='Removed') {
+      // Mike added the Inactive 8-25-2017 because it was just Inactive in the db.
+      // it was not showing users that were removed from iep and not iepweb02 because
+      // it was marking status in the db table as Inactive.
+       if ($p['exists']=='no'|| $stat=='Removed'|| $stat=='Inactive') {
+           
+       
+     // Mike added this 8-25-2017  need to check      
+           if($stat=='Inactive') $checke='';
 
 
       $color = ($incStaff % 2) ? "#F0F0F0" : "#FFFFFF";

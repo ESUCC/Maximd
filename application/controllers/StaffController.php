@@ -559,7 +559,7 @@ class StaffController extends Zend_Controller_Action
         // end of finding the student name
         
         
-        
+         
         
       
         // This gets the list of staff members from the iep_privileges table and not the iep_personnel table

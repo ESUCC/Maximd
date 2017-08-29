@@ -105,13 +105,15 @@ class PasswordchangeController extends App_Zend_Controller_Action_Abstract
            
            
            // end mike
-           
-          
+    //      $this->writevar1($allowChange,'this is the allowchange');
+        
         if($allowChange==true) {
-          
+         //   $this->writevar1($postData['id_personnel'],'this is the id of hte personnel');
+            $this->writevar1($postData['password'],'this is hte new pw');
             
             if(!isset($postData['newPassword']))
            {
+               
                $form = new My_Form_PasswordChangeForm();
                $fullName=$postData['name_first']." ".$postData['name_last'];
                $id_personnel = $postData['id_personnel'];

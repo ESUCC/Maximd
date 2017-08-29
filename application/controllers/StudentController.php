@@ -2,7 +2,7 @@
 class StudentController extends My_Form_AbstractFormController
 {
  
-    public function init(){
+    public function init(){ 
         $this->_redirector = $this->_helper->getHelper('Redirector');
 
         $this->searchConfig['searchStudent'] = array(

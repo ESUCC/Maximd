@@ -23,6 +23,7 @@ class Model_Table_IepPersonnel extends Zend_Db_Table_Abstract
                and r.status= \'Active\' and r.id_county=\''.$cty.'\' and r.id_district=\''.$district.'\'
                and r.id_school=\''.$school.'\'order  by p.name_last');
          
+       
        }
        if($status=='false')
        {
@@ -30,6 +31,8 @@ class Model_Table_IepPersonnel extends Zend_Db_Table_Abstract
                iep_privileges r, iep_district d where p.id_county=d.id_county and p.id_district=d.id_district and p.id_personnel=r.id_personnel
                and r.id_county=\''.$cty.'\' and r.id_district=\''.$district.'\' and r.status =\'Inactive\'
                and r.id_school=\''.$school.'\'order  by p.name_last');
+       
+       
        }
        
        if($status=='removed')
@@ -38,7 +41,13 @@ class Model_Table_IepPersonnel extends Zend_Db_Table_Abstract
                iep_privileges r, iep_district d where p.id_county=d.id_county and p.id_district=d.id_district and p.id_personnel=r.id_personnel
                and r.id_county=\''.$cty.'\' and r.id_district=\''.$district.'\' and r.status =\'Removed\'
                and r.id_school=\''.$school.'\'order  by p.name_last');
+     
+      
        }
+       
+       
+  
+       
         $result=$database->fetchAll($sql);
     
         return $result;
