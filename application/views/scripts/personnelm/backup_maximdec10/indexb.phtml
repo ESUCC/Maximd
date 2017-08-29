@@ -75,16 +75,16 @@
 <?php 
  foreach($this->schools as $schools){ ?>
 <tr><td><?php echo $schools['name_school']?><td>     
-<td><a href=https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
+<td><a href=https://iepweb02.unl.edu/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
 "/id_school/".$schools['id_school']."/status/true"?>> Active</a></td>
 
 
 
-<td><a href=https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
+<td><a href=https://iepweb02.unl.edu/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
 "/id_school/".$schools['id_school'].
    "/status/false"?>>Inactive</td></a>
    
- <td><a href=https://iepweb02.esucc.org/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
+ <td><a href=https://iepweb02.unl.edu/personnelm/indexb/id_county/<?php echo $schools['id_county']."/id_district/".$schools['id_district'].
    "/id_school/".$schools['id_school'].
    "/status/removed"?>>Removed</a></td></tr>
  
@@ -105,7 +105,7 @@
 <tr><th>NAME</th><th>District Name</th><th>Class Value</th><th>School Id</th><th>Status<th></tr>
 
 <br>
-<form action="https://iepweb02.esucc.org/personnelm/updatePrivs/" method="post">
+<form action="https://iepweb02.unl.edu/personnelm/updatePrivs/" method="post">
 <?php foreach($this->staffListb as $staff)
   {
       $fname=$staff['name_first'];
@@ -152,7 +152,7 @@
      
      ?>
       
-<tr><td><a href=https://iepweb02.esucc.org/personnel/edit/id_personnel/<?php echo $staff['id_personnel']?>>
+<tr><td><a href=https://iepweb02.unl.edu/personnel/edit/id_personnel/<?php echo $staff['id_personnel']?>>
         <?php echo $fullName?></a></td><td><?php echo $staff['name_district']?></td><td><?php echo $name?></td><td>
         
         <td> <input type ="hidden" name="<?php echo ("ID_".$x)?>"value="<? echo $staff['id_personnel']?>"></td>
