@@ -21,7 +21,7 @@ $evalArr = $valueListHelper->goalEvalProcedure();
                     $width = ('' == $dbScaleValue) ? 100 : $dbScaleValue;
 		    $styleWidth = ('print' != $view->mode) ? ' style="width:'.$width.'%;"' : ''; ?>
                     <div style="width:<?= $width; ?>%">
-                        <img class="form010Chart"<?php echo $styleWidth;?> src="https://iepweb02.unl.edu/chart/chart/<?php echo session_name() . '/' . urlencode(session_id()); ?>/chartid/<?php echo $this->element->progress_chart_id->getValue(); ?>" />
+                        <img class="form010Chart"<?php echo $styleWidth;?> src="https://iepweb02.esucc.org/chart/chart/<?php echo session_name() . '/' . urlencode(session_id()); ?>/chartid/<?php echo $this->element->progress_chart_id->getValue(); ?>" />
                     </div>
                     <div class="noprint" align="left"><?php  echo $this->element->progress_chart_scale; ?></div>
                 </td>
