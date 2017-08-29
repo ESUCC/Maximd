@@ -546,7 +546,9 @@ foreach($this->paginator2 as $pg2) {
       // $person['id_personnel'].
       $fullName= ("<b> ".$person['name_first']." ".$person['name_last']."</b> - ".$accessLevel[$person['class']]); //." ".$person['name_district']." ".$person['id_school']);
 
-      // Mike added the Inactive 8-25-2017
+      // Mike added the Inactive 8-25-2017 because it was just Inactive in the db.
+      // it was not showing users that were removed from iep and not iepweb02 because
+      // it was marking status in the db table as Inactive.
        if ($p['exists']=='no'|| $stat=='Removed'|| $stat=='Inactive') {
            
        
