@@ -590,7 +590,12 @@ class StaffController extends Zend_Controller_Action
         // Mike added 8-4-2017 so that case managers dont see any staff for a student at the
         // top of the Student Team.  
         $this->view->initialList=true;
-        
+      
+        // Mike added 8-30-2017 DM case manager variable because did not take into account 
+        // could be something else in the same district.  In case that had issues 
+        // jkarnatz1 could she was case manager and district manager in NB School Distr=
+        $DM_case_mgr=false;
+       
         foreach($_SESSION["user"]["user"]->privs as $privs ) {
             
             if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv 
@@ -612,6 +617,7 @@ class StaffController extends Zend_Controller_Action
             
             if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv
                && $privs['class']<=3 && $privs['status']=='Active') {
+                   $DM_case_mgr=true;
                    $allowView=true;
                }
                
@@ -622,7 +628,7 @@ class StaffController extends Zend_Controller_Action
         }
         
         $x=0;
-        
+        if ($DM_case_mgr==true) $case_mgr=false;
         if($case_mgr==true){
             
             
@@ -638,7 +644,6 @@ class StaffController extends Zend_Controller_Action
             }
             $studentList=$studentListCaseMgr;
             $this->view->studentList=$studentList;
-            
             $checkHack=true;
             
            foreach($this->view->studentList as $stu){
@@ -646,7 +651,7 @@ class StaffController extends Zend_Controller_Action
             }
          //   $this->writevar1($studentId,'this is the student id');
             if ($checkHack==true && $subMenuLink==false) {
-                $this->_redirect( '/login/logout');
+               $this->_redirect( '/login/logout');
               }
               
             
