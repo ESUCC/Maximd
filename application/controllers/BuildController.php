@@ -8,7 +8,7 @@
  * @version   $Id: $
  */
 class BuildController extends Zend_Controller_Action {
-	/**
+	/** 
 	 */
 	public function indexAction() {
 		/*
