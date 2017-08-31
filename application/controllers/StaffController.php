@@ -594,7 +594,7 @@ class StaffController extends Zend_Controller_Action
         // Mike added 8-30-2017 DM case manager variable because did not take into account 
         // could be something else in the same district.  In case that had issues 
         // jkarnatz1 could she was case manager and district manager in NB School Distr=
-        $DM_case_mgr=false;
+        $Admin_case_mgr=false;
        
         foreach($_SESSION["user"]["user"]->privs as $privs ) {
             
@@ -617,7 +617,7 @@ class StaffController extends Zend_Controller_Action
             
             if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv
                && $privs['class']<=3 && $privs['status']=='Active') {
-                   $DM_case_mgr=true;
+                   $Admin_case_mgr=true;
                    $allowView=true;
                }
                
@@ -628,7 +628,7 @@ class StaffController extends Zend_Controller_Action
         }
         
         $x=0;
-        if ($DM_case_mgr==true) $case_mgr=false;
+        if ($Admin_case_mgr==true) $case_mgr=false;
         if($case_mgr==true){
             
             
@@ -651,7 +651,7 @@ class StaffController extends Zend_Controller_Action
             }
          //   $this->writevar1($studentId,'this is the student id');
             if ($checkHack==true && $subMenuLink==false) {
-               $this->_redirect( '/login/logout');
+               $this->_redirect( '/student/search');
               }
               
             

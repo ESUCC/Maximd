@@ -87,9 +87,9 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 	    
 	    
 	    
-	 //  $this->writevar1($sql,'this is the sql command');
+	  // $this->writevar1($sql,'this is the sql command');
 	    $results=$database->fetchAll($sql);
-    //    $this->writevar1($results,'these are the results');
+      // $this->writevar1($results,'these are the results');
 	    
 	    return $results;
 	   
