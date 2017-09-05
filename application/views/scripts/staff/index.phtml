@@ -81,10 +81,16 @@ if($this->superAdmin==true){
 if ($this->superAdmin==false){
 foreach ($this->privileges as $privilege)
   {
-    $privilege['id_school']='001';
+     //if($privilge['class']==6 && $privilge['status']=='active') $privilege['id_school']
+      
+    //  $privilege['id_school']='005';
+   
+    
+    
+    
     if($privilege['name_district']) 
-    { 
-        if(($privilege['class']==2 || $privilege['class']==2 )&& $privilege['status']=='Active'){    
+     { 
+        if(($privilege['class']==2 || $privilege['class']==3 )&& $privilege['status']=='Active'){    
               $privilege['id_school']='001';
         }
    ?>   <option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team','id_county'=>$privilege['id_county'],

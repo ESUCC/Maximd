@@ -3,16 +3,19 @@
 <table border="0">   
         <!-- logo row -->
             <td>
-                <?php if ($auth->hasIdentity()) { 
+              //  <?php if ($auth->hasIdentity()) { 
                 echo $this->navigationTopTabs('simple');
-                } ?>
+                } 
+                ?>
             </td>
         </tr>
         <tr>
             <td>
                 <?php if ($auth->hasIdentity()) {
                   echo   $this->navigationSubmenu('Student'); 
-                } ?>
+                  
+                } 
+                ?>
             </td>
         </tr>
 </table>
@@ -239,8 +242,8 @@ $Stu_id_district=$this->somedata[0]['id_district'];
 $seed_id=$Stu_id;
 $cnt=count($this->schoolName);
 
-$accessLevel = array( "1" => "System Admin", "2" => "District Manager", "3" => "Associate District Manager", "4" => "School Manager", "5" => "Associate School Manager",
-		      "6" => "Case Manager", "7" => "School Staff", "8" => "Specialist", "9" =>  "Parent/Guardian", "10" => "Service Coordinator" );
+$accessLevel = array( "1" => "System Admin", "2" => "District Manager", "3" => "Associate District Manager", "4" => "School Manager", "5" => "Associate School Manager","6" => "Case Manager", "7" => "School Staff", "8" => "Specialist", "9" =>  "Parent/Guardian", "10" => "Service Coordinator" );
+//echo "$cnt";
 ?>
 
 <select onChange="window.location.href=this.value" class="topMenu">
@@ -430,7 +433,7 @@ foreach($this->paginator2 as $pg2) {
        
        // Mike added this 8-4-2017 to make sure that we do not have
        // anybody just adding a student id outside the list.
-       if($disabled==" " && $this->case_mgr==true) {
+       if($disabled ==" " && $this->case_mgr==true) {
            $foundUnListedStudent=false;
            foreach($this->studentList as $pupils){
                 
@@ -440,7 +443,7 @@ foreach($this->paginator2 as $pg2) {
                //    $this->_redirect('https://iep.unl.edu/srs.php?area=home&sub=home');
            }
           if($foundUnListedStudent==false){
-              die();
+           //   die();
           }
        }
        
@@ -546,6 +549,8 @@ foreach($this->paginator2 as $pg2) {
       }  // end of inner foreach personrights
       }
       // $person['id_personnel'].
+    //  echo $accessLevel[$person['class']];
+    
       $fullName= ("<b> ".$person['name_first']." ".$person['name_last']."</b> - ".$accessLevel[$person['class']]); //." ".$person['name_district']." ".$person['id_school']);
 
       // Mike added the Inactive 8-25-2017 because it was just Inactive in the db.

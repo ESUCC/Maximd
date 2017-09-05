@@ -446,7 +446,8 @@ class StaffController extends Zend_Controller_Action
      
      // if coming from the index.phtml page there is no personnel id that is captured. Thus set one!
      if($user_id<1){
-         $user_id  = $_SESSION["user"]["user"]->user["id_personnel"];
+        $user_id  = $_SESSION["user"]["user"]->user["id_personnel"];
+         
      } 
      
       
@@ -458,7 +459,9 @@ class StaffController extends Zend_Controller_Action
      
      
      $menuLink=false;
-     if($studentId==null ) $menuLink=true;
+     if($studentId==null ){
+         $menuLink=true;
+     }
      $this->view->menuLink=$menuLink;
      
      
@@ -468,21 +471,114 @@ class StaffController extends Zend_Controller_Action
    //  $this->writevar1($school_sv,'this is the school in staffcontroller');
      $schoolName = new Model_Table_School();
      $t=$schoolName->districtSchools($county_sv,$district_sv);
-     $cnt=count($t);        
-     $this->view->schoolName=$t;
+     $cnt=count($t); 
+     
+     // added by Mike Aug 31
+    
+     
+     $x=0;
+     $finalList=null;
+     $siteAdmin=false;
+     $schoolAd='000';
+     $schoolCase='';
+     foreach($t as $schol){
+             
+         foreach($_SESSION["user"]["user"]->privs as $privs ) {
+          
+          if($privs['class']<=3 && $privs['id_county']==$schol['id_county']&&
+              $privs['id_district']==$schol['id_district']&&
+               $privs['status']=='Active') {
+                  $siteAdmin=true;
+                  
+                  $x=$x+1;
+              }
+              
+              if($privs['class']<=5 && $privs['class'] >3 &&
+                  $privs['id_county']==$schol['id_county']&&
+                  $privs['id_district']==$schol['id_district']&&
+                  $privs['id_school']==$schol['id_school']&&
+                  $privs['status']=='Active') {
+                    $finalList[$x]=$schol;
+                    $schoolAd=$schol['id_school'];
+                    $x=$x+1;
+                    
+                  }
+                  
+              if($privs['class']==6  &&
+                  $privs['id_county']==$schol['id_county']&&
+                  $privs['id_district']==$schol['id_district']&&
+                  $privs['id_school']==$schol['id_school']&&
+                  $privs['status']=='Active') {
+                  
+             //     $school_sv=$schol['id_school'];    
+                  $finalList[$x]=$schol;
+                  $schoolAd=$schol['id_school'];
+                  $schoolCase=$schol['id_school']."-".$schoolCase;
+                  $x=$x+1;
+                // $this->writevar1($schol,'this is the school in the loop'." ".$privs['status']);
+              }
+              
+              
+         }        
+      
+        }
+        
+       
+      
+        if($siteAdmin==false){
+            $this->view->schoolName=$finalList;
+            $this->writevar1($finalList,'this is the final list of schools for mark');
+        }
+        if($siteAdmin==true) {
+            $this->view->schoolName=$t;
+        
+            $this->writevar1($this->view->schoolName,'this is the final list of schools for admin');
+        }
+     
+     
+     // end Mike add Aug 31
+  //   $this->view->schoolName=$t;
      $this->view->user_id=$user_id;
      $this->view->id_district=$district_sv;
      $this->view->id_county=$county_sv;
      $this->view->id_school=$school_sv;
-
-         $student = new Model_Table_StudentTable2();
-         $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
-        //  $this->writevar1($studentList,'this is the student list');
+    
+   // $this->writevar1($school_sv,'id of the school2');
+      
+     $student = new Model_Table_StudentTable2();
+     $studentList=$student->getStudentList($county_sv, $district_sv,$school_sv);
+     
+     $z=0;
+   
+       
+       
+       //  $this->writevar1($studentList,'this is the student list');
          
        $subMenuLink=false;
+      
+      
+       // Mike added 9-1-2017
+       $schoolCase=explode("-",$schoolCase);
+
+       $IsCaseMgr=false;
        if($studentId==''){
-           $studentId=$studentList[1]['id_student'];
-           $subMenuLink=true;
+          
+          
+           
+          foreach($schoolCase as $slCase){ 
+           if($slCase==$school_sv){
+                
+               foreach($studentList as $stu){
+                   if ($stu['id_case_mgr']==$user_id){
+                       $studentId=$stu['id_student'];
+                       $IsCaseMgr=true;
+                   }
+                   
+                    
+                 }
+           }   
+         }
+           if($IsCaseMgr==false) $studentId=$studentList[1]['id_student'];
        } 
        
        
@@ -499,6 +595,8 @@ class StaffController extends Zend_Controller_Action
   //     writevar($studentId,'this is the student id');
        $nameStudentFull= $studentName->fetchRow($studentName->select()
                                      ->where('id_student =?',$studentId));
+       
+     //  $this->writevar1($nameStudentFull,'student full name');
        $this->view->nameStudentFull=$nameStudentFull['name_first']." ".$nameStudentFull['name_last'];
        $this->view->idStudentFull=$nameStudentFull['id_student'];
        $caseMgr=$cseMgr->getIepPersonnel($nameStudentFull['id_case_mgr']); 
@@ -547,7 +645,7 @@ class StaffController extends Zend_Controller_Action
            $studentData=$findName->studentInfo2($studentId);
             $nameStudent=$studentData[0]['name_first']." ".$studentData[0]['name_last'];
           
-         //  writevar($studentData[0]['name_first'],'this is the student name');
+          //  $this->writevar1($studentData[0]['id_school'],'this is the student name');
            $this->view->nameStudentFull=$nameStudent;
          //  $this->writevar1($nameStudent,'this is another full name of  the student');
             $this->view->user_id=$user_id; 
@@ -608,9 +706,10 @@ class StaffController extends Zend_Controller_Action
             }
                 
             if($privs['id_county']==$county_sv && $privs['id_district']==$district_sv
-                    && $privs['id_school']==$school_sv && $privs['class']<='6'
+                    && $privs['id_school']==$school_sv && $privs['class']<='5'
                     && $privs['status']=='Active') {
                         $allowView=true;
+                        $Admin_case_mgr=true;
                         
             }
             
@@ -628,32 +727,41 @@ class StaffController extends Zend_Controller_Action
         }
         
         $x=0;
+       
         if ($Admin_case_mgr==true) $case_mgr=false;
+       
+        
         if($case_mgr==true){
             
             
             $studentListCaseMgr=null;
             foreach($studentList as $stuList){
                 if ($stuList['id_case_mgr']==$_SESSION['user']['id_personnel']) {
+                    $allowView=true;
                     $studentListCaseMgr[$x]=$stuList;
                     $x=$x+1;
                     
-                   // $this->writevar1($stuList,'this is the student list');
+               //    $this->writevar1($studentListCaseMgr,'this is the student list');
                 }
             
             }
             $studentList=$studentListCaseMgr;
             $this->view->studentList=$studentList;
             $checkHack=true;
-            
+         
+           
            foreach($this->view->studentList as $stu){
-                if($stu['id_student']==$studentId) $checkHack=false;
+                if($stu['id_student']==$studentId) {
+                    $checkHack=false;
+                   // $this->writevar1($stu['id_student'],' equals '.$studentId);
+                }
             }
          //   $this->writevar1($studentId,'this is the student id');
             if ($checkHack==true && $subMenuLink==false) {
                $this->_redirect( '/student/search');
               }
-              
+           
+            
             
          //   $this->writevar1($studentList,'this is the student list');
           //  $this->view->nameStudentFull=$studentList[0]['name_first']." ".$studentList[0]['name_last'];
@@ -661,7 +769,8 @@ class StaffController extends Zend_Controller_Action
             // Mike added this 8-4-2017 so that nothing shows up when teachers click the
             // Students Team button from the nav menu
             
-            
+         //   $this->writevar1($allowView,'allow view and menulink');
+           
             if($menuLink==true) {
                 $this->view->nameStudentFull="Please Select a Student!";
                 $this->view->initialList=false;
@@ -671,7 +780,7 @@ class StaffController extends Zend_Controller_Action
         
         
         }
-        
+       
         if($allowView==false){
           
             $studentList=null;
@@ -681,6 +790,7 @@ class StaffController extends Zend_Controller_Action
             $this->view->user_id='0000';
             $this->view->studentId='0000';
             $this->view->studentId='0000';
+           
         }
         
         $this->view->allowView=$allowView;
@@ -698,6 +808,7 @@ class StaffController extends Zend_Controller_Action
         $teamMembers = new Model_Table_StudentTeam(); 
         $staffMemberRights= $teamMembers->fetchAll($teamMembers->select()
         ->where('id_student =?',$studentId));
+       // $this->writevar1($staffMemberRights,'these are the staff member rights');
         
         //   $rowCount = count($staffMemberRights);
         // set the condition for create or update and tack it onto the stafflist array
@@ -719,7 +830,6 @@ class StaffController extends Zend_Controller_Action
         
         
         
-      //  writevar($staffMemberRights,'these are the staff member rights');
         $this->view->staffMemberRights=$staffMemberRights;
        
             
@@ -951,7 +1061,7 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
            // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
