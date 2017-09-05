@@ -37,8 +37,10 @@ class StaffController extends Zend_Controller_Action
         
          
         // Mike added this 2-14-2017 because it was showing multiples of the same district in the pull down.
-        $temp=$privilegesObj->getPrivileges($id_personnel);
+        $temp=$privilegesObj->getPrivilegesmike($id_personnel);
        
+        //$this->writevar1($temp,'this is the value of the temp variable');        
+        
         $newTemp[0]=$temp[0];
        
         $x=0;
@@ -60,6 +62,7 @@ class StaffController extends Zend_Controller_Action
         if($superAdmin == true){
             $allDists=new Model_Table_IepDistrict();
             $this->view->allDist =$allDists->getAllDistricts();
+            
         }
         
         foreach($temp as $temporary){
@@ -67,7 +70,7 @@ class StaffController extends Zend_Controller_Action
           //  writevar($temporary['name_district'],'name of the district');
              foreach($newTemp as $newt){
                  if($newt['name_district']==$temporary['name_district']) $found='yes';
-             
+                 
               }
               
             if($found=='no'){

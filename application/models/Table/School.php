@@ -284,6 +284,7 @@ class Model_Table_School extends Model_Table_AbstractIepForm
          
         $all = $this->fetchAll($this->select()
             ->where('id_county = ?',$id_county)
+            ->where('status = ?','Active')
             ->where('id_district = ?',$id_dist));
     
         return $all->toArray();
