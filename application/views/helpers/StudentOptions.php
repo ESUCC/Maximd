@@ -44,9 +44,12 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
         $school=$demographics['id_school'];
         // End Mike Add
         
-        
-        
-        
+       /* 
+        if($access->description==null){
+            $access->access_level="editaccess";
+            $access->description="Case Manager";
+        }
+        */
         
      //   $this->writevar1($access,'this is the access ');
         if ('Team Member' == $access->description) {
@@ -58,7 +61,11 @@ class Zend_View_Helper_StudentOptions extends Zend_View_Helper_Abstract
                 $accessArrayObj = new $accessArrayClassName ();
             }
         } else {
+          // if($access->description==null ) $access->description='Case Manager';
             $accessArrayClassName = 'App_Auth_Role_' . str_replace ( ' ', '', $access->description );
+           // $this->writevar1($access->description,'this is the access array description');
+            
+           
             $accessArrayObj = new $accessArrayClassName ();
         }
 
