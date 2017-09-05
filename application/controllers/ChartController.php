@@ -5,7 +5,7 @@ class ChartController extends App_Zend_Controller_Action_Abstract {
     
     public function preDispatch() {
 
-        //Zend_Debug::dump();
+        //Zend_Debug::dump(); 
         
 	    $tk = new Model_Table_IepSession();
 		$session = $tk->getSessionBySessId($this->getRequest()->getParam('PHPSESSID'));

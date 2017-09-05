@@ -481,9 +481,16 @@ class StaffController extends Zend_Controller_Action
      $siteAdmin=false;
      $schoolAd='000';
      $schoolCase='';
+     
      foreach($t as $schol){
              
          foreach($_SESSION["user"]["user"]->privs as $privs ) {
+          
+         // Mike added this if class==1  9-5-2017 in order to make slane or class=1 work    
+          if($privs['class']==1 && $privs['status']=='Active' ){
+              $siteAdmin=true;
+              $x=$x+1;
+          }
           
           if($privs['class']<=3 && $privs['id_county']==$schol['id_county']&&
               $privs['id_district']==$schol['id_district']&&
@@ -721,6 +728,11 @@ class StaffController extends Zend_Controller_Action
                }
                
                
+               // Mike added this 9-5-2017 in order to make slane work or class==1
+               if($privs['class']==1 && $privs['status']=='Active') {
+                       $Admin_case_mgr=true;
+                       $allowView=true;
+                   }   
                    
                
                 
