@@ -481,9 +481,16 @@ class StaffController extends Zend_Controller_Action
      $siteAdmin=false;
      $schoolAd='000';
      $schoolCase='';
+     
      foreach($t as $schol){
              
          foreach($_SESSION["user"]["user"]->privs as $privs ) {
+          
+         // Mike added this if class==1  9-5-2017 in order to make slane or class=1 work    
+          if($privs['class']==1 && $privs['status']=='Active' ){
+              $siteAdmin=true;
+              $x=$x+1;
+          }
           
           if($privs['class']<=3 && $privs['id_county']==$schol['id_county']&&
               $privs['id_district']==$schol['id_district']&&
@@ -721,6 +728,11 @@ class StaffController extends Zend_Controller_Action
                }
                
                
+               // Mike added this 9-5-2017 in order to make slane work or class==1
+               if($privs['class']==1 && $privs['status']=='Active') {
+                       $Admin_case_mgr=true;
+                       $allowView=true;
+                   }   
                    
                
                 
@@ -1061,8 +1073,8 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
-           // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
+             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+           // $this->_redirect('https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
             correct privileges <br>to add this staff member at this  Privilege Level!!</center>";

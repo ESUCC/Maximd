@@ -206,7 +206,7 @@ class LpsHelper
                 $client = $sessUser->newSiteClient;
             } else {
                 // old site
-                $url = 'https://iep.unl.edu/form_print.php?form=form_' . $formNumber . '&document=' . $document . '&archive=true';
+                $url = 'https://iep.esucc.org/form_print.php?form=form_' . $formNumber . '&document=' . $document . '&archive=true';
                 if (!isset($sid)) {
                     $sid = trim($legacySiteSessionId);
                 }
@@ -218,7 +218,7 @@ class LpsHelper
             if ($dbData['version_number'] >= 9) {
                 $cookie = new Zend_Http_Cookie('PHPSESSID-ARCHIVE', $sid, $config->DOC_ROOT);
             } else {
-                $cookie = new Zend_Http_Cookie('PHPSESSID-ARCHIVE', $sid, 'iep.unl.edu');
+                $cookie = new Zend_Http_Cookie('PHPSESSID-ARCHIVE', $sid, 'iep.esucc.org');
             }
 
             $client->setCookie($cookie);
