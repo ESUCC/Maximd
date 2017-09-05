@@ -391,6 +391,29 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
 // 
         
     }
+    
+    /* Mike added this on 5-9-2017 because did not want to interfere with getPrivileges function below
+    This function takes into accout status==inactive where the other one does not.
+    It is called from about line 40 in staffController.php
+            $temp=$privilegesObj->getPrivilegesmike($id_personnel);
+
+    
+    */
+    public function getPrivilegesmike($id_personnel)
+    {
+        $select = $this->_db->select()
+        ->from($this->_name, array('*',
+            'name_county' => 'get_name_county(id_county)',
+            'name_district' => 'get_name_district(id_county, id_district)',
+            'name_school' => 'get_name_school(id_county, id_district, id_school)',
+            'class_description' => 'get_class_description(class)',
+        ))
+        ->where("id_personnel = ?", $id_personnel)
+        ->where("status != 'Inactive' ")
+        ->where("status != 'Removed'");
+        $results = $this->_db->fetchAll($select);
+        return $results;
+    }
 
     public function getPrivileges($id_personnel)
     {
