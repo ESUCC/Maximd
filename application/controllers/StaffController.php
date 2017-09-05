@@ -1061,7 +1061,7 @@ public function addotherstaffsaveAction() {
             
             
              echo "<br><br><br><center>Saved</center>";
-             echo '<center><a href="https://iepweb02.esucc.org/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
+             echo '<center><a href="https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel.'">Saved Privileges--Click to Continue</a>';
            // $this->_redirect('https://iepweb02.unl.edu/personnelm/edit/id_personnel/'.$request->id_personnel);
            }
         if($okToSave==false) echo "<br><br><br><center><font color=\"red\">You do not have the 
