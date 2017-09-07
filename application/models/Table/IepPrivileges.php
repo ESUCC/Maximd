@@ -53,6 +53,35 @@ class Model_Table_IepPrivileges extends Zend_Db_Table_Abstract {
         $this->insert($data);
     }
     
+    public function updatePrivilegesByUserMinactive($id,$id_county,$id_district,$class,$id_school) {
+    
+         
+    if($id_school!='000'){
+        $data=array(
+            'id_personnel' =>$id,
+            'id_county'=>$id_county,
+            'id_district'=>$id_district,
+            'class'=>$class,
+            'status'=>'Inactive',
+            'id_school'=>$id_school  );
+        
+     //   $this->writevar1($data,'this is the data');
+    }
+    
+    if($id_school=='000'){
+        $data=array(
+            'id_personnel' =>$id,
+            'id_county'=>$id_county,
+            'id_district'=>$id_district,
+            'class'=>$class,
+            'status'=>'Inactive');
+    
+       // $this->writevar1($data,'this is the data');
+    }
+        
+        $this->insert($data);
+    }
+    
     //Added 7-12-2017 in order to make staff active or inactive
     public function updatePrivs($arrayPrivs){
         $x=0;

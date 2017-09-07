@@ -256,14 +256,21 @@ class Form_StudentDemographics extends Form_AbstractForm {
         ));
 
         $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment', array('label' => 'Alternate assessment'));
+        
         $this->alternate_assessment->getDecorator('label')->setOption('placement', 'prepend');
-        $this->alternate_assessment->setAttrib('readonly', 'readonly');
+        $this->alternate_assessment->setRequired(true);
+       // $this->alternate_assessment->setAttrib('readonly', 'readonly');
+      //   $this->alternate_assessment->setLabel('Alternate Assessment ?');
         $this->alternate_assessment->addFilter(new Zend_Filter_Int());
         $this->alternate_assessment->setMultiOptions(array(
             '1' => 'Yes',
             '0' => 'No'
         ));
 
+        
+        
+        
+        
         $this->primary_language = new App_Form_Element_Select('primary_language');
         $this->primary_language->setLabel('Primary language');
         $this->primary_language->getDecorator('label')->setOption('class', 'srsLabel');

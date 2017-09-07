@@ -48,11 +48,11 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?&area=student&sub=admin">Student Admin</a></li>';
             $this->returnText .= '  <li><a href="https://iep.unl.edu/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
-           
+            
             // Mike added this Jul 5th for password change
           //  $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';
             $this->returnText .= '  <li><a href="/Passwordchange/subpassword"><font color="green"><b><i>Change Password</i></b></font></a></li>';
-             
+            
         }
         $this->returnText .= '</ul>';
         return $this->returnText;
@@ -79,15 +79,18 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             
             
              $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="https://iepweb02.unl.edu/Passwordchange/subpassword"><font color="green"><b><i>Change Password</font></b></i></a></li>';
-            
+             $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="/login/new-account-request"><font color="green"><b>New Privilege Request</b></a></li>';
+              
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
-            $this->returnText .= '  <li><a href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
             
 // Mike added this July 26 so that only the New Privilege tab would show up
 // where appropriate
+  
+            
             if($showNewPrivs==true){
-            $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
+            //$this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             } 
 // End of Mike add            
         }
