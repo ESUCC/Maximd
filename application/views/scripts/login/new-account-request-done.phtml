@@ -1,0 +1,34 @@
+<?if (isset($_SESSION['user']['id_personnel'])){?>
+    <table class="navTopMenu">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<br>
+<?}?>
+
+<table>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;"><span class="btb"><?=$this->name_full?></span> your request has been submitted.</td>
+    </tr>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;">Once your account is approved, you&rsquo;ll be able to log on using your existing user name.</td>
+    </tr>
+    <tr>
+        <td align="left" class="bt" style="padding-top:15px;"><span class="btb">Thank you</span> for taking the time to apply. You&rsquo;ll be notified when your account is approved.</td>
+    </tr>
+</table>
+<br><br><br><br><br><br><br><br>

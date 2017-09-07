@@ -79,7 +79,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             
             
              $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="https://iepweb02.esucc.org/Passwordchange/subpassword"><font color="green"><b><i>Change Password</font></b></i></a></li>';
-             $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="/login/new-account-request"><font color="green">New permission request</a></li>';
+             $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="/login/new-account-request"><font color="green">New Privilege request</a></li>';
               
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two

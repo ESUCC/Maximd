@@ -729,7 +729,9 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         $this->view->accountSupervisor = $tmpSession->accountSupervisor;
         $tmpSession->unsetAll();
     }
-
+    
+   
+   
     function getUserClassDescription($userClass) {
         // user classes
         /* 	$UC_SA  = 1;	// system admin */
@@ -777,5 +779,119 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         }
         return $description;
     }
+    
+    public function newAccountRequestDoneAction()
+    {
+   
+        $session = new Zend_Session_Namespace('user');
+        $id = $session->user->user['id_personnel'];
+        $user_type = $this->getRequest()->getParam('user_type');
+        $id_cty=$this->getRequest()->getParam('id_county');
+        $id_dist=$this->getRequest()->getParam('id_district');
+        $id_school='000';
+        /**
+         * build insert data
+         */
+        $userFormData = array();
+        $userFormData['id_county'] = $session->user->user['id_county'];
+        $userFormData['id_district'] = $session->user->user['id_district'];
+    
+        $userFormData['class'] = $user_type;
+        $userFormData['name_first'] = $session->user->user['name_first'];
+        $userFormData['name_last'] = $session->user->user['name_last'];
+        $userFormData['email'] = $session->user->user['email_address'];
+        $userFormData['phone_work'] = $session->user->user['phone_work'];
+    
+        /**
+         * insert a priv for this user
+         */
+        $privilegeData = array(
+            "id_county" => $userFormData['id_county'],
+            "id_district" => $userFormData['id_district'],
+            "id_personnel" => $id,
+            "class" => $user_type,
+        );
+      
+    
+        $privilegeObj = new Model_Table_IepPrivileges();
+        // DM and ADM don't require schools
+       
+        if($user_type>3 ){
+            foreach ($this->getRequest()->getParam('schools') as  $cds) {
+                $id_school = substr($cds, -3);
+                $this->writevar1($cds,'this is the cds');
+                $privilegeData['id_school'] = $id_school;
+                 $id_cty= substr($cds,0,2);
+                 $id_dist=substr($cds,3,4);
+                $privilegeData['id_county']=$id_cty;
+                $privilegeData['id_district']=$id_dist;
+                
+               // $this->writevar1($privilegeData,'this is hte priv data');
+               
+               $privilegeObj->updatePrivilegesByUserMinactive($id,$id_cty,$id_dist,
+                                                              $privilegeData['class'],$id_school);
+            }
+        }
+        if($user_type<4){
+            $privilegeObj->updatePrivilegesByUserMinactive($id,$id_cty,$id_dist,$user_type,$id_school);
+            
+        }
+    
+            
+        $districtObj = new Model_Table_District();
+        /**
+         * fetch destination locations,
+         * this is done to get the personnel in the
+         * current role being applied for
+         */
+      //  $destinationDistrict = $districtObj->fetchRow("id_county = '".$userFormData['id_county']."' and id_district = '".$userFormData['id_district']."'");
+        $destinationDistrict = $districtObj->fetchRow("id_county = '".$id_cty."' and id_district = '".$id_dist."'");
+        $personnelObj = new Model_Table_PersonnelTable();
+        $schoolObj = new Model_Table_School();
+    
+        /**
+         * if DM or SM
+         * get the person currently in the role being requested
+         * this is so we can let the account supervisor know (in email below) that
+         * the SM or DM will be demoted to ASM or ADM if this
+         * privilege is approved
+         */
+   //     if($user_type < 4) {
+    //        $emailAccountSupervisorsResult = $this->emailAccountSupervisors($personnelObj, $userFormData, null, $destinationDistrict, $id);
+    //    } else {
+            
+       if($user_type >3 ){ 
+        $idAccountSupervisorArr = array();
+            foreach ($this->getRequest()->getParam('schools') as $cds) {
+                $id_school = substr($cds, -3);
+            //    $this->writevar1($cds,'this is the cds');
+                $id_cty= substr($cds,0,2);
+                $id_dist=substr($cds,3,4);
+              //  $this->writevar1($id_school,'this is hte data '.$id_cty." ".$id_dist);
+                
+                
+              //  $school = $schoolObj->fetchRow("id_county = '".$userFormData['id_county']."' and id_district = '".$userFormData['id_district']."' and id_school = '".$id_school."'");
+                $school = $schoolObj->fetchRow("id_county = '".$id_cty."' and id_district = '".$id_dist."' and id_school = '".$id_school."'");
+                if (isset($school['id_account_sprv'])) {
+                    $idAccountSupervisorArr[$school['id_account_sprv']][$cds] = $school;
+                }
+            }
+            foreach($idAccountSupervisorArr as $idAccountSupervisor=>$destinationSchoolsForThisUser) {
+                $emailAccountSupervisorsResult = $this->emailAccountSupervisors($personnelObj, $userFormData, $destinationSchoolsForThisUser, $destinationDistrict, $id);
+            }
+       }
+       
+       if($user_type<4){
+           $emailAccountSupervisorsResult = $this->emailAccountSupervisors($personnelObj, $userFormData, null, $destinationDistrict, $id);
+                 
+       }
+            
+        //}
+    
+        $this->view->name_full = $session->user->user['name_full'];
+    
+    }  
+    
+    
 
 }

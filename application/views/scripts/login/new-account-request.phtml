@@ -1,4 +1,25 @@
 
+    <table border="0"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?> 
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationSubmenu('personnel');
+                } ?>
+            </td>
+        </tr>
+    </table>
+   
+
+
+
 <script type="text/javascript">
 
 

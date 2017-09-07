@@ -1,3 +1,26 @@
+<?if (isset($_SESSION['user']['id_personnel'])){?>
+    <table class="navTopMenu">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<br>
+<?}?>
+
+
 <script type="text/javascript">
     $(document).ready(function () {
     <?
@@ -53,7 +76,12 @@ if (9 == $this->user_type) {
     <tr>
         <td style="padding-top:5px;">
             <button onclick="window.location='/login/new-account-request'">Back</button>
-            <button onclick="window.location='/'">Cancel</button>
+
+	    <?if (isset($_SESSION['user']['id_personnel'])){?>
+                <button onclick="window.location='/home/'">Cancel</button>
+	       <?}else{?>
+                <button onclick="window.location='/'">Cancel</button>
+	    <?}?>
         </td>
     </tr>
     </tbody>
@@ -64,12 +92,13 @@ if (9 == $this->user_type) {
      */
 } else {
     ?>
-<form id="accountRequestDetails" method="post">
+
+<form id="accountRequestDetails" method="post"<?if (isset($_SESSION['user']['id_personnel'])){?> action="/login/new-account-request-done"<?}?>>
     <table style="width: 600px">
         <tr>
             <td colspan="2" style="font-size: 14px">
                 <B>User Type Selected:</B>
-                <input type="hidden" id="user_type" value="<?= $this->user_type?>"/>
+                <input type="hidden" id="user_type" name="user_type" value="<?= $this->user_type?>"/>
             </td>
         </tr>
         <tr>
@@ -80,7 +109,11 @@ if (9 == $this->user_type) {
         </tr>
         <tr>
             <td colspan="2" align="right">
+   	    <?if (isset($_SESSION['user']['id_personnel'])){?>
+		<button name="cancel" id="cancel" type="button" alt="Cancel" title="Cancel" onclick="window.location='/home/'">Cancel</button>
+	      <?} else {?>
                 <?= $this->form->getElement('cancel') ?>
+	    <?}?>
                 <?= $this->form->getElement('submit') ?>
             </td>
         </tr>

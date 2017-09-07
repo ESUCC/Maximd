@@ -51,6 +51,17 @@ class StudentController extends My_Form_AbstractFormController
         );
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
 // Maxim modified this code October 20 2016
     public function logAction()
     {
@@ -283,7 +294,7 @@ class StudentController extends My_Form_AbstractFormController
 //        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-	   	// ----   Read all Privileges ------------------------
+	   	// ----   Read all Privileges ------------------------/
        	$x = 0;
        	$priv = Array();
        	$priv_student = 0;
@@ -1081,7 +1092,7 @@ class StudentController extends My_Form_AbstractFormController
             if($formValid) {
                 // valid to save
                 $data = $form->getValues();
-              //  writevar($data,'this is the data');
+              
                
                 if($data['grade']!='EI 0-2'){
                     $data['id_ser_cord']=NULL;
@@ -1135,7 +1146,7 @@ class StudentController extends My_Form_AbstractFormController
                 'address_state' => 'Nebraska'
             ));
         }
-
+        $this->writevar1($form,'thisis the form');
         $this->view->form = $form;
         if(count($form->getMessages())) {
             $this->view->errorMessage = 'Record is incomplete, and cannot be saved.';

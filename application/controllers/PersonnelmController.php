@@ -168,7 +168,10 @@ class PersonnelmController extends My_Form_AbstractFormController
         
 
         // Mike added this 2-14-2017 because it was showing multiples of the same district in the pull down.
-        $temp=$privilegesObj->getPrivileges($id_personnel);
+        // Mike change getPrivileges to getPrivilegesmike on 9-6-2017 because the pull down was showing
+        // Inactive district that person like Jody was in charge of.  Needed to show just 'Active.
+        
+        $temp=$privilegesObj->getPrivilegesmike($id_personnel);
         
        // $this->writevar1($temp,'these are the privs');
       
