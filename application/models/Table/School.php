@@ -117,9 +117,16 @@ class Model_Table_School extends Model_Table_AbstractIepForm
         ->where("c.id_county = '".$options['id_county']."'");
         $county_row = $db->fetchRow($select);
     
+       
+        /* Mike changed this 9-8-2017
+         * added the following where
+         *  ->where("d.id_county= '".$options['id_county']."'")
+         *  Need to mention to Maxim.
+        */
         $select = $db->select()
         ->from( array('d' => 'iep_district'), 'name_district')
-        ->where("d.id_district = '".$options['id_district']."'");
+        ->where("d.id_district = '".$options['id_district']."'")
+        ->where("d.id_county= '".$options['id_county']."'");
         $district_row = $db->fetchRow($select);
     
     

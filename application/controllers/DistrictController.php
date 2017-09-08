@@ -21,6 +21,78 @@ class DistrictController extends Zend_Controller_Action
         fwrite($fp, $data2);
         fclose($fp);
     } 
+    
+    // Mike added these two tables on 9-7-2017 for edfi reporting purposes
+    
+    public function edfireportAction(){
+        $districtModel = new Model_Table_EdFiReport();
+        $page = $this->_getParam('page');
+        $maxRecs=20;
+         
+        $fieldname = $this->_getParam('fieldname');
+        if ($fieldname == "") $fieldname = "name_district";
+    
+        //  $this->writevar1($fieldname,'the field name line 67');
+    
+        $sort = $this->_getParam('sort');
+        if ($sort == "") $sort = "asc";
+    
+        $fieldname = $fieldname . " " . $sort;
+    
+        if($page==""){
+            $page=1;
+        }
+    
+        $results = $districtModel->getDistrictsResume($page, $maxRecs, $fieldname);
+    
+        if($sort=="asc"){
+            $this->view->sort="desc";
+        } else {
+            $this->view->sort="asc";
+        }
+         
+        $this->view->districtModel= $results;
+    
+    }
+    
+    
+    public function edfidetailAction(){
+        $districtModel = new Model_Table_EdFiReport();
+        $id_district = $this->_getParam('id_district');
+        $id_county = $this->_getParam('id_county');
+    
+        $fieldname = $this->_getParam('fieldname');
+        if ($fieldname == "") $fieldname = "edfipublishtime";
+    
+        $sort = $this->_getParam('sort');
+        if ($sort == "") $sort = "desc";
+    
+        $fieldname = $fieldname . " " . $sort;
+    
+    
+        $page = $this->_getParam('page');
+        $maxRecs=20;
+    
+        if($page==""){
+            $page=1;
+        }
+    
+        if($sort=="asc"){
+            $this->view->sort="desc";
+        } else {
+            $this->view->sort="asc";
+        }
+    
+        $this->view->id_district= $id_district;
+        $this->view->id_county= $id_county;
+    
+        $results = $districtModel->getDistrictsDetail($id_district, $id_county, $page, $maxRecs, $fieldname);
+        //   $this->writevar1($results,'this is the result dist controller line 122');
+        $this->view->districtModel= $results;
+    
+    }
+    
+    // end of Mike add 9-7-2017
        
     public function listtableAction() {
         $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);       
