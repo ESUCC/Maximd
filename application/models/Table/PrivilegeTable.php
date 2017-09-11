@@ -65,17 +65,21 @@ class Model_Table_PrivilegeTable extends Model_Table_AbstractIepForm {
         $privCount= count($cnt);
       //  $this->writevar1($privCount,'this is the prvi count');
         $y=0;
-      
+        $superAdmin=false;
     //   $this->writevar1($classLevel,'this is the class level');
         $gotOne=0;
         for($x=0;$x<$privCount;$x++)
         {
            
-           
-           $check=$_SESSION["user"]["user"]->privs[$x]["class"];
-       //   $this->writevar1($check,'tbis is the check variable');
+           $status=$_SESSION["user"]["user"]->privs[$x]['status'];
             
-            if ($check<=$classLevel) {
+           $check=$_SESSION["user"]["user"]->privs[$x]["class"];
+           
+           if($status=='Active'&& $check=='1')$superAdmin=true;
+
+           
+           
+            if ($check<=$classLevel && $status=='Active') {
             $gotOne=1;
             $array[$y]['id_personnel']=$staffId;
             $array[$y]['class']=$_SESSION["user"]["user"]->privs[$x]["class"];
@@ -103,7 +107,18 @@ class Model_Table_PrivilegeTable extends Model_Table_AbstractIepForm {
            }
            //   $this->writevar1($array,'this is the whole thing');
             //  $this->writevar1($gotOne,'this is the value of got');
-      
+     
+           
+     // Mike added this 9-7-2017 so that all the districts would show up in "Edit the Following Districts"
+     // tab.  
+     if($superAdmin==true){
+         $dist=new Model_Table_IepDistrict();
+         $array=$dist->getAllDistricts();
+         return($array);
+         
+     }
+    // end of Mike add       
+           
     if($gotOne==1) {
         return($array);
     }

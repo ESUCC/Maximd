@@ -128,71 +128,10 @@ class DistrictController extends Zend_Controller_Action
         
     }
     
-    public function edfireportAction(){
-        $districtModel = new Model_Table_EdFiReport();
-        $page = $this->_getParam('page');
-        $maxRecs=20;
-    
-        $fieldname = $this->_getParam('fieldname');
-        if ($fieldname == "") $fieldname = "name_district";
-    
-        $sort = $this->_getParam('sort');
-        if ($sort == "") $sort = "asc";
-    
-        $fieldname = $fieldname . " " . $sort;
-    
-        if($page==""){
-            $page=1;
-        }
-    
-        $results = $districtModel->getDistrictsResume($page, $maxRecs, $fieldname);
-    
-        if($sort=="asc"){
-            $this->view->sort="desc";
-        } else {
-            $this->view->sort="asc";
-        }
-         
-        $this->view->districtModel= $results;
-    
-    }
+  
     
     
-    public function edfidetailAction(){
-        $districtModel = new Model_Table_EdFiReport();
-        $id_district = $this->_getParam('id_district');
-        $id_county = $this->_getParam('id_county');
     
-        $fieldname = $this->_getParam('fieldname');
-        if ($fieldname == "") $fieldname = "edfipublishtime";
-    
-        $sort = $this->_getParam('sort');
-        if ($sort == "") $sort = "desc";
-    
-        $fieldname = $fieldname . " " . $sort;
-    
-    
-        $page = $this->_getParam('page');
-        $maxRecs=20;
-    
-        if($page==""){
-            $page=1;
-        }
-    
-        if($sort=="asc"){
-            $this->view->sort="desc";
-        } else {
-            $this->view->sort="asc";
-        }
-    
-        $this->view->id_district= $id_district;
-        $this->view->id_county= $id_county;
-    
-        $results = $districtModel->getDistrictsDetail($id_district, $id_county, $page, $maxRecs, $fieldname);
-    
-        $this->view->districtModel= $results;
-    
-    } 
     
     public function indexAction()
     {
@@ -496,12 +435,22 @@ class DistrictController extends Zend_Controller_Action
         
         
         foreach($UserPrivTable as $priv) {   
+            
+            
+            
             if($priv['id_district']==$id_district and $priv['id_county']==$id_county and $priv['class']<=3 and $priv['status']=='Active')
             {
                     $proceed='yes';// This will allow one to edit the district page.  
             }
          }
 
+      
+       // Mike added this 9-7-2017 so that site admin can view district edit page.  
+       foreach($_SESSION['user']['user']->privs as $privs)  {
+           if ($privs['class']==1 && $privs['status']=='Active') $proceed='yes';
+       }
+       // end of mike add
+         
        if ($proceed == 'yes') {
 // end of Mike add sort of
         $formData = $this->getRequest()->getPost();
