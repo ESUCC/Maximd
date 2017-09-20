@@ -133,6 +133,8 @@ class SchoolController extends My_Form_AbstractFormController
        $this->view->school = $result[0];
        $this->view->county = $result[1];
        $this->view->district = $result[2];
+     //  $this->writevar1($result[2],'this is the district');
+       
        $this->view->schoolmng = $result[3];
        $this->view->schoolsprv = $result[4];
        $this->view->reports = $result[5];
@@ -145,7 +147,7 @@ class SchoolController extends My_Form_AbstractFormController
 
    	  $classPriv = $this->usersession->user->user['class'];
    	  $schoolPriv = $this->usersession->user->user['id_school'];
-   	  $districtPriv = $this->usersession->user->user['id_district'];
+       $districtPriv = $this->usersession->user->user['id_district'];
    	  $countyPriv = $this->usersession->user->user['id_county'];
 
 // ------ Check all privs for get access -------------------

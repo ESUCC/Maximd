@@ -819,7 +819,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         if($user_type>3 ){
             foreach ($this->getRequest()->getParam('schools') as  $cds) {
                 $id_school = substr($cds, -3);
-                $this->writevar1($cds,'this is the cds');
+              //  $this->writevar1($cds,'this is the cds');
                 $privilegeData['id_school'] = $id_school;
                  $id_cty= substr($cds,0,2);
                  $id_dist=substr($cds,3,4);

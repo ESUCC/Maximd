@@ -9,7 +9,7 @@ class Form_Form034 extends Form_AbstractForm {
 		$this->setEditorType('App_Form_Element_TestEditor');
 	}
     
-	protected function initialize() {
+	protected function initialize() { 
 		parent::initialize();
 		
 		$this->id_form_034 = new App_Form_Element_Hidden('id_form_034');

@@ -21,48 +21,18 @@ class DistrictController extends Zend_Controller_Action
         fwrite($fp, $data2);
         fclose($fp);
     } 
-       
-    public function listtableAction() {
-        $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);       
-        $database = Zend_Db::factory($dbConfig->db2);
-        
-       $sql="SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
-    //  $sql="select table_name,pg_relation_size(table_name) from information_schema.tables where table_schema='public' order by 2 ";
-       
-   //    $sql="SELECT table_name,pg_size_pretty(table_size) AS table_size,pg_size_pretty(indexes_size) AS indexes_size,pg_size_pretty(total_size) AS total_size FROM ( SELECT table_name,pg_table_size(table_name) AS table_size,pg_indexes_size(table_name) AS indexes_size,pg_total_relation_size(table_name) AS total_sizeFROM (SELECT ('"' || table_schema || '"."' || table_name || '"') AS table_name FROM information_schema.tables) AS all_tables ORDER BY total_size DESC) AS pretty_sizes"
-        $result=$database->fetchAll($sql);
-       $this->writevar1($result,'this is the list of tables');
-       $this->view->tables=$result;
-       
-     
-      /* 
-       $value=array();
-       $x=0;
-        foreach($result as $res){
-           $value[$x]['name']=$res['table_name'];
-            
-           $sql2="select count(*) from ". $res['table_name']."";
-          // $resultSize=$database->fetchAll($sql2);
-           $msg='this is the size result for '.$res['table_name'];
-         //  $this->writevar1($resultSize,$msg);
-           $this->writevar1($res['table_name'],'this is the table name');
-           $x=$x+1;
-        }
-        $this->writevar1($value,'this is  the value var line 39');
-        
-        die();
-      */  
-        
-        
-    }
+    
+    // Mike added these two tables on 9-7-2017 for edfi reporting purposes
     
     public function edfireportAction(){
         $districtModel = new Model_Table_EdFiReport();
         $page = $this->_getParam('page');
         $maxRecs=20;
-    
+         
         $fieldname = $this->_getParam('fieldname');
         if ($fieldname == "") $fieldname = "name_district";
+    
+        //  $this->writevar1($fieldname,'the field name line 67');
     
         $sort = $this->_getParam('sort');
         if ($sort == "") $sort = "asc";
@@ -117,10 +87,51 @@ class DistrictController extends Zend_Controller_Action
         $this->view->id_county= $id_county;
     
         $results = $districtModel->getDistrictsDetail($id_district, $id_county, $page, $maxRecs, $fieldname);
-    
+        //   $this->writevar1($results,'this is the result dist controller line 122');
         $this->view->districtModel= $results;
     
-    } 
+    }
+    
+    // end of Mike add 9-7-2017
+       
+    public function listtableAction() {
+        $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);       
+        $database = Zend_Db::factory($dbConfig->db2);
+        
+       $sql="SELECT table_name FROM information_schema.tables WHERE table_schema='public'";
+    //  $sql="select table_name,pg_relation_size(table_name) from information_schema.tables where table_schema='public' order by 2 ";
+       
+   //    $sql="SELECT table_name,pg_size_pretty(table_size) AS table_size,pg_size_pretty(indexes_size) AS indexes_size,pg_size_pretty(total_size) AS total_size FROM ( SELECT table_name,pg_table_size(table_name) AS table_size,pg_indexes_size(table_name) AS indexes_size,pg_total_relation_size(table_name) AS total_sizeFROM (SELECT ('"' || table_schema || '"."' || table_name || '"') AS table_name FROM information_schema.tables) AS all_tables ORDER BY total_size DESC) AS pretty_sizes"
+        $result=$database->fetchAll($sql);
+       $this->writevar1($result,'this is the list of tables');
+       $this->view->tables=$result;
+       
+     
+      /* 
+       $value=array();
+       $x=0;
+        foreach($result as $res){
+           $value[$x]['name']=$res['table_name'];
+            
+           $sql2="select count(*) from ". $res['table_name']."";
+          // $resultSize=$database->fetchAll($sql2);
+           $msg='this is the size result for '.$res['table_name'];
+         //  $this->writevar1($resultSize,$msg);
+           $this->writevar1($res['table_name'],'this is the table name');
+           $x=$x+1;
+        }
+        $this->writevar1($value,'this is  the value var line 39');
+        
+        die();
+      */  
+        
+        
+    }
+    
+  
+    
+    
+    
     
     public function indexAction()
     {
@@ -424,12 +435,22 @@ class DistrictController extends Zend_Controller_Action
         
         
         foreach($UserPrivTable as $priv) {   
+            
+            
+            
             if($priv['id_district']==$id_district and $priv['id_county']==$id_county and $priv['class']<=3 and $priv['status']=='Active')
             {
                     $proceed='yes';// This will allow one to edit the district page.  
             }
          }
 
+      
+       // Mike added this 9-7-2017 so that site admin can view district edit page.  
+       foreach($_SESSION['user']['user']->privs as $privs)  {
+           if ($privs['class']==1 && $privs['status']=='Active') $proceed='yes';
+       }
+       // end of mike add
+         
        if ($proceed == 'yes') {
 // end of Mike add sort of
         $formData = $this->getRequest()->getPost();

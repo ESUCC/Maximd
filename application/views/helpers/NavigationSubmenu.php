@@ -51,7 +51,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             
             // Mike added this Jul 5th for password change
           //  $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';
-            $this->returnText .= '  <li><a href="/Passwordchange/subpassword"><font color="green"><b><i>Change Password</i></b></font></a></li>';
+       //     $this->returnText .= '  <li><a href="/Passwordchange/subpassword"><font color="green"><b><i>Change Password</i></b></font></a></li>';
             
         }
         $this->returnText .= '</ul>';
@@ -79,7 +79,9 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             
             
              $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="https://iepweb02.unl.edu/Passwordchange/subpassword"><font color="green"><b><i>Change Password</font></b></i></a></li>';
-             $this->returnText .= '  <li><a class="pwchange2  pwchange tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="/login/new-account-request"><font color="green"><b>New Privilege Request</b></a></li>';
+            
+             // Mike had to take out the class namess up to tooltip on 9-8-2017 because it was creating 2 links in the html doc
+             $this->returnText .= '  <li><a class="tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar2" href="/login/new-account-request"><font color="green"><b>New Privilege Request</b></a></li>';
               
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
@@ -90,7 +92,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
   
             
             if($showNewPrivs==true){
-            //$this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
+           $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.unl.edu/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             } 
 // End of Mike add            
         }

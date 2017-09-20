@@ -25,6 +25,27 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 // 		)
 // 	);
 
+	
+	// Mike added this 9-7-2017 in order to make edfi work
+	
+	public function studentsInDistrict($id_cnty,$id_dist,$juneCutoff){
+	    //$sql = "SELECT id_student,tempid,alternate_assessment,pub_school_student,parental_placement,unique_id_state,name_first,name_last,sesis_exit_code,status,id_county,id_district,id_school FROM iep_student WHERE id_county = '$id_cnty' AND id_district = '$id_dist' AND status = 'Active'";
+	    $sql = "SELECT id_student,grade,tempid,alternate_assessment,
+	    pub_school_student,parental_placement,
+	    unique_id_state,name_first,name_last,
+	    sesis_exit_code,sesis_exit_date,status,id_county,id_district,id_school
+	    FROM iep_student WHERE id_county = '$id_cnty'
+	    AND id_district = '$id_dist'
+	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' )";
+	
+	    $result = $this->db->fetchAll($sql);
+	    //  $this->writevar1($sql,'this is the sql statement line 40');
+	    ///---  $this->writevar1($result,'this is the result in table line 40');
+	    return $result;
+	     
+	}
+	
+	
 	public function studentInfo($id)
 	{
 	    $db = Zend_Registry::get('db');
