@@ -53,6 +53,9 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=admin&sub=server\');">Admin</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=reports&sub=reports\');">Reports</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.esucc.org/srs.php?area=help&sub=tutorials\');">Help</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'http://72.15.175.198/video/studentteam.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\')">Training Video</a></li>';
+		    
+		
 		//$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\''.$config->DOC_ROOT .'personnel/stylescope\');">Stylescope</a></li>';
 		if ($admin)
 		    $this->returnText .= '  <li '.(($controllerName == 'translation') ? 'class="current"' : '').'><a href="/translation">Translation</a></li>';
@@ -89,6 +92,10 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=admin&sub=server">Admin</a></li>';
             $this->returnText .= '  <li><a href="/report">Reports</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=help&sub=tutorials">Help</a></li>';
+            $this->returnText .= '  <li><a id="localvideo" href="javascript:void(window.open(\'http://72.15.175.198/video/greentabs.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\'))"><font color="green"><b>Green Tabs Video Training</font></b></a></li>';
+            
+            
+            
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
         }
         //$this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=help&sub=tutorials">Help</a></li>';

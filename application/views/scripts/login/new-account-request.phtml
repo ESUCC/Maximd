@@ -22,7 +22,8 @@
 
 <script type="text/javascript">
 
-
+$(document).ready(function() {
+	  $('#hideme').empty();})
 
 
 
@@ -112,11 +113,14 @@ if (isset($this->msg)) {
     echo '<div class="btsRed">' . $this->msg . '</div>';
 }
 ?>
+<br>
+<h2><a href="javascript:void(window.open('http://72.15.175.198/video/newaccount.html','_blank','location=yes,width=850,height=700,scrollbars=yes,status=yes'))">New Account Request Training Video</a>
+</h2>
+<br><br>
 <form method="post">
     <table style="width:800px;">
        <tr>
         <!--  <td> <a class="video" href="#">Video</a> -->
-         <a href="javascript:window.open('http://72.15.175.198/video/newaccount.html','_blank','location=yes,width=850,height=700,scrollbars=yes,status=yes')">Training Video</a>
          </td></tr>
         <tr>
             <td colspan="2"><b>Step 1: What type of user are you?</b></td>

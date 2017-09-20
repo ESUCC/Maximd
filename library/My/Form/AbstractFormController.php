@@ -1945,6 +1945,13 @@ END;
 		
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true ); 
        
+		// Mike added this 3-8-2017 so that no 2 people can edit a form together.
+		if(isset($dbData[0]['message'])) {
+		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
+		    	
+		}
+		
+		
 	//	$this->writevar1($dbData,'this is the dbData line 1936');
          
 		// store the list of subforms

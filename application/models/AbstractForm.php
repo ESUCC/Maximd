@@ -39,11 +39,24 @@ class Model_AbstractForm
         $this->valid = true;
 	}
 
+	public function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+	
 	public function buildFormAccess($id_student)
 	{
       	$student_auth = new App_Auth_StudentAuthenticator();
       	$this->formAccessObj = $student_auth->validateStudentAccess($id_student, $this->usersession);
 //      	Zend_Debug::dump($this->formAccessObj);
+       //  $this->writevar1($this->formAccessObj,'this is ithe form access');
+       // returns editaccess and role in an array
 		return $this->formAccessObj;
 	}
 	public function getStudent($id_student)
@@ -253,10 +266,17 @@ class Model_AbstractForm
         		// checkout active
         		if($this->db_form_data['zend_checkout_user'] != $this->usersession->sessIdUser)
         		{
+        		    
                     $personnel = new Model_Table_PersonnelTable();
+                  
+                
+                    
                     $person = $personnel->find($this->db_form_data['zend_checkout_user'])->current()->toArray();
+                   // $this->writevar1($person,'this is hte person');
+                    
                     throw new App_Exception_Checkout("This form is currently being used by {$person['name_first']} {$person['name_last']}. This form will remain locked until " . $this->db_form_data['zend_checkout_time'] . " or until {$person['name_first']} {$person['name_last']} clicks the DONE button on this form.");
-                    return false;
+                  
+                   return false;
         		}
         	}
         	// checkout the form

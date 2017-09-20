@@ -21,6 +21,17 @@ class Model_Form004 extends Model_AbstractForm
      */
 	var $db_form_data = array();
 	
+	function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+	
 	public function find($id, $accessMode = "view", $page =1, $versionNumber = 1, $checkout = 0)
 	{
 
@@ -44,9 +55,11 @@ class Model_Form004 extends Model_AbstractForm
 	        	
 	    }
 	    catch (App_Exception_Checkout $e) {
-	        //	    $this->writevar1($e->getMessage(),'this is the error message');
-	        //    $this->view->scott=$e->getMessage();
+	    //   $this->writevar1($e->getMessage(),'this is the error message');
+	       // $this->view->scott=$e->getMessage();
 	        $t[0]['message']=$e->getMessage();
+	        
+	        
 	        return $t;
 	    }
 

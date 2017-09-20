@@ -5,6 +5,7 @@
  *
  */
 class Model_Form018 extends Model_AbstractForm
+//class Model_Table_Form018 extends Model_Table_AbstractIepForm
 {
 
     /**
@@ -36,6 +37,7 @@ class Model_Form018 extends Model_AbstractForm
 	{
 		if(false === parent::buildDbForm($id, $accessMode, $page, $versionNumber, $checkout))
 		{
+		    die();
 			return false;
 		}
 

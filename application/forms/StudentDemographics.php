@@ -255,22 +255,17 @@ class Form_StudentDemographics extends Form_AbstractForm {
             '0' => 'No'
         ));
 
-        $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment', array('label' => 'Alternate assessment'));
-        
+        $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment'); //, array('label' => 'Alternate assessment'));
         $this->alternate_assessment->getDecorator('label')->setOption('placement', 'prepend');
+//        $this->alternate_assessment->setAttrib('readonly', 'readonly');
+        $this->alternate_assessment->setLabel('Alternate assessment');
         $this->alternate_assessment->setRequired(true);
-       // $this->alternate_assessment->setAttrib('readonly', 'readonly');
-      //   $this->alternate_assessment->setLabel('Alternate Assessment ?');
         $this->alternate_assessment->addFilter(new Zend_Filter_Int());
         $this->alternate_assessment->setMultiOptions(array(
             '1' => 'Yes',
             '0' => 'No'
         ));
 
-        
-        
-        
-        
         $this->primary_language = new App_Form_Element_Select('primary_language');
         $this->primary_language->setLabel('Primary language');
         $this->primary_language->getDecorator('label')->setOption('class', 'srsLabel');
@@ -655,21 +650,30 @@ class Form_StudentDemographics extends Form_AbstractForm {
 
     }
 
+
     public function populate(array $values) {
         parent::populate($values);
+
 
         /**
          * age
          */
 //        $studentTable = new Model_Table_StudentTable();
 //        $studentInfo = $studentTable->studentInfo($values['id_student']);
+
+
+
+// --------------- Sept. 12, 2017 -- This rule was removed ----------------------
+// -------------- Bug with Student Edit Form - field "Alternate assessment"  ----
+/*
         if(isset($values['age']) && isset($values['age_months_into_year'])) {
             $this->age->setValue($values['age'] . ' years and ' . $values['age_months_into_year'] . ' months');
         }
-
+*/
         /**
          * alternate assessment
          */
+/*
         $modelForm004 = new Model_Table_Form004();
         $form004 = $modelForm004->mostRecentFinalForm($values['id_student'], 'date_conference');
         if(null != $form004) {
@@ -692,6 +696,8 @@ class Form_StudentDemographics extends Form_AbstractForm {
         }
 
         $this->setDisabledValues();
+
+*/
     }
 
     public function isValid($data = array())
