@@ -1,0 +1,26 @@
+<?$auth = Zend_Auth::getInstance();?>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationSubmenu('student'); ?>
+        </td>
+    </tr>
+</table> 
+
+
+<div style="position: relative; width: 100%; height: 300px; padding: 50px 0;">
+
+<h2>Access Denied (952)</h2>
+Your access privileges don't allow you to perform this function. Please contact the SRS Help Desk if you need access to this function.<br>
+<br>
+For assistance, please contact us at <a href="mailto:mdanahy@esucc.org">mdanahy@esucc.org</a>
+
+
+
+</div>

@@ -107,7 +107,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->id_district = new App_Form_Element_Select('id_district', array('label' => 'District'));
         $this->id_school = new App_Form_Element_Select('id_school', array('label' => 'School'));
 
-        $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'County'));
+        $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'Countys'));
         $this->id_county_display->setIgnore(true);
         $this->id_county_display->setAllowEmpty(true);
         $this->id_county_display->setRequired(false);
