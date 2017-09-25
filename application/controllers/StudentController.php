@@ -378,7 +378,9 @@ class StudentController extends My_Form_AbstractFormController
 				$options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
 				$options["ell_student"] = ($options["ell_student"] == "Yes") ? 'True' : 'False';
 				$options["ward"] = ($options["ward"] == "Yes") ? 'True' : 'False';
-				$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; 
+				//$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; 
+				$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False';
+				
 				$options["ward_surrogate"] = ($options["ward_surrogate"] == "Yes") ? 'True' : 'False';
 				$options["ward_surrogate_nn"] = ($options["ward_surrogate_nn"] == "Yes") ? 'True' : 'False';
 
@@ -1033,7 +1035,7 @@ class StudentController extends My_Form_AbstractFormController
         if($this->getRequest()->getParam('id_student')) {
             $studentArr = $stuObject->studentInfo($this->getRequest()->getParam('id_student'));
           
-           //  $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
+           // $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
             // this is not in the iep_student table.
             if(1!=count($studentArr)) {
                 throw new Exception('Student not found');
@@ -1148,7 +1150,7 @@ class StudentController extends My_Form_AbstractFormController
                 'address_state' => 'Nebraska'
             ));
         }
-      //  $this->writevar1($form,'thisis the form');
+      // $this->writevar1($form,'thisis the form');
         $this->view->form = $form;
         if(count($form->getMessages())) {
             $this->view->errorMessage = 'Record is incomplete, and cannot be saved.';

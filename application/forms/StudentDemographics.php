@@ -107,7 +107,9 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->id_district = new App_Form_Element_Select('id_district', array('label' => 'District'));
         $this->id_school = new App_Form_Element_Select('id_school', array('label' => 'School'));
 
-        $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'Countys'));
+        $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'County:'));
+       
+        
         $this->id_county_display->setIgnore(true);
         $this->id_county_display->setAllowEmpty(true);
         $this->id_county_display->setRequired(false);
@@ -253,7 +255,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->ell_student->setMultiOptions(array(
             '1' => 'Yes',
             '0' => 'No'
-        ));
+        )); 
 
         $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment'); //, array('label' => 'Alternate assessment'));
         $this->alternate_assessment->getDecorator('label')->setOption('placement', 'prepend');
