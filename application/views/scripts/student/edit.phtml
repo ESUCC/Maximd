@@ -80,13 +80,14 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
                         $.each(json['data'], function(optionValue, optionDisplay) {
                             options += '<option value="' + optionValue + '">' + optionDisplay + '</option>';
                             size += 1;
+                            
                         });
                         if(size>1) {
                             options = optionsPrefix+options;
                         }
                         // triggerHandler causes onChange to fire on district
                         $("#id_case_mgr").html(options).triggerHandler("change");
-//                    $('#id_district').add('#id_school').closest('.wrapperDiv').slideDown();
+  //                  $('#id_district').add('#id_school').closest('.wrapperDiv').slideDown();
 
                     }
                 }
@@ -105,6 +106,10 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             $("input[type='radio'][name='parental_placement']").prop('checked', false).closest('div').hide();
         } else {
             $("input[type='radio'][name='parental_placement']").closest('div').show();
+            $('#parental_placement-label').css("color","blue");
+            
+            ;
+           
         }
         /**
          * Non-Pub County:
@@ -122,9 +127,16 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             $('#nonpubschool').closest('div').hide();
         } else {
             // not public school student
+            
             $('#nonpubcounty').closest('div').show();
+            $('#nonpubcounty-label').css("color","blue");
+          //  $('.srsTextLabel').css("color","blue").closest('radio');
+           //  $("lable[for='nonpubcounty']".css("color","blue").
+            
             $('#nonpubdistrict').closest('div').show();
+            $('#nonpubdistrict-label').css("color","blue");
             $('#nonpubschool').closest('div').show();
+            $('#nonpubschool-label').css("color","blue");
         }
     }
     function statusToggle() {
