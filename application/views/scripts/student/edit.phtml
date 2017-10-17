@@ -35,7 +35,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             changeMonth: true,
             changeYear: true
         });
-
+//cosole.table(data,['name','gender','email']);
         buildNonPublicSchools();
 
         $('.studentOptions').each(function() { 
@@ -51,6 +51,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
 							url: '/student/get-most-recent/'+$(this).val(),
 							success: function(json) {
 								if (json['success'] == '1')
+									
 									window.location.href = json['url'];
 								else
 									alert('The system was unable to locate the most recent form.');
@@ -65,6 +66,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
 		});
     });
     function fetchCaseManagers() {
+        
         if($('#id_county').val()  && $('#id_district').val()  && $('#id_school').val() ) {
             $.ajax({
                 type: 'POST',
@@ -95,6 +97,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
         }
     }
     function publicSchoolStudentToggle() {
+       // console.log('we got here');
         /**
          * hide parental_placement when student is in public school
          */
@@ -121,6 +124,8 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
          – Could we add a checkbox to the right of "Non-Public County" that is labeled "home Schooled".
          If this box is checked, the other three non-public questions can be left blank and need not be revealed.
          */
+      // console.assert(publicSchoolStudent!=1,'PUblic school Student is equal  1');
+      // console.log('This is the value of pub school student=' + publicSchoolStudent);
         if (undefined == publicSchoolStudent || 1 == publicSchoolStudent) {
             $('#nonpubcounty').closest('div').hide();
             $('#nonpubdistrict').closest('div').hide();

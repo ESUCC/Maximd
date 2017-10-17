@@ -143,7 +143,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
             1 => 'Yes',
             0 => 'No'
         ));
-
+ 
         $this->parental_placement = new App_Form_Element_Radio('parental_placement', array('label' => 'Parental Placement'));
         $this->parental_placement->setRequired(false);
         $this->parental_placement->setAllowEmpty(true);
@@ -696,10 +696,13 @@ class Form_StudentDemographics extends Form_AbstractForm {
                     break;
             }
         }
-
+*/
+        
+        // SRS-127 the default values for hte district county school did not show up.
+        //the coment was below this line. Mike moved it up 9-26-2017
         $this->setDisabledValues();
 
-*/
+
     }
 
     public function isValid($data = array())

@@ -30,6 +30,21 @@ class Model_Table_Form004 extends Model_Table_AbstractIepForm
                 'Model_Table_Form010',
     );
     
+    // Mike added 10-17-2017 in order to get csv to work
+    public function getMostRecentIepState($id_student){
+         
+        $sql="select * from iep_form_004 where id_student='$id_student' and status='Final' order by date_conference DESC";
+        $forms=$this->db->fetchAll($sql);
+        if (!empty($forms)) {
+    
+            return $forms;
+        }
+        else {
+            return null;
+        }
+         
+    }   // end of the function
+    
     
     function dupe($document) {
 

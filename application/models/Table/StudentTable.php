@@ -36,7 +36,7 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	    sesis_exit_code,sesis_exit_date,status,id_county,id_district,id_school
 	    FROM iep_student WHERE id_county = '$id_cnty'
 	    AND id_district = '$id_dist'
-	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' )";
+	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' ) order by id_school desc,name_last";
 	
 	    $result = $this->db->fetchAll($sql);
 	    //  $this->writevar1($sql,'this is the sql statement line 40');

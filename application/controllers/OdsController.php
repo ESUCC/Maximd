@@ -34,9 +34,10 @@ class OdsController extends Zend_Controller_Action
       $ifsp=new Model_Table_Form013();
       $iepCard=new Model_Table_Form023();
       $relatedServices=new Model_Table_Form004RelatedService();
-      
-      $id_county='11';
-      $id_district='0014';
+   
+     // We are outta swagger so don't need this anymore
+     // $id_county='11';
+     // $id_district='0014';
       $listStudents = new Model_Table_StudentTable();
       $juneCutoff=$this->getJuneCutoff();
       $districtStudents=$listStudents->studentsInDistrict($id_county,$id_district,$juneCutoff);
@@ -51,7 +52,7 @@ class OdsController extends Zend_Controller_Action
      
       $advisorStudentData='';
      //$advisorStudentData['educationOrganizationID']=$student['id_county'].$student['id_district'];
-      $advisorStudentData['educationOrganizationID']='255901';
+      //$advisorStudentData['educationOrganizationID']='255901';
      
      // $advisorStudentData['studentUniqueID']=$student['unique_id_state'];
       $advisorStudentData['studentUniqueID']=$student['tempid'];
