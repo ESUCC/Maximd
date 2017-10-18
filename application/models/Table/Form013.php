@@ -22,6 +22,19 @@ class Model_Table_Form013 extends Model_Table_AbstractIepForm
                 'Model_Table_Form013TeamOther',
                 'Model_Table_Form013TeamMembers',
     );
+    
+    function getMostRecentIfspState($id_student){
+        $sql="select * from iep_form_013 where id_student='$id_student' and status='Final' order by meeting_date DESC";
+        $forms=$this->db->fetchAll($sql);
+    
+        if (!empty($forms)) {
+            return $forms;
+        }
+        else {
+            return null;
+        }
+    
+    }   // end of the function
 
     function dupe($document, $ifspType, $dupeFull = 0) {
 

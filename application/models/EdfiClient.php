@@ -41,7 +41,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	$data = "Client_id=$edfiClientId&Response_type=code";
 	$urlWithData = "$edfiApiCodeUrl?$data";
 	
-  //  $this->writevar1("", "Request to " . $edfiApiCodeUrl);
+  //  $this->writevar1("Request to ",$edfiApiCodeUrl);
 
     try
     {
@@ -56,11 +56,11 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	    $result = curl_exec($curl);
 	    $jsonResult = json_decode($result);
 	    curl_close($curl);
-      //  $this->writevar1($jsonResult,'this is the json results');
+      //  $this->writevar1($data,'this is the json results');
 	    return $jsonResult->code;
     } 
     catch(Exception $e) {
-     //  $this->writevar1("", 'Message: ' .$e->getMessage());
+    // $this->writevar1("", 'Message: ' .$e->getMessage());
         return "";
     }
 } 
@@ -70,7 +70,9 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	 
 	$edfiApiTokenUrl = "$edfiBaseUrl/oauth/token";
 	$paramsToPost = "Client_id=$edfiClientId&Client_secret=$edfiClientSecret&Code=$authCode&Grant_type=authorization_code";
-	 
+	//$this->writevar1($paramsToPost,'parameters to post');
+	//$this->writevar1($edfiApiTokenUrl,'edfi token url');
+	
       try
     {
        $curl = curl_init();
@@ -82,11 +84,33 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
 		 
 	    $result = curl_exec($curl);
-	
+	    
+	    /*$this->writevar1($result,'this is the curl');
+	     * this is what it looks like
+	     * this is the curl
+          string(109) "{
+           "access_token": "de5199b992d34cb3aa575b7cc8cd3ede",
+           "expires_in": 18599,
+           "token_type": "bearer"
+            }"
+	    */
 	    $jsonResult = json_decode($result);
-	
+	    $this->writevar1($jsonResult,'this is the json result for the token');
+	    /*
+	     * This is what the writevar looks like
+	     * this is the json result for the token
+           object(stdClass)#1674 (3) {
+             ["access_token"]=>
+             string(32) "de5199b992d34cb3aa575b7cc8cd3ede"
+             ["expires_in"]=>
+             int(18599)
+             ["token_type"]=>
+             string(6) "bearer"
+            }
+
+	     */
 	    curl_close($curl);
-	
+	     
 	    return $jsonResult->access_token;
     } 
     catch(Exception $e) {
@@ -100,6 +124,8 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
  /*Authenticate and returns barier token or empty string if an error occurs */
  function edfiApiAuthenticate($edfiBaseUrl,$edfiClientId,$edfiClientSecret){
     $this->currentToken="";
+    
+  //  $this->writevar1($edfiBaseUrl,'the base url');
     try {
          $authCode = $this->getAuthCode($edfiBaseUrl, $edfiClientId);
          if($authCode!=""){
@@ -109,7 +135,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
          }
     } 
     catch(Exception $e) {
-   // $this->writevar1("", 'Message: ' .$e->getMessage());
+  //   $this->writevar1("", 'Message: ' .$e->getMessage());
     }
   // $this->writevar1($this->currentToken,'current token line 114');
     return $this->currentToken;
@@ -204,7 +230,7 @@ function updateStudentSpecialEducationProgramAssociation($data){
   //  $this->writevar1("","Preparing to post  " . $id_student . " token=" . $this->currentToken . " opx=" );
 
 //	$this->writevar1("","..................................................");
- //   $this->writevar1("", $data);
+  $this->writevar1("Student data to upload", $data);
 //	$this->writevar1("", "..................................................");
 
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);

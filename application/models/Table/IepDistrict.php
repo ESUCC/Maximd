@@ -16,6 +16,25 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         fwrite($fp, $data2);
         fclose($fp);
     }
+ 
+    
+    // Mike added 10-17-2017 so that the ods would work
+    public function getEdfiSecretKey($county,$district) {
+         
+        $Db = Zend_Registry::get('db');
+    
+        $query="select edfi_key,edfi_secret from iep_district where id_county='".$county.
+        "' and id_district='".$district."'";
+    
+    
+        //    $this->writevar1($query,'this is the query');
+         
+        $keys=$Db->fetchrow($query);
+         
+        // $this->writevar1($keys,'these are the keys');
+        return $keys;
+    }
+    
     
    // Mike added this from Maxim 8-23-2017 in order to get the new district edit screen to pop up.
     function updateImageLocation($id_county, $id_district, $imagefile) {

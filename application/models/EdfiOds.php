@@ -35,15 +35,53 @@ class Model_EdfiOds
  
        // $id_county='25';
        // $id_district='5901';
+      //  $keyedfi='B25B1648BF20';
+     //   $secret='E83D35F66F1945E9';
+        
+     //   $secret = '68EB93F573E94C00';
+    //    $keyedfi = '5E3CA3F25BE5';
+        
+    //    $keyedfi='6BA1704F69654457';
+    //    $secret='9138D4CA4CFE';
+        
+        /*
+         * 
+         *  
+* SRS DISTRICT = 79-0011 (Morrill)
+KEY = 68EB93F573E94C00
+SECRET = 5E3CA3F25BE5
+
+SRS DISTRICT = 87-0017 (Winnebago)
+KEY = 6BA1704F69654457
+SECRET = 9138D4CA4CFE
+         * 
+         */
         
         
-        /*Demo data remove on valid  $edfiDistrictarray param*/
-	    $edfiDistrictarray=array(
-		   // array($id_district,$id_county,"Ivclm8boYPBH", "i677vvbvE6VpRW6EQBtL3eiK")
+        /*
+         * this is new as of Oct 3rd.  Mike did this so that we can retrieve secret and key from 
+         * the db and attached each district to the ods. That way we are not putting data on the
+         * ods that does not belong.
+         */
+        $getSecretKey= new Model_Table_IepDistrict();
+        $secretKey=$getSecretKey->getEdfiSecretKey($id_county,$id_district);
+        $keyedfi=$secretKey['edfi_key'];
+        $secret=$secretKey['edfi_secret'];
+        
+        
+        
+        /*Demo data remove on valid  $edfiDistrictarray param
+         *  // array($id_district,$id_county,"Ivclm8boYPBH", "i677vvbvE6VpRW6EQBtL3eiK")
 		    
 	      //  array($id_district,$id_county,"7gRhbgUz4zrq", "K1ZdbInI8EODEvScB3dxbJF8")
-	         array($id_district,$id_county,"g3uiYKK0Pros","bjRB3D3ahbsV33YgXxApZLyG")
-	    );
+	        
+	      /*  
+	        array($id_district,$id_county,"g3uiYKK0Pros","bjRB3D3ahbsV33YgXxApZLyG")
+	        This was last to work in the sandbox 9-14-2017
+	      */
+	    // array($id_district,$id_county,$secret,$keyedfi)
+         
+	    $edfiDistrictarray=array( array($id_district,$id_county,$keyedfi,$secret));
 
 	  // $this->writevar1($edfiDistrictarray,'this is the district array');
     //:q!    $this->writevar1("",'!!!!! USING DEMO DATA REMOVE  LINES 34-36 EdfiODSController !!!!!');
@@ -52,6 +90,10 @@ class Model_EdfiOds
      //   $this->writevar1($districtStudents,' districts for sync process');
 
         /*Get config parameters from Zend*/
+	    
+	    /*
+	     * Not written by Mike 
+	     */
         $config = Zend_Controller_Front::getInstance()->getParam('bootstrap');
         $db2 = $config->getOption('db2');
  
@@ -75,12 +117,19 @@ class Model_EdfiOds
         $connstr = "host=" . $host . " port=" . $port . " dbname=" . $db . " user=" . $user . " password=" . $pass;
 
         /*Edfi API base URL*/
-        $APIUrl="https://sandbox.nebraskacloud.org/ng/api/";
+       
+        // base url for sandbox removed 9-14-2017
+      //  $APIUrl="https://sandbox.nebraskacloud.org/ng/api/";
 
-       // $this->writevar1($connstr,' DB connection');
-      //  $this->writevar1($APIUrl,' Edfi API Url');
-     //   $this->writevar1($edfiDistrictarray,'this is the edfi district array line 32');
-	    $sync= new Model_EdfiSync();
+        // base url for staging added 9-14-2017
+        // NOte:try both of these to see if we still get errors.
+        // Unfortunately can't see json data on ods. 10-9-2017
+        
+        
+        //$APIUrl="https://adviserstagingods.nebraskacloud.org/api/api/v2.0/";
+        $APIUrl="https://adviserstagingods.nebraskacloud.org/api";
+        
+        $sync= new Model_EdfiSync();
 	    $sync->set_DbConnString($connstr);
 	    $sync->set_APIUrl($APIUrl);
 	    $sync->receiveEdfiSync($edfiDistrictarray,$APIUrl);

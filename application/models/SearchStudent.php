@@ -25,6 +25,17 @@ class Model_SearchStudent
 		$this->_setCache($cache);
 	}
 
+	function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+	
     public function reset()
     {
         $this->overrideSelectStmt = null;
@@ -227,6 +238,8 @@ class Model_SearchStudent
 		 */
         if(false==$this->_session->parent) {
 		    $counter = 1;
+		  //  $this->writevar1($options,'these are the options');
+		    
 			foreach($options['searchValues'] AS $key => $value) {
 			    $value = empty($value) ? "NULL" : strtolower($value);
 			   // var_dump();
@@ -396,7 +409,8 @@ class Model_SearchStudent
                             $whereStmt .= " ell_student = 'f'\n";
                         }
                         break;
-                                    case 'alternate_assessment':
+                      //  $this->writevar1('this is the key value pair',$key." ".$value);
+                                    case 's.alternate_assessment':
                         $whereStmt .= " $conditional ";
                         if ($value == "T" || $value == "t" || $value == "true" || $value == "Y" || $value == "y" || $value == "Yes" || $value == "yes") {
                             $whereStmt .= " alternate_assessment = 't'\n";

@@ -15,9 +15,27 @@ class Model_EdfiJsonModels{
 
 	}
 
+	function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
 
    /*Return a studentSpecialEducationProgramAssociation JSON */
-    public function createStudentSpecialEducationProgramAssociation($id,$educationOrganizationId,$studentUniqueId,$beginDate,$reasonExitedDescriptor,$specialEducationSettingDescriptor,$levelOfProgramParticipationDescriptor,$placementTypeDescriptor,$specialEducationPercentage,$toTakeAlternateAssessment,$endDate,$services,$disabilities){
+    public function createStudentSpecialEducationProgramAssociation($id,$educationOrganizationId,
+                                                                    $studentUniqueId,$beginDate,
+                                                                     $reasonExitedDescriptor,
+                                                                     $specialEducationSettingDescriptor,
+                                                                     $levelOfProgramParticipationDescriptor,
+                                                                     $placementTypeDescriptor,
+                                                                     $specialEducationPercentage,
+                                                                     $toTakeAlternateAssessment,$endDate,
+                                                                     $services,$disabilities){
 
               
         $jsonstring='{
@@ -54,9 +72,11 @@ class Model_EdfiJsonModels{
                 "specialEducationPercentage": %spedpercent%,
                 "toTakeAlternateAssessment": %ttaltassessment%,
                 "services": [
-                    %jsonServices%
+                    %jsonServices% 
                 ],
-                "disabilities": %iddisabilities%,
+                 "disabilities": [ 
+                    %iddisabilities% 
+                  ],
                  "serviceProviders": []
             }';
 
@@ -72,26 +92,37 @@ class Model_EdfiJsonModels{
         $jsonstring=str_replace('%ptdesc%', $placementTypeDescriptor, $jsonstring);
         $jsonstring=str_replace('%spedpercent%', $specialEducationPercentage, $jsonstring);
         $jsonstring=str_replace('%ttaltassessment%', $toTakeAlternateAssessment, $jsonstring);
-        $jsonstring=str_replace('%iddisabilities%',$disabilities,$jsonstring);
        
+       // Miked edited this out 9-7-2017 so that we could change disabilities to the correct format
+       // $jsonstring=str_replace('%iddisabilities%',$disabilities,$jsonstring);
+       
+    
+      
       //  if($endDate!=""){
        //     $endDate= '"endDate": "%' . $endDate .  '%",';
        // }
+      
         $jsonstring=str_replace('%endate%', $endDate, $jsonstring);
 
         //Generate services for student association
         $servicesJson="";
         foreach ($services as $service){
+       //     $this->writevar1($service,'this is the bare service');
             if($servicesJson!=""){
                     $servicesJson= $servicesJson . ",";
             }
             $servicesJson = $servicesJson . '{"serviceDescriptor": "' . $service[0] . '","serviceBeginDate": "' . $service[1] . '"}';
+          //  $this->writevar1($servicesJson,'this is the json servierces');
         }
         
         $jsonstring=str_replace('%jsonServices%', $servicesJson, $jsonstring);
-
-
-
+         
+        // Mike added this 9-7-2017 so that would work in ods.  IT works! 
+        if($disabilities!="") $disabilitiesJson='{"disabilityDescriptor": "'.$disabilities.'"}';
+         $jsonstring=str_replace('%iddisabilities%',$disabilitiesJson,$jsonstring);   
+        
+       
+       
         return $jsonstring;
         
     } 

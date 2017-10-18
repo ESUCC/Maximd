@@ -35,7 +35,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             changeMonth: true,
             changeYear: true
         });
-
+//cosole.table(data,['name','gender','email']);
         buildNonPublicSchools();
 
         $('.studentOptions').each(function() { 
@@ -51,6 +51,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
 							url: '/student/get-most-recent/'+$(this).val(),
 							success: function(json) {
 								if (json['success'] == '1')
+									
 									window.location.href = json['url'];
 								else
 									alert('The system was unable to locate the most recent form.');
@@ -61,10 +62,11 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
                     }
 
 				}
-			});
+			}); 
 		});
     });
     function fetchCaseManagers() {
+        
         if($('#id_county').val()  && $('#id_district').val()  && $('#id_school').val() ) {
             $.ajax({
                 type: 'POST',
@@ -80,13 +82,14 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
                         $.each(json['data'], function(optionValue, optionDisplay) {
                             options += '<option value="' + optionValue + '">' + optionDisplay + '</option>';
                             size += 1;
+                            
                         });
                         if(size>1) {
                             options = optionsPrefix+options;
                         }
                         // triggerHandler causes onChange to fire on district
                         $("#id_case_mgr").html(options).triggerHandler("change");
-//                    $('#id_district').add('#id_school').closest('.wrapperDiv').slideDown();
+  //                  $('#id_district').add('#id_school').closest('.wrapperDiv').slideDown();
 
                     }
                 }
@@ -94,6 +97,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
         }
     }
     function publicSchoolStudentToggle() {
+       // console.log('we got here');
         /**
          * hide parental_placement when student is in public school
          */
@@ -105,6 +109,10 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             $("input[type='radio'][name='parental_placement']").prop('checked', false).closest('div').hide();
         } else {
             $("input[type='radio'][name='parental_placement']").closest('div').show();
+            $('#parental_placement-label').css("color","blue");
+            
+            ;
+           
         }
         /**
          * Non-Pub County:
@@ -116,15 +124,24 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
          – Could we add a checkbox to the right of "Non-Public County" that is labeled "home Schooled".
          If this box is checked, the other three non-public questions can be left blank and need not be revealed.
          */
+      // console.assert(publicSchoolStudent!=1,'PUblic school Student is equal  1');
+      // console.log('This is the value of pub school student=' + publicSchoolStudent);
         if (undefined == publicSchoolStudent || 1 == publicSchoolStudent) {
             $('#nonpubcounty').closest('div').hide();
             $('#nonpubdistrict').closest('div').hide();
             $('#nonpubschool').closest('div').hide();
         } else {
             // not public school student
+            
             $('#nonpubcounty').closest('div').show();
+            $('#nonpubcounty-label').css("color","blue");
+          //  $('.srsTextLabel').css("color","blue").closest('radio');
+           //  $("lable[for='nonpubcounty']".css("color","blue").
+            
             $('#nonpubdistrict').closest('div').show();
+            $('#nonpubdistrict-label').css("color","blue");
             $('#nonpubschool').closest('div').show();
+            $('#nonpubschool-label').css("color","blue");
         }
     }
     function statusToggle() {

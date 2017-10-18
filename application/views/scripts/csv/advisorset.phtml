@@ -1,0 +1,149 @@
+
+<style>
+ #srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 10px; 
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+#mainFooter{
+	 height: 0px;
+    padding-bottom: 0; 
+	
+}
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+</style>
+
+   <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('district');
+                } ?>
+            </td>
+        </tr>
+    </table>
+    
+    <?php //$this->view->listOfStudents
+         ?>       
+    <h1><?php echo $this->listOfStudents[0]['name_district']?></h1>
+    <br>
+    <table>
+    <tr><u>
+    <th>Last Name,First</th><th>School Name/Id<th>Date Conference</th><th>Primary Service</th><th>Min per day</th>
+    <th>Days/Week</th></u><th>RSrv 1</th><th>RSrv 1 Time</th><th>RSrv 1 Days/wk</th>
+    <th>Rel Srv 2</th><th>Rel Srv 2 Time</th><th>RSrv 2 Days/wk</th>
+    <th>Rel Srv 3</th><th>Rel Srv 3 Time</th><th>RSrv 3 Days/wk</th>
+    </tr>
+   
+    
+    <?php 
+    foreach($this->listOfStudents as $studentList) {
+      echo '<tr><td>';  
+      echo $studentList['name_last'].", ".$studentList['name_first'];
+      echo '</td>';
+      
+      echo '<td>';
+      echo "|". $studentList['name_school'].", ".$studentList['id_school'];
+      echo '</td>';
+      
+      echo '<td>';
+      if($studentList['date_conference']!=null)
+      echo "|".$studentList['date_conference'];
+      echo '</td>';
+      
+      echo '<td>';
+      if($studentList['primary_disability_drop'] !=null)
+      echo"|". $studentList['primary_disability_drop'];
+      echo '</td>';
+      
+     // if($studentList['primary_service_tpd_unit']=='h') $studentList['primary_service_tpd']=60*$studentList['primary_service_tpd'];
+      echo '<td>';
+      if($studentList['primary_service_tpd'] !=null)
+      echo "|".$studentList['primary_service_tpd']." ".$studentList['primary_service_tpd_unit'];
+      echo '</td>';
+        
+       echo '<td>';
+      if($studentList['primary_service_dpw'] !=null)
+      echo "|". $studentList['primary_service_dpw']." ".$studentList['primary_service_tpd_unit'];
+      echo '</td>'; 
+        
+        
+      
+      
+       if($studentList['supp_services']!=NULL) {
+           
+          $numElements=count($studentList['supp_services']);
+       //   writevar1($numElements,'number of elements');
+          $t=$studentList['supp_services'];
+         
+          foreach($t as $tt){
+              writevar1($tt,'this is t assigned from sup services');
+              echo '<td>';
+              echo "|".$tt['related_service_drop'];
+               echo '</td>';
+               echo '<td>';
+               echo "|". $tt['related_service_tpd']." ".$tt['related_service_tpd_unit'];
+               echo '</td>';
+               echo '<td>';
+               echo "|".$tt['related_service_dpw']." ".$tt['related_service_dpw'];
+               echo '</td>';
+             
+            
+             }
+           echo '</td></tr>';
+          }  
+     //  echo'<tr><td>-</td><td>-</td><td>-</td></tr>';
+    }
+   
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
+    ?>
+    
+    
+    
+    </table>
+      

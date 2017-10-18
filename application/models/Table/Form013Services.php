@@ -12,5 +12,81 @@ class Model_Table_Form013Services extends Model_Table_AbstractIepForm {
             'refColumns'        => array('id_form_013')
         )
     );
+   
+    // Mike added these functions to get ods to work 10-17-2017
+    function writevar1($var1,$var2) {
     
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+     
+    public function getLastServiceLocation($id){
+    
+        $sql1="select * from ifsp_services where status is null  and id_form_013='$id'  ";
+        $forms=$this->db->fetchAll($sql1);
+        return $forms[0]['service_where'];
+         
+         
+    }
+    
+    public function getIfspServicesState($id_form){
+         
+        /*
+         * Speech-language therapy
+         * Physical Therapy Services
+         * Occupational Therapy Services
+         */
+    
+        $result['serviceDescriptor_slt']='0';
+        $result['serviceBeginDate_slt']=null;
+        $result['serviceDescriptor_ot']='0';
+        $result['serviceBeginDate_ot']=null;
+        $result['serviceDescriptor_pt']='0';
+        $result['serviceBeginDate_pt']=null;
+    
+        $sql="select * from ifsp_services where status is null and id_form_013='$id_form' order by timestamp_created desc";
+        $forms=$this->db->fetchAll($sql);
+        $form=$forms[0];
+         
+    
+         
+         
+        if (!empty($form)) {
+    
+    
+            if ($form['service_service']=='Speech-language therapy') {
+                $result['serviceDescriptor_slt']='3';
+                $result['serviceBeginDate_slt']=$form['service_start'];
+    
+            }
+    
+            if ($form['service_service']=='Physical Therapy Services'){
+                $result['serviceDescriptor_pt']='2';
+                $result['serviceBeginDate_pt']=$form['service_start'];
+    
+            }
+            if ($form['service_service']=='Occupational Therapy Services'){
+                $result['serviceDescriptor_ot']='1';
+                $result['serviceBeginDate_ot']=$form['service_start'];
+    
+            }
+    
+    
+            $result['specialeducationsettingdescriptor']=$form['service_where'];
+    
+    
+    
+            return $result;
+            // end of the for looop
+        }
+        else {
+            return null;
+        }
+         
+    }   // end of the function
 }

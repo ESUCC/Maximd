@@ -107,7 +107,9 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->id_district = new App_Form_Element_Select('id_district', array('label' => 'District'));
         $this->id_school = new App_Form_Element_Select('id_school', array('label' => 'School'));
 
-        $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'County'));
+        $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'County:'));
+       
+        
         $this->id_county_display->setIgnore(true);
         $this->id_county_display->setAllowEmpty(true);
         $this->id_county_display->setRequired(false);
@@ -141,7 +143,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
             1 => 'Yes',
             0 => 'No'
         ));
-
+ 
         $this->parental_placement = new App_Form_Element_Radio('parental_placement', array('label' => 'Parental Placement'));
         $this->parental_placement->setRequired(false);
         $this->parental_placement->setAllowEmpty(true);
@@ -253,7 +255,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->ell_student->setMultiOptions(array(
             '1' => 'Yes',
             '0' => 'No'
-        ));
+        )); 
 
         $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment'); //, array('label' => 'Alternate assessment'));
         $this->alternate_assessment->getDecorator('label')->setOption('placement', 'prepend');
@@ -694,10 +696,13 @@ class Form_StudentDemographics extends Form_AbstractForm {
                     break;
             }
         }
-
+*/
+        
+        // SRS-127 the default values for hte district county school did not show up.
+        //the coment was below this line. Mike moved it up 9-26-2017
         $this->setDisabledValues();
 
-*/
+
     }
 
     public function isValid($data = array())

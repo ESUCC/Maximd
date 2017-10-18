@@ -46,7 +46,9 @@ echo $this->element->dob;
     <table class="sc_formInputBlock">
         <tr>
             <td>
-                <?php
+                <?php if ($view->db_form_data['status'] != 'Final' || $this->element->assessment_accom->getValue() != 'The child will participate in a combination of assessment systems as specified.') {
+                    $this->element->assessment_accom->removeMultiOption('The child will participate in a combination of assessment systems as specified.');
+                }
                 if ('print' == $view->mode) {
                     echo $this->element->assessment_accom->getValue();
                 } else {

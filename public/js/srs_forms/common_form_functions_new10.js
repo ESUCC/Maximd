@@ -1,7 +1,7 @@
 function removeAllTabs(selector){
    for (var tabIndex=$('#'+selector).tabs('length')-1; tabIndex>=0; tabIndex--)
    {
-	   deleteTab(selector, tabIndex);
+	   deleteTab(selector, tabIndex); 
    }
 }
 function deleteTab(selector, tabIndex){

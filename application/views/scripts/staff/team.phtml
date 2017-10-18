@@ -182,9 +182,12 @@
     		$("#searchTable").html("<table width='100%' id='findres' class='studentList'>")
         		$.each(studentsList, function(indx, val) {
 			    color = (i % 2) ? "#FFFFFF" : "#F0F0F0";
+			   
 			    i++;
 			    if ((val[1].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
-				finded++;
+				   // console.log((val[1].substr(0, searchAlphabetLength)).toLowerCase());
+                  //  console.log(searchAlphabet.toLowerCase());
+					finded++;
 			        $("#findres").append('<tr bgcolor="' + color + '"><td><a href="/staff/team/id_county/' + val[2] + '/id_district/' + val[3] + '/id_student/' + val[4] + '/id_personnel/' + val[5] + '/id_school/' + val[6] + '">' + val[0] + ' ' + val[1] + '</a></td></tr>');
 			    } 
 			});

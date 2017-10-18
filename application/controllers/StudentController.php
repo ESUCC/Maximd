@@ -237,7 +237,7 @@ class StudentController extends My_Form_AbstractFormController
         // $result = $studentManagersListQuery->studentManagersList($re... to the following
         //the studentManagersListm was put in special just for 
         $result = $studentManagersListQuery->studentManagersList($request->id_county, $request->id_district, $request->id_school); // Get result
-        $this->writevar1($result,'this is the result');
+      //  $this->writevar1($result,'this is the result');
        $this->_helper->json->sendJson($result[0]);
 
         return;
@@ -315,7 +315,7 @@ class StudentController extends My_Form_AbstractFormController
 			{
 		      	$value = urldecode($nameField);
 		      	$options[$value] = urldecode(strip_tags($valueField));
-			  	//print $nameField ."=>". $valueField."<br>";
+			 // 	print $nameField ."=>". $valueField."<br>";
     		}
 
 
@@ -378,7 +378,9 @@ class StudentController extends My_Form_AbstractFormController
 				$options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
 				$options["ell_student"] = ($options["ell_student"] == "Yes") ? 'True' : 'False';
 				$options["ward"] = ($options["ward"] == "Yes") ? 'True' : 'False';
-				$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; 
+				//$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; 
+				$options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False';
+				
 				$options["ward_surrogate"] = ($options["ward_surrogate"] == "Yes") ? 'True' : 'False';
 				$options["ward_surrogate_nn"] = ($options["ward_surrogate_nn"] == "Yes") ? 'True' : 'False';
 
@@ -1025,14 +1027,15 @@ class StudentController extends My_Form_AbstractFormController
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();
-
+        $this->writevar1($this->getRequest()->getParam('id_student'),'this is the post data');
+        
         $stuObject = new Model_Table_StudentTable();
         $form = new Form_StudentDemographics();
 
         if($this->getRequest()->getParam('id_student')) {
             $studentArr = $stuObject->studentInfo($this->getRequest()->getParam('id_student'));
           
-            // writevar($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
+           // $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
             // this is not in the iep_student table.
             if(1!=count($studentArr)) {
                 throw new Exception('Student not found');
@@ -1123,6 +1126,7 @@ class StudentController extends My_Form_AbstractFormController
              //       writevar($data,'this is the data before the update');
                     $stuObject->update($data, $where);
                     if(isset($forceRefresh) && $forceRefresh) {
+                        
                         $this->_redirector->gotoSimple('edit', 'student', null, array('id_student' => $this->getRequest()->getParam('id_student')));
                     }
                 } else {
@@ -1146,7 +1150,7 @@ class StudentController extends My_Form_AbstractFormController
                 'address_state' => 'Nebraska'
             ));
         }
-        $this->writevar1($form,'thisis the form');
+      // $this->writevar1($form,'thisis the form');
         $this->view->form = $form;
         if(count($form->getMessages())) {
             $this->view->errorMessage = 'Record is incomplete, and cannot be saved.';
