@@ -14,13 +14,31 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         fclose($fp);
     }
     
+    function removeTableEntry($form_code,$form_id){
+    // Mike added this 10-14-2017 so that we can remove table row entry from edfi should end user
+    // decide to delete a form.  Best to start over with edfi.
+        // id_form_022 and 'some number'
+        
+       if($form_code=='id_form_002') $this->delete('mdt_id =' . (int)$form_id);
+       if($form_code=='id_form_022') $this->delete('mdt_id =' . (int)$form_id);
+       if($form_code=='id_form_004') $this->delete('iep_ifsp_id =' . (int)$form_id);
+       if($form_code=='id_form_023') $this->delete('iep_ifsp_id =' . (int)$form_id);
+        
+       
+        
+    }
+    
     function setupAdvisor($stuData){
-       // $this->writevar1($stuData,'this isthe student data');
         $id=$stuData['id_student'];
         $table = new Model_Table_Edfi();
         $item=$table->fetchrow('id_student = '."'".$id."'");
       //  $this->writevar1($item,'this is the item');
-      //  if ($stuData['id_student']=='1118982')$this->writevar1($item['id_student'],'here is the student');
+      
+      //  $this->writevar1($stuData['specialeducationsettingdescriptor'],'placement type descriptor');
+        if($stuData['id_student']=='1448941') {
+        //    $this->writevar1($stuData['specialeducationsettingdescriptor'],'data before it goes in for Elusia');
+         //   $this->writevar1($stuData,'this is the student data');
+        }
         
         if(empty($item)) {
             $this->insertEdfi($stuData);
@@ -31,19 +49,19 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     
     function insertEdfi($stuData){
     //    $this->writevar1($stuData['specialeducationsettingdescriptor'],' '.$stuData['id_student']);
-      //  if($stuData['id_student']=='1384091'){
-            $this->writevar1($stuData,'this is the student data edfi.model');
-      //  }
+        
         $data = array(
-            'educationorganzationid'        => $stuData['educationOrganizationID'],
+         //   'educationorganzationid'        => $stuData['educationOrganizationID'],
+            
+            'educationorganzationid'        => $stuData['educationOrganizationID'].'000',
             'id_student'                   => $stuData['id_student'],
             'studentuniqueid'              =>$stuData['studentUniqueID'],
             'begindate'                    =>$this->changeDatetoNull($stuData['beginDate']),
             'enddate'                      =>$stuData['enddate'],
             'reasonexiteddescriptor'       =>$stuData['reasonExitedDescriptor'],
-            'specialeducationsettingdescriptor'    =>$stuData['specialEducationSettingDescriptor'],
+            'specialeducationsettingdescriptor'    =>$stuData['specialeducationsettingdescriptor'],
             'levelofprogramparticipationdescriptor'=>$stuData['levelOfProgramParticipationDescriptor'],
-            'placementtypedescriptor'      =>$stuData['placementTypeDescriptor'],
+            'placementtypedescriptor'      =>$stuData['placementtypedescriptor'],
             'specialeducationpercentage'   =>$stuData['specialEducationPercentage'],
             'totakealternateassessment'    =>$stuData['toTakeAlternateAssessment'],
             'servicedescriptor_pt'         =>$stuData['serviceDescriptor_pt'],
@@ -53,16 +71,28 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             'servicedescriptor_slt'        =>$stuData['serviceDescriptor_slt'],
             'servicebegindate_slt'         =>$this->changeDatetoNull($stuData['serviceBeginDate_slt']),
             'disabilities'                 =>$stuData['disabilities'],
-        
+                  
             'edfipublishstatus'            =>$stuData['edfiPublishStatus'],
             'edfiresultcode'               =>$stuData['edfiResultCode'],
             'edfipublishtime'              =>$stuData['edfiPublishTime'],
-            'id_author'                    =>$stuData['id_author']
+            'id_author'                    =>$stuData['id_author'],
+            'mdt_code'                     =>$stuData['mdt_code'],
+            'mdt_id'                       =>$stuData['mdt_id'],
+            'iep_ifsp_code'                =>$stuData['iep_ifsp_code'],
+            'iep_ifsp_id'                  =>$stuData['iep_ifsp_id'],
+            'name_first'                   =>$stuData['name_first'],
+            'name_last'                    =>$stuData['name_last'],
+            'name_school'                  =>$stuData['name_school']
             );
        
-        //$this->writevar1($data,'this is the data before it goes in');
+     //   $this->writevar1($data,'this is the data before it goes in');
         
         $db = Zend_Registry::get('db');
+        
+        if($stuData['id_student']=='1411436'){
+        //    $this->writevar1($data,'this is the student data edfi.model');
+        }
+     //   $this->writevar1($data,'this is the data');
         $db->insert('edfi', $data);
         
     } // End of the function
@@ -212,6 +242,8 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     
     function updateOneStudent($currentForm){
     //    $this->writevar1($currentForm,'this is the current form line 118');
+        
+        // Mike appended the formcode and the form id to mdt and iep_ifsp edfi 10-12-2014
         $studentId=$currentForm['id_student'];
         $ot=null;
         $pt=null;
@@ -245,7 +277,10 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             'edfipublishstatus'=>'W',
             'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
             'levelofprogramparticipationdescriptor'=>"06",
-            'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent']
+            'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent'],
+            'iep_ifsp_code'=>'form004',
+            'iep_ifsp_id'=>$currentForm['id_form_004']
+            
             );
         
         
@@ -273,7 +308,9 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
                 'edfipublishstatus'=>'W',
                 'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
                 'levelofprogramparticipationdescriptor'=>"06",
-                'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent']
+                'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent'],
+                'iep_ifsp_code'=>'form023',
+                'iep_ifsp_id'=>$currentForm['id_form_023']
             );
            
            
@@ -291,7 +328,9 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
            $data=array(
                'disabilities'=>$mdtCode,
                'edfipublishstatus'=>'W',
-               'id_author_last_mod'=>$_SESSION['user']['id_personnel']
+               'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
+               'mdt_code'=>'form002',
+               'mdt_id'=>$currentForm['id_form_002']
            );
            
            
@@ -308,7 +347,9 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             $data=array(
                 'disabilities'=>$mdtCode,
                 'edfipublishstatus'=>'W',
-                'id_author_last_mod'=>$_SESSION['user']['id_personnel']
+                'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
+                'mdt_code'=>'form022',
+                'mdt_id'=>$currentForm['id_form_022']
             );
              
              

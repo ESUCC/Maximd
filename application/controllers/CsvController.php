@@ -38,6 +38,22 @@ class CsvController extends Zend_Controller_Action {
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
       
+      
+      $continue=false;
+      foreach($_SESSION['user']['user']->privs as $privs){
+      
+          if ($privs['class']<=3 && $privs['id_county']==$id_county && $privs['id_district']==$id_district
+              && $privs['status']=='Active')
+              $continue=true;
+      
+              if($privs['class']==1 && $privs['status']=='Active') $continue=true;
+      
+      }
+      
+      if($continue==false){
+          $this->_redirect( '/error/no-access');
+      
+      }
        
       $listStudents = new Model_Table_StudentTable();
       $juneCutoff=$this->getJuneCutoff();

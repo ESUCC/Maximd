@@ -61,10 +61,16 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	public function receiveEdfiSync($edfiDistrictarray) {
 		if(($this->connstr!="") and ($this->APIUrl!="")){
 
-		//  $this->writevar1("", "Processing  " .  count($edfiDistrictarray) . " districts <br/><br/>");
-            
+		 // $this->writevar1("", "Processing  " .  count($edfiDistrictarray) . " districts <br/><br/>");
+            /*
+             * This will look through each district that is edfi capable and look for the "W" in
+             * the publish and do just that to the ods. If the ods is a success then a "S" is put 
+             * in this field. If there is an error then an "E" gets put into this field.
+             * 
+             */
 			foreach ($edfiDistrictarray as $value){
-			  //  $this->writevar1($value,'this is the value');
+			 //  $this->writevar1($value,'this is the value');
+			   
 				$result="";
 
 				while($result=="") {
@@ -116,7 +122,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 			/*Commit*/
 			$con = pg_connect($this->connstr) or die ("Could not connect to server\n"); 
 			foreach ($this->updateList as $query){
-				// never got here.  $this->writevar1("", "Executing " . $query);
+			//	  $this->writevar1("", "Executing " . $query);
 				
 				
 				pg_query($con, $query);
@@ -134,7 +140,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*Get JSON representation from Students association*/
 	private function getStudentJson($student){
 	   
-	    $this->writevar1($student,'student info from db line 136');
+	  //  $this->writevar1($student,'student info from db line 136');
 	   
 	    
 				$studentUniqueId=$student[8];
@@ -149,7 +155,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 				$endDate = $student[10];
 				
 				$disabilities=$student[20];
-                $this->writevar1($student[20],'this should be disabilities');
+           //     $this->writevar1($student[20],'this should be disabilities');
 				if(is_null($reasonExitedDescriptor)){
 							$reasonExitedDescriptor="";
 						}
@@ -231,7 +237,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 						); 
  
                    // $this->writevar1($jsonUpdate,'this is the jsonupdate line 219');
-                  $this->writevar1($jsonUpdate,'this is the jasonUpdate');
+              //    $this->writevar1($jsonUpdate,'this is the jasonUpdate');
 					return $jsonUpdate;
 
 	}
@@ -256,7 +262,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		//Get auth token for current disctrict call
 	 	$this->currToken=$this->edfi_client->edfiApiAuthenticate($this->APIUrl,$key,$secret);
 		
-	 //	$this->writevar1("TOKEN ", "Token = " . $this->currToken);
+	//	$this->writevar1("TOKEN",$this->currToken);
         
 
 		/*If a valid token is received*/
@@ -362,14 +368,14 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		            and s.id_county='".$county."'";
 		
 	//	$this->writevar1($query,'this is the bad query');
-		 $this->writevar1($query,'this is the query');
+		// $this->writevar1($query,'this is the query');
 		
 		 $rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
 		  
      	 
 		while ($row = pg_fetch_row($rs)) {
 		  $students[]=$row;
-		  $this->writevar1($row,'this is the row data');
+		//  $this->writevar1($row,'this is the row data');
 		}
 		
 		pg_close($con); 

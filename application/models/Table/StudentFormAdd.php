@@ -134,12 +134,25 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
        
                    
        // Mike added this 8-4-2017 so that we only get  case managers at the school.
-       
-       $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel from iep_personnel p,iep_privileges r where p.id_personnel=r.id_personnel and r.class='6' and r.id_district='".
+       // Mike changed this 10-17-2017 so that school managers and ASM as well as case managers get in the 
+       // mix
+       $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel,r.class from iep_personnel p,iep_privileges r 
+                 where p.id_personnel=r.id_personnel and  r.class <= '6' and r.id_district='".
                        $id_district."' and r.id_county='".$id_county."' and r.id_school='".$id_school."' order by p.name_last asc";
-                   
+   
+                       
+                       // testing 10-17-2017
+       $select3="select p.id_personnel,p.name_first,p.name_last,r.id_personnel,r.class from iep_personnel p,
+             iep_privileges r 
+             where p.id_personnel=r.id_personnel and  r.class <= '3' and r.id_district='".
+             $id_district."' and r.id_county='".$id_county."' and r.status='Active'  order by p.name_last asc";
+                                         
+                       
+                       
         $result = $db->fetchAll($select2);
-        $this->writevar1($result,'this is the result');
+        $num=count($result);
+       //$this->writevar1($result,'this is the result');
+      //  $this->writevar1($num,'this is the numbers');
         return array($result);
     }
 
