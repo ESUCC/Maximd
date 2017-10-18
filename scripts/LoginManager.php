@@ -24,7 +24,7 @@ class LoginManager
 
     public function loginOldSite()
     {
-        $oldSiteClient = $this->setup('https://iep.unl.edu/logon.php?option=1');        
+        $oldSiteClient = $this->setup('https://iep.esucc.org/logon.php?option=1');        
         $oldSiteClient->setParameterPost('ferpa', '1');
         $response = $oldSiteClient->request('POST');
         //echo($response);

@@ -204,6 +204,9 @@ class CsvController extends Zend_Controller_Action {
            //$this->writevar1($result,'this i the array result for both mdts');
       }
        
+      $mostRecentIep=$iep->getMostRecentIepState($stuId);
+      $mostRecentIfsp=$ifsp->getMostRecentIfspState($stuId);
+      $mostRecentIepCard=$iepCard->getMostRecentIepCardState($stuId);
       
        
        if($mostRecentMdt==null && $mostRecentMdtCard==null && $ifsp==null ) {
@@ -216,7 +219,7 @@ class CsvController extends Zend_Controller_Action {
        if($student['unique_id_state']<='1000000000'){
            $continue=false;
        }
- 
+       
  
  // Start Here
  
@@ -225,9 +228,7 @@ class CsvController extends Zend_Controller_Action {
        $mostRecentIepCard=null;
        $mostRecentIfsp=null;
        
-       $mostRecentIep=$iep->getMostRecentIepState($stuId);
-    //   $mostRecentIfsp=$ifsp->getMostRecentIfspState($stuId);
-    //   $mostRecentIepCard=$iepCard->getMostRecentIepCardState($stuId);
+       
         
      
  
