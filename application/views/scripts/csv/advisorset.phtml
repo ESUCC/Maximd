@@ -57,24 +57,39 @@
             </td>
         </tr>
     </table>
-    
+     
     <?php //$this->view->listOfStudents
          ?>       
     <h1><?php echo $this->listOfStudents[0]['name_district']?></h1>
     <br>
     <table>
     <tr><u>
-    <th>Last Name,First</th><th>School Name/Id<th>Date Conference</th><th>Primary Service</th><th>Min per day</th>
-    <th>Days/Week</th></u><th>RSrv 1</th><th>RSrv 1 Time</th><th>RSrv 1 Days/wk</th>
-    <th>Rel Srv 2</th><th>Rel Srv 2 Time</th><th>RSrv 2 Days/wk</th>
-    <th>Rel Srv 3</th><th>Rel Srv 3 Time</th><th>RSrv 3 Days/wk</th>
+    <th>Last Name,First|</th><th>School/Id|<th>DateConf|</th><th>PriService|</th><th>MinPerDay|</th>
+    <th>Days/Week|</th></u><th>RSrv1|</th><th>RSrv1 Time|</th><th>RSrv1 Days/wk|</th>
+    <th>RSrv2|</th><th>RSrv2 Time|</th><th>RSrv2 Days/wk|</th>
+    <th>RSrv3|</th><th>RSrv3 Time|</th><th>RSrv3 Days/wk|</th>
     </tr>
    
-    
+   
     <?php 
     foreach($this->listOfStudents as $studentList) {
-      echo '<tr><td>';  
-      echo $studentList['name_last'].", ".$studentList['name_first'];
+      echo '<tr><td>';
+      
+      if($studentList['section']=='IEP'){
+          $formName='form004';
+          $formNumber=$studentList['id_form'];
+      }
+      
+      if($studentList['section']=='IFSP') {
+          $formName='form013';
+          $formNumber=$studentList['id_form'];
+      }
+      
+      $fullName=$studentList['name_last'].", ".$studentList['name_first'];?>
+      <a href="/<?php echo $formName?>/view/document/<?php echo $formNumber?>/page/6"><?php echo $fullName ?></a>
+      
+      
+      <?php 
       echo '</td>';
       
       echo '<td>';
@@ -85,7 +100,15 @@
       if($studentList['date_conference']!=null)
       echo "|".$studentList['date_conference'];
       echo '</td>';
+     
+      $isIfsp=false;
+      $nameIfsp=(explode(" ",$studentList['name_first']));
+      foreach($nameIfsp as $ifsp){
+          if($ifsp=='IFSP') $isIfsp=true;
+      }
       
+      
+      if($isIfsp==false){
       echo '<td>';
       if($studentList['primary_disability_drop'] !=null)
       echo"|". $studentList['primary_disability_drop'];
@@ -98,11 +121,11 @@
       echo '</td>';
         
        echo '<td>';
-      if($studentList['primary_service_dpw'] !=null)
-      echo "|". $studentList['primary_service_dpw']." ".$studentList['primary_service_tpd_unit'];
+      if($studentList['primary_service_days_value'] !=null)
+      echo "|". $studentList['primary_service_days_value']." ".$studentList['primary_service_days_unit'];
       echo '</td>'; 
         
-        
+      }  
       
       
        if($studentList['supp_services']!=NULL) {
@@ -110,9 +133,10 @@
           $numElements=count($studentList['supp_services']);
        //   writevar1($numElements,'number of elements');
           $t=$studentList['supp_services'];
-         
+           if(!array_key_exists("id_ifsp_services",$t[0])){
+               
           foreach($t as $tt){
-              writevar1($tt,'this is t assigned from sup services');
+             writevar1($tt,'this is t assigned from sup services');
               echo '<td>';
               echo "|".$tt['related_service_drop'];
                echo '</td>';
@@ -120,11 +144,30 @@
                echo "|". $tt['related_service_tpd']." ".$tt['related_service_tpd_unit'];
                echo '</td>';
                echo '<td>';
-               echo "|".$tt['related_service_dpw']." ".$tt['related_service_dpw'];
+               echo "|".$tt['related_service_days_value']." ".$tt['related_service_days_unit'];
                echo '</td>';
              
             
              }
+           }
+           
+           if(array_key_exists("id_ifsp_services",$t[0])) {
+               foreach($t as $tt){
+                      // writevar1($tt,'this is t assigned from sup services');
+                   echo '<td>';
+                   echo "|".$tt['service_service'];
+                   echo '</td>';
+                   echo '<td>';
+                   echo "|". $tt['service_tpd']." ".$tt['service_tpd_unit'];
+                   echo '</td>';
+                   echo '<td>';
+                   echo "|".$tt['service_dwm']." ".$tt['service_dwm_unit'];
+                   echo '</td>';
+                    
+           
+               }
+           }
+                
            echo '</td></tr>';
           }  
      //  echo'<tr><td>-</td><td>-</td><td>-</td></tr>';
