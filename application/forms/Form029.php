@@ -59,7 +59,8 @@ class Form_Form029 extends Form_AbstractForm {
 		$this->meeting_type_eligible_iep->setAllowEmpty(false);
 		$this->meeting_type_eligible_iep->addValidator(new My_Validate_EmptyIfNot('meeting_type', '3'));
 		$this->meeting_type_eligible_iep->addValidator(new My_Validate_EmptyIf('meeting_type_eligible_ifsp', 't'));
-		$this->meeting_type_eligible_iep->setLabel(" &nbsp; If the team determines that your child is eligible for special education and related services, a meeting will follow to develop your child's Individualized Educaton Plan (IEP). At the IEP meeting we will typically be discussing:");
+		// Mike changed 10-23-2017 jira ticket SRS-133 education was spelled Educaton
+		$this->meeting_type_eligible_iep->setLabel(" &nbsp; If the team determines that your child is eligible for special education and related services, a meeting will follow to develop your child's Individualized Education Plan (IEP). At the IEP meeting we will typically be discussing:");
 		$this->meeting_type_eligible_iep->setDescription("<ul>
  				<li>Any special education and related services and supplementary aids and services which your child may require</li>
 				<li>Appropriate annual goals</li>

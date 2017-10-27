@@ -52,6 +52,7 @@ class Form023Controller extends My_Form_AbstractFormController {
     			getdate(strtotime($this->view->db_form_data['student_data']['dob'])),
     			getdate(strtotime($nssrsSubmissionPeriod))
     	);
+    	$this->writevar1($ageArr,'this is the age array');
     	$this->view->db_form_data['student_data']['age_at_submission'] = $ageArr['years'];
     	
     	$subFormsArray = array();

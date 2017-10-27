@@ -1027,7 +1027,7 @@ class StudentController extends My_Form_AbstractFormController
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();
-        $this->writevar1($this->getRequest()->getParam('id_student'),'this is the post data');
+       // $this->writevar1($this->getRequest()->getParam('id_student'),'this is the post data');
         
         $stuObject = new Model_Table_StudentTable();
         $form = new Form_StudentDemographics();
