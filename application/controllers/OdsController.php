@@ -51,7 +51,7 @@ class OdsController extends Zend_Controller_Action
       }
       
       if($continue==false){
-          $this->_redirect( '/error/no-access');
+      //    $this->_redirect( '/error/no-access');
           
       }
     
