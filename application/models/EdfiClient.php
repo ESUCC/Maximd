@@ -95,7 +95,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
             }"
 	    */
 	    $jsonResult = json_decode($result);
-	    $this->writevar1($jsonResult,'this is the json result for the token');
+	  //  $this->writevar1($jsonResult,'this is the json result for the token');
 	    /*
 	     * This is what the writevar looks like
 	     * this is the json result for the token
@@ -230,7 +230,7 @@ function updateStudentSpecialEducationProgramAssociation($data){
   //  $this->writevar1("","Preparing to post  " . $id_student . " token=" . $this->currentToken . " opx=" );
 
 //	$this->writevar1("","..................................................");
-  $this->writevar1("Student data to upload", $data);
+ // $this->writevar1("Student data to upload", $data);
 //	$this->writevar1("", "..................................................");
 
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);

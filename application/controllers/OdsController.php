@@ -11,7 +11,7 @@ class OdsController extends Zend_Controller_Action
         $fp = fopen("/tmp/textfile.txt", "a");
         fwrite($fp, $data2);
         fclose($fp);
-    }
+    } 
     
   public function indexAction(){ 
       
@@ -37,24 +37,12 @@ class OdsController extends Zend_Controller_Action
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
       
-      //$this->writevar1($_SESSION["user"]["user"]->privs,'these are the priviliges');
+     // $this->writevar1($id_county,'this is the county');
+     // $this->writevar1($id_district,'this is the id of the district');
       
-      $continue=false;
-      foreach($_SESSION['user']['user']->privs as $privs){
-          
-          if ($privs['class']<=3 && $privs['id_county']==$id_county && $privs['id_district']==$id_district
-              && $privs['status']=='Active')
-              $continue=true;
-              
-          if($privs['class']==1 && $privs['status']=='Active') $continue=true;    
-              
-      }
       
-      if($continue==false){
-      //    $this->_redirect( '/error/no-access');
-          
-      }
-    
+   //   $id_county='11';
+     // $id_district='0014';
       $listStudents = new Model_Table_StudentTable();
       $juneCutoff=$this->getJuneCutoff();
       $districtStudents=$listStudents->studentsInDistrict($id_county,$id_district,$juneCutoff);
@@ -64,9 +52,11 @@ class OdsController extends Zend_Controller_Action
       $schoolList=new Model_Table_IepSchoolm();
       $schools=$schoolList->getIepSchoolInfo($id_county,$id_district);
       
-     // This loop ends at line 398
-      foreach($districtStudents as $student){
-      
+     // This loop ends at line 446
+      foreach($districtStudents as $student) {
+          
+     // Take this out when ready to run the whole thing.      
+     if($student['id_student']=='1185572') {
       $continue=true;
      
       $advisorStudentData='';
@@ -346,6 +336,8 @@ class OdsController extends Zend_Controller_Action
                }
           
             } // end of check for related services form form_004_related_services
+         //  $this->writevar1($result,' data after decision');
+            
           }   // end of the existence of an iep only.
         
           
@@ -369,7 +361,7 @@ class OdsController extends Zend_Controller_Action
             //  if ($fm[0]['id_student']=='1345747')
              //     $this->writevar1($fm[0],' id of student iepcard'.$fm[0]['id_student']);
               
-            if ($card[0]['service_ot']==true){
+            if ($card[0]['servicedescriptor_ot']==true){
                 $advisorStudentData['service_ot']=1;
             } else {
                     $advisorStudentData['service_ot']=0;
@@ -400,29 +392,31 @@ class OdsController extends Zend_Controller_Action
              $advisorStudentData['levelOfProgramParticipationDescriptor']='06';
            
             $result=$this->decideWhereToGetIepData($mostRecentIep,$mostRecentIepCard);
+          //  $this->writevar1($result,' data after decision');
             $advisorStudentData['iep_ifsp_code']=$result['iep_ifsp_code'];
             $advisorStudentData['iep_ifsp_id']=$result['iep_ifsp_id'];
             
-            $advisorStudentData['specialEducationPercentage']=$result['special_ed_non_peer'];
-           
+            $advisorStudentData['specialEducationPercentage']=$result['specialeducationpercentage'];
+            $this->writevar1($advisorStudentData,' data after decision just sped percent');
+            
        //     $advisorStudentData['iep_ifsp_code']=
         //    $advisorStudentData['iep_ifsp_id']=
              
             
-            $advisorStudentData['service_ot']=$result['service_ot'];
+            $advisorStudentData['serviceDescriptor_ot']=$result['serviceDescriptor_ot'];
             $advisorStudentData['serviceBeginDate_ot']=$result['serviceBeginDate_ot'];
             
-            $advisorStudentData['service_pt']=$result['service_pt'];
+            $advisorStudentData['serviceDescriptor_pt']=$result['serviceDescriptor_pt'];
             $advisorStudentData['serviceBeginDate_pt']=$result['serviceBeginDate_pt'];
             
             
-            $advisorStudentData['service_slt']=$result['service_slt'];
+            $advisorStudentData['serviceDescriptor_slt']=$result['serviceDescriptor_slt'];
             $advisorStudentData['serviceBeginDate_slt']=$result['serviceBeginDate_slt'];
             
             $advisorStudentData['specialeducationsettingdescriptor']=$result['specialeducationsettingdescriptor'];
             
           //  if ($advisorStudentData['id_student']=='1345747') 
-             //   $this->writevar1($result,'this is the id of the student  for 2 nulls'.$result['specialEducationSettingDescriptor']);
+        //   $this->writevar1($result,'this is the id of the student  for 2 nulls'.$result['specialEducationSettingDescriptor']);
 
          } // end of getting values if using iep
       
@@ -443,7 +437,7 @@ class OdsController extends Zend_Controller_Action
              
         // if($advisorStudentData['id_student']=='1384091') $this->writevar1($advisorStudentData,'this is the advisor at the end line 381');
           $insert=new Model_Table_Edfi();
-         //$this->writevar1($advisorStudentData,'this is the student data');
+         $this->writevar1($advisorStudentData,'this is the student data');
          
          
          $insert->setupAdvisor($advisorStudentData);
@@ -454,8 +448,11 @@ class OdsController extends Zend_Controller_Action
                        //  $this->_redirect('/#');
          }  //this is the end of publishing to the datastore 376
        
+        
       } // end of the if continue line 175 if continue==true
-     } // end of the for loop way up there searching for each districts students
+     
+      } // Take this out when ready to run the whole thing
+    } // end of the for loop way up there searching for each districts students
     
      $insertEdfi=new Model_EdfiOds();
      
@@ -468,20 +465,7 @@ class OdsController extends Zend_Controller_Action
 
  } // end of the advisorSetAction function
     
-
-    
-    
-    
-    
-    
-    
-    
- 
-    
-    
-    
-    
-    
+  
     function decideWhereToGetIepData($iep,$iepCard) {
    
         if($iep[0]['date_conference']>= $iepCard[0]['date_conference']) {
@@ -491,31 +475,37 @@ class OdsController extends Zend_Controller_Action
             $result['specialeducationsettingdescriptor']=$iep[0]['primary_service_location'];
             $result['iep_ifsp_code']='form004';
             $result['iep_ifsp_id']=$iep[0]['id_form_004'];
+            $result['specialeducationpercentage']=$iep[0]['special_ed_non_peer_percent'];
+       //     $this->writevar1($iep[0],'this is the result if iep under decide where to get iepdata');
             return $result;
         }
         
         if($iep[0]['date_conference']< $iepCard[0]['date_conference']) {
             $result['iep_ifsp_code']='form023';
             $result['iep_ifsp_id']=$iepCard[0]['id_form_023'];
+            $result['specialeducationpercentage']=$iepCard[0]['special_ed_non_peer_percent'];
             
+          //  $this->writevar1($iepCard[0],'this is the iep card bare on the db');
             if ($iepCard[0]['service_ot']==true){
-                $result['service_ot']=1;
+              //  $result['service_ot']=1;
+                $result['serviceDescriptor_ot']=1;
             } else {
-                $result['service_ot']=0;
+                $result['serviceDescriptor_ot']=0;
             }
             if ($iepCard[0]['service_pt']==true){
-                $result['service_pt']=2;
+                $result['serviceDescriptor_pt']=2;
             }
             else {
-                $iepCard['service_pt']=0;
+                $result['serviceDescriptor_pt']=0;
             }
             if ($iepCard[0]['service_slt']==true){
-                $result['service_slt']=3;
+                $result['serviceDescriptor_slt']=3;
             }
             else {
-                $iepCard['service_slt']=0;
+                $result['servicedescriptor_slt']=0;
             }
             $result['specialeducationsettingdescriptor']=$iepCard[0]['service_where'];
+          //  $this->writevar1($result,'this is the result from the card');
             
             return $result;
 

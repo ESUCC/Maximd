@@ -23,7 +23,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
          
         $Db = Zend_Registry::get('db');
     
-        $query="select edfi_key,edfi_secret from iep_district where id_county='".$county.
+        $query="select edfi_key,edfi_secret,use_edfi from iep_district where id_county='".$county.
         "' and id_district='".$district."'";
     
     

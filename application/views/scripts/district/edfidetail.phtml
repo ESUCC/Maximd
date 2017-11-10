@@ -124,7 +124,7 @@
 
 <table class="TableList" id="ResultsTable" width="100%">
 <tr >
-    <th width="15%">
+    <th width="20%">
         <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
         
     </th>
@@ -137,7 +137,7 @@
     <th>
         Error
     </th>
-    <th width="10%">
+    <th width="20%">
         Student
     </th>
     <th width="20%">
@@ -151,16 +151,19 @@
 <style>
 
 </style>
-<?php 
-    foreach($this->districtModel as $district) {?>
+<?php  
+    foreach($this->districtModel as $district) {
+    
+        ?>
 <tr >
     <td >
+        School Name:<b><?php echo $this->escape($district['name_school']);?> </b><br>
         <?php echo $this->escape($district['edfipublishtime']);?>
     </td>
     <td>
         <?php echo $this->escape($district['educationorganzationid']);?>
     </td>
-    <td style="text-align:center;">
+    <td style="text-align:center;"> 
 <b>
         <?php
          $color="";
@@ -185,6 +188,8 @@
         <?php echo $this->escape($district['edfierrormessage']);?>
     </td>
     <td>
+        Name:<b><?php echo $this->escape($district['name_first'])." ".$this->escape($district['name_last'])?></b>
+        <br>
         Id: <?php echo $this->escape($district['id_student']);?>
         <br/>
         Unique: <?php echo $this->escape($district['studentuniqueid']);?>
@@ -196,13 +201,13 @@
         End: <?php 
             echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
         <br>
-        <?php echo $this->escape($district['reasonexiteddescriptor']);?>
+        Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
     </td>
     <td>
         <table class="tableCell">
             <tr>
                 <td>
-                    SE Setting:
+                    Special Ed Setting:
                 </td>
                 <td>
                     <?php echo $this->escape($district['specialeducationsettingdescriptor']);?>
@@ -210,7 +215,7 @@
             </tr>
             <tr>
                 <td>
-                    LOPP: 
+                    Level Program Participation: 
                 </td>
                 <td>
                     <?php echo $this->escape($district['levelofprogramparticipationdescriptor']);?>
@@ -218,7 +223,7 @@
             </tr>
             <tr>
                 <td>
-                    PT:
+                    Placement Type:
                 </td>
                 <td>
                     <?php echo $this->escape($district['placementtypedescriptor']);?>
@@ -226,7 +231,7 @@
             </tr>
             <tr>
                 <td>
-                    SE %:
+                    SPED Percent Time  %:
                 </td>
                 <td>
                      <?php echo $this->escape($district['specialeducationpercentage']);?>
@@ -234,7 +239,7 @@
             </tr>
             <tr>
                 <td>
-                    Total AA: 
+                    To Take Alt Assessment: 
                 </td>
                 <td>
                     <?php echo $this->escape($district['totakealternateassessment']);?>
@@ -247,8 +252,39 @@
                 <td>
                     <?php echo $this->escape($district['disabilities']);?>
                 </td>
+                
             </tr>
-        </table>
+            <tr>
+                <td>
+                    Speach Language: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_slt']);?>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    Occupational Therapy: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_ot']);?>
+                </td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    Physical Therapy: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_pt']);?>
+                </td>
+                
+            </tr>
+            
+            
+        </table><br>
         
     </td>
 </td>
