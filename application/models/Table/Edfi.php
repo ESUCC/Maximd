@@ -82,7 +82,10 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             'iep_ifsp_id'                  =>$stuData['iep_ifsp_id'],
             'name_first'                   =>$stuData['name_first'],
             'name_last'                    =>$stuData['name_last'],
-            'name_school'                  =>$stuData['name_school']
+            'name_school'                  =>$stuData['name_school'],
+            'id_county'                    =>$stuData['id_county'],
+            'id_district'                    =>$stuData['id_district'],
+            'id_school'                    =>$stuData['id_school']
             );
        
      //   $this->writevar1($data,'this is the data before it goes in');

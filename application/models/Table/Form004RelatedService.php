@@ -29,7 +29,7 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
         $sql="select * from form_004_related_service where id_form_004='$id_form004' and status='Active'";
         $forms=$this->db->fetchAll($sql);
         // $result=null;
-         
+         $this->writevar1($forms,'these are the forms');
         if($forms!=null){
             return $forms;
         } // end of ifset
