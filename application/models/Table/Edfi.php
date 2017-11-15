@@ -35,10 +35,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
       //  $this->writevar1($item,'this is the item');
       
       //  $this->writevar1($stuData['specialeducationsettingdescriptor'],'placement type descriptor');
-        if($stuData['id_student']=='1448941') {
-        //    $this->writevar1($stuData['specialeducationsettingdescriptor'],'data before it goes in for Elusia');
-         //   $this->writevar1($stuData,'this is the student data');
-        }
+        
         
         if(empty($item)) {
             $this->insertEdfi($stuData);

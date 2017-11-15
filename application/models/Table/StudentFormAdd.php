@@ -142,14 +142,19 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
    
                        
                        // testing 10-17-2017
-       $select3="select p.id_personnel,p.name_first,p.name_last,r.id_personnel,r.class from iep_personnel p,
-             iep_privileges r 
-             where p.id_personnel=r.id_personnel and  r.class <= '3' and r.id_district='".
-             $id_district."' and r.id_county='".$id_county."' and r.status='Active'  order by p.name_last asc";
-                                         
-                       
-                       
-        $result = $db->fetchAll($select2);
+      
+               
+      
+       // Jira Ticket 131.  Mike had to come up with it. Request was made to include district managers.
+         $mike="select  DISTINCT on (p.name_last,p.name_first) p.name_last,p.name_first,p.id_personnel, 
+                        r.class,r.status,p.status,r.id_school from iep_personnel p, iep_privileges r 
+                        where r.id_personnel=p.id_personnel and p.id_county='".$id_county."' and p.id_district='".$id_district."' 
+                        and r.status='Active'and p.status='Active' 
+                        and ((r.id_school='".$id_school."' and r.class <='6') or (r.class<='3')) order by p.name_last,p.name_first " ;
+       
+        
+         
+        $result = $db->fetchAll($mike);
         $num=count($result);
        //$this->writevar1($result,'this is the result');
       //  $this->writevar1($num,'this is the numbers');

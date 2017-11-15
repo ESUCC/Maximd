@@ -56,6 +56,42 @@ class DistrictController extends Zend_Controller_Action
     }
     
     
+    public function edfidetail2Action(){
+        $districtModel = new Model_Table_EdFiReport();
+        $id_district = $this->_getParam('id_district');
+        $id_county = $this->_getParam('id_county');
+    
+        $fieldname = $this->_getParam('fieldname');
+        if ($fieldname == "") $fieldname = "edfipublishtime";
+    
+        $sort = $this->_getParam('sort');
+        if ($sort == "") $sort = "desc";
+    
+        $fieldname = $fieldname . " " . $sort;
+    
+    
+        $page = $this->_getParam('page');
+        $maxRecs=20;
+    
+        if($page==""){
+            $page=1;
+        }
+    
+        if($sort=="asc"){
+            $this->view->sort="desc";
+        } else {
+            $this->view->sort="asc";
+        }
+    
+        $this->view->id_district= $id_district;
+        $this->view->id_county= $id_county;
+        $fieldname='edfipublishstatus';
+        $results = $districtModel->getDistrictsDetail($id_district, $id_county, $page, $maxRecs, $fieldname);
+        //   $this->writevar1($results,'this is the result dist controller line 122');
+        $this->view->districtModel= $results;
+    
+    }
+    
     public function edfidetailAction(){
         $districtModel = new Model_Table_EdFiReport();
         $id_district = $this->_getParam('id_district');

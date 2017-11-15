@@ -56,7 +56,7 @@ class OdsController extends Zend_Controller_Action
       foreach($districtStudents as $student) {
           
      // Take this out when ready to run the whole thing.      
-     if($student['id_student']=='1185572') {
+   //  if($student['id_student']=='1146088') {
       $continue=true;
      
       $advisorStudentData='';
@@ -189,12 +189,14 @@ class OdsController extends Zend_Controller_Action
        
        if($mostRecentMdt==null && $mostRecentMdtCard==null && $ifsp==null ) {
            $continue=false;
+           $this->writevar1($advisorStudentData['id_student'],' this student has no MDT card');
        }
      
        
        // No need to go out to the database if there is no mdt or mdt card
       // changed this 9-14-2017 from 'tempid' 
        if($student['unique_id_state']<='1000000000'){
+           $this->writevar1($student['unique_id_state'],' id of the state');
            $continue=false;
        }
  
@@ -433,17 +435,14 @@ class OdsController extends Zend_Controller_Action
        if (($mostRecentIfsp!=null || $mostRecentIep!=null || $mostRecentIepCard!=null)
            && $continue==true && $advisorStudentData['studentUniqueID']>='600000') {
          
-       //  $this->writevar1($advisorStudentData['beginDate'],$stuId);
          $advisorStudentData['edfiPublishStatus']='W';
          $advisorStudentData['edfiResultCode']=null;
          $advisorStudentData['edfiPublishTime']=date("Y-m-d");
      //    $advisorStudentData['id_author']=$_SESSION["user"]["user"]->user["id_personnel"];
            $advisorStudentData['id_author']=0;
-      //   $this->writevar1($advisorStudentData,'this is the student data');
              
         // if($advisorStudentData['id_student']=='1384091') $this->writevar1($advisorStudentData,'this is the advisor at the end line 381');
           $insert=new Model_Table_Edfi();
-        $this->writevar1($advisorStudentData,'this is the student data');
          
          
          $insert->setupAdvisor($advisorStudentData);
@@ -457,7 +456,7 @@ class OdsController extends Zend_Controller_Action
         
       } // end of the if continue line 175 if continue==true
      
-      } // Take this out when ready to run the whole thing
+ //     } // Take this out when ready to run the whole thing
     } // end of the for loop way up there searching for each districts students
     
      $insertEdfi=new Model_EdfiOds();
@@ -498,7 +497,7 @@ class OdsController extends Zend_Controller_Action
             if($result['serviceDescriptor_slt']!='3')
             $result['serviceDescriptor_slt']=$services['serviceDescriptor_slt'];
             
-            $this->writevar1($services,'these are the services');
+            //$this->writevar1($services,'these are the services');
             
             
             $result['specialeducationsettingdescriptor']=$iep[0]['primary_service_location'];
@@ -529,7 +528,7 @@ class OdsController extends Zend_Controller_Action
                 $result['serviceDescriptor_pt']=null;
             }
             if ($iepCard[0]['service_slt']==true){
-                $result['serviceDescriptor_slt']=null;
+                $result['serviceDescriptor_slt']=3;
             }
             else {
                 $result['servicedescriptor_slt']=null;
