@@ -140,7 +140,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*Get JSON representation from Students association*/
 	private function getStudentJson($student){
 	   
-	   $this->writevar1($student,'student info from db line 136');
+	 // $this->writevar1($student,'student info from db line 136');
 	   
 	    
 				$studentUniqueId=$student[8];
@@ -281,7 +281,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 						$data=$this->getStudentJson($student);
                        
 						$result = $this->edfi_client->updateStudentSpecialEducationProgramAssociation($data);
-                        $this->writevar1($data,'this is the data');
+                       // $this->writevar1($data,'this is the data');
                         
                    
 						$status=$result->get_publishStatus();
@@ -333,8 +333,8 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*Update stedent after PUT */
 	private function updateStudent($id_student, $status, $code, $message){
 
-		 $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status ); 
-         $this->writevar1($id_student.' '.$status.' '.$message,' this is the id status and message');
+	//	 $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status ); 
+     //    $this->writevar1($id_student.' '.$status.' '.$message,' this is the id status and message');
 	
 	    
 	    if($status!=""){

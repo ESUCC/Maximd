@@ -202,7 +202,7 @@ class DistrictController extends Zend_Controller_Action
         $classLevel=3;
         $this->view->districtList=$iep_priv->getUserInfo2($classLevel);
         
-        $this->writevar1($this->view->districtList,'this is the district list ');
+       // $this->writevar1($this->view->districtList,'this is the district list ');
         
         $edFiTable=array();
         $x=0;

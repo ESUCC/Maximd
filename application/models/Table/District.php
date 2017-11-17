@@ -34,7 +34,7 @@ class Model_Table_District extends Model_Table_AbstractIepForm
 	function getDistrictUseEdfi($idDistrict, $idCounty)
 	{
 	    
-	    $this->writevar1($idCounty." ".$idDistrict,' this is the district and county '); 
+	//    $this->writevar1($idCounty." ".$idDistrict,' this is the district and county '); 
 	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 	    $database = Zend_Db::factory($dbConfig->db2);
 	
@@ -46,7 +46,7 @@ class Model_Table_District extends Model_Table_AbstractIepForm
 	    $sql=('SELECT use_edfi from iep_district where id_district=\''.$idDistrict.'\' and id_county=\''.$idCounty.'\'');
 	    // $this->writevar1($sql,'this is the sql statement');
 	    $result=$database->fetchAll($sql);
-	    $this->writevar1($result,'this is the result lilne 45' );
+	//    $this->writevar1($result,'this is the result lilne 45' );
 	    $result=$result[0]['use_edfi'];
 	     
 	    return $result;

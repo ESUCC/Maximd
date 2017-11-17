@@ -49,7 +49,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
             $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
             
-            $this->returnText .= '  <li ><a href="https://iepweb02.esucc.org/ods/advisorset/id_county/87/id_district/0017"><b><i><font color="green">ODS Link</a></font></b></i></li>';
+         //   $this->returnText .= '  <li ><a href="https://iepweb02.esucc.org/ods/advisorset/id_county/87/id_district/0017"><b><i><font color="green">ODS Link</a></font></b></i></li>';
             
             // Mike added this Jul 5th for password change
           //  $this->returnText .= '  <li '.(($actionName == 'submenuPassword') ? 'class="current"' : '').'><a href="/Passwordchange/subpassword"><font color="green"><b><i>Changes Password</i></b></font></a></li>';

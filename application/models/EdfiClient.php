@@ -56,7 +56,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	    $result = curl_exec($curl);
 	    $jsonResult = json_decode($result);
 	    curl_close($curl);
-        $this->writevar1($data,'this is the json results');
+      //  $this->writevar1($data,'this is the json results');
 	    return $jsonResult->code;
     } 
     catch(Exception $e) {
