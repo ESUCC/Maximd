@@ -32,6 +32,18 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
      * Coppied from formOptions
      * then altered to build a select
      */
+    public function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
+    
     public function formMenu($id_student, $form)
     {
         $options = array('<select class="formMenuSelect" style="width: 150px;">');
@@ -158,6 +170,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
         if('Admin' == $access->description) {
             $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';
+            
         }
         $options[] = '</select>';
         return implode(' | ', $options);

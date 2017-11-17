@@ -474,9 +474,12 @@ foreach ($this->districtListAll as $indx => $distList){
     if($distList != '' && $distList != NULL){
     ?>
 
+ 
+  
+
     <option value="<?=$this->escape($distList);?>|<?php echo $this->url(array('controller'=>'district','action'=>'editdistrict','name_district'=>$distList,
     'id_district'=>$this->districtList[$indx]["id_district"],'id_county'=>$this->districtList[$indx]["id_county"] ));?>/"><?=$this->escape($distList);?></option>
-
+ 
 <?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
 
     <?  
@@ -501,9 +504,17 @@ foreach ($this->districtListAll as $indx => $distList){
     if($distList != '' && $distList != NULL){
     ?>
     
+    <?php 
+      $dist=new Model_Table_District();
+     if($dist->getDistrictUseEdfi($this->districtList[$indx]['id_district'],
+         $this->districtList[$indx]['id_county'])==true){
+      
+     ?>
+    
+    
     <option value="<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2',
                                           'id_district'=>$this->districtList[$indx]["id_district"],'id_county'=>$this->districtList[$indx]["id_county"] ));?>/"><?=$this->escape($distList);?></option>
-    
+    <?php }?>
 <?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
 
     <?  

@@ -30,6 +30,9 @@ class OdsController extends Zend_Controller_Action
  
   public function advisorsetAction($id_county=0,$id_district=0) {
       
+      // Check to see if they have publish to advisor set
+      
+      
       $iep=new Model_Table_Form004();
       $ifsp=new Model_Table_Form013();
       $iepCard=new Model_Table_Form023();
@@ -37,9 +40,15 @@ class OdsController extends Zend_Controller_Action
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
       
-     // $this->writevar1($id_county,'this is the county');
-     // $this->writevar1($id_district,'this is the id of the district');
+       
       
+      $dist=new Model_Table_District();
+      //$this->writevar1($dist->getDistrictUseEdfi($id_county,$id_district),'this is the value in that field');
+      if($dist->getDistrictUseEdfi($id_district,$id_county)!=true){
+       $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);
+          
+          
+      }
       
    //   $id_county='11';
      // $id_district='0014';
@@ -56,7 +65,7 @@ class OdsController extends Zend_Controller_Action
       foreach($districtStudents as $student) {
           
      // Take this out when ready to run the whole thing.      
-   //  if($student['id_student']=='1146088') {
+  //   if($student['id_student']=='1473206') {
       $continue=true;
      
       $advisorStudentData='';
@@ -196,7 +205,7 @@ class OdsController extends Zend_Controller_Action
        // No need to go out to the database if there is no mdt or mdt card
       // changed this 9-14-2017 from 'tempid' 
        if($student['unique_id_state']<='1000000000'){
-           $this->writevar1($student['unique_id_state'],' id of the state');
+         //  $this->writevar1($student['unique_id_state'],' id of the state');
            $continue=false;
        }
  
@@ -456,7 +465,7 @@ class OdsController extends Zend_Controller_Action
         
       } // end of the if continue line 175 if continue==true
      
- //     } // Take this out when ready to run the whole thing
+  //    } // Take this out when ready to run the whole thing
     } // end of the for loop way up there searching for each districts students
     
      $insertEdfi=new Model_EdfiOds();
@@ -466,7 +475,7 @@ class OdsController extends Zend_Controller_Action
      $this->_redirector = $this->_helper->getHelper('Redirector');
    //  $this->_redirect( '/district/edfireport/page/11');
    // $this->_redirect( '/district/edfidetail/id_district/5901/id_county/25');
-     $this->_redirect( '/district/edfidetail/id_district/'.$id_district.'/id_county/'.$id_county);
+     $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);
 
  } // end of the advisorSetAction function
     

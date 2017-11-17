@@ -28,6 +28,17 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         
     }
     
+    function removeTableEntryByStudentId($stuId){
+        // Mike added this 10-14-2017 so that we can remove table row entry from edfi should end user
+        // decide to delete a form.  Best to start over with edfi.
+        // id_form_022 and 'some number'
+    
+         $this->delete('id_student =' . $stuId);
+        
+    
+    }
+    
+    
     function setupAdvisor($stuData){
         $id=$stuData['id_student'];
         $table = new Model_Table_Edfi();

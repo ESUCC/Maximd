@@ -60,7 +60,10 @@ class DistrictController extends Zend_Controller_Action
         $districtModel = new Model_Table_EdFiReport();
         $id_district = $this->_getParam('id_district');
         $id_county = $this->_getParam('id_county');
-    
+        
+        $this->view->countyId=$id_county;
+        $this->view->districtId=$id_district;
+        
         $fieldname = $this->_getParam('fieldname');
         if ($fieldname == "") $fieldname = "edfipublishtime";
     
@@ -96,6 +99,9 @@ class DistrictController extends Zend_Controller_Action
         $districtModel = new Model_Table_EdFiReport();
         $id_district = $this->_getParam('id_district');
         $id_county = $this->_getParam('id_county');
+        
+        $this->view->countyId=$id_county;
+        $this->view->districtId=$id_district;
     
         $fieldname = $this->_getParam('fieldname');
         if ($fieldname == "") $fieldname = "edfipublishtime";

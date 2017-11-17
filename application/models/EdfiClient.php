@@ -56,7 +56,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	    $result = curl_exec($curl);
 	    $jsonResult = json_decode($result);
 	    curl_close($curl);
-      //  $this->writevar1($data,'this is the json results');
+        $this->writevar1($data,'this is the json results');
 	    return $jsonResult->code;
     } 
     catch(Exception $e) {
@@ -150,10 +150,10 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
  */
  
 function studentExists($id_student){
- 
+    
 	$authorization = "Authorization: Bearer " . $this->currentToken;
     $url = $this->currentAPIUrl . "/api/v2.0/2017/students?studentUniqueId=" . $id_student;  
- 
+    
 	$curl = curl_init();
 	 
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -167,10 +167,19 @@ function studentExists($id_student){
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
     curl_close($curl);
-
+   // $this->writevar1($httpCode,'this is hte http code');
+   
+    
+    
+   // Mike added this 11-15-2017 because it was not taking into account that the student does not exists in 
+   // the SIS .IT was not changing the db to show an E in the edfipublishstatus
+    if ($httpCode=='404') return '404';
+   
+    
+    
     if($httpCode == 200) {
         $this->currentStudent=$result;
-      //  $this->writevar1($result,'this current Student');
+       
       // Pull this from edfi
       
         return true;
@@ -211,7 +220,6 @@ function updateCurrentStudent(){
     curl_close($curl);
 
     $eresponse->set_resultCode($httpCode, $result);
-   
     return $eresponse;
 
 }

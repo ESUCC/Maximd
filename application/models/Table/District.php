@@ -17,12 +17,24 @@ class Model_Table_District extends Model_Table_AbstractIepForm
     protected $_name = 'iep_district';
 	protected $_primary = array('id_county', 'id_district');
 
+	function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+	
 	
 	// Mike added 11-10-2017 this so that we can check for district being an edfi district 
 	
 	function getDistrictUseEdfi($idDistrict, $idCounty)
 	{
-	     
+	    
+	    $this->writevar1($idCounty." ".$idDistrict,' this is the district and county '); 
 	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 	    $database = Zend_Db::factory($dbConfig->db2);
 	
@@ -30,10 +42,11 @@ class Model_Table_District extends Model_Table_AbstractIepForm
 	     from iep_personnel t,iep_privileges p
 	     where t.id_personnel=p.id_personnel and p.status=\'Active\' and p.id_county=\''.$id_county.'\'  and
 	     p.id_district=\''.$id_district.'\'and (p.class=\'2\' or p.class=\'3\') order by t.name_last');*/
+	   
 	    $sql=('SELECT use_edfi from iep_district where id_district=\''.$idDistrict.'\' and id_county=\''.$idCounty.'\'');
 	    // $this->writevar1($sql,'this is the sql statement');
 	    $result=$database->fetchAll($sql);
-	    // $this->writevar1($result[0]['use_edfi'],'this is the result lilne 45' );
+	    $this->writevar1($result,'this is the result lilne 45' );
 	    $result=$result[0]['use_edfi'];
 	     
 	    return $result;

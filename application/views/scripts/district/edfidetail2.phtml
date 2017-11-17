@@ -119,20 +119,21 @@
 <?  
    }    
 ?> 
+<h2> <a href="/ods/advisorset/id_county/<?php echo $this->countyId?>/id_district/<?php echo $this->districtId?>">Update ODS with Student Data </a></h2>
 
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 
 <table class="TableList" id="ResultsTable" width="100%">
 <tr >
     <th width="20%">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
         
     </th>
     <th width="10%">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
     </th>
     <th style="text-align:center;">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishstatus', "sort" => $this->sort ));?>>Result</a>
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishstatus', "sort" => $this->sort ));?>>Result</a>
     </th>
     <th>
         Error
@@ -151,6 +152,9 @@
 <style>
 
 </style>
+<?php 
+
+?>
 <?php  
     foreach($this->districtModel as $district) {
     
@@ -202,6 +206,33 @@
             echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
         <br>
         Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
+        <br>
+        <a href="/student/edit/id_student/<?php echo $district['id_student']?>">Edit Student Link</a>
+        <br>
+        <?php if($district['iep_ifsp_code']=='form004'){
+                   $iepFormName='Latest IEP';
+                   $pageIep='6';
+        }
+              if($district['iep_ifsp_code']=='form023'){
+                  $iepFormName='Latest IEP Data Card';          
+                  $pageIep='1';
+              }
+              if($district['mdt_code']=='form002'){
+                  $mdtFormName='Latest MDT';
+                  $pageMdt='3';
+              }
+              if($district['mdt_code']=='form022') {
+                  $mdtFormName='Latest MDT Card';
+                  $pageMdt='1';
+              }
+              
+         //     echo $district['iep_ifsp_code'];
+            ?>
+        <a href="/<?php echo $district['iep_ifsp_code']?>/view/document/<?php echo $district['iep_ifsp_id']?>/page/<?php echo $pageIep?>">View <?php echo $iepFormName?></a>
+        <br>
+        <a href="/<?php echo $district['mdt_code']?>/view/document/<?php echo $district['mdt_id']?>/page/<?php echo $pageMdt?>">View <?php echo $mdtFormName?></a>
+        <br>
+        <a href="/student/search-forms/id_student/<?php echo $district['id_student']?>">Search Student Forms</a>
     </td>
     <td>
         <table class="tableCell">

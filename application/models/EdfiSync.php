@@ -140,7 +140,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*Get JSON representation from Students association*/
 	private function getStudentJson($student){
 	   
-	  //  $this->writevar1($student,'student info from db line 136');
+	   $this->writevar1($student,'student info from db line 136');
 	   
 	    
 				$studentUniqueId=$student[8];
@@ -270,25 +270,22 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 			
 			/*Sync each student*/
 			foreach ($this->pending_students as $student){
+			   
 				$studentUniqueId=$student[8];
-              //  $this->writevar1($studentUniqueId,'this i the unique student id');
-            //    $this->writevar1($this->edfi_client->studentExists($studentUniqueId),'the student exists');
-				
-			//	$this->writevar1("", "Found " . $studentUniqueId . "=" . "OK 1" );
-				
-				if($this->edfi_client->studentExists($studentUniqueId)){
-			//		$this->writevar1("", "Found " . $studentUniqueId . "=" . "OK 2" );
+          		
+				if($this->edfi_client->studentExists($studentUniqueId)==true or $this->edfi_client->studentExists='404'){
+				  // $this->writevar1($studentUniqueId , "=" . "OK 2" );
 						
 								
 						/*$result = $this->edfi_client->updateCurrentStudent();*/
 						$data=$this->getStudentJson($student);
                        
 						$result = $this->edfi_client->updateStudentSpecialEducationProgramAssociation($data);
-                       // $this->writevar1($result,'this is the result');
+                        $this->writevar1($data,'this is the data');
                         
                    
 						$status=$result->get_publishStatus();
-					 // $this->writevar1("", "Status " . $status  );
+					  // $this->writevar1("", "Status " . $status  );
 					 // Just displays S or E
 
                          
@@ -336,8 +333,8 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*Update stedent after PUT */
 	private function updateStudent($id_student, $status, $code, $message){
 
-		// $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status ); 
-       //  $this->writevar1($id_student.' '.$status.' '.$message,' this is the id status and message');
+		 $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status ); 
+         $this->writevar1($id_student.' '.$status.' '.$message,' this is the id status and message');
 	
 	    
 	    if($status!=""){
@@ -380,7 +377,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		
 		pg_close($con); 
 	
-	//	$this->writevar1($students,'here are the students');
+		
 		return $students;
 		
 	} 
