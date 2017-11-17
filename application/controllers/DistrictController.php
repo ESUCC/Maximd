@@ -60,6 +60,10 @@ class DistrictController extends Zend_Controller_Action
         $id_district = $this->_getParam('id_district');
         $id_county = $this->_getParam('id_county');
     
+        $this->view->countyId=$id_county;
+        $this->view->districtId=$id_district;
+        
+        
         $fieldname = $this->_getParam('fieldname');
         if ($fieldname == "") $fieldname = "edfipublishtime";
     
@@ -197,6 +201,20 @@ class DistrictController extends Zend_Controller_Action
         //If they do not have the rights then the view->districtlist returns the # 0 instead of the array of privileges
         $classLevel=3;
         $this->view->districtList=$iep_priv->getUserInfo2($classLevel);
+        
+        $this->writevar1($this->view->districtList,'this is the district list ');
+        
+        $edFiTable=array();
+        $x=0;
+        foreach($this->view->districtList as $distList){
+            if($distList['use_edfi']==true){
+            $edFiTable[$x]=$distList;
+            $x=$x+1;
+            }
+        }
+        $this->view->EdFiList=$edFiTable;
+        
+        
         
         $district_list = array();
         foreach ($iep_priv->getUserInfo2($classLevel) as $index => $val) {
