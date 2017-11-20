@@ -21,7 +21,17 @@ class Form023Controller extends My_Form_AbstractFormController {
         parent::setFormRev('08/08');
         
     }
-
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     protected function buildSrsForm($document, $page, $raw = false)
     {
         
@@ -50,12 +60,17 @@ class Form023Controller extends My_Form_AbstractFormController {
     	/*
     	 * Calculate the Age at Submission
     	 */
-    	$nssrsSubmissionPeriod = "10/15/2016";
-    	$nssrsTransitionCutoffDate = "7/1/2016";
+        
+        // Mike changed this 10-22-2017 needs to pull it from the db so that is not a problem
+        
+        
+    	$nssrsSubmissionPeriod = "10/15/2017";
+    	$nssrsTransitionCutoffDate = "7/1/2017";
     	$ageArr = Model_Table_StudentTable::age_calculate(
     			getdate(strtotime($this->view->db_form_data['student_data']['dob'])),
     			getdate(strtotime($nssrsSubmissionPeriod))
     	);
+    //	$this->writevar1($ageArr,'this is the age array');
     	$this->view->db_form_data['student_data']['age_at_submission'] = $ageArr['years'];
     	
     	$subFormsArray = array();

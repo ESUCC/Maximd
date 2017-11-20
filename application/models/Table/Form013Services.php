@@ -34,6 +34,34 @@ class Model_Table_Form013Services extends Model_Table_AbstractIepForm {
          
     }
     
+    // added by Mike 10-18-2017 to keep things going correctly for the csv
+    public function getIfspServicesStateCsv($id_form){
+         
+        /*
+         * Speech-language therapy
+         * Physical Therapy Services
+         * Occupational Therapy Services
+         */
+    
+     
+    
+        $sql="select * from ifsp_services where status is null and id_form_013='$id_form' order by timestamp_created desc";
+        $forms=$this->db->fetchAll($sql);
+        
+        if (!empty($forms)) {
+
+           $result=$forms;
+         //  $this->writevar1($forms,'these are the forms');
+
+            return $result;
+            // end of the for looop
+        }
+        else {
+            return null;
+        }
+         
+    }   // end of the function
+   
     public function getIfspServicesState($id_form){
          
         /*

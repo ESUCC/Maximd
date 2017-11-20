@@ -28,6 +28,17 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         
     }
     
+    function removeTableEntryByStudentId($stuId){
+        // Mike added this 10-14-2017 so that we can remove table row entry from edfi should end user
+        // decide to delete a form.  Best to start over with edfi.
+        // id_form_022 and 'some number'
+    
+         $this->delete('id_student =' . $stuId);
+        
+    
+    }
+    
+    
     function setupAdvisor($stuData){
         $id=$stuData['id_student'];
         $table = new Model_Table_Edfi();
@@ -35,10 +46,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
       //  $this->writevar1($item,'this is the item');
       
       //  $this->writevar1($stuData['specialeducationsettingdescriptor'],'placement type descriptor');
-        if($stuData['id_student']=='1448941') {
-        //    $this->writevar1($stuData['specialeducationsettingdescriptor'],'data before it goes in for Elusia');
-         //   $this->writevar1($stuData,'this is the student data');
-        }
+        
         
         if(empty($item)) {
             $this->insertEdfi($stuData);
@@ -82,7 +90,10 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             'iep_ifsp_id'                  =>$stuData['iep_ifsp_id'],
             'name_first'                   =>$stuData['name_first'],
             'name_last'                    =>$stuData['name_last'],
-            'name_school'                  =>$stuData['name_school']
+            'name_school'                  =>$stuData['name_school'],
+            'id_county'                    =>$stuData['id_county'],
+            'id_district'                    =>$stuData['id_district'],
+            'id_school'                    =>$stuData['id_school']
             );
        
      //   $this->writevar1($data,'this is the data before it goes in');
@@ -148,7 +159,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     }
     
     function updateEditStudentEdfi($student){
-     //   $this->writevar1($student,'this is the student line 119 ');
+        $this->writevar1($student,'this is the student line 151 in edfi ');
         /*
          * 1 check for district edfi
          * 2 check for existing entry in edfi table
@@ -160,10 +171,11 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $dist=new Model_Table_District();
         $disId=$student['id_district'];
         $countyId=$student['id_county'];
-        $distUseEdfi=$dist->getDistrictUseEdfi($disId,$countyId);
+    //    $distUseEdfi=$dist->getDistrictUseEdfi($disId,$countyId);
       //  $this->writevar1($distUseEdfi,'this is the district info');
         
-         
+        $distUseEdfi=true;
+        
         if($distUseEdfi==true) {
             // #2
            $studentEdfiEntry=$this->checkForTableEntry($student['id_student']); 
@@ -198,8 +210,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
                      
                   
                $data=array(
-                   'reasonexiteddescriptor'=>$student['sesis_exit_code'],
-                   
+                   'reasonexiteddescriptor'=>$student['sesis_exit_code'],             
                    'enddate'=>$date, 
                    'placementtypedescriptor'=>$placementType,
                    'totakealternateassessment'=>$student['alternate_assessment'],
@@ -240,9 +251,18 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
        return $row;
     }
     
-    function updateOneStudent($currentForm){
-    //    $this->writevar1($currentForm,'this is the current form line 118');
+    function updateOneStudent($currentForm) {
         
+        // Mike added 11-10-2017 to see if the district has edfi set
+        $edfiDistrict= new Model_Table_IepDistrict();
+        
+        $edfiDist=$edfiDistrict->getEdfiSecretKey($currentForm['id_county'],$currentForm['id_district']);
+        
+        // if it is set update the edfi table otherwise go back to the abstractForm.php
+        if($edfiDist['use_edfi']==true) {
+            
+        
+        $this->writevar1($currentForm['id_district'],' this is the current form '.$currentForm['id_county']);
         // Mike appended the formcode and the form id to mdt and iep_ifsp edfi 10-12-2014
         $studentId=$currentForm['id_student'];
         $ot=null;
@@ -359,7 +379,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         }
         // this is the end of form_022
         
-        
+        }  // end of the if to seeif the district is using edfi.   
     } 
      
         

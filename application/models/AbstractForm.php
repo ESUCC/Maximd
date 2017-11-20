@@ -326,6 +326,13 @@ class Model_AbstractForm
 
 			$formTable = $this->table;
 
+			// Mike added this 11-10-2017 so that we can finalize edfi forms in the db table edfi.
+			
+			
+			// end of Mike add
+			
+			
+			
 			// derive pk name
 			$pkArr = $formTable->get_primary();
 			$keyName = is_array($pkArr) ? array_shift($pkArr) : $pkArr;
@@ -351,7 +358,31 @@ class Model_AbstractForm
 //			$msgText = "Sorry, this form can&rsquo;t be finalized because the date of conference is too far in the future.";
 //			return true;
 //		}
-
+      
+      // Mike added this 11-10-2017 in order to update the edfi db when a form is finalized.
+      
+					 $edfi=new Model_Table_Edfi();
+					 //	$this->writevar1($currentForm,'this is current form in abstractform model line 334');
+					 if(isset($currentForm['id_form_004'])){
+					     $edfi->updateOneStudent($currentForm);
+					 }
+					 	
+					 if(isset($currentForm['id_form_023'])){
+					     $edfi->updateOneStudent($currentForm);
+					 }
+					 	
+					 if(isset($currentForm['id_form_002'])){
+					     $edfi->updateOneStudent($currentForm);
+					 }
+					 	
+					 if(isset($currentForm['id_form_022'])){
+					     //      $this->writevar1($currentForm,'this is current form in abstractform model line 349');
+					      
+					     $edfi->updateOneStudent($currentForm);
+					      
+					 }			 
+					 
+					 
 		return $formTable->update(
 			array(
 				'status'=>'Final',

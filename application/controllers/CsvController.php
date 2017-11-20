@@ -38,6 +38,7 @@ class CsvController extends Zend_Controller_Action {
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
       
+      //form004/view/document/1620600/page/1
       
       $continue=false;
       foreach($_SESSION['user']['user']->privs as $privs){
@@ -206,37 +207,39 @@ class CsvController extends Zend_Controller_Action {
        
       
        
-       if($mostRecentMdt==null && $mostRecentMdtCard==null && $ifsp==null ) {
+       if($mostRecentMdt==null) {
            $continue=false;
        }
      
-       
-       // No need to go out to the database if there is no mdt or mdt card
-      // changed this 9-14-2017 from 'tempid' 
-       if($student['unique_id_state']<='1000000000'){
-           $continue=false;
-       }
- 
- 
- // Start Here
- 
-      if($continue==true)   {   // end is down at 449 or so
        $mostRecentIep=null;
        $mostRecentIepCard=null;
        $mostRecentIfsp=null;
-       
        $mostRecentIep=$iep->getMostRecentIepState($stuId);
-    //   $mostRecentIfsp=$ifsp->getMostRecentIfspState($stuId);
+       $mostRecentIfsp=$ifsp->getMostRecentIfspState($stuId);
+       $useIfsp=false;
+       
+    //   if($mostRecentIep==null && $mostRecentIfsp==null) $continue=false; 
+       if($mostRecentIfsp!=null && $mostRecentIep==null) {
+           $continue=true;
+           $useIfsp=true;
+       }
+ // Start Here for iep stuff
+ 
+      if($continue==true)   {   
+       
+       
+       
     //   $mostRecentIepCard=$iepCard->getMostRecentIepCardState($stuId);
         
-     
+       
  
       
   
   // IEP ONly        
          if($mostRecentIep!=null){
-             $csvStudentData['section']='ONLY HAS IEP';
-             $fm=$mostRecentIep;         
+             $csvStudentData['section']='IEP';
+             $fm=$mostRecentIep;
+             $csvStudentData['id_form']=$fm[0]['id_form_004'];
              $csvStudentData['levelOfProgramParticipationDescriptor']='06';
              $csvStudentData['specialEducationPercentage']=$fm[0]['special_ed_non_peer_percent'];           
              $csvStudentData['iep_ifsp_code']='form004';
@@ -246,6 +249,8 @@ class CsvController extends Zend_Controller_Action {
               * a single character and NDE will not accept that.
               * 
               */
+             
+            // $this->writevar1($fm[0]['primary_service_dpw'],'this is hte iep');
               $ps=$fm[0]['primary_service_location'];          
               if(strlen($ps)==1){
                   $ps="0".$ps;
@@ -259,50 +264,84 @@ class CsvController extends Zend_Controller_Action {
               $csvStudentData['primary_disability_drop']=$fm[0]['primary_disability_drop'];
               $csvStudentData['primary_service_tpd_unit']=$fm[0]['primary_service_tpd_unit'];
               $csvStudentData['primary_service_tpd']=$fm[0]['primary_service_tpd'];        
-             
+              $csvStudentData['primary_service_days_value']=$fm[0]['primary_service_days_value'];
+              $csvStudentData['primary_service_days_unit']=$fm[0]['primary_service_days_unit'];
+              
+              
+              
               $csvStudentData['supp_services']=null;
               $relatedResults=$relatedServices->getRelatedServicesStateForCsv($fm[0]['id_form_004']);
             //  $this->writevar1($relatedResults,'related services');
               if($relatedResults[0]!=null) $csvStudentData['supp_services']=$relatedResults;
-             
+              $csvStudentData['name_first']=$csvStudentData['name_first']." IEP";
               
           }   
           
+ // end of the existence of an iep only.
+ // End of IEP ONLY  
+
+// Beginning of the IFSP section 10-18-2017
+          if ($mostRecentIfsp!=null and $mostRecentIep==null ){
+              $csvStudentData['section']='IFSP';
+              $decidedOnForm=$mostRecentIfsp;
+              $csvStudentData['levelOfProgramParticipationDescriptor']='05';
           
-// end of the existence of an iep only.
- // End of IEP ONLY       
+               
+             
+               
           
-          
-           
-       
+              $form013=$ifsp->getMostRecentIfspState($stuId);
+              $id_form013=$form013[0]['id_form_013'];
+              $csvStudentData['id_form']=$id_form013;
+              $csvStudentData['iep_ifsp_code']='form013';
+              $csvStudentData['iep_ifsp_id']=$id_form013;
+              //$serviceifsp=new Model_Table_Form013Services();
+              //$serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
+               
+              $serviceifsp=new Model_Table_Form013Services();
+              $serviceDescription=$serviceifsp->getIfspServicesStateCsv($id_form013);
+            //  $this->writevar1($serviceDescription,'this is the service description');
+               
+              $csvStudentData['supp_services']=$serviceDescription;
+              $csvStudentData['date_conference']=$mostRecentIfsp[0]['meeting_date'];
               
-     
-     } //end of the if check on iep true or false
-    
-      //$this->writevar1($result,'these are the related services az per this form004');
-    //   $this->writevar1($csvStudentData,'this is the csv student data for the first go around');
+          }
+
+          
+          
+          
+ //End of the IFSP section  Mike 10-18-2017        
+          
+          
+          
+
+     //  if($csvStudentData['date_conference']==null){
+     //      $csvStudentData['date_conference']="No Conference Date";
+          
+     //  }
+     //  if($csvStudentData['primary_disability_drop']==null){
+      //     $csvStudentData['primary_disability_drop']="No Primary Disablity";
        
-       if($csvStudentData['date_conference']==null){
-           $csvStudentData['date_conference']="No Conference Date";
+      // }
+       
+         
+       if($useIfsp==true){
+           $csvStudentData['name_first']="<b>".$csvStudentData['name_first']." IFSP";
           
        }
-       if($csvStudentData['primary_disability_drop']==null){
-           $csvStudentData['primary_disability_drop']="No Primary Disablity";
-       
-       }
-     
+        
        $listOfStudents[$inx]=$csvStudentData;
-       
-      // $this->writevar1($listOfStudents[$inx],'list of students');
+       $this->writevar1($csvStudentData,'studentlist');
        $inx=$inx+1;
-    } // end of the for students
+      
+     } 
   
   
     
     $this->view->listOfStudents=$listOfStudents;
-  } //end advisorsetAction
+   } 
  
-    
+  }  //end advisorsetAction
 
     
     

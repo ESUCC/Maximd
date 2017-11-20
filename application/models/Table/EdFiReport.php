@@ -58,9 +58,12 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
      public function getDistrictsDetail($id_district, $id_county, $page, $maxRecs, $sortfield)
     {
         $db = Zend_Registry::get('db');
+        $organizationalId=$id_county.$id_district.'000';
+      //  $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by " . $sortfield;
+      //  $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by edfipublishstatus,name_last" . $sortfield;
+        $sql="select * from edfi where educationorganzationid='".$organizationalId."' order by edfipublishstatus,id_school,name_last ";
         
-        $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by " . $sortfield;
-
+        
         $result = $db->fetchAll($sql);
 
         $paginator = Zend_Paginator::factory($result)->setItemCountPerPage($maxRecs)->setCurrentPageNumber(empty($page) ? 1 : $page);

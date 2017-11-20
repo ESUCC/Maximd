@@ -5,6 +5,8 @@ class Form032Controller extends My_Form_AbstractFormController {
     protected $identity;
 	protected $version = 9;
 	protected $startPage = 1;
+// Mike added multipleDrafts for wade on SRS-124 10-26-2017 
+	protected $multipleDrafts = true;
 	
 	protected $_subformTypes = array(
 			'OtherAttendee' => 'other_attendee'

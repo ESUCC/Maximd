@@ -1159,7 +1159,7 @@ public function addotherstaffschoollistAction() {
 public function addremotestaffAction() {
    // include("Writeit.php");
     $newRights=$this->_getAllParams();
-     writevar($newRights,'this is the post data for the remote staff');
+   //  writevar($newRights,'this is the post data for the remote staff');
       
       $class=$newRights['class'];
       $id_local_county=$newRights['id_local_county'];

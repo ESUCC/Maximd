@@ -9,7 +9,7 @@
     /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
     height: 0px; 
 }
-#leftTop {
+#leftTop { 
     /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
     height: 2px;
     padding: 0;
@@ -374,7 +374,7 @@
 			          console.log(data);
 	          }
         });
-	      return false;
+	      return false; 
     });
 
     $(document).on( "click", "#cancelSearch", function() {
@@ -454,13 +454,14 @@
         </tr>
     </table>
 
-<?php include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
+<?php // include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
 
 <?php if ($auth->hasIdentity()) { ?>
 
 <?php  echo $this->current_date_and_time; ?><br>
 
 <div>
+
 <?php 
 if(count($this->districtList) != 0) {
 ?>
@@ -473,9 +474,12 @@ foreach ($this->districtListAll as $indx => $distList){
     if($distList != '' && $distList != NULL){
     ?>
 
-    <option value="<?=$this->escape($distList);?>|<?php echo $this->url(array('controller'=>'district','action'=>'editdistrict','name_district'=>$distList,
-                                          'id_district'=>$this->districtList[$indx]["id_district"],'id_county'=>$this->districtList[$indx]["id_county"] ));?>/"><?=$this->escape($distList);?></option>
+ 
+  
 
+    <option value="<?=$this->escape($distList);?>|<?php echo $this->url(array('controller'=>'district','action'=>'editdistrict','name_district'=>$distList,
+    'id_district'=>$this->districtList[$indx]["id_district"],'id_county'=>$this->districtList[$indx]["id_county"] ));?>/"><?=$this->escape($distList);?></option>
+ 
 <?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
 
     <?  
@@ -484,6 +488,36 @@ foreach ($this->districtListAll as $indx => $distList){
   }    
 ?> 
     </select>
+ </div>
+    
+  <br>
+ <div id="directme">  
+    
+
+    <h2> <b><u>View Advisor Data for the Following Districts</u></b></h2>
+    <select class="tooltip" data-tip-source="tooltip-sidebar" onChange="window.location.href=this.value">
+      <option>Choose District to View</option>
+<?php 
+
+foreach ($this->EdFiList as $List){
+  
+    ?>
+     
+    <option value="<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2',
+                                          'id_district'=>$List['id_district'],'id_county'=>$List['id_county'] ));?>/"><?=$this->escape($List['name_district']);?></option>
+  
+<?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
+
+    <?  
+    }
+   
+ // }    
+?> 
+    
+    
+   </select>
+    
+   
 </div>
 <br>
 

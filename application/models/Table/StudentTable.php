@@ -39,12 +39,24 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' ) order by id_school desc,name_last";
 	
 	    $result = $this->db->fetchAll($sql);
-	    //  $this->writevar1($sql,'this is the sql statement line 40');
-	    ///---  $this->writevar1($result,'this is the result in table line 40');
+	    $x=1;
+	   
+	    
+
 	    return $result;
 	     
 	}
 	
+	function writevar1($var1,$var2) {
+	
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
 	
 	public function studentInfo($id)
 	{

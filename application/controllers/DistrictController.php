@@ -55,6 +55,45 @@ class DistrictController extends Zend_Controller_Action
     
     }
     
+    public function edfidetail2Action(){
+        $districtModel = new Model_Table_EdFiReport();
+        $id_district = $this->_getParam('id_district');
+        $id_county = $this->_getParam('id_county');
+    
+        $this->view->countyId=$id_county;
+        $this->view->districtId=$id_district;
+        
+        
+        $fieldname = $this->_getParam('fieldname');
+        if ($fieldname == "") $fieldname = "edfipublishtime";
+    
+        $sort = $this->_getParam('sort');
+        if ($sort == "") $sort = "desc";
+    
+        $fieldname = $fieldname . " " . $sort;
+    
+    
+        $page = $this->_getParam('page');
+        $maxRecs=20;
+    
+        if($page==""){
+            $page=1;
+        }
+    
+        if($sort=="asc"){
+            $this->view->sort="desc";
+        } else {
+            $this->view->sort="asc";
+        }
+    
+        $this->view->id_district= $id_district;
+        $this->view->id_county= $id_county;
+    
+        $results = $districtModel->getDistrictsDetail($id_district, $id_county, $page, $maxRecs, $fieldname);
+        //   $this->writevar1($results,'this is the result dist controller line 122');
+        $this->view->districtModel= $results;
+    
+    }
     
     public function edfidetailAction(){
         $districtModel = new Model_Table_EdFiReport();
@@ -162,6 +201,20 @@ class DistrictController extends Zend_Controller_Action
         //If they do not have the rights then the view->districtlist returns the # 0 instead of the array of privileges
         $classLevel=3;
         $this->view->districtList=$iep_priv->getUserInfo2($classLevel);
+        
+       // $this->writevar1($this->view->districtList,'this is the district list ');
+        
+        $edFiTable=array();
+        $x=0;
+        foreach($this->view->districtList as $distList){
+            if($distList['use_edfi']==true){
+            $edFiTable[$x]=$distList;
+            $x=$x+1;
+            }
+        }
+        $this->view->EdFiList=$edFiTable;
+        
+        
         
         $district_list = array();
         foreach ($iep_priv->getUserInfo2($classLevel) as $index => $val) {

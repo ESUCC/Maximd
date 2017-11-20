@@ -1556,6 +1556,7 @@ END;
 		// make sure.
 		// retrieve data from the request
 		$request = $this->getRequest ();
+		
 		$this->view->document = $request->document;
 		$this->view->page = $request->page;
 		
@@ -1584,8 +1585,9 @@ END;
 			$this->_redirector->gotoSimple ( 'edit', 'form' . $this->getFormNumber (), null, array ('document' => $request->document, 'page' => $this->view->page ) );
 			return;
 		}
-		
 		// update the form if confirmed
+		
+		
 		if (isset ( $request->confirm ) && $request->confirm == "Confirm") {
 			# BACKUP THE FORM
 			if (! $modelobj->deleteFormInsert ( $this->getPrimaryKeyName (), $request->document, $this->getFormNumber () )) {
@@ -1594,8 +1596,20 @@ END;
 				exit ();
 			} else {
 				# DELETE THE FORM
-				$modelobj->deleteForm ( $this->getPrimaryKeyName (), $request->document );
-			
+     		     $modelobj->deleteForm ( $this->getPrimaryKeyName (), $request->document );
+			   
+				/*
+				 * Mike added this 11-15-2017 
+				 * Setup edfi delete if you have to delete a mdt or iep card or a iep or an mdt
+				 * this will remove the table entry for that student. 
+				 */
+				$edFi=new Model_Table_Edfi();
+				if ($modelName=='Model_Form004'||$modelName=='Model_Form023'|| $modelName=='Model_Form002'
+				    ||$modelName=='Model_Form022' ) {
+				    
+				        $edFi->removeTableEntryByStudentId($formData['id_student']);
+				    }
+				// end of the Mike add for edfi
 				/*
 				 * Track access to logger
 			     */
@@ -1620,7 +1634,9 @@ END;
 		/*
          * show the confirmation page
          */
+		
 		echo $this->renderConfirm ( 'delete', 'Are you sure you want to delete this form?', $request->document, $request->page );
+		
 		return;
 	}
 	public function resumeAction() {
@@ -1635,7 +1651,8 @@ END;
 		$modelobj = new $modelName ( $this->getFormNumber (), $this->usersession );
 
 		$formData = $modelobj->find ( $request->document );
-
+         
+		
 		if ('Suspended' != $formData ['status'] ) {
 			$this->_helper->viewRenderer ( 'errorgoback', 'html', true );
 			$this->view->message = "This form is not suspended and cannot be resumed.";
@@ -1651,6 +1668,7 @@ END;
 		if (isset ( $request->confirm ) && $request->confirm == "Confirm") {
 			# BACKUP THE FORM
             # DELETE THE FORM
+            
             $modelobj->resumeForm ( $request->document );
 
 			if ('iepweb03' == APPLICATION_ENV) {

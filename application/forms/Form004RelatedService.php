@@ -159,7 +159,7 @@ class Form_Form004RelatedService extends Form_AbstractForm {
 		return $this;
 				
 	}
-
+// Mike added mental healthf counseling services 11-10-2017 Jira 136
 	function getPrimaryDisability_version1()
 	{
         $arrLabel = array(
@@ -170,6 +170,7 @@ class Form_Form004RelatedService extends Form_AbstractForm {
             "Health services",
             "Interpreting Services",
             "Medical services (for diagnostic or evaluation purposes)",
+            "Mental Health Counseling",
             "Nursing services",
             "Nutrition services",
             "Occupational Therapy Services",
@@ -195,6 +196,7 @@ class Form_Form004RelatedService extends Form_AbstractForm {
             "Health services",
             "Interpreting Services",
             "Medical services (for diagnostic or evaluation purposes)",
+            "Mental Health Counseling",
             "Nursing services",
             "Nutrition services",
             "Occupational Therapy Services",

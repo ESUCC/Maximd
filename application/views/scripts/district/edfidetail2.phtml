@@ -119,20 +119,66 @@
 <?  
    }    
 ?> 
+<script type="text/javascript">
+$("document").ready(function() {
+	document.getElementById("change").addEventListener("click", function (evt) {
+        changeContent();
+    });
+    document.getElementById("create").addEventListener("click", function (evt) {
+        createContent();
+    });
+    
+    document.getElementById("changeAll").addEventListener("click", function (evt) {
+        changeAllTheContent();
+    });
+    // use the html() function to get the current HTML of an element
+    //alert($("#example").html());
+});
+ 
+function changeContent() {
+    // use the html() function to change the content of the div
+    var Message= $("<p><font size=\"+1\">Warning: Please wait until this message disappears before leaving this page. </p><p><font size=\"+1\">SRS is updating the State ODS with your Districts Data! </p>")
+    $(".new").html(Message);
+   
+    $(".new").css("color","red");
+    
+    
+}
+
+function createContent() {
+    // set the text content of the last paragraph
+    var newItem = $("<p>This is a new paragraph</p>");
+    $("#example").html(newItem);
+}
+
+function changeAllTheContent() {
+    $("#example p").text("<p>This is a paragraph</p>");
+}
+
+
+</script>
+
+<?php 
+?>
+
+<h2 id="change" class="new" ><a href="/ods/advisorset/id_county/<?php echo $this->countyId?>/id_district/<?php echo $this->districtId?>"> <b> Update ODS with Student's Data </b></a></h2>
+
+
+
 
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 
 <table class="TableList" id="ResultsTable" width="100%">
 <tr >
     <th width="20%">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
         
     </th>
     <th width="10%">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
     </th>
     <th style="text-align:center;">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishstatus', "sort" => $this->sort ));?>>Result</a>
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishstatus', "sort" => $this->sort ));?>>Result</a>
     </th>
     <th>
         Error
@@ -151,6 +197,9 @@
 <style>
 
 </style>
+<?php 
+
+?>
 <?php  
     foreach($this->districtModel as $district) {
     
@@ -185,7 +234,13 @@
         
     </td>
     <td>
-        <?php echo $this->escape($district['edfierrormessage']);?>
+        <?php 
+        $error_msg1="Authorization denied. The claim does not have any established relationships with the requested resource.";
+        $replacement_msg1='The student does not seem to have an entry from your SIS.  Please check your SIS and make sure the student is being exported to the State ODS.';
+        
+        
+        
+        echo $this->escape($district['edfierrormessage']);?>
     </td>
     <td>
         Name:<b><?php echo $this->escape($district['name_first'])." ".$this->escape($district['name_last'])?></b>
@@ -202,6 +257,33 @@
             echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
         <br>
         Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
+        <br>
+        <a href="/student/edit/id_student/<?php echo $district['id_student']?>">Edit Student Link</a>
+        <br>
+        <?php if($district['iep_ifsp_code']=='form004'){
+                   $iepFormName='Latest IEP';
+                   $pageIep='6';
+        }
+              if($district['iep_ifsp_code']=='form023'){
+                  $iepFormName='Latest IEP Data Card';          
+                  $pageIep='1';
+              }
+              if($district['mdt_code']=='form002'){
+                  $mdtFormName='Latest MDT';
+                  $pageMdt='3';
+              }
+              if($district['mdt_code']=='form022') {
+                  $mdtFormName='Latest MDT Card';
+                  $pageMdt='1';
+              }
+              
+         //     echo $district['iep_ifsp_code'];
+            ?>
+        <a href="/<?php echo $district['iep_ifsp_code']?>/view/document/<?php echo $district['iep_ifsp_id']?>/page/<?php echo $pageIep?>">View <?php echo $iepFormName?></a>
+        <br>
+        <a href="/<?php echo $district['mdt_code']?>/view/document/<?php echo $district['mdt_id']?>/page/<?php echo $pageMdt?>">View <?php echo $mdtFormName?></a>
+        <br>
+        <a href="/student/search-forms/id_student/<?php echo $district['id_student']?>">Search Student Forms</a>
     </td>
     <td>
         <table class="tableCell">
@@ -295,3 +377,4 @@
 </table>
 
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
+

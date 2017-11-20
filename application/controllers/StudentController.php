@@ -291,6 +291,8 @@ class StudentController extends My_Form_AbstractFormController
 
     public function saveAction()
     {
+        
+        
 //        $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
@@ -388,6 +390,7 @@ class StudentController extends My_Form_AbstractFormController
 //				exit;
 
 				$studentQuery = new Model_Table_StudentFormAdd();
+			
 				$result = $studentQuery->studentSave($options);  // Save data
 
 				header("Location: /student/edit/id_student/".$result);
@@ -1023,11 +1026,9 @@ class StudentController extends My_Form_AbstractFormController
 
     public function editAction()
     {
-     //  include("Writeit.php");
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();
-        $this->writevar1($this->getRequest()->getParam('id_student'),'this is the post data');
         
         $stuObject = new Model_Table_StudentTable();
         $form = new Form_StudentDemographics();
@@ -1123,7 +1124,15 @@ class StudentController extends My_Form_AbstractFormController
                         $data['sesis_exit_date'] = null;
                         $forceRefresh = true;
                     }
-             //       writevar($data,'this is the data before the update');
+// Mike added this 11-10-2017 in order to get data to edfi on edit student changes
+                    $dataEdfi=$data;
+                    $dataEdfi['id_student']=$this->getRequest()->getParam('id_student');
+                   
+                    $modifyEdFi=new Model_Table_Edfi();                  
+                    $modifyEdFi->updateEditStudentEdfi($dataEdfi);
+                    
+// end of Mike add                    
+                    
                     $stuObject->update($data, $where);
                     if(isset($forceRefresh) && $forceRefresh) {
                         
@@ -1131,6 +1140,7 @@ class StudentController extends My_Form_AbstractFormController
                     }
                 } else {
                     $data['id_author'] = $this->usersession->sessIdUser;
+                    
                     $studentId = $stuObject->insert($data);
                     $this->_redirector->gotoSimple('edit', 'student', null, array('id_student' => $studentId));
                 }

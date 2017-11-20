@@ -90,13 +90,15 @@ class Model_Table_PrivilegeTable extends Model_Table_AbstractIepForm {
             $array[$y]['id_school']=$_SESSION["user"]["user"]->privs[$x]["id_school"];
              $array[$y]['class']=$_SESSION["user"]["user"]->privs[$x]["class"];
             $array[$y]['status']=$_SESSION["user"]["user"]->privs[$x]["status"];
-            $sql=('SELECT name_district,id_district,id_county from iep_district where id_district =\''.$array[$y]['id_district'].'\' 
+            $sql=('SELECT use_edfi,name_district,id_district,id_county from iep_district where id_district =\''.$array[$y]['id_district'].'\' 
                   and id_county = \''.$array[$y]['id_county'].'\' order by name_district');
              $t=$database->fetchall($sql);
              $count=count($t);
           //   $this->writevar1($array[$y],'hope this has an school id in it');
              if($t) {
                  $array[$y]['name_district']=$t[0]['name_district'];
+                 $array[$y]['use_edfi']=$t[0]['use_edfi'];
+                 
           //       $this->writevar1($array[$y],'this is this school district');
             //     $this->writevar1($_SESSION["user"]["user"]->privs[$x]["class"],'class level');
                  $y=$y+1;
