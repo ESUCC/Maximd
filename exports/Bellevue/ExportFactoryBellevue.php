@@ -381,13 +381,13 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
 
           if($exportLine[33]==NULL) $exportLine[33]='No_Qualified_FBA_is_Available';
  
-        $t=$exportLine[32];
+          $t=strip_tags($exportLine[32]);
        //   $t=preg_replace('/\s+/', '', $t);
           $exportLine[32]=substr($t,0,3995);
           $exportLine[32]=$exportLine[32];
           if($exportLine[32]==NULL) $exportLine[32]='No Qualified  FBA is Available';
           
-          $t=$exportLine[31];
+          $t=strip_tags($exportLine[31]);
      //     $t=preg_replace('/\s+/', '', $t);
           $exportLine[31]=substr($t,0,3995);
           $exportLine[31]=$exportLine[31];
@@ -399,7 +399,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
           $exportLine[30]=$exportLine[30];
           if($exportLine[30]==NULL) $exportLine[30]='No Qualified  FBA is Available';
           
-          $t=$exportLine[29];
+          $t=strip_tags($exportLine[29]);
         //  $t=preg_replace('/\s+/', '', $t);
           $exportLine[29]=substr($t,0,3995);
           $exportLine[29]=$exportLine[29];
@@ -411,13 +411,13 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
           $exportLine[28]=$exportLine[28];
          if($exportLine[28]==NULL) $exportLine[28]='No Qualified  FBA is Available';
           
-          $t=$exportLine[27];
+          $t=strip_tags($exportLine[27]);
       //    $t=preg_replace('/\s+/', '', $t);
           $exportLine[27]=substr($t,0,3995);
           $exportLine[27]=$exportLine[27];
          if($exportLine[27]==NULL) $exportLine[27]='No Qualified  FBA is Available';
           
-          $t=$exportLine[26];
+          $t=strip_tags($exportLine[26]);
        //   $t=preg_replace('/\s+/', '', $t);
           $exportLine[26]=substr($t,0,3995);
           $exportLine[26]=$exportLine[26];
@@ -430,7 +430,16 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
           }
          $exportLine[25]=$exportLine[10]; 
          
- 
+         $exportLine[33]=strip_tags($exportLine[33]);
+         // Mike changes 11-21-2017 SRS-135
+        // $exportLine[12]='';
+         $exportLine[13]='';
+         $exportLine[14]='';
+         $exportLine[16]='';
+         $exportLine[18]='';
+         $exportLine[30]='';
+         $exportLine[28]='';
+         
              
             file_put_contents($exportPath, $this->arrayToCsv($exportLine) . $this->eol, FILE_APPEND);
                 $counter++; // This puts all the students in i.e. all the fields.  This is the line that writes it.    

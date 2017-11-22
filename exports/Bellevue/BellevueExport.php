@@ -15,7 +15,7 @@ class BellevueExport extends ExportFactoryBellevue {
         echo "\n\nBegin Export Student's\n";
         $finalLog = "\n\nBegin Exports Students...\n";
         $finalLog .= $this->dumpLog();
-        // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application
+        // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02.esucc.org/80/1.0.0_18/application
         $this->clearMetaData();clear;
      
         /**
@@ -27,7 +27,7 @@ class BellevueExport extends ExportFactoryBellevue {
        // print_r($exportConfig); die(); 
         $this->exportConfig = $exportConfig;
         $this->dataSource = $exportConfig->data_source;
-     //   print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application is what is printed
+      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.esucc.org/80/1.0.0_18/application is what is printed        
         $this->initEmail($exportConfig->email);
 
         /** create database connection */
@@ -713,6 +713,92 @@ class BellevueExport extends ExportFactoryBellevue {
         } else {
             return null;
         }
+    }
+    
+    
+    public function relatedServiceMultipleForms($student){
+        $x=$student->id_student;
+        $ieP=new Model_Table_Form004();
+        $ifsP=new Model_Table_Form013();
+        $iepCarD=new Model_Table_Form023();
+        
+        $mostRecentIep=$ieP->getMostRecentIepState($student->id_student);
+        if($mostRecentIep!=null) $mostRecentIep=$mostRecentIep[0];
+        $mostRecentIepCard=$iepCarD->getMostRecentIepCardState($student->id_student);
+        if($mostRecentIepCard!=null) $mostRecentIepCard=$mostRecentIepCard[0];
+        
+        $mostRecentIfsp=$ifsP->getMostRecentIfspState($student->id_student);
+        
+        if($mostRecentIep==null and $mostRecentIepCard==null and $mostRecentIfsp==null ){
+            return ZER0;
+        }
+       
+        if($mostRecentIep!=null and $mostRecentIepCard==null ){
+           // $t="IEP";
+            $t=$mostRecentIep['primary_service_location'];
+          //  if(strlen($t)==1 ) $t="0".$t;
+            $t=sprintf("%02d",$t);
+         
+            return $t;
+       }
+
+        if($mostRecentIep ==null and $mostRecentIepCard !=null) {
+         //  $t="IEPCARD";
+            $t= $mostRecentIepCard['primary_service_location'];
+           // if(strlen($t)==1 ) $t="0".$t;
+            $t=sprintf("%02d",$t);
+            return $t;
+        }
+        
+        
+        if($mostRecentIep !=null and $mostRecentIepCard !=null) {
+            
+            if($mostRecentIep['date_conference']>$mostRecentIepCard['date_conference']){
+              //  $t="IEP_win";
+                $t=$mostRecentIfsp['primary_service_location'];
+             //   if(strlen($t)==1)$t="0".$t;
+             $t=sprintf("%02d",$t);
+            return $t;
+            }
+            
+            if ($mostRecentIep['date_conference']<=$mostRecentIepCard['date_conference']){
+               // $t='IEPCARD_WIN';
+                $t=$mostRecentIepCard['primary_service_location'];
+             //   if(strlen($t)==1 ) $t="0$t";
+                $t=sprintf("%02d",$t);
+                return $t;
+             //   return $mostRecentIepCard['primary_service_location'];
+            }
+            
+        }
+        
+        
+        if($mostRecentIep==null and $mostRecentIepCard==null ){
+            
+            $serviceifsp=new Model_Table_Form013Services();
+            $form013=$ifsP->getMostRecentIfspState($student->id_student);
+            $id_form013=$form013[0]['id_form_013'];
+            $serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
+           
+            if($serviceDescription['specialeducationsettingdescriptor']=='Home') $t="01";
+            if($serviceDescription['specialeducationsettingdescriptor']=='Community') $t="02";
+            if($serviceDescription['specialeducationsettingdescriptor']=='Other') $t="03";
+            
+            
+          //  $t=$serviceDescription['specialeducationsettingdescriptor'];
+           // if(strlen($t)==1 ) $t="0".$t;
+          //  $t=sprintf("%02d",$t);
+          //  echo $serviceDescription['specialeducationsettingdescriptor']." ".$t;
+            return $t;
+        }
+        
+        
+        
+        
+        
+        
+         
+        return "MEE";
     }
 
     public function relatedServiceFreqSmall($student) {

@@ -285,7 +285,7 @@ class StudentController extends My_Form_AbstractFormController
             $this->view->student = $request->id_student;
         }
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
+        header("Location:https://iep.esucc.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
         exit;
     }
 
@@ -436,7 +436,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        //header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
+        //header("Location:https://iep.esucc.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
         exit;
 
     }
@@ -457,7 +457,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
+        header("Location:https://iep.esucc.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
         exit;
 
 
@@ -1063,7 +1063,7 @@ class StudentController extends My_Form_AbstractFormController
             !('77' == $dbStudent['id_county'] && '0027' == $dbStudent['id_district']) &&
             '1010818' != $this->usersession->sessIdUser
             ) {
-            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.unl.edu/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
+            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.esucc.org/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
             $this->_redirector->gotoUrl($url);
             exit;
             }
