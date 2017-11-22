@@ -257,7 +257,8 @@ class ExportFactoryBellevue
 
         $select = $table->select();
         // This is setting up the sql command and parameters. 
-       
+       $this->writevar1($select, 'the select command line 260 factore');
+      
         $whereAdd = '';
         if (isset($this->exportConfig->id_county_district) && count($this->exportConfig->id_county_district)) {
             $first = true;
@@ -429,7 +430,9 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
              $exportLine[1]=2;
           }
          $exportLine[25]=$exportLine[10]; 
-         
+         $exportLine[32]=$this->removeReturns($exportLine[32]);
+        
+         $exportLine[33]=$this->removeReturns($exportLine[33]);
          $exportLine[33]=strip_tags($exportLine[33]);
          // Mike changes 11-21-2017 SRS-135
         // $exportLine[12]='';
@@ -779,7 +782,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         $stripTags = new Zend_Filter_StripTags($allowedTags, $allowedAttributes);
 
         // remove returns
-        $data = $this->removeReturns($data);
+       $data = $this->removeReturns($data);
 
         // now filter the string
         return $stripTags->filter($data);
@@ -838,9 +841,9 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         $localVar = 'form' . substr('000' . $formNo, -3, 3);
         $modelName = 'Model_Table_Form' . substr('000' . $formNo, -3, 3);
         
-        $this->writevar1($modelName,'this is the model name');
-        $this->writevar1($localVar,'this is the localvar');
-        
+    //    $this->writevar1($modelName,'this is the model name');
+     //   $this->writevar1($localVar,'this is the localvar');
+      // returns something like Model_Table_Form004 and form004 respectively  
         if (!is_null($this->$localVar)) {
             return $this->$localVar;
         }
@@ -955,7 +958,8 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         // Michael or Mike added this June 1 beacuse PowerSChool does not like this combination. It adds a hashtag called ?
         
         $text =str_replace("- "," ",$text);
-        $text = str_replace("\r", "", $text);
+        $text=str_replace("<br />"," ",$text);
+        $text = str_replace("\r", "  ", $text);
         $text = str_replace("&apos;", "'", $text);
         $text = $this->removeImages($text);
         $text = $this->removeBadCharacters($text);

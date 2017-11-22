@@ -28,8 +28,10 @@ class BellevueExport extends ExportFactoryBellevue {
         $this->exportConfig = $exportConfig;
         $this->dataSource = $exportConfig->data_source;
       //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.esucc.org/80/1.0.0_18/application is what is printed        
+      // echo($this->dataSource);
+        
         $this->initEmail($exportConfig->email);
-
+        
         /** create database connection */
         $dbConfig = $appConfig->db2;
         $db = Zend_Db::factory($dbConfig);    // returns instance of Zend_Db_Adapter class
@@ -42,6 +44,7 @@ class BellevueExport extends ExportFactoryBellevue {
          * must be fired after pre-flight file
          */
         $emptyDataSources = $this->countEmptyDataSource();
+        
        // print_r($emptyDataSources);die(); //returns this: SELECT "iep_student".* FROM "iep_student" WHERE (id_county = '77') AND (id_district = '0001') AND (data_source = NULL)0
         $finalLog .= "\n\nPre-export students with an empty data_source field: " . count($emptyDataSources)."\n";
 
@@ -53,6 +56,7 @@ class BellevueExport extends ExportFactoryBellevue {
         /**
          * export students
          */
+        
         
        $success = $this->exportStudents(); 
        print_r($success);
