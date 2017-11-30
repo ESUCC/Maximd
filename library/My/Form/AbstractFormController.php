@@ -189,11 +189,12 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// see Form004Controller for an example
 		//
 		// mode determined by get call
-		// page determined by get call  	
+		// page determined by get call   	
 		
 
 		// version - determined by db or internally
 		$this->view->version = $this->version;
+		
 		// build the model
 		// including subform data (related table rows)
 		// also including student data
@@ -207,6 +208,8 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		
 		// old site is for forms 1-8
 		// redirect there if version is not greater or equal to 9
+		$this->writevar1($this->view->db_form_data ['version_number'],'I think this is not a called version number inside buildSrsForm');
+		
 		if (9 > $this->view->db_form_data ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
 				$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$document);
@@ -682,7 +685,9 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// if there is a print version for this page/subform
 		// replace the edit viewscript with a print viewscript
 		if($form->getDecorator ( 'Viewscript' )) {
+		    
 			$myViewscript = $form->getDecorator ( 'Viewscript' )->getOption ( 'viewScript' );
+		//	$this->writevar1($myViewscript,'this is the viewscript');
 			if (substr_count ( $myViewscript, 'edit_' ) > 0) {
 
 
@@ -1201,12 +1206,17 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 //    public function printForm()
 //    {
         // configure options
+        
+        
         $this->view->mode = 'print';
         $this->view->valid = true;
 
         // retrieve data from the request
 //		$request = $this->getRequest ();
         $document = $this->getRequest()->getParam('document');
+      //  $this->writevar1($document,'this is the document'); Just print out the document number
+        
+        
         // =====================================================================================
         // WRITE THE WEB PAGE TO A FILE AND CREATE THE PDF
         // SETUP PRINCEXML FOR PDF CREATION
@@ -1221,6 +1231,12 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
         /*
         * END SRSZF-287
         */
+     //   $this->writevar1($shortName,'this is the short name');
+       
+        
+        
+        
+        
 
         $tmpfpath = TEMP_DIR . '/' . $shortName . ".html"; // NAME OF FILE WHERE WEB PAGE WILL BE WRITTEN
         $tmpPDFpath = TEMP_DIR . '/' . $shortName . ".pdf"; // NAME OF PDF THAT WILL BE CREATED BY PRINCEXML
@@ -1237,7 +1253,8 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 
         // build the model
         $this->view->db_form_data = $this->buildModel($document, $this->view->mode);
-
+       // $this->writevar1($this->view->db_form_data,'this is hte form data');
+        
         /*
            * Add summary fields if form is IEP and print is summary
            */
@@ -1260,6 +1277,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
         // they are then ouput on print_paper.phtml
         $config = array('className' => $this->getFormClass(), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps);
         //		$view->assign("pages", $this->buildAllFormPages($request->document, $this->view->pageCount));
+       // $this->writevar1($config,'this is the config');
         $pagesArr = array();
         $this->formArr = array();
         if (1) {
@@ -1942,7 +1960,7 @@ END;
 	public function buildModel($document, $mode) {
 		// build the model
 		$modelName = $this->getModelName ();
-
+      //   $this->writevar1($modelName,'this is the model name');
 		//$this->writevar1($modelName,'this is the model name line 1924');
 		// return Model_Form008
 		
@@ -1955,14 +1973,12 @@ END;
 		// looks like the form
 		
 		
-		//$this->writevar1($document,'this is the document line 1934');
-		//$this->writevar1($mode,'this is the mode line 1935');
-		// this returns the document id and the mode of edit
+		
 		
 		
 		
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true ); 
-       
+     //   $this->writevar1($dbData,'this is the db data');
 		// Mike added this 3-8-2017 so that no 2 people can edit a form together.
 		if(isset($dbData[0]['message'])) {
 		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
@@ -1994,19 +2010,28 @@ END;
 			$this->view->version = $dbData['version_number'];
 		}
 		
+		
+		// Mike put this in 11-28-2017 because we are having issues with printing the forms in iep
+		// This makes all the forms version 9.
+		
+   //  	$dbData['version_number']='9';
+	//    $this->view->version=$dbData['version_number'];
+		
+	    
+	    
 		// old site is for form versions 1-8
 		// redirect there if version is not greater or equal to 9
 		
-	//	$this->writevar1($dbData['version_number'],'this is the version number line 1971');
+		
 		// this is coming back as null thus it goes into the loop below.
 		
 		if (9 > $dbData ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
-				$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
+		  //  	$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
 			} else {
-				$this->_redirect ( 'https://iep.esucc.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
+			//	$this->_redirect ( 'https://iep.esucc.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
 			}
-			die ();
+			// die ();
 		}
 		
 		/*
@@ -2301,12 +2326,17 @@ END;
 		
 		// build the model
 		$this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getParam ( 'document' ), $this->view->mode );
-		
+	
+		//$this->writevar1($this->view->db_form_data,'this is the db form data');
+	
 		$config = array ('className' => $this->getFormClass (), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps );
 		
 		// build zend form
 		$this->view->form = $this->buildZendForm ( $this->getFormClass (), $this->view->db_form_data, $this->view->version, $config, $this->view->page );
-
+        
+		$this->writevar1($this->view->form,'this is the form');
+		
+		
 		// validate the forms (all pages)
 		$pagesValidArr = $this->arraysKeyExtract ( $this->formPagesValidArr, 'valid', 1 );
 		$this->view->pageValidationListTop = $this->view->form->formValidPagesDisplay ( $this->view->db_form_data ['status'], $pagesValidArr, 'pagesValidTop' );

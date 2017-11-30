@@ -1,6 +1,6 @@
 <?php  
 // 0 
-$configArr['PS_ID']=array('id_student'=>'field');  // THIS is all  MIke for our benifit
+$configArr['PS_ID']=array('id_student_local'=>'field');  // THIS is all  MIke for our benifit
 //1
 $configArr['S_NE_STU_SPED_X.Alternate_Assessment'] = array( 'alternate_assessment' => 'field' ); // ok
 //2 
@@ -38,7 +38,10 @@ $configArr['U_SPED.ReEval_Consent_Recvd']=array('date_district_received'=>'007-f
 //17
 $configArr['initial_Consent_Recvd']=array('date_district_received'=>'001-final');// This is new
 //18
-$configArr['NE_alternateassessment'] = array('assessment_alt'=>'004-final'); 
+//$configArr['NE_alternateassessment'] = array('assessment_alt'=>'004-final'); 
+$configArr['U_SPED.AT_Considerations']=array('student_strengths'=>'004-final');
+
+
 
 //19  the troubleing one
 //$configArr['related_services'] = array( 'related_service_drop' => '004-final-Model_Table_Form004RelatedService' );

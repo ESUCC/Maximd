@@ -727,49 +727,57 @@ class BellevueExport extends ExportFactoryBellevue {
         $iepCarD=new Model_Table_Form023();
         
         $mostRecentIep=$ieP->getMostRecentIepState($student->id_student);
+    //    $this->writevar1($mostRecentIep,'the most recent iep ');
+       
         if($mostRecentIep!=null) $mostRecentIep=$mostRecentIep[0];
         $mostRecentIepCard=$iepCarD->getMostRecentIepCardState($student->id_student);
+       
+        
         if($mostRecentIepCard!=null) $mostRecentIepCard=$mostRecentIepCard[0];
+       // $this->writevar1($mostRecentIepCard,'the most recent iepCard ');
         
         $mostRecentIfsp=$ifsP->getMostRecentIfspState($student->id_student);
         
         if($mostRecentIep==null and $mostRecentIepCard==null and $mostRecentIfsp==null ){
-            return ZER0;
+            return ''; // note it wasa ZER0
         }
        
         if($mostRecentIep!=null and $mostRecentIepCard==null ){
            // $t="IEP";
             $t=$mostRecentIep['primary_service_location'];
+         //   $this->writevar1($t,'this is the primary service uner iep');
           //  if(strlen($t)==1 ) $t="0".$t;
-            $t=sprintf("%02d",$t);
+           // $t=sprintf("%02d",$t);
          
             return $t;
        }
 
         if($mostRecentIep ==null and $mostRecentIepCard !=null) {
          //  $t="IEPCARD";
-            $t= $mostRecentIepCard['primary_service_location'];
+            $t= $mostRecentIepCard['service_where'];
            // if(strlen($t)==1 ) $t="0".$t;
-            $t=sprintf("%02d",$t);
+           // $t=sprintf("%02d",$t);
             return $t;
         }
         
         
         if($mostRecentIep !=null and $mostRecentIepCard !=null) {
+            $this->writevar1($mostRecentIep,'most recent iep');
+            $this->writevar1($mostRecentIepCard,'most recent iep card');
             
             if($mostRecentIep['date_conference']>$mostRecentIepCard['date_conference']){
-              //  $t="IEP_win";
-                $t=$mostRecentIfsp['primary_service_location'];
+            
+                $t=$mostRecentIep['primary_service_location'];
              //   if(strlen($t)==1)$t="0".$t;
-             $t=sprintf("%02d",$t);
+          //   $t=sprintf("%02d",$t);
             return $t;
             }
             
-            if ($mostRecentIep['date_conference']<=$mostRecentIepCard['date_conference']){
-               // $t='IEPCARD_WIN';
-                $t=$mostRecentIepCard['primary_service_location'];
+         if ($mostRecentIep['date_conference']<=$mostRecentIepCard['date_conference']){
+              
+                $t=$mostRecentIepCard['service_where'];
              //   if(strlen($t)==1 ) $t="0$t";
-                $t=sprintf("%02d",$t);
+          //      $t=sprintf("%02d",$t);
                 return $t;
              //   return $mostRecentIepCard['primary_service_location'];
             }
@@ -777,7 +785,7 @@ class BellevueExport extends ExportFactoryBellevue {
         }
         
         
-        if($mostRecentIep==null and $mostRecentIepCard==null ){
+        if($mostRecentIep==null and $mostRecentIepCard==null and $mostRecentIfsp!=null){
             
             $serviceifsp=new Model_Table_Form013Services();
             $form013=$ifsP->getMostRecentIfspState($student->id_student);

@@ -2,6 +2,8 @@
 
 class ExportFactoryBellevue
 { 
+// Note: On line 299 you can save a lot of time by adding a student id to the district sql command.  
+// It will only get that one student.
 
     var $type;
     var $debug = true;  
@@ -257,7 +259,7 @@ class ExportFactoryBellevue
 
         $select = $table->select();
         // This is setting up the sql command and parameters. 
-       $this->writevar1($select, 'the select command line 260 factore');
+     //  $this->writevar1($select, 'the select command line 260 factore');
       
         $whereAdd = '';
         if (isset($this->exportConfig->id_county_district) && count($this->exportConfig->id_county_district)) {
@@ -275,7 +277,7 @@ class ExportFactoryBellevue
                 }
                 $first = false;
             }
-          
+           
             $select->where($whereAdd);
         } else
             if (count($this->exportConfig->id_district) >= 2) {
@@ -292,13 +294,16 @@ class ExportFactoryBellevue
         } else {
             $select->where('id_county = ?', $this->exportConfig->id_county);
             $select->where('id_district = ?', $this->exportConfig->id_district);
+           // $select->where('id_student= ?','1451293');
         }
         if (isset($this->exportConfig->limitToActive) && $this->exportConfig->limitToActive) {
             $select->where('status = ?', 'Active');
+         //   $select->where('id_student= ?','1282236');
         }
 //        $select->limit(10);
        echo "\n" . "\n" . $select . "\n";
         $stmt = $db->query($select);
+       // $this->writevar1($stmt,'this is the db statement');
        // print_r($stmt); die(); //returns something fetall can understand  [queryString] => SELECT "iep_student".* FROM "iep_student" WHERE (id_county = '77') AND (id_district = '0001') AND (status = 'Active')
         $data = array();
         $studentCount = 1;
@@ -371,7 +376,12 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         //$exportLine[15] = $this->chDateFormat($exportLine[15]);
         $exportLine[16] = $this->chDateFormat($exportLine[16]);
          $exportLine[17] = $this->chDateFormat($exportLine[17]);  
+        
+         $exportLine[18]= strip_tags($exportLine[18]);
          $exportLine[20] = $this->chDateFormat($exportLine[20]);
+         
+         if($exportLine[21]=='05') $exportLine[21]='5';
+         
           
         //  $exportLine[30] = $this->chDateFormat($exportLine[30]);
         
@@ -657,7 +667,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         }
 
         $retArr = array();
-        //$this->writevar1($this->getSourceFields(),'this is the source fields line');
+      
        
         foreach ($this->getSourceFields() as $configLine) {
             
@@ -816,11 +826,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
             $form004Obj = new Model_Table_Form004();
             $form004 = $form004Obj->mostRecentFinalForm($student->id_student);
             
-           if($student->id_student=='1324747'){ 
-            $this->writevar1($student->id_student,'this is the student id');
-            $this->writevar1($form004,'this is form 004');
-            die();
-           }
+           
         
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -878,7 +884,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
            */   
              // Mike added this 1-21-2017 so that any forms over year were not displayed.  Lot of writeup
                 if($differ2 >=365 ){
-                    $this->writevar1($differ2,'this is the time difference');
+                  //  $this->writevar1($differ2,'this is the time difference');
                     $form['bi_behavior_management']='NO QUALIFIED FBA Available';
                     $form['bi_behavioral_goal']='NO QUALIFIED FBA Available';
                     $form['bi_crisis_intervention']='NO QUALIFIED FBA Available';
@@ -886,7 +892,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                     $form['bi_alternative_discipline_reason']='NO QUALIFIED FBA Available';
                     $form['fa_specific_antecedents']='NO QUALIFIED FBA Available';
                     $form['bi_modifications']='NO QUALIFIED FBA Available';
-                    $this->writevar1($form,'this is the form modifield');
+                //    $this->writevar1($form,'this is the form modifield');
                 }
             }
             // End of Mikes add.
