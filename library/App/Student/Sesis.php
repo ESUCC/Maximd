@@ -76,13 +76,26 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         $this->JSmodifiedCode = "onFocus=\"javascript:modified('', '', '', '', '', '');\"";
 
     }
+    
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
 
     function sesis_collection($studentData) {
 
         if(!is_array($studentData)) {
             // student data is most likely a student id in this case
             $this->studentID = $studentData;
+        //    $this->writevar1($this->sesis_collection_wSearch($studentData),'this is the sesis data line 96');
             return $this->sesis_collection_wSearch($studentData);
+          
         }
 
         $this->studentID = $studentData['id_student'];
@@ -91,7 +104,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         # COLLECT THE SESIS DATA (IN FUNCTION GENERAL)
         #
         $this->sesisData = $this->build_sesis_data($studentData);
-
+         
         $this->validate_sesis_data($this->sesisData);
 
         return $this->sesisData;
@@ -99,20 +112,23 @@ class App_Student_Sesis // file: class_nssrs_collect_08
     function sesis_collection_transfer(&$transferData)
     {
 
-        $this->studentID = $studentData['id_student'];
-
+       $this->studentID = $studentData['id_student'];
+       // $this->studentID = $transferData['id_student'];
         #
         # SET SESIS DATA FROM TRANSFER RECORD
         #
+       // $this->writevar1($transferData,'this is the transfer data');
         $sesisData = array();
         for($n=1; $n<=52; $n++)
         {
             $keyNum = substr('000'.$n, -3 , 3);
             $sesisData[$keyNum] = $transferData['nssrs_' . $keyNum];
+         //   $this->writevar1($keyNum,'sesis data keynum');
             unset($transferData['nssrs_' . $keyNum]);
         }
 
         $this->sesisData = $sesisData;
+        
         $this->studentData = $transferData;
         $this->studentID = $transferData['id_student'];
         $this->exclude_from_nssrs_report = $transferData['exclude_from_nssrs_report'];
@@ -130,7 +146,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
 
         $this->sesisData['035'] = $this->nssrsSubmissionPeriod;
         $this->sesisData['003'] = $this->nssrsSnapshotDate;
-
+       
         return $this->sesisData;
     }
 
@@ -159,9 +175,9 @@ class App_Student_Sesis // file: class_nssrs_collect_08
             # COLLECT THE SESIS DATA (IN FUNCTION GENERAL)
             #
             $this->sesisData = $this->build_sesis_data($studentData);
-
+        //    $this->writevar1($this->sesisData,'this is the sesis data after build line 178');
             $this->validate_sesis_data($this->sesisData);
-
+            $this->writevar1($this->sesisData,'this is sesis data line 180');
             return $this->sesisData;
         } else {
             return false;
@@ -486,6 +502,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         # BUILDS THE sesisValidation VARIABLE IN THIS OBJECT
         #
         $evalObj = new App_Student_SesisValidate();
+        
         $evalObj->validate($sesisData, $this->sesisValidation, $this->arrValidationResults);
     }
 
@@ -663,13 +680,16 @@ class App_Student_Sesis // file: class_nssrs_collect_08
 
         // determine if the student is part C, part B, or transitional
         $settingCat = $this->primary_setting_category($dob);
-
+        //$this->writevar1($this->iepUsed,'this is the iep used');
         // get the student's setting code
         if('iep' == $this->iepUsed) {
             // does the code from IEP
             $fromIEP = 1;
             $settingCode = $this->mostRecentIEP['primary_service_location'];
-
+            /*$this->writevar1($settingCode,'this is the setting code line 688');
+            $this->writevar1($this->mostRecentIEP,'the most recent iep');
+            the setting code comes in correctly here;
+            */
         } elseif('iepcard' == $this->iepUsed) {
             $fromIEP = 1;
             $settingCode = $this->mostRecentIEPCard['service_where'];
@@ -682,7 +702,8 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         } else {
             $this->IEP_locationValueListName = "NO DOC";
         }
-
+         
+      //  $this->writevar1($settingCode,'this is setting code line 705');
         // if null setting code, check exit date
         if('' == $settingCode) {
             $exitDate = $this->studentData['sesis_exit_date'];
@@ -701,9 +722,10 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         $settingCode = intval($settingCode); // remove leading zeros
         $this->settingCode = $settingCode;
         $this->settingCat = $settingCat;
-
+      //  $this->writevar1($settingCode,'this is setting code line 724');
 
         if('' == $settingCode) {
+           
             return null;
         }
 
@@ -741,7 +763,9 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         // has has code "1"(yes) in the Parental Placement Field (Field 51) will automatically
         // have a code of "14" (private school) added to Field 44 (Primary Setting)
         // regardless of what the student's IEP or Data card say.
-        if($ageAtSubmissionDate >= 6 && 1 == $parentalPlacement) {
+       // Mike changed this from 1 to 0 12-01-2017
+        if($ageAtSubmissionDate >= 6 && 0==$parentalPlacement) {
+           
             return 14;
         }
 
@@ -1333,7 +1357,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         }
         $import['033'] = new App_Student_SesisItem($entryDate,'ENTRY DATE','Datetime','10','','','');
         //echo (strlen($import['033']->data) == 10) . "<BR>";
-
+     //   $this->writevar1($import['33'],'this is the field 33 line 1359 sesis.php');
         // Field#34 Exit Date
         //
         // This is the exit date from the EDIT STUDENT PAGE.
@@ -1342,6 +1366,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         } else {
             $exitDate = date('Y-m-d', strtotime($arr['sesis_exit_date']));
         }
+        $this->writevar1($arr['sesis_exit_date'],'this is the exist date line 1368 sesis.php');
         $import['034'] = new App_Student_SesisItem($exitDate,'EXITDATE','Datetime','10','Empty or a valid date, see Exit table below, if present, exit reason must be present','','Formerly row 55');
 
         // Field#35 SNAPSHOT DATE
@@ -1365,7 +1390,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
             $dobDate = date('m/d/Y', strtotime($arr['dob']));
         }
         $import['044'] = new App_Student_SesisItem($this->primary_setting_code($dobDate, $this->build_spedSetting_pre2007(), $this->build_parentalPlacement2008($arr['parental_placement'])),'Primary Setting Code','','','','');
-
+      //  $this->writevar1($import['044'],'this is the import line 1384');
         //echo "44: " . $import['044'] . "<BR>";
 
         // Field#45 Unused – Leave Blank

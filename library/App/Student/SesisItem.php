@@ -20,7 +20,6 @@ class App_Student_SesisItem
         $this->length = $length;
         $this->validation = $validation;
         $this->note = $note;
-
 //        Zend_Debug::dump($name, $type);
 //        Zend_Debug::dump($data, 'data');
 
@@ -33,6 +32,18 @@ class App_Student_SesisItem
 //        require_once("iep_class_student.inc");
         $this->tempStdObj = new Model_Table_StudentTable();
     }
+    
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     function html_row_displayOutfacing($key, &$output, $arrValidationResults, $arrSesisValidation, $additionalData)
     {
         //var_dump($additionalData);
@@ -391,11 +402,11 @@ class App_Student_SesisItem
 //             }
 
         } elseif('033' == $key) {
-//            $output .= $this->formInput->form_input_text($key, date('Y-m-d', strtotime($this->data)), true, ' size="10" '. $this->JSmodifiedCode) . " Initial Verification Date (YYYY-MM-DD)";
+      //   $output .= $this->formInput->form_input_text($key, date('Y-m-d', strtotime($this->data)), true, ' size="10" '. $this->JSmodifiedCode) . " Initial Verification Date (YYYY-MM-DD)";
 
         } elseif('034' == $key) {
-//            $output .= $this->formInput->form_input_text($key, date('Y-m-d', strtotime($this->data)), true, ' size="10" '. $this->JSmodifiedCode) . " Exit Date (YYYY-MM-DD)";
-
+            $output .= $this->formInput->form_input_text($key, date('Y-m-d', strtotime($this->data)), true, ' size="10" '. $this->JSmodifiedCode) . " Exit Date (YYYY-MM-DD)";
+       //    $this->writevar1($output,'this is it so far line 409 sesisitem.php');
 
         } elseif('044' == $key) {
 
@@ -574,6 +585,7 @@ class App_Student_SesisItem
         $output .= "</TD>";
 
         $output .= "</TR>";
+        //$this->writevar1($output,'this is the out put line 589');
 
     }
 

@@ -2,7 +2,17 @@
 
 class App_Collection_Student extends Model_Table_Collection
 {
-
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     public function getNames($userId, $collectionName='default', $additionalFields = array()) {
 
         $returnArray = array();
@@ -11,12 +21,13 @@ class App_Collection_Student extends Model_Table_Collection
          */
         $model = new Model_Table_Collection();
         $collectionItems = $model->getItems($userId, $collectionName);
-
+      //  $this->writevar1($collectionItems,'these re the colleciton items');
         $modelStudent = new Model_Table_StudentTable();
         if (count($collectionItems) > 0) {
             foreach ($collectionItems as $collectionItem) {
 
                 $studentArr = $modelStudent->studentInfo($collectionItem['value']);
+           //     $this->writevar1($studentArr,'student array');
                 if (count($studentArr) == 0) {
                     continue;
                 }
@@ -35,6 +46,7 @@ class App_Collection_Student extends Model_Table_Collection
                 }
             }
         }
+     //   $this->writevar1($returnArray,'this returnarray');
         return $returnArray;
     }
 

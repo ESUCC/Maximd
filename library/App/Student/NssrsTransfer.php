@@ -144,6 +144,17 @@ class App_Student_NssrsTransfer extends Zend_Db_Table_Abstract {
         );
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     public function insert_transfer($sesisData, $studentData) {
         // build temp data array from other arrays
         $tmpData = array();
@@ -163,9 +174,23 @@ class App_Student_NssrsTransfer extends Zend_Db_Table_Abstract {
         }
 
         $data = array_combine($this->fieldArr, $insertData);
-
         $nssrsTransfersObj = new Model_Table_NssrsTransfers();
+        
+        
+        /*
+         * Mike added this 12-3-2017 SRS-141 date issue in line 34 of the nesses report
+         * Please note that the code does get the date elsewhere, but if nobody exists the students 
+         * then transfering the student does not disable the student or create an exist date.  Therefore
+         * unless this happens this field will always be null.  
+         */
+        if($data['nssrs_034']==null ) {
+            $date=date("Y-m-d");
+        
+            $data['nssrs_034']=$date;
+        }  
+      //  $this->writevar1($data,'this is the data line 177 nssrstransfer app-student');
         $transferId = $nssrsTransfersObj->insert($data);
+        
         $transfer = $nssrsTransfersObj->find($transferId);
         if(count($transfer)) {
             return $transfer->current()->toArray();

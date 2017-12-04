@@ -2027,11 +2027,11 @@ END;
 		
 		if (9 > $dbData ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
-		  //  	$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
+		  	$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
 			} else {
-			//	$this->_redirect ( 'https://iep.esucc.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
+				$this->_redirect ( 'https://iep.esucc.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
 			}
-			// die ();
+			die ();
 		}
 		
 		/*
@@ -2334,7 +2334,7 @@ END;
 		// build zend form
 		$this->view->form = $this->buildZendForm ( $this->getFormClass (), $this->view->db_form_data, $this->view->version, $config, $this->view->page );
         
-		$this->writevar1($this->view->form,'this is the form');
+	//	$this->writevar1($this->view->form,'this is the form');
 		
 		
 		// validate the forms (all pages)

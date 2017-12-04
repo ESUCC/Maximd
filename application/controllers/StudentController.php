@@ -1382,7 +1382,7 @@ class StudentController extends My_Form_AbstractFormController
         $studentCollectionObj = new App_Collection_Student();
       
         $studentCollection = $studentCollectionObj->getNames($this->usersession->sessIdUser, $groupName);
-        // writevar($studentCollection,'this is the collection of what we need');
+     //   $this->writevar1($studentCollection,'this is the collection of what we need');
         // This returns the students in the list array format with full name and as 'name' and id as 'id' ass array
       
         switch ($this->getRequest()->getParam('run')) {
@@ -1404,6 +1404,8 @@ class StudentController extends My_Form_AbstractFormController
                 break;
           
             case 'transfer':
+                
+                
                 /**
                  * transfer students action
                  */  
@@ -1492,6 +1494,7 @@ class StudentController extends My_Form_AbstractFormController
 
         foreach ($studentCollection as $collectionItem) {
             $studentId = $collectionItem['id'];
+            $this->writevar1($studentId,'this is the studentid');
             switch ($type) {
                 case 'mostRecentFinal':
                     $form = $modelForm->mostRecentFinalForm($studentId, $sortField);
