@@ -208,7 +208,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		
 		// old site is for forms 1-8
 		// redirect there if version is not greater or equal to 9
-		$this->writevar1($this->view->db_form_data ['version_number'],'I think this is not a called version number inside buildSrsForm');
+	//	$this->writevar1($this->view->db_form_data ['version_number'],'I think this is not a called version number inside buildSrsForm');
 		
 		if (9 > $this->view->db_form_data ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
@@ -2027,9 +2027,9 @@ END;
 		
 		if (9 > $dbData ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
-		  	$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
+		 	$this->_redirect('https://iep.esucc.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
 			} else {
-				$this->_redirect ( 'https://iep.esucc.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
+			$this->_redirect ( 'https://iep.esucc.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
 			}
 			die ();
 		}
