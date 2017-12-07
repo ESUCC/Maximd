@@ -2,7 +2,7 @@
 
 class DistrictController extends Zend_Controller_Action
 {
-    // Mike on commit 12-12-2016
+    // Mike on commit 12-12-2016 and 12/7/2017
 // June 10th lat commit
     public function init() 
     {
@@ -13,7 +13,7 @@ class DistrictController extends Zend_Controller_Action
 
     function writevar1($var1,$var2) { 
     
-        ob_start(); 
+        ob_start();  
         var_dump($var1);
         $data = ob_get_clean();
         $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
