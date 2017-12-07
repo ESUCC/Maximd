@@ -5,7 +5,7 @@
 -- jesse syncing from local machine
 -- notice that it excludes the bootstrap.php file
 --
-rsync -zrpt --delete-after -e "ssh" --exclude=bootstrap.php --exclude=.DS_Store /Applications/ZendServer/apache2/htdocs/neb_srs/ root@iepweb02.esucc.org:/var/www/html/neb_srs/
+rsync -zrpt --delete-after -e "ssh" --exclude=bootstrap.php --exclude=.DS_Store /Applications/ZendServer/apache2/htdocs/neb_srs/ root@iepweb02.nebraskacloud.org:/var/www/html/neb_srs/
 
 enter password for iepweb02
 

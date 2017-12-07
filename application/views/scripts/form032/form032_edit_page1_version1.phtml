@@ -59,7 +59,12 @@
     	<td style="padding-left:25px;padding-bottom:none;"><?php echo str_replace("[replace_ifsp_label]","If the team determines that your child is eligible for early intervention services, a meeting will follow to develop your child's Individualized Family Service Plan (IFSP). At the IFSP meeting we will typically be discussing:",$this->element->meeting_type_eligible_ifsp); ?></td>
     </tr>
     <?php endif; ?>
-    <?php if(('print' == $view->mode && $this->element->meeting_transition_conference->getValue() == 't') || $view->mode != 'print') : ?>
+    <?php /*
+    SRS 121 changed by Mike 12-07-2017 it was
+    $this->element->meeting_transition_conference-
+    changed to combined_transition_conference
+    */ 
+    if(('print' == $view->mode && $this->element->combined_transition_conference->getValue() == 't') || $view->mode != 'print') : ?>
     <tr>
     	<td style="padding-left:75px;">
     		<?php echo $this->element->combined_transition_conference; ?>
@@ -148,7 +153,7 @@
 	<tr>
 		<td colspan="3"><?php echo $this->element->change_name; ?> at <?php echo $this->element->change_phone_email; ?></td>
 	</tr>
-</table>
+</table> 
 <table class="<?php echo ($view->mode == 'print') ? 'formTitleHead' : 'formSectionHeadBlue'; ?>" cellpadding="0" cellspacing="0">
 	<tr>
 		<td>Parental Safeguards</td>
