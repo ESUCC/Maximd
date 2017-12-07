@@ -12,6 +12,19 @@ class Model_Table_TransferRequest extends Zend_Db_Table_Abstract
     protected $_primary = 'id_transfer_request';
     protected $_sequence = 'iep_transfer__id_transfer_r_seq';
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
+    
+    
     public function confirmTransferRequest($idTransferRequest) {
         $tr = $this->getTransferRequest($idTransferRequest);
         if(empty($tr)) {
@@ -122,16 +135,18 @@ class Model_Table_TransferRequest extends Zend_Db_Table_Abstract
     {
         // track transfers at the nssrs level
         if( ($transfer['id_county_to'] != $transfer['id_county_from']) || ($transfer['id_district_to'] != $transfer['id_district_from']) )
-        {
+        { 
             // out of district
             $sesisObj = new App_Student_Sesis();
             $sesisData = $sesisObj->sesis_collection($studentId);
+         //   $this->writevar1($sesisData,'this is the sesis data lline 142 model/table/transferrequest.php');
             $sesisData['033'] = Model_Table_StudentTable::getEntryDate($studentId);
             $sesisData['052'] = '1';
             $sesisData['001'] = $transfer['id_county_from'] . '-' . $transfer['id_district_from'];
             $sesisData['002'] = $transfer['id_school_from'];
-
+             
             $nssrs_transfer = new App_Student_NssrsTransfer();
+          //  $this->writevar1($sesisData,'this is the nssrs transfer request line 150 TransferRequest 149');
             if(!$nssrs_transfer->insert_transfer($sesisData, $sesisObj->studentData)) {
                 $this->sendTransferErrorEmail($studentId);
             }
@@ -294,6 +309,7 @@ class Model_Table_TransferRequest extends Zend_Db_Table_Abstract
         $message = '';
         foreach($insertedTransferRequestIds as $idTransferRequest) {
             $tr = $this->getTransferRequest($idTransferRequest);
+          
             if(empty($tr)) {
                 continue;
             }

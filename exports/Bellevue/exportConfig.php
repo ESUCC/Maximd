@@ -24,7 +24,9 @@ $configArr['S_NE_STU_SPED_X.Sped_Time_nw_RegEd_Peers'] = array( 'special_ed_non_
 //11
 $configArr['S_NE_STU_SPED_X.Sped_Time_w_RegEd_Peers'] = array( 'special_ed_peer_percent' => '004-final' );
 //12
-$configArr['U_Students_Extension.SPED_IEPStrengths'] = array( 'studentStrengths' => 'function' );
+//Changed this 11-21-2017 as per SRS-135 #1
+$configArr['U_Students_Extension.SPED_IEPStrengths'] = array( 'student_strengths' => '004-final' );
+//$configArr['U_Students_Extension.SPED_IEPStrengths'] = array( 'studentStrengths' => 'function' );
 //13
 $configArr['U_SPED.MIPS_Consent_Recvd']= array('pg6_date_doc_signed_parent'=>'004-final');
 //14
@@ -36,7 +38,10 @@ $configArr['U_SPED.ReEval_Consent_Recvd']=array('date_district_received'=>'007-f
 //17
 $configArr['initial_Consent_Recvd']=array('date_district_received'=>'001-final');// This is new
 //18
-$configArr['NE_alternateassessment'] = array('assessment_alt'=>'004-final'); 
+//$configArr['NE_alternateassessment'] = array('assessment_alt'=>'004-final'); 
+$configArr['U_SPED.AT_Considerations']=array('student_strengths'=>'004-final');
+
+
 
 //19  the troubleing one
 //$configArr['related_services'] = array( 'related_service_drop' => '004-final-Model_Table_Form004RelatedService' );
@@ -44,8 +49,9 @@ $configArr['related_services'] =  array( 'relatedServices' => 'function' );
 //20
 $configArr['S_NE_STU_SPED_X.Sped_Entry_Date']= array('initial_verification_date'=>'002-final');
 //21
-$configArr['S_NE_STU_SPED_X.Sped_Inst_Setting'] = array('primary_service_location'=>'004-final');
-
+// Mike made a new function in BellevueExport.php that will take into account iepdatacards and ifsps.
+//$configArr['S_NE_STU_SPED_X.Sped_Inst_Setting'] = array('primary_service_location'=>'004-final');
+$configArr['S_NE_STU_SPED_X.Sped_Inst_Setting'] = array('relatedServiceMultipleForms'=>'function');
 
 // Start of Mike Change on 10-31-2016 
 //$configArr['S_NE_STU_SPED_X.PrimaryService'] = array('related_service_drop'=>'004-final-Model_Table_Form004RelatedService');

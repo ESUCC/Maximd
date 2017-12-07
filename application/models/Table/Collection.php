@@ -18,6 +18,17 @@ class Model_Table_Collection extends Model_Table_AbstractIepForm
         'Model_Table_CollectionItem',
     );
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     public function get($userId, $collectionName='default') {
         $collection = $this->fetchRow(
             $this->select()

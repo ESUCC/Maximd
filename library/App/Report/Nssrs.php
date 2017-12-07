@@ -117,7 +117,16 @@ class App_Report_Nssrs
 //        }
 
     }
-
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
     public function buildReportData()
     {
         $data = array();
@@ -820,11 +829,12 @@ class App_Report_Nssrs
      */
     private function primarySettingCode()
     {
+        
         $settingCode = null;
         if (!is_null($this->getForm('004')) && false !== $this->getForm('004')) {
             $iep = $this->getForm('004');
             $settingCode = $iep['primary_service_location'];
-
+            $this->writevar1($settingCode,'this is the setting code');
         } elseif (!is_null($this->getForm('013')) && false !== $this->getForm('013')) {
             $form013Obj = new Model_Table_Form013();
             $form013 = $this->getForm('013');
@@ -858,7 +868,7 @@ class App_Report_Nssrs
                     $settingCode = 10;
             }
         }
-
+      //   $this->writevar1($settingCode,'this is the setting code');
         return $settingCode;
     }
 

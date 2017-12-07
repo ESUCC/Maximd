@@ -108,7 +108,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		if (! App_Helper_Session::siteAccessGranted ()) {
 			if ('production' == APPLICATION_ENV) {
 				// try to get the token from iep and relogin
-				return $this->_redirect ( 'https://iep.unl.edu/srs.php?area=personnel&sub=gettoken&destination=' . str_replace ( '/', '-', $_SERVER ['REQUEST_URI'] ) );
+				return $this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination=' . str_replace ( '/', '-', $_SERVER ['REQUEST_URI'] ) );
 			} else {
 				// redirect home
 				return $this->redirectWithMessage ( '/', "You do not have site access granted." );
@@ -189,11 +189,12 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// see Form004Controller for an example
 		//
 		// mode determined by get call
-		// page determined by get call  	
+		// page determined by get call   	
 		
 
 		// version - determined by db or internally
 		$this->view->version = $this->version;
+		
 		// build the model
 		// including subform data (related table rows)
 		// also including student data
@@ -207,11 +208,13 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		
 		// old site is for forms 1-8
 		// redirect there if version is not greater or equal to 9
+	//	$this->writevar1($this->view->db_form_data ['version_number'],'I think this is not a called version number inside buildSrsForm');
+		
 		if (9 > $this->view->db_form_data ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
-				$this->_redirect('https://iep.unl.edu/form_print.php?form=form_'.$this->getFormNumber().'&document='.$document);
+				$this->_redirect('https://iep.nebraskacloud.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$document);
 			} else {
-				$this->_redirect('https://iep.unl.edu/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $document . '&option='.$this->getRequest()->getActionName());
+				$this->_redirect('https://iep.nebraskacloud.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $document . '&option='.$this->getRequest()->getActionName());
 			}
 			die ();
 		}
@@ -682,7 +685,9 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// if there is a print version for this page/subform
 		// replace the edit viewscript with a print viewscript
 		if($form->getDecorator ( 'Viewscript' )) {
+		    
 			$myViewscript = $form->getDecorator ( 'Viewscript' )->getOption ( 'viewScript' );
+		//	$this->writevar1($myViewscript,'this is the viewscript');
 			if (substr_count ( $myViewscript, 'edit_' ) > 0) {
 
 
@@ -831,7 +836,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form002', 'action' => 'view', 'document' => $prevMdt ['id_form_002'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->primary_disability = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$form->getElement('disability_primary')->getMultiOption($prevMdt['disability_primary'])}</a>";
 			} else {
-				$sessQuickLinks->primary_disability = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_002&document={$prevMdt['id_form_002']}&page=1&option=view\" target=\"_blank\">{$form->getElement('disability_primary')->getMultiOption($prevMdt['disability_primary'])}</a>";
+				$sessQuickLinks->primary_disability = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_002&document={$prevMdt['id_form_002']}&page=1&option=view\" target=\"_blank\">{$form->getElement('disability_primary')->getMultiOption($prevMdt['disability_primary'])}</a>";
 			
 			}
 		} else {
@@ -848,7 +853,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form004', 'action' => 'view', 'document' => $prevIep ['id_form_004'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->primary_service = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevIep['primary_disability_drop']}</a>";
 			} else {
-				$sessQuickLinks->primary_service = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_004&document={$prevIep['id_form_004']}&page=1&option=view\" target=\"_blank\">{$prevIep['primary_disability_drop']}</a>";
+				$sessQuickLinks->primary_service = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_004&document={$prevIep['id_form_004']}&page=1&option=view\" target=\"_blank\">{$prevIep['primary_disability_drop']}</a>";
 			
 			}
 		} else {
@@ -864,7 +869,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form004', 'action' => 'view', 'document' => $prevIep ['id_form_004'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->prev_iep = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevIep['date_conference']}</a>";
 			} else {
-				$sessQuickLinks->prev_iep = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_004&document={$prevIep['id_form_004']}&page=1&option=view\" target=\"_blank\">{$prevIep['date_conference']}</a>";
+				$sessQuickLinks->prev_iep = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_004&document={$prevIep['id_form_004']}&page=1&option=view\" target=\"_blank\">{$prevIep['date_conference']}</a>";
 			
 			}
 		} else {
@@ -881,7 +886,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form003', 'action' => 'view', 'document' => $prevForm003 ['id_form_003'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->prev_notice_iep = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm003['date_notice']}</a>";
 			} else {
-				$sessQuickLinks->prev_notice_iep = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_003&document={$prevForm003['id_form_003']}&page=1&option=view\" target=\"_blank\">{$prevForm003['date_notice']}</a>";
+				$sessQuickLinks->prev_notice_iep = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_003&document={$prevForm003['id_form_003']}&page=1&option=view\" target=\"_blank\">{$prevForm003['date_notice']}</a>";
 			
 			}
 		} else {
@@ -898,7 +903,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form010', 'action' => 'view', 'document' => $prevForm010 ['id_form_010'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->prev_pr = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm010['date_notice']}</a>";
 			} else {
-				$sessQuickLinks->prev_pr = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_010&document={$prevForm010['id_form_010']}&page=1&option=view\" target=\"_blank\">{$prevForm010['date_notice']}</a>";
+				$sessQuickLinks->prev_pr = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_010&document={$prevForm010['id_form_010']}&page=1&option=view\" target=\"_blank\">{$prevForm010['date_notice']}</a>";
 			
 			}
 		} else {
@@ -912,7 +917,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form002', 'action' => 'view', 'document' => $prevMdt ['id_form_002'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->prev_mdt = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevMdt['date_mdt']}</a>";
 			} else {
-				$sessQuickLinks->prev_mdt = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_002&document={$prevMdt['id_form_002']}&page=1&option=view\" target=\"_blank\">{$prevMdt['date_mdt']}</a>";
+				$sessQuickLinks->prev_mdt = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_002&document={$prevMdt['id_form_002']}&page=1&option=view\" target=\"_blank\">{$prevMdt['date_mdt']}</a>";
 			
 			}
 		} else {
@@ -929,7 +934,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form013', 'action' => 'view', 'document' => $prevForm013 ['id_form_013'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->prev_ifsp = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm013['meeting_date']}</a>";
 			} else {
-				$sessQuickLinks->prev_ifsp = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_013&document={$prevForm013['id_form_013']}&page=1&option=view\" target=\"_blank\">{$prevForm013['meeting_date']}</a>";
+				$sessQuickLinks->prev_ifsp = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_013&document={$prevForm013['id_form_013']}&page=1&option=view\" target=\"_blank\">{$prevForm013['meeting_date']}</a>";
 			
 			}
 		} else {
@@ -960,7 +965,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form001', 'action' => 'view', 'document' => $prevForm001 ['id_form_001'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->last_initial_eval = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm001['date_notice']}</a>";
 			} else {
-				$sessQuickLinks->last_initial_eval = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_001&document={$prevForm001['id_form_001']}&page=1&option=view\" target=\"_blank\">{$prevForm001['date_notice']}</a>";
+				$sessQuickLinks->last_initial_eval = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_001&document={$prevForm001['id_form_001']}&page=1&option=view\" target=\"_blank\">{$prevForm001['date_notice']}</a>";
 			
 			}
 		} else {
@@ -975,7 +980,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form015', 'action' => 'view', 'document' => $prevForm015 ['id_form_015'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->last_initial_ifsp_eval = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm015['date_notice']}</a>";
 			} else {
-				$sessQuickLinks->last_initial_ifsp_eval = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_015&document={$prevForm015['id_form_015']}&page=1&option=view\" target=\"_blank\">{$prevForm015['date_notice']}</a>";
+				$sessQuickLinks->last_initial_ifsp_eval = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_015&document={$prevForm015['id_form_015']}&page=1&option=view\" target=\"_blank\">{$prevForm015['date_notice']}</a>";
 			
 			}
 		} else {
@@ -990,7 +995,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form016', 'action' => 'view', 'document' => $prevForm016 ['id_form_016'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->last_initial_ifsp_placement = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm016['date_notice']}</a>";
 			} else {
-				$sessQuickLinks->last_initial_ifsp_placement = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_016&document={$prevForm016['id_form_016']}&page=1&option=view\" target=\"_blank\">{$prevForm016['date_notice']}</a>";
+				$sessQuickLinks->last_initial_ifsp_placement = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_016&document={$prevForm016['id_form_016']}&page=1&option=view\" target=\"_blank\">{$prevForm016['date_notice']}</a>";
 			
 			}
 		} else {
@@ -1005,7 +1010,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 				$link = $this->view->url ( array ('controller' => 'form014', 'action' => 'view', 'document' => $prevForm014 ['id_form_014'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->last_notice_of_ifsp = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$prevForm014['date_notice']}</a>";
 			} else {
-				$sessQuickLinks->last_notice_of_ifsp = "<a href=\"https://iep.unl.edu/srs.php?area=student&sub=form_014&document={$prevForm014['id_form_014']}&page=1&option=view\" target=\"_blank\">{$prevForm014['date_notice']}</a>";
+				$sessQuickLinks->last_notice_of_ifsp = "<a href=\"https://iep.nebraskacloud.org/srs.php?area=student&sub=form_014&document={$prevForm014['id_form_014']}&page=1&option=view\" target=\"_blank\">{$prevForm014['date_notice']}</a>";
 			
 			}
 		} else {
@@ -1125,7 +1130,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		
 		
 		imagepng ( $im, $_SERVER ['DOCUMENT_ROOT'] . 'temp/' . substr ( $url [1], strrpos ( $url [1], '/' ) + 1 ) . '.png' );
-		return '<img class="form010Chart" src="http://iepweb02.unl.edu/temp/' . substr ( $url [1], strrpos ( $url [1], '/' ) + 1 ) . '.png">';
+		return '<img class="form010Chart" src="http://iepweb02.nebraskacloud.org/temp/' . substr ( $url [1], strrpos ( $url [1], '/' ) + 1 ) . '.png">';
 	}
 	
 	public function archiveAction() {
@@ -1201,12 +1206,17 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 //    public function printForm()
 //    {
         // configure options
+        
+        
         $this->view->mode = 'print';
         $this->view->valid = true;
 
         // retrieve data from the request
 //		$request = $this->getRequest ();
         $document = $this->getRequest()->getParam('document');
+      //  $this->writevar1($document,'this is the document'); Just print out the document number
+        
+        
         // =====================================================================================
         // WRITE THE WEB PAGE TO A FILE AND CREATE THE PDF
         // SETUP PRINCEXML FOR PDF CREATION
@@ -1221,6 +1231,12 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
         /*
         * END SRSZF-287
         */
+     //   $this->writevar1($shortName,'this is the short name');
+       
+        
+        
+        
+        
 
         $tmpfpath = TEMP_DIR . '/' . $shortName . ".html"; // NAME OF FILE WHERE WEB PAGE WILL BE WRITTEN
         $tmpPDFpath = TEMP_DIR . '/' . $shortName . ".pdf"; // NAME OF PDF THAT WILL BE CREATED BY PRINCEXML
@@ -1237,7 +1253,8 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 
         // build the model
         $this->view->db_form_data = $this->buildModel($document, $this->view->mode);
-
+       // $this->writevar1($this->view->db_form_data,'this is hte form data');
+        
         /*
            * Add summary fields if form is IEP and print is summary
            */
@@ -1260,6 +1277,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
         // they are then ouput on print_paper.phtml
         $config = array('className' => $this->getFormClass(), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps);
         //		$view->assign("pages", $this->buildAllFormPages($request->document, $this->view->pageCount));
+       // $this->writevar1($config,'this is the config');
         $pagesArr = array();
         $this->formArr = array();
         if (1) {
@@ -1295,7 +1313,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
         }
 
         // build the print header
-        $img = 'http://iep.unl.edu/image_upload/' . $this->view->db_form_data ['id_county'] . $this->view->db_form_data ['id_district'] . '.jpg';
+        $img = 'http://iep.nebraskacloud.org/image_upload/' . $this->view->db_form_data ['id_county'] . $this->view->db_form_data ['id_district'] . '.jpg';
         $view->assign("header", $this->view->printHeader($img, $this->getFormTitle()));
 
         // build the print footer
@@ -1626,7 +1644,7 @@ END;
 			} elseif ('jesselocal' == APPLICATION_ENV) {
 				$this->_redirector->gotoSimple ( 'forms', 'student', null, array ('student' => '1198891' ) );
 			} else {
-			  $this->_redirect ( 'https://iep.unl.edu/srs.php?area=student&sub=student&student=' . $formData ['id_student'] . '&option=forms' );
+			  $this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $formData ['id_student'] . '&option=forms' );
 			}
 			return;
 		}
@@ -1676,7 +1694,7 @@ END;
 			} elseif ('jesselocal' == APPLICATION_ENV) {
 				$this->_redirector->gotoSimple ( 'forms', 'student', null, array ('student' => $formData ['id_student'] ) );
 			} else {
-				$this->_redirect ( 'https://iep.unl.edu/srs.php?area=student&sub=student&student=' . $formData ['id_student'] . '&option=forms' );
+				$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $formData ['id_student'] . '&option=forms' );
 			}
 			return;
 		}
@@ -1760,7 +1778,7 @@ END;
 		//$this->writevar1($studentObj->isDemoStudent($student[0]['id_county'],$student[0]['id_district'],$student[0]['id_school']),'the student in abstractformcontroller');
 		$this->writevar1(in_array($this->getFormNumber(), $createOldForms['forms']),'this lets you know it is in the array array');
 		if (!$studentObj->isDemoStudent($student[0]['id_county'],$student[0]['id_district'],$student[0]['id_school']) && in_array($this->getFormNumber(), $createOldForms['forms'])) {
-			$this->_redirect('https://iep.unl.edu/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&student=' . $this->getRequest()->student . '&option=new');
+			$this->_redirect('https://iep.nebraskacloud.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&student=' . $this->getRequest()->student . '&option=new');
 			exit;
 		}
 		
@@ -1838,7 +1856,7 @@ END;
 		if ('iepweb03' == APPLICATION_ENV) {
 			$this->_redirector->gotoSimple ( 'forms', 'student', null, array ('student' => '1366090' ) );
 		} else {
-			$this->_redirect ( 'https://iep.unl.edu/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
+			$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
 		}
 	
 	}
@@ -1942,7 +1960,7 @@ END;
 	public function buildModel($document, $mode) {
 		// build the model
 		$modelName = $this->getModelName ();
-
+      //   $this->writevar1($modelName,'this is the model name');
 		//$this->writevar1($modelName,'this is the model name line 1924');
 		// return Model_Form008
 		
@@ -1955,14 +1973,12 @@ END;
 		// looks like the form
 		
 		
-		//$this->writevar1($document,'this is the document line 1934');
-		//$this->writevar1($mode,'this is the mode line 1935');
-		// this returns the document id and the mode of edit
+		
 		
 		
 		
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true ); 
-       
+     //   $this->writevar1($dbData,'this is the db data');
 		// Mike added this 3-8-2017 so that no 2 people can edit a form together.
 		if(isset($dbData[0]['message'])) {
 		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
@@ -1994,17 +2010,26 @@ END;
 			$this->view->version = $dbData['version_number'];
 		}
 		
+		
+		// Mike put this in 11-28-2017 because we are having issues with printing the forms in iep
+		// This makes all the forms version 9.
+		
+   //  	$dbData['version_number']='9';
+	//    $this->view->version=$dbData['version_number'];
+		
+	    
+	    
 		// old site is for form versions 1-8
 		// redirect there if version is not greater or equal to 9
 		
-	//	$this->writevar1($dbData['version_number'],'this is the version number line 1971');
+		
 		// this is coming back as null thus it goes into the loop below.
 		
 		if (9 > $dbData ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
-				$this->_redirect('https://iep.unl.edu/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
+		 	$this->_redirect('https://iep.nebraskacloud.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
 			} else {
-				$this->_redirect ( 'https://iep.unl.edu/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
+			$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
 			}
 			die ();
 		}
@@ -2301,12 +2326,17 @@ END;
 		
 		// build the model
 		$this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getParam ( 'document' ), $this->view->mode );
-		
+	
+		//$this->writevar1($this->view->db_form_data,'this is the db form data');
+	
 		$config = array ('className' => $this->getFormClass (), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps );
 		
 		// build zend form
 		$this->view->form = $this->buildZendForm ( $this->getFormClass (), $this->view->db_form_data, $this->view->version, $config, $this->view->page );
-
+        
+	//	$this->writevar1($this->view->form,'this is the form');
+		
+		
 		// validate the forms (all pages)
 		$pagesValidArr = $this->arraysKeyExtract ( $this->formPagesValidArr, 'valid', 1 );
 		$this->view->pageValidationListTop = $this->view->form->formValidPagesDisplay ( $this->view->db_form_data ['status'], $pagesValidArr, 'pagesValidTop' );

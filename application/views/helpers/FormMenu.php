@@ -155,7 +155,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             $options[] = '<option href="/form'.$form->form_no.'/log/document/'.$form->id.'" target="_blank">Log</option >';
         }
         if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
-            $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+           $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
         }
         
         if($form->filePath) {

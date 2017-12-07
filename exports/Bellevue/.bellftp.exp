@@ -13,4 +13,3 @@ send "/usr/bin/scp /usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/80/
 expect "assword:"
 send "My2C3nts\r"
 expect "#"
-
