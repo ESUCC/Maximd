@@ -316,5 +316,25 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
     	}
     	return false;
     }
+    
+    public function setMissingIdStudentLocals($county, $district) {
+        $sql = "SELECT id_student, id_student_local, id_district, s.Status, name_first, name_last, name_middle, dob FROM iep_student AS s WHERE s.id_county = '{$county}' AND id_district = '{$district}' AND (id_student_local = '0' OR id_student_local IS NULL) AND status = 'Active'";
+        $result = $this->db->fetchAll($sql);
+    
+        $found = array();
+        $not_found = array();
+        foreach ($result as $r) {
+            $sql_sub = "SELECT * FROM iep_student sub WHERE sub.id_county = '{$county}' AND sub.id_district = '{$district}' AND sub.name_first = '{$r['name_first']}' AND sub.name_last = '{$r['name_last']}' AND sub.name_middle = '{$r['name_middle']}' AND sub.dob = '{$r['dob']}' AND status != 'Active'";
+            $result_sub = $this->db->fetchRow($sql_sub);
+            if (isset($result_sub['id_student_local'])) {
+                $sql_update = "UPDATE iep_student SET id_student_local = '{$result_sub['id_student_local']}' WHERE id_student = '{$r['id_student']}'";
+                $this->db->query($sql_update);
+                $found[] = $r;
+            } else {
+                $not_found[] = $r;
+            }
+        }
+        return array($found, $not_found);
+    }
 
 }

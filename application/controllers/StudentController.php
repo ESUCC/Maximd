@@ -93,7 +93,7 @@ class StudentController extends My_Form_AbstractFormController
            $options['id_student'] = 0; 
            $session->id_student = 0;  
         }
-
+ 
         $options['page'] = intval($this->getRequest()->getParam('page') * 1);
         $options['maxRecs'] = 25; // default 25
 
@@ -136,42 +136,33 @@ class StudentController extends My_Form_AbstractFormController
 
     public function studentaddAction()
     {
-	$this->_helper->viewRenderer->setNoRender(true);
-
+        $this->_helper->viewRenderer->setNoRender(true);
+    
         // ----   Read all Privileges ------------------------
-	$x = 0;
-	$priv = Array();
-	$priv_student = 0;
-	while ($x < count($this->usersession->user->privs))
+        $x = 0;
+        $priv = Array();
+        $priv_student = 0;
+        while ($x < count($this->usersession->user->privs))
         {
-        	if (key($this->usersession->user->privs) >= 0) { $priv_student = 1; break; }
-		$x++;
+            if (key($this->usersession->user->privs) >= 0) { $priv_student = 1; break; }
+            $x++;
         }
         // --------------------------------------------------------
-       	if ($priv_student == 1)
-       	{
-        	$options = array();
-	        $options['id_county'] = $this->usersession->user->user['id_county'];
-	        $userid = $this->usersession->id_personnel;
-
-    	    // Get data for Form
-	        $studentAddFormQuery = new Model_Table_StudentFormAdd();
-	        $result = $studentAddFormQuery->studentFormCountyList($userid); // Get result
-		$this->view->county = $result;
-
-
-		// NonPublic schools
-		$nonpubcounty = new Model_Table_County();
-		$result = $nonpubcounty->getNonPublicCounties();
-		$this->view->nonpubcounty = $result;
-
-    	        echo $this->view->render('student/student-add.phtml');
-
-
-	   } else {
-			echo $this->view->render('student/access-denied.phtml');
-	   }
-       return;
+        if ($priv_student == 1)
+        {
+            $options = array();
+            $options['id_county'] = $this->usersession->user->user['id_county'];
+            $userid = $this->usersession->id_personnel;
+    
+            // Get data for Form
+            $studentAddFormQuery = new Model_Table_StudentFormAdd();
+            $result = $studentAddFormQuery->studentFormCountyList($userid); // Get result
+            $this->view->county = $result;
+            echo $this->view->render('student/student-add.phtml');
+        } else {
+            echo $this->view->render('student/access-denied.phtml');
+        }
+        return;
     }
     
     public function listdistrictAction()

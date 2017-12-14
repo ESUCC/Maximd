@@ -226,8 +226,10 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 
         $db = Zend_Registry::get('db');
         $select = $db->select()
-                   ->from( array('s' => 'iep_student'), array('count' => 'COUNT(s.unique_id_state)'))
-                   ->where('s.unique_id_state = ?', $options["unique_id_state"]);
+                   ->from( array('s' => 'iep_student'), array('s.unique_id_state', 's.id_county', 's.id_district', 's.id_school'))
+                    ->where('s.unique_id_state = ?', $options["unique_id_state"]);
+                 //  ->from( array('s' => 'iep_student'), array('count' => 'COUNT(s.unique_id_state)'))
+                  // ->where('s.unique_id_state = ?', $options["unique_id_state"]);
 
        $result = $db->fetchRow($select);
 

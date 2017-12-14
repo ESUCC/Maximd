@@ -39,17 +39,16 @@ class OdsController extends Zend_Controller_Action
       $relatedServices=new Model_Table_Form004RelatedService();
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
-      
-       
-      
+
       $dist=new Model_Table_District();
-      //$this->writevar1($dist->getDistrictUseEdfi($id_county,$id_district),'this is the value in that field');
+   
+  
+   if($cronCall==false){
       if($dist->getDistrictUseEdfi($id_district,$id_county)!=true){
-       $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);
-          
-          
+       $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);               
       }
       
+   
    //   $id_county='11';
      // $id_district='0014';
       $listStudents = new Model_Table_StudentTable();
