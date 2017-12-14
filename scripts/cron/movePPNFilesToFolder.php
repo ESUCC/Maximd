@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * /usr/local/zend/bin/php -c /usr/local/zend/apache2/htdocs/srs-zf/scripts/cron/php.ini  /usr/local/zend/apache2/htdocs/srs-zf/scripts/cron/movePPNFilesToFolder.php -e jesselocal -n 004 -b 1/1/2012
  *
  * php -c /usr/local/zend/apache2/htdocs/srs-zf/scripts/cron/php.ini  /usr/local/zend/apache2/htdocs/srs-zf/scripts/cron/movePPNFilesToFolder.php -e production -n 004 -b 1/1/2015
@@ -21,7 +21,11 @@ require_once 'showStatus.php';
 $args = getopt("e:n:b:d:");
 $passedEnv = @$args["e"];
 if (null == $passedEnv) {
-    echo "ERROR - Usage: archive.php -e environment(iepweb03) -b beginDate(2009-01-01) \n";
+    
+    /*
+     * Mike changed this 12-14-2017 -e environment(iepwe03) to the following.  SRS-148
+     */
+    echo "ERROR - Usage: archive.php -e environment(iepweb02) -b beginDate(2009-01-01) \n";
     echo "passedEnv: $passedEnv\n";
     print_r($argv);
     die();
@@ -88,30 +92,46 @@ $formsNotIndexed = array();
 ArchiverHelper::setupTranslate($config, '004', $session);
 
 // get forms to be archived
+PpnHelper::setMissingIdStudentLocals($localConfig->idCounty,$localConfig->idDistrict);
 $students = PpnHelper::getStudentsForArchiving();
+$filenames = array();
+$iterator = new DirectoryIterator(APPLICATION_PATH . '/../' . $localConfig->pdf->folder);
+foreach ($iterator as $fileinfo) {
+    if ($fileinfo->isFile()) {
+        $filenames[$fileinfo->getFilename()] = $fileinfo->getFilename();
+    }
+}
 foreach ($students as $student) {
     ShowStatus::show_status($counter, count($students));
     $form = PpnHelper::mostRecentFinalForm($student['id_student'], '004');
     if(!is_null($form)) {
         if(isset($student['id_student_local'])) {
             $fileName = $student['id_student_local'] . '_' . date('Ymd', strtotime($form['date_conference']));
-        } else {
-            $fileName = 'srs_' . $student['id_student'] . '_' . date('Ymd', strtotime($form['date_conference']));
-        }
+            unset($filenames[$student['id_student_local'] . '_' . date('Ymd', strtotime($form['date_conference'])) . '.pdf']);
+        
 
-        $sessUser = new Zend_Session_Namespace('user');
-        $archiveData = PpnHelper::archiveFormToPdf(
-            'Model_Form004',
-            '004',
-            $sessUser,
-            $form['id_form_004'],
-            '',
-            APPLICATION_PATH . '/../' . $localConfig->pdf->folder,
-            $fileName,
-            false
-        );
+            $sessUser = new Zend_Session_Namespace('user');
+            $archiveData = PpnHelper::archiveFormToPdf(
+                'Model_Form004',
+                '004',
+                $sessUser,
+                $form['id_form_004'],
+                '',
+                APPLICATION_PATH . '/../' . $localConfig->pdf->folder,
+                $fileName,
+                false
+            );
+       }
     }
     $counter++;
+}
+
+// Remove old Summary Forms
+if (!empty($filenames)) {
+    foreach ($filenames AS $filename) {
+        echo "removing old file " . APPLICATION_PATH . '/../' . $localConfig->pdf->folder . '/' . $filename . " \r\n";
+        unlink(APPLICATION_PATH . '/../' . $localConfig->pdf->folder . '/' . $filename);
+    }
 }
 
 

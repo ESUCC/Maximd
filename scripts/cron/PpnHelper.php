@@ -101,4 +101,34 @@ class PpnHelper
             return null;
         }
     }
+    
+    static function setMissingIdStudentLocals($county, $district) {
+        $student = new Model_Table_StudentTable();
+        list($found, $not_found) = $student->setMissingIdStudentLocals($county, $district);
+        $mail = new Zend_Mail();
+        $mailBody  = "";
+        if (!empty($found)) { 
+        $mailBody .= "The export was able to match and update local student Ids for the following students: \r\n\r\n";
+            foreach ($found as $f) {
+                $mailBody .= $f['name_first'] . ',' . $f['name_middle'] . ',' . $f['name_last'] . ',' . $f['dob'] . "\r\n";
+            }
+        }
+        if (!empty($not_found)) {
+            $mailBody .= "The export was UNABLE to match local student Ids for the following students: \r\n\r\n";
+            foreach ($not_found as $n) {
+                $mailBody .= $n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] . "\r\n";
+            }
+        }
+        if (empty($found) && empty($not_found)) {
+            $mailBody .= "All local student Ids are up to date";
+        }
+
+	echo $mailBody;
+        
+        //$mailTransport = new Zend_Mail_Transport_Sendmail();
+        //$mail->setSubject('Missing Local Student Id Report for Papillion Summary PDF Export');
+        //$mail->setBodyText($mailBody);
+        //$mail->addTo('wigglaff@gmail.com', 'Steve Bennett');
+        //$mail->send($mailTransport);
+    }
 }
