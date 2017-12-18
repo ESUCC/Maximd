@@ -43,10 +43,10 @@ class OdsController extends Zend_Controller_Action
       $dist=new Model_Table_District();
    
   
-   if($cronCall==false){
-      if($dist->getDistrictUseEdfi($id_district,$id_county)!=true){
+   
+      if($dist->getDistrictUseEdfi($id_district,$id_county)!=true)
        $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);               
-      }
+      
       
    
    //   $id_county='11';
@@ -617,5 +617,6 @@ class OdsController extends Zend_Controller_Action
          }
      }
   }
+  
 
 ?>

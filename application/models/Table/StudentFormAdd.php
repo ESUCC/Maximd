@@ -293,6 +293,52 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
      return $id;
    }
 
+   public function studentParentAdd($id_student, $options, $result)
+   {
+       foreach($result as $indx => $val) {
+   
+           $data = array(
+               'id_author'		=> '0',
+               'id_author_last_mod'	=> '0',
+               'timestamp_created'	=> date('Y-m-d G:i:s'),
+               'timestamp_last_mod'	=> date('Y-m-d G:i:s'),
+               'address_street1'	=> $val->addresses[0]->streetNumberName,
+               'address_street2'	=> '',
+               'address_city'		=> $val->addresses[0]->city,
+               'address_state'		=> $val->addresses[0]->stateAbbreviationType,
+               'address_zip'		=> $val->addresses[0]->postalCode,
+               'email_address'		=> '',
+               //		'id_guardian'
+               'id_student'		=> $id_student,
+               'name_first'		=> $val->firstName,
+               'name_last'		=> $val->lastSurname,
+               'name_middle'		=> '',
+               'relation_to_child'	=> '',
+               'xxxprimary_language'	=> '',
+               'phone_home'		=> $val->telephones[0]->telephoneNumber,
+               'phone_work'		=> '',
+               'status'		=> 'Active',
+               //		'user_name'		=> '', // generate auto
+           //		'password'		=> '', // generate auto
+               'password_reset_flag'	=> 'false',
+               'date_last_pw_change'	=> date('Y-m-d G:i:s'),
+               //		'date_expiration'
+           //		'checkout_id_user'
+           //		'checkout_time'
+           //		'online_access'
+           //		'id_student_local'
+           //		'id_guardian_local'
+           //		'last_auto_update'
+           //		'last_login'
+           //		'data_source'
+               'unique_id_state'	=> $options["unique_id_state"]
+           );
+   
+           $db = Zend_Registry::get('db');
+           $db->insert('iep_guardian', $data);
+   
+       }
+   }
 
     static function schoolMultiOtions($idCounty, $idDistrict, $privLimited = false)
     {

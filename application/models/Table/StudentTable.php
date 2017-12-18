@@ -316,7 +316,8 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
     	}
     	return false;
     }
-    
+    // Mike added this 12-15-2017 because the PDF create upload wont work without it. Took from iepweb03. 
+    // SRS-148
     public function setMissingIdStudentLocals($county, $district) {
         $sql = "SELECT id_student, id_student_local, id_district, s.Status, name_first, name_last, name_middle, dob FROM iep_student AS s WHERE s.id_county = '{$county}' AND id_district = '{$district}' AND (id_student_local = '0' OR id_student_local IS NULL) AND status = 'Active'";
         $result = $this->db->fetchAll($sql);

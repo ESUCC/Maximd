@@ -26,7 +26,7 @@ class Model_DraftEdfiClient  {
             if ($config->edfi->baseUrl)
                 $edfiBaseUrl = $config->edfi->baseUrl;
             else 
-                throw new Exception("EdFi engine misconfigured");
+                throw new Exception("EdFi engine misconfigured"); 
         } else {
             $this->edfiBaseUrl = $edfiBaseUrl;
         }
@@ -50,6 +50,17 @@ class Model_DraftEdfiClient  {
         }
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+    
     /**
      * Compose a query string from an associative array.
      * Example: key1=val1&key2=val2
@@ -175,6 +186,7 @@ class Model_DraftEdfiClient  {
     /* Get students. */
     public function getStudent($studentId) {
         $student = $this->edfiAPIGet("/api/v2.0/2017/students", array('studentUniqueId' => $studentId));
+      // $this->writevar1($student,'this is the student json in draftedficlient');
         return json_decode($student);
     }
     

@@ -192,10 +192,14 @@
     				    $("#unique_id_state").val(data_var["student_id"]);
     				    if (response.firstName) $("#name_first").val(response.firstName);
 				    if (response.lastSurname) $("#name_last").val(response.lastSurname);
+
 				    if (response.electronicMails) {
+
+					      if(response.electronicMails.length){
     				        $("#email_address").val(response.electronicMails[0]["electronicMailAddress"]);
     				        $("#email_address_confirm").val(response.electronicMails[0]["electronicMailAddress"]);
     				    }
+				    }
 
 				    if (response.birthDate) {
 					    var date_birth = getFormattedDate(response.birthDate);
