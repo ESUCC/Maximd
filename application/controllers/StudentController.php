@@ -274,7 +274,7 @@ class StudentController extends My_Form_AbstractFormController
             $this->view->student = $request->id_student;
         }
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
+        header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
         exit;
     }
 
@@ -413,7 +413,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        //header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
+        //header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
         exit;
 
     }
@@ -434,7 +434,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
+        header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
         exit;
 
 
@@ -1013,7 +1013,7 @@ class StudentController extends My_Form_AbstractFormController
         if($this->getRequest()->getParam('id_student')) {
             $studentArr = $stuObject->studentInfo($this->getRequest()->getParam('id_student'));
           
-           // $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
+            $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
             // this is not in the iep_student table.
             if(1!=count($studentArr)) {
                 throw new Exception('Student not found');
@@ -1040,7 +1040,7 @@ class StudentController extends My_Form_AbstractFormController
             !('77' == $dbStudent['id_county'] && '0027' == $dbStudent['id_district']) &&
             '1010818' != $this->usersession->sessIdUser
             ) {
-            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.unl.edu/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
+            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
             $this->_redirector->gotoUrl($url);
             exit;
             }

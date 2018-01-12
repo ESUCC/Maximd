@@ -30,9 +30,10 @@
 		<td><?php
             if('print' == $view->mode) { ?>
             <br />
-            <?php } ?>
+            <?php }?>
 			<strong>Proposed Conference Date, Time and Location:</strong>
 			<div id="dates_wrapper-colorme" class="colorme">
+
             <?php 
             if('print' == $view->mode)
             {
@@ -46,9 +47,12 @@
             if('print' == $view->mode)
             {
                 echo "<B>" . $this->element->mdt_conf_time->getLabel() . "</B> ";
-                echo $this->element->mdt_conf_time->getValue();
-            } else {
-                echo $this->element->mdt_conf_time;
+                echo date( "g:i a", strtotime($this->element->mdt_conf_time->getValue() ));
+            } else if('view' == $view->mode) {
+                echo $this->element->mdt_conf_time->getLabel() . " ";
+		echo date( "g:i a", strtotime($this->element->mdt_conf_time->getValue() ));
+	    } else {
+	        echo $this->element->mdt_conf_time;
             }
             ?>
             <?php 
@@ -117,10 +121,13 @@
 		</td>
     </tr>
 </table> 
+
 <table class="formInput">
+    <tr><td>
+	    Parents/Guardians of children with disabilities have rights under the procedural safeguards of the Individuals with Disabilities Education Act (IDEA). If you would like a copy of your procedural safeguards or if you have any questions regarding this notice or your rights, please contact:
+    </td></tr>
     <tr>
         <td><?php echo $this->element->rights_contact; ?></td>
         <td><?php echo $this->element->rights_contact_num; ?></td>
     </tr>
 </table>
-

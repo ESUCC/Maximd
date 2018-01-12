@@ -15,7 +15,7 @@ class BellevueExport extends ExportFactoryBellevue {
         echo "\n\nBegin Export Student's\n";
         $finalLog = "\n\nBegin Exports Students...\n";
         $finalLog .= $this->dumpLog();
-        // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application
+        // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/80/1.0.0_18/application
         $this->clearMetaData();clear;
      
         /**
@@ -27,7 +27,7 @@ class BellevueExport extends ExportFactoryBellevue {
        // print_r($exportConfig); die(); 
         $this->exportConfig = $exportConfig;
         $this->dataSource = $exportConfig->data_source;
-      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application is what is printed        
+      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/80/1.0.0_18/application is what is printed        
       // echo($this->dataSource);
         
         $this->initEmail($exportConfig->email);
@@ -783,8 +783,7 @@ class BellevueExport extends ExportFactoryBellevue {
             }
             
         }
-        
-        
+        // Mike changed the $t='01' etc to $t='1' etc.
         if($mostRecentIep==null and $mostRecentIepCard==null and $mostRecentIfsp!=null){
             
             $serviceifsp=new Model_Table_Form013Services();
@@ -792,9 +791,9 @@ class BellevueExport extends ExportFactoryBellevue {
             $id_form013=$form013[0]['id_form_013'];
             $serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
            
-            if($serviceDescription['specialeducationsettingdescriptor']=='Home') $t="01";
-            if($serviceDescription['specialeducationsettingdescriptor']=='Community') $t="02";
-            if($serviceDescription['specialeducationsettingdescriptor']=='Other') $t="03";
+            if($serviceDescription['specialeducationsettingdescriptor']=='Home') $t="1";
+            if($serviceDescription['specialeducationsettingdescriptor']=='Community') $t="2";
+            if($serviceDescription['specialeducationsettingdescriptor']=='Other') $t="3";
             
             
           //  $t=$serviceDescription['specialeducationsettingdescriptor'];

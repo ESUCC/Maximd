@@ -32,6 +32,16 @@ class Form029Controller extends My_Form_AbstractFormController {
         parent::setFormRev('08/08');
     }
 
+    function writevar1($var1,$var2) {
+    
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
 	protected function buildSrsForm($document, $page, $raw = false)
     {
 		parent::buildSrsForm($document, $page);
@@ -85,6 +95,7 @@ class Form029Controller extends My_Form_AbstractFormController {
 			$this->addSubformSection("outside_agency", "Form_Form029OutsideAgency", "Model_Table_Form029OutsideAgency");
 		}
 		
+		$this->writevar1($$this->view->db_form_data,'this is the data '); 
 		// fill the html form with db data
 		$this->form->populate($this->view->db_form_data);
 		

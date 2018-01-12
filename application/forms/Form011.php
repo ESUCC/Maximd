@@ -1,38 +1,29 @@
 <?php
-
 class Form_Form011 extends Form_AbstractForm {
     
 	private $JSmodifiedCode = "javascript:modified('', '', '', '', '', '');";
 	
 	protected function initialize() {
 		parent::initialize();
-		
 		$this->id_form_011 = new App_Form_Element_Hidden('id_form_011');
-      	$this->id_form_011->ignore = true;
+      		$this->id_form_011->ignore = true;
       	
-      	$multiOptions = array('testEditor'=>'Existing Editor', 'tinyMce'=>'TinyMce');
-      	$this->form_editor_type = new App_Form_Element_Radio('form_editor_type', array('label' => 'Editor Type', 'multiOptions'=>$multiOptions));
-      	$this->form_editor_type->setRequired(false);
-      	$this->form_editor_type->setAllowEmpty(true);
-      	$this->form_editor_type->setAttrib('onchange', $this->form_editor_type->getAttrib('onchange').'setToRefresh();');
-      	$this->form_editor_type->getDecorator('label')->setOption('placement', 'prepend');
-      	 
+      		$multiOptions = array('testEditor'=>'Existing Editor', 'tinyMce'=>'TinyMce');
+      		$this->form_editor_type = new App_Form_Element_Radio('form_editor_type', array('label' => 'Editor Type', 'multiOptions'=>$multiOptions));
+      		$this->form_editor_type->setRequired(false);
+    		$this->form_editor_type->setAllowEmpty(true);
+      		$this->form_editor_type->setAttrib('onchange', $this->form_editor_type->getAttrib('onchange').'setToRefresh();');
+      		$this->form_editor_type->getDecorator('label')->setOption('placement', 'prepend');
 	}
 	public function view_p1_v1() {
-				
 		$this->initialize();
-		
 		$this->setDecorators ( array (array ('ViewScript', array ('viewScript' => 'form011/form011_view_page1_version1.phtml' ) ) ) );
-		
 		return $this;
 	}
 	
 	public function view_p2_v1() {
-				
 		$this->initialize();
-		
 		$this->setDecorators ( array (array ('ViewScript', array ('viewScript' => 'form011/form011_view_page2_version1.phtml' ) ) ) );
-		
 		return $this;
 	}
 	
@@ -50,23 +41,21 @@ class Form_Form011 extends Form_AbstractForm {
 		
 		// Setting the decorator for the element to a single, ViewScript, decorator,
 		// specifying the viewScript as an option, and some extra options: 
-		$this->setDecorators ( array (array ('ViewScript', array (
-										'viewScript' => 'form011/form011_edit_page1_version1.phtml' ) ) ) );
-
+		$this->setDecorators ( array (array ('ViewScript', array ( 'viewScript' => 'form011/form011_edit_page1_version1.phtml' ) ) ) );
 		$this->date_notice = new App_Form_Element_DatePicker('date_notice', array('label' => 'Date of Notice'));
 		$this->date_notice->addErrorMessage("Date of Notice is empty.");
-        
+    
 		$this->mdt_conf_date = new App_Form_Element_DatePicker('mdt_conf_date', array('label'=>'Date'));
-		$this->mdt_conf_date->setDecorators(App_Form_DecoratorHelper::inlineElement(true));
+    		$this->mdt_conf_date->setDecorators(App_Form_DecoratorHelper::inlineElement(false));
 		$this->mdt_conf_date->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'dates_wrapper');");
+		$this->mdt_conf_date->addErrorMessage("Conference Date is empty.");
 		$this->mdt_conf_date->setAttrib('wrapped', 'dates_wrapper');
 		$this->mdt_conf_date->setRequired(true);
 		$this->mdt_conf_date->setAllowEmpty(false);
-		$this->mdt_conf_date->addErrorMessage("Conference Date is empty.");
-		
 		$this->mdt_conf_time = new App_Form_Element_TimeTextBox('mdt_conf_time', array('label'=>'Time'));
 		$this->mdt_conf_time->setDecorators(App_Form_DecoratorHelper::inlineElement(true));
 		$this->mdt_conf_time->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'dates_wrapper');");
+		$this->mdt_conf_time->setAttrib('constraints' , '{timePattern: "h:mm a", formatLength: "short"}');
 		$this->mdt_conf_time->setAttrib('wrapped', 'dates_wrapper');
 		$this->mdt_conf_time->setRequired(true);
 		$this->mdt_conf_time->setAllowEmpty(false);
@@ -101,7 +90,7 @@ class Form_Form011 extends Form_AbstractForm {
 		$this->other_attendees->addErrorMessage("The following individuals who can help explain the evaluation results or who have special knowledge or expertise regarding your child or services that may be needed is empty. If the item does not apply to this student, please explain why.");
 		
 		$this->other_staff = new App_Form_Element_TextareaEditor('other_staff', array('label'=>'Other staff'));
-		$this->other_staff->setRequired(true);
+		$this->other_staff->setRequired(false);
 		$this->other_staff->setAllowEmpty(false);
 		$this->other_staff->addErrorMessage("Others is empty. If the item does not apply to this student, please explain why.");
 		
@@ -135,11 +124,9 @@ class Form_Form011 extends Form_AbstractForm {
 	
 		// Setting the decorator for the element to a single, ViewScript, decorator,
 		// specifying the viewScript as an option, and some extra options: 
-		$this->setDecorators ( array (array ('ViewScript', array (
-										'viewScript' => 'form011/form011_edit_page2_version1.phtml' ) ) ) );
+		$this->setDecorators ( array (array ('ViewScript', array ( 'viewScript' => 'form011/form011_edit_page2_version1.phtml' ) ) ) );
 		
-		
-		$this->name_list_guardian = new App_Form_Element_Text('name_list_guardian', array('label'=>'name_list_guardian'));
+		$this->name_list_guardian = new App_Form_Element_Text('name_list_guardian', array('label'=>'Parent/Guardian'));
 		$this->name_list_guardian->setRequired(true);
 		$this->name_list_guardian->setAllowEmpty(false);
 		$this->name_list_guardian->addErrorMessage("One or more parents must be entered for this student before this form can be finalized.");
@@ -210,7 +197,7 @@ class Form_Form011 extends Form_AbstractForm {
 		$this->school_phone->setRequired(true);
 		$this->school_phone->setAllowEmpty(false);
 		$this->school_phone->addErrorMessage("School Contact Phone is empty. If the item does not apply to this student, please explain why.");
-		
+		  
 		return $this;
 	}
 }

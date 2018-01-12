@@ -19,13 +19,20 @@
 		<td>
 			<table class="formInput" style="margin-top:1px;">
 				<tr>
-					<td class="printBoldLabel">Parent/Guardian:</td>
-					<td><?php echo $this->element->name_list_guardian->getValue(); ?></td>
+				    <td>
+					<?=$this->element->name_list_guardian;?>
+
+				</td>
+
                     <?php if ('print' == $view->mode) { ?>
-                    <?php $this->element->date_sent->removeDecorator('label'); ?>
+
                     <td class="printBoldLabel">
-                    <?php echo $this->element->date_sent->getLabel(); ?>
+                        <?php $this->element->date_sent->removeDecorator('label'); ?>
+	                <?php echo $this->element->date_sent->getLabel(); ?>
                     </td>
+
+
+
                     <td>
                     <?php echo $this->element->date_sent->getValue(); ?>
                     </td>

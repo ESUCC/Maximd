@@ -362,8 +362,11 @@ class Model_AbstractForm
       // Mike added this 11-10-2017 in order to update the edfi db when a form is finalized.
       
 					 $edfi=new Model_Table_Edfi();
-					 //	$this->writevar1($currentForm,'this is current form in abstractform model line 334');
-					 if(isset($currentForm['id_form_004'])){
+					
+					 // Mike changed this 1-8-2018 because people couuld not finalize form010 or progress reports.
+					// if(isset($currentForm['id_form_004']).  there is an id_form_004 in form010
+					
+					 if(isset($currentForm['id_form_004']) && !isset($currentForm['id_form_010'])){
 					     $edfi->updateOneStudent($currentForm);
 					 }
 					 	

@@ -2062,13 +2062,15 @@ class Form_Form004 extends Form_AbstractForm
                 if (count($studentRows)) {
                     $student = $studentRows->current();
                 }
-                if ($student['id_county'] == "99" && $student['id_district'] == "9999") {
-                    $this->district_assessments->addValidator(
-                        new My_Validate_NotEmptyIf('assessment_accom', 'The child will participate in district-wide assessment WITH accommodations, as specified:')
-                    );
-                } else {
+                
+           // Mike changed commented this out 1-9-2018 because it was causing finalize issues     
+           //   if ($student['id_county'] == "99" && $student['id_district'] == "9999") {
+             //      $this->district_assessments->addValidator(
+             //           new My_Validate_NotEmptyIf('assessment_accom', 'The child will participate in district-wide assessment WITH accommodations, as specified:')
+             //       );
+           //     } else {
                     $this->removeElement('district_assessments');
-                }
+           //     }
             }
         }
 

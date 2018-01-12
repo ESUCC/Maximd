@@ -170,7 +170,10 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 			                    new Zend_Db_Expr("date_part('year',age(dob))"),
 			            )
 					)
-             		->where("(s.id_case_mgr = '$id' OR s.id_list_team ilike '%$id%') and s.status='Active'")
+				->where("(s.id_case_mgr = '$id') and s.status ='Active'")
+	// Mike changed this 1-18-2017 SRS-150.  It was showing students from districts they were at before.
+	
+             //   ->where("(s.id_case_mgr = '$id' OR s.id_list_team ilike '%$id%') and s.status ='Active'")
                     ->order(array('name_last asc', 'name_first asc'));
 // 		echo "select: $select<BR>";
 // 		die();
