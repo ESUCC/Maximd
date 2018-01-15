@@ -9,7 +9,7 @@ class ApiAbstractController extends Zend_Rest_Controller
         $this->usersession = new Zend_Session_Namespace ( 'user' );
         $this->user = $this->usersession->user;
 
- 
+
 
     }
 
