@@ -1,4 +1,6 @@
 <?php
+
+// Mike Commit
 class ApiAbstractController extends Zend_Rest_Controller
 {
     public $collectionModel = '';
