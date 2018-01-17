@@ -1,8 +1,8 @@
 <?php
 class StudentController extends My_Form_AbstractFormController
 {
- 
-    public function init(){ 
+
+    public function init(){
         $this->_redirector = $this->_helper->getHelper('Redirector');
 
         $this->searchConfig['searchStudent'] = array(
@@ -52,7 +52,7 @@ class StudentController extends My_Form_AbstractFormController
     }
 
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -61,7 +61,7 @@ class StudentController extends My_Form_AbstractFormController
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
 // Maxim modified this code October 20 2016
     public function logAction()
     {
@@ -71,7 +71,7 @@ class StudentController extends My_Form_AbstractFormController
 
         $nb = intval($this->getRequest()->getParam('nb') * 1);
 
-        if ($nb == 0) 
+        if ($nb == 0)
             $this->_helper->viewRenderer->setNoRender(true);
          else {
             $this->_helper->layout()->disableLayout();
@@ -85,15 +85,15 @@ class StudentController extends My_Form_AbstractFormController
           $options['id_student'] = $session->id_student;
         else if ($id_student > 0 || $id_student != $session->id_student)
         {
-          $options['id_student'] = $id_student; 
+          $options['id_student'] = $id_student;
           $session->id_student = $id_student;
         }
-        else 
-        { 
-           $options['id_student'] = 0; 
-           $session->id_student = 0;  
+        else
+        {
+           $options['id_student'] = 0;
+           $session->id_student = 0;
         }
- 
+
         $options['page'] = intval($this->getRequest()->getParam('page') * 1);
         $options['maxRecs'] = 25; // default 25
 
@@ -115,7 +115,7 @@ class StudentController extends My_Form_AbstractFormController
         $this->view->maxRecs = $options['maxRecs'];
         $this->view->resultCount = $result[3];
         $this->view->results = $result[1];
- 
+
 
 
         // Generate pagination
@@ -137,7 +137,7 @@ class StudentController extends My_Form_AbstractFormController
     public function studentaddAction()
     {
         $this->_helper->viewRenderer->setNoRender(true);
-    
+
         // ----   Read all Privileges ------------------------
         $x = 0;
         $priv = Array();
@@ -153,7 +153,7 @@ class StudentController extends My_Form_AbstractFormController
             $options = array();
             $options['id_county'] = $this->usersession->user->user['id_county'];
             $userid = $this->usersession->id_personnel;
-    
+
             // Get data for Form
             $studentAddFormQuery = new Model_Table_StudentFormAdd();
             $result = $studentAddFormQuery->studentFormCountyList($userid); // Get result
@@ -164,7 +164,7 @@ class StudentController extends My_Form_AbstractFormController
         }
         return;
     }
-    
+
     public function listdistrictAction()
     {
         $this->_helper->layout()->disableLayout();
@@ -174,7 +174,7 @@ class StudentController extends My_Form_AbstractFormController
         $request = $this->getRequest();
         // Get data for District List
         $studentDistrictListQuery = new Model_Table_StudentFormAdd();
-        $result = $studentDistrictListQuery->studentDistrictList($request->id_county, $userid); // Get result 
+        $result = $studentDistrictListQuery->studentDistrictList($request->id_county, $userid); // Get result
         $this->_helper->json->sendJson($result[0]);
         return;
     }
@@ -210,7 +210,7 @@ class StudentController extends My_Form_AbstractFormController
         $request = $this->getRequest();
         // Get data for School List
         $studentSchoolListQuery = new Model_Table_StudentFormAdd();
-        $result = $studentSchoolListQuery->studentSchoolList($request->id_county, $request->id_district); // Get result 
+        $result = $studentSchoolListQuery->studentSchoolList($request->id_county, $request->id_district); // Get result
         $this->_helper->json->sendJson($result[0]);
         return;
     }
@@ -223,10 +223,10 @@ class StudentController extends My_Form_AbstractFormController
         $request = $this->getRequest();
         // Get data for Managers List
         $studentManagersListQuery = new Model_Table_StudentFormAdd();
-        
+
         // Mike changed this on 8-4-2017 from
         // $result = $studentManagersListQuery->studentManagersList($re... to the following
-        //the studentManagersListm was put in special just for 
+        //the studentManagersListm was put in special just for
         $result = $studentManagersListQuery->studentManagersList($request->id_county, $request->id_district, $request->id_school); // Get result
       //  $this->writevar1($result,'this is the result');
        $this->_helper->json->sendJson($result[0]);
@@ -282,7 +282,7 @@ class StudentController extends My_Form_AbstractFormController
     {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
-    
+
        	// ----   Read all Privileges ------------------------
         $x = 0;
         $priv = Array();
@@ -295,16 +295,16 @@ class StudentController extends My_Form_AbstractFormController
         // --------------------------------------------------------
         if ($priv_student == 1)
         {
-    
+
             $post = $this->getRequest()->getPost();
             $options = Array();
             $options_reports = Array();
-    
+
             foreach ($post as $nameField => $valueField) {
                 $value = urldecode($nameField);
                 $options[$value] = urldecode(strip_tags($valueField));
             }
-    
+
             // Validate Data from form
             $validator_digital = new Zend_Validate_Regex('/\d+$/');
             $validator_state = new Zend_Validate_Regex('/\w{2}$/');
@@ -312,15 +312,15 @@ class StudentController extends My_Form_AbstractFormController
             $validator_phone = new Zend_Validate_Regex('/^\d{3}-\d{3}-\d{4}$/');
             $validator_email = new Zend_Validate_Regex('/\S+@\S+\.\S+/');
             $validator_date = new Zend_Validate_Regex('/^\d{2}\/\d{2}\/\d{4}$/');
-    
+
             $options['id_district'] = $this->usersession->user->user['id_district'];
             $options['id_county'] = $this->usersession->user->user['id_county'];
-    
+
             if (!isset($options["program_provider_name"])) $options["program_provider_name"] = "";
             if (!isset($options["program_provider_code"])) $options["program_provider_code"] = "";
             if (!isset($options["program_provider_id_school"])) $options["program_provider_id_school"] = "";
-    
-    
+
+
             if (	strlen($options["name_first"]) != "" &&
                 strlen($options["name_last"]) != "" &&
                 $options["id_county_school"] != "" &&
@@ -344,7 +344,7 @@ class StudentController extends My_Form_AbstractFormController
                     || $options["email_address_confirm"] == "") && $options["email_address"] == $options["email_address_confirm"]) // &&
                 //($validator_date->isValid($options["sesis_exit_date"]) || $options["sesis_exit_date"] == "")
                 ) {
-    
+
                     $options["exclude_from_nssrs_report"] = (isset($options["exclude_from_nssrs_report"])) ? 'True' : 'False';
                     $options["pub_school_student"] = ($options["pub_school_student"] == "Yes") ? 'True' : 'False';
                     $options["ell_student"] = ($options["ell_student"] == "Yes") ? 'True' : 'False';
@@ -352,40 +352,40 @@ class StudentController extends My_Form_AbstractFormController
                     if (isset($options["alternate_assessment"])) $options["alternate_assessment"] = ($options["alternate_assessment"] == "Yes") ? 'True' : 'False'; else $options["alternate_assessment"] = "";
                     if (isset($options["ward_surrogate"])) $options["ward_surrogate"] = ($options["ward_surrogate"] == "Yes") ? 'True' : 'False'; else $options["ward_surrogate"] = "False";
                     if (isset($options["ward_surrogate_nn"])) $options["ward_surrogate_nn"] = ($options["ward_surrogate_nn"] == "Yes") ? 'True' : 'False'; else $options["ward_surrogate_nn"] = "False";
-    
+
                     if (!isset($options["date_web_notify"]) || !$validator_date->isValid($options["date_web_notify"])) $options["date_web_notify"] = NULL;
                     $options["unique_id_state"] = intval($options["unique_id_state"] * 1);
-    
+
                     $studentQuery = new Model_Table_StudentFormAdd();
                     $id_student = $studentQuery->studentSave($options);  // Save data
-    
+
                     // Get Guardian/Parent
                     if (intval($options["unique_id_state"]) > 0) {
                         $url = "https://" . $_SERVER["HTTP_HOST"] . "/Newedfi/studentParents?student_id=".$options["unique_id_state"];
                         $result = file_get_contents($url);
                         $result = json_decode($result);
-    
+
                         if (count($result) > 0 ) {
                             $studentQuery = new Model_Table_StudentFormAdd();
                             $result = $studentQuery->studentParentAdd($id_student, $options, $result);  // Save data
                         }
                     }
-    
+
                     header("Location: /student/edit/id_student/".$id_student);
                     exit;
-    
+
                 } else {
                     $this->view->msg = "Incorrect data"; //print_r($options);
                 }
-    
+
                 echo $this->view->render('student/student-save.phtml');
-    
+
         }
         else
         {
             echo $this->view->render('student/access-denied.phtml');
         }
-    
+
         return;
     }
 
@@ -500,7 +500,7 @@ class StudentController extends My_Form_AbstractFormController
         $accessObj = $student_auth->validateStudentAccess($this->getRequest()->getParam('student'), $this->usersession);
          if(false == $accessObj) {
         //    throw new Exception('You do not have access.');
-        } 
+        }
 
         $this->view->student = $this->getRequest()->getParam('student');
         $this->view->draftFormsArr = array();
@@ -570,7 +570,7 @@ class StudentController extends My_Form_AbstractFormController
             array(
                 'result' => $this->view->render('student/'.$searchModel->getFormatToRender($this->getRequest()))
             )
-        ); 
+        );
     }
 
     protected function getStudentDataAction()
@@ -600,14 +600,14 @@ class StudentController extends My_Form_AbstractFormController
             $personnelObj = new Model_Table_PersonnelTable();
             $personnel = $personnelObj->fetchRow(
                 "id_personnel = " . $this->usersession->sessIdUser );
-          
+
        //   writevar($personnel,"this is personnel search action in ctl line 296\n");
             $personnel->pref_student_search_location = $this->getRequest()->getParam('pref_student_search_location');
             $personnel->save();
-           
+
         }
      //   writevar($personnel,"this is personnel search action in ctl line 301\n");
- 
+
         $this->setupStudentSearch();
     }
 
@@ -653,7 +653,7 @@ class StudentController extends My_Form_AbstractFormController
             Zend_Registry::get('searchCache')
         );
         $this->view->field = $search->getSortStatus($this->getRequest()->getParams());
-        //Mike changed this   
+        //Mike changed this
         if (!array_key_exists('error', ($searchResults = $search->searchStudent($this->getRequest()->getParams(), $sort)))) {
             $this->view->maxResultsExceeded = $searchResults[0];
             $this->view->paginator = $searchResults[1];
@@ -879,7 +879,7 @@ class StudentController extends My_Form_AbstractFormController
 //    }
 
     function searchFormsAction() {
-        
+
         $this->view->hideLeftBar = true;
         if(!$this->getRequest()->getParam('id_student')) {
             $this->_redirector->gotoSimple('search', 'student', null, array());
@@ -975,7 +975,7 @@ class StudentController extends My_Form_AbstractFormController
             $session->options = $this->getRequest()->getParams();
             $session->sort = $sort;
             $session->page = $this->view->page;
-           
+
             $studentObj = new Model_Table_StudentTable();
             $student = $studentObj->studentInfo($this->getRequest()->getParam('student'));
             $this->view->student = $student[0];
@@ -988,7 +988,7 @@ class StudentController extends My_Form_AbstractFormController
         echo Zend_Json::encode(
             array('result' => $this->view->render($viewScript))
         );
-        
+
         exit;
     }
 
@@ -1006,14 +1006,14 @@ class StudentController extends My_Form_AbstractFormController
         $this->view->hideLeftBar = true;
 
         $postData = $this->getRequest()->getPost();
-        
+
         $stuObject = new Model_Table_StudentTable();
         $form = new Form_StudentDemographics();
 
         if($this->getRequest()->getParam('id_student')) {
             $studentArr = $stuObject->studentInfo($this->getRequest()->getParam('id_student'));
-          
-            $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
+
+        //    $this->writevar1($studentArr,'this is the student array');//this gets demo of student as well as firstnamme,lastname of teacm members.  T
             // this is not in the iep_student table.
             if(1!=count($studentArr)) {
                 throw new Exception('Student not found');
@@ -1073,14 +1073,14 @@ class StudentController extends My_Form_AbstractFormController
             if($formValid) {
                 // valid to save
                 $data = $form->getValues();
-              
-               
+
+
                 if($data['grade']!='EI 0-2'){
                     $data['id_ser_cord']=NULL;
                     $data['id_ei_case_mgr']=NULL;
                    // writevar($data,'this is the data after');
                 }
-                
+
                 // submitted update address is valid and is different from database
                 if(''!=$postData['confirm_email'] && $postData['confirm_email']==$postData['email_address']) {
                     // update email
@@ -1104,20 +1104,20 @@ class StudentController extends My_Form_AbstractFormController
 // Mike added this 11-10-2017 in order to get data to edfi on edit student changes
                     $dataEdfi=$data;
                     $dataEdfi['id_student']=$this->getRequest()->getParam('id_student');
-                   
-                    $modifyEdFi=new Model_Table_Edfi();                  
+
+                    $modifyEdFi=new Model_Table_Edfi();
                     $modifyEdFi->updateEditStudentEdfi($dataEdfi);
-                    
-// end of Mike add                    
-                    
+
+// end of Mike add
+
                     $stuObject->update($data, $where);
                     if(isset($forceRefresh) && $forceRefresh) {
-                        
+
                         $this->_redirector->gotoSimple('edit', 'student', null, array('id_student' => $this->getRequest()->getParam('id_student')));
                     }
                 } else {
                     $data['id_author'] = $this->usersession->sessIdUser;
-                    
+
                     $studentId = $stuObject->insert($data);
                     $this->_redirector->gotoSimple('edit', 'student', null, array('id_student' => $studentId));
                 }
@@ -1357,11 +1357,11 @@ class StudentController extends My_Form_AbstractFormController
         }
         $groupName = $this->getRequest()->getParam('collection');
         $studentCollectionObj = new App_Collection_Student();
-      
+
         $studentCollection = $studentCollectionObj->getNames($this->usersession->sessIdUser, $groupName);
      //   $this->writevar1($studentCollection,'this is the collection of what we need');
         // This returns the students in the list array format with full name and as 'name' and id as 'id' ass array
-      
+
         switch ($this->getRequest()->getParam('run')) {
             case 'print':
                 /**
@@ -1371,7 +1371,7 @@ class StudentController extends My_Form_AbstractFormController
                 $formList = $this->buildFormList($this->getRequest()->getParam('formNum'), $this->getRequest()->getParam('printType'), $studentCollection);
                 if(count($formList)>0) {
                     $job = $this->printCollection($filePath, $formList);
-                   // writevar($formList,'this is a list of the jobs'); // this will print out an array of students-id,id_school,distric,county and the form number 
+                   // writevar($formList,'this is a list of the jobs'); // this will print out an array of students-id,id_school,distric,county and the form number
                     $result = true;
                 } else {
                     $errorMessage = "No forms found.";
@@ -1379,14 +1379,14 @@ class StudentController extends My_Form_AbstractFormController
                 }
                // writevar($filePath,'this is the file path'); // It gets the file path correct
                 break;
-          
+
             case 'transfer':
-                
-                
+
+
                 /**
                  * transfer students action
-                 */  
-                
+                 */
+
                 if(count($studentCollection)>0) {
 
                     $transferCollectionObj = new App_Student_Transfer_Collection();
@@ -1410,7 +1410,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
       //   writevar($result,'this is the value of t/f result'); this comes out true is students are there.
-        
+
         if ($result) {
               //  writevar($filePath,'this is the filepath before jason encode');// it is set at this point
             //  writevar($job,'this is the job');  //this prints out an integer it was 184 in our case with 3 kids
@@ -1425,7 +1425,7 @@ class StudentController extends My_Form_AbstractFormController
     }   // and so ends the function
 
     function printCollection($filePath, $formList) {
-        
+
         $queue = new ZendJobQueue();
         // check that Job Queue is running
         if ($queue->isJobQueueDaemonRunning() && count($formList)>0) {
@@ -1433,7 +1433,7 @@ class StudentController extends My_Form_AbstractFormController
                 "formList" => $formList,
                 "filePath" => $filePath,
             );
-            
+
             $options = array(
                 "priority" => ZendJobQueue::PRIORITY_NORMAL,
                 "name" => 'Print Form Collection'
@@ -1509,10 +1509,10 @@ class StudentController extends My_Form_AbstractFormController
 
 
     public function getJobStatusAction() {
-        
+
         $queue = new ZendJobQueue();
         $info = $queue->getJobStatus($this->getRequest()->getParam('id'));
-       
+
         if ($info) {
             echo Zend_Json::encode(array('success' => '1', 'status'=>$info['status'], 'id'=>$this->getRequest()->getParam('id')));
         } else
@@ -1521,10 +1521,10 @@ class StudentController extends My_Form_AbstractFormController
 
     }
     public function getJobDocumentAction() {
-        
+
         $fileName = $this->getRequest()->getParam('fileName');
        $tmpPdfPath = APPLICATION_PATH.'/../tmp_printing/' . $fileName;
-       
+
         /*
         * Issue SRSZF-287 Mod.  Download PDF instead of printing
         * anything to screen.

@@ -26,7 +26,7 @@
        </tu>
        <tu tuid="child will participate">
            <tuv xml:lang="es"><seg>Si el ni&#xF1;o participar&#xE1; en los servicios del a&#xF1;o escolar extendido, por favor describa</seg></tuv>
-           <tuv xml:lang="en"><seg>If the child will participate in extended school year services, please describe</seg></tuv>
+           <tuv xml:lang="en"><seg>If the child will participate in extended school year servicess, please describes:</seg></tuv>
        </tu>
        <tu tuid="Yes">
            <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>

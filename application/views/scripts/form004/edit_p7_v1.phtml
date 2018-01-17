@@ -119,4 +119,70 @@ echo $this->element->dob;
             </td>
         </tr>
     </table>
+
+
+
+    <table class="formTitleHead">
+        <tr>
+            <td><<h1><center><?php echo $this->translate('Prior Written Notice Section'); ?></center></h1></td>
+        </tr>
+    </table>
+
+
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('PWN Section 1: A Description of the action proposed or refused by the school distrcit or approved cooperative.'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->pwn_describe_action; ?>
+            </td>
+        </tr>
+    </table>
+
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('PWN Section 2: An explanation of why the district or approved cooperative proposes or refuses to take the action'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->pwn_describe_reason; ?>
+            </td>
+        </tr>
+    </table>
+
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('PWN Section 3: A description of other options the IEP team considered and the reasons why those options were rejected'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->pwn_options_other; ?>
+            </td>
+        </tr>
+    </table>
+
+    <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('PWN Section 4: A description of each evaluation procedure, assessment, record or report the school district or approved cooperative uses as a basis for the proposal or refusal'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->pwn_justify_action; ?>
+            </td>
+        </tr>
+    </table>
+
+      <table class="sc_formInputBlock">
+        <tr>
+            <td><?php echo $this->translate('PWN Section 5: A description of any other factors which are relevant to the school district’s or approved cooperative’s proposal or refusal'); ?>:</td>
+        </tr>
+        <tr class="sc_richTextBox">
+            <td>
+                <?php echo $this->element->pwn_other_factors; ?>
+            </td>
+        </tr>
+    </table>
+
+
 <?php } ?>

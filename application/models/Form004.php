@@ -13,16 +13,16 @@ class Model_Form004 extends Model_AbstractForm
      * @var array
      */
 	var $subformIndexToModel = array();
-	
+
     /**
      * $db_form_data - array
      *
      * @var array
      */
 	var $db_form_data = array();
-	
+
 	function writevar1($var1,$var2) {
-	
+
 	    ob_start();
 	    var_dump($var1);
 	    $data = ob_get_clean();
@@ -31,7 +31,7 @@ class Model_Form004 extends Model_AbstractForm
 	    fwrite($fp, $data2);
 	    fclose($fp);
 	}
-	
+
 	public function find($id, $accessMode = "view", $page =1, $versionNumber = 1, $checkout = 0)
 	{
 
@@ -42,24 +42,24 @@ class Model_Form004 extends Model_AbstractForm
 	     * Mike replaced this with the catch try
 	     if(false === parent::buildDbForm($id, $accessMode, $page, $versionNumber, $checkout))
 	     {
-	      
+
 	     return false;
 	     }
 	     */
-	     
+
 	    try {
-	        	
+
 	        $this->buildDbForm($id, $accessMode, $page, $versionNumber, $checkout);
-	        	
-	        	
-	        	
+
+
+
 	    }
 	    catch (App_Exception_Checkout $e) {
 	    //   $this->writevar1($e->getMessage(),'this is the error message');
 	       // $this->view->scott=$e->getMessage();
 	        $t[0]['message']=$e->getMessage();
-	        
-	        
+
+
 	        return $t;
 	    }
 
@@ -68,9 +68,9 @@ class Model_Form004 extends Model_AbstractForm
 //			return $e;
 //		}
 
-			
-			
-			
+
+
+
         // transition plan -- force true when student is over 15 years 1 day
         /*
         if(true == $this->db_form_data['student_data']['force_tran_plan'])
@@ -78,16 +78,16 @@ class Model_Form004 extends Model_AbstractForm
             $this->db_form_data['transition_plan'] = 't';
         }
         */
-        
+
         // location page 6 - clear if date_conference is empty
         if(empty($this->db_form_data['date_conference']))
         {
             $this->db_form_data['primary_service_location'] = '';
         }
-        
+
         $translate = Zend_Registry::get('Zend_Translate');
-        
-        // build sub forms		
+
+        // build sub forms
 		if('all' == $page || 1 == $page)
 		{
 			// PAGE 1
@@ -106,8 +106,8 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['team_member'] = "Model_Table_Form004TeamMember";
-	 		
-			
+
+
 			// TEAM OTHER - 1-5 ROWS
 			$select 		= $this->db_form->select()->where("status = 'Active'")->order('timestamp_created');
 			$teamOther 		= $this->db_form->findDependentRowset('Model_Table_Form004TeamOther', 'Model_Table_Form004', $select);
@@ -121,8 +121,8 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['team_other'] = "Model_Table_Form004TeamOther";
-			
-			
+
+
 			// TEAM DISTRICT - 1-5 ROWS
 			$select 		= $this->db_form->select()->where("status = 'Active'")->order('timestamp_created');
 			$teamDistrict 	= $this->db_form->findDependentRowset('Model_Table_Form004TeamDistrict', 'Model_Table_Form004', $select);
@@ -136,12 +136,12 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['team_district'] = "Model_Table_Form004TeamDistrict";
-		} 
-		
+		}
+
 		if('all' == $page || 4 == $page)
 		{
-			
-			
+
+
 			// IEP GOALS
 			$select 		= $this->db_form->select()->where("status = 'Draft'")->order(array('timestamp_created ASC', 'id_form_004_goal ASC'));
 			$subformRecords 	= $this->db_form->findDependentRowset('Model_Table_Form004Goal', 'Model_Table_Form004', $select);
@@ -154,9 +154,9 @@ class Model_Form004 extends Model_AbstractForm
 				$this->db_form_data['iep_form_004_goal_'.$rownum] = $db_row->toArray();
 				// add a row number based on sort position - just used for user display
 				$this->db_form_data['iep_form_004_goal_'.$rownum]['rownumber'] = $rownum;
-				
+
 				// convert fields stored in the db as return delimited lists into arrays
-				// fields updated here should be added to the storeasarray config in the zend form definition 
+				// fields updated here should be added to the storeasarray config in the zend form definition
 				//
 				$this->db_form_data['iep_form_004_goal_'.$rownum]['eval_procedure'] = $this->storeFieldAsArray($this->db_form_data['iep_form_004_goal_'.$rownum]['eval_procedure']);
 				$this->db_form_data['iep_form_004_goal_'.$rownum]['person_responsible'] = $this->storeFieldAsArray($this->db_form_data['iep_form_004_goal_'.$rownum]['person_responsible']);
@@ -164,7 +164,7 @@ class Model_Form004 extends Model_AbstractForm
 			}
 			$this->subformIndexToModel['iep_form_004_goal'] = "Model_Table_Form004Goal";
 
-		
+
 	        // get the school report dates for this student
 			if(!empty($this->db_form_data['student_data']['date_conference'])) {
 				$yearIdentifier = date('Y', strtotime($this->db_form_data['student_data']['date_conference']));
@@ -177,9 +177,9 @@ class Model_Form004 extends Model_AbstractForm
 								->where("year_identifier = '".$yearIdentifier."' OR year_identifier = '".($yearIdentifier-1)."' OR year_identifier = '".($yearIdentifier+1)."'")
 								->order('year_identifier ASC');
 			$schRptDateRows = $student->findDependentRowset('Model_Table_SchoolReportDates', 'Model_Table_ViewAllStudent', $select);
-			
+
 //			$sessUser = new Zend_Session_Namespace('user');
-//			
+//
 //			if(1000254 == $sessUser->id_personnel) {
 //				echo $select;
 //				Zend_Debug::dump($schRptDateRows->toArray());
@@ -193,21 +193,21 @@ class Model_Form004 extends Model_AbstractForm
 						if(-1 != $d->compareTimestamp(new Zend_Date())) {
 							$reportDates[] = $row['date_report'.$i];
 						}
-						
+
 					}
 				}
 			}
 			asort($reportDates);
 			$reportDates = array_values(array_unique($reportDates)); // reindex
-						
+
 			if(count($schRptDateRows) >0 ) {
 				$this->db_form_data['student_data']['schoolReportDates'] = $reportDates;
 			} else {
 				$this->db_form_data['student_data']['schoolReportDates'] = array();
 			}
-			
+
 		}
-		
+
 		if('all' == $page || 5 == $page)
 		{
 			/*
@@ -220,8 +220,8 @@ class Model_Form004 extends Model_AbstractForm
 		        // force if 16 or over
 		        $this->db_form_data['transition_plan'] = true;
 		    }
-		    
-			
+
+
 			// IEP GOALS
 			$select 		= $this->db_form->select()->where("lower(status) != 'deleted' or status is null")->order('timestamp_created ASC');
 			$subformRecords = $this->db_form->findDependentRowset('Model_Table_Form004SecondaryGoal', 'Model_Table_Form004', $select);
@@ -236,12 +236,12 @@ class Model_Form004 extends Model_AbstractForm
 				$this->db_form_data['iep_form_004_secondary_goal_'.$rownum]['rownumber'] = $rownum;
 				$this->db_form_data['iep_form_004_secondary_goal_'.$rownum]['transition_plan_sub'] = $this->db_form_data['transition_plan'];
 				$this->db_form_data['iep_form_004_secondary_goal_'.$rownum]['dob_sub'] = $this->db_form_data['dob'];
-				
+
 				$rownum++;
 			}
 			$this->subformIndexToModel['iep_form_004_secondary_goal'] = "Model_Table_Form004SecondaryGoal";
 		}
-		
+
 		if('all' == $page || 6 == $page)
 		{
             if('print' != $accessMode)
@@ -264,8 +264,8 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['related_services'] = "Model_Table_Form004RelatedService";
-			
-			
+
+
 			// ==========================================================================================
 			// SUPPLEMENTAL SERVICES
 			$select 		= $this->db_form->select()->where("status = 'Active'")->order('timestamp_created ASC');
@@ -282,8 +282,8 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['supp_services'] = "Model_Table_Form004SupplementalService";
-			
-			
+
+
 			// ==========================================================================================
 			// PROGRAM MODIFICATIONS
 			$select 		= $this->db_form->select()->where("status = 'Active'")->order('timestamp_created ASC');
@@ -300,8 +300,8 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['program_modifications'] = "Model_Table_Form004ProgramModifications";
-			
-			
+
+
 			// ==========================================================================================
 			// ASSISTIVE TECHNOLOGY
 			$select 		= $this->db_form->select()->where("status = 'Active'")->order('timestamp_created ASC');
@@ -318,7 +318,7 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['assist_tech'] = "Model_Table_Form004AssistiveTechnology";
-			
+
 
 			// ==========================================================================================
 			// SCHOOL_SUPPORT
@@ -336,15 +336,16 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['school_supp'] = "Model_Table_Form004SchoolSupport";
-			
+
 		}
-		
+
 		if('all' == $page || 7 == $page)
 		{
             // convert fields stored in the db as return delimited lists into arrays
             // fields updated here should be added to the storeasarray config in the zend form definition
             //
             $this->db_form_data['district_assessments'] = $this->storeFieldAsArray($this->db_form_data['district_assessments']);
+
         }
 
 		if('all' == $page || 8 == $page)
@@ -368,10 +369,11 @@ class Model_Form004 extends Model_AbstractForm
 				$rownum++;
 			}
 			$this->subformIndexToModel['iep_form_004_suppform'] = "Model_Table_Form004SupplementalForm";
-			
+
 		}
+		$this->writevar1($this->db_form_data,'this is the db form data');
 		return $this->db_form_data;
-	}	
+	}
 
     private function accChecklist()
     {
@@ -387,7 +389,7 @@ class Model_Form004 extends Model_AbstractForm
         if($district['use_accomodations_checklist']) {
 	        $select         = $this->db_form->select()->where("status = 'Active'")->order('id_accom_checklist ASC');
 	        $subformRecords = $this->db_form->findDependentRowset('Model_Table_Form004AccomodationsChecklist', 'Model_Table_Form004', $select);
-        	
+
             $form004AccommodationCheckistObj = new Model_Table_Form004AccomodationsChecklist();
             // if there is no list, add one
             if($subformRecords->count() == 0) {
@@ -395,7 +397,7 @@ class Model_Form004 extends Model_AbstractForm
                     'id_form_004'       => $this->db_form_data['id_form_004'],
                 );
                 $form004AccommodationCheckistObj->insert($data);
-		        $subformRecords = $this->db_form->findDependentRowset('Model_Table_Form004AccomodationsChecklist', 'Model_Table_Form004', $select);    
+		        $subformRecords = $this->db_form->findDependentRowset('Model_Table_Form004AccomodationsChecklist', 'Model_Table_Form004', $select);
             }
 
             // if there are more than two, get checklists
@@ -424,7 +426,7 @@ class Model_Form004 extends Model_AbstractForm
             }
 
         }
-		
-        
+
+
     }
 }

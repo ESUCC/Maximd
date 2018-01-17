@@ -1,4 +1,4 @@
-<?php 
+<?php
 $view = $this->element->page->getView();
 if (true !== $view->db_form_data['summary_form']) {
 	$summaryForm = false;
@@ -25,13 +25,13 @@ echo $this->element->page;
     </tr>
 </table>
 
-<table class="formInput" style="margin-top:1px;">     
+<table class="formInput" style="margin-top:1px;">
     <tr>
         <TD>
         <table class="formInput" style="margin-top:1px;">
             <tr>
                 <td style="text-align: left;" colspan="2">
-                    <?php 
+                    <?php
                         echo "<B>" . $this->element->transportation_yn->getLabel() . "</B> ";
                         echo $this->element->transportation_yn->getMultiOption((int) $this->element->transportation_yn->getValue());
                     ?>
@@ -39,9 +39,11 @@ echo $this->element->page;
             </tr>
             <tr>
                 <td>
-                    <?php 
+                    <?php
+
                         echo "<B>" . $this->element->transportation_why->getLabel() . "</B> ";
                         echo $this->element->transportation_why->getValue();
+
                     ?>
                 </td>
             </tr>
@@ -49,13 +51,13 @@ echo $this->element->page;
         </TD>
     </tr>
 </table>
-<table class="formInput" style="margin-top:1px;">     
+<table class="formInput" style="margin-top:1px;">
     <tr>
         <td><B><?php echo $this->translate('special education transportation'); ?>:</B></td>
     </tr>
     <tr>
         <td>
-        <?php 
+        <?php
             echo $this->element->transportation_desc->getValue();
         ?>
         </td>
@@ -68,10 +70,10 @@ echo $this->element->page;
         <td><?php echo $this->translate('Assessment'); ?></td>
     </tr>
 </table>
-<table class="formInput" style="margin-top:1px;">     
+<table class="formInput" style="margin-top:1px;">
     <tr>
         <td>
-        <?php 
+        <?php
             if('print' == $view->mode) {
                 //echo "<B>" . $this->element->assessment_accom->getLabel() . "</B>";
                 if (strlen($this->element->assessment_accom->getValue()) > 0)
@@ -79,7 +81,7 @@ echo $this->element->page;
             } else {
                 echo $this->element->assessment_accom;
             }
-            
+
         ?></td>
     </tr>
     <tr>
@@ -112,7 +114,7 @@ echo $this->element->page;
     </tr>
     <tr>
         <td>
-        <?php 
+        <?php
             echo $this->element->assessment_alt->getValue();
         ?>
         </td>
@@ -127,13 +129,13 @@ echo $this->element->page;
     </tr>
 </table>
 
-<table class="formInput" style="margin-top:1px;">     
+<table class="formInput" style="margin-top:1px;">
     <tr>
         <td>
             <table class="formInput" style="margin-top:1px;">
             <tr>
                 <td>
-		        <?php 
+		        <?php
                     echo "<B>" . $this->element->ext_school_year_yn->getLabel() . "</B> ";
                     echo $this->element->ext_school_year_yn->getMultiOption((int) $this->element->ext_school_year_yn->getValue());
 		        ?>
@@ -142,18 +144,20 @@ echo $this->element->page;
             </table>
         </td>
     </tr>
-    
+
     <tr>
         <td><B><?php echo $this->translate('child will participate'); ?>:</B></td>
     </tr>
     <tr>
         <td>
-        <?php 
+        <?php
             echo "<B>" . $this->element->ext_school_year_desc->getLabel() . "</B> ";
             echo $this->element->ext_school_year_desc->getValue();
         ?>
         </td>
     </tr>
 </table>
+
+
 <?php } ?>
 <?php endif; ?>

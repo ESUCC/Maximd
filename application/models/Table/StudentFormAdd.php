@@ -10,9 +10,9 @@ require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 {
-    
+
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -21,28 +21,28 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     public function studentFormCountyList($userid)
-    {   
+    {
         //  Mike added July 27th the superuser function SRS-105
-        
+
         $db = Zend_Registry::get('db');
         $superAdmin=false;
-        
+
         foreach($_SESSION['user']['user']->privs as $privs){
             if($privs['class']=='1' && $privs['status']=='Active') {
               $superAdmin=true;
               $select = $db->select()
               ->from( array('c' => 'iep_county') , array('c.id_county', 'c.name_county'));
               $county_row = $db->fetchAll($select);
-             
+
            // $this->writevar1($county_row,'this is the county row');
-            
+
             }
         }
- 
+
         if($superAdmin==false) {
-        
+
         $county_row = array();
         $select = $db->select()
                    ->distinct()
@@ -52,42 +52,42 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                    ->order( 'c.name_county asc' );
         $county_row = $db->fetchAll($select);
         }
-        
-        
+
+
     //  $this->writevar1($select,'this is the sql command');
     return array($county_row);
     }
 
-    
-    
-    
+
+
+
     public function studentDistrictList($id_county, $userid)
     {
         // Mike added July 27th the superuser function SRS-105
         $db = Zend_Registry::get('db');
-	
-        
+
+
         $county_row = array();
-        
+
         $superAdmin=false;
-        
+
         foreach($_SESSION['user']['user']->privs as $privs){
             if($privs['class']=='1' && $privs['status']=='Active') {
                 $superAdmin=true;
                 $select = $db->select()
                 ->from( array('d' => 'iep_district') , array('d.id_district', 'd.name_district'))
                 ->where('d.id_county = ?',$id_county);
-              
+
                 $district_row = $db->fetchAll($select);
-        
+
                // $this->writevar1($county_row,'this is the county row');
-        
+
             }
         }
-        
-        
+
+
          if($superAdmin==false){
-         
+
          $select = $db->select()
                    ->distinct()
                    ->from( array('r' => 'iep_privileges'), array() )
@@ -97,8 +97,8 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                    ->order( 'd.name_district asc' );
          $district_row = $db->fetchAll($select);
          }
-         
-         
+
+
       //   $this->writevar1($district_row,'this is hte list of districts');
       return array( $district_row );
     }
@@ -127,33 +127,33 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
         $select = $db->select()
                    ->distinct()
                    ->from( array('p' => 'iep_personnel'), array('p.id_personnel', 'p.name_first', 'p.name_last') )
-                   ->joinLeft(array('r' => 'iep_privileges'), 'p.id_personnel = r.id_personnel', array() ) 
+                   ->joinLeft(array('r' => 'iep_privileges'), 'p.id_personnel = r.id_personnel', array() )
                    ->where('r.status = \'Active\' and p.id_county = \''.$id_county.'\' and ((p.id_district=\''.$id_district.'\' and r.id_school = \''.$id_school.'\' and r.class >= 4)
 											or (r.class = 2 or r.class = 3))')
                    ->order('p.name_first asc');
-       
-                   
+
+
        // Mike added this 8-4-2017 so that we only get  case managers at the school.
-       // Mike changed this 10-17-2017 so that school managers and ASM as well as case managers get in the 
+       // Mike changed this 10-17-2017 so that school managers and ASM as well as case managers get in the
        // mix
-       $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel,r.class from iep_personnel p,iep_privileges r 
+       $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel,r.class from iep_personnel p,iep_privileges r
                  where p.id_personnel=r.id_personnel and  r.class <= '6' and r.id_district='".
                        $id_district."' and r.id_county='".$id_county."' and r.id_school='".$id_school."' order by p.name_last asc";
-   
-                       
+
+
                        // testing 10-17-2017
-      
-               
-      
+
+
+
        // Jira Ticket 131.  Mike had to come up with it. Request was made to include district managers.
-         $mike="select  DISTINCT on (p.name_last,p.name_first) p.name_last,p.name_first,p.id_personnel, 
-                        r.class,r.status,p.status,r.id_school from iep_personnel p, iep_privileges r 
-                        where r.id_personnel=p.id_personnel and p.id_county='".$id_county."' and p.id_district='".$id_district."' 
-                        and r.status='Active'and p.status='Active' 
+         $mike="select  DISTINCT on (p.name_last,p.name_first) p.name_last,p.name_first,p.id_personnel,
+                        r.class,r.status,p.status,r.id_school from iep_personnel p, iep_privileges r
+                        where r.id_personnel=p.id_personnel and p.id_county='".$id_county."' and p.id_district='".$id_district."'
+                        and r.status='Active'and p.status='Active'
                         and ((r.id_school='".$id_school."' and r.class <='6') or (r.class<='3')) order by p.name_last,p.name_first " ;
-       
-        
-         
+
+
+
         $result = $db->fetchAll($mike);
         $num=count($result);
        //$this->writevar1($result,'this is the result');
@@ -164,26 +164,26 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
     /* This was added to test studentMangersList above
     public function studentManagersListm($id_county, $id_district, $id_school)
     {
-    
+
         $db = Zend_Registry::get('db');
-       
-        
+
+
         $select = $db->select()
         ->distinct()
         ->from( array('p' => 'iep_personnel'), array('p.id_personnel', 'p.name_first', 'p.name_last') )
         ->joinLeft(array('r' => 'iep_privileges'), 'p.id_personnel = r.id_personnel', array() )
         ->where('r.status = \'Active\' and p.id_county = \''.$id_county.'\' and ((p.id_district=\''.$id_district.'\' and r.id_school = \''.$id_school.'\' and r.class=\'6\')')
                  ->order('p.name_first asc');
-   
-         
+
+
     $select2="select p.id_personnel,p.name_first,p.name_last,r.id_personnel from iep_personnel p,iep_privileges r where p.id_personnel=r.id_personnel and r.class='6' and r.id_district='".
               $id_district."' and r.id_county='".$id_county."' and r.id_school='".$id_school."' order by p.name_last asc";
-    
+
      //$this->writevar1($select2,'this is the select2 ');
-     
+
      $result = $db->fetchAll($select2);
      $this->writevar1(array($result),'this is the result after query old');
-     
+
     return array($result);
     }
 */
@@ -212,7 +212,7 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
             $select = $db->select()
                    ->from( array('p' => 'iep_county') , array('p.id_county', 'p.name_county'))
                    ->order('p.name_county asc');
-        } 
+        }
 
         $result = $db->fetchAll($select);
 
@@ -287,7 +287,7 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
      $db = Zend_Registry::get('db');
      $db->insert('iep_student', $data);
 
-    
+
      $id = $db->lastInsertId('iep_student', 'id_student');
 
      return $id;
@@ -295,8 +295,11 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 
    public function studentParentAdd($id_student, $options, $result)
    {
+      // $this->writevar1($options,'these are the options');
+      // $this->writevar1($result,'this is the result');
+
        foreach($result as $indx => $val) {
-   
+
            $data = array(
                'id_author'		=> '0',
                'id_author_last_mod'	=> '0',
@@ -333,21 +336,22 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
            //		'data_source'
                'unique_id_state'	=> $options["unique_id_state"]
            );
-   
+
            $db = Zend_Registry::get('db');
+           $this->writevar1($data,'this is what gets inserted into the db');
            $db->insert('iep_guardian', $data);
-   
+
        }
    }
 
     static function schoolMultiOtions($idCounty, $idDistrict, $privLimited = false)
     {
         $retArray = array();
-    
+
         if (strlen($idCounty) < 2 || strlen($idDistrict) < 4) {
             return false;
         }
-    
+
         $table = new Model_Table_School();
         $select = $table->select()
         ->where("status ='Active'")
@@ -355,7 +359,7 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
         ->where('id_district = ?', $idDistrict)
         ->order('name_school');
         $schools = $table->fetchAll($select);
-    
+
         if($privLimited) {
             /**
              * setup accessible districts
@@ -377,7 +381,7 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                 $retArray[$c['id_school']] = $c['name_school'];
             }
         }
-    
+
         return $retArray;
     }
 

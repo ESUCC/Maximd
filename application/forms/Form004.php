@@ -144,7 +144,7 @@ class Form_Form004 extends Form_AbstractForm
 
         // in order to create a not empty if validator,
         // we have to set the following flags
-        // setRequired(false); 
+        // setRequired(false);
         // setAllowEmpty(false); -- this doesn't make sense, but must be false to force the validator to fire.
         $this->date_doc_signed_parent->setRequired(false);
         $this->date_doc_signed_parent->setAllowEmpty(false);
@@ -738,7 +738,7 @@ class Form_Form004 extends Form_AbstractForm
         );
 
         $this->pdf_filepath_present_lev_perf = new App_Form_Element_Hidden('pdf_filepath_present_lev_perf', array('Label' => 'pdf_filepath_present_lev_perf:'));
-        
+
         $this->addressed_physical_education = new App_Form_Element_Checkbox('addressed_physical_education', array('Label' => 'Please check to confirm that you have addressed the student\'s needs in the area of Physical Education'));
         $this->addressed_physical_education->setRequired(true);
         $this->addressed_physical_education->setAllowEmpty(false);
@@ -1173,25 +1173,25 @@ class Form_Form004 extends Form_AbstractForm
 
         $this->expanded_options = new App_Form_Element_Checkbox('expanded_options', array('label'=>'Expanded Options'));
         $this->expanded_options->setAttrib('onclick', "toggleShowExpandedOptions();");
-        
+
         $this->reg_edu_student_services = $this->buildEditor('reg_edu_student_services', array('label'=>'Services with Regular Education Students'));
         $this->reg_edu_student_services->setRequired(false);
         $this->reg_edu_student_services->setAllowEmpty(false);
         $this->reg_edu_student_services->removeEditorEmptyValidator();
         $this->reg_edu_student_services->addValidator(new My_Validate_EditorNotEmptyIf('expanded_options', "t"), true);
-        
+
         $this->not_reg_edu_student_services = $this->buildEditor('not_reg_edu_student_services', array('label'=>'Services Not with Regular Education Students'));
         $this->not_reg_edu_student_services->setRequired(false);
         $this->not_reg_edu_student_services->setAllowEmpty(false);
         $this->not_reg_edu_student_services->removeEditorEmptyValidator();
         $this->not_reg_edu_student_services->addValidator(new My_Validate_EditorNotEmptyIf('expanded_options', "t"), true);
-        
+
         $this->other_services = $this->buildEditor('other_services', array('label'=>'Other Services'));
         $this->other_services->setRequired(false);
         $this->other_services->setAllowEmpty(false);
         $this->other_services->removeEditorEmptyValidator();
         $this->other_services->addValidator(new My_Validate_EditorNotEmptyIf('expanded_options', "t"), true);
-        
+
         return $this;
     }
 
@@ -1207,7 +1207,7 @@ class Form_Form004 extends Form_AbstractForm
 
         $this->setDecorators(
             array(
-//				                'PrepareElements', 
+//				                'PrepareElements',
                 array(
                     'ViewScript',
                     array(
@@ -1530,6 +1530,7 @@ class Form_Form004 extends Form_AbstractForm
 
         $this->edit_p7_v1();
         $this->addPage7Ext();
+        $this->addPage7Pwn();
         return $this;
     }
 
@@ -1627,7 +1628,7 @@ class Form_Form004 extends Form_AbstractForm
         // $this->transportation_why->addDecorator('HtmlTag', array ('tag' => 'div', 'class' => 'colorme', 'id'  => $this->transportation_why->getName() . '-colorme') );
 
         /*
-         * End Modification 
+         * End Modification
          */
 
         $this->transportation_why->addErrorMessage(
@@ -1704,13 +1705,15 @@ class Form_Form004 extends Form_AbstractForm
          * NON-LPS Fields
          */
         if (!$this->lps) {
-            $this->addPage7Ext();
+           $this->addPage7Ext();
+           $this->addPage7Pwn();
         }
         return $this;
     }
 
     public function addPage7Ext()
     {
+
         $multiOptions = array('1' => 'Yes', '0' => 'No');
         $this->ext_school_year_yn = new App_Form_Element_Radio('ext_school_year_yn', array(
             'Label' => 'Description of extended school year:',
@@ -1728,6 +1731,58 @@ class Form_Form004 extends Form_AbstractForm
         $this->ext_school_year_desc->addErrorMessage('Extended school year services selection must be entered.');
         $this->ext_school_year_desc->removeEditorEmptyValidator();
         $this->ext_school_year_desc->addValidator(new My_Validate_EditorNotEmptyIf('ext_school_year_yn', '1'));
+
+    }
+
+    public function addPage7Pwn()
+    {
+
+
+
+        $this->pwn_describe_action = $this->buildEditor(
+            'pwn_describe_action',
+            array('Label', 'Prior Written Notice')
+            );
+        $this->pwn_describe_action->addErrorMessage('PWN Section 1: Description of Action must be entered');
+        $this->pwn_describe_action->removeEditorEmptyValidator();
+        $this->pwn_describe_action->addValidator(new My_Validate_EditorNotEmptyIf('pwn_describe_action', '1'));
+
+
+        $this->pwn_describe_reason = $this->buildEditor(
+            'pwn_describe_reason',
+            array('Label', 'Prior Written Notice')
+            );
+        $this->pwn_describe_reason->addErrorMessage('PWN Section 2: Explanation of approval must be entered.');
+        $this->pwn_describe_reason->removeEditorEmptyValidator();
+        $this->pwn_describe_reason->addValidator(new My_Validate_EditorNotEmptyIf('pwn_describe_reason', '1'));
+
+        $this->pwn_options_other = $this->buildEditor(
+            'pwn_options_other',
+            array('Label', 'Prior Written Notice')
+            );
+        $this->pwn_options_other->addErrorMessage('PWN Section 3: Description of other options must be entered.');
+        $this->pwn_options_other->removeEditorEmptyValidator();
+        $this->pwn_options_other->addValidator(new My_Validate_EditorNotEmptyIf('pwn_options_other', '1'));
+
+
+        $this->pwn_justify_action = $this->buildEditor(
+            'pwn_justify_action',
+            array('Label', 'Prior Written Notice')
+            );
+        $this->pwn_justify_action->addErrorMessage('PWN Section 4: Evaluation or Record description must be entered.');
+        $this->pwn_justify_action->removeEditorEmptyValidator();
+        $this->pwn_justify_action->addValidator(new My_Validate_EditorNotEmptyIf('pwn_justify_action', '1'));
+
+
+        $this->pwn_other_factors = $this->buildEditor(
+            'pwn_other_factors',
+            array('Label', 'Prior Written Notice')
+            );
+        $this->pwn_other_factors->addErrorMessage('PWN Section 5: Description of relevant factors for proposal or refusal must be entered.');
+        $this->pwn_other_factors->removeEditorEmptyValidator();
+        $this->pwn_other_factors->addValidator(new My_Validate_EditorNotEmptyIf('pwn_other_factors', '1'));
+
+
     }
 
     public function edit_p8_v2()
@@ -2062,8 +2117,8 @@ class Form_Form004 extends Form_AbstractForm
                 if (count($studentRows)) {
                     $student = $studentRows->current();
                 }
-                
-           // Mike changed commented this out 1-9-2018 because it was causing finalize issues     
+
+           // Mike changed commented this out 1-9-2018 because it was causing finalize issues
            //   if ($student['id_county'] == "99" && $student['id_district'] == "9999") {
              //      $this->district_assessments->addValidator(
              //           new My_Validate_NotEmptyIf('assessment_accom', 'The child will participate in district-wide assessment WITH accommodations, as specified:')
