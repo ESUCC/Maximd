@@ -1,4 +1,4 @@
-<?php 
+<?php
     $view = $this->element->page->getView();
 	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
 	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
@@ -11,93 +11,95 @@
         <td><b>Notice and Consent For Initial Placement in Special Education Services</b></td>
     </tr>
 </table>
-<table class="formInput">     
+<table class="formInput">
     <tr>
         <td>
         <?php echo $this->element->date_notice; ?>
         </td>
     </tr>
 </table>
-<table class="formInput"> 
+<table class="formInput">
     <tr>
 		<td>
-		<?php 
-		
+		<?php
+
 		// WADE THIS IS WHAT YOU MIGHT WANT TO EDIT
-		$editScreen=" </b>the Individual Education Program (IEP) Team met to develop an appropriate 
-		educational program for your child.<br> To the maximum extent appropriate, your 
-		child will be educated with other children in the general education 
-		environment. <br>Your child will be moved from the general education environment 
-		only when the nature or severity of needs are such that<br> the education in 
-		general education classes with supplementary services cannot be achieved 
-		satisfactorily. <br><br><b>1: Based on the IEP which has been developed for your child, 
-        the Adama proposes to serve your child within the following 
+		$editScreen=" </b>the Individual Education Program (IEP) Team met to develop an appropriate
+		educational program for your child.<br> To the maximum extent appropriate, your
+		child will be educated with other children in the general education
+		environment. <br>Your child will be moved from the general education environment
+		only when the nature or severity of needs are such that<br> the education in
+		general education classes with supplementary services cannot be achieved
+		satisfactorily. <br><br><b>1: Based on the IEP which has been developed for your child,
+        the Adama proposes to serve your child within the following
         program";
-        $printScreen=" </b>the Individual Education Program (IEP) Team met to develop an appropriate educational program for your child. To the maximum extent appropriate, your child will be educated with other children in the general education  environment. Your child will be moved from the general education environment 
+        $printScreen=" </b>the Individual Education Program (IEP) Team met to develop an appropriate educational program for your child. To the maximum extent appropriate, your child will be educated with other children in the general education  environment. Your child will be moved from the general education environment
 		only when the nature or severity of needs are such that the education in general education classes with supplementary services cannot be achieved satisfactorily. </br></br><b>1: Based on the IEP which has been developed for your child,  the Adama proposes to serve your child within the following program: </b>";
-        
+
 		    $urll=$_SERVER['REQUEST_URI'];
 		$url_page = explode('/',$urll);
-	
+
 		 $displ= $url_page[2];
-		
+
 		?></b>
 		<div id="dates_wrapper-colorme" class="colorme">
-	<b> 	 <?php 
-	   echo "On  ".$this->element->date_met;  
+	<b> 	 <?php
+	   echo "On  ".$this->element->date_met;
 	   if($displ=='print') {
 	       echo $printScreen;
 	   }
 	   else {
 	       echo $editScreen;
 	   }
-	
+
 	?>
 		<span class="noprint"> <br>(describe the proposed program)</b></span>:
-        
+
 		</div><blockquote>
 		<?php echo $this->element->describe_program; ?></blockquote>
 		</td>
 	</tr>
 </table>
-<table class="formInput"> 
+<table class="formInput">
 	<tr>
 		<td>
-	<b>2: The suggested special education program is based on<span class="noprint"> (describe the reasons 
+	<b>2: The suggested special education program is based on<span class="noprint"> (describe the reasons
         why the district proposes to place)</b></span>:
 	<blockquote><?php echo $this->element->describe_reason; ?></blockquote>
 		</td>
     </tr>
-</table> 
-<table class="formInput"> 
+</table>
+
+<!-- Mike changed 1-19-2016 SRS 164 mispelled District was distric -->
+<table class="formInput">
 	<tr>
 		<td><b>
-		3: To determine the appropriate placement for your child, the school distric
+		3: To determine the appropriate placement for your child, the school district
         considered the following option(s) prior to reaching the placement decision,<br>
-        and rejected those option(s) because<span class="noprint"> (provide a description of any options 
+        and rejected those option(s) because<span class="noprint"> (provide a description of any options
         the district considered and the reasons why those options were rejected)</b></span>:
 	<blockquote>	<?php echo $this->element->provide_description; ?></blockquote>
 		</td>
     </tr>
-</table> 
-<table class="formInput"> 
+</table>
+<table class="formInput">
 	<tr>
 		<td>
-		<b>4: The proposed placement is based upon the following evaluation procedures, tests, 
-		
+		<b>4: The proposed placement is based upon the following evaluation procedures, tests,
+
         records or reports:</b>
 	<blockquote><?php echo $this->element->proposed_placement; ?></blockquote>
 		</td>
     </tr>
-</table> 
-<table class="formInput"> 
+</table>
+<table class="formInput">
 	<tr>
 		<td>
 		<b>5: Other factors which are relevant to the school district's proposal, if any, are:</b>
 	<blockquote>	<?php echo $this->element->other_factors; ?></blockquote>
 		</td>
     </tr>
-</table> 
+</table>
 
 <table class="formInput">
 	<tr>
@@ -105,7 +107,7 @@
 		<p><b>6: Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individual with Disabilities Education Act (IDEA).
 		 <br>If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:</b>
 		</td>
-	</tr> 
+	</tr>
 	<tr>
 		<td>
 		<?php echo $this->element->contact_name; ?>
@@ -114,4 +116,4 @@
 		<?php echo $this->element->contact_num; ?>
 		</td>
     </tr>
-</table> 
+</table>

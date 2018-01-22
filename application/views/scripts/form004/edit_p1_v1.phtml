@@ -41,12 +41,12 @@ if(isset($view->db_form_data['team_member'])) { ?>
         <tr>
             <td style="width:200px;">
                 <span class="btsb">
-                    <?php echo $this->translate('This IEP will be in effect from'); ?> 
+                    <?php echo $this->translate('This IEP will be in effect from'); ?>
                 </span>
             </td>
             <td align="left" style="width:135px;">
                 <span class="btsb">
-                    <?php echo $this->element->effect_from_date; ?> 
+                    <?php echo $this->element->effect_from_date; ?>
                 </span>
             </td>
             <td align="left" style="width:50px;">
@@ -70,10 +70,10 @@ echo $this->subform($view, 'team_district'); ?>
 
 <table class="sc_subSectionHead">
 	<tr>
-		<td><?php echo $this->translate('Parent Signature'); ?> 
+		<td><?php echo $this->translate('Parent Signature'); ?>
 		</td>
 		<td>
-		<?php 
+		<?php
 			if('Draft' == $view->db_form_data['status']) {
 				echo $this->formCheckbox('clearRadioButtons', 1, array('ignore' => true, 'onChange' => "modified();")) . ' ' . $this->translate('Clear Radio Buttons');
 			}
@@ -160,7 +160,7 @@ echo $this->subform($view, 'team_district'); ?>
 	<?php } ?>
 	<tr>
 		<td colspan="4"><? echo $this->element->doc_signed_parent;?></td>
-		<table class="formInputSub">	
+		<table class="formInputSub">
 		  <tr>
 			<td><?php echo $this->translate('signature is on file'); ?>.</td>
 		  </tr>
@@ -176,7 +176,7 @@ echo $this->subform($view, 'team_district'); ?>
 <?php if(0) { ?>
 <input type="file" name="uploadFile" dojoType="soliant.widget.FileInput">
 <?php } ?>
-<?php 
+<?php
 
 //$value = '<p class="MsoNormal"><span lang="EN" style="font-family:Arial;mso-bidi-font-family:
 //Arial;mso-ansi-language:EN">Font=Arial12pt.Lorem ipsum dolor sit

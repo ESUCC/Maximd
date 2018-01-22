@@ -1,10 +1,10 @@
 <?php
 /**
- * Helper for displaying a printed footer 
- * 
+ * Helper for displaying a printed footer
+ *
  * @uses      Zend_View_Helper_Abstract
  * @package   SRS
- * @author    Jesse LaVere <mdanahy@esucc.org> 
+ * @author    Jesse LaVere <mdanahy@esucc.org>
  * @version   $Id: $
  */
 class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
@@ -16,7 +16,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
 
     /**
      * build footer div
-     * 
+     *
      * @return string
      */
     public function studentInfoHeader($db_form_data, $formNumber = null, $showDateOfNotice = false)
@@ -50,7 +50,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		$parents = $db_form_data['student_data']['parents'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
 //      return $this->_retString;
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
@@ -65,7 +65,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '  <tr>';
         $this->_retString .= '      <td colspan="2"><span class="btsb">'.$this->view->translate('Parents').'</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
 
@@ -92,7 +92,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
 //      return $this->_retString;
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
@@ -107,10 +107,10 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">Parents</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '      <td><span class="btsb">School District</span>: '.$schoolDistrict.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
-    
+
     public function form003($db_form_data)
     {
     	if('Final'==$db_form_data['status']) {
@@ -134,7 +134,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
 //      return $this->_retString;
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
@@ -152,13 +152,13 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">Grade</span>: '.$db_form_data['student_data']['grade'].'&nbsp;</td>';
         $this->_retString .= '      <td colspan="2"><span class="btsb">Address</span>: '.$db_form_data['student_data']['address'].'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
-    
+
     public function form004($db_form_data)
     {
-    
+
     	if('Final'==$db_form_data['status']) {
 			$student = $db_form_data['finalized_student_name'];
 //			$age = $db_form_data['finalized_age'];
@@ -177,10 +177,11 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
 			$nameSchool = $db_form_data['name_school'];
 			$grade = $db_form_data['student_data']['grade'];
 			$parents = $db_form_data['student_data']['parents'];
+
 // 			$address = $db_form_data['finalized_address'];
 			$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
-    	}    		
-	
+    	}
+
     	$this->_retString = "";
     	$this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
     	$this->_retString .= '  <tr class="noprint">';
@@ -204,7 +205,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     	}
     	$this->_retString .= '  </tr>';
     	$this->_retString .= '</table>';
-    	
+        
         return $this->_retString;
     }
     public function form005($db_form_data)
@@ -230,7 +231,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
         $this->_retString .= '  <tr>';
@@ -241,7 +242,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">School District</span>: '.$schoolDistrict.'&nbsp;</td>';
         $this->_retString .= '      <td><span class="btsb">Parents</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
 
@@ -268,7 +269,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
         $this->_retString .= '  <tr>';
@@ -279,7 +280,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">School District</span>: '.$schoolDistrict.'&nbsp;</td>';
         $this->_retString .= '      <td><span class="btsb">Parents</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
 
@@ -306,7 +307,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
         $this->_retString .= '  <tr>';
@@ -317,7 +318,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">School District</span>: '.$schoolDistrict.'&nbsp;</td>';
         $this->_retString .= '      <td><span class="btsb">Parents</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
 
@@ -344,7 +345,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
         $this->_retString .= '  <tr>';
@@ -355,7 +356,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">School District</span>: '.$schoolDistrict.'&nbsp;</td>';
         $this->_retString .= '      <td><span class="btsb">Parents</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
 
@@ -382,7 +383,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		// 			$address = $db_form_data['finalized_address'];
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    	
+
         $this->_retString = "";
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
         $this->_retString .= '  <tr>';
@@ -393,12 +394,12 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '      <td><span class="btsb">School District</span>: '.$schoolDistrict.'&nbsp;</td>';
         $this->_retString .= '      <td><span class="btsb">Parents</span>: '.$parents.'&nbsp;</td>';
         $this->_retString .= '  </tr>';
-        $this->_retString .= '</table>';                
+        $this->_retString .= '</table>';
         return $this->_retString;
     }
-    
+
     public function form013($db_form_data)
-    {    
+    {
         $this->_retString = "";
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
         $this->_retString .= '  <tr>';
@@ -485,7 +486,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
         $this->_retString .= '</table>';
         return $this->_retString;
     }
-    
+
     public function form026($db_form_data, $showDateOfNotice)
     {
     	$page = Zend_Controller_Front::getInstance()->getRequest()->getParam('page');
@@ -510,7 +511,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     		$date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     		$date_of_notice = new Zend_Date( $db_form_data['date_of_notice_discontinuation'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
     	}
-    
+
     	$this->_retString = "";
     	$this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
     	$this->_retString .= '  <tr>';
@@ -532,7 +533,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     	$this->_retString .= '</table>';
     	return $this->_retString;
     }
-    
+
     public function form027($db_form_data)
     {
     	if('Final'==$db_form_data['status']) {
@@ -573,12 +574,12 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     	$this->_retString .= '</table>';
     	return $this->_retString;
     }
-    
+
     public function form028($db_form_data)
     {
     	$studentModel = new Model_Table_StudentTable();
     	$studentInfo = $studentModel->studentInfo($db_form_data['id_student']);
-    	
+
     	if('Final'==$db_form_data['status']) {
     		$student = $db_form_data['finalized_student_name'];
     		$age = $db_form_data['finalized_age'];
@@ -632,7 +633,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     	$this->_retString .= '</table>';
     	return $this->_retString;
     }
-    
+
     public function form031($db_form_data)
     {
         if('Final'==$db_form_data['status']) {
@@ -654,7 +655,7 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
             $parents = $db_form_data['student_data']['parents'];
             $date = new Zend_Date( $db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
         }
-         
+
         $this->_retString = "";
         //      return $this->_retString;
         $this->_retString .= '<table class="formDesc" cellpadding="0" cellspacing="0">';
@@ -671,4 +672,4 @@ class Zend_View_Helper_StudentInfoHeader extends Zend_View_Helper_Abstract
     }
 
 }
-        
+

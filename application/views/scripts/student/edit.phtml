@@ -25,7 +25,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
         $('#grade').change(function (event) {
             gradeToggle();
         })
-        gradeToggle(); 
+        gradeToggle();
 
         $('#id_school').change(function (event) {
             fetchCaseManagers(); //api-student/get-case-managers/id_county/99/id_district/9999/id_school/01
@@ -38,7 +38,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
 //cosole.table(data,['name','gender','email']);
         buildNonPublicSchools();
 
-        $('.studentOptions').each(function() { 
+        $('.studentOptions').each(function() {
 			$(this).change(function() {
 				if ($(this).val() != '') {
 					if ($(this).val().match(/IEP/) == 'IEP' ||
@@ -51,7 +51,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
 							url: '/student/get-most-recent/'+$(this).val(),
 							success: function(json) {
 								if (json['success'] == '1')
-									
+
 									window.location.href = json['url'];
 								else
 									alert('The system was unable to locate the most recent form.');
@@ -62,11 +62,11 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
                     }
 
 				}
-			}); 
+			});
 		});
     });
     function fetchCaseManagers() {
-        
+
         if($('#id_county').val()  && $('#id_district').val()  && $('#id_school').val() ) {
             $.ajax({
                 type: 'POST',
@@ -82,7 +82,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
                         $.each(json['data'], function(optionValue, optionDisplay) {
                             options += '<option value="' + optionValue + '">' + optionDisplay + '</option>';
                             size += 1;
-                            
+
                         });
                         if(size>1) {
                             options = optionsPrefix+options;
@@ -110,9 +110,9 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
         } else {
             $("input[type='radio'][name='parental_placement']").closest('div').show();
             $('#parental_placement-label').css("color","blue");
-            
+
             ;
-           
+
         }
         /**
          * Non-Pub County:
@@ -132,15 +132,16 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             $('#nonpubschool').closest('div').hide();
         } else {
             // not public school student
-            
+
             $('#nonpubcounty').closest('div').show();
             $('#nonpubcounty-label').css("color","blue");
           //  $('.srsTextLabel').css("color","blue").closest('radio');
            //  $("lable[for='nonpubcounty']".css("color","blue").
-            
+
             $('#nonpubdistrict').closest('div').show();
             $('#nonpubdistrict-label').css("color","blue");
             $('#nonpubschool').closest('div').show();
+
             $('#nonpubschool-label').css("color","blue");
         }
     }
@@ -239,6 +240,7 @@ $this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
             <div>Student Options: <?php echo $this->studentOptions($this->id_student); ?></div>
         </div>
         <?= $this->countyDistrictSchoolNoElements(); ?>
-        <?= $this->nonPublicCdsHelper(); ?>
-        <?= $this->form; ?>
+        <?php  echo $this->nonPublicCdsHelper(); ?>
+
+        <?php echo $this->form; ?>
     </div>

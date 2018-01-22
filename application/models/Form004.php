@@ -371,7 +371,7 @@ class Model_Form004 extends Model_AbstractForm
 			$this->subformIndexToModel['iep_form_004_suppform'] = "Model_Table_Form004SupplementalForm";
 
 		}
-		$this->writevar1($this->db_form_data,'this is the db form data');
+		//$this->writevar1($this->db_form_data,'this is the db form data');
 		return $this->db_form_data;
 	}
 

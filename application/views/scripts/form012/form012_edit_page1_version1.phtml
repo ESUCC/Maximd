@@ -1,11 +1,11 @@
-<?php 
+<?php
     $view = $this->element->page->getView();
     echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
 	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
 ?>
 <?= $this->element->id_form_012; ?>
 <?= $this->element->page; ?>
-    
+
 <table class="formTitleHead" cellpadding="0" cellspacing="0">
     <tbody>
         <tr>
@@ -14,11 +14,11 @@
         </tr>
     </tbody>
 </table>
-
+<!-- SRS 164 the work tesing instead of testing was in 2nd tr below Mike change 1-19-2018 -->
 <table class="formInput">
    <tr>
         <td>
-            <?php 
+            <?php
             if('print' == $view->mode)
             {
             	echo "<B>" . $this->element->date_notice->getLabel() . "</B> ";
@@ -28,7 +28,7 @@
             }
             ?>
         </td>
-    </tr>    
+    </tr>
         <tr>
             <td>As part of the identification, eligibility, and
             evaluation of program effectiveness process, the team, including the
@@ -47,14 +47,14 @@
             to determine the student's present level of educational performance and
             considerations for additional testing. The school district has reviewed
             all the information listed below and has determined, based on this
-            information, that no additional tesing is necessary to determine
+            information, that no additional testing is necessary to determine
             eligibility.</td>
         </tr>
 </table>
 <span><strong>This information included:</strong></span>
 <table class="formInput printIndent">
     <tbody>
-        
+
         <tr>
             <td><strong>Existing Evaluations</strong></td>
         </tr>
@@ -155,8 +155,8 @@
         <tr>
             <td colspan="2">
             <div id="provided_wrapper-colorme" class="colorme">
-            This notice was provided on: 
-            <?php echo $this->element->date_sent; ?> 
+            This notice was provided on:
+            <?php echo $this->element->date_sent; ?>
             by the following person: <?php echo $this->element->sender; ?>
             </div>
             </td>

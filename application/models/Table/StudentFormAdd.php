@@ -278,11 +278,16 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 	'pub_school_student'         => $options["pub_school_student"]  // boolean
    );
 
+
+   // $this->writevar1($options,'the options in studentformadd.php');
      if ($options["alternate_assessment"] != "") $data['alternate_assessment'] = $options["alternate_assessment"];   // boolean
      if ($options["parental_placement"] != "") $data['parental_placement'] = $options["parental_placement"];
      if ($options["nonpubcounty"] != "") $data['nonpubcounty'] = $options["nonpubcounty"];
      if ($options["nonpubdistrict"] != "") $data['nonpubdistrict'] = $options["nonpubdistrict"];
      if ($options["nonpubschool"] != "") $data['nonpubschool'] = $options["nonpubschool"];
+
+
+    // $this->writevar1($data,'data in StudentFormAdd line 288');  this works for the school being shown up
 
      $db = Zend_Registry::get('db');
      $db->insert('iep_student', $data);

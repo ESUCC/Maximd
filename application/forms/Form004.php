@@ -10,6 +10,7 @@ class Form_Form004 extends Form_AbstractForm
         $this->setEditorType('App_Form_Element_TinyMceTextarea');
     }
 
+
     protected function initialize()
     {
         parent::initialize();
@@ -33,6 +34,7 @@ class Form_Form004 extends Form_AbstractForm
         $this->form_editor_type->getDecorator('label')->setOption('placement', 'prepend');
 
     }
+
 
 
     public function view_p1_v1()
@@ -1525,6 +1527,8 @@ class Form_Form004 extends Form_AbstractForm
         return $this->edit_p7_v1();
     }
 
+
+    // This was added by Mike 1-18-2018 SRS-151 .  The $this->addPage7Pwn
     public function edit_p7_v10()
     {
 
@@ -1703,7 +1707,9 @@ class Form_Form004 extends Form_AbstractForm
 
         /*
          * NON-LPS Fields
+         *  // This was added by Mike 1-18-2018 SRS-151 .  The $this->addPage7Pwn
          */
+
         if (!$this->lps) {
            $this->addPage7Ext();
            $this->addPage7Pwn();
@@ -1713,7 +1719,7 @@ class Form_Form004 extends Form_AbstractForm
 
     public function addPage7Ext()
     {
-
+       //this->parent_names = new App_Form_Element_Text('parent_names');
         $multiOptions = array('1' => 'Yes', '0' => 'No');
         $this->ext_school_year_yn = new App_Form_Element_Radio('ext_school_year_yn', array(
             'Label' => 'Description of extended school year:',
@@ -1738,21 +1744,22 @@ class Form_Form004 extends Form_AbstractForm
     {
 
 
-
         $this->pwn_describe_action = $this->buildEditor(
             'pwn_describe_action',
-            array('Label', 'Prior Written Notice')
+            array('Label', 'Please Describe Action')
             );
-        $this->pwn_describe_action->addErrorMessage('PWN Section 1: Description of Action must be entered');
+
+
+        $this->pwn_describe_action->addErrorMessage('Description of Action must be entered');
         $this->pwn_describe_action->removeEditorEmptyValidator();
         $this->pwn_describe_action->addValidator(new My_Validate_EditorNotEmptyIf('pwn_describe_action', '1'));
 
 
         $this->pwn_describe_reason = $this->buildEditor(
             'pwn_describe_reason',
-            array('Label', 'Prior Written Notice')
+            array('Label', 'A description of other options the IEP team considered and the reasons why those options were rejected')
             );
-        $this->pwn_describe_reason->addErrorMessage('PWN Section 2: Explanation of approval must be entered.');
+        $this->pwn_describe_reason->addErrorMessage('Explanation of approval must be entered.');
         $this->pwn_describe_reason->removeEditorEmptyValidator();
         $this->pwn_describe_reason->addValidator(new My_Validate_EditorNotEmptyIf('pwn_describe_reason', '1'));
 
@@ -1760,7 +1767,7 @@ class Form_Form004 extends Form_AbstractForm
             'pwn_options_other',
             array('Label', 'Prior Written Notice')
             );
-        $this->pwn_options_other->addErrorMessage('PWN Section 3: Description of other options must be entered.');
+        $this->pwn_options_other->addErrorMessage('Description of other options must be entered.');
         $this->pwn_options_other->removeEditorEmptyValidator();
         $this->pwn_options_other->addValidator(new My_Validate_EditorNotEmptyIf('pwn_options_other', '1'));
 
@@ -1769,7 +1776,7 @@ class Form_Form004 extends Form_AbstractForm
             'pwn_justify_action',
             array('Label', 'Prior Written Notice')
             );
-        $this->pwn_justify_action->addErrorMessage('PWN Section 4: Evaluation or Record description must be entered.');
+        $this->pwn_justify_action->addErrorMessage('Evaluation or Record description must be entered.');
         $this->pwn_justify_action->removeEditorEmptyValidator();
         $this->pwn_justify_action->addValidator(new My_Validate_EditorNotEmptyIf('pwn_justify_action', '1'));
 

@@ -4,7 +4,7 @@
 class Zend_View_Helper_NonPublicCdsHelper extends Zend_View_Helper_Abstract
 {
     /**
-     * 
+     *
      * @return string
      */
     public function nonPublicCdsHelper()
@@ -39,7 +39,7 @@ class Zend_View_Helper_NonPublicCdsHelper extends Zend_View_Helper_Abstract
 	        		}
 	        	});	// end ajax call
 			}
-		}	
+		}
 		function buildNonPublicSchools() {
 			if(null != $('#nonpubdistrict').val() && $('#nonpubdistrict').val().length>0) {
 	        	$.ajax({
@@ -58,7 +58,7 @@ class Zend_View_Helper_NonPublicCdsHelper extends Zend_View_Helper_Abstract
 	        				options = optionsPrefix+options;
 	        			}
 	        			// triggerHandler causes onChange to fire on school
-			        	$("#nonpubschool").html(options).triggerHandler("change");
+			        //	$("#nonpubschool").html(options).triggerHandler("change");
 	        		}
 	        	});	// end ajax call
 			} else {
@@ -82,7 +82,7 @@ class Zend_View_Helper_NonPublicCdsHelper extends Zend_View_Helper_Abstract
         </script>
     	<?php
     	$this->view->placeholder('countyDistrictSchool')->captureEnd();
-        
+
     	return $this->view->placeholder('countyDistrictSchool');
     }
     /**
@@ -93,5 +93,5 @@ class Zend_View_Helper_NonPublicCdsHelper extends Zend_View_Helper_Abstract
     {
     	$this->view = $view;
     }
-    
+
 }

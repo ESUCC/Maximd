@@ -7,7 +7,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
     protected $_name = 'iep_district';
 
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -16,26 +16,26 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         fwrite($fp, $data2);
         fclose($fp);
     }
- 
-    
+
+
     // Mike added 10-17-2017 so that the ods would work
     public function getEdfiSecretKey($county,$district) {
-         
+
         $Db = Zend_Registry::get('db');
-    
+
         $query="select edfi_key,edfi_secret,use_edfi from iep_district where id_county='".$county.
         "' and id_district='".$district."'";
-    
-    
+
+
         //    $this->writevar1($query,'this is the query');
-         
+
         $keys=$Db->fetchrow($query);
-         
+
         // $this->writevar1($keys,'these are the keys');
         return $keys;
     }
-    
-    
+
+
    // Mike added this from Maxim 8-23-2017 in order to get the new district edit screen to pop up.
     function updateImageLocation($id_county, $id_district, $imagefile) {
         $data = array(
@@ -44,21 +44,21 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         $where = "id_district = '$id_district' and id_county='$id_county' ";
         $this->update($data, $where);
     }
-    
+
     function getImageLocation($id_county, $id_district) {
         $select = $this->select()
         ->from('iep_district', array('imagefile'))
         ->where('id_district = ?', $id_district)
         ->where('id_county = ?', $id_county);
-    
+
         $imagefile = $this->fetchAll($select);
-    
+
         return $imagefile[0]["imagefile"];
     }
-    
+
     public function getIepDistrictReport($options) {
         $db = Zend_Registry::get('db');
-    
+
         $select = $db->select()
         ->from( 'iep_district_report_date', array('year_identifier', "to_char(date_report1, 'MM/DD/YYYY') as date_report1", "to_char(date_report2, 'MM/DD/YYYY') as date_report2", "to_char(date_report3, 'MM/DD/YYYY') as date_report3", "to_char(date_report4, 'MM/DD/YYYY') as date_report4", "to_char(date_report5, 'MM/DD/YYYY') as date_report5", "to_char(date_report6, 'MM/DD/YYYY') as date_report6") )
         ->where( 'id_county = ?', $options['id_county'] )
@@ -66,15 +66,15 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         ->order('year_identifier asc')
         ->limitPage(0, 20);
         $stmt = $db->query($select);
-    
+
         $reports_row = $stmt->fetchAll();
-    
+
         return $reports_row;
     }
-    
+
     // end of Maxim adds 8-23-2017
-    
-    
+
+
     // Mike added this 7-24-2017 from Maxim so that the popup in the choose District School list would work
     function getIepSchoolList($id_county, $id_district)
     {
@@ -84,18 +84,18 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         ->where('id_district = ?', $id_district)
         ->where('id_county = ?', $id_county)
         ->order(array('name_school asc'));
-    
+
         $results = $db->fetchAll($select);
-    
+
         return $results;
     }
-    // Mike added this 8-23-2017 so that the pop up would save.  This is after modification 1 from 
+    // Mike added this 8-23-2017 so that the pop up would save.  This is after modification 1 from
     //Maxim on the district edit page.
-    
+
     public function saveIepDistrictReports($options, $options_reports) {
-    
+
         $db = Zend_Registry::get('db');
-    
+
         // Reports Save
         foreach($options_reports as $index => $value){
             $select = $db->select()
@@ -104,25 +104,25 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
             ->where( 'id_district = ?', $options['id_district'] )
             ->where( 'year_identifier = ?', intval($index));
             $report_row = $db->fetchRow($select);
-    
-    
+
+
             $options_reports[$index][0] == "" ? $date1 = "" : $date1 = Zend_Locale_Format::getDate($options_reports[$index][0], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
             $options_reports[$index][1] == "" ? $date2 = "" : $date2 = Zend_Locale_Format::getDate($options_reports[$index][1], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
             $options_reports[$index][2] == "" ? $date3 = "" : $date3 = Zend_Locale_Format::getDate($options_reports[$index][2], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
             $options_reports[$index][3] == "" ? $date4 = "" : $date4 = Zend_Locale_Format::getDate($options_reports[$index][3], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
             $options_reports[$index][4] == "" ? $date5 = "" : $date5 = Zend_Locale_Format::getDate($options_reports[$index][4], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
             $options_reports[$index][5] == "" ? $date6 = "" : $date6 = Zend_Locale_Format::getDate($options_reports[$index][5], array('date_format' => 'MM-dd-yyyy', 'fix_date' => true) );
-    
+
             $date1 != "" ? $date_report1 = $date1["year"]."-".$date1["month"]."-".$date1["day"] : $date_report1 = NULL;
             $date2 != "" ? $date_report2 = $date2["year"]."-".$date2["month"]."-".$date2["day"] : $date_report2 = NULL;
             $date3 != "" ? $date_report3 = $date3["year"]."-".$date3["month"]."-".$date3["day"] : $date_report3 = NULL;
             $date4 != "" ? $date_report4 = $date4["year"]."-".$date4["month"]."-".$date4["day"] : $date_report4 = NULL;
             $date5 != "" ? $date_report5 = $date5["year"]."-".$date5["month"]."-".$date5["day"] : $date_report5 = NULL;
             $date6 != "" ? $date_report6 = $date6["year"]."-".$date6["month"]."-".$date6["day"] : $date_report6 = NULL;
-    
-    
+
+
             if ($report_row["cnt"] == 1){
-    
+
                 $data = array(
                     'date_report1'     => $date_report1,
                     'date_report2'     => $date_report2,
@@ -131,14 +131,14 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
                     'date_report5'     => $date_report5,
                     'date_report6'     => $date_report6
                 );
-    
+
                 $where['id_county = ?'] = $options["id_county"];
                 $where['id_district = ?'] = $options["id_district"];
                 $where['year_identifier = ?'] = $index;
                 $db->update('iep_district_report_date', $data, $where);
-    
+
             } else {
-    
+
                 $data = array(
                     'date_report1'     => $date_report1,
                     'date_report2'     => $date_report2,
@@ -150,17 +150,17 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
                     'id_district'      => $options["id_district"],
                     'year_identifier'  => $index
                 );
-    
+
                 $db->insert('iep_district_report_date', $data);
             }
-    
+
         }
-    
+
     }
-    
-    
+
+
     // Mike added this 7-24-2017 from Maxim so that the popup in the choose District School list would work
-    
+
     function getIepManagersList()
     {
         $db = Zend_Registry::get('db');
@@ -168,28 +168,28 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         ->from( 'iep_personnel' )
         ->where('class > 0');
         $results = $db->fetchAll($select);
-    
+
         return $results;
     }
-    
+
     public function getAllDistricts()
     {
-        
+
         $db1= Zend_Registry::get('db');
-        
+
         $sqlst="select d.use_edfi,d.id_district,d.id_county,d.name_district,c.name_county from iep_district d,iep_county c where c.id_county=d.id_county order by name_district";
         $allDis = $db1->fetchAll($sqlst);
-        
-        
+
+
       //  $this->writevar1($allDis,'this is the list of Districts');
-        
+
         return $allDis;
         // return $row;
     }
-    
+
     public function getIepDistrict($name_district)
     {
-        
+
         $row = $this->fetchRow('name_district = ' . "'" . $name_district . "'");
         if (! $row) {
             throw new Exception("Could not find row $name_district");
@@ -203,11 +203,11 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
     {
       // include("writeit.php");
         $db = Zend_Registry::get('db');
-     
-        
+
+
         /* Mike changed this 2-9-2017 because it did not check to see if a user had been rendered inactive on
-         * the personnel/edit screen.   
-         * 
+         * the personnel/edit screen.
+         *
          * $select = $db->select()
                    ->distinct()
                    ->from( array('p' => 'iep_personnel'), array('p.id_personnel', 'p.name_first', 'p.name_last', 'p.email_address') )
@@ -218,19 +218,19 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
                    ->where('r.id_district = ?', $id_district)
                    ->order('p.name_last asc');
         $result = $db->fetchAll($select);
-        
+
         $district->getAdapter()->fetchAll($sqlStmt, $binds);
      */
         $today=date("Y-m-d");
-        $sqlStmt="select p.id_personnel,p.name_first,p.name_last,p.email_address from iep_personnel p, iep_privileges r 
-                  where p.id_personnel=r.id_personnel and p.status='Active' and r.status='Active'  
-                  and r.id_district='".$id_district."' and r.id_county='".$id_county."' and r.class<='".$class."' 
+        $sqlStmt="select p.id_personnel,p.name_first,p.name_last,p.email_address from iep_personnel p, iep_privileges r
+                  where p.id_personnel=r.id_personnel and p.status='Active' and r.status='Active'
+                  and r.id_district='".$id_district."' and r.id_county='".$id_county."' and r.class<='".$class."'
                   order  by p.name_last asc";
        // writevar($sqlStmt,'this is the sql statement');
         $result= $db->fetchAll($sqlStmt);
-        
+
        // writevar($result,'this is the result for the pull down in district edit.');
-        
+
         return $result;
     }
 
@@ -241,7 +241,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
             ->where('id_district =?',$id_dst) );
        return $row->toArray();
     }
-    
+
     public function getIepDistrictName($id_cty,$id_dst)
     {
    // include("Writeit.php");
@@ -251,15 +251,26 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         if (! $row) {
             throw new Exception("Could not find row");
         }
-       
+
         return ($row);
         // return $row;
     }
 
     public function updateIepDistrict2($formData)
     {   $t=$formData;
-        writevar($t['email_student_transfers_to'],'this is the form data inside the model');
-        
+       // writevar($t['email_student_transfers_to'],'this is the form data inside the model');
+
+         $this->writevar1($t['nssrs_send_tonight'],'this is the iepDistrict.php in modeltable');
+
+
+         /*
+          * Mike added the if statement because the database field is a char varring.  Thus it will not take a 1 or 0.  This is SRS-157
+          */
+         if($t['nssrs_send_tonight']=="1" ) $t['nssrs_send_tonight']="t";
+         if($t['nssrs_send_tonight']=="0" ) $t['nssrs_send_tonight']="";
+
+
+
         $data=array(
             'checkout_id_user'=>$t['checkout_id_user'],
             'name_district'=>$t['name_district'],
@@ -349,14 +360,14 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
             'use_mips_consent_form'=>$t['use_mips_consent_form'],
             'pref_district_imports'=>$t['pref_district_imports'],
             'district_import_code'=>$t['district_import_code'],
-            
-           
+
+
         );
         $this->writevar1($data,'this is the data');
-        
+
         $county= $_SESSION["user"]["user"]->user["id_county"];
         $district = $_SESSION["user"]["user"]->user["id_district"];
-        
+
         $where = "id_district ='$district' and id_county ='$county'";
         $this->update($data,$where);
         die();
@@ -364,9 +375,15 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
 
 
     public function updateIepDistrictForm($options)
-    {   
+    {
+
+        /*
+         * Mike added the if statement because the database field is a char varring.  Thus it will not take a 1 or 0.  This is SRS-157
+         */
+        if($options['nssrs_send_tonight']=="1") $options['nssrs_send_tonight']="t";
+        if($options['nssrs_send_tonight']=="0") $options['nssrs_send_tonight']="";
         // Mike added this 5-11-17 so that the edfi_refresh field would update
-      //  $this->writevar1($options,'this are the options in the table');
+        $this->writevar1($options['nssrs_send_tonight'],'this are the options in the table');
         $data['edfi_refresh']=$options['edfi_refresh'];
         $data['use_edfi']=$options['use_edfi'];
         $data['name_district'] = $options['name_district'];
@@ -455,13 +472,13 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
 	if ($options['use_zf_forms'] == 1) $data['use_zf_forms'] = 'true'; else $data['use_zf_forms'] = 'false';
 	if ($options['use_mips_consent_form'] == 1) $data['use_mips_consent_form'] = 'true'; else $data['use_mips_consent_form'] = 'false';
 	if ($options['pref_district_imports'] == 1) $data['pref_district_imports'] = 'true'; else $data['pref_district_imports'] = 'false';
-    
+
         $where = "id_district ='".$options['id_district']."' and id_county = '".$options['id_county']."'";
         $this->update($data, $where);
 	return;
     }
 
-    
+
     public function updateIepDistrict($name_district, $id_district, $id_county, $phone_main, $address_street1, $add_resouce1)
     {
         /*
@@ -479,7 +496,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         ;
         $where = "id_district = '$id_district' and id_county='$id_county' ";
         // $where[] = "id_county = '$id_county'";
-        
+
         // $this->update($data, 'name_district = '."'". $name_district ."'");
         $this->update($data, $where);
     }
@@ -487,9 +504,9 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
     public function sortIepDistrict($conjunct)
     {
         // $d=array();
-        
+
         // $outf= new Zend_Writeit;
-        
+
         /*
          * $id_district=$dis_nun->districtAction($id_district);
          *
@@ -515,5 +532,4 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         // die(); This returns an sql statement that is correct in zendserver.
         return $row;
     }
-} 
-  
+}

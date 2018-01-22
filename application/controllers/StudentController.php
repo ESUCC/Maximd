@@ -198,6 +198,7 @@ class StudentController extends My_Form_AbstractFormController
 	if ($id2 == "") $id2 = "00";
 	$nonpubschool = new Model_Table_School();
 	$result = $nonpubschool->getNonPublicSchools($id1, $id2);
+	//$this->writevar1($result,'list of the non public schools'); //all is getting there.
         $this->_helper->json->sendJson($result);
         return;
     }
@@ -1069,11 +1070,12 @@ class StudentController extends My_Form_AbstractFormController
              */
             $form->setMultiOptionsAndConditionalFields($this->getRequest()->getPost(), $this->usersession);
             $formValid = $form->isValid($this->getRequest()->getPost());
+
             $form->setDisabledValues();
             if($formValid) {
                 // valid to save
                 $data = $form->getValues();
-
+                $this->writevar1($data,'this is the data line 1078');
 
                 if($data['grade']!='EI 0-2'){
                     $data['id_ser_cord']=NULL;
