@@ -14,7 +14,16 @@ class NewedfiController extends Zend_Controller_Action {
     }
 
 	public function studentAction() {
+
+
+	    /*
+	    foreach($_SESSION['user']['user']->privs as $privs)  {
+	        if ($privs['class']==1 && $privs['status']=='Active') $proceed='yes';
+	    }
+	    */
 	    // Mike Changed this 12-15-2017 and it works.  Put it back to the sandbox for Wade demo
+
+
 
 
 	    $student_id = $this->_getParam('student_id');
@@ -24,10 +33,14 @@ class NewedfiController extends Zend_Controller_Action {
 
 
 
-	    $edFiClientDraft = new Model_DraftEdfiClient("https://adviserstagingods.nebraskacloud.org/api","6BA1704F69654457", "9138D4CA4CFE");
+	  //  $edFiClientDraft = new Model_DraftEdfiClient("https://adviserstagingods.nebraskacloud.org/api","6BA1704F69654457", "9138D4CA4CFE");
 
 
 	  // $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","5268BB4BE4B3458B","393D3CC9B1E4");
+
+	    // Winnebago
+	    $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","72211943390944B7","F1510515770B");
+
 
 	   $jsonStudent = $edFiClientDraft->getStudent($student_id);
 
@@ -38,13 +51,29 @@ class NewedfiController extends Zend_Controller_Action {
     	return $this->_helper->json->sendJson($jsonStudent, true);
 	}
 
+
+
+/*
+
+
+ODS URLs:
+2017-2018 API URL: https://adviserods.nebraskacloud.org/api/api/v2.0/2018/
+
+2017-2018 Authentication URL: https://adviserods.nebraskacloud.org/api/
+
+	 *
+	 *
+	 *
+	 */
+
 	public function studentparentsAction() {
 	     $student_id = $this->_getParam('student_id');
 	//   $edFiClientDraft = new Model_DraftEdfiClient("https://sandbox.nebraskacloud.org/ng/api", "g3uiYKK0Pros", "bjRB3D3ahbsV33YgXxApZLyG");
-	      $edFiClientDraft = new Model_DraftEdfiClient("https://adviserstagingods.nebraskacloud.org/api","6BA1704F69654457", "9138D4CA4CFE");
+	    //  $edFiClientDraft = new Model_DraftEdfiClient("https://adviserstagingods.nebraskacloud.org/api","6BA1704F69654457", "9138D4CA4CFE");
 	  //   $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","5268BB4BE4B3458B","393D3CC9B1E4");
 
-
+	   // Winnebago
+	     $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","72211943390944B7","F1510515770B");
 
 	    $jsonParents = $edFiClientDraft->getParents($student_id);
 

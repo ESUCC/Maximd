@@ -22,6 +22,9 @@ class Model_DraftEdfiClient  {
     function __construct($edfiBaseUrl = null, $edfiClientId = null, $edfiClientSecret = null) {
         $config = Zend_Registry::get( 'config' );
 
+        //$this->writevar1($edfiClientId." ",'Client id');
+       // $this->writevar1($edfiClientSecret,'edifi secret');
+
         if (!$edfiBaseUrl) {
             if ($config->edfi->baseUrl)
                 $edfiBaseUrl = $config->edfi->baseUrl;
@@ -95,6 +98,8 @@ class Model_DraftEdfiClient  {
         //$url = $this->currentAPIUrl . "/api/v2.0/2017/students?studentUniqueId=" . $studentId;
         $queryString = $this->composeQueryString($parameters);
         $url = $this->edfiBaseUrl . $apiEndpoint . "?" . $queryString;
+
+       // $this->writevar1($url,'this is hte url line 99 Draftedficlient.php');
 
         $curl = curl_init();
 
@@ -178,7 +183,8 @@ class Model_DraftEdfiClient  {
         if (!isset($this->currentToken)) {
             $authCode = $this->getAuthCode();
             $this->currentToken = $this->getAuthToken($authCode);
-            $this->writevar1($this->currentToken,'this is the token');
+
+            //$this->writevar1($this->currentToken,'this is the token');
         }
 
         return $this->currentToken;
@@ -186,15 +192,21 @@ class Model_DraftEdfiClient  {
 
     /* Get students. */
     public function getStudent($studentId) {
-        $student = $this->edfiAPIGet("/api/v2.0/2017/students", array('studentUniqueId' => $studentId));
-        $this->writevar1($student,'this is the student json in draftedficlient');
+
+        //    $this->writevar1($studentId,'this is the student id');
+
+        $student = $this->edfiAPIGet("/api/v2.0/2018/students", array('studentUniqueId' => $studentId));
+      //  $this->writevar1($student,'this is the student json in draftedficlient');
         return json_decode($student);
     }
 
     public function getParents($studentId) {
-        $result = $this->edfiAPIGet("/api/v2.0/2017/studentParentAssociations", array('studentUniqueId' => $studentId));
+        $result = $this->edfiAPIGet("/api/v2.0/2018/studentParentAssociations", array('studentUniqueId' => $studentId));
         $parentAssociations = json_decode($result);
-       // $this->writevar1($parentAssociations,'this is the parent association');
+
+       // $this->writevar1($result,'this the result coming from the ods');
+       // $this->writevar1($parentAssociations,'this is the parent association after json decode');
+
         $parents = array();
         foreach ($parentAssociations as $value => $parentAssociation)
         {
@@ -207,7 +219,11 @@ class Model_DraftEdfiClient  {
 
     public function getParent($parentId)
     {
-        $parent = $this->edfiAPIGet("/api/v2.0/2017/parents", array('parentUniqueId' => $parentId));
+        $parent = $this->edfiAPIGet("/api/v2.0/2018/parents", array('parentUniqueId' => $parentId));
+
+      //  $this->writevar1($parent,'raw json of parent data');
+      //  $this->writevar1(json_decode($parent),'this is the json decoded part');
+
         return json_decode($parent);
     }
 }

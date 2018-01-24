@@ -23,11 +23,11 @@
  <td colspan="2">Parent Information</td>
 </tr>
 
-<tr> 
+<tr>
  <td class="ParentFormTitle">Status <sup>*</sup></td><td class="ParentFormValue"><select name="status"><option<?if ($this->result["status"] == "Active"){?> selected<?}?>>Active</option>
  <option<?if ($this->result["status"] == "Inactive"){?> selected<?}?>>Inactive</option><option<?if ($this->result["status"] == "Remove"){?> selected<?}?>>Remove</option>
  </select>
- </td>      
+ </td>
 </tr>
 
 <tr>
@@ -66,6 +66,9 @@
 </tr>
 <tr>
  <td class="ParentFormTitle">Work Phone</td><td class="ParentFormValue"><input type="input" id="phone_work" name="phone_work" value="<?=$this->result["phone_work"]?>"> <small>include area code, ex: 308-555-1234</small></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Mobile Phone</td><td class="ParentFormValue"><input type="input" id="phone_mobile" name="phone_mobile" value="<?=$this->result["phone_mobile"]?>"> <small>include area code, ex: 308-555-1234</small></td>
 </tr>
 <tr>
  <td class="ParentFormTitle">Email</td><td class="ParentFormValue"><input type="input" id="email_address" name="email_address" value="<?=$this->result["email_address"]?>"> <small>ex: user@host.com</small></td>

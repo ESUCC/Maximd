@@ -300,11 +300,25 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 
    public function studentParentAdd($id_student, $options, $result)
    {
-      // $this->writevar1($options,'these are the options');
-      // $this->writevar1($result,'this is the result');
+
+       //$this->writevar1($options,'these are the options for parent add in StudentFormAdd');
+      // $this->writevar1($result,'this is the result for parent in add in studentformadd');
 
        foreach($result as $indx => $val) {
 
+           $homePhone='';
+           $workPhone='';
+           $mobilePhone='';
+
+// Mike added this 1-22-2018 so that we get work and mobil numbers as well. SRS-PHONE
+
+           foreach($val->telephones as $telephone) {
+               if($telephone->telephoneNumberType =="Home") $homePhone=$telephone->telephoneNumber;
+               if($telephone->telephoneNumberType=="Work") $workPhone=$telephone->telephoneNumber;
+               if($telephone->telephoneNumberType=="Mobile") $mobilePhone=$telephone->telephoneNumber;
+           }
+
+// End of Mike add
            $data = array(
                'id_author'		=> '0',
                'id_author_last_mod'	=> '0',
@@ -323,8 +337,12 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
                'name_middle'		=> '',
                'relation_to_child'	=> '',
                'xxxprimary_language'	=> '',
-               'phone_home'		=> $val->telephones[0]->telephoneNumber,
-               'phone_work'		=> '',
+             // Mike commented this out 1-23-2019 see above
+             //  'phone_home'		=> $val->telephones[0]->telephoneNumber,
+            //   'phone_work'		=> '',
+               'phone_home'		=> $homePhone,
+               'phone_work'   => $workPhone,
+               'phone_mobile'  =>$mobilePhone,
                'status'		=> 'Active',
                //		'user_name'		=> '', // generate auto
            //		'password'		=> '', // generate auto
@@ -343,7 +361,8 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
            );
 
            $db = Zend_Registry::get('db');
-           $this->writevar1($data,'this is what gets inserted into the db');
+          $this->writevar1($data,'this is what gets inserted into the db');
+           if($data['name_first']!='')
            $db->insert('iep_guardian', $data);
 
        }
