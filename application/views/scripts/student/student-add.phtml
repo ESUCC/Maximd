@@ -77,7 +77,7 @@
                 address_street1: {
                   required: true,
                   minlength: 5
-                },                
+                },
                 address_city: {
                   required: true,
                   minlength: 1
@@ -101,20 +101,20 @@
                 },
                 email_address: {
                   email: true,
-                  required: { 
+                  required: {
                     depends: function(element) {
                      return $("#email_address_confirm").is(":filled");
-                    }                    
+                    }
                   }
                 },
                 email_address_confirm: {
                   email: true,
-                  required: {  
+                  required: {
                     depends: function(element) {
                      return $("#email_address").is(":filled");
                     }
                   },
-                  equalTo: "#email_address", 
+                  equalTo: "#email_address",
                 }
            },
            submitHandler: function(form) {
@@ -233,7 +233,7 @@
 		}
     	    }
         });
-	
+
 
 	return false;
     });
@@ -320,13 +320,13 @@
 
     function formCheck(){
 	var err = 0;
-	$("#studentForm input[type=text], #studentForm select").each(function() { 
+	$("#studentForm input[type=text], #studentForm select").each(function() {
 	    if ($(this).is(":visible") && $(this).attr("req") == "req" && $(this).val() == "") { err = 1; return; }
 	});
 
-	$('#studentForm input[type="radio"]').each(function() { 
-	    var nameEl = $(this).attr("name");// 
-	    if ( !$("input:radio[name=" + nameEl + "]").is(":checked") && $(this).attr("req") == "req" ) { err = 1; return; } 
+	$('#studentForm input[type="radio"]').each(function() {
+	    var nameEl = $(this).attr("name");//
+	    if ( !$("input:radio[name=" + nameEl + "]").is(":checked") && $(this).attr("req") == "req" ) { err = 1; return; }
 	});
 	return err;
     }
@@ -359,7 +359,7 @@
               data       : data_var,
               dataType   : "json",
               success    : function(response) {
-			if (response) { 
+			if (response) {
 			    $("#unique_id_state").val("");
 			    $('<label id="unique_id_state_err" class="error" for="unique_id_state">NSSRS Number Exists (County: ' + response["id_county"] + ', District: ' + response["id_district"] + ', School: ' + response["id_school"] + ')</label>').insertAfter( '#unique_id_state' );
 			    var delayAlert = setInterval(function() { $("#unique_id_state_err").remove();  clearInterval(delayAlert); }, 20000);
@@ -415,12 +415,12 @@
           success    : function(response) {
             if (response.length > 0){
 	        if (response.length != 1) $("#id_district_school").append('<option value="">Choose...</option>');
-  	      $.each(response, function (key, val) { 
+  	      $.each(response, function (key, val) {
 		if (response.length == 1){
-			$("#id_district_school").append("<option value='"+val.id_district+"' selected>"+val.name_district+"</option>");  
+			$("#id_district_school").append("<option value='"+val.id_district+"' selected>"+val.name_district+"</option>");
 			schoolsLoad();
-		    } else 
-			$("#id_district_school").append("<option value='"+val.id_district+"'>"+val.name_district+"</option>");  
+		    } else
+			$("#id_district_school").append("<option value='"+val.id_district+"'>"+val.name_district+"</option>");
 	      });
               $("#districtstudentload").html('');
               $("#id_district_school").show();
@@ -447,7 +447,7 @@
     function schoolsLoad() {
       $("#schoolload").html('<i class="fa fa-spinner fa-pulse"></i>');
       $("#id_school").empty().hide();
-      $("#title_school").show();      
+      $("#title_school").show();
       $("#case_manager").empty().hide();
       $("#title_case_manager").hide();
 
@@ -472,7 +472,7 @@
               $("#id_school").append('<option value="">Choose...</option>');
   	      $.each(response, function (key, val) { $("#id_school").append("<option value='"+val.id_school+"'>" + val.name_school + "</option>");  });
               $("#schoolload").html('');
-              $("#id_school").show(); 
+              $("#id_school").show();
             } else {
               $("#schoolload").html('');
               $("#id_school").hide();
@@ -512,7 +512,7 @@
               $("#case_manager").append('<option value="">Choose...</option>');
   	      $.each(response, function (key, val) { $("#case_manager").append("<option value="+val.id_personnel+">" + val.name_last + " " + val.name_first + "</option>");  });
               $("#managersload").html('');
-              $("#case_manager").show(); 
+              $("#case_manager").show();
             } else {
               $("#managersload").html('');
               $("#case_manager").hide();
@@ -542,7 +542,7 @@
 
        if ($("#nonpubcounty").val() != "" && $("#nonpubcounty").val() != "00") {
 	switch(rel) {
-          case 'NonPubCounty': 
+          case 'NonPubCounty':
     	  default:
 	    loaddiv = "nonpubdistrictload";
 	    divarea = "nonpubdistrict";
@@ -552,9 +552,9 @@
             $("#nonpubschool").hide();
             $("#nonpubschool").empty().append('<option value="">Choose...</option>');
 	    $("#title_nonpubschool").hide();
-	    $("#title_" + divarea).show();    	    
+	    $("#title_" + divarea).show();
     	    break;
-          case 'NonPubDistrict': 
+          case 'NonPubDistrict':
 	    loaddiv = "nonpubschoolload";
 	    divarea = "nonpubschool";
             var id1 = $("#nonpubcounty").val();
@@ -562,7 +562,7 @@
             url = "/student/listnonpublicschools/nonpubcounty/" + id1 + "/nonpubdistrict/" + id2;
             $("#"+divarea).hide();
 	    //$("#title_" + divarea).hide();
-	    $("#title_" + divarea).show();    	    
+	    $("#title_" + divarea).show();
 	    break;
 	}
 
@@ -818,11 +818,11 @@ an employee of the school district but is bound by the requirements of The Famil
 </td></tr>
 
 <tr class="sft type="radio" name="ward_surrogate" style="width: 20px;" value="Yes"> Yes
-       <input type="radio" name="ward_surrogate" style="width: 20px;" value="No"> No 
+       <input type="radio" name="ward_surrogate" style="width: 20px;" value="No"> No
 </td></tr>
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">If surrogate not needed, is it because parents are involved</td><td class="StudentFormValue">
        <input type="radio" name="ward_surrogate_nn" style="width: 20px;" value="Yes"> Yes
-       <input type="radio" name="ward_surrogate_nn" style="width: 20px;" value="No"> No 
+       <input type="radio" name="ward_surrogate_nn" style="width: 20px;" value="No"> No
 </td></tr>
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">Other reason that surrogate is not needed, please explain</td><td class="StudentFormValue"><input type="input" id="ward_surrogate_other" name="ward_surrogate_other"></td></tr>
 
@@ -846,7 +846,7 @@ an employee of the school district but is bound by the requirements of The Famil
  </div>
 </form>
 </div>
- 
+
 <div id="dialog">
 <form name="usidform">
 <p>If student record exists on the edfi ODS enter their state id.  Student demographic data will auto populate. </p>

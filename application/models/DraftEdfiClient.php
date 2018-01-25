@@ -22,8 +22,10 @@ class Model_DraftEdfiClient  {
     function __construct($edfiBaseUrl = null, $edfiClientId = null, $edfiClientSecret = null) {
         $config = Zend_Registry::get( 'config' );
 
-        //$this->writevar1($edfiClientId." ",'Client id');
-       // $this->writevar1($edfiClientSecret,'edifi secret');
+
+
+        $this->writevar1($edfiClientId." ",'Client id');
+        $this->writevar1($edfiClientSecret,'edifi secret');
 
         if (!$edfiBaseUrl) {
             if ($config->edfi->baseUrl)
@@ -196,8 +198,9 @@ class Model_DraftEdfiClient  {
         //    $this->writevar1($studentId,'this is the student id');
 
         $student = $this->edfiAPIGet("/api/v2.0/2018/students", array('studentUniqueId' => $studentId));
-      //  $this->writevar1($student,'this is the student json in draftedficlient');
-        return json_decode($student);
+      //    $this->writevar1($student,'this is the student json in draftedficlient');
+          return json_decode($student);
+
     }
 
     public function getParents($studentId) {

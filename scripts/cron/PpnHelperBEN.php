@@ -75,7 +75,8 @@ class PpnHelperBEN
 
     public static function getStudentsForArchiving()
     {
-        $stmt = "SELECT id_student, id_student_local ";
+     //   $stmt = "SELECT id_student, id_student_local ";
+        $stmt = "SELECT id_student, unique_id_state ";
         $stmt .= "FROM iep_student s ";
         $stmt .= "WHERE s.id_county = '28' and s.id_district = '0059' and s.status = 'Active' ";
 //        echo "$stmt\n";
@@ -110,13 +111,17 @@ class PpnHelperBEN
         if (!empty($found)) {
         $mailBody .= "The export was able to match and update local student Ids for the following students: \r\n\r\n";
             foreach ($found as $f) {
-                $mailBody .= $f['name_first'] . ',' . $f['name_middle'] . ',' . $f['name_last'] . ',' . $f['dob'] . "\r\n";
+           //  $mailBody .= $f['name_first'] . ',' . $f['name_middle'] . ',' . $f['name_last'] . ',' . $f['dob'] . "\r\n";
+             $mailBody .= $f['name_first'] . ',' . $f['name_middle'] . ',' . $f['name_last'] . ',' . $f['dob'] .','.$f['unique_id_state']."\r\n";
+
             }
         }
         if (!empty($not_found)) {
-            $mailBody .= "The export was UNABLE to match local student Ids for the following students: \r\n\r\n";
+            $mailBody .= "The export was UNABLE to match local student State Ids for the following students: \r\n\r\n";
             foreach ($not_found as $n) {
-                $mailBody .= $n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] . "\r\n";
+            //  $mailBody .= $n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] . "\r\n";
+              $mailBody .= $n['id_student'].','.$n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] .','.$n['unique_id_state'].','.$n['id_student_local']."\r\n";
+
             }
         }
         if (empty($found) && empty($not_found)) {

@@ -86,7 +86,7 @@
                 address_street1: {
                   required: true,
                   minlength: 5
-                },                
+                },
                 address_city: {
                   required: true,
                   minlength: 1
@@ -107,20 +107,20 @@
                 },
                 email_address: {
                   email: true,
-                  required: { 
+                  required: {
                     depends: function(element) {
                      return $("#email_address_confirm").is(":filled");
-                    }                    
+                    }
                   }
                 },
                 email_address_confirm: {
                   email: true,
-                  required: {  
+                  required: {
                     depends: function(element) {
                      return $("#email_address").is(":filled");
                     }
                   },
-                  equalTo: "#email_address", 
+                  equalTo: "#email_address",
                 },
                 ChildReceives: {
                   required: true
@@ -161,7 +161,7 @@
         if (!$("#studentForm").valid()) return false
         $("#tabs").tabs('select', page); // For only Jquery UI version 1.8
         validator.resetForm();
-           
+
         return false;
     });
 
@@ -322,7 +322,7 @@
     $(document).on("change keyup", "#id_district_school", function () {
       $("#schoolload").html('<i class="fa fa-spinner fa-pulse"></i>');
       $("#id_school").empty().hide();
-      $("#title_school").show();      
+      $("#title_school").show();
       $("#case_manager").empty().hide();
       $("#title_case_manager").hide();
 
@@ -347,7 +347,7 @@
               $("#id_school").append('<option value="">Choose...</option>');
   	      $.each(response, function (key, val) { $("#id_school").append("<option value='"+val.id_school+"'>" + val.name_school + "</option>");  });
               $("#schoolload").html('');
-              $("#id_school").show(); 
+              $("#id_school").show();
             } else {
               $("#schoolload").html('');
               $("#id_school").hide();
@@ -388,7 +388,7 @@
               $("#case_manager").append('<option value="">Choose...</option>');
   	      $.each(response, function (key, val) { $("#case_manager").append("<option value="+val.id_personnel+">" + val.name_last + " " + val.name_first + "</option>");  });
               $("#managersload").html('');
-              $("#case_manager").show(); 
+              $("#case_manager").show();
             } else {
               $("#managersload").html('');
               $("#case_manager").hide();
@@ -423,8 +423,8 @@
       data_var['id'] = id;
 
       switch(rel) {
-          case 'County': 
-            id_county = id;            
+          case 'County':
+            id_county = id;
             action = "do_action/district/id_county/"+id_county;
             loaddiv = "#districtload";
             divarea = "#program_provider_code";
@@ -435,7 +435,7 @@
             $("#program_provider_id_school").hide();
             $("#schoolload").hide();
             break;
-          case 'District': 
+          case 'District':
             id_district = id;
             action = "do_action/school/id_county/"+id_county+"/id_district/"+id_district;
             loaddiv = "#schoolload";
@@ -444,7 +444,7 @@
             $("#title_program_provider_id_school").show();
           break;
           case 'ChildReceives':
-          default: 
+          default:
             action = "do_action/county/";
             loaddiv = "#countyload";
             divarea = "#program_provider_name";
@@ -467,7 +467,7 @@
 
             if (response.length > 0){
               $(divarea).empty().append('<option value="">Choose...</option>');
-   	      if (rel == "County") { 
+   	      if (rel == "County") {
                  $.each(response, function (key, val) { $(divarea).append("<option value="+val.id_district+">" + val.name_district + "</option>");  });
                } else if (rel == "District") {
                  $.each(response, function (key, val) { $(divarea).append("<option value="+val.id_school+">" + val.name_school + "</option>");  });
@@ -487,8 +487,8 @@
         });
        } else {
 
-            id_county = "";            
-            id_district = "";            
+            id_county = "";
+            id_district = "";
 
             $("#sesis_area").hide();
             $("#program_provider_name").empty().hide().rules("remove");
@@ -514,7 +514,7 @@
 
        if ($("#nonpubcounty").val() != "" && $("#nonpubcounty").val() != "00") {
 	switch(rel) {
-          case 'NonPubCounty': 
+          case 'NonPubCounty':
     	  default:
 	    loaddiv = "nonpubdistrictload";
 	    divarea = "nonpubdistrict";
@@ -524,9 +524,9 @@
             $("#nonpubschool").hide();
             $("#nonpubschool").empty().append('<option value="">Choose...</option>');
 	    $("#title_nonpubschool").hide();
-	    $("#title_" + divarea).show();    	    
+	    $("#title_" + divarea).show();
     	    break;
-          case 'NonPubDistrict': 
+          case 'NonPubDistrict':
 	    loaddiv = "nonpubschoolload";
 	    divarea = "nonpubschool";
             var id1 = $("#nonpubcounty").val();
@@ -534,7 +534,7 @@
             url = "/student/listnonpublicschools/nonpubcounty/" + id1 + "/nonpubdistrict/" + id2;
             $("#"+divarea).hide();
 	    //$("#title_" + divarea).hide();
-	    $("#title_" + divarea).show();    	    
+	    $("#title_" + divarea).show();
 	    break;
 	}
 
@@ -635,7 +635,7 @@ an employee of the school district but is bound by the requirements of The Famil
 </table>
 
   </div>
-  <div id="tabs-2">
+ <!--- <div id="tabs-2">  -->
 
 <table class="StudentForm">
 
@@ -786,11 +786,11 @@ an employee of the school district but is bound by the requirements of The Famil
 
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle" style="width: 450px;">Has a surrogate parent been appointed?</td><td class="StudentFormValue">
        <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="Yes"> Yes
-       <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="No"> No 
+       <input type="radio" id="ward_surrogate" name="ward_surrogate" style="width: 20px;" value="No"> No
 </td></tr>
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">If surrogate not needed, is it because parents are involved</td><td class="StudentFormValue">
        <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="Yes"> Yes
-       <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="No"> No 
+       <input type="radio" id="ward_surrogate_nn" name="ward_surrogate_nn" style="width: 20px;" value="No"> No
 </td></tr>
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">Other reason that surrogate is not needed, please explain</td><td class="StudentFormValue"><input type="input" id="ward_surrogate_other" name="ward_surrogate_other"></td></tr>
 
@@ -833,15 +833,15 @@ an employee of the school district but is bound by the requirements of The Famil
     </td>
 </tr>
 <tr style="height: 40px; border-bottom: 1px solid #e0e0e0; padding: 3px; display: none;" id="sesis_area">
-    <td class="StudentFormTitle" style="width: 33%; vertical-align: middle;"> 
+    <td class="StudentFormTitle" style="width: 33%; vertical-align: middle;">
       <span>County</span>
       <select id="program_provider_name" name="program_provider_name" style="display: none" class="sesis" rel="County"></select><span id="countyload"></span>
     </td>
-    <td class="StudentFormTitle" style="width: 33%; vertical-align: middle;"> 
+    <td class="StudentFormTitle" style="width: 33%; vertical-align: middle;">
       <span id="title_program_provider_code" style="display: none;">District</span>
       <select id="program_provider_code" name="program_provider_code" style="display: none" class="sesis" rel="District"></select><span id="districtload"></span>
     </td>
-    <td class="StudentFormTitle" style="width: 33%; vertical-align: middle;"> 
+    <td class="StudentFormTitle" style="width: 33%; vertical-align: middle;">
       <span id="title_program_provider_id_school" style="display: none;">School</span>
       <select id="program_provider_id_school" name="program_provider_id_school" style="display: none"></select><span id="schoolload"></span>
     </td>
@@ -853,7 +853,7 @@ an employee of the school district but is bound by the requirements of The Famil
           <option>Choose Exit Category if Applicable</option>
       </select>
     </td>
-    <td colspan="1" class="StudentFormTitle" style="width: 50%; vertical-align: middle;">Exit Date 
+    <td colspan="1" class="StudentFormTitle" style="width: 50%; vertical-align: middle;">Exit Date
       <input type="text" id="sesis_exit_date" name="sesis_exit_date" class="datepicker">
     </td>
 </tr>

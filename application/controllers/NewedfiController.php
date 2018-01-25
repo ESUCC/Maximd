@@ -16,33 +16,58 @@ class NewedfiController extends Zend_Controller_Action {
 	public function studentAction() {
 
 
-	    /*
-	    foreach($_SESSION['user']['user']->privs as $privs)  {
-	        if ($privs['class']==1 && $privs['status']=='Active') $proceed='yes';
+
+        $x=0;
+       $found=false;
+      //  $this->writevar1($_SESSION['user']['user']->privs[0]['class'],'these are the privs');
+	    foreach($_SESSION['user']['user']->privs as $priv)  {
+	        $this->writevar1($priv['id_district'],'this is the privilege');
+	        if ($priv['class']<=6 && $priv['status']=='Active') {
+               if(!$found ){
+                $keySecret= new Model_Table_District();
+	            $t=$keySecret->getKeys($priv['id_county'],$priv['id_district']);
+                $key=$t['edfi_key'];
+                $secret=$t['edfi_secret'];
+
+                if($key!=null and $secret!=null and !$found){
+                $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/",$key,$secret);
+                $student_id = $this->_getParam('student_id');
+                $jsonStudent = $edFiClientDraft->getStudent($student_id);
+                if(isset($jsonStudent->id)) $found=true;
+             //   $this->writevar1($jsonStudent->message,'this is the json message');
+            //    $this->writevar1($jsonStudent->id,'this is the json student');
+             //   $this->writevar1($found,'true or false n found');
+                }
+
+               }
+
+	        }
 	    }
-	    */
+
+
+
+
+
 	    // Mike Changed this 12-15-2017 and it works.  Put it back to the sandbox for Wade demo
 
 
 
 
 	    $student_id = $this->_getParam('student_id');
+
+
 	 // $edFiClientDraft = new Model_DraftEdfiClient("https://sandbox.nebraskacloud.org/ng/api", "g3uiYKK0Pros", "bjRB3D3ahbsV33YgXxApZLyG");
 
 	  // https://adviserstagingods.nebraskacloud.org/api
-
-
-
 	  //  $edFiClientDraft = new Model_DraftEdfiClient("https://adviserstagingods.nebraskacloud.org/api","6BA1704F69654457", "9138D4CA4CFE");
-
-
 	  // $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","5268BB4BE4B3458B","393D3CC9B1E4");
-
 	    // Winnebago
-	    $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","72211943390944B7","F1510515770B");
-
-
-	   $jsonStudent = $edFiClientDraft->getStudent($student_id);
+	  //  $key="72211943390944B7";
+	  //  $secret="F1510515770B";
+	//    $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","72211943390944B7","F1510515770B");
+	  //   $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/",$key,$secret);
+	  // $jsonStudent = $edFiClientDraft->getStudent($student_id);
+	//   $this->writevar1($jsonStudent,'this is the json student');
 
  		$this->getHelper('Layout')->disableLayout();
     	$this->getHelper('ViewRenderer')->setNoRender();

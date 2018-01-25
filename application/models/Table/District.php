@@ -2,23 +2,23 @@
 
 /**
  * iep_district
- *  
+ *
  * @author jlavere
- * @version 
+ * @version
  */
-	
+
 require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_District extends Model_Table_AbstractIepForm
 {
 	/**
-	 * The default table name 
+	 * The default table name
 	 */
     protected $_name = 'iep_district';
 	protected $_primary = array('id_county', 'id_district');
 
 	function writevar1($var1,$var2) {
-	
+
 	    ob_start();
 	    var_dump($var1);
 	    $data = ob_get_clean();
@@ -27,37 +27,45 @@ class Model_Table_District extends Model_Table_AbstractIepForm
 	    fwrite($fp, $data2);
 	    fclose($fp);
 	}
-	
-	
-	// Mike added 11-10-2017 this so that we can check for district being an edfi district 
-	
-	function getDistrictUseEdfi($idDistrict, $idCounty)
-	{
-	    
-	//    $this->writevar1($idCounty." ".$idDistrict,' this is the district and county '); 
+
+	function getKeys($id_county,$id_district){
 	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 	    $database = Zend_Db::factory($dbConfig->db2);
-	
+	    $sql='SELECT edfi_key,edfi_secret from iep_district where id_county=\''.$id_county.'\' and id_district=\''.$id_district.'\'';
+	    $select=$database->fetchrow($sql);
+	    return ($select);
+	}
+
+
+	// Mike added 11-10-2017 this so that we can check for district being an edfi district
+
+	function getDistrictUseEdfi($idDistrict, $idCounty)
+	{
+
+	//    $this->writevar1($idCounty." ".$idDistrict,' this is the district and county ');
+	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+	    $database = Zend_Db::factory($dbConfig->db2);
+
 	    /*sql2('SELECT t.name_first,t.name_last,t.id_district,t.id_county,t.id_personnel,p.class
 	     from iep_personnel t,iep_privileges p
 	     where t.id_personnel=p.id_personnel and p.status=\'Active\' and p.id_county=\''.$id_county.'\'  and
 	     p.id_district=\''.$id_district.'\'and (p.class=\'2\' or p.class=\'3\') order by t.name_last');*/
-	   
+
 	    $sql=('SELECT use_edfi from iep_district where id_district=\''.$idDistrict.'\' and id_county=\''.$idCounty.'\'');
 	    // $this->writevar1($sql,'this is the sql statement');
 	    $result=$database->fetchAll($sql);
 	//    $this->writevar1($result,'this is the result lilne 45' );
 	    $result=$result[0]['use_edfi'];
-	     
+
 	    return $result;
-	
-	
+
+
 	}
-	
+
     function getDistrict($idCounty, $idDistrict)
     {
         $table = new $this->className();
-        $select = $table->select()            
+        $select = $table->select()
             ->where( 'id_county = ?', $idCounty )
             ->where( 'id_district= ?', $idDistrict );
             return $table->fetchRow($select);
@@ -70,7 +78,7 @@ class Model_Table_District extends Model_Table_AbstractIepForm
     	if(strlen($idCounty)<2) {
     		return false;
     	}
-    	
+
     	$table = new Model_Table_District();
     	$select = $table->select()
     		->where( "status ='Active'" )
@@ -104,7 +112,7 @@ class Model_Table_District extends Model_Table_AbstractIepForm
         asort($retArray);
         return $retArray;
     }
-    
+
     static function districtMultiOptionsAll() {
     	$retArray = array();
 

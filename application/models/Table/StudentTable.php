@@ -2,16 +2,16 @@
 
 /**
  * StudentTable
- *  
+ *
  * @author jesse
- * @version 
+ * @version
  */
 
 require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	/**
-	 * The default table name 
+	 * The default table name
 	 */
 	protected $_name = 'iep_student';
 	protected $_primary = 'id_student';
@@ -25,9 +25,9 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 // 		)
 // 	);
 
-	
+
 	// Mike added this 9-7-2017 in order to make edfi work
-	
+
 	public function studentsInDistrict($id_cnty,$id_dist,$juneCutoff){
 	    //$sql = "SELECT id_student,tempid,alternate_assessment,pub_school_student,parental_placement,unique_id_state,name_first,name_last,sesis_exit_code,status,id_county,id_district,id_school FROM iep_student WHERE id_county = '$id_cnty' AND id_district = '$id_dist' AND status = 'Active'";
 	    $sql = "SELECT id_student,grade,tempid,alternate_assessment,
@@ -37,18 +37,18 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	    FROM iep_student WHERE id_county = '$id_cnty'
 	    AND id_district = '$id_dist'
 	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' ) order by id_school desc,name_last";
-	
+
 	    $result = $this->db->fetchAll($sql);
 	    $x=1;
-	   
-	    
+
+
 
 	    return $result;
-	     
+
 	}
-	
+
 	function writevar1($var1,$var2) {
-	
+
 	    ob_start();
 	    var_dump($var1);
 	    $data = ob_get_clean();
@@ -57,12 +57,12 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	    fwrite($fp, $data2);
 	    fclose($fp);
 	}
-	
+
 	public function studentInfo($id)
 	{
 	    $db = Zend_Registry::get('db');
 	    $id = $db->quote($id);
-	
+
 	    $select = $db->select()
 	                 ->from( 'iep_student',
 			            array(
@@ -76,7 +76,7 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 			                'age_months_into_year' =>
 			                    new Zend_Db_Expr("date_part('months',age(dob))"),
 			                'address' =>
-			                    new Zend_Db_Expr("CASE WHEN address_street2 IS NOT NULL THEN address_street1 || ' ' || address_street2 || ' ' || address_city || ', ' || address_state || ' ' || address_zip ELSE address_street1 || ' ' || address_city || ', ' || address_state || ' ' || address_zip END"), 
+			                    new Zend_Db_Expr("CASE WHEN address_street2 IS NOT NULL THEN address_street1 || ' ' || address_street2 || ' ' || address_city || ', ' || address_state || ' ' || address_zip ELSE address_street1 || ' ' || address_city || ', ' || address_state || ' ' || address_zip END"),
 			                'most_recent_dis' =>
 			                    new Zend_Db_Expr("get_most_recent_mdt_disability_primary(id_student)"),
 			                'most_recent_date_mdt' =>
@@ -172,7 +172,7 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 					)
 				->where("(s.id_case_mgr = '$id') and s.status ='Active'")
 	// Mike changed this 1-18-2017 SRS-150.  It was showing students from districts they were at before.
-	
+
              //   ->where("(s.id_case_mgr = '$id' OR s.id_list_team ilike '%$id%') and s.status ='Active'")
                     ->order(array('name_last asc', 'name_first asc'));
 // 		echo "select: $select<BR>";
@@ -303,7 +303,7 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
             }
         }
     }
-    
+
     /**
      * Returns true if user is in demo county, district or school
      *
@@ -319,12 +319,12 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
     	}
     	return false;
     }
-    // Mike added this 12-15-2017 because the PDF create upload wont work without it. Took from iepweb03. 
+    // Mike added this 12-15-2017 because the PDF create upload wont work without it. Took from iepweb03.
     // SRS-148
     public function setMissingIdStudentLocals($county, $district) {
-        $sql = "SELECT id_student, id_student_local, id_district, s.Status, name_first, name_last, name_middle, dob FROM iep_student AS s WHERE s.id_county = '{$county}' AND id_district = '{$district}' AND (id_student_local = '0' OR id_student_local IS NULL) AND status = 'Active'";
+        $sql = "SELECT id_student, id_student_local, unique_id_state,id_district, s.Status, name_first, name_last, name_middle, dob FROM iep_student AS s WHERE s.id_county = '{$county}' AND id_district = '{$district}' AND (id_student_local = '0' OR id_student_local IS NULL) AND status = 'Active'";
         $result = $this->db->fetchAll($sql);
-    
+
         $found = array();
         $not_found = array();
         foreach ($result as $r) {
