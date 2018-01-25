@@ -136,6 +136,26 @@ class StudentController extends My_Form_AbstractFormController
 
     public function studentaddAction()
     {
+
+        /*
+         * Mike added this section 1-25-2017 so that the autofil on the student add pop up either appears or not
+         * depending on the existence of a key and the rights being case manager and below.
+         */
+
+        $this->view->edfikeys=false;
+        foreach($_SESSION['user']['user']->privs as $priv)  {
+            $this->writevar1($priv['id_district'],'this is the privilege');
+            $this->writevar1($priv['class'],'this is the class');
+            if ($priv['class']<=6 && $priv['status']=='Active') {
+                $keySecret= new Model_Table_District();
+                $t=$keySecret->getKeys($priv['id_county'],$priv['id_district']);
+                if($t['edfi_key']!=null and $t['edfi_secret']!=null) $this->view->edfikeys=true;
+            }
+            if($priv['class']==1) $this->view->edfikeys=true;
+        }
+
+        // end of Mike add 1-25-2017
+
         $this->_helper->viewRenderer->setNoRender(true);
 
         // ----   Read all Privileges ------------------------
@@ -159,6 +179,11 @@ class StudentController extends My_Form_AbstractFormController
             $result = $studentAddFormQuery->studentFormCountyList($userid); // Get result
             $this->view->county = $result;
             echo $this->view->render('student/student-add.phtml');
+
+
+
+
+
         } else {
             echo $this->view->render('student/access-denied.phtml');
         }

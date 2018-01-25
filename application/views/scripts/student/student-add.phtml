@@ -13,7 +13,7 @@
         <td>
                 <?php if($auth->hasIdentity()) echo $this->navigationSubmenu('student'); ?>
         </td>
-    </tr>
+    </tr>  <!--  This is  a comment -->
 </table>
 
 <script type="text/javascript">
@@ -847,7 +847,10 @@ an employee of the school district but is bound by the requirements of The Famil
 </form>
 </div>
 
+
+<?php if($this->edfikeys==true) {?>
 <div id="dialog">
+
 <form name="usidform">
 <p>If student record exists on the edfi ODS enter their state id.  Student demographic data will auto populate. </p>
 If your SIS is sending guardian information to the edfi ODS then guardian entries will also be created. <br><br>
@@ -858,4 +861,4 @@ Enter Student State ID: <br><br><input type="text" id="usid"> <input type="butto
 <input type="button" class="dialog-close" value=" I don't know Student State ID ">
 </form>
 </div>
-
+<?php }?>
