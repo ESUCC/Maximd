@@ -28,6 +28,22 @@ class Model_Table_District extends Model_Table_AbstractIepForm
 	    fclose($fp);
 	}
 
+	// Mike added this 1-26-2018 so that the autofill on the state id would identify to the end user the location of the school
+	// with the state id trying to be used.
+
+	function getSchoolDistrictAutoFill($stateId) {
+
+	    $db = Zend_Registry::get('db');
+	    $sql="select s.id_school,d.name_school from iep_student s,iep_school d where s.unique_id_state='$stateId' and s.id_district=d.id_district and s.id_county=d.id_county";
+	  //  $this->writevar1($sql,'thisis the sql');
+	    $select=$db->fetchAll($sql);
+	 //   $this->writevar1($select,'this is the info');
+	    return($select);
+	}
+
+	// End of Mike add 1-26-2018
+
+
 	function getAllDists() {
 
 

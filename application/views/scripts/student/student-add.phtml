@@ -185,8 +185,12 @@
 				$("#usid_load").html('');
 
 				if (response2.unique_id_state) {
-				    $("#usidmsg").html("User already exist");
-     				    $("#usidmsg").text(response.message);
+				    $("#usidmsg").html("The state id is already being used by the following district. ");
+     				   $("#usidmsg").text(response.message);
+      				   $("#usidmsg2").text('District: ' + response2.name_district);
+        			   $("#usidmsg3").text('School: ' + response2.name_school + ' main phone: ' + response2.phone_main);
+     				    $("#usidmsg4").text('School Manager: ' + response2.full_name );
+      				   $("#usidmsg6").text('Please begin a transfer request or contact the school mgr.');
 				    var delayAlert2 = setInterval(function() { $("#usidmsg").html("");  clearInterva2(delayAlert2); }, 20000);
 				} else {
     				    $("#unique_id_state").val(data_var["student_id"]);
@@ -361,7 +365,9 @@
               success    : function(response) {
 			if (response) {
 			    $("#unique_id_state").val("");
-			    $('<label id="unique_id_state_err" class="error" for="unique_id_state">NSSRS Number Exists (District: ' + response["name_district"] +'County: ' + response["id_county"] + ', District: ' + response["id_district"] + ', School: ' + response["id_school"] + ')</label>').insertAfter( '#unique_id_state' );
+$('<label id="unique_id_state_err" class="error" for="unique_id_state">State Id in use by ' + response["name_district"] +': Contact ' + response["full_name"] + ' at ' + response["phone_main"] + ', School: ' + response["name_school"] + ')</label>').insertAfter( '#unique_id_state' );
+
+//	$('<label id="unique_id_state_err" class="error" for="unique_id_state">State Id in use by ' + response["name_district"] +'County: ' + response["id_county"] + ', District: ' + response["id_district"] + ', School: ' + response["id_school"] + ')</label>').insertAfter( '#unique_id_state' );
 			    var delayAlert = setInterval(function() { $("#unique_id_state_err").remove();  clearInterval(delayAlert); }, 20000);
 			}
                         $("#nssrsload").html('');
@@ -854,6 +860,14 @@ If your SIS is sending guardian information to the edfi ODS then guardian entrie
 Enter Student State ID: <br><br><input type="text" id="usid"> <input type="button" id="usid_find" value="FIND"> <span id="usid_load"></span>
 <br>
 <div id="usidmsg" style="height: 30px; color: red;"></div>
+<div>
+<b id="usidmsg6" style="height: 15px; color: green;"></b><br>
+<b id="usidmsg2" style="height: 30px; color: red;"></b><br>
+<b id="usidmsg3" style="height: 30px; color: red;"></b><br>
+<b id="usidmsg4" style="height: 30px; color: red;"></b><br>
+<b id="usidmsg5" style="height: 30px; color: red;"></b><br>
+
+</div>
 <hr><br>
 <input type="button" class="dialog-close" value=" I don't know Student State ID ">
 </form>

@@ -237,10 +237,10 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
 
 
         $sql='select s.unique_id_state,s.id_county,s.id_district,d.name_district from iep_student s,iep_district d where s.unique_id_state=\''.$options['unique_id_state'].'\' and s.id_district=d.id_district and s.id_county=d.id_county';
-       $this->writevar1($options,'the info for options');
+    //  $this->writevar1($options,'the info for options');
       // $result = $db->fetchRow($select);
        $result =$db->fetchRow($sql);
-       $this->writevar1($result,'this is the result');
+     //  $this->writevar1($result,'this is the result');
        return array($result);
     }
 

@@ -144,8 +144,8 @@ class StudentController extends My_Form_AbstractFormController
 
         $this->view->edfikeys=false;
         foreach($_SESSION['user']['user']->privs as $priv)  {
-            $this->writevar1($priv['id_district'],'this is the privilege');
-            $this->writevar1($priv['class'],'this is the class');
+          //  $this->writevar1($priv['id_district'],'this is the privilege');
+         //   $this->writevar1($priv['class'],'this is the class');
             if ($priv['class']<=6 && $priv['status']=='Active') {
                 $keySecret= new Model_Table_District();
                 $t=$keySecret->getKeys($priv['id_county'],$priv['id_district']);
@@ -281,10 +281,31 @@ class StudentController extends My_Form_AbstractFormController
 
         $options["unique_id_state"] = intval($this->getRequest()->getParam('unique_id_state') * 1);
         $studentNssrsCheckQuery = new Model_Table_StudentFormAdd();
-        
-        
+
+        /*
+         *
+         * Get the school name
+         * Get school Manager
+         * Get Main Phone
+         */
+           $schoolName= new Model_Table_School();
+           $nameSchool=$schoolName->getSchoolAutoFill($options["unique_id_state"]);
+         // $this->writevar1($nameSchool,'name of hte schol');
+
+
+
+
+          $schooManagerName= new Model_Table_PersonnelTable();
+          $managerSchool=$schooManagerName->getbyId($nameSchool[0]['id_school_mgr']);
+         // $this->writevar1($managerSchool,' this is the school manager');
+
         $result = $studentNssrsCheckQuery->studentNssrsCheck($options); // Get result
+
+        $result[0]['name_school']=$nameSchool[0]['name_school'];
+        $result[0]['phone_main']=$nameSchool[0]['phone_main'];
+        $result[0]['full_name']=$managerSchool['name_first']." ".$managerSchool['name_last']." ".$managerSchool['email_address'];
         $this->writevar1($result,'the checknsrsAction report');
+
         $this->_helper->json->sendJson($result[0]);
 
         return;
@@ -303,7 +324,7 @@ class StudentController extends My_Form_AbstractFormController
             $this->view->student = $request->id_student;
         }
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
+        header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
         exit;
     }
 
@@ -442,7 +463,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        //header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
+        //header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
         exit;
 
     }
@@ -463,7 +484,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
+        header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
         exit;
 
 
@@ -1069,7 +1090,7 @@ class StudentController extends My_Form_AbstractFormController
             !('77' == $dbStudent['id_county'] && '0027' == $dbStudent['id_district']) &&
             '1010818' != $this->usersession->sessIdUser
             ) {
-            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.unl.edu/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
+            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
             $this->_redirector->gotoUrl($url);
             exit;
             }

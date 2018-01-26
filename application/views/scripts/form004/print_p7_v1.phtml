@@ -1,7 +1,5 @@
 <?php
-
 function writevar1($var1,$var2) {
-
     ob_start();
     var_dump($var1);
     $data = ob_get_clean();
@@ -10,8 +8,6 @@ function writevar1($var1,$var2) {
     fwrite($fp, $data2);
     fclose($fp);
 }
-
-
 $view = $this->element->page->getView();
 writevar1($view,'the view on print phtml');
 if (true !== $view->db_form_data['summary_form']) {
@@ -24,13 +20,10 @@ if(isset($view->db_form_data['district'])) {
 } else {
     $district = array();
 }
-
-
 echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
 echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
 echo $this->element->id_form_004;
 echo $this->element->page;
-
 ?>
 <?php if (!$summaryForm || $district['iep_summary_transportation']) :?>
 <table class="formSectionHead" cellspacing="0" cellpadding="0">
@@ -54,10 +47,8 @@ echo $this->element->page;
             <tr>
                 <td>
                     <?php
-
                         echo "<B>" . $this->element->transportation_why->getLabel() . "</B> ";
                         echo $this->element->transportation_why->getValue();
-
                     ?>
                 </td>
             </tr>
@@ -95,7 +86,6 @@ echo $this->element->page;
             } else {
                 echo $this->element->assessment_accom;
             }
-
         ?></td>
     </tr>
     <tr>
@@ -195,10 +185,8 @@ echo $this->element->page;
 
 
 <?php
-
 // Mike added this 1-19-2018 Prior Written Notice
 echo $this->studentInfoHeader($view->db_form_data, '004');
-
 ?>
 <p><br>
 <table class="formSectionHead" cellpadding="0" cellspacing="0">
@@ -215,7 +203,6 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             <tr>
                 <td>
 		        <?php
-
                     echo "<B>A Description of the action proposed or refused by the school distrcit or approved cooperative.</B><br> ";
                     echo $this->element->pwn_describe_action->getValue();
 		        ?>
@@ -282,11 +269,3 @@ cooperative’s proposal or refusal:</b><br>";
             </table>
         </td>
     </tr>
-
-
-
-
-
-
-
-
