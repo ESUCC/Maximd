@@ -224,15 +224,23 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
     public function studentNssrsCheck($options)
     {
 
+        /*
+         * Mike commented out the $select so that we could get the name of the district to return to the auto populate.
+         */
         $db = Zend_Registry::get('db');
-        $select = $db->select()
+        /*$select = $db->select()
                    ->from( array('s' => 'iep_student'), array('s.unique_id_state', 's.id_county', 's.id_district', 's.id_school'))
                     ->where('s.unique_id_state = ?', $options["unique_id_state"]);
                  //  ->from( array('s' => 'iep_student'), array('count' => 'COUNT(s.unique_id_state)'))
                   // ->where('s.unique_id_state = ?', $options["unique_id_state"]);
+        */
 
-       $result = $db->fetchRow($select);
 
+        $sql='select s.unique_id_state,s.id_county,s.id_district,d.name_district from iep_student s,iep_district d where s.unique_id_state=\''.$options['unique_id_state'].'\' and s.id_district=d.id_district and s.id_county=d.id_county';
+       $this->writevar1($options,'the info for options');
+      // $result = $db->fetchRow($select);
+       $result =$db->fetchRow($sql);
+       $this->writevar1($result,'this is the result');
        return array($result);
     }
 

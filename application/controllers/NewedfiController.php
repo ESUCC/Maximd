@@ -15,15 +15,22 @@ class NewedfiController extends Zend_Controller_Action {
 
 	public function studentAction() {
 
-
+/*
+ * Mike finished this 1-25-2017 so that a person such as a site admin for multiple sites can find a student.  Some staff have
+ * no less than 14 sites they are managing.
+ *
+ */
 
         $x=0;
-       $found=false;
+        $sysAdmin=false;
+        $found=false;
       //  $this->writevar1($_SESSION['user']['user']->privs[0]['class'],'these are the privs');
 	    foreach($_SESSION['user']['user']->privs as $priv)  {
-	        $this->writevar1($priv['id_district'],'this is the privilege');
+	        if ($priv['class']==1 && $priv['status']=='Active') $sysAdmin=true;
 	        if ($priv['class']<=6 && $priv['status']=='Active') {
                if(!$found ){
+
+
                 $keySecret= new Model_Table_District();
 	            $t=$keySecret->getKeys($priv['id_county'],$priv['id_district']);
                 $key=$t['edfi_key'];
@@ -34,15 +41,32 @@ class NewedfiController extends Zend_Controller_Action {
                 $student_id = $this->_getParam('student_id');
                 $jsonStudent = $edFiClientDraft->getStudent($student_id);
                 if(isset($jsonStudent->id)) $found=true;
-             //   $this->writevar1($jsonStudent->message,'this is the json message');
-            //    $this->writevar1($jsonStudent->id,'this is the json student');
-             //   $this->writevar1($found,'true or false n found');
+
                 }
 
                }
 
 	        }
+	    }  // End the for each
+
+	    // Check for system admin. This one takes a while to complete.
+
+	    if($sysAdmin==true){
+	        $dist= new Model_Table_District();
+	        $allDistricts=$dist->getAllDists();
+            $found=false;
+            $student_id = $this->_getParam('student_id');
+            foreach($allDistricts as $dist){
+               if($dist['edfi_key']!=null and $dist['edfi_secret']!=null and $found==false){
+                   $edFiClientDraft= new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/",$dist['edfi_key'],$dist['edfi_secret']);
+                   $jsonStudent = $edFiClientDraft->getStudent($student_id);
+                   if(isset($jsonStudent->id)) $found=true;
+
+               }
+
+            }
 	    }
+// End of Mike add 1-25-2017
 
 
 

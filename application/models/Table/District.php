@@ -28,6 +28,18 @@ class Model_Table_District extends Model_Table_AbstractIepForm
 	    fclose($fp);
 	}
 
+	function getAllDists() {
+
+
+	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+	    $database = Zend_Db::factory($dbConfig->db2);
+	    $sql='SELECT name_district,id_county,id_district,edfi_key,edfi_secret from iep_district';
+	  //  $this->writevar1($sql,'the sql command');
+	    $select=$database->fetchAll($sql);
+	    return ($select);
+
+	}
+
 	function getKeys($id_county,$id_district){
 	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 	    $database = Zend_Db::factory($dbConfig->db2);

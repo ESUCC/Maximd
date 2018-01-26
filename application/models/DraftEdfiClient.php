@@ -24,8 +24,8 @@ class Model_DraftEdfiClient  {
 
 
 
-        $this->writevar1($edfiClientId." ",'Client id');
-        $this->writevar1($edfiClientSecret,'edifi secret');
+     //   $this->writevar1($edfiClientId." ",'Client id');
+     //   $this->writevar1($edfiClientSecret,'edifi secret');
 
         if (!$edfiBaseUrl) {
             if ($config->edfi->baseUrl)
