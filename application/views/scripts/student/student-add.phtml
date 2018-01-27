@@ -365,7 +365,7 @@
               success    : function(response) {
 			if (response) {
 			    $("#unique_id_state").val("");
-$('<label id="unique_id_state_err" class="error" for="unique_id_state">State Id in use by ' + response["name_district"] +': Contact ' + response["full_name"] + ' at ' + response["phone_main"] + ', School: ' + response["name_school"] + ')</label>').insertAfter( '#unique_id_state' );
+$('<label id="unique_id_state_err" class="error" for="unique_id_state">State Id in use by ' + response["name_district"] +': Contact ' + response["full_name"] + ' at ' + response["phone_main"] + ', School: ' + response["name_school"] + '</label>').insertAfter( '#unique_id_state' );
 
 //	$('<label id="unique_id_state_err" class="error" for="unique_id_state">State Id in use by ' + response["name_district"] +'County: ' + response["id_county"] + ', District: ' + response["id_district"] + ', School: ' + response["id_school"] + ')</label>').insertAfter( '#unique_id_state' );
 			    var delayAlert = setInterval(function() { $("#unique_id_state_err").remove();  clearInterval(delayAlert); }, 20000);

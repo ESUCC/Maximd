@@ -304,7 +304,6 @@ class StudentController extends My_Form_AbstractFormController
         $result[0]['name_school']=$nameSchool[0]['name_school'];
         $result[0]['phone_main']=$nameSchool[0]['phone_main'];
         $result[0]['full_name']=$managerSchool['name_first']." ".$managerSchool['name_last']." ".$managerSchool['email_address'];
-        $this->writevar1($result,'the checknsrsAction report');
 
         $this->_helper->json->sendJson($result[0]);
 
