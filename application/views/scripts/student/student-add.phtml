@@ -822,10 +822,13 @@ an employee of the school district but is bound by the requirements of The Famil
                                        <input type="radio" name="alternate_assessment" style="width: 20px;" value="Yes" req="req"> Yes
                                        <input type="radio" name="alternate_assessment" style="width: 20px;" value="No" req="req"> No
 </td></tr>
-
+<!--
+Mike took this out 1-29-2018 becasee it was just a radio button at the top of the page.
 <tr class="sft type="radio" name="ward_surrogate" style="width: 20px;" value="Yes"> Yes
        <input type="radio" name="ward_surrogate" style="width: 20px;" value="No"> No
 </td></tr>
+-->
+
 <tr class="surrogate_area" style="display: none"><td class="StudentFormTitle">If surrogate not needed, is it because parents are involved</td><td class="StudentFormValue">
        <input type="radio" name="ward_surrogate_nn" style="width: 20px;" value="Yes"> Yes
        <input type="radio" name="ward_surrogate_nn" style="width: 20px;" value="No"> No
@@ -853,6 +856,11 @@ an employee of the school district but is bound by the requirements of The Famil
 </form>
 </div>
 
+<?php
+
+if($this->edfikeys==true) {?>
+
+
 <div id="dialog">
 <form name="usidform">
 <p>If student record exists on the edfi ODS enter their state id.  Student demographic data will auto populate. </p>
@@ -872,4 +880,5 @@ Enter Student State ID: <br><br><input type="text" id="usid"> <input type="butto
 <input type="button" class="dialog-close" value=" I don't know Student State ID ">
 </form>
 </div>
+<?php }?>
 

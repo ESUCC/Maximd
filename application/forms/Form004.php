@@ -1281,7 +1281,7 @@ class Form_Form004 extends Form_AbstractForm
     {
         $this->edit_p7_v1();
         $this->addPage7Ext();
-        $this->addPage7Pwn();
+     //   $this->addPage7Pwn();
         return $this;
     }
     public function edit_p7_v11()
@@ -1434,7 +1434,7 @@ class Form_Form004 extends Form_AbstractForm
          */
         if (!$this->lps) {
            $this->addPage7Ext();
-           $this->addPage7Pwn();
+       //    $this->addPage7Pwn();
         }
         return $this;
     }

@@ -240,7 +240,7 @@ class Model_Table_StudentFormAdd extends Model_Table_AbstractIepForm
     //  $this->writevar1($options,'the info for options');
       // $result = $db->fetchRow($select);
        $result =$db->fetchRow($sql);
-     //  $this->writevar1($result,'this is the result');
+     // $this->writevar1($result,'this is the result in studentformadd.php line 243');
        return array($result);
     }
 

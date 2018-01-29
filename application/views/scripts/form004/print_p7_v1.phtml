@@ -9,7 +9,7 @@ function writevar1($var1,$var2) {
     fclose($fp);
 }
 $view = $this->element->page->getView();
-writevar1($view,'the view on print phtml');
+//writevar1($view,'the view on print phtml');
 if (true !== $view->db_form_data['summary_form']) {
 	$summaryForm = false;
 } else {
@@ -167,12 +167,12 @@ echo $this->element->page;
 <!-- Mike added this 1-16-2018 for PWN section SRS-151 -->
 
 
-
+<!--
 
 <p style="page-break-before: always">
 
 
-
+-->
 <p>
 <b>
 
@@ -182,11 +182,11 @@ echo $this->element->page;
 
 
 
-
+<!--
 
 <?php
 // Mike added this 1-19-2018 Prior Written Notice
-echo $this->studentInfoHeader($view->db_form_data, '004');
+//echo $this->studentInfoHeader($view->db_form_data, '004');
 ?>
 <p><br>
 <table class="formSectionHead" cellpadding="0" cellspacing="0">
@@ -203,8 +203,8 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             <tr>
                 <td>
 		        <?php
-                    echo "<B>A Description of the action proposed or refused by the school distrcit or approved cooperative.</B><br> ";
-                    echo $this->element->pwn_describe_action->getValue();
+                 //   echo "<B>A Description of the action proposed or refused by the school distrcit or approved cooperative.</B><br> ";
+                 //   echo $this->element->pwn_describe_action->getValue();
 		        ?>
                 </td>
             </tr>
@@ -218,8 +218,8 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             <tr>
                 <td>
 		        <?php
-                    echo "<b>An explanation of why the district or approved cooperative proposes or refuses to take the action: </b><br>";
-                    echo $this->element->pwn_describe_reason->getValue();
+               //     echo "<b>An explanation of why the district or approved cooperative proposes or refuses to take the action: </b><br>";
+                //    echo $this->element->pwn_describe_reason->getValue();
 		        ?>
                 </td>
             </tr>
@@ -233,9 +233,8 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             <tr>
                 <td>
 		        <?php
-                    echo "<b>The text will include A description of other options the IEP team considered and the reasons why those options were
-rejected:</b><br>";
-                    echo $this->element->pwn_options_other->getValue();
+                 //   echo "<b>The text will include A description of other options the IEP team considered and the reasons why those options were rejected:</b><br>";
+                 //   echo $this->element->pwn_options_other->getValue();
 		        ?>
                 </td>
             </tr>
@@ -246,9 +245,8 @@ rejected:</b><br>";
             <tr>
                 <td>
 		        <?php
-                    echo "<b>A description of each evaluation procedure, assessment, record or report the school district or
-approved cooperative uses as a basis for the proposal or refusal: </b><br>";
-                    echo $this->element->pwn_justify_action->getValue();
+                 //   echo "<b>A description of each evaluation procedure, assessment, record or report the school district or approved cooperative uses as a basis for the proposal or refusal: </b><br>";
+                 //   echo $this->element->pwn_justify_action->getValue();
 		        ?>
                 </td>
             </tr>
@@ -260,12 +258,13 @@ approved cooperative uses as a basis for the proposal or refusal: </b><br>";
             <tr>
                 <td>
 		        <?php
-                    echo "<b>A description of any other factors which are relevant to the school district’s or approved
-cooperative’s proposal or refusal:</b><br>";
-                    echo $this->element->pwn_other_factors->getValue();
+                //    echo "<b>A description of any other factors which are relevant to the school district’s or approved cooperative’s proposal or refusal:</b><br>";
+                 //   echo $this->element->pwn_other_factors->getValue();
 		        ?>
                 </td>
             </tr>
             </table>
         </td>
     </tr>
+
+    -->

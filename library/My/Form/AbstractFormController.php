@@ -1236,7 +1236,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
         /*
         * END SRSZF-287
         */
-       $this->writevar1($shortName,'this is the short name');
+     //  $this->writevar1($shortName,'this is the short name');
 
 
 

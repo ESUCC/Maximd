@@ -36,6 +36,7 @@ class Model_Table_School extends Model_Table_AbstractIepForm
         $db = Zend_Registry::get('db');
         $sql="select s.id_school,d.name_school,d.id_school_mgr,d.phone_main from iep_student s,iep_school d where s.unique_id_state='$stateId' and s.id_district=d.id_district and s.id_county=d.id_county";
         $select=$db->fetchAll($sql);
+       //$this->writevar1($select,'this is the result of the db search');
         return($select);
     }
 

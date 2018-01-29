@@ -144,14 +144,13 @@ class StudentController extends My_Form_AbstractFormController
 
         $this->view->edfikeys=false;
         foreach($_SESSION['user']['user']->privs as $priv)  {
-          //  $this->writevar1($priv['id_district'],'this is the privilege');
-         //   $this->writevar1($priv['class'],'this is the class');
-            if ($priv['class']<=6 && $priv['status']=='Active') {
+
+            if ($priv['class']<=1 && $priv['status']=='Active') {
                 $keySecret= new Model_Table_District();
                 $t=$keySecret->getKeys($priv['id_county'],$priv['id_district']);
                 if($t['edfi_key']!=null and $t['edfi_secret']!=null) $this->view->edfikeys=true;
             }
-            if($priv['class']==1) $this->view->edfikeys=true;
+            if($priv['class']==1  && $priv['status']=='Active') $this->view->edfikeys=true;
         }
 
         // end of Mike add 1-25-2017
@@ -280,34 +279,42 @@ class StudentController extends My_Form_AbstractFormController
     {
 
         $options["unique_id_state"] = intval($this->getRequest()->getParam('unique_id_state') * 1);
+
+
+
+
         $studentNssrsCheckQuery = new Model_Table_StudentFormAdd();
+        $result = $studentNssrsCheckQuery->studentNssrsCheck($options); // Get result
+
+
+        $schoolName= new Model_Table_School();
+        $nameSchool=$schoolName->getSchoolAutoFill($options["unique_id_state"]);
 
         /*
-         *
+         *  The following if statement gets the approprite info if the id is being used.
          * Get the school name
          * Get school Manager
          * Get Main Phone
          */
-           $schoolName= new Model_Table_School();
-           $nameSchool=$schoolName->getSchoolAutoFill($options["unique_id_state"]);
-         // $this->writevar1($nameSchool,'name of hte schol');
+
+        if(count(array_filter($nameSchool))>0) {
+            $schooManagerName= new Model_Table_PersonnelTable();
+            $managerSchool=$schooManagerName->getbyId($nameSchool[0]['id_school_mgr']);
+
+            $result[0]['name_school']=$nameSchool[0]['name_school'];
+            $result[0]['phone_main']=$nameSchool[0]['phone_main'];
+            $result[0]['full_name']=$managerSchool['name_first']." ".$managerSchool['name_last']." ".$managerSchool['email_address'];
+         //   $this->writevar1($result,'this is the result variable');
+
+       }
 
 
 
-
-          $schooManagerName= new Model_Table_PersonnelTable();
-          $managerSchool=$schooManagerName->getbyId($nameSchool[0]['id_school_mgr']);
-         // $this->writevar1($managerSchool,' this is the school manager');
-
-        $result = $studentNssrsCheckQuery->studentNssrsCheck($options); // Get result
-
-        $result[0]['name_school']=$nameSchool[0]['name_school'];
-        $result[0]['phone_main']=$nameSchool[0]['phone_main'];
-        $result[0]['full_name']=$managerSchool['name_first']." ".$managerSchool['name_last']." ".$managerSchool['email_address'];
 
         $this->_helper->json->sendJson($result[0]);
 
         return;
+
     }
 
     public function parentAction()
