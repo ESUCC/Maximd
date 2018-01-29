@@ -77,7 +77,7 @@ class PpnHelperGRT
     {
         $stmt = "SELECT id_student, id_student_local ";
         $stmt .= "FROM iep_student s ";
-        $stmt .= "WHERE s.id_county = '77' and s.id_district = '0027' and s.status = 'Active' ";
+        $stmt .= "WHERE s.id_county = '77' and s.id_district = '0037' and s.status = 'Active' ";
 //        echo "$stmt\n";
         $result = Zend_Registry::get('db')->query($stmt);
         return $result->fetchAll();
@@ -116,7 +116,8 @@ class PpnHelperGRT
         if (!empty($not_found)) {
             $mailBody .= "The export was UNABLE to match local student Ids for the following students: \r\n\r\n";
             foreach ($not_found as $n) {
-                $mailBody .= $n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] . "\r\n";
+                //$mailBody .= $n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] . "\r\n";
+$mailBody .= $n['id_student'].','.$n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] .','.$n['unique_id_state'].','.$n['id_student_local']."\r\n";
             }
         }
         if (empty($found) && empty($not_found)) {

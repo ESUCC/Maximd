@@ -101,17 +101,16 @@ class PpnHelper
             return null;
         }
     }
-
+    
     static function setMissingIdStudentLocals($county, $district) {
         $student = new Model_Table_StudentTable();
         list($found, $not_found) = $student->setMissingIdStudentLocals($county, $district);
         $mail = new Zend_Mail();
         $mailBody  = "";
-        if (!empty($found)) {
+        if (!empty($found)) { 
         $mailBody .= "The export was able to match and update local student Ids for the following students: \r\n\r\n";
             foreach ($found as $f) {
-                $mailBody .= $n['name_first'] . ',' . $n['name_middle'] . ',' . $n['name_last'] . ',' . $n['dob'] . "\r\n";
-
+                $mailBody .= $f['name_first'] . ',' . $f['name_middle'] . ',' . $f['name_last'] . ',' . $f['dob'] . "\r\n";
             }
         }
         if (!empty($not_found)) {
@@ -125,7 +124,7 @@ class PpnHelper
         }
 
 	echo $mailBody;
-
+        
         //$mailTransport = new Zend_Mail_Transport_Sendmail();
         //$mail->setSubject('Missing Local Student Id Report for Papillion Summary PDF Export');
         //$mail->setBodyText($mailBody);

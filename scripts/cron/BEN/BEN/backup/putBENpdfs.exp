@@ -1,0 +1,18 @@
+#!/usr/bin/expect 
+
+#stty -echo
+log_user 1
+
+set timeout -1
+
+spawn /bin/bash
+expect "]#"
+send "cd /etc/httpd/srs-zf/scripts/cron/BEN/\r"
+expect "]#"
+
+#send_user "GETTING DATA...\n"
+send "/usr/bin/scp -r /etc/httpd/srs-zf/scripts/cron/BEN/pdfs_ben iep@205.202.253.9:/home/iep\r"
+expect "assword:"
+send "spediep\r"
+expect "]#"
+send_user "DONE RUNNING PHP SCRIPTS\n"

@@ -328,6 +328,8 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
         $found = array();
         $not_found = array();
         foreach ($result as $r) {
+
+            // Mike added this 1-26-2017 because it was causing trouble with names like O'Connel
              $r['name_last']=str_replace('\'', '', $r['name_last']);
             $sql_sub = "SELECT * FROM iep_student sub WHERE sub.id_county = '{$county}' AND sub.id_district = '{$district}' AND sub.name_first = '{$r['name_first']}' AND sub.name_last = '{$r['name_last']}' AND sub.name_middle = '{$r['name_middle']}' AND sub.dob = '{$r['dob']}' AND status != 'Active'";
             $result_sub = $this->db->fetchRow($sql_sub);
