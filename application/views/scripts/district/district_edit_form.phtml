@@ -14,7 +14,7 @@
     var form_data = new FormData();
     form_data.append("id_district", $("#id_district").val());
     form_data.append("id_county", $("#id_county").val());
-    $.ajax({ // Get Logo 
+    $.ajax({ // Get Logo
             url: "/district/listfile",
             dataType: 'json',
             cache: false,
@@ -280,13 +280,13 @@
 </div><div id="tabs-4">
 
 <table class="DistrictTable">
-<tr><td class="fieldInput2" colspan=2><input type="checkbox" name="pref_district_imports" id="pref_district_imports"<?=(($this->data['pref_district_imports'] || $this->data['pref_district_imports'] == 1) ? " checked" : "");?>/> <b>District Imports it's students</b></td></tr>
-<tr><td class="fieldInput2" colspan=2><input type="checkbox" name="use_edfi" id="use_edfi"<?=(($this->data['use_edfi'] || $this->data['use_edfi'] == 1) ? " checked" : "");?>/> <b>Adviser Data Publishing</b></td></tr>
+<tr><td class="fieldInput2" colspan=2><input type="checkbox"  name="pref_district_imports" id="pref_district_imports"<?=(($this->data['pref_district_imports'] || $this->data['pref_district_imports'] == 1) ? " checked" : "");?>/> <b>District Imports it's students</b></td></tr>
+<tr><td class="fieldInput2" colspan=2><input type="checkbox" disabled="diabled" name="use_edfi" id="use_edfi"<?=(($this->data['use_edfi'] || $this->data['use_edfi'] == 1) ? " checked" : "");?>/> <b>Adviser Data Publishing</b></td></tr>
 <tr><td class="labelText2"><b>District Import Code<b></td><td> <input type="text" name="district_import_code" id="district_import_code" value="<?=$this->data['district_import_code']?>"readonly></td></tr>
 </table>
 
 </div><div id="tabs-5">
- 
+
 <table class="DistrictTable">
 
 <tr><td class="fieldInput2"><input type="checkbox" name="optional_features" id="optional_features"<?=(($this->data['optional_features'] || $this->data['optional_features'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Accept Optional Features</b></td></tr>
@@ -308,8 +308,8 @@
 </div>
 
 <div id="tabs-6">
-  <input type="file" name="fileToUpload" id="fileToUpload"> 
-  <input type="button" name="fileRemove" id="fileRemove" value=" Remove Image ">  
+  <input type="file" name="fileToUpload" id="fileToUpload">
+  <input type="button" name="fileRemove" id="fileRemove" value=" Remove Image ">
   <div id="districtLogo"></div>
 </div>
 
@@ -353,5 +353,5 @@
 
 </form>
 </div>
- 
+
 <div id="successSave"></div>
