@@ -1,5 +1,5 @@
 <?php
-$paramArr = array_slice($argv, 1); 
+$paramArr = array_slice($argv, 1);
 
 /**
  * jesselocal
@@ -19,7 +19,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . APPLICATION_PATH.'/../exp
 
 require_once('cmd_line_helper.php');
 require_once('Bellevue/BellevueExport.php');
- 
+
 
 /**
  * general setup of the application
@@ -31,4 +31,3 @@ bootCli(APPLICATION_PATH, APPLICATION_ENV);
  */
 
 $importFactory = new BellevueExport();
-

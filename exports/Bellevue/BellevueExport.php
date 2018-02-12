@@ -1,9 +1,9 @@
-<?php
+f<?php
 
 /**
  * require the main export factory
  */
-require_once('ExportFactoryBellevue.php'); 
+require_once('ExportFactoryBellevue.php');
 
 class BellevueExport extends ExportFactoryBellevue {
 
@@ -11,31 +11,31 @@ class BellevueExport extends ExportFactoryBellevue {
 
     public function __construct() {
         parent::__construct();
-  
+
         echo "\n\nBegin Export Student's\n";
         $finalLog = "\n\nBegin Exports Students...\n";
         $finalLog .= $this->dumpLog();
         // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application
         $this->clearMetaData();clear;
-     
+
         /**
          * get the main application AND import config files
          */
         $appConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-      //  print_r($appConfig);die(); 
+      //  print_r($appConfig);die();
         $exportConfig = new Zend_Config_Ini('Bellevue/export.ini', APPLICATION_ENV);
-       // print_r($exportConfig); die(); 
+       // print_r($exportConfig); die();
         $this->exportConfig = $exportConfig;
         $this->dataSource = $exportConfig->data_source;
-      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application is what is printed        
+      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.unl.edu/80/1.0.0_18/application is what is printed
       // echo($this->dataSource);
-        
+
         $this->initEmail($exportConfig->email);
-        
+
         /** create database connection */
         $dbConfig = $appConfig->db2;
         $db = Zend_Db::factory($dbConfig);    // returns instance of Zend_Db_Adapter class
-      //  print_r($db);die(); prints what you would expect 
+      //  print_r($db);die(); prints what you would expect
         Zend_Registry::set('db', $db);
         Zend_Db_Table_Abstract::setDefaultAdapter($db);
 
@@ -44,23 +44,23 @@ class BellevueExport extends ExportFactoryBellevue {
          * must be fired after pre-flight file
          */
         $emptyDataSources = $this->countEmptyDataSource();
-        
+
        // print_r($emptyDataSources);die(); //returns this: SELECT "iep_student".* FROM "iep_student" WHERE (id_county = '77') AND (id_district = '0001') AND (data_source = NULL)0
         $finalLog .= "\n\nPre-export students with an empty data_source field: " . count($emptyDataSources)."\n";
 
         $finalLog .= $this->dumpLog();
        //  print_r($finalLog);die(); returned Pre-export students with an empty data_source field: 1
-        
+
         $this->clearMetaData();
 
         /**
          * export students
          */
-        
-        
-       $success = $this->exportStudents(); 
+
+
+       $success = $this->exportStudents();
        print_r($success);
-       
+
        //exportStudents is in ExportFactory.php
        //  print_r($success); echo "\n"; die(); This prints a 1 or a 0 to the screen all activity is passed to exportStudents in ExportFactory.php
         if($success) {
@@ -99,7 +99,7 @@ class BellevueExport extends ExportFactoryBellevue {
     }
 
   public function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -163,7 +163,7 @@ class BellevueExport extends ExportFactoryBellevue {
 // added by Mike 1-10-2016 because the value from the privious form should this be set to no disabilty
 
         $notLast002= new Model_Table_Form002Bellevue();
-         
+
         if($mdt['mdt_00603e2a']=='A'){
             $pd=$notLast002->exportForBellevue($mdt);
             $mdt['disability_primary']=$pd;
@@ -224,9 +224,9 @@ class BellevueExport extends ExportFactoryBellevue {
         }
     }
     // Mike added this function 6-9-2016
-    
+
     public function nssrsServiceId($student) {
-        
+
         $num=999;
      //   $mike = $this->lastIep($student->related_service_drop);
      //  print_r($mike);
@@ -236,7 +236,7 @@ class BellevueExport extends ExportFactoryBellevue {
     }
 
     public function studentStrengths ($student) {
-        
+
         $iep = $this->lastIep($student);
     //   echo var_dump($iep);
         if(is_object($iep)) {
@@ -642,9 +642,9 @@ class BellevueExport extends ExportFactoryBellevue {
 
   /*  public function relatedServices($student) {
         $iep = $this->lastIep($student);
-        
+
         if ($student->id_student=='1463037'){ $this->writevar1($iep,'this is the iep'); }
-        
+
         if(is_object($iep)) {
             //if(9 >= $iep->version_number) {
              $t='true';
@@ -652,7 +652,7 @@ class BellevueExport extends ExportFactoryBellevue {
                $relatedServices = $iep->findDependentRowset('Model_Table_Form004RelatedService');
                 $retString = '';
                 foreach ($relatedServices as $relatedService) {
-                
+
                  if($student->id_student=='1463037') { $this->writevar1($relatedService,'this is the related service');}
                     if('Active'!=$relatedService->status) continue;
                     if(''!=$retString) $retString .= $this->delimiter;
@@ -670,33 +670,248 @@ class BellevueExport extends ExportFactoryBellevue {
 */
 
 
- public function relatedServices($student) {   
+ public function relatedServices($student) {
         $iep = $this->lastIep($student);
+
+        $iepLatest=new Model_Table_Form004();
+        $mostRecentIep=$iepLatest->getMostRecentIepState($student->id_student);
+
+        $ifspRecent= new Model_Table_Form013();
+        $mostRecentIfsp=$ifspRecent->getMostRecentIfspState($student->id_student);
+
+        if ($student->id_student_local=='97051') $this->writevar1($mostRecentIfsp,'97051 most recent ifsp');
+        if($student->id_student=='1459615') $this->writevar1($mostRecentIfsp,'the most recent ifsp');
+        $iepCd=new Model_Table_Form023();
+        $mostRecentIepCard=$iepCd->getMostRecentIepCardState($student->id_student);
+
+      // $this->writevar1($student->id_student,'this is the id fo the student');
+     // $this->writevar1($mostRecentIep[0]['id_student'],'this is the iep');
+    //  $this->writevar1($mostRecentIepCard[0]['id_student'],'this is the iep/ifsp card');
+
+
+   //   if ($mostRecentIfsp !=NULL )  $this->writevar1($mostRecentIfsp,'this is the most recent ifsp');
+
         $t=$student->id_student;
-        
-        if(is_object($iep)) {
-            /** don't forget to version check */
+
+        $useIep=false;
+        $useIfsp=false;
+        $useIepCard=false;
+
+
+        if($mostRecentIep!=null and $mostRecentIepCard==NULL ) {
+            $useIep=true;
+        }
+
+        if($mostRecentIep!=null and $mostRecentIepCard!=null){
+            if($mostRecentIep[0]['date_conference'] >= $mostRecentIepCard['date_conference']){
+                $useIep=true;
+                $useIepCard=false;
+            }
+            if($mostRecentIep[0]['date_conference'] <= $mostRecentIepCard['date_conference']) {
+                $useIepCard=true;
+                $useIep=false;
+            }
+
+        }
+
+
+        if($mostRecentIfsp!=null and $mostRecentIepCard==null and $mostRecentIep==NULL){
+
+                $useIfsp=true;
+        }
+
+        if($mostRecentIfsp!=null and $mostRecentIepCard!=null and $mostRecentIep==NULL){
+        //    $this->writevar1($mostRecentIfsp[0]['meeting_date'],'this is beforre the meeting date comparison');
+            if($mostRecentIfsp[0]['meeting_date'] >= $mostRecentIepCard[0]['date_conference'] ) {
+               $useIfsp=true;
+               $useIepCard=false;
+           }
+           if($mostRecentIfsp[0]['meeting_date'] <= $mostRecentIepCard[0]['date_conference'] ){
+               $useIepCard=true;
+               $useIfsp=false;
+           }
+
+        }
+
+        if($useIep==true){
+            $relatedServices = $iep->findDependentRowset('Model_Table_Form004RelatedService');
+            $retString = '';
+        //     $this->writevar1($student->id_student_local,'this is an iep');
+            $ot=false;
+            $pt=false;
+            $slt=false;
+
+
+            $service=$iep['primary_disability_drop'];
+         //  $this->writevar1($service,'this is the service');
+
+            if($iep['primary_disability_drop']=='Occupational Therapy' or $iep['primary_disability_drop']=='Occupational Therapy Services') {
+             //   $this->writevar1($iep['primary_disability_drop'],'this is the primary disability OT');
+                $ot=true;
+            }
+
+
+            if($iep['primary_disability_drop']=='Physical Therapy' or $iep['primary_disability_drop']=='Physical therapy') {
+             //   $this->writevar1($iep['primary_disability_drop'],'this is the primary disability PT');
+                $pt=true;
+            }
+
+           if($iep['primary_disability_drop']=='Speech-language therapy' or $iep['primary_disability_drop']=='Speech/Language Therapy') {
+            //   $this->writevar1($iep['primary_disability_drop'],'this is the primary disability SLT');
+                $slt=true;
+           }
+
+
+
+           // if (strpos($service,'Speech-language')or strpos($service,'Speech-Language')!==false)       $this->writevar1($iep['primary_disability_drop'],'this is the dd of the iep');
+
+
+
+            foreach ($relatedServices as $relatedService) {
+
+
+          //      $this->writevar1($relatedService->related_service_drop,'this is the related services');
+                if($relatedService->status=='Active') {
+                    if(''!=$retString) $retString .= $this->delimiter;
+                    $retString .= $relatedService->related_service_drop;
+                }
+
+                if($relatedService->related_service_drop=='Occupational Therapy Services' or $relatedService->related_service_drop=='Occupational Therapy')
+                    $ot=true;
+
+
+                if($relatedService->related_service_drop=='Physical Therapy' or $relatedService->related_service_drop=='Physical therapy')
+                    $pt=true;
+
+                if($relatedService->related_service_drop=='Speech-language therapy' or $relatedService->related_service_drop=='Speech/Language Therapy')
+                    $slt=true;
+            }
+
+            if($ot==true and $pt==false and $slt==false) $code=1;
+            if($ot==false and $pt==true and $slt==false) $code=2;
+            if($ot==false and $pt==false and $slt==true) $code=3;
+            if($ot==true and $pt==true and $slt==false) $code=4;
+            if($ot==false and $pt==true and $slt==true) $code=5;
+            if($ot==true and $pt==false and $slt==true) $code=6;
+            if($ot==true and $pt==true and $slt==true) $code=7;
+            if($ot==false and $pt==false and $slt==false) $code=8;
+       //     $this->writevar1($code,'this is the code');
+
+        }
+
+
+        if($student->id_student_local=='97051') {
+            $this->writevar1($useIepCard,' use iepcard ');
+            $this->writevar1($useIep,' use iep');
+            $this->writevar1($useIfsp,' use ifsp card');
+
+
+        }
+        if($useIepCard==true){
+         //   $this->writevar1($student->id_student_local,'this is an iep card');
+
+            $code=8;
+
+            if($mostRecentIepCard[0]['service_ot']==true and $mostRecentIepCard[0]['service_pt']!=true and $mostRecentIepCard[0]['service_slt']!=true){
+                $code=1;
+            }
+            if($mostRecentIepCard[0]['service_ot']!=true and $mostRecentIepCard[0]['service_pt']==true and $mostRecentIepCard[0]['service_slt']!=true){
+                $code=2;
+            }
+            if($mostRecentIepCard[0]['service_ot']!=true and $mostRecentIepCard[0]['service_pt']!=true and $mostRecentIepCard[0]['service_slt']==true){
+                $code=3;
+            }
+
+            //
+
+            if($mostRecentIepCard[0]['service_ot']==true and $mostRecentIepCard[0]['service_pt']==true and $mostRecentIepCard[0]['service_slt']!=true){
+                $code=4;
+            }
+
+            if($mostRecentIepCard[0]['service_ot']!=true and $mostRecentIepCard[0]['service_pt']==true and $mostRecentIepCard[0]['service_slt']==true){
+                $code=5;
+            }
+            if($mostRecentIepCard[0]['service_ot']==true and $mostRecentIepCard[0]['service_pt']!=true and $mostRecentIepCard[0]['service_slt']==true){
+                $code=6;
+            }
+
+            if($mostRecentIepCard[0]['service_ot']==true and $mostRecentIepCard[0]['service_pt']==true and $mostRecentIepCard[0]['service_slt']==true){
+                $code=7;
+            }
+           // $this->writevar1($mostRecentIepCard,'most recent iep card');
+           // $this->writevar1($mostRecentIepCard[0]['service_ot'],'this is ot');
+         //   $this->writevar1($mostRecentIepCard[0]['service_pt'],'this is pt');
+         //   $this->writevar1($mostRecentIepCard[0]['service_slt'],'this is slt');
+          //  $this->writevar1($code,'here is the code');
+
+
+        }
+
+        if ($useIfsp==true){
+
+            $serv=new Model_Table_Form013Services();
+            $result=$serv->getIfspServicesState($mostRecentIfsp[0]['id_form_013']);
+
+           if($result['serviceDescriptor_ot']==1 and $result['serviceDescriptor_pt']!=2 and $result['serviceDescriptor_slt']!=3){
+               $code=1;
+           }
+           if($result['serviceDescriptor_ot']!=1 and $result['serviceDescriptor_pt']==2 and $result['serviceDescriptor_slt']!=3){
+               $code=2;
+           }
+           if($result['serviceDescriptor_ot']!=1 and $result['serviceDescriptor_pt']!=2 and $result['serviceDescriptor_slt']==3){
+               $code=3;
+           }
+
+
+
+           if($result['serviceDescriptor_ot']==1 and $result['serviceDescriptor_pt']==2 and $result['serviceDescriptor_slt']!=3){
+               $code=4;
+           }
+           if($result['serviceDescriptor_ot']!=1 and $result['serviceDescriptor_pt']==2 and $result['serviceDescriptor_slt']==3){
+               $code=5;
+           }
+           if($result['serviceDescriptor_ot']==1 and $result['serviceDescriptor_pt']!=2 and $result['serviceDescriptor_slt']==3){
+               $code=6;
+           }
+           if($result['serviceDescriptor_ot']==1 and $result['serviceDescriptor_pt']==2 and $result['serviceDescriptor_slt']==3){
+               $code=7;
+           }
+           if($result['serviceDescriptor_ot']!=1 and $result['serviceDescriptor_pt']!=2 and $result['serviceDescriptor_slt']!=3){
+               $code=8;
+           }
+
+          //  $this->writevar1($student->id_student,'student with the ifsp');
+         //  if($student->id_student=='1453168') $this->writevar1($result,'this is the result');
+        }
+
+      /*  if(is_object($iep)) {
+            // don't forget to version check
             $t='yes';
             //if(9 >= $iep->version_number) {
              if($t=='yes') {
                 $relatedServices = $iep->findDependentRowset('Model_Table_Form004RelatedService');
-                //if($student->id_student=='1324747') $this->writevar1($relatedServices,'this is the related services');
                 $retString = '';
-                foreach ($relatedServices as $relatedService) {                    
-                  
-                     if($relatedService->status=='Active') {     
+                foreach ($relatedServices as $relatedService) {
+
+                     if($relatedService->status=='Active') {
                     if(''!=$retString) $retString .= $this->delimiter;
                     $retString .= $relatedService->related_service_drop;
                      }
                 }
+             //   echo $retString;
                 return $retString;
             } else {
                 return 'na';
             }
         } else {
             return null;
-        }
-    }
+        } */
+
+
+    return $code;
+
+
+     }
 
     public function relatedServiceLocation($student) {
         $iep = $this->lastIep($student);
@@ -718,37 +933,37 @@ class BellevueExport extends ExportFactoryBellevue {
             return null;
         }
     }
-    
-    
+
+
     public function relatedServiceMultipleForms($student){
         $x=$student->id_student;
         $ieP=new Model_Table_Form004();
         $ifsP=new Model_Table_Form013();
         $iepCarD=new Model_Table_Form023();
-        
+
         $mostRecentIep=$ieP->getMostRecentIepState($student->id_student);
     //    $this->writevar1($mostRecentIep,'the most recent iep ');
-       
+
         if($mostRecentIep!=null) $mostRecentIep=$mostRecentIep[0];
         $mostRecentIepCard=$iepCarD->getMostRecentIepCardState($student->id_student);
-       
-        
+
+
         if($mostRecentIepCard!=null) $mostRecentIepCard=$mostRecentIepCard[0];
        // $this->writevar1($mostRecentIepCard,'the most recent iepCard ');
-        
+
         $mostRecentIfsp=$ifsP->getMostRecentIfspState($student->id_student);
-        
+
         if($mostRecentIep==null and $mostRecentIepCard==null and $mostRecentIfsp==null ){
             return ''; // note it wasa ZER0
         }
-       
+
         if($mostRecentIep!=null and $mostRecentIepCard==null ){
            // $t="IEP";
             $t=$mostRecentIep['primary_service_location'];
          //   $this->writevar1($t,'this is the primary service uner iep');
           //  if(strlen($t)==1 ) $t="0".$t;
            // $t=sprintf("%02d",$t);
-         
+
             return $t;
        }
 
@@ -759,56 +974,56 @@ class BellevueExport extends ExportFactoryBellevue {
            // $t=sprintf("%02d",$t);
             return $t;
         }
-        
-        
+
+
         if($mostRecentIep !=null and $mostRecentIepCard !=null) {
-            $this->writevar1($mostRecentIep,'most recent iep');
-            $this->writevar1($mostRecentIepCard,'most recent iep card');
-            
+          //  $this->writevar1($mostRecentIep,'most recent iep');
+         //  $this->writevar1($mostRecentIepCard,'most recent iep card');
+
             if($mostRecentIep['date_conference']>$mostRecentIepCard['date_conference']){
-            
+
                 $t=$mostRecentIep['primary_service_location'];
              //   if(strlen($t)==1)$t="0".$t;
           //   $t=sprintf("%02d",$t);
             return $t;
             }
-            
+
          if ($mostRecentIep['date_conference']<=$mostRecentIepCard['date_conference']){
-              
+
                 $t=$mostRecentIepCard['service_where'];
              //   if(strlen($t)==1 ) $t="0$t";
           //      $t=sprintf("%02d",$t);
                 return $t;
              //   return $mostRecentIepCard['primary_service_location'];
             }
-            
+
         }
         // Mike changed the $t='01' etc to $t='1' etc.
         if($mostRecentIep==null and $mostRecentIepCard==null and $mostRecentIfsp!=null){
-            
+
             $serviceifsp=new Model_Table_Form013Services();
             $form013=$ifsP->getMostRecentIfspState($student->id_student);
             $id_form013=$form013[0]['id_form_013'];
             $serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
-           
+
             if($serviceDescription['specialeducationsettingdescriptor']=='Home') $t="1";
             if($serviceDescription['specialeducationsettingdescriptor']=='Community') $t="2";
             if($serviceDescription['specialeducationsettingdescriptor']=='Other') $t="3";
-            
-            
+
+
           //  $t=$serviceDescription['specialeducationsettingdescriptor'];
            // if(strlen($t)==1 ) $t="0".$t;
           //  $t=sprintf("%02d",$t);
           //  echo $serviceDescription['specialeducationsettingdescriptor']." ".$t;
             return $t;
         }
-        
-        
-        
-        
-        
-        
-         
+
+
+
+
+
+
+
         return "MEE";
     }
 
@@ -944,6 +1159,9 @@ class BellevueExport extends ExportFactoryBellevue {
      */
     public function progModService($student) {
         $iep = $this->lastIep($student);
+
+
+
         if(is_object($iep)) {
             /** don't forget to version check */
             if(9 >= $iep->version_number) {

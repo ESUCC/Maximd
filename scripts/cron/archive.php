@@ -15,7 +15,7 @@ $beforeDate = @$args["b"];
 $delete = @$args["d"];
 
 if(null==$passedEnv || null==$formNumber || null==$beforeDate || strlen($formNumber)!=3) {
-    echo "ERROR - Usage: archive.php -e environment(iepweb03) -n formNum(004) -b beginDate(2009-01-01) \n";
+    echo "ERROR - Usage: archive.php -e environment(iepweb02) -n formNum(004) -b beginDate(2009-01-01) \n";
     echo "passedEnv: $passedEnv\n";
     echo "formNumber: $formNumber\n";
     echo "beforeDate: $beforeDate\n";
@@ -26,7 +26,7 @@ if(null==$passedEnv || null==$formNumber || null==$beforeDate || strlen($formNum
 // application path - relative to file in scripts/cron/
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../../application/'));
-    
+
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : $passedEnv));
@@ -73,7 +73,7 @@ echo "User logged in.\n";
 $startTime = strtotime('now');
 
 // get forms to be archived
-$formsToArchive = ArchiverHelper::formsToBeArchived('iep_form_' . $formNumber, 'id_form_' . $formNumber, 
+$formsToArchive = ArchiverHelper::formsToBeArchived('iep_form_' . $formNumber, 'id_form_' . $formNumber,
                 'date_conference', $beforeDate);
 
 $formsToArchiveCount = count($formsToArchive);
@@ -92,7 +92,7 @@ foreach ($formsToArchive as $formRec) {
 		die();
 	}
     echo "Processing $counter of $formsToArchiveCount\n";
-    
+
 	/*
 	 * Store (in the filesystem) and index (in Solr) each form
 	 */

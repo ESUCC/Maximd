@@ -2,7 +2,7 @@
 /*
 
  */
-class Form_SearchForm extends Zend_Form { 
+class Form_SearchForm extends Zend_Form {
 
     protected $_district;
 
@@ -40,7 +40,7 @@ class Form_SearchForm extends Zend_Form {
         "031" => array( "fullName" => "Notice of Initial Eval and child Assessment", "shortName" => "Notice of Initial Eval and child Assessment", 'date' => "date_notice" ),
         "032" => array( "fullName" => "Notice of Meeting (IFSP)", "shortName" => "Notice of Meeting (IFSP)", 'date' => "date_notice" ),
         "034" => array( "fullName" => "Prior Written Notice", "shortName" => "Prior Written Notice", 'date' => "date_notice" ),
-        
+
         );
 
     function getFormInfo($formId, $key = 'fullName') {
@@ -76,12 +76,13 @@ class Form_SearchForm extends Zend_Form {
                         '009' => "Notice of Discontinuation",
                         '010' => "Progress Report",
                         '017' => "Notes Page",
+                        '034' => "Prior Written Notice",
                         '018' => "Summary of Performance",
                         '026' => "Revocation of Consent for Special Education and Related Services",
                         '028' => "Equitable Service Plan",
                         '030' => "Notice of Equitable Service Meeting",
                         '024' => "Agency Consent Invitation",
-                        '034' => "Prior Written Notice",
+
                     ),
                     'OPTIONAL FORMS' => array(
                         '011' => "Notice of MDT Conference",
@@ -105,7 +106,7 @@ class Form_SearchForm extends Zend_Form {
                       //  '025' => "Notification Of Multidisciplinary Team Planning Meeting",
                         '015' => "Notice and Consent for Initial Evaluation (IFSP)",
                         '033' => "Annual Transition Notice",
-                        
+
                     ),
                 )
             )
@@ -320,10 +321,12 @@ class Form_SearchForm extends Zend_Form {
                 '009' => "Notice of Discontinuation",
                 '010' => "Progress Report",
                 '017' => "Notes Page",
+                '034' => "Prior Written Notice",
                 '018' => "Summary of Performance",
                 '026' => "Revocation of Consent for Special Education and Related Services",
                 '028' => "Equitable Service Plan",
                 '030' => "Notice of Equitable Service Meeting",
+
             ),
             'OPTIONAL FORMS' => array(
                 '011' => "Notice of MDT Conference",
@@ -338,7 +341,7 @@ class Form_SearchForm extends Zend_Form {
                 '013' => "IFSP",
               /* '032' => "Notice of Meeting (IFSP)",
                * Mike changed this 4-18-2017 jira ticket SRS-50
-               * 
+               *
                */
                 '032' => "Notice of Meeting (Part C)",
          //       '014' => "Notification of IFSP Meeting (Outdated)",
@@ -347,7 +350,8 @@ class Form_SearchForm extends Zend_Form {
                 '031' => "Notice of Initial Eval and Child Assessment",
          //      '025' => "Notification Of Multidisciplinary Team Planning Meeting",
                 '033' => "Annual Transition Notice",
-                '034' => "Prior Written Notice",
+
+
             ),
         );
         return $createForms;

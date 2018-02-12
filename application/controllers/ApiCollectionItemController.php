@@ -7,6 +7,18 @@ class ApiCollectionItemController extends Zend_Rest_Controller
         $this->user = $this->usersession->user;
     }
 
+
+    function writevar1($var1,$var2) {
+
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+
     function putAction() {
 
     }
@@ -74,7 +86,9 @@ class ApiCollectionItemController extends Zend_Rest_Controller
         $collectionExists = $studentCollection->collectionNameExists($this->usersession->sessIdUser, $this->getRequest()->getParam('name'));
 
         if(!$collectionExists) {
+
             $newCollection = $studentCollection->addCollection($this->usersession->sessIdUser, $this->getRequest()->getParam('name'));
+             $this->writevar1($newCollection,'this is the new collection');
             $this->getResponse()->setHttpResponseCode(201);
             $this->_helper->json(array('id'=>$newCollection));
 

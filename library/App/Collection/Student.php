@@ -3,7 +3,7 @@
 class App_Collection_Student extends Model_Table_Collection
 {
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -12,7 +12,7 @@ class App_Collection_Student extends Model_Table_Collection
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     public function getNames($userId, $collectionName='default', $additionalFields = array()) {
 
         $returnArray = array();
@@ -46,7 +46,6 @@ class App_Collection_Student extends Model_Table_Collection
                 }
             }
         }
-     //   $this->writevar1($returnArray,'this returnarray');
         return $returnArray;
     }
 

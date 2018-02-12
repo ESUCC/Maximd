@@ -198,7 +198,7 @@ class Model_DraftEdfiClient  {
         //    $this->writevar1($studentId,'this is the student id');
 
         $student = $this->edfiAPIGet("/api/v2.0/2018/students", array('studentUniqueId' => $studentId));
-      //    $this->writevar1($student,'this is the student json in draftedficlient');
+         $this->writevar1($student,'this is the student json in draftedficlient');
           return json_decode($student);
 
     }

@@ -122,7 +122,7 @@ ODS URLs:
 	  //   $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","5268BB4BE4B3458B","393D3CC9B1E4");
 
 	   // Winnebago
-	     $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","72211943390944B7","F1510515770B");
+	     $edFiClientDraft = new Model_DraftEdfiClient("https://adviserods.nebraskacloud.org/api/","","");
 
 	    $jsonParents = $edFiClientDraft->getParents($student_id);
 

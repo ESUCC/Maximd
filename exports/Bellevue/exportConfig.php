@@ -1,9 +1,9 @@
-<?php  
-// 0 
+<?php
+// 0
 $configArr['PS_ID']=array('id_student_local'=>'field');  // THIS is all  MIke for our benifit
 //1
 $configArr['S_NE_STU_SPED_X.Alternate_Assessment'] = array( 'alternate_assessment' => 'field' ); // ok
-//2 
+//2
 $configArr['U_SPED.SPED_CaseManager'] = array( 'caseManager' => 'function' );
 //3
 $configArr['U_SPED.SPED_IEP_EndDate'] = array( 'effect_to_date' => '004-final' );
@@ -38,9 +38,9 @@ $configArr['U_SPED.ReEval_Consent_Recvd']=array('date_district_received'=>'007-f
 //17
 $configArr['initial_Consent_Recvd']=array('date_district_received'=>'001-final');// This is new
 //18
-//$configArr['NE_alternateassessment'] = array('assessment_alt'=>'004-final'); 
-$configArr['U_SPED.AT_Considerations']=array('student_strengths'=>'004-final');
-
+//$configArr['NE_alternateassessment'] = array('assessment_alt'=>'004-final');
+//$configArr['U_SPED.AT_Considerations']=array('student_strengths'=>'004-final');
+$configArr['U_SPED.AT_Considerations']=array('assistive_tech'=>'004-final');
 
 
 //19  the troubleing one
@@ -53,7 +53,7 @@ $configArr['S_NE_STU_SPED_X.Sped_Entry_Date']= array('initial_verification_date'
 //$configArr['S_NE_STU_SPED_X.Sped_Inst_Setting'] = array('primary_service_location'=>'004-final');
 $configArr['S_NE_STU_SPED_X.Sped_Inst_Setting'] = array('relatedServiceMultipleForms'=>'function');
 
-// Start of Mike Change on 10-31-2016 
+// Start of Mike Change on 10-31-2016
 //$configArr['S_NE_STU_SPED_X.PrimaryService'] = array('related_service_drop'=>'004-final-Model_Table_Form004RelatedService');
 //22  page 6 as per wade 1-23-2017
 $configArr['S_NE_STU_SPED_X.PrimaryService'] = array('primary_disability_drop'=>'004-final');

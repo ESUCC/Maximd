@@ -54,7 +54,7 @@ class ExportFactory
     }
 
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -63,7 +63,7 @@ class ExportFactory
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     public function clearMetaData()
     {
         $this->currentLine = 0;
@@ -184,13 +184,13 @@ class ExportFactory
         }
         $select->where('data_source = NULL');
         echo $select;
-        
+
         $db = Zend_Registry::get('db');
         $stmt = $db->query($select);
       // $this->writevar1($select,'this is the select statement');
       //  $this->writevar1($stmt,'this is the sql statement');
-        
-        
+
+
         $studentCount = 0;
         while ($data = $stmt->fetch()) {
             $studentCount++;
@@ -247,27 +247,27 @@ class ExportFactory
        $ifsp_date=$database->fetchAll($sql);
 
        return $ifsp_date[0]['ifsp_date'];
-       
-       
+
+
    }
-   
+
    public function getStudentExitInfo($id)  {
-      
+
        $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
        $database = Zend_Db::factory($dbConfig->db2);
-       
+
        //Get all the students
-       
-       
+
+
        $sql="select id_student,sesis_exit_code,sesis_exit_date from iep_student where id_student='".$id."' ";
-   //    $this->writevar1($sql,'this is the sql command'); 
+   //    $this->writevar1($sql,'this is the sql command');
        $studentData=$database->fetchAll($sql);
    //    $this->writevar1($studentData,'this is the student data');
-       
-       
+
+
        return $studentData;
    }
-   
+
    public function getTransferReportCutoff() {
        $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
        $database = Zend_Db::factory($dbConfig->db2);
@@ -275,16 +275,16 @@ class ExportFactory
        $datetransfer=$database->fetchAll($sql);
       // $this->writevar1($datetransfer[0]['transfer_report_cutoff'],'this  is the date transfer');
        return($datetransfer[0]['transfer_report_cutoff']);
-       
+
    }
-    
+
    public function getPublicSchoolValues($id){
        $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
        $database = Zend_Db::factory($dbConfig->db2);
-       
+
        $sql="select id_student,pub_school_student,parental_placement from iep_student where id_student= '".$id."' ";
      //  $this->writevar1($sql,'thisis the sql command');
-       
+
         $resultArray=$database->fetchAll($sql);
       // $this->writevar1($resultArray,'this is the result array');
        if($resultArray[0]['pub_school_student']=='true'){
@@ -293,11 +293,11 @@ class ExportFactory
        else {
         if($resultArray[0]['parental_placement']=='0') return '2';
         if($resultArray[0]['parental_placement']=='1') return '3';
-        
+
        }
-       
-   
-   }  
+
+
+   }
     public function getForm013($id,$id13)
     {
         $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
@@ -306,55 +306,55 @@ class ExportFactory
         $sql3='';
         $sql2="select get_most_recent_iep_date_conference(".$id.") as iep_date";
         $sql3="select get_most_recent_ifsp_date_conference(".$id.") as ifsp_date";
-    
-        
+
+
         $iep_date=$database->fetchAll($sql2);
         $ifsp_date=$database->fetchAll($sql3);
-      
+
      //   if ($id=='1475756'){
      //       $this->writevar1($iep_date,'this is the iep_date');
         //    $this->writevar1($ifsp_date,'this is the ifsp_date');
      //   }
-        
+
          $iepDate=$iep_date[0]['iep_date'];
          $ifspDate=$ifsp_date[0]['ifsp_date'];
-      
+
          if($ifspDate> $iepDate ) {
-             
+
           //   if ($id=='1475756') $this->writevar1($ifspDate,'we got here');
-             
-        
-             
+
+
+
          $sqlFirst="select get_most_recent_ifsp_id($id) as ifsp_id";
          $form13Id=$database->fetchAll($sqlFirst);
      //    if ($id=='1475756') $this->writevar1($form13Id,'this is the array form 13 id');
          $fm13id=$form13Id[0]['ifsp_id'];
-         
+
          $sql="select id_form_013,service_where, status from ifsp_services where id_form_013='".$fm13id."' order by timestamp_last_mod DESC";
-         
+
          //  $this->writevar1($sql,'this is the sql statement');
          $result=$database->fetchAll($sql);
 
           //     if ($id=='1475756') $this->writevar1($result,'this is the result');
 
          $service=$result[0]['service_where'];
-         if ($service=='Home') $serviceNum='1'; 
+         if ($service=='Home') $serviceNum='1';
          if ($service=='Community') $serviceNum='2';
          if ($service=='Other')$serviceNum='3';
-         
-          //  if ($id=='1475756') $this->writevar1($serviceNum,'we got here inside the ifsp');           
-         
-          
-         return $serviceNum;  
+
+          //  if ($id=='1475756') $this->writevar1($serviceNum,'we got here inside the ifsp');
+
+
+         return $serviceNum;
          }
          else {
             // if ($id=='1475756') $this->writevar1($serviceNum,'we got here outside the ifsp');
-             
+
              return $id13;
          }
-         
-        
-        
+
+
+
     }
 
     public function exportStudents()
@@ -410,25 +410,25 @@ class ExportFactory
         if (isset($this->exportConfig->limitToActive) && $this->exportConfig->limitToActive) {
             $select->where("(status ='Active' or sesis_exit_date > '".$dateCutoff."' )");
         }
-        
-     
-        
+
+
+
 //        $select->limit(10);
         echo "\n" . "\n" . $select . "\n";
         $stmt = $db->query($select);
-        $this->writevar1($stmt,'this is the sql statement');
+      //  $this->writevar1($stmt,'this is the sql statement');
         $date1=$this->getTransferReportCutoff();
      //   $this->writevar1($date1,'last date of transfer');
         $data = array();
         $studentCount = 1;
-        
-        
-        
-        
+
+
+
+
         while ($data = $stmt->fetch()) {
             $studentCount++;
         }
-        
+
         $counter = 1;
         $exportPath = realpath(
                 APPLICATION_PATH . '/../' . $this->exportConfig->studentExportFile->filepath . '/'
@@ -449,30 +449,30 @@ class ExportFactory
                     echo '.';
                 }
                 $exportLine = $this->buildExportLine($student);
-              
-                
-                
+
+
+
                 // Mike says put it right here man 2-27-2017
                 $exportLine[12]=$this->getPublicSchoolValues($student->id_student);
                 $item13=$exportLine[13];
                 $exportLine[13]=$this->getForm013($student->id_student,$item13);
-               
-                $dateTransfer= $this->getTransferReportCutoff();  
+
+                $dateTransfer= $this->getTransferReportCutoff();
                 $studentExitInfo=$this->getStudentExitInfo($student->id_student);
               //  $this->writevar1($studentExitInfo,'this is the student exit info');
                 $temp=date('2010-10-02 00:00:00');
-            //    
+            //
             //    $this->writevar1($studentExitInfo,'this is the student info');
-                
-                
-                
-                
+
+
+
+
               //  $this->writevar1($t,'this is transfer report cutoff date');
                 if($exportLine[19]!='1') $exportLine[19]='2';
-                 
-                
+
+
                 $exportLine[20]=$this->getForm013MeetingDate($student->id_student);
-              
+
                 file_put_contents($exportPath, $this->arrayToCsv($exportLine, "\t", '"', true) . $this->eol, FILE_APPEND);
                 $counter++;
             }
@@ -774,7 +774,7 @@ class ExportFactory
         } else {
             return null;
         }
-        
+
     }
 
     public function removeReturns($text)

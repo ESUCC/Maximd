@@ -1,27 +1,27 @@
 <?php
 
 class ExportFactoryBellevue
-{ 
-// Note: On line 299 you can save a lot of time by adding a student id to the district sql command.  
+{
+// Note: On line 299 you can save a lot of time by adding a student id to the district sql command.
 // It will only get that one student.
 
     var $type;
-    var $debug = true;  
+    var $debug = true;
     var $dataSource;
 
     var $sourceFields = array();
     var $extraFields = array();
     var $extraInsertFields = array();
-    var $extraUpdateFields = array(); 
+    var $extraUpdateFields = array();
 
-    var $currentLine = 0; 
+    var $currentLine = 0;
     var $currentRecord;
     var $currentChangeType;
     var $delimiter = "\t";
     var $eol = "\r\n";
- 
+
     var $log = array();
-    var $timeOfImport = array();  
+    var $timeOfImport = array();
 
     var $form001 = null;
     var $form002 = null;
@@ -54,9 +54,9 @@ class ExportFactoryBellevue
         $this->timeOfImport = date("c", strtotime('now'));
     }
 
-    
+
     public function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -65,8 +65,8 @@ class ExportFactoryBellevue
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
-    
+
+
     public function clearMetaData()
     {
         $this->currentLine = 0;
@@ -221,7 +221,7 @@ class ExportFactoryBellevue
         $this->delimiter = $delimiter;
     }
 
-    public function getDelimiter() 
+    public function getDelimiter()
     {
         return $this->delimiter;
     }
@@ -233,12 +233,12 @@ class ExportFactoryBellevue
     }
 
     public function getSourceFields()
-    { 
+    {
         return $this->sourceFields;
-    } 
+    }
 
 
-    
+
     public function exportStudents()
     {
         $db = Zend_Registry::get('db');
@@ -255,12 +255,12 @@ class ExportFactoryBellevue
         (
             [id_student] => field
             )
-      */        
+      */
 
         $select = $table->select();
-        // This is setting up the sql command and parameters. 
+        // This is setting up the sql command and parameters.
      //  $this->writevar1($select, 'the select command line 260 factore');
-      
+
         $whereAdd = '';
         if (isset($this->exportConfig->id_county_district) && count($this->exportConfig->id_county_district)) {
             $first = true;
@@ -271,22 +271,27 @@ class ExportFactoryBellevue
                 }
                 list($id_county, $id_district) = explode('-', $id_county_district);
                 if($first) {
-                    $whereAdd = '(id_county = \''.$id_county.'\' and id_district = \''.$id_district.'\') ';
+                    $whereAdd = '(id_county = \''.$id_county.'\' and id_district = \''.$id_district.'\'and id_student_local> \'10\') ';
                 } else {
-                    $whereAdd .= 'or (id_county = \''.$id_county.'\' and id_district = \''.$id_district.'\') ';
+                    $whereAdd .= 'or (id_county = \''.$id_county.'\' and id_district = \''.$id_district.'\' and id_student_local> \'10\') ';
                 }
                 $first = false;
             }
-           
+
             $select->where($whereAdd);
         } else
+
+            /*
+             * Mike added the and id_student_local > 10 at Michelle Andrade's request so  that studentss did not show up without a local id
+             * 2-10-2018
+             */
             if (count($this->exportConfig->id_district) >= 2) {
             $first = true;
             foreach ($this->exportConfig->id_district as $id_district) {
                 if ($first) {
-                    $whereAdd = '(id_county = \'' . $this->exportConfig->id_county . '\' and id_district = \'' . $id_district . '\') ';
+                    $whereAdd = '(id_county = \'' . $this->exportConfig->id_county . '\' and id_district = \'' . $id_district . '\' and id_student_local> \'10\') ';
                 } else {
-                    $whereAdd .= 'or (id_county = \'' . $this->exportConfig->id_county . '\' and id_district = \'' . $id_district . '\') ';
+                    $whereAdd .= 'or (id_county = \'' . $this->exportConfig->id_county . '\' and id_district = \'' . $id_district . '\' and id_student_local> \'10\') ';
                 }
                 $first = false;
             }
@@ -294,16 +299,19 @@ class ExportFactoryBellevue
         } else {
             $select->where('id_county = ?', $this->exportConfig->id_county);
             $select->where('id_district = ?', $this->exportConfig->id_district);
+            $select->where('id_student_local > ?','10');
+
            // $select->where('id_student= ?','1451293');
         }
         if (isset($this->exportConfig->limitToActive) && $this->exportConfig->limitToActive) {
             $select->where('status = ?', 'Active');
+            $select->where('id_student_local > ?','10');
          //   $select->where('id_student= ?','1282236');
         }
 //        $select->limit(10);
        echo "\n" . "\n" . $select . "\n";
         $stmt = $db->query($select);
-       // $this->writevar1($stmt,'this is the db statement');
+    //    $this->writevar1($stmt,'this is the db statement');
        // print_r($stmt); die(); //returns something fetall can understand  [queryString] => SELECT "iep_student".* FROM "iep_student" WHERE (id_county = '77') AND (id_district = '0001') AND (status = 'Active')
         $data = array();
         $studentCount = 1;
@@ -335,12 +343,12 @@ class ExportFactoryBellevue
         //     print_r($exportLine); // this prints the fields in array format.
           /*  * Array
             (
-           
+
             [0] => 1414948
-            ) 
+            )
             */
              // print_r($exportLine."   ");
-       //        print_r($exportLine);  
+       //        print_r($exportLine);
 
 //changed by Mike D 11/01/2016
 //$this->writevar1($exportLine[5],'this is line 5');
@@ -353,95 +361,102 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
       if($exportLine[10]==''||$exportLine[10]==NULL){
           $exportLine[10]=0;
       }
-      
+
       if($exportLine[11]==''||$exportLine[11]==NULL){
           $exportLine[11]=0;
       }
-      
+
 //            $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
-// end of Mike change             
- 
+// end of Mike change
+
             //$exportLine[2]=$this->changeTrueFalse($exportLine[2]);
-              
+
              // $exportLine[9]=changeDateFormat($exportLine[9])
          //   $dateString=$exportLine[9];
-         
-         
+
+
             $exportLine[3] = $this->chDateFormat($exportLine[3]);
             $exportLine[4] = $this->chDateFormat($exportLine[4]);
             $exportLine[5] = $this->chDateFormat($exportLine[5]);
 
-             
+
         $exportLine[13] = $this->chDateFormat($exportLine[13]);
         //$exportLine[15] = $this->chDateFormat($exportLine[15]);
         $exportLine[16] = $this->chDateFormat($exportLine[16]);
-         $exportLine[17] = $this->chDateFormat($exportLine[17]);  
-        
+         $exportLine[17] = $this->chDateFormat($exportLine[17]);
+
+
+
          $exportLine[18]= strip_tags($exportLine[18]);
+         $search1 = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u");
+         $replace1 = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u");
+         $exportLine[18]=str_replace($search1,$replace1,$exportLine[18]);
+
+
          $exportLine[20] = $this->chDateFormat($exportLine[20]);
-         
+
          if($exportLine[21]=='05') $exportLine[21]='5';
-         
-          
+
+
         //  $exportLine[30] = $this->chDateFormat($exportLine[30]);
-        
+
          $t=$exportLine[33];
        //   $t=preg_replace('/\s+/', '', $t);
           $exportLine[33]=substr($t,0,3995);
           $exportLine[33]=$exportLine[33];
 
           if($exportLine[33]==NULL) $exportLine[33]='No_Qualified_FBA_is_Available';
- 
+
           $t=strip_tags($exportLine[32]);
        //   $t=preg_replace('/\s+/', '', $t);
           $exportLine[32]=substr($t,0,3995);
           $exportLine[32]=$exportLine[32];
           if($exportLine[32]==NULL) $exportLine[32]='No Qualified  FBA is Available';
-          
+
           $t=strip_tags($exportLine[31]);
      //     $t=preg_replace('/\s+/', '', $t);
           $exportLine[31]=substr($t,0,3995);
           $exportLine[31]=$exportLine[31];
           if($exportLine[31]==NULL) $exportLine[31]='No Qualified  FBA is Available';
-          
+
           $t=$exportLine[30];
      //     $t=preg_replace('/\s+/', '', $t);
           $exportLine[30]=substr($t,0,3995);
           $exportLine[30]=$exportLine[30];
           if($exportLine[30]==NULL) $exportLine[30]='No Qualified  FBA is Available';
-          
+
           $t=strip_tags($exportLine[29]);
         //  $t=preg_replace('/\s+/', '', $t);
           $exportLine[29]=substr($t,0,3995);
           $exportLine[29]=$exportLine[29];
           if($exportLine[29]==NULL) $exportLine[29]='No Qualified  FBA is Available';
-          
+
           $t=$exportLine[28];
         //  $t=preg_replace('/\s+/', '', $t);
           $exportLine[28]=substr($t,0,3995);
           $exportLine[28]=$exportLine[28];
          if($exportLine[28]==NULL) $exportLine[28]='No Qualified  FBA is Available';
-          
+
           $t=strip_tags($exportLine[27]);
       //    $t=preg_replace('/\s+/', '', $t);
           $exportLine[27]=substr($t,0,3995);
           $exportLine[27]=$exportLine[27];
          if($exportLine[27]==NULL) $exportLine[27]='No Qualified  FBA is Available';
-          
+
           $t=strip_tags($exportLine[26]);
        //   $t=preg_replace('/\s+/', '', $t);
           $exportLine[26]=substr($t,0,3995);
           $exportLine[26]=$exportLine[26];
           if($exportLine[26]==NULL) $exportLine[26]='No Qualified  FBA is Available';
-          
-          
+
+
          // Mike added this 11/02/16 in order to make the field a 2 instead of null
            if ($exportLine[1]!='1'){
              $exportLine[1]=2;
           }
-         $exportLine[25]=$exportLine[10]; 
+         $exportLine[25]=$exportLine[10];
          $exportLine[32]=$this->removeReturns($exportLine[32]);
-        
+
          $exportLine[33]=$this->removeReturns($exportLine[33]);
          $exportLine[33]=strip_tags($exportLine[33]);
          // Mike changes 11-21-2017 SRS-135
@@ -449,47 +464,47 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
          $exportLine[13]='';
          $exportLine[14]='';
          $exportLine[16]='';
-         $exportLine[18]='';
+     //    $exportLine[18]='';
          $exportLine[30]='';
          $exportLine[28]='';
-         
-             
+
+
             file_put_contents($exportPath, $this->arrayToCsv($exportLine) . $this->eol, FILE_APPEND);
-                $counter++; // This puts all the students in i.e. all the fields.  This is the line that writes it.    
+                $counter++; // This puts all the students in i.e. all the fields.  This is the line that writes it.
             }
             fclose($fp);
             return true;
         }
 
     }
-    
+
     // Mike added this to change the dates"
-   
+
 
     function changeTrueFalse($bool){
-       
+
         if ($bool==1) {
              return 1;
          }
         else return 2;
     }
-    
+
     function chDateFormat($dateline){
         if($dateline!=NULL){
         $newDateString = date_format(date_create_from_format('Y-m-d', $dateline), 'm-d-Y');
         return $newDateString;
-    }  else 
+    }  else
         {
-          return $dateline;     
+          return $dateline;
         }
     }
-    
+
     function nssrsChangeValue($exportLine) {
-            
-           
+
+
            $arr=explode(":",$exportLine);
-           
-          
+
+
            if( in_array(("Speech-language therapy"), $arr) ||
                in_array(("Speech-Language therapy"), $arr) ||
                in_array(("Speech-language Therapy"), $arr) ||
@@ -501,19 +516,19 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                in_array(strtolower("Speech-language Therapy"), $arr) ||
                in_array(strtolower("Speech/language Therapy"), $arr)
                ) {
-                   $spLang =  1;} 
+                   $spLang =  1;}
                    else {
                    $spLang =  0;}
-                
+
                if( in_array(("Occupational Therapy Services"), $arr) ||
                    in_array(strtolower("Occupational Therapy Services"), $arr)
                    ) {
-                       $occTherSer =  1; } 
+                       $occTherSer =  1; }
                        else {
                        $occTherSer =  0; }
-                    
-                       
-                       
+
+
+
                    if( in_array(("Physical Therapy"), $arr) ||
                        in_array(("physical therapy"), $arr)
                        ) {
@@ -521,31 +536,31 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                        } else {
                            $phyTherSer =  0;
                        }
-                        
+
                        #if(1000254 == $sessIdUser) echo "spLang: $spLang<BR>";
                        #if(1000254 == $sessIdUser) echo "occTherSer: $occTherSer<BR>";
                        #if(1000254 == $sessIdUser) echo "phyTherSer: $phyTherSer<BR>";
-                        
+
                        if($spLang == 1 && $occTherSer == 1 && $phyTherSer == 1)
                        {
                            return 7;
-                       } 
+                       }
                        elseif($spLang == 1 && $occTherSer == 1 && $phyTherSer == 0) {
-                           return 6; } 
+                           return 6; }
                        elseif($spLang == 1 && $occTherSer == 0 && $phyTherSer == 1) {
-                           return 5; } 
+                           return 5; }
                        elseif($spLang == 0 && $occTherSer == 1 && $phyTherSer == 1) {
-                           return 4;} 
+                           return 4;}
                        elseif($spLang == 1 && $occTherSer == 0 && $phyTherSer == 0) {
                            return 3; }
                        elseif($spLang == 0 && $occTherSer == 0 && $phyTherSer == 1) {
-                           return 2;} 
+                           return 2;}
                        elseif($spLang == 0 && $occTherSer == 1 && $phyTherSer == 0) {
                            return 1; }
                        else { return 8; }
-                        
-                     
-   
+
+
+
                }
     /**
      * Formats a line (passed as a fields  array) as CSV and returns the CSV as a string.
@@ -567,15 +582,15 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
             // Enclose fields containing $delimiter, $enclosure or whitespace
             if ($encloseAll || preg_match("/(?:${delimiter_esc}|${enclosure_esc}|\s)/", $field)) {
                 $output[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $field) . $enclosure;
-               
+
             } else {
                 $output[] = $field;
             }
       //    print_r($output[36]);
         }
-        
-        // print_r(implode($delimiter,$output)); die(); // This actually prints out the headers to the csv file properly. 
-          
+
+        // print_r(implode($delimiter,$output)); die(); // This actually prints out the headers to the csv file properly.
+
         return implode($delimiter, $output);
     }
 
@@ -610,16 +625,16 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                 }
 
             }
-            
-        } 
+
+        }
     /*    print_r($retArr);die();
-  
+
     *  [0] => srs_id_number
     [1] => U_SPED.EI_Referal
     [2] => State_StudentNumber
     [3] => S_NE_STU_SPED_X.Alternate_Assessment
     */
-       
+
         return $retArr;
     }
 
@@ -628,10 +643,10 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
       // print_r($form);die();// prints out the contents of the iep_form_004 for the form fields. Everything for the one student
         // print_r($subFormName); die(); //prints out something like this. Model_Table_Form004TeamMember
       //  print_r($fieldName); die(); prints out Processing student: 1457849 (1 of 2224) participant_name
-        
-        
+
+
         $subForm = $form->findDependentRowset($subFormName);
-        //  print_r($subForm);die(); 
+        //  print_r($subForm);die();
         if ($subForm->count()) {
             $retString = '';
             foreach ($subForm as $relatedRow) {
@@ -646,7 +661,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                 }
                 $retString .= $relatedRow->$fieldName;
             }
-            return $retString; 
+            return $retString;
         }
         return '';
     }
@@ -659,20 +674,20 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
          */
         for ($i = 1; $i <= 25; $i++) {
             $formVarName = 'form' . substr('000' . $i, -3, 3);
-           
+
      // print_r($formVarName);  //this prints out the 25 of the following: form001form002form003..etc till form025
-         //   print_r($this->formVarName);die(); //prints nothing to the screen. 
+         //   print_r($this->formVarName);die(); //prints nothing to the screen.
             $this->$formVarName = null;
-            
+
         }
 
         $retArr = array();
-      
-       
+
+
         foreach ($this->getSourceFields() as $configLine) {
-            
-      // Prints out each line in exportConfig.php as per what Bellevue has and not the array field name      
-      //   $this->writevar1($configLine,'this is each config line');    
+
+      // Prints out each line in exportConfig.php as per what Bellevue has and not the array field name
+      //   $this->writevar1($configLine,'this is each config line');
             foreach ($configLine as $ffName => $fieldFormOrFunction) {
                 if (substr_count($fieldFormOrFunction, '-') > 0) {
                     if (substr_count($fieldFormOrFunction, '-') == 1) {
@@ -729,7 +744,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                        $retArr[] = '';
                     } else {
                         $retArr[] = $this->sanitizeOutput($form->$ffName);
-                        
+
                     }
                     unset($subFormName);
 
@@ -750,29 +765,29 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                             Zend_Debug::dump($ffName, 'no function found');
                         } else {
                             $retArr[] = $this->sanitizeOutput($this->$ffName($student));
-                            
-                     
-                       /*   
+
+
+                       /*
                          if(!is_null($retArr[9])) {
                              print_r("We got here");print_r($retArr[9]); print_r("\n");
                            $new String = date_format(date_create_from_format('Y-m-d', $retArr[9]), 'd-m-Y');
                           //    $retArr[9]=$newDateString;
                            print_r($newDateString);print_r("\n");
-                           
-                           
+
+
                            $retArr[9]= date_format(date_create_from_format('Y-m-d', $retArr[9]), 'd-m-Y');
-                         }                            
-                          */ 
-                          
-                          
+                         }
+                          */
+
+
                            //$retArr[37]=9999;
-                        //    print_r($this->$ffName($student)); Does not print what I think it should.  Need to find array name 
+                        //    print_r($this->$ffName($student)); Does not print what I think it should.  Need to find array name
                         }
                     }
                 }
             }
-        } 
-        
+        }
+
     //    $this->writevar1($retArr,'this is the array');  this actuall builds the export line according to the config file.
     //  print_r($retArr);
         return $retArr;
@@ -825,50 +840,60 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
         try {
             $form004Obj = new Model_Table_Form004();
             $form004 = $form004Obj->mostRecentFinalForm($student->id_student);
-            
-           
-        
+
+
+
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
         if (count($form004)) {
             $this->form004 = $form004;
             return $form004;
-            
+
         } else {
             return null;
         }
     }
-// Note there was one that 
+
+    public function lastIfsp($student){
+
+    }
+
+    public function lastIepCard($student){
+
+    }
+
+
+// Note there was one that
     public function mostRecentFinalForm($student, $formNo)
     {
-       
-    
+
+
         $localVar = 'form' . substr('000' . $formNo, -3, 3);
         $modelName = 'Model_Table_Form' . substr('000' . $formNo, -3, 3);
-        
+
     //    $this->writevar1($modelName,'this is the model name');
      //   $this->writevar1($localVar,'this is the localvar');
-      // returns something like Model_Table_Form004 and form004 respectively  
+      // returns something like Model_Table_Form004 and form004 respectively
         if (!is_null($this->$localVar)) {
             return $this->$localVar;
         }
         try {
             $formObj = new $modelName();
             $form = $formObj->mostRecentFinalForm($student->id_student);
-         
-            
-         
+
+
+
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n";
         }
-        
-        
+
+
         if (count($form)) {
             $this->$localVar = $form;
             // Mike added this 1-21-2017 so that any forms over year were not displayed.  Lot of writeup
             if($modelName=='Model_Table_Form019') {
-             
+
                 $theDate=strtotime($form['date_notice']);
                 $now =time();
                 $differ=$now-$theDate;
@@ -881,7 +906,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                 if ($form['bi_alternative_discipline_reason']=='') $form['bi_alternative_discipline_reason']='NO QUAlIFIED FBA Avaailable';
                 if ($form['fa_specific_antecedents']=='') $form['fa_specific_antecedents']='NO QUAlIFIED FBA Avaailable';
                 if ($form['bi_modifications']=='') $form['bi_modifications']='NO QUAlIFIED FBA Avaailable';
-           */   
+           */
              // Mike added this 1-21-2017 so that any forms over year were not displayed.  Lot of writeup
                 if($differ2 >=365 ){
                   //  $this->writevar1($differ2,'this is the time difference');
@@ -896,24 +921,24 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
                 }
             }
             // End of Mikes add.
-           
+
             return $form;
-           
+
         } else {
             return null;
         }
     }
-      
-        
+
+
         /* if (count($form)) {
             $this->$localVar = $form;
             return $form;
         } else {
             return null;
         } */
-        
 
-        
+
+
 
 
     public function lastMdtDateMdt($student)
@@ -962,7 +987,7 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
     {
         $text = str_replace("\n", "", $text);
         // Michael or Mike added this June 1 beacuse PowerSChool does not like this combination. It adds a hashtag called ?
-        
+
         $text =str_replace("- "," ",$text);
         $text=str_replace("<br />"," ",$text);
         $text = str_replace("\r", "  ", $text);
