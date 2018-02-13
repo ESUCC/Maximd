@@ -11,7 +11,7 @@ $paramArr = array_slice($argv, 1);
 
 // Define path to application directory
 defined('APPLICATION_PATH') || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../../application'));
-echo (APPLICATION_PATH);
+echo "tge app path is here " .(APPLICATION_PATH)."THIS IS HE APP PATH \N";
 // Define application environment
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : $paramArr[0]));
 

@@ -2035,13 +2035,13 @@ END;
 		// Mike added this 2-10-2018 so that only  version 9 will display in see SRS-180
 		if(isset($dbData['id_form_002']) and $dbData['status']=='Draft') {
 
-		      $dbData['version_number']='9';
+		   $dbData['version_number']='9';
 	      }
 
 
 
 
-		
+
 
 
 

@@ -6,6 +6,17 @@ class ArchiverHelper
     /**
      * @param null $log
      */
+    function writevar1($var1,$var2) {
+
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+
     public function setLog($log)
     {
         $this->log = $log;
@@ -34,7 +45,7 @@ class ArchiverHelper
         $db = Zend_Db::factory($config->db2);
         Zend_Db_Table_Abstract::setDefaultAdapter($db);
         Zend_Registry::set('db', $db);
-        
+
         self::addLogStatic("Database config set up.");    }
 
     public static function setupTranslate($config, $formNumber, $session)
@@ -77,12 +88,15 @@ class ArchiverHelper
         self::addLogStatic("Zend Translate configured.");
 
     }
-    
+
     public static function setupRegistry()
     {
+
+        writevar1('we got to the setupRegistry',' into the setup registry');
         if (!class_exists('Zend_Registry', false) || !Zend_Registry::isRegistered('config')) {
             if (!class_exists('Zend_Registry')) {
                 $paths = array('.', '/usr/local/zend/share/ZendFramework/library',
+            //    $paths=  array('.','/usr/local/zend/var/libraries/Zend_Framework_1/default/library',
                 APPLICATION_PATH . '/../library');
                 ini_set('include_path', implode(PATH_SEPARATOR, $paths));
                 require_once 'Zend/Loader/Autoloader.php';
@@ -92,19 +106,19 @@ class ArchiverHelper
             }
         }
     }
-    
-    private static function addTmxToTranslation($tmxFile, $translate) 
+
+    private static function addTmxToTranslation($tmxFile, $translate)
     {
         if (file_exists($tmxFile)) {
             $actionTranslation = new Zend_Translate(array('adapter' => 'tmx',
                                                           'content' => $tmxFile,
                                                           'scan' => Zend_Translate::LOCALE_FILENAME,
                                                           'disableNotices' => true));
-    
+
             $translate->addTranslation(array('content' => $actionTranslation));
         }
     }
-    
+
     public static function formsToBeArchived($tableName, $keyName, $dateField = 'date_notice', $beforeDate)
     {
         $columnExistsQuery = "SELECT attname FROM pg_attribute WHERE attrelid =

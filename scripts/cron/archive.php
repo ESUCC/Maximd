@@ -1,5 +1,21 @@
 <?php
 
+echo "We got here"."\n";
+
+
+function writevar1($var1,$var2) {
+
+    ob_start();
+    var_dump($var1);
+    $data = ob_get_clean();
+    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+    $fp = fopen("/tmp/textfile.txt", "a");
+    fwrite($fp, $data2);
+    fclose($fp);
+}
+
+writevar1('we got here','we got here');
+
 /**
  * Script for creating archives
  */
@@ -13,6 +29,9 @@ $passedEnv = @$args["e"];
 $formNumber = @$args["n"];
 $beforeDate = @$args["b"];
 $delete = @$args["d"];
+writevar1($args,'these are the arguments');
+
+
 
 if(null==$passedEnv || null==$formNumber || null==$beforeDate || strlen($formNumber)!=3) {
     echo "ERROR - Usage: archive.php -e environment(iepweb02) -n formNum(004) -b beginDate(2009-01-01) \n";
@@ -20,6 +39,7 @@ if(null==$passedEnv || null==$formNumber || null==$beforeDate || strlen($formNum
     echo "formNumber: $formNumber\n";
     echo "beforeDate: $beforeDate\n";
     print_r($argv);
+
     die();
 }
 
@@ -27,9 +47,15 @@ if(null==$passedEnv || null==$formNumber || null==$beforeDate || strlen($formNum
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../../application/'));
 
+     writevar1(APPLICATION_PATH,'this is the app path');
+
+
+
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : $passedEnv));
+
+writevar1(APPLICATION_ENV,'this is the app environment');
 
 require_once 'Zend/Application.php';
 
@@ -39,6 +65,9 @@ $application->bootstrap();
 
 // setup registry with config
 ArchiverHelper::setupRegistry();
+
+
+
 
 $session = new Zend_Session_Namespace('user');
 if (empty($session->locale))
