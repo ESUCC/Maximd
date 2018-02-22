@@ -5,9 +5,9 @@ class Archiver
 
     public function log($message = 'Init Archiver')
     {
-//        $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH . '/../logs/ArchiverLog.txt');
-//        $logger = new Zend_Log($writer);
-//        $logger->info($message);
+     //   $writer = new Zend_Log_Writer_Stream(APPLICATION_PATH . '/../logs/ArchiverLog.txt');
+     //   $logger = new Zend_Log($writer);
+     //   $logger->info($message);
     }
 
     public static function processForm( //$oldSiteClient, $newSiteClient,
@@ -37,6 +37,7 @@ class Archiver
             $formsArchived,
             $formsNotArchived
         );
+     //   $this->writevar1($archiveData,'this is the archive data array');
         if(false === $archiveData) {
             return false;
         }
@@ -100,6 +101,7 @@ class Archiver
     private static function index($archiveData, $config, &$formsIndexed, &$formsNotIndexed)
     {
 //        echo "INFO: Indexing...\n";
+    /*   Mike commented this out 2-15-2018 so that it does not get to the solr server.
         $indexed = App_Solr::indexBinary($archiveData, $config->solr->host, $config->solr->port);
         if ($indexed) {
             $formsIndexed[] = "File " . $archiveData['tmpPdfPath'] . " has been indexed.\n";
@@ -108,7 +110,8 @@ class Archiver
             $formsNotIndexed[] = "File " . $archiveData['tmpPdfPath'] . " could not be indexed:\n $indexed\n";
 //            echo "WARNING: Could not index...\n";
             return false;
-        }
+        } */
+        return true;
     }
 
     public static function archiveFormToDb($formRec, $formNumber, $config, $archiveConfig)
@@ -144,7 +147,9 @@ class Archiver
             }
 
             self::deleteExistingArchiveRecords($mainDbForm, $archiveDb, $tableName, $tableKey);
-            self::log("Delete archive records from $tableName where " . $tableKey . ' = ' . $formRec[$tableKey]);
+           self::log("Delete archive records from $tableName where " . $tableKey . ' = ' . $formRec[$tableKey]);
+
+
 
             // insert into archive db
             $archiveResult = $archiveDb->insert($tableName, self::massageBools($mainDbForm, $mainDb->describeTable($tableName)));
@@ -168,7 +173,7 @@ class Archiver
                             throw new Exception('Archiving subform ' . $dependentTableName . ' failed.');
                             return false;
                         }
-                        self::log("Archive Form Insert into $dependentTableName.");
+                      self::log("Archive Form Insert into $dependentTableName.");
                     }
                 }
             }
@@ -180,7 +185,7 @@ class Archiver
             $mainDb->rollback();
 //            echo "WARNING: Could not move data to archive db...\n";
             return false;
-        }
+        } 
     }
 
     public static function deleteForm($formRec, $formNumber, $config, $archiveConfig)

@@ -42,7 +42,9 @@ class ArchiverHelper
 
     public static function seetupDb($config)
     {
+        //writevar1($config,'this is the config');
         $db = Zend_Db::factory($config->db2);
+    //   writevar1($db,'this is the db');
         Zend_Db_Table_Abstract::setDefaultAdapter($db);
         Zend_Registry::set('db', $db);
 
@@ -92,11 +94,11 @@ class ArchiverHelper
     public static function setupRegistry()
     {
 
-        writevar1('we got to the setupRegistry',' into the setup registry');
+
         if (!class_exists('Zend_Registry', false) || !Zend_Registry::isRegistered('config')) {
             if (!class_exists('Zend_Registry')) {
-                $paths = array('.', '/usr/local/zend/share/ZendFramework/library',
-            //    $paths=  array('.','/usr/local/zend/var/libraries/Zend_Framework_1/default/library',
+                //$paths = array('.', '/usr/local/zend/share/ZendFramework/library',
+                $paths=  array('.','/usr/local/zend/var/libraries/Zend_Framework_1/default/library',
                 APPLICATION_PATH . '/../library');
                 ini_set('include_path', implode(PATH_SEPARATOR, $paths));
                 require_once 'Zend/Loader/Autoloader.php';
@@ -131,16 +133,32 @@ class ArchiverHelper
             $studentSql = " and id_student = '$limitToStudent' ";
         }
 
+
+        $dateArr=explode('/',$beforeDate);
+
+        $t=$dateArr[2]-1;
+
+        $beforeDateStart=($dateArr[0].'/'.$dateArr[1].'/'.$t);
+        $tt=$beforeDateStart;
+       // writevar1($tt,'this is the before date start '.$beforeDate);
+
         if(null!=$beforeDate && $exists!=false) {
-            $stmt = "SELECT version_number, pdf_archived, $keyName as id, $keyName, id_student, $dateField as date FROM $tableName
-            where status = 'Final' and $dateField < '$beforeDate' $studentSql order by $dateField desc;";
+            $stmt = "SELECT version_number,id_school,id_county,id_district, pdf_archived, $keyName as id, $keyName, id_student, $dateField as date FROM $tableName
+            where status = 'Final'and $dateField >= '$tt' and $dateField < '$beforeDate' $studentSql order by $dateField desc;";
+
+
         } else {
-            $stmt = "SELECT version_number, pdf_archived, $keyName as id, $keyName, id_student, date_notice as date FROM $tableName
-            where status = 'Final' and date_notice < '$beforeDate' $studentSql order by date_notice desc;";
+            $stmt = "SELECT version_number,id_school,id_county,id_district, pdf_archived, $keyName as id, $keyName, id_student, date_notice as date FROM $tableName
+             where status = 'Final' and date_notice >= '$tt' and date_notice < '$beforeDate' $studentSql order by date_notice desc;";
 //            echo "Column $dateField does not exist for table $tableName, so we are using date_notice.\n";
         }
-//        echo "$stmt\n";
+     echo "$stmt\n";
+    //   writevar1($stmt,'this is the archive statement for the db');
         $result = Zend_Registry::get('db')->query($stmt);
+
+        // Before
+
+
         return $result->fetchAll();
     }
     public static function formsToBeMovedToArchivDb($tableName, $keyName)

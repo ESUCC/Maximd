@@ -80,6 +80,8 @@ class Model_Table_Form013Services extends Model_Table_AbstractIepForm {
         $sql="select * from ifsp_services where status is null and id_form_013='$id_form' ";
         $forms=$this->db->fetchAll($sql);
 
+
+
     //   $this->writevar1($forms,'this is the collection of ifsp forms');
      //   $form=$forms[0];
 
@@ -88,7 +90,24 @@ class Model_Table_Form013Services extends Model_Table_AbstractIepForm {
 
         foreach($forms as $form){
 
-            if ($form['service_service']=='Speech-language therapy' or $form['service_service']=='Speech Language Therapy') {
+            if ($form['service_service']=='Speech-language therapy'||
+                $form['service_service']=='Speech-Language therapy'||
+
+                $form['service_service']=='Speech-language Therapy'||
+                $form['service_service']=='Speech-Language Therapy'||
+
+                $form['service_service']=='Speech/language therapy'||
+                $form['service_service']=='Speech/Language therapy'||
+
+                $form['service_service']=='Speech/language Therapy'||
+                $form['service_service']=='Speech/Language Therapy'||
+
+                $form['service_service']=='Speech-language Therapy'||
+                $form['service_service']=='Speech/language Therapy'
+
+                )
+
+            {
                 $result['serviceDescriptor_slt']='3';
                 $result['serviceBeginDate_slt']=$form['service_start'];
 
@@ -108,11 +127,13 @@ class Model_Table_Form013Services extends Model_Table_AbstractIepForm {
 
             $result['specialeducationsettingdescriptor']=$form['service_where'];
 
-
-       //     $this->writevar1($id_form,'this is the form id');
-          //  $this->writevar1($result,'this is the result inside the model');
           }
           //   $this->writevar1($result,'this is the whole form');
+
+          if($id_form=='53559') {
+              $this->writevar1($id_form,'this is hte form id');
+              $this->writevar1($result,'this is the result');
+          }
 
            return $result;
             // end of the for looop

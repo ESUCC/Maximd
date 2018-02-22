@@ -33,7 +33,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
      * then altered to build a select
      */
     public function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -42,16 +42,19 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
-    
+
+
     public function formMenu($id_student, $form)
     {
+        $preVersion=new Model_Table_ArchiveNew();
+        $formInfo=$preVersion->getFormMetaData($form->id_student,$form->id,$form->form_no);
+
         $options = array('<select class="formMenuSelect" style="width: 150px;">');
         $options[] = '<option value="">Form Options...</option>';
         $student_auth = new App_Auth_StudentAuthenticator();
         $session = new Zend_Session_Namespace('user');
         $access = $student_auth->validateStudentAccess($id_student, $session);
-        
+
         if ('Team Member' == $access->description) {
             if ('viewaccess' == $access->access_level) {
                 $accessArrayClassName = 'App_Auth_Role_' . str_replace ( ' ', '', $access->description ) . 'View';
@@ -65,18 +68,18 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             $accessArrayObj = new $accessArrayClassName ();
         }
    //     echo '<pre>' . print_r($accessArrayClassName, true) . '</pre>';
-      
-        
-      /* Mike changed this 4-24-2017 to the uncommented code per jira SRS-57 
+
+
+      /* Mike changed this 4-24-2017 to the uncommented code per jira SRS-57
        * if(!empty($form->form_no)) {
             $formKey = 'form_' . $form->form_no;
             $formAccessArr = $accessArrayObj->$formKey;
         }*/
-        
+
         if(!empty($form->form_no)) {
             $formKey = 'form_' . $form->form_no;
             $formAccessArr = $accessArrayObj->$formKey;
-        
+
             if(isset($formAccessArr['Final']['dupe_form_004'])) {
                 $form004DupMenu= new Model_Table_Form004();
                 $continue=$form004DupMenu->removeDupeMenu($id_student);
@@ -84,7 +87,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
                 // $this->writevar1($formAccessArr,'this is the form access array');
                 //$this->writevar1($formAccessArr['Final']['dupe_form_004'],'this is the form access array that was built');
             }
-        
+
         }
         // Mike changed the above to this 4-24-2017 srs-17
         else {
@@ -92,21 +95,21 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
 
         if (isset($formAccessArr[$form->status]['view']) && $formAccessArr[$form->status]['view']) {
-            $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+ if($formInfo==false)           $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
         }
-   
+
     // Mike changed this 4-18-2017 as per jira SRS-42
     //    if('Draft'==$form->status) {
-           if('Draft'==$form->status||$form->form_no=='023'|| $form->form_no=='022') {    
-            
+           if('Draft'==$form->status||$form->form_no=='023'|| $form->form_no=='022') {
+
                 if($form->form_no=='023' || $form->form_no=='022'){
                     $formAccessArr[$form->status]['delete']=true;
-                } 
-    
+                }
+
                 // end of Mike change
-                
-                
-                
+
+
+
             if (isset($formAccessArr[$form->status]['edit']) && $formAccessArr[$form->status]['edit']) {
                 $options[] = '<option href="/form'.$form->form_no.'/edit/document/'.$form->id.'/page/1">Edit</option >';
             }
@@ -119,7 +122,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
         if('Suspended'==$form->status) {
             if (isset($formAccessArr['Draft']['view']) && $formAccessArr['Draft']['view']) {
-                $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+    if($formInfo==false)               $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
             }
             if (isset($formAccessArr['Draft']['delete']) && $formAccessArr['Draft']['delete']) {
                 $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';
@@ -128,7 +131,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
                 $options[] = '<option href="/form'.$form->form_no.'/resume/document/'.$form->id.'">Resume Draft Status</option >';
             }
         }
-        
+
         if('Final'==$form->status && '004' == $form->form_no) {
             if (isset($formAccessArr['Final']['delete']) && $formAccessArr['Final']['delete']) {
                 $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';
@@ -154,10 +157,28 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         if (isset($formAccessArr[$form->status]['log']) && $formAccessArr[$form->status]['log']) {
             $options[] = '<option href="/form'.$form->form_no.'/log/document/'.$form->id.'" target="_blank">Log</option >';
         }
-        if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
-           $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+
+      //  $preVersion=new Model_Table_ArchiveNew();
+      //  $formInfo=$preVersion->getFormMetaData($form->id_student,$form->id,$form->form_no);
+
+        if($formInfo!=false){
+
+         //   $this->writevar1($formInfo['form_id'],'this is the form info4');
+
+            if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
+               $options[] = '<option href="/district/testprint/id/'.$formInfo['id_iep_archive_meta_data'].'">Print From Archive</option >';
+            }
+
+          //  $this->writevar1($formInfo,'this is the form info');
         }
-        
+
+       if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
+ if($formInfo==false)         $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+        }
+
+
+
+    //    $this->writevar1($form->id." ".$form->id_student." ".$form->form_no." ".$form->version_number,'this is the form');
         if($form->filePath) {
             $splitPath = preg_split('/\//', $form->filePath);
             $folder1 = $splitPath[1];
@@ -170,7 +191,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
         if('Admin' == $access->description) {
             $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';
-            
+
         }
         $options[] = '</select>';
         return implode(' | ', $options);

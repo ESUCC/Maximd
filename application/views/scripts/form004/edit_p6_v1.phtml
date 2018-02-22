@@ -1,4 +1,4 @@
-<?php 
+<?php
    	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
    	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
    	$view = $this->element->page->getView();
@@ -8,7 +8,7 @@
 <?= $this->element->id_form_004; ?>
 <?= $this->element->id_student; ?>
 <?= $this->element->date_conference; // placed for use building the location menus on subforms ?>
-<?= $this->element->page; ?>    
+<?= $this->element->page; ?>
 <?= $this->element->dob; ?>
 <?= $this->element->submit; ?>
 
@@ -70,14 +70,14 @@
         <tr class="bglight">
             <td colspan="2">
                 <div id="dates_wrapper-colorme" class="colorme">
-                <?php echo $this->translate('Duration Dates From'); ?> <?= $this->element->primary_service_from; ?> <?php echo $this->translate('to'); ?> 
+                <?php echo $this->translate('Duration Dates From'); ?> <?= $this->element->primary_service_from; ?> <?php echo $this->translate('to'); ?>
                 <?= $this->element->primary_service_to; ?>
                 </div>
             </td>
         </tr>
         <tr class="bglight">
             <td colspan="2">
-                <?php 
+                <?php
                     if(empty($view->db_form_data['date_conference'])) {
                         $this->element->primary_service_location->setAttrib('disable', 'disable');
                         $this->element->primary_service_location->addMultiOption('', 'Please enter the date of conference');
@@ -103,31 +103,31 @@
         </tr>
         <tr class="bglight">
             <td colspan="2">
-                <?php echo $this->translate('Does Service Follow School Calendar'); ?>? 
+                <?php echo $this->translate('Does Service Follow School Calendar'); ?>?
                 <?= $this->element->primary_service_calendar; ?>
             </td>
         </tr>
 	</table>
-	<?php 
-		// 
+	<?php
+		//
 		// related_services subform
 		//
 		echo $this->subform($view, 'related_services');
-	
-		// 
+
+		//
 		// supplemental services subform
 		//
 		echo $this->subform($view, 'supp_services');
-		// 
+		//
 		// program modification subform
 		//
 		echo $this->subform($view, 'program_modifications');
         echo $this->subform($view, 'accomodations_checklist');
-		// 
+		//
 		//  Assistive Technology Devices or Services subform
 		//
 		echo $this->subform($view, 'assist_tech');
-		// 
+		//
 		//   Supports for School Personnel subform
 		//
 		echo $this->subform($view, 'school_supp');
@@ -156,15 +156,15 @@
 			<td class="tanHead">
 				<?php if('edit' != $view->mode) {
 					echo $this->element->special_ed_peer_percent->getLabel() . ' ' .
-						 $this->element->special_ed_peer_percent->getValue() . '%'; 
+						 $this->element->special_ed_peer_percent->getValue() . '%';
 				} else {
 					echo $this->element->special_ed_peer_percent;
 				}
 				?>
-				
+
 				<?php if('edit' != $view->mode) {
 					echo '<BR />' .$this->element->special_ed_non_peer_percent->getLabel() . ' ' .
-						 $this->element->special_ed_non_peer_percent->getValue() . '%'; 
+						 $this->element->special_ed_non_peer_percent->getValue() . '%';
 				} else {
 					echo $this->element->special_ed_non_peer_percent;
 				}
@@ -173,7 +173,7 @@
 			<td class="tanHead">
 				<?php if('edit' != $view->mode) {
 					echo $this->element->reg_ed_percent->getLabel() . ' ' .
-						 $this->element->reg_ed_percent->getValue() . '%'; 
+						 $this->element->reg_ed_percent->getValue() . '%';
 				} else {
 					echo $this->element->reg_ed_percent;
 				}
@@ -182,14 +182,14 @@
 		</tr>
 	</table>
 	<?php } ?>
-	
+
 	<div id="showHideMips">
 	<table class="formSectionHead">
 	    <tr>
 	        <td><?php echo $this->translate('MIPS Consent Form'); ?> </td>
 	    </tr>
 	</table>
-	<table class="formInput">        
+	<table class="formInput">
 	     <tr class="bgLight2">
 	    	<td><?php echo $this->translate('student is receiving'); ?></td>
 		 </tr>
@@ -199,7 +199,7 @@
 			</td>
 		</tr>
 	</table>
-	
+
 	<table class="formSectionHead">
 	    <tr>
 	        <td><?php echo $this->translate('Parent Signature'); ?>: </td>
@@ -235,7 +235,7 @@
 		</tr>
 	</table>
     </div>
-<?php /* Commenting out, not ready for production yet*/
+<?php
 if ('production' !== APPLICATION_ENV) { ?>
 <div class="page6" style="page-break-before: always;">
     <table class="formSectionHead" cellpadding="0" cellspacing="0">

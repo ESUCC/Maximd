@@ -756,10 +756,31 @@ class BellevueExport extends ExportFactoryBellevue {
                 $pt=true;
             }
 
-           if($iep['primary_disability_drop']=='Speech-language therapy' or $iep['primary_disability_drop']=='Speech/Language Therapy') {
+
+
+
+
+
+
+           if($iep['primary_disability_drop']=='Speech-language therapy'||
+              $iep['primary_disability_drop']=='Speech-Language therapy'||
+
+               $iep['primary_disability_drop']=='Speech-language Therapy'||
+               $iep['primary_disability_drop']=='Speech-Language Therapy'||
+
+               $iep['primary_disability_drop']=='Speech/language therapy'||
+               $iep['primary_disability_drop']=='Speech/Language therapy'||
+
+               $iep['primary_disability_drop']=='Speech/language Therapy'||
+               $iep['primary_disability_drop']=='Speech/Language Therapy'||
+
+               $iep['primary_disability_drop']=='Speech-language Therapy'||
+               $iep['primary_disability_drop']=='Speech/language Therapy'
+
+                ) {
             //   $this->writevar1($iep['primary_disability_drop'],'this is the primary disability SLT');
                 $slt=true;
-           }
+            }
 
 
 
@@ -774,7 +795,7 @@ class BellevueExport extends ExportFactoryBellevue {
                 if($relatedService->status=='Active') {
                     if(''!=$retString) $retString .= $this->delimiter;
                     $retString .= $relatedService->related_service_drop;
-                }
+
 
                 if($relatedService->related_service_drop=='Occupational Therapy Services' or $relatedService->related_service_drop=='Occupational Therapy')
                     $ot=true;
@@ -785,6 +806,7 @@ class BellevueExport extends ExportFactoryBellevue {
 
                 if($relatedService->related_service_drop=='Speech-language therapy' or $relatedService->related_service_drop=='Speech/Language Therapy')
                     $slt=true;
+                }
             }
 
             if($ot==true and $pt==false and $slt==false) $code=1;
@@ -807,6 +829,9 @@ class BellevueExport extends ExportFactoryBellevue {
 
 
         }
+
+
+
         if($useIepCard==true){
          //   $this->writevar1($student->id_student_local,'this is an iep card');
 

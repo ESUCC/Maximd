@@ -1,6 +1,6 @@
 <?php
 
-echo "We got here"."\n";
+
 
 
 function writevar1($var1,$var2) {
@@ -14,7 +14,7 @@ function writevar1($var1,$var2) {
     fclose($fp);
 }
 
-writevar1('we got here','we got here');
+
 
 /**
  * Script for creating archives
@@ -29,7 +29,7 @@ $passedEnv = @$args["e"];
 $formNumber = @$args["n"];
 $beforeDate = @$args["b"];
 $delete = @$args["d"];
-writevar1($args,'these are the arguments');
+
 
 
 
@@ -47,20 +47,30 @@ if(null==$passedEnv || null==$formNumber || null==$beforeDate || strlen($formNum
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../../application/'));
 
-     writevar1(APPLICATION_PATH,'this is the app path');
-
+ //    writevar1(APPLICATION_PATH,'this is the app path');
+//     writevar1(realpath(realpath(dirname(__FILE__) . '/../../application/')),'this is real file path');
 
 
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : $passedEnv));
 
-writevar1(APPLICATION_ENV,'this is the app environment');
+//writevar1(APPLICATION_ENV,'this is the app environment');
 
+//writevar1('we got to zend application.php','line 60');
+
+
+error_reporting(E_ALL|E_STRICT);
+ini_set('display_errors',1);
 require_once 'Zend/Application.php';
+//writevar1('we got to zend application.php','line 62');
+
+
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(APPLICATION_ENV, APPLICATION_PATH . '/configs/application.ini');
+
+
 $application->bootstrap();
 
 // setup registry with config
@@ -74,6 +84,8 @@ if (empty($session->locale))
     $session->locale = 'en';
 
 echo "Config loaded.\n";
+
+
 
 $config = Zend_Registry::get('config');
 
@@ -104,6 +116,26 @@ $startTime = strtotime('now');
 // get forms to be archived
 $formsToArchive = ArchiverHelper::formsToBeArchived('iep_form_' . $formNumber, 'id_form_' . $formNumber,
                 'date_conference', $beforeDate);
+//writevar1($formsToArchive,'these are the forms to archive');
+
+/* forms to archive looks like this .  All 200,000 plus
+ * [234486]=>
+  array(6) {
+    ["version_number"]=>
+    int(11)
+    ["pdf_archived"]=>
+    bool(false):
+    ["id"]=>
+    int(1626279)
+    ["id_form_004"]=>
+    int(1626279)
+    ["id_student"]=>
+    int(1219515)
+    ["date"]=>
+    string(10) "0201-04-06"
+
+ */
+
 
 $formsToArchiveCount = count($formsToArchive);
 
@@ -114,8 +146,11 @@ $formsIndexed = array();
 $formsNotIndexed = array();
 
 foreach ($formsToArchive as $formRec) {
+
 	// exit if queue is deactivated
-	$queue = ArchiverHelper::getQueueStatus();
+  writevar1($formRec,'this is a form');
+
+    $queue = ArchiverHelper::getQueueStatus();
 	if('on'!=$queue['status']) {
 		Zend_Debug::dump("Queue is off.");
 		die();
@@ -136,7 +171,7 @@ foreach ($formsToArchive as $formRec) {
         $formsNotIndexed,
         $formsArchived
     );
-    echo "Archiving result: $processResult\n";
+   // echo "Archiving result: $processResult\n";
 
     /*
      * delete from main db

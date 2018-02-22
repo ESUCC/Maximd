@@ -1,10 +1,22 @@
 <?php
 
-class App_Helper_Session extends Zend_Acl 
+class App_Helper_Session extends Zend_Acl
 {
 
+
+    function writevar1($var1,$var2) {
+
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+
 	static function cleanSessionForReuse($force = false) {
-		
+
         $defaultNamespace = new Zend_Session_Namespace();
 	    $sessUser = new Zend_Session_Namespace('user');
         if($force || $defaultNamespace->validSession || $defaultNamespace->siteaccessgranted || null != $sessUser->id_personnel) {
@@ -18,19 +30,19 @@ class App_Helper_Session extends Zend_Acl
         	Zend_Auth::getInstance()->clearIdentity();
 	    	Zend_Session::forgetMe();
         }
-		
-	}	
+
+	}
 
 	static function siteAccessGranted() {
-		
+
         $defaultNamespace = new Zend_Session_Namespace();
 	    $sessUser = new Zend_Session_Namespace('user');
         if($defaultNamespace->validSession && $defaultNamespace->siteaccessgranted && (null != $sessUser->id_personnel || null != $sessUser->id_guardian)) {
         	return true;
         }
 		return false;
-	}	
-	
+	}
+
 	static public function grantSiteAccess($user, $parent) {
         $defaultNamespace = new Zend_Session_Namespace();
 		$defaultNamespace->validSession = true;
@@ -55,13 +67,13 @@ class App_Helper_Session extends Zend_Acl
 	        $sessUser->sessIdUser = $user->user['id_personnel'];;
         }
 	    return false;
-		
-	} 
-	
-	static public function grantArchiverSiteAccess($user, $parent) 
+
+	}
+
+	static public function grantArchiverSiteAccess($user, $parent)
 	{
 		$config = Zend_Registry::get ( 'config' );
-	
+
 		$httpParams = array(
 			'maxredirects' => 5,
 			'timeout'  => 600,
@@ -76,7 +88,7 @@ class App_Helper_Session extends Zend_Acl
         $newSiteClient->setParameterPost('submit', 'Continue');
         $newSiteClient->setParameterPost('agree', 't');
         $response = $newSiteClient->request();
-
+     //   $this-->writevar1($response,'this is hte response');
         $dom = new Zend_Dom_Query($response->getBody());
         if($dom->query('#agree')->count()>=1) {
             // login failed
@@ -106,6 +118,8 @@ class App_Helper_Session extends Zend_Acl
         }
 
         $sessUser = new Zend_Session_Namespace('user');
+
+
         $sessUser->user = $user;
         if(empty($sessUser->user->user['name_middle'])) {
             $sessUser->user->user['name_full'] = $sessUser->user->user['name_first'] . ' ' . $sessUser->user->user['name_last'];
@@ -118,6 +132,7 @@ class App_Helper_Session extends Zend_Acl
         $sessUser->oldSiteClient = $oldSiteClient;
         $sessUser->testUser = false;
         $sessUser->testUser = false;
+      //  writevar1($sessUser,'this is hte sessi user');
         if($parent) {
             $sessUser->parent = true;
             $sessUser->id_guardian = $user->user['id_guardian'];

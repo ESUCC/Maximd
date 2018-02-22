@@ -41,11 +41,10 @@ class ArchiveController extends My_Form_AbstractFormController
         $this->view->jQuery()->enable();
         $this->view->jQuery()->uiEnable();
         $this->view->jQuery()->addStylesheet('/js/jquery_addons/DataTables-1.8.2/media/css/demo_page.css', 'screen');
-        $this->view->jQuery()->addStylesheet('/js/jquery_addons/DataTables-1.8.2/media/css/demo_table.css', 'screen');
+         $this->view->jQuery()->addStylesheet('/js/jquery_addons/DataTables-1.8.2/media/css/demo_table.css', 'screen');
         $this->view->jQuery()->addStylesheet(
-            '/js/jquery_addons/DataTables-1.8.2/media/css/demo_table_jui.css',
-            'screen'
-        );
+           '/js/jquery_addons/DataTables-1.8.2/media/css/demo_table_jui.css','screen'
+       );
 
         $this->view->jQuery()->addJavascriptFile('/js/jquery_addons/DataTables-1.8.2/media/js/jquery.dataTables.js');
         $this->view->jQuery()->addJavascriptFile('/js/jquery_addons/jquery.dataTables.columnFilter.js');
