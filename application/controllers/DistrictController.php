@@ -79,7 +79,8 @@ class DistrictController extends Zend_Controller_Action
         //                 header("Content-Type: text/html; charset=utf-8");
         //Mike line 1478 came up as an error in line 1481 because it was split on 3 lines.  put it together and it worked on the printing
         header("Content-Transfer-Encoding: binary");
-        header('Content-Length: ' . filesize($filename));
+     //Mike took this out 2-22-2018 because the file size was smaller than the actual file name.Thus it was only printing part of it.
+      //  header('Content-Length: ' . filesize($filename));
         readfile($filename);
         $this->view->pdfString=$pdf1->render($result);
         //$tmpPDFpath;

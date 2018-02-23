@@ -148,7 +148,7 @@ $formsNotIndexed = array();
 foreach ($formsToArchive as $formRec) {
 
 	// exit if queue is deactivated
-  writevar1($formRec,'this is a form');
+
 
     $queue = ArchiverHelper::getQueueStatus();
 	if('on'!=$queue['status']) {

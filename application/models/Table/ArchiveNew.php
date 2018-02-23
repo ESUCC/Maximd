@@ -67,7 +67,8 @@ class Model_Table_ArchiveNew extends Model_Table_AbstractIepForm {
               'dob'=>$student['dob'],
               'sesis_exit_date'=>$student['sesis_exit_date'],
               'id_student_local'=>$student['id_student_local'],
-              'unique_id_state'=>$student['unique_id_state']
+              'unique_id_state'=>$student['unique_id_state'],
+              'version_number'=>$Data['version_number']
 
           );
 

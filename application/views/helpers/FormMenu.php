@@ -48,6 +48,10 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
     {
         $preVersion=new Model_Table_ArchiveNew();
         $formInfo=$preVersion->getFormMetaData($form->id_student,$form->id,$form->form_no);
+        $OldVersion=false;
+        if($formInfo['version_number']<9) $OldVersion=true;
+
+
 
         $options = array('<select class="formMenuSelect" style="width: 150px;">');
         $options[] = '<option value="">Form Options...</option>';
@@ -95,7 +99,8 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
 
         if (isset($formAccessArr[$form->status]['view']) && $formAccessArr[$form->status]['view']) {
- if($formInfo==false)           $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+        // Mike put the if in 2-23-2018 SRS-190
+            if($formInfo==false or $OldVersion==false) $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
         }
 
     // Mike changed this 4-18-2017 as per jira SRS-42
@@ -122,7 +127,8 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
         if('Suspended'==$form->status) {
             if (isset($formAccessArr['Draft']['view']) && $formAccessArr['Draft']['view']) {
-    if($formInfo==false)               $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+   // Mike put this in 2-23-2018 SRS-190
+                if($formInfo==false or $OldVersion==false)                $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
             }
             if (isset($formAccessArr['Draft']['delete']) && $formAccessArr['Draft']['delete']) {
                 $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';
@@ -173,7 +179,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
 
        if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
- if($formInfo==false)         $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+ if($formInfo==false or $OldVersion==false)         $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
         }
 
 

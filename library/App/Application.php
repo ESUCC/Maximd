@@ -35,7 +35,7 @@ class App_Application {
 
             $modelform = new $modelName ($formNumber, $usersession);
 			$dbData = $modelform->find ($document, 'print', 'all', null, true);
-
+         //    writevar1($dbData,'this is the db data in Application.php line 38');
 
             $formDate = strtotime('now');
             if(isset($dbData['date_conference']) && !empty($dbData['date_conference'])) {
@@ -92,10 +92,11 @@ class App_Application {
 
 
            // $shortName = 'form-'.$formNumber."-".$document."-archived(" . date('Ymd', $formDate) . ")";;
-            $shortName = $dbData['id_student']."-".$formNumber."-".$document."-archived(" . date('Ymd', $formDate) . ")";;
+            $shortName = $dbData['id_student']."-".$formNumber."-".$document."-archived_" . date('Ymd', $formDate) . "";;
       //      writevar1($path,'this is the path name');
         //    writevar1($shortName,'this is the short name of the file ');
 
+            //"-archived(" . date('Ymd', $formDate) . ")";;
             /*
              * This is where Mike writes to table entry called mikeArchive  2-20-2018
              *
@@ -109,9 +110,10 @@ class App_Application {
             'form_id'=>$document,
             'id_county'=>$dbData['id_county'],
             'id_district'=>$dbData['id_district'],
-            'id_school'=>$dbData['id_school']
+            'id_school'=>$dbData['id_school'],
+            'version_number'=>$dbData['version_number']
              );
-
+  //    writevar1($MetaDbData,'this is the data to be put in the db line 116 applicaion.php');
          $t=false;
             $metaData=new Model_Table_ArchiveNew();
          //   writevar1($metaData,'this is the archiveNew data');

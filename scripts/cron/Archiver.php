@@ -37,24 +37,28 @@ class Archiver
             $formsArchived,
             $formsNotArchived
         );
-     //   $this->writevar1($archiveData,'this is the archive data array');
+
         if(false === $archiveData) {
             return false;
         }
-        /*
-         * Store pdf contents in Solr
-         */
+
+         /* Store pdf contents in Solr
+          */
         $indexResult = self::index($archiveData, $config, $formsIndexed, $formsNotIndexed);
         if(false === $indexResult) {
             return false;
         }
 
         // archive or update archived student
+
+
         self::archiveStudent($formRec, $formNumber, $config, $archiveConfig);
 
         /*
          * move main db records to to the archive db
          */
+
+
         $archiveToDbResult = self::archiveFormToDb($formRec, $formNumber, $config, $archiveConfig);
         if(false === $archiveToDbResult) {
             return false;
@@ -116,6 +120,7 @@ class Archiver
 
     public static function archiveFormToDb($formRec, $formNumber, $config, $archiveConfig)
     {
+        /* Mike commented this out 2-22-2018 because we are not archiving the db of forms. */
 //        echo "INFO: Archiving to db...\n";
         $archiveDb = Zend_Db::factory($archiveConfig->dbArchive);
         $archiveDb->beginTransaction();
@@ -185,7 +190,10 @@ class Archiver
             $mainDb->rollback();
 //            echo "WARNING: Could not move data to archive db...\n";
             return false;
-        } 
+        }
+
+
+
     }
 
     public static function deleteForm($formRec, $formNumber, $config, $archiveConfig)
@@ -211,6 +219,7 @@ class Archiver
         $deleteResult = $mainDbForm->delete();
         self::log("Delete main db form from $modelName. result: $deleteResult");
         return $deleteResult;
+
     }
 
     public static function restoreArchiveForm($formId, $formNumber, $config, $archiveConfig)
