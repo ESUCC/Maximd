@@ -16,23 +16,23 @@ class My_Classes_iepFunctionGeneral {
     public static function xmlRpcslqExec($sqlStmt, &$errorId, &$errorMsg, $errorCapture = true, $errorNoResults = true, $replaceNULL = true)
     {
         global $dbH, $ERROR_SQL_EXEC, $ERROR_NO_RESULTS, $sessIdUser, $DB_NAME, $DB_USER_NAME, $DB_HOST, $DB_PORT, $DB_PASSWORD;
-    
+
         /*
         * This allows us to use the functions that make
         * making XML-RPC requests easy.
         */
         //require_once("lib/xmlrpc_utils/utils.php");
         $path = 'lib/ZendFramework/library';
-    
+
         set_include_path(get_include_path() . PATH_SEPARATOR . $path);
-    
+
         /*
         * The difference between this call and the last is we pass
         * in an array as the 'args' element of the array passed as
         * the argument of the xu_rpc_http_concise() function.
-        */ 
+        */
         $sqlExecArgs =  array();
-        
+
         $sqlExecArgs['sqlStmt'] = $sqlStmt;
         $sqlExecArgs['errorId'] = $errorId;
         $sqlExecArgs['errorMsg'] = $errorMsg;
@@ -40,50 +40,50 @@ class My_Classes_iepFunctionGeneral {
         $sqlExecArgs['errorId'] = $errorId;
         $sqlExecArgs['errorNoResults'] = $errorNoResults;
         $sqlExecArgs['replaceNULL'] = $replaceNULL;
-    
+
         $sqlExecArgs['ERROR_SQL_EXEC'] = $ERROR_SQL_EXEC;
         $sqlExecArgs['ERROR_NO_RESULTS'] = $ERROR_NO_RESULTS;
         $sqlExecArgs['sessIdUser'] = $sessIdUser;
-    
+
         $sqlExecArgs['DB_NAME'] = $DB_NAME;
         $sqlExecArgs['DB_USER_NAME'] = $DB_USER_NAME;
         $sqlExecArgs['DB_HOST'] = $DB_HOST;
         $sqlExecArgs['DB_PORT'] = $DB_PORT;
         $sqlExecArgs['DB_PASSWORD'] = $DB_PASSWORD;
-        
+
         $host = "srs-dev";
         //$host = "localhost";
         $uri = "/xmlrpc_server.php";
         $port = 8001;
     	//$port = 5432;
-    
+
         require_once 'Zend/XmlRpc/Client.php';
         $client = new Zend_XmlRpc_Client("http://$host:$port$uri");
-        
+
         //var_dump($errorNoResults);
-    
+
         try {
-        
+
             $result =  $client->call('psql.sqlExec_func', array($sqlExecArgs));
-            
+
             $resultData = $result['resultData'];
             $resultOther = $result['resultOther'];
             $affectedRows = $result['affectedRows'];
-            
+
             #echo "errorId: |".$resultOther['errorId']."|<BR>";
             #echo "errorMsg: |".$resultOther['errorMsg']."|<BR>";
-    
-            if('' != $resultOther['errorId'] || '' != $resultOther['errorMsg']) 
+
+            if('' != $resultOther['errorId'] || '' != $resultOther['errorMsg'])
             {
                 echo "<B>error</B>: $sqlStmt<BR>";
                 echo "<B>errorId</B>: {$resultOther['errorId']}<BR>";
                 echo "<B>errorMsg</B>: {$resultOther['errorMsg']}<BR>";
                 //pre_print_r($result);
-                
+
                 $errorId = $resultOther['errorId'];
                 $errorMsg = $resultOther['errorMsg'];
                 return false;
-    
+
             } else {
                 $stmtType = strtoupper(substr($sqlStmt, 0, 3));
                 #echo "affectedRows: $affectedRows<BR>";
@@ -106,19 +106,19 @@ class My_Classes_iepFunctionGeneral {
                 #if($stmtType == "INS") pre_print_r($result);
                 return $resultData;
             }
-      
+
         } catch (Zend_XmlRpc_Client_HttpException $e) {
-            
+
             echo "Zend_XmlRpc_Client_HttpException code: " . $e->getCode() . "<BR>";
             echo "Zend_XmlRpc_Client_HttpException getMessage: " . $e->getMessage() . "<BR>";
-            return false;    
-        }     
+            return false;
+        }
     }
-    
+
     public static function sqlExecToArray($sqlStmt, &$errorId, &$errorMsg, $errorCapture = true, $errorNoResults = true, $replaceNULL = true)
     {
         global $dbH, $ERROR_SQL_EXEC, $ERROR_NO_RESULTS, $sessIdUser, $DB_NAME, $DB_USER_NAME, $DB_HOST, $DB_PORT, $DB_PASSWORD;
-    
+
         $stmtType = strtoupper(substr($sqlStmt, 0, 3));
         if ($replaceNULL) {
             // edited 9/2/02 sl to account for fact that the old ways fails when single quote is at very end of data
@@ -165,10 +165,10 @@ class My_Classes_iepFunctionGeneral {
             }
         } else {
             return true;
-        }    
-    
+        }
+
     }
-    
+
     public static function pg2php($pgResult, $arrayType = PGSQL_BOTH) {
         #
         # return array types PGSQL_BOTH, PGSQL_ASSOC, PGSQL_NUM
@@ -181,11 +181,11 @@ class My_Classes_iepFunctionGeneral {
         //return "freak";
         return $data;
     }
-        
+
     public static function buildInsertStmt($arrFieldList, $arrData, $tableName, $pkeyName) {
-    
+
         reset($arrFieldList);
-    
+
         $sqlStmt = 	"INSERT INTO $tableName (";
         //while (list($fieldName, $value) = each($arrFieldList)) {
         foreach($arrFieldList as $fieldName) {
@@ -207,7 +207,7 @@ class My_Classes_iepFunctionGeneral {
             // and most db values are posted back to a page before submission and get quote-escaped BUT
             // at least for forms, see include_form_head 1 around lines 330-345, more data is added to the array
             // before submission, and this will not be quote-escaped
-            // Could have tried to handle each case, or turn off magic quotes, but best is just to strip all 
+            // Could have tried to handle each case, or turn off magic quotes, but best is just to strip all
             // slashes here and then add them back.
             if (is_array($arrData[$fieldName])) { //echo "imploding";
                 $dataElement = implode("|", $arrData[$fieldName]);
@@ -215,7 +215,7 @@ class My_Classes_iepFunctionGeneral {
                 $dataElement = $arrData[$fieldName];
             }
             $sqlStmt .= "'" . addslashes( stripslashes( $dataElement ) ) . "'";
-            
+
         }
         $sqlStmt .= ");\n";
         return $sqlStmt;
@@ -225,7 +225,7 @@ class My_Classes_iepFunctionGeneral {
 	public static function buildUpdateStmt(&$document, &$arrFieldList, &$arrData, &$tableName, &$pkeyName) {
 		//debugLog( "saving");
 		global $sessIdUser;
-		
+
 		reset($arrFieldList);
 		$sqlStmt = 	"UPDATE $tableName\nSET ";
 		while (list($fieldName, $value) = each($arrFieldList)) {
@@ -242,7 +242,7 @@ class My_Classes_iepFunctionGeneral {
 				$dataElement = $arrData[$fieldName];
 			}
 			$sqlStmt .= $fieldName . " = '" . addslashes( stripslashes( $dataElement ) ) . "'";
-			
+
 		}
 		$sqlStmt .= "\nWHERE $pkeyName = $document;\n";
 		//debugLog ( "update stmt = $sqlStmt");
@@ -251,11 +251,11 @@ class My_Classes_iepFunctionGeneral {
 	// ================================================================================================================================
 	// END database functions
 	// ================================================================================================================================
-	
+
 	// ================================================================================================================================
 	// general functions
 	// ================================================================================================================================
-	
+
 	public static function pre_print_r($data, $return = false) {
 	     $output = "=========================== data ==================<BR>";
 	     $output .= "<span style=\"font-size:small;\">";
@@ -271,7 +271,7 @@ class My_Classes_iepFunctionGeneral {
 	        echo $output;
 	     }
 	}
-	
+
 	public static function priceKeywords($kwCount, $payRate = 1) {
 		if ($kwCount == 0) {
 			$total = 0;
@@ -300,10 +300,10 @@ class My_Classes_iepFunctionGeneral {
 			}
 		}
 	    if($payRate != '') $total = round($total * $payRate, 2);
-	
+
 	    // apply discount
 	    return $total;
-		
+
 	}
 
 	// ================================================================================================================================
@@ -322,7 +322,7 @@ class My_Classes_iepFunctionGeneral {
     public static function globalRestore($name, $backupName) {
         $GLOBALS[$name] = $GLOBALS[$backupName];
         unset($GLOBALS[$backupName]);
-    } 
+    }
 
     public static function replaceSpacesInQuotes($str, &$quotedPhrases, $replacement='_')
     {
@@ -330,7 +330,7 @@ class My_Classes_iepFunctionGeneral {
         $quoteChar = '"';
         $spaceChar = ' ';
         $retString = '';
-                
+
         for($i=0;$i<strlen($str);$i++) {
             if($str[$i] == $quoteChar) {
                 $quoteOn = !$quoteOn;
@@ -355,7 +355,7 @@ class My_Classes_iepFunctionGeneral {
         }
         return $retString;
     }
-    
+
     public static function replaceDisallowedCharacters($str)
     {
         #echo "str: $str<BR>";
@@ -374,7 +374,7 @@ class My_Classes_iepFunctionGeneral {
         #die('test');
         return $str;
     }
-    
+
 	/* return javascript for displaying text in window status onMouseOver and onMouseOut */
 	public static function windowStatus($displayText) {
 		return "onMouseOver=\"javascript:window.status='$displayText'; return true\" onMouseOut=\"javascript:window.status=''; return true;\"";
@@ -382,26 +382,26 @@ class My_Classes_iepFunctionGeneral {
 
 	public static function getPrivClass($id_county, $id_district, $id_school) {
 		global $sessUserPrivs, $sessUserMinPriv;
-		
+
 		$sessUser = new Zend_Session_Namespace('user');
 		$sessUserMinPriv = $sessUser->sessUserMinPriv;
 		$sessUserPrivs = $sessUser->sessUserPrivs;
 	//	Zend_debug::dump($sessUser->sessUserPrivs);die();
-		
+
 		if(!isset($sessUserPrivs))
 		{
 		    // use zend session
 	    	$session = new Zend_Session_Namespace();
-	
+
 		    $sessUserMinPriv = $session->sessUserMinPriv;
 		    $sessUserPrivs = $session->sessUserPrivs;
 		}
-		
+
 		// IF PARENT, RETURN UC_SA
 		if($sessUserMinPriv == UC_PG) {
 			return UC_PG;
 		}
-	
+
 		// IF SUPER USER IS MIN PRIV, RETUN UC_SA
 		if($sessUserMinPriv == UC_SA) {
 			return UC_SA;
@@ -409,20 +409,20 @@ class My_Classes_iepFunctionGeneral {
 		//disassemble($sessUserPrivs, 0, "=====sessUserPrivs=====");
 		$privCount = count($sessUserPrivs);
 		//debugLog("privCount: ".$privCount);
-	
+
 		//debugLog("id_district: ".$id_district);
 		//debugLog("id_school: ".$id_school);
-		
+
 		// loop to check for super user
 		for ($h = 0; $h < $privCount; $h++) {
 			//debugLog("sess_id_county: ".$sessUserPrivs[$h]['id_county']."=".$id_county);
 			//debugLog("sess_id_district: ".$sessUserPrivs[$h]['id_district']."=".$id_district);
 			//debugLog("sess_id_school: ".$sessUserPrivs[$h]['id_school']."=".$id_school);
 			//debugLog("sess_id_class: ".$sessUserPrivs[$h]['class']);
-			
+
 			//debugLog("Dist Length: ".strlen(trim($sessUserPrivs[$h]['id_district'])));
-			
-			
+
+
 			if( strlen(trim( $sessUserPrivs[$h]['id_district'])) == 0 && strlen(trim( $sessUserPrivs[$h]['id_school'])) == 0){
 				$activeClass = $sessUserPrivs[$h]['class'];
 				//debugLog("sess_class SU: ".$sessUserPrivs[$h]['class']);
@@ -431,12 +431,12 @@ class My_Classes_iepFunctionGeneral {
 			}
 		}
 		//debugLog("GPC: NO SUPER ACCESS");
-	
+
 		// loop to check for district
 		for ($i = 0; $i < $privCount; $i++) {
 			//debugLog("sess_id_district: ".$sessUserPrivs[$i]['id_district']." = ".$id_district);
 			//debugLog("sess_id_school: ".$sessUserPrivs[$i]['id_school']." = ".$id_school);
-			
+
 			if($sessUserPrivs[$i]['id_county'] == $id_county && $sessUserPrivs[$i]['id_district'] == $id_district && strlen(trim( $sessUserPrivs[$i]['id_school'])) == 0){
 				$activeClass = $sessUserPrivs[$i]['class'];
 				//debugLog("sess_class dist: ".$sessUserPrivs[$i]['class']);
@@ -453,7 +453,7 @@ class My_Classes_iepFunctionGeneral {
 		for ($j = 0; $j < $privCount; $j++) {
 			//debugLog("sess_id_district: ".$sessUserPrivs[$j]['id_district']." = ".$id_district);
 			//debugLog("sess_id_school: ".$sessUserPrivs[$j]['id_school']." = ".$id_school);
-			
+
 			if( $sessUserPrivs[$j]['id_county'] == $id_county && $sessUserPrivs[$j]['id_district'] == $id_district && $sessUserPrivs[$j]['id_school'] == $id_school){
 				$activeClass = min( $activeClass, $sessUserPrivs[$j]['class']);
 			}
@@ -470,10 +470,10 @@ class My_Classes_iepFunctionGeneral {
 	}
 
 	public static function buildOptionListAccess($arrData, $area, $view, $page='', $menuLimiterArr ='', $sessPrivCheckObj= null) {
-		
+
         $DOC_ROOT = DOC_ROOT;           // set in initialize function and set in application.ini
         $NONZEND_ROOT = NONZEND_ROOT;   // set in initialize function and set in application.ini
-        
+
 		//echo "NONZEND_ROOT: ".NONZEND_ROOT."<BR>";
 		//echo "zendRoot: ".zendRoot."<BR>";
 		if(isset($arrData['form_no']) && $arrData['form_no']!='') {
@@ -483,7 +483,7 @@ class My_Classes_iepFunctionGeneral {
 		}
 		#
 		# ON IEPS, WE HAVE TO BUILD A LINK TO CREATE PROGRESS REPORTS
-		# DATA IS ADDED TO arrData BEFORE IT'S PASSED INTO THIS FUNCTION 
+		# DATA IS ADDED TO arrData BEFORE IT'S PASSED INTO THIS FUNCTION
 		#
 		#
 		# FORM ARRAYS PASSED FROM FORM CENTER WILL HAVE THEIR IDS IN THE ID FIELD
@@ -496,8 +496,8 @@ class My_Classes_iepFunctionGeneral {
 			$formID = "id_form_$formNum";
 			$formID = $arrData[$formID];
 		}
-		
-		
+
+
 		// 20070327 jlavere
 		// adding a menu item
 		// add item in access_definitions folder in lib in the class that will have the item
@@ -506,7 +506,7 @@ class My_Classes_iepFunctionGeneral {
 		// add code for the sql call in include form head 1
 		#########################################################################################
 		##
-		# IF ACCESS HAS BEEN GRANTED, AND IT MUST TO BE HERE, THE USER HAS A $sessPrivCheckObj->accessObJ						
+		# IF ACCESS HAS BEEN GRANTED, AND IT MUST TO BE HERE, THE USER HAS A $sessPrivCheckObj->accessObJ
 		#
 		# menuLimiterArr IS THE LIST THAT MANUALLY LIMITS THE OPTIONS DISPLAYED IN THE SUB MENU
 		# ARRAY SHOULD CONTAIN ALL POSSIBLE VALUES - FILTERING BASED ON CLASS AND ACESS WILL BE DONE IN THE SCRIPT
@@ -525,7 +525,7 @@ class My_Classes_iepFunctionGeneral {
             unset($availableMenus['dupe']); // 20080421 jlavere - if dupe element has no value, it wont be shown, so we need to remove it from the array
             // this removes the extra | char on the right of the form options for individual forms
         }
-        
+
 		#pre_print_r($availableMenus);
 		# availableMenus IS BUILT AT THE TIME ACCESS IS GRANTED IN STUDENT_STUDENT
 		#
@@ -544,12 +544,12 @@ class My_Classes_iepFunctionGeneral {
 			#$formText = ($option =="forms"?("form_" . $formNo):$sub);
 			#
 			$id_student = isset($arrData['id_student'])?$arrData['id_student']:"";
-            
-            
+
+
             //
-            // 
             //
-            
+            //
+
             if('024' == $formNum)
             {
 #               require_once('class_session_tokenizer.php');
@@ -624,7 +624,7 @@ class My_Classes_iepFunctionGeneral {
 			# PUT THIS IN FOR EVERY ELEMENT
 			#
 			$internalExtra = "onMouseOver\"javascript:window.status='Form Log'; return true\" onMouseOut=\"javascript:window.status=''; return true;\"";
-			
+
 			# #################################################################################
 			# PRINT LINK NEEDS TO HAVE AN ID SO IT CAN BE TURNED OFF WHEN THE PAGE IS MODIFIED
 			#
@@ -649,68 +649,68 @@ class My_Classes_iepFunctionGeneral {
 	}
 
 	public static function date_massage($dateField, $dateFormat = 'm/d/Y') {
-		
+
 		if(empty($dateField) ) {
 			return;
 		}
-	
-	    # strtotime mishandles dates with '-' 
+
+	    # strtotime mishandles dates with '-'
 	    $dateField=str_replace("-","/",$dateField);
 	    date_default_timezone_set('GMT');
 		return date($dateFormat, strtotime($dateField));
-	
+
 	}
-	
+
 	/* encode special html characters with option to convert dates for display */
 	public static function htmlEncode($str, $formatDate = false) {
-	
+
 		if (empty($str)) {
 			return $str;
 		}
-		
+
 		$str = htmlspecialchars($str);
 		$str = stripslashes($str);
-		
+
 		if ($formatDate) {
 			$str = displayDate($str);
 		}
-		
+
 		return $str;
 	}
 
-            
-                
+
+
     /* build html select list of numbers */
     public static function dropDownButtonNumbers($name, $qty, $offset = 1, $currentValue = false, $defaultValue = false, $defaultLabel = false, $attributes = false) {
-        
+
         $arrLabel = array();
         $arrValue = array();
-        
+
         for($i = 0; $i < $qty; $i++) {
             $arrLabel[$i] = $i + $offset;
             $arrValue[$i] = $i + $offset;
         }
-    
+
         $strHTML = "<div dojoType=\"dijit.form.DropDownButton\" name=\"$name\" id=\"$name\"";
-        
+
         if (!empty($attributes)) {
             $strHTML .= " $attributes";
         }
 //        Zend_Debug::dump($attributes);
         $strHTML .= ">";
         $strHTML .= "<span>Page</span>";
-        
+
         if($currentValue == "" && $defaultValue != "") {
             $currentValue = $defaultValue;
         }
-        
+
         if($defaultLabel != "none") {
             $strHTML .= "<option value=\"\" selected=\"selected\">$defaultLabel</option>";
         }
-        
+
         $strHTML .= '<div dojoType="dijit.Menu" id="Page">';
-        
-        
+
+
         $count = count($arrLabel);
         for($i = 0; $i < $count; $i++) {
 //            if($currentValue == $arrValue[$i]) {
@@ -721,39 +721,39 @@ class My_Classes_iepFunctionGeneral {
             $strHTML .= '<div dojoType="dijit.MenuItem" id="navPage_'.$arrLabel[$i].'" label="'.$arrLabel[$i].'"></div>';
         }
         $strHTML .= "</div>";
-        
+
         $strHTML .= "</div>";
-        
-        return $strHTML;    
+
+        return $strHTML;
     }
-            
+
 	/* build html select list of numbers */
 	public static function valueListNumbers($name, $qty, $offset = 1, $currentValue = false, $defaultValue = false, $defaultLabel = false, $attributes = false) {
-		
+
 		$arrLabel = array();
 		$arrValue = array();
-		
+
 		for($i = 0; $i < $qty; $i++) {
 			$arrLabel[$i] = $i + $offset;
 			$arrValue[$i] = $i + $offset;
 		}
-	
+
 		$strHTML = "<select name=\"$name\" id=\"$name\"";
-	
+
 		if (!empty($attributes)) {
 			$strHTML .= " $attributes";
 		}
-		
+
 		$strHTML .= ">";
-		
+
 		if($currentValue == "" && $defaultValue != "") {
 			$currentValue = $defaultValue;
 		}
-		
+
 		if($defaultLabel != "none") {
 			$strHTML .= "<option value=\"\" selected=\"selected\">$defaultLabel</option>";
 		}
-		
+
 		$count = count($arrLabel);
 		for($i = 0; $i < $count; $i++) {
 			if($currentValue == $arrValue[$i]) {
@@ -762,10 +762,10 @@ class My_Classes_iepFunctionGeneral {
 				$strHTML .= "<option value=\"$arrValue[$i]\">$arrLabel[$i]</option>";
 			}
 		}
-		
+
 		$strHTML .= "</select>";
-		
-		return $strHTML;	
+
+		return $strHTML;
 	}
 }
 

@@ -383,7 +383,7 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         if($options['nssrs_send_tonight']=="1") $options['nssrs_send_tonight']="t";
         if($options['nssrs_send_tonight']=="0") $options['nssrs_send_tonight']="";
         // Mike added this 5-11-17 so that the edfi_refresh field would update
-        $this->writevar1($options['nssrs_send_tonight'],'this are the options in the table');
+      //  $this->writevar1($options['nssrs_send_tonight'],'this are the options in the table');
         $data['edfi_refresh']=$options['edfi_refresh'];
         $data['use_edfi']=$options['use_edfi'];
         $data['name_district'] = $options['name_district'];
@@ -455,7 +455,11 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         $data['fedrep_send_tonight'] = $options['fedrep_send_tonight'];
         $data['fedrep_email'] = $options['fedrep_email'];
         $data['nssrs_send_tonight'] = $options['nssrs_send_tonight'];
-	if ($options['assurance_stmt'] == 1) $data['assurance_stmt'] = 'true'; else $data['assurance_stmt'] = 'false';
+        // Mike added 2-26-2018 SRS-151
+
+       $data['use_form004_pwn']=$options['use_form004_pwn'];
+
+    if ($options['assurance_stmt'] == 1) $data['assurance_stmt'] = 'true'; else $data['assurance_stmt'] = 'false';
 	if ($options['optional_features'] == 1) $data['optional_features'] = 'true'; else $data['optional_features'] = 'false';
 	if ($options['use_goal_helper'] == 1) $data['use_goal_helper'] = 'true'; else $data['use_goal_helper'] = 'false';
 	if ($options['use_form_012'] == 1) $data['use_form_012'] = 'true'; else $data['use_form_012'] = 'false';
@@ -474,7 +478,16 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
 	if ($options['pref_district_imports'] == 1) $data['pref_district_imports'] = 'true'; else $data['pref_district_imports'] = 'false';
 
         $where = "id_district ='".$options['id_district']."' and id_county = '".$options['id_county']."'";
-        $this->update($data, $where);
+
+     //   $this->writevar1($data['use_form004_pwn'],'this is the data line 482');
+
+        try{
+          $this->update($data,$where);
+        } catch(Exception $e){
+            $this->writevar1($e,'this is the catch error');
+        }
+
+
 	return;
     }
 

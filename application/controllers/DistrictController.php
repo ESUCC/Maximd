@@ -623,17 +623,32 @@ class DistrictController extends Zend_Controller_Action
 
         // NOTE the user id will be picked up from the _SESSION['user'][['id_personnel'] variable in the getuserInfor2 funcition
         $UserPrivTable=$iep_priv->getUserInfo2($classLevel);
+       // $this->writevar1($UserPrivTable,'this is the user priv table line 626');
         $proceed='no';
         foreach($UserPrivTable as $priv) {
+            if($priv[status]=='Active' and $priv['class']==1){ $proceed='yes';}
             if($priv['id_district']==$id_district and $priv['id_county']==$id_county and $priv['class']<=3 and $priv['status']=='Active')
             {
                     $proceed='yes';// This will allow one to edit the district page.
             }
          }
 
+
        if ($proceed == 'yes') {
 
         $post = $this->getRequest()->getPost();
+          //  $this->writevar1($post['use_form004_pwn'],'this is the post');
+
+            if($post['use_form004_pwn']=='1') {
+            $post['use_form004_pwn']=true;
+             }
+
+            if($post['use_form004_pwn']=='0') {
+            $post['use_form004_pwn']=false;
+            }
+
+
+      //  $this->writevar1($post,'this is the post');
         $options = Array();
         $options_reports = Array();
 
@@ -651,6 +666,18 @@ class DistrictController extends Zend_Controller_Action
         }
 
         $district = new Model_Table_IepDistrict();
+// Mike added this 2-27-2018 SRS-151
+        if($options['use_form004_pwn']=='1') {
+            $options['use_form004_pwn']=1;
+        }
+
+        else {
+            $options['use_form004_pwn']=0;
+        }
+
+     //   $this->writevar1($options,'these are the options on line 665');
+
+
         $district->updateIepDistrictForm($options); // Save data
 	$district->saveIepDistrictReports($options, $options_reports);  // Save reports
 

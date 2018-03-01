@@ -3,7 +3,7 @@
 class Form_AbstractForm extends Zend_Dojo_Form {
 
 	private $JSmodifiedCode = "javascript:modified('', '', '', '', '', '');";
-	
+
 	public $accessMode;
 	public $page;
 	public $version;
@@ -69,39 +69,39 @@ class Form_AbstractForm extends Zend_Dojo_Form {
      * @var App_Form_FormHelper
      */
     public $formHelper;
-    
+
     /**
      * $valueListHelper - App_Form_ValueListHelper
      *
      * @var valueListHelper
      */
     public $valueListHelper;
-    
+
     /**
      * $decoratorHelper - App_Form_DecoratorHelper
      *
      * @var decoratorHelper
      */
     public $decoratorHelper;
-    
+
     /**
      * $form - Zend_Dojo_Form
      *
      * @var Zend_Dojo_Form
      */
 	public $form;
-	
+
 	// ===========================================================================================
 	public function __construct($options = null)
 	{
 		$this->formHelper = new App_Form_FormHelper();
-		
+
         // build the helper for common reference for value lists
         $this->valueListHelper = new App_Form_ValueListHelper();
-        
+
         // build the helper for common reference for value lists
         $this->decoratorHelper = new App_Form_DecoratorHelper();
-        
+     //   $this->writevar1($options,'these are the options in abstrctform.php line 104');
         try {
 			$this->accessMode = $options['mode'];
 			$this->page = $options['page'];
@@ -113,7 +113,18 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 		}
 		parent::__construct();
 	}
-	
+
+	public function writevar1($var1,$var2) {
+
+	    ob_start();
+	    var_dump($var1);
+	    $data = ob_get_clean();
+	    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+	    $fp = fopen("/tmp/textfile.txt", "a");
+	    fwrite($fp, $data2);
+	    fclose($fp);
+	}
+
 	// ===========================================================================================
 	protected $editorType;
     function setEditorType($type) {
@@ -132,7 +143,7 @@ class Form_AbstractForm extends Zend_Dojo_Form {
     	return $editor;
     }
 	// ===========================================================================================
-	
+
 	public function buildForm($raw = false)
 	{
 		// build the name of the function used to build this form
@@ -140,80 +151,80 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 		$buildFunctionName = $this->accessMode . '_p' . $this->page . '_v' . $this->version;
 		//echo "page: $buildFunctionName<BR>";die();
 		// call the internal function to build the zend form
-		
+
 		if($raw) {
 			$buildFunctionName .= '_raw';
 			$this->form = $this->$buildFunctionName($raw);
 		} else {
 			$this->form = $this->$buildFunctionName($raw);
 		}
-		
-	}	
-	
+
+	}
+
 	protected function initialize() {
-	    
+
 	    /*
 	     * Initialize translation for all site forms.
 	     */
 	    $translate = Zend_Registry::get('Zend_Translate');
 	    $this->setDefaultTranslator($translate);
-	    
+
 		$this->setAction('search/search')->setMethod('post')->setAttrib('class', 'srchFrmHome');
 
 		$this->id_student = new App_Form_Element_Hidden('id_student');
 		$this->id_student->ignore = true;
-		
+
 		$this->page = new App_Form_Element_Hidden('page');
 		$this->page->ignore = true;
-		
+
 		$this->zend_checkout_time = new App_Form_Element_Hidden('zend_checkout_time');
 
         $this->page_status = new App_Form_Element_Hidden('page_status');
         $this->page_status->setRequired(false);
         $this->page_status->setAllowEmpty(true);
-		
+
 	}
-	
+
 	public function student_data_header($subformName, $addNotReq) {//, $addNewRowButton=true, $addNotReq=true
 
 		$this->setDecorators ( array (array ('ViewScript', array ('viewScript' => 'edit_form_student_info_header.phtml' ) ) ) );
-		
+
 		$this->name_student = new App_Form_Element_Text('name_student');
 		$this->name_student->setAttrib('disable', 'true');
 		$this->name_student->noValidation();
-		
+
 		$this->age = new App_Form_Element_Text('age');
 		$this->age->setAttrib('disable', 'true');
 		$this->age->noValidation();
-		
+
 		$this->name_district = new App_Form_Element_Text('name_district');
 		$this->name_district->setAttrib('disable', 'true');
 		$this->name_district->noValidation();
-		
+
 		$this->dob = new App_Form_Element_DatePicker('dob');
 		$this->dob->setAttrib('disable', 'true');
 		$this->dob->noValidation();
-		
+
 		$this->gender = new App_Form_Element_Text('gender');
 		$this->gender->setAttrib('disable', 'true');
 		$this->gender->noValidation();
-		
+
 		$this->name_school = new App_Form_Element_Text('name_school');
 		$this->name_school->setAttrib('disable', 'true');
 		$this->name_school->noValidation();
-		
+
 		$this->grade = new App_Form_Element_Text('grade');
 		$this->grade->setAttrib('disable', 'true');
 		$this->grade->noValidation();
-		
+
         $this->address = new App_Form_Element_Text('address');
         $this->address->setAttrib('disable', 'true');
         $this->address->noValidation();
-        
+
         $this->parents = new App_Form_Element_Text('parents');
         $this->parents->setAttrib('disable', 'true');
         $this->parents->noValidation();
-        
+
         return $this;
 	}
 
@@ -245,24 +256,24 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 	public function edit_subform_version1_header($subformName, $addNotReq) {//, $addNewRowButton=true, $addNotReq=true
 
 		$this->setDecorators ( array (array ('ViewScript', array ('viewScript' => 'subformHeader.phtml' ) ) ) );
-		
+
 		// hidden element to tell the system to add a row
 		$this->addrow = new App_Form_Element_Hidden('addrow');
-		
+
 		// button to call addSubformRow for the subform
-		// sets the above to 1 I believe    
+		// sets the above to 1 I believe
 		$this->add_subform_row= new App_Form_Element_Button('add_subform_row', 'Add Row');
 		$this->add_subform_row->setAttrib('onclick', 'addSubformRow(\''.$subformName.'\');');
-		
+
 		if($addNotReq) {
 			$this->override = new App_Form_Element_Checkbox('override', array('label'=>'Not Required'));
 			$this->override->setAttrib('onclick', "override(this.id, this.checked);");
 		}
-		
+
       	$this->count = new App_Form_Element_Hidden('count');
 
         $this->subformTitle = new Zend_Form_Element_Hidden('subformTitle');
-      	                
+
         //
       	// add hidden elements for subform counts
       	//
@@ -270,7 +281,7 @@ class Form_AbstractForm extends Zend_Dojo_Form {
         $this->subformName->setValue($subformName);
 		return $this;
 	}
-	
+
     function clearValidation()
     {
 		unset($this->errors);
@@ -286,7 +297,7 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 		}
 		return $formPages;
 	}
-    
+
 	// ===========================================================================================
     // rewrite
 	public function validateFormPages(array $formPages)
@@ -298,11 +309,11 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 		}
 		return $validationArray;
 	}
-	
+
     public function validateFormPage(Zend_Form $formPage)
-    {	
+    {
     	$retArr = array();
-    	
+
     	// @todo: can this be integrated into the validation checks themselves?
     	// override validation if Not Required is checked
     	foreach($formPage->getSubforms() as $k => $sf)
@@ -316,7 +327,7 @@ class Form_AbstractForm extends Zend_Dojo_Form {
     			}
     		}
     	}
-    	
+
     	$retArr['valid'] = $formPage->isValid($formPage->getValues());
     	$retArr['errors'] = $formPage->getErrors();
     	$retArr['messages'] = $formPage->getMessages();
@@ -337,7 +348,7 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 				$form->$n->setRequired(false);
 			}
         }
-        // loop through the subforms and pass them to 
+        // loop through the subforms and pass them to
         // this function as forms
         $subforms = $form->getSubforms();
         foreach($subforms as $n => $sf)
@@ -352,8 +363,8 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 		$page = 1;
 		foreach($validationArray as $valid)
 		{
-			$class = $valid ? "btsb" : "btsbRed"; 
-			$retString .= "<span class=\"".$class."\">" .$page++ ."</span>"; 
+			$class = $valid ? "btsb" : "btsbRed";
+			$retString .= "<span class=\"".$class."\">" .$page++ ."</span>";
 		}
 		$retString .= "]</span>";
 		return $retString;
@@ -365,7 +376,7 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 		$page = 1;
 		foreach($validationArray as $valid)
 		{
-			$retString .= $valid ? '1' : '0'; 
+			$retString .= $valid ? '1' : '0';
 		}
 		return $retString;
 	}
@@ -373,21 +384,21 @@ class Form_AbstractForm extends Zend_Dojo_Form {
 	static function selectBoolConverter($value) {
 
     	if(is_null($value)) // null
-		{	
+		{
 			return null;
 		}
 		elseif((boolean) $value === false || 'f' === strtolower($value)
             || "no" === strtolower($value) || '0' === $value || 0 === $value)
 		{
 			return 'f';
-		} 
+		}
 		elseif((boolean) $value === true || 't' === strtolower($value)
             || 'yes' === strtolower($value) || '1' === $value || 1 === $value)
 		{
 			return 't';
 		}
-		
-		
+
+
 	}
 
     public function removeSrsFormHelpers($form, $exceptions = array())

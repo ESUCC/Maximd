@@ -35,6 +35,16 @@ class Model_Table_AbstractIepForm extends Zend_Db_Table_Abstract
 ////    	die();
 //		return $result;
 //    }
+public function writevar1($var1,$var2) {
+
+    ob_start();
+    var_dump($var1);
+    $data = ob_get_clean();
+    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+    $fp = fopen("/tmp/textfile.txt", "a");
+    fwrite($fp, $data2);
+    fclose($fp);
+}
 
     public function getForm($id) {
 
@@ -93,6 +103,7 @@ class Model_Table_AbstractIepForm extends Zend_Db_Table_Abstract
         //
         // security: switch to stored procedures
         //
+     // $this->writevar1($data,'this is the data in abstractIepform.php line 106');
 
 //	        unset($data['submit']);         // make sure submit button is removed
         $pkName = $this->_primary;
@@ -126,9 +137,13 @@ class Model_Table_AbstractIepForm extends Zend_Db_Table_Abstract
 
         try {
             $table = new $this->className();
+
             $where = $table->getAdapter()->quoteInto($pkName.' = ?', $id);
+     //       $this->writevar1($data,'this is the data again line 142 in abstractiepform.php with where '.$where);
+
+
             $table->update($data, $where);
-//            print_r($data);
+          //  print_r($data);
 //            print_r($where);
 //            echo "success";die();
             return true;
@@ -146,6 +161,8 @@ class Model_Table_AbstractIepForm extends Zend_Db_Table_Abstract
 
         unset($data['submit']); // make sure submit button is removed
         unset($data[$this->_primary]); // make sure key isn't written
+
+
 
 //	        try {
         $table = new $this->className();
@@ -254,6 +271,7 @@ class Model_Table_AbstractIepForm extends Zend_Db_Table_Abstract
 
     function updateSubformsOrder($subTableName, $subTablePkName, $fkName, $fkValue, $orderKeyName)
     {
+     //   $tihs->writevar1($subTableName,'this is the sub table name line 274 in abstractIepForm');
         #echo "subTableName: $subTableName<BR>";
         #echo "fkName: $fkName<BR>";
         #echo "fkValue: $fkValue<BR>";

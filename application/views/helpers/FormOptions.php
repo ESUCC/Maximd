@@ -108,7 +108,7 @@ class Zend_View_Helper_FormOptions extends Zend_View_Helper_Abstract
         if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
             $options[] = '<a href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</a>';
         }
-        
+
         if($form->filePath) {
             $splitPath = preg_split('/\//', $form->filePath);
             $folder1 = $splitPath[1];
@@ -117,7 +117,7 @@ class Zend_View_Helper_FormOptions extends Zend_View_Helper_Abstract
             $options[] = '<a href="/file-download/pdf/folder1/'. $folder1 .'/folder2/' . $folder2 . '/file/' .
                              $file . '">Download</a>';
         }
-        
+
         return implode(' | ', $options);
     }
 }

@@ -167,7 +167,15 @@ echo $this->element->page;
 <!-- Mike added this 1-16-2018 for PWN section SRS-151 -->
 
 
+<?php
+$usePWN=new Model_Table_District();
+$distInfo=$usePWN->getDistrict($view->db_form_data['id_county'],$view->db_form_data['id_district']);
+$distResult=$distInfo['use_form004_pwn'];
 
+
+
+if($distResult==true){
+?>
 
 <p style="page-break-before: always">
 
@@ -233,7 +241,7 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             <tr>
                 <td>
 		        <?php
-                   echo "<b>The text will include A description of other options the IEP team considered and the reasons why those options were rejected:</b><br>";
+                   echo "<b>A description of other options the IEP team considered and the reasons why those options were rejected:</b><br>";
                    echo $this->element->pwn_options_other->getValue();
 		        ?>
                 </td>
@@ -266,4 +274,4 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             </table>
         </td>
     </tr>
-
+<?php }?>

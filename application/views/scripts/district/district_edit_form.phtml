@@ -216,6 +216,8 @@
 
     <table class="DistrictTable" style="margin: 10px 0;">
     <tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_present_lev_perf" id="iep_summary_present_lev_perf"<?=(($this->data['iep_summary_present_lev_perf'] == true) ? " checked" : "");?>/></td><td class="labelText2"><b>Present level of Performance</b></td></tr>
+
+
     </table>
 
 <div class="accordion" id="acc2">
@@ -275,6 +277,7 @@
     <tr><td class="labelText2" colspan="2"><b>Supplemental Pages:</b></td></tr>
     <tr><td class="fieldInput2"><input type="checkbox" name="iep_summary_supplemental_pages" id="iep_summary_supplemental_pages"<?=(($this->data['iep_summary_supplemental_pages'] || $this->data['iep_summary_supplemental_pages'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Supplemental Pages</b> (Includes Modifications and Accommodations checklist)</td></tr>
     <tr><td class="fieldInput2"><input type="checkbox" name="use_mips_consent_form" id="use_mips_consent_form"<?=(($this->data['iep_summary_supplemental_pages'] || $this->data['iep_summary_supplemental_pages'] == 1) ? " checked" : "");?>/></td><td class="labelText2"><b>Use Mips Consent Form</b></td></tr>
+
     </table>
 
 </div><div id="tabs-4">
@@ -301,7 +304,11 @@
 <tr><td class="fieldInput2"><input type="checkbox" name="use_nssrs" id="use_nssrs"<?=(($this->data['use_nssrs'] || $this->data['use_nssrs'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Create NSSRS File</b></td></tr>
 <tr><td class="fieldInput2"><input type="checkbox" name="use_nssrs_overview" id="use_nssrs_overview"<?=(($this->data['use_nssrs_overview'] || $this->data['use_nssrs_overview'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Create NSSRS Overview file</b></td></tr>
 <tr><td class="fieldInput2"><input type="checkbox" name="nssrs_send_tonight" id="nssrs_send_tonight"<?=(($this->data['nssrs_send_tonight'] || $this->data['nssrs_send_tonight'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Send nssrs file tonight</b></td></tr>
+<!--  Mike added 2-26-2018 SRS-151 -->
+<tr><td class="fieldInput2"><input type="checkbox" name="use_form004_pwn" id="use_form004_pwn"<?=(($this->data['use_form004_pwn'] ==1) ? " checked" : "");?>/></td><td class="labelText2"><b>Include Prior Written Notice on page 7 of the IEP</b></td></tr>
+
 <tr><td colspan="2" class="labelText2"><b>NSSRS Email</b> <input type="text" name="email_nssrs" id="email_nssrs" value="<?=$this->data['email_nssrs']?>" /></td></tr>
+
 <tr><td class="fieldInput2"><input type="checkbox" name="use_zf_forms"<?=(($this->data['use_zf_forms'] || $this->data['use_zf_forms'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Use New Style Forms</b></td></tr>
 </table>
 

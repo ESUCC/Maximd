@@ -7,9 +7,11 @@ echo $this->element->id_form_004;
 echo $this->element->page;
 echo $this->element->dob;
 ?>
+
+
     <table class="formTitleHead">
         <tr>
-            <td><?php echo $this->translate('Transportation'); ?></td>
+            <td><?php  echo $this->translate('Transportation');?></td>
         </tr>
     </table>
 
@@ -39,12 +41,13 @@ echo $this->element->dob;
 
     <table class="formSectionHead">
         <tr>
-            <td><?php echo $this->translate('Assessment'); ?></td>
+            <td><?php echo $this->translate('Assessment '); ?></td>
         </tr>
     </table>
     <table class="sc_formInputBlock">
         <tr>
             <td>
+
                 <?php if ($view->db_form_data['status'] != 'Final' || $this->element->assessment_accom->getValue() != 'The child will participate in a combination of assessment systems as specified.') {
                     $this->element->assessment_accom->removeMultiOption('The child will participate in a combination of assessment systems as specified.');
                 }
@@ -97,7 +100,7 @@ echo $this->element->dob;
 <?php if (!$view->lps || 10 <= $view->version) { ?>
     <table class="formTitleHead">
         <tr>
-            <td><?php echo $this->translate('Extended School Year Services'); ?></td>
+            <td><?php echo $this->translate('Extended School Year Services for '); echo $view->db_form_data['id_district']." ".$view->db_form_data['id_county'] ?></td>
         </tr>
     </table>
     <table class="formInput noBorder">
@@ -119,71 +122,131 @@ echo $this->element->dob;
     </table>
 
 
+<?php
+$usePWN=new Model_Table_District();
+$distInfo=$usePWN->getDistrict($view->db_form_data['id_county'],$view->db_form_data['id_district']);
+$distResult=$distInfo['use_form004_pwn'];
 
+
+
+if($distResult!=true){
+?>
+
+<script type="text/javascript">
+
+
+$("document").ready(function() {
+
+$("#disappear").hide(1000);
+
+});
+</script>
+
+<?php }
+
+
+
+    ?>
+
+
+</script>
+
+ <script type="text/javascript">
+
+
+$("document").ready(function() {
+
+
+	$('textarea').text(function() {
+		return $(this).text().replace("EMPTY1","EMPTY2");
+	});
+​
+
+});
+
+</script>
+
+<div id="disappear">
     <table class="formTitleHead">
+
+      <?php if (!$distResult) echo '<tbody style="display:none">'; ?>
         <tr>
             <td><h1><center> <?php echo $this->translate('Prior Written Notice Section'); ?></center></h1></td>
         </tr>
+       </tbody>
     </table>
 
 
     <table class="sc_formInputBlock">
+      <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
         <tr>
-            <td><?php echo $this->translate('A Description of the action proposed or refused by the school distrcit or approved cooperative.'); ?>:</td>
+            <td><?php echo $this->translate('A description of the action proposed or refused by the school district or approved cooperative:'); ?>:</td>
         </tr>
         <tr class="sc_richTextBox">
             <td>
                 <?php echo $this->element->pwn_describe_action; ?>
             </td>
         </tr>
+    <tbody>
     </table>
 
     <table class="sc_formInputBlock">
+       <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
         <tr>
-            <td><?php echo $this->translate('An explanation of why the district or approved cooperative proposes or refuses to take the action'); ?>:</td>
+            <td><?php echo $this->translate('An explanation of why the district or approved cooperative proposes or refuses to take the action:'); ?>:</td>
         </tr>
         <tr class="sc_richTextBox">
             <td>
                 <?php echo $this->element->pwn_describe_reason; ?>
             </td>
         </tr>
+     </tbody>
     </table>
 
     <table class="sc_formInputBlock">
 
+       <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
+
         <tr>
-            <td><?php echo $this->translate('A description of other options the IEP team considered and the reasons why those options were rejected'); ?>:</td>
+            <td><?php echo $this->translate('A description of other options the IEP team considered and the reasons why those options were rejected:'); ?>:</td>
         </tr>
         <tr class="sc_richTextBox">
             <td>
                 <?php echo $this->element->pwn_options_other; ?>
             </td>
         </tr>
+
     </table>
 
     <table class="sc_formInputBlock">
-
+     <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
 
         <tr>
-            <td><?php echo $this->translate('A description of each evaluation procedure, assessment, record or report the school district or approved cooperative uses as a basis for the proposal or refusal'); ?>:</td>
+            <td><?php echo $this->translate('A description of each evaluation procedure, assessment, record or report the school district or approved cooperative uses as a basis for the proposal or refusal:'); ?>:</td>
         </tr>
         <tr class="sc_richTextBox">
             <td>
                 <?php echo $this->element->pwn_justify_action; ?>
             </td>
         </tr>
+       </tbody>
     </table>
 
       <table class="sc_formInputBlock">
+       <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
         <tr>
-            <td><?php echo $this->translate('A description of any other factors which are relevant to the school district’s or approved cooperative’s proposal or refusal'); ?>:</td>
+            <td><?php echo $this->translate('A description of any other factors which are relevant to the school district’s or approved cooperative’s proposal or refusal:'); ?>:</td>
         </tr>
         <tr class="sc_richTextBox">
             <td>
                 <?php echo $this->element->pwn_other_factors; ?>
             </td>
         </tr>
+       </tbody>
     </table>
+</div>
 
 
-<?php } ?>
+<?php
+         }
+       ?>

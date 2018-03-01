@@ -15,6 +15,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 	protected $subformHelper;
 	public $additionalFormActions = array (); // array of Action objects
 
+
 	protected $subFormsForDuping;
 
 	public function writevar1($var1,$var2) {
@@ -471,7 +472,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 		// retrieve data from the request
 		$request = $this->getRequest ();
 		$post = $this->getRequest ()->getPost ();
-		$this->writevar1($post,'this is the posted data');
+	//	$this->writevar1($post,'this is the posted data');
 		$this->view->document = $request->document;
 		$this->view->page = $request->page;
 
@@ -2033,9 +2034,11 @@ END;
 		// this is coming back as null thus it goes into the loop below.
 
 		// Mike added this 2-10-2018 so that only  version 9 will display in see SRS-180
+
+
 		if(isset($dbData['id_form_002']) and $dbData['status']=='Draft') {
 
-		   $dbData['version_number']='9';
+		 //  $dbData['version_number']='9';
 	      }
 
 
@@ -2046,12 +2049,14 @@ END;
 
 
 
+// Mike found this 2-23-2018 and it is the log  view to the old when get action is log.
 
 
 		if (9 > $dbData ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
 		 	$this->_redirect('https://iep.nebraskacloud.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$this->getRequest ()->getParam ( 'document' ));
 			} else {
+		//	$this->_redirect('https://iepweb02.nebraskacloud.org/form'.$this->getFormNumber().'/'.$this->getRequest()->getActionName().'/document/'.$this->getRequest()->getParam('document'));
 			$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=form_' . $this->getFormNumber () . '&document=' . $this->getRequest ()->getParam ( 'document' ) . '&option='.$this->getRequest()->getActionName());
 			}
 			die ();
@@ -2150,6 +2155,19 @@ END;
 
 	public function buildZendForm($formClass, $data, $version, $config, $currentPage = null) {
 
+	    if($formClass=='Form_Form004'){
+
+
+	    $idDist=$data['id_district'];
+	    $idCty=$data['id_county'];
+
+	    $getDistInfo=new Model_Table_District();
+	    $distInfo=$getDistInfo->getDistrict($idCty,$idDist);
+
+	    $data['use_form004_pwn']=$distInfo['use_form004_pwn'];
+	  //  $this->writevar1($data,'this is the data line 2163');
+
+	    }
         $appconfig = Zend_Registry::get ( 'config' );
         $refreshCode = '?refreshCode=' . $appconfig->externals->refresh;
 
@@ -2205,6 +2223,7 @@ END;
 				// add subforms defined in the parent controller
 				$subFormsArray = $this->buildAdditional ( $formPage, $pageNum, $data, $config );
 			}
+		//	$this->writevar1($data['id_district'],'this is the data line 2210 in abstractform controller');
 			$formPage->populate ( $data );
 			$formPage->page->setValue ( $pageNum );
 
@@ -2213,6 +2232,7 @@ END;
 
 			if ($currentPage == $pageNum) {
 				$retForm = $formPage;
+
 				if (null != $subFormsArray && count ( $subFormsArray ) > 0) {
 					$this->subFormsArray = $subFormsArray;
 				}
@@ -2229,8 +2249,28 @@ END;
 		if (null == $currentPage) {
 			return $formPages;
 		}
+
 		return $retForm;
 	}
+/*
+ * Mike modified this function 3-1-2018 SRS-151
+ */
+	public function pwnMod($pwnData){
+      $districtInfo= new Model_Table_District();
+      $districtIn=$districtInfo->getDistrict($pwnData['id_county'], $pwnData['id_district']);
+      if($districtIn['use_form004_pwn']==false){
+         if($pwnData['pwn_describe_action']!=''|| $pwnData['pwn_describe_action']== NULL) $pwnData['pwn_describe_action']='EMPTY1';
+         if($pwnData['pwn_describe_reason']!=''||$pwnData['pwn_describe_reason']==NULL) $pwnData['pwn_describe_reason']='EMPTY1';
+         if($pwnData['pwn_options_other']!=''|| $pwnData['pwn_options_other']==NULL)   $pwnData['pwn_options_other']='EMPTY1';
+         if($pwnData['pwn_other_factors']!=''|| $pwnData['pwn_other_factors']==NULL)   $pwnData['pwn_other_factors']='EMPTY1';
+         if ($pwnData['pwn_justify_action']!=''|| $pwnData['pwn_justify_action']==NULL) $pwnData['pwn_justify_action']='EMPTY1';
+
+
+	  }
+	  return $pwnData;
+	}
+
+
 	public function editAction()
     {
 		// get refresh code for externals
@@ -2251,11 +2291,11 @@ END;
 
 		// get requested page, if any
 		$this->view->page = ($this->getRequest ()->getParam ( 'page' ) > 0) ? $this->getRequest ()->getParam ( 'page' ) : $this->startPage;
-		//$this->writevar1($this->view->page,'this is the view page');
+
 		// set form title
 		$this->view->headTitle ( ' - ' . $this->getFormTitle () . ' Page ' . $this->view->page );
 
-
+    //    $this->writevar1($this->getFormTitle,'this is hte form title line 2285');
 
 		// build the model
 		$this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getParam ( 'document' ), $this->view->mode );
@@ -2263,6 +2303,21 @@ END;
 
 
 
+// This was put in by Mike 2-28-2018 in order to put EMPTY1 in the pwn fields so that it would shut off the required fields before finalize on
+// page 7 of form004.  This is only the case where it puts something in should the district choose to use PWN in the form004 page 7. SRS-151
+
+		$pwnCheck=$this->getRequest()->getControllerName();
+
+		if($pwnCheck=='form004'){
+		  $this->writevar1($pwnCheck,'this is the pwn check ');
+           $distInfo = new Model_Table_District();
+           $idCty=$this->view->db_form_data['id_county'];
+           $idDst=$this->view->db_form_data['id_district'];
+
+           $data=$this->view->db_form_data;
+          $this->view->db_form_data=$this->pwnMod($data);
+
+		}
 
 		// error reporter
 		$this->view->dojo()->requireModule('soliant.widget.ErrorReporter');
@@ -2283,9 +2338,14 @@ END;
 
 		$config = array ('className' => $this->getFormClass (), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps );
 
+
+		$config['use_form004_pwn']=$usePwn['use_form004_pwn'];
+
+
+	//	$this->writevar1($config,'this is the config line 2316');
 		// build zend form
 		$this->view->form = $this->buildZendForm ( $this->getFormClass (), $this->view->db_form_data, $this->view->version, $config, $this->view->page );
-
+        $this->writevar1($this->view->form,'this is the whole form');
 		// build array of boolean page validity from the internal var
 		// built in buildZendForm()
 		$pagesValidArr = $this->arraysKeyExtract ( $this->formPagesValidArr, 'valid', 1 );
@@ -2462,6 +2522,7 @@ END;
 
 	// This method is called from JavaScript
 	//    public function jsonupdateiepnewAction()
+
 	public function jsonupdateiepAction() {
 		ob_start();
 		// check if this is a beta tester form
@@ -2515,6 +2576,11 @@ END;
     	// $this->formPagesValidArr[pageNumber]['valid'] = $formPage->isValid($formPage->getValues());
     	// $this->formPagesValidArr[pageNumber]['errors'] = $formPage->getErrors();
     	// $this->formPagesValidArr[pageNumber]['messages'] = $formPage->getMessages();
+
+
+
+
+
 		$this->view->form = $this->buildZendForm ( $this->getFormClass (), $this->view->db_form_data, $this->view->db_form_data ['version_number'], $config, $this->view->page );
 		// at this point the form has been built based on db data.
 
@@ -2528,9 +2594,16 @@ END;
 		// populate from post
 		// all pages should have the right
 		// page_status EXCEPT the current page
-		$this->view->form->populate ( $this->getRequest ()->getParams(), true);
-		$valid = $this->view->form->isValid( $this->getRequest ()->getParams() );
 
+
+
+		// $this->view->form->populate ( $t, true);
+        $this->view->form->populate ( $this->getRequest ()->getParams(), true);
+
+      //    $this->writevar1($this->getRequest()->getParams(),'these are parameters in abstracformcontroller line 2604');
+
+		 $valid = $this->view->form->isValid( $this->getRequest ()->getParams() );
+		// $valid = $this->view->form->isValid( $t );
 
 		/*
 		 * build the error message array for the CURRENT page
@@ -2548,7 +2621,30 @@ END;
         /**
          * SAVE THE FORM
          */
-        $rowsToRebuild = $this->view->form->formHelper->persistData ( $this->getFormNumber (), $this->view->form, $this->view->mode, $this->view->page, $this->view->db_form_data ['version_number'], $checkout, $this->subFormsArray );
+
+/*
+		$pwnCheck=$this->getRequest()->getControllerName();
+
+		if($pwnCheck=='form004'){
+		       if($post['pwn_describe_action']=='EMPTY1')$post['pwn_describe_action']='';
+		       if($post['pwn_describe_reason']=='EMPTY1')$post['pwn_describe_reason']='';
+		       if($post['pwn_options_other']=='EMPTY1')$post['pwn_options_other']='';
+		       if($post['pwn_justify_action']=='EMPTY1')$post['pwn_justify_action']='';
+		       if($post['pwn_other_factors']=='EMPTY1')$post['pwn_other_factors']='';
+
+
+		}
+  */
+
+		$rowsToRebuild = $this->view->form->formHelper->persistData ( $this->getFormNumber (), $this->view->form, $this->view->mode, $this->view->page, $this->view->db_form_data ['version_number'], $checkout, $this->subFormsArray );
+
+
+
+
+
+
+
+	//	$this->writevar1($post,'post value line 2643');
 		if (method_exists ( $this, 'saveAdditional' )) {
 			$this->saveAdditional ( $post );
 		}
@@ -2560,10 +2656,33 @@ END;
 		// validate the forms (all pages)
 		$pagesValidArr = $this->arraysKeyExtract ( $this->formPagesValidArr, 'valid', 1 );
 
+
+
+		$pwnCheck=$this->getRequest()->getControllerName();
+
+
 		// build the model
 		// getting db data so we can confirm version from db
 		// also sets $this->view->lps based on county and district
+
+
 		$this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getPost ( $this->getPrimaryKeyName (), null ), $this->view->mode );
+
+		if($pwnCheck=='form004'){
+		//    if($this->view->db_form_data['pwn_describe_action']=='EMPTY1')$this->view->db_form_data['pwn_describe_action']='';
+		//    if($this->view->db_form_data['pwn_describe_reason']=='EMPTY1')$this->view->db_form_data['pwn_describe_reason']='';
+		//    if($this->view->db_form_data['pwn_options_other']=='EMPTY1')$this->view->db_form_data['pwn_options_other']='';
+		//    if($this->view->db_form_data['pwn_justify_action']=='EMPTY1')$this->view->db_form_data['pwn_justify_action']='';
+		//    if($this->view->db_form_data['pwn_other_factors']=='EMPTY1')$this->view->db_form_data['pwn_other_factors']='';
+
+
+		}
+
+
+
+
+//		$this->writevar1($this->view->db_form_data,'this is the db form data line 2653');
+
 
 		$config = array ('className' => $this->getFormClass (), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->db_form_data ['version_number'], 'lps' => $this->view->lps );
 
@@ -2605,9 +2724,27 @@ END;
             $this->view->validationArr,
             $rowsToRebuild
         );
+	//	$this->writevar1($this->view->form,'this is the form line 2720');
+	//	$this->writevar1($this->getPrimaryKeyName(),'this is hte primary key name line 2703');
+	//	$this->writevar1($this->view->page,'this is the page view line 2704');
+	//	$this->writevar1($this->view->validationArr,'thisis the validation array line 2705');
+	//	$this->writevar1($rowsToRebuild,'this is the rowsto rebuild line 2705');
+
+
+
+
+
 
         if (method_exists ( $this, 'postSaveAdditional' )) {
+
+
+
+
+
             $this->view->data = $this->postSaveAdditional ( $post, $this->view->data );
+
+
+
         }
 
         // log the save results
@@ -2635,6 +2772,13 @@ END;
 	    		$this->view->db_form_data['id_student'],
 	    		$this->getRequest()->getParam('page')
 	    );
+
+
+
+
+
+
+
 
 		return $this->render ( 'data' );
 	}
@@ -2834,8 +2978,8 @@ END;
 		$refreshCode = '?refreshCode=' . $config->externals->refresh;
 
 		// style the view page
-		$this->view->headLink ()->appendStylesheet ( '/css/site_view.css' . $refreshCode );
-		$this->view->headLink ()->appendStylesheet ( '/css/srs_style_additions.css' . $refreshCode );
+		//$this->view->headLink ()->appendStylesheet ( '/css/site_view.css' . $refreshCode );
+		//$this->view->headLink ()->appendStylesheet ( '/css/srs_style_additions.css' . $refreshCode );
 
 		// configure options
 		$this->view->mode = 'log';
@@ -2884,6 +3028,7 @@ END;
 			$this->getRequest()->getParam('document'),
 			$this->getFormNumber()
 		);
+		//$this->writevar1($this->view->results,'these are the results line 2887 abstracfromcontroller.php line 2887');
 		$this->render('/log/log', null, true);
 	}
 
@@ -3082,6 +3227,7 @@ END;
 	public function updateElementValueAction() {
 		$this->_helper->layout()->disableLayout();
 		$model = new Model_Table_Form004();
+
 		$model->saveForm(
 			$this->getRequest()->getParam('document'),
 			array(

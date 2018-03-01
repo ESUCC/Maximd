@@ -100,7 +100,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
 
         if (isset($formAccessArr[$form->status]['view']) && $formAccessArr[$form->status]['view']) {
         // Mike put the if in 2-23-2018 SRS-190
-            if($formInfo==false or $OldVersion==false) $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+        /*    if($formInfo==false or $OldVersion==false)*/ $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
         }
 
     // Mike changed this 4-18-2017 as per jira SRS-42
@@ -176,10 +176,10 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             }
 
           //  $this->writevar1($formInfo,'this is the form info');
-        }
+       }
 
        if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
- if($formInfo==false or $OldVersion==false)         $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+ /*if($formInfo==false or $OldVersion==false)  */       $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
         }
 
 

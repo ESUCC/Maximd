@@ -11,6 +11,10 @@ class Form_Form004 extends Form_AbstractForm
         parent::initialize();
         $this->id_form_004 = new App_Form_Element_Hidden('id_form_004');
         $this->id_form_004->ignore = true;
+
+
+
+
         $this->dob = new App_Form_Element_Hidden('dob');
         $multiOptions = array('testEditor' => 'Existing Editor', 'tinyMce' => 'TinyMce');
         $this->form_editor_type = new App_Form_Element_Radio('form_editor_type', array(
@@ -25,6 +29,18 @@ class Form_Form004 extends Form_AbstractForm
         );
         $this->form_editor_type->getDecorator('label')->setOption('placement', 'prepend');
     }
+
+    public function writevar1($var1,$var2) {
+
+        ob_start();
+        var_dump($var1);
+        $data = ob_get_clean();
+        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+        $fp = fopen("/tmp/textfile.txt", "a");
+        fwrite($fp, $data2);
+        fclose($fp);
+    }
+
     public function view_p1_v1()
     {
         $this->initialize();
@@ -1279,8 +1295,11 @@ class Form_Form004 extends Form_AbstractForm
     // This was added by Mike 1-18-2018 SRS-151 .  The $this->addPage7Pwn
     public function edit_p7_v10()
     {
+
+
         $this->edit_p7_v1();
         $this->addPage7Ext();
+
         $this->addPage7Pwn();
         return $this;
     }
@@ -1434,7 +1453,8 @@ class Form_Form004 extends Form_AbstractForm
          */
         if (!$this->lps) {
            $this->addPage7Ext();
-         $this->addPage7Pwn();
+
+           $this->addPage7Pwn();
         }
         return $this;
     }
@@ -1458,8 +1478,15 @@ class Form_Form004 extends Form_AbstractForm
         $this->ext_school_year_desc->removeEditorEmptyValidator();
         $this->ext_school_year_desc->addValidator(new My_Validate_EditorNotEmptyIf('ext_school_year_yn', '1'));
     }
+
+
     public function addPage7Pwn()
     {
+
+
+
+
+
         $this->pwn_describe_action = $this->buildEditor(
             'pwn_describe_action',
             array('Label', 'Please Describe Action')
@@ -1492,9 +1519,9 @@ class Form_Form004 extends Form_AbstractForm
             'pwn_other_factors',
             array('Label', 'Prior Written Notice')
             );
-        $this->pwn_other_factors->addErrorMessage('PWN Section 5: Description of relevant factors for proposal or refusal must be entered.');
-        $this->pwn_other_factors->removeEditorEmptyValidator();
-        $this->pwn_other_factors->addValidator(new My_Validate_EditorNotEmptyIf('pwn_other_factors', '1'));
+       $this->pwn_other_factors->addErrorMessage('PWN Section 5: Description of relevant factors for proposal or refusal must be entered.');
+       $this->pwn_other_factors->removeEditorEmptyValidator();
+       $this->pwn_other_factors->addValidator(new My_Validate_EditorNotEmptyIf('pwn_other_factors', '1'));
     }
     public function edit_p8_v2()
     {

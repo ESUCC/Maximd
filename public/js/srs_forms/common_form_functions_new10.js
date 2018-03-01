@@ -1,7 +1,7 @@
 function removeAllTabs(selector){
    for (var tabIndex=$('#'+selector).tabs('length')-1; tabIndex>=0; tabIndex--)
    {
-	   deleteTab(selector, tabIndex); 
+	   deleteTab(selector, tabIndex);
    }
 }
 function deleteTab(selector, tabIndex){
@@ -40,14 +40,14 @@ dojo.require("dojox.html._base");
 
 /*
  * save progression
- * 
+ *
  * fn: attachSaveAction
  * 	fn: savePageDeferred
  *   fn: conditionalSave
  *    fn: save
  *     ---success: saveCallback
  *     ---failure: saveError
- * 
+ *
  */
 
 //Prevent the backspace key from navigating back.
@@ -98,7 +98,7 @@ $(document).unbind('keydown').bind('keydown', function (event) {
 
 // 20111021 jlavere
 // ie8 helper var
-var ie8KillBackButtonWarning = false; 
+var ie8KillBackButtonWarning = false;
 
 
 dojo.declare("my.TabContainer", dijit.layout.TabContainer, {
@@ -109,11 +109,11 @@ dojo.declare("my.TabContainer", dijit.layout.TabContainer, {
 		// method to the ContentPane if it doesn't have one
 		this.inherited(arguments);
 		if(!child["setTitle"] && child.title){
-			dojo.mixin(child,{ 
+			dojo.mixin(child,{
 				setTitle: function(title){
 					// summary: set the title (25 char max)
 					this.title = title.substring(0, 25);
-					this.controlButton.containerNode.innerHTML = title.substring(0, 25) || ""; 
+					this.controlButton.containerNode.innerHTML = title.substring(0, 25) || "";
 				}
 			});
 		}
@@ -121,10 +121,10 @@ dojo.declare("my.TabContainer", dijit.layout.TabContainer, {
 });
 
 
-var browserName = navigator.appName; 
-var browserVer = parseInt(navigator.appVersion); 
+var browserName = navigator.appName;
+var browserVer = parseInt(navigator.appVersion);
 
-if (document.getElementById && document.createElement 
+if (document.getElementById && document.createElement
 		&& !(browserName == "Microsoft Internet Explorer" && browserVer <= 5)) {
     var useDOMCode = true;
 } else {
@@ -148,7 +148,7 @@ if (parseInt(navigator.appVersion) >= 4) {
 //=========================================================================================================
 //
 // define PgDateTextBox inherited from dijit.form.DateTextBox
-// cetralize code for processing db data flow in and out of 
+// cetralize code for processing db data flow in and out of
 // dynamically created date objects
 //
 dojo.declare("PgDateTextBox", dijit.form.DateTextBox, {
@@ -242,12 +242,12 @@ function conditionalSave(event, wait2finish, url) {
     	//console.debug('save button enabled');
     	modFlag = 1;
 	}
-    
+
     // if either indicator suggests the page is modified
     // save the page
     //
     //modFlag = 1; // always save
-    if (modFlag) 
+    if (modFlag)
     {
     	// display the saving dialog
     	// this does not display if wait2finish is true
@@ -260,36 +260,36 @@ function conditionalSave(event, wait2finish, url) {
 
 
 function save(event, wait2finish, url) {
-	
+
 	$("#jsubmit-header").focus(); // be sure to exit all fields.focus on the submit button
 	$("#jsubmit-header").blur();
 
     try {
 		// display the saving dialog
 		// this does not display if wait2finish is true -- not sure this is true
-		$.blockUI({ 
+		$.blockUI({
 			message: 'Your page is saving...'
 		});
 
     } catch (error) {
     	console.debug('blockIU not loading');
     }
-	
+
 	//Stop the submit event since we want to control form submission.
 	if(event != null) event.preventDefault();
 	if(event != null) event.stopPropagation();
 
     // stop checkout timer
     ClearCountDown('clock1', 'Saving Form');
-    
-	// fade the navigation toolbar so user cannot 
+
+	// fade the navigation toolbar so user cannot
 	// navigate while page is saving
     fadeNode('page_navigation_controlbar', 'out');
-    
+
     var wait2finish = (wait2finish == true) ? true : false;
     //The parameters to pass to xhrPost, the form, how to handle it, and the callbacks.
     //Note that there isn't a url passed.  xhrPost will extract the url to call from the form's
-    //'action' attribute.  You could also leave off the action attribute and set the url of the 
+    //'action' attribute.  You could also leave off the action attribute and set the url of the
     //xhrPost object either should work.
     var xhrArgs = {
         form: dojo.byId("myform"),
@@ -301,34 +301,34 @@ function save(event, wait2finish, url) {
         error: saveError
     };
     dojo.publish("/form_timer", ["saving"]);
-    
+
     dojox.html.set(dojo.byId("serverInteractionProgressMsg"), 'Form being saved....');
     fadeNode('serverInteractionProgressMsg', 'in');
-    
+
     dojox.html.set(dojo.byId("response"), 'Form being sent...');
-    
+
     dojo.byId('returnResult').value = 'connecting'; // element defined in edit.phtml
 
     //Call the asynchronous xhrPost
     var deferred = dojo.xhrPost(xhrArgs);
-    
+
     return deferred;
 
 }
 
 var dijitsToDestroy = [];
 function downWardDijits(tagId) {
-	
+
 //	console.debug('downWardDijits', tagId);
-	
-	if(foundDijit = dijit.byId(tagId)) 
-	{	
+
+	if(foundDijit = dijit.byId(tagId))
+	{
 		foundDom = dojo.byId(tagId)
 //		console.debug('FOUND DIJIT', foundDijit.id);
-		
+
 		// add dijit to list of elements to be destroyed
 		dijitsToDestroy.push(foundDijit.id);
-		
+
 		for (i=0;i<foundDom.childNodes.length;i++)
 		{
 			if(foundDom.childNodes[i].id) downWardDijits(foundDom.childNodes[i].id);
@@ -338,7 +338,7 @@ function downWardDijits(tagId) {
 				downWardDijits(selectTag.id);
 			}
 		);
-		
+
 	} else if (foundElement = dojo.byId(tagId)) {
 //		console.debug('FOUND DOM ELEMENT', foundElement);
 //		console.debug(foundElement, 'FOUND DOM ELEMENT', foundElement.id, foundElement.getChildren());
@@ -353,11 +353,11 @@ function downWardDijits(tagId) {
 //					console.debug('childNode destroy', childNode.id, childNode.widgetid);
 //					dojo.destroy(childNode.id);
 				}
-				
+
 //				downWardDijits(selectTag.id);
 			}
 		);
-		
+
 	} else {
 //		console.debug('ELEMENT NOT FOUND');
 	}
@@ -365,7 +365,7 @@ function downWardDijits(tagId) {
 
 function destroyWidgets() {
 	downWardDijits("iep_form_004_goal_tab_container");
-	
+
 	for(i=0;i<dijitsToDestroy.length;i++) {
 //		console.debug('destroy:', dijitsToDestroy[i]);
 		if('iep_form_004_goal_tab_container' != dijitsToDestroy[i]) {
@@ -378,15 +378,15 @@ function domDestroyRecursive(node, subformName) {
 	if(undefined != node) {
 	    dojo.forEach(node.childNodes, function(childNode){
 	    	if(	undefined != childNode &&
-	    		childNode.id && 
-	    		subformName == childNode.id.substring(0, subformName.length) && 
+	    		childNode.id &&
+	    		subformName == childNode.id.substring(0, subformName.length) &&
 	    		undefined != dijit.byId(childNode.id)
 	    	) {
 	    		dijit.byId(childNode.id).destroyRecursive();
 //	    		console.debug('destroy recursive', childNode.id);
 	    	}
 	    	domDestroyRecursive(childNode, subformName);
-	    });      
+	    });
 	}
 }
 function saveCallback(data) {
@@ -408,13 +408,13 @@ function saveCallback(data) {
 
         window.location.href='/'+data.form+'/view/document/'+data.document+'/page/'+data.page;
     }
- 
+
 //	console.debug('saveCallback');
     dojox.html.set(dojo.byId("serverInteractionProgressMsg"), 'Form successfully saved');
-	
+
 	fadeNode('serverInteractionProgressMsg', 'out', 5000);
-	dojox.html.set(dojo.byId("response"), 'Form posted.');    
-	
+	dojox.html.set(dojo.byId("response"), 'Form posted.');
+
     // get items from the json object
     var returneditems = data.items;
 
@@ -424,15 +424,15 @@ function saveCallback(data) {
     } else {
         var errorCount = returneditems[0]['validationArr'].length;
     }
-    
+
     // update the checkout time
     dojo.byId('zend_checkout_time').value = returneditems[0]['zend_checkout_time'];
     reset_cd(returneditems[0]['zend_checkout_duration']);
 //    dojox.html.set(dojo.byId("form_timer_server"), '<SCRIPT language="JavaScript" SRC="/countdown/countdown/countto/2012-01-01 00:00:00"></SCRIPT>');
-    
+
     // timer format changed.. moved to js file included in header
 //    startTimer();
-    
+
     /**
      * update the Draft[123...] display
      */
@@ -441,7 +441,7 @@ function saveCallback(data) {
     $('#pagesValidBottom').parent().html($(returneditems[0]['pageValidationList']));
 
     if(null != returneditems[0]['subform_options'])
-    {	
+    {
     	if('tinyMce'==$('input:radio[name=form_editor_type]:checked').val()) {
     		//console.debug('tinyMce');
     		if($('.jTabContainer').length) {
@@ -449,19 +449,19 @@ function saveCallback(data) {
     		}
 	    	// loop through subforms that have had rows deleted
 	    	for(var subformName in returneditems[0]['subform_options'])
-	    	{    	
+	    	{
 	    		if(0==$('.jTabContainer').length) {
 	    			/*
 	    			 * no tab container found
-	    			 * subforms are contained in table rows 
+	    			 * subforms are contained in table rows
 	    			 */
 	                var parentContainer = $('#'+subformName+"_parent");
 	                //console.debug('parentContainer', parentContainer);
-	                
+
 	                /*
 	                 * destroy the existing widgets with this subformName prefix
 	                 * then remove all the dom elements below the parent container
-	                 * 
+	                 *
 	                 * tinyMce must be remove and reinitted before this process
 	                 */
 
@@ -539,12 +539,12 @@ function saveCallback(data) {
 //					}
 	    		}
 	    	}
-    		
+
     	} else {
-    	
+
 	    	// loop through subforms that have had rows deleted
 	    	for(var subformName in returneditems[0]['subform_options'])
-	    	{    	
+	    	{
 	    		if(dijit.byId(subformName+"_tab_container"))
 	    		{
 	    			tabContainerFound = true;
@@ -554,28 +554,28 @@ function saveCallback(data) {
 	    		if(!tabContainerFound) {
 	    			/*
 	    			 * no tab container found
-	    			 * subforms are contained in table rows 
+	    			 * subforms are contained in table rows
 	    			 */
 	                var node = dojo.byId(subformName+"_parent");
-	                
+
 	                /*
 	                 * destroy the existing widgets with this subformName prefix
 	                 * then remove all the dom elements below the parent container
 	                 */
 	                domDestroyRecursive(node, subformName);
 	                dojo.empty(subformName+"_parent");
-					
+
 	                /*
 	                 * replace each tab and parse the html
 	                 */
 	        		for(var tabNum in returneditems[0]['subform_options'][subformName]['new_html'])
-					{	
+					{
 						var uniqueRowId = 'refresh_me_'+subformName+'_'+tabNum;
 						insertRow = '<tr><td id="'+uniqueRowId+'">' + returneditems[0]['subform_options'][subformName]['new_html'][tabNum] + '</td></tr>';
 		        		dojo.place(insertRow, node);
 		        		dojo.parser.parse(dojo.byId(uniqueRowId));
 					}
-	        		
+
 	        		/*
 	        		 * update the hidden element with the new count of subform rows
 	        		 */
@@ -590,8 +590,8 @@ function saveCallback(data) {
 						}
 						dojo.byId(countVarName).value = tabNum;
 					}
-	        		
-	        		
+
+
 	    		} else {
 	    			/*
 	    			 * tabContainer found
@@ -603,15 +603,15 @@ function saveCallback(data) {
 		    			tc.removeChild(tabNode);
 		    			tabNode.destroyRecursive();
 		    		});
-		    		
-	    			//We want to refresh the tabs    
+
+	    			//We want to refresh the tabs
 					// build and insert a content pane
 		    		/*
 		    		 * hard coded tab titles
-		    		 * should move to the return data 
+		    		 * should move to the return data
 		    		 */
 	//	    		console.debug('subformName', subformName);
-	
+
 	                if (subformName == 'ifsp_goals')
 	                    var tabTitle = 'Goal ';
 	                else if (subformName == 'iep_form_004_goal')
@@ -624,7 +624,7 @@ function saveCallback(data) {
 	                	var tabTitle = 'Supplemental Form ';
 	                else
 					    var tabTitle = 'Tab ';
-	
+
 	                /*
 	                 * update the form with the new html
 	                 */
@@ -649,7 +649,7 @@ function saveCallback(data) {
 	//						console.debug('subformName', subformName);
 							tab = new dijit.layout.ContentPane(
 							    //properties
-								{ 		
+								{
 									title:tabTitle + tabNum,
 									id:subformName + '_' + tabNum,
 	//		    					parseOnLoad: true
@@ -659,7 +659,7 @@ function saveCallback(data) {
 								tabname
 							);
 	//						console.debug('post create');
-	
+
 							tab.setContent(returneditems[0]['subform_options'][subformName]['new_html'][tabNum]);
 							tc.addChild(tab, tabNum);
 						}
@@ -670,8 +670,8 @@ function saveCallback(data) {
 						dojo.byId(countVarName).value = tabNum;
 						// append stylesheets
 						addEditorStyleSheets(subformName, tabNum);
-						tab.startup(); 
-					}	
+						tab.startup();
+					}
 	    		}
 	    	}
 	    	//refresh_dijits(subformName, 'all');
@@ -688,7 +688,7 @@ function saveCallback(data) {
 //    }
 
 //    var submitButton2 = dijit.byId('submitButton2');
-    
+
     // restore the navigation toolbar
 	dojo.fadeIn({
 		node:'page_navigation_controlbar'
@@ -696,15 +696,15 @@ function saveCallback(data) {
 //
 //	var submitButton3 = dijit.byId('submitButton3');
 //	dojo.removeClass('submitButton3', 'enabledButton');
-	
-    
+
+
 	validationPostSave(errorCount, returneditems);
 
 	// unset the modified variable
 	// this allows modFlag aware functions
 	// to be reset
 	resetModFlag();
-	
+
     try {
     	callPageReload(returneditems);
     } catch (error) {
@@ -712,9 +712,9 @@ function saveCallback(data) {
     }
 
 	dojo.byId('returnResult').value = 'success'; // element defined in edit.phtml
-    
+
     updateFadingOtherTextboxes();
-    
+
     /*
      * forced refresh
      * if needed, refresh the page
@@ -731,7 +731,7 @@ function saveCallback(data) {
     		location.reload(true);
     	}
     }
-    
+
 //	// hide the saving dialog
 //	dijit.byId('savingDialog').hide();
 
@@ -751,33 +751,33 @@ function validationPostSave(errorCount, returneditems) {
     // update the validation list display table
     // clear the validation error list table
     $("#validationList").html(makeValidationListTable(errorCount, returneditems[0]['validationArr']));
-    
+
     colorInvalidFields(errorCount, returneditems[0]['validationArr']);
     //
     // clear the validation status display table
     // this is the link to display the validation errors
     //
     $("#validationStatusSpan").html(makeValidationStatusTable(errorCount))
-    
+
     if(typeof colorTabs == 'function') {
     	colorTabs();
-    } 
+    }
 }
 
 function saveError(error) {
     //We'll 404 in the demo, but that's okay.  We don't have a 'postIt' service on the
     //docs server.
 //    dojo.byId("response").innerHTML = "Form error.<br/>"+error;
-	dojox.html.set(dojo.byId("response"), "Form error.<br/>"+error);    
+	dojox.html.set(dojo.byId("response"), "Form error.<br/>"+error);
 
-    alert("An exception occurred in the script. Error name: " 
-  		  	 + error.name + ". Error description: " 
+    alert("An exception occurred in the script. Error name: "
+  		  	 + error.name + ". Error description: "
   		  	 + error.description + ". Error line: " + error.line
   			 + ". Error message: " + error.message);
-    
+
 //    dojo.byId('returnResult').value = 'failure'; // element defined in edit.phtml
 
-    // fade the navigation toolbar so user cannot 
+    // fade the navigation toolbar so user cannot
 	// navigate while page is saving
     fadeNode('page_navigation_controlbar', 'in');
 
@@ -788,7 +788,7 @@ function saveError(error) {
     } catch (error) {
     	console.debug('blockIU not loading');
     }
-	
+
 
 }
 
@@ -801,7 +801,7 @@ function removeHTMLTags(text) {
 	strInputCode = strInputCode.replace(/&(lt|gt);/g, function (strMatch, p1) {
 		return (p1 == "lt")? "<" : ">";
 	});
- 
+
 	var strTagStrippedText = strInputCode.replace(/<\/?[^>]+(>|$)/g, "");
 	//alert("Output text:\n" + strTagStrippedText);
 	// Use the alert below if you want to show the input and the output text
@@ -825,14 +825,14 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_revert.gif";
             img_el.alt = "Revert";
             img_el.title = "Revert (shortcut key = R)";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "r";
             link_el.href = "javascript:recordAction(document.forms[0], 'revert', '" + docRoot + "', '" + area + "', '" + sub + "', '" + keyName + "', '" + id + "', '" + page + "');";
             link_el.onMouseOver = "javascript:window.status='Click here to revert to the most previously saved version of this record.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -846,14 +846,14 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_revert.gif";
             img_el.alt = "Revert";
             img_el.title = "Revert (shortcut key = R)";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "r";
             link_el.href = "javascript:recordAction(document.forms[0], 'revert', '" + docRoot + "', '" + area + "', '" + sub + "', '" + keyName + "', '" + id + "', '" + page + "');";
             link_el.onMouseOver = "javascript:window.status='Click here to revert to the most previously saved version of this record.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -906,14 +906,14 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_save.gif";
             img_el.alt = "Save";
             img_el.title = "Save (shortcut key = S)";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "s";
             link_el.href = "javascript:parentSave();recordAction(document.forms[0], 'save', '" + docRoot + "', '" + area + "', '" + sub + "', '" + keyName + "', '" + id + "', '" + page + "');";
             link_el.onMouseOver = "javascript:window.status='Click here to save.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -931,14 +931,14 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_save.gif";
             img_el.alt = "Save";
             img_el.title = "Save (shortcut key = S)";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "s";
             link_el.href = "javascript:recordAction(document.forms[0], 'save', '" + docRoot + "', '" + area + "', '" + sub + "', '" + keyName + "', '" + id + "', '" + page + "');";
             link_el.onMouseOver = "javascript:window.status='Click here to save.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -954,13 +954,13 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_print_off.gif";
             img_el.alt = "Print";
             img_el.title = "Record must be saved before it can be printed.";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "s";
             link_el.onMouseOver = "javascript:window.status='Record must be saved before it can be printed.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -976,13 +976,13 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_print_off.gif";
             img_el.alt = "Print";
             img_el.title = "Record must be saved before it can be printed.";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "s";
             link_el.onMouseOver = "javascript:window.status='Record must be saved before it can be printed.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -1000,7 +1000,7 @@ function modified(docRoot, area, sub, keyName, id, page) {
             link_el.setAttribute('onMouseOver', "javascript:window.status='Record must be saved before it can be printed.'; return true;");
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(text_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
@@ -1017,23 +1017,23 @@ function modified(docRoot, area, sub, keyName, id, page) {
             img_el.src = "/images/button_print_off.gif";
             img_el.alt = "Print";
             img_el.title = "Record must be saved before it can be printed.";
-    
+
             var link_el = document.createElement("a"); // link element
             link_el.accesskey = "s";
             link_el.onMouseOver = "javascript:window.status='Record must be saved before it can be printed.'; return true;";
             link_el.onMouseOut = "javascript:window.status=''; return true;";
             link_el.appendChild(img_el);
-            
+
             SpanElemRef.replaceChild(link_el, SpanElemRef.childNodes[0]);
         }
     }
 //    console.debug('end of modified.');
-    
+
     // enable all jsave buttons
 //    console.debug($('.jsavebutton').attr("disabled"));
     $('.jsavebutton').attr('disabled', false).css('color', 'black');
 //    console.debug($('.jsavebutton').attr("disabled"));
-    
+
     return true;
 }
 
@@ -1054,20 +1054,20 @@ function hideAddButton(buttonId) {
 
 
 function makeValidationListTable(errorCount, errorArray)
-{	
+{
 	//
 	// builds html table of error messages about field validity
 	//
 	//console.group('function:: makeValidationListTable')
     //console.debug('errorArray: ', errorArray);
-    
+
     var valTable=document.createElement("Table");
     valTable.id = 'validationList';
     valTable.style.display = 'none';
-    
+
     var tbody = document.createElement("tbody");
     valTable.appendChild(tbody);
-    
+
 //    var  oTR= valTable.insertRow(0);
 //    var  oTD= oTR.insertCell(0);
 
@@ -1092,7 +1092,7 @@ function makeValidationListTable(errorCount, errorArray)
 	    tbody.appendChild(row1);                                         // add row to table body
     }
 //    class="bts" align="left" colspan="2" style="width: 100%;"
-//    tbody.appendChild(oTD); 
+//    tbody.appendChild(oTD);
 
     if(addRows)
     {
@@ -1100,7 +1100,7 @@ function makeValidationListTable(errorCount, errorArray)
 		        function(valRow) {
 		            //console.debug('building error text');
 		            var rowCount = valTable.getElementsByTagName("TR").length;      // get row count of validationList
-		
+
 		            //console.debug('tbody3', tbody);
 		            var row = document.createElement("TR");                         // create row element
 		            var cell1 = document.createElement("TD");                       // create cell element
@@ -1118,13 +1118,13 @@ function makeValidationListTable(errorCount, errorArray)
 		        }
 		    );
     }
-    
+
     //console.groupEnd();
     return tbody;
 }
 
 function colorInvalidFields(errorCount, errorArray)
-{	
+{
 	// changes color of divs on the page where the field is not valid for finalization
     if(0 == errorCount)
     {
@@ -1145,10 +1145,10 @@ function makeValidationStatusTable(errorCount)
     oTbl.setAttribute('class', "formTop");
     var tbody = document.createElement("Body");
     oTbl.appendChild(tbody);
-    
+
 //    var  oTR= oTbl.insertRow(0);
 //    var  oTD= oTR.insertCell(0);
-    
+
     var row1 = document.createElement("TR");                         // create row element
     var cell1 = document.createElement("TD");                       // create cell element
 	cell1.setAttribute('align', "left");
@@ -1195,7 +1195,7 @@ function disableSave()
 
 function selectPage(event, url, button)
 {
-	
+
 	// set the action to be passed when page is submitted
 	dojo.byId('changePageAction').value = 'select';
 
@@ -1226,8 +1226,8 @@ function selectPage(event, url, button)
 	    }
 		document.forms['myform'].submit();
 	}
-	
-	
+
+
 //	var savebtn = dijit.byId('submitButton');
 //	dojo.byId('changePageAction').value = 'select';
 //	if(savebtn) {
@@ -1246,7 +1246,7 @@ function selectPage(event, url, button)
 //        });
 //
 //        if (modFlag)
-//        { 
+//        {
 //			var wait2finish = true;
 //			// saving of page required
 //			save(event, wait2finish, url);
@@ -1254,10 +1254,10 @@ function selectPage(event, url, button)
 //	}
 //	//console.debug('two - - - - - - -  - -', dojo.byId('returnResult').value);
 //    if (button == 2)
-//        document.getElementById('myform').action = 
+//        document.getElementById('myform').action =
 //            document.getElementById('myform').action + '/button/' + button;
 //
-////    
+////
 //    if (button == 3) {
 //        document.getElementById('myform').action = document.getElementById('myform').action + '/button/' + button + '/navPage3/' + dojo.byId('navPage3placeholder').value;
 ////        dojo.byId('navPage3').value = dojo.byId('navPage3placeholder').value;
@@ -1304,7 +1304,7 @@ function savePageDeferred(event, url)
 		// setting ie8KillBackButtonWarning to true
 		// should stop the "you're leaving this page" dialog
 		ie8KillBackButtonWarning = true;
-		
+
 		var deferred = conditionalSave(event, false, url);
 		if(false != deferred) {
 //			console.debug('save happening - save page deferred');
@@ -1332,7 +1332,7 @@ function savePageDeferred(event, url)
 }
 function prevPage(event, url)
 {
-	
+
 	// set the action to be passed when page is submitted
 	dojo.byId('changePageAction').value = 'prev';
 
@@ -1361,11 +1361,11 @@ function prevPage(event, url)
 	} else {
 		document.forms['myform'].submit();
 	}
-	
-	
+
+
 //	var savebtn = dijit.byId('submitButton');
 //	dojo.byId('changePageAction').value = 'prev';
-//	
+//
 //	if(savebtn) {
 //		var savebtnDisabled = savebtn.disabled;
 //        /* No more Save Button Disabled */
@@ -1377,7 +1377,7 @@ function prevPage(event, url)
 //
 //        $('.changed').each(function() {
 //            modFlag = 1;
-//        }); 
+//        });
 //
 //        if (modFlag)
 //        {
@@ -1387,17 +1387,17 @@ function prevPage(event, url)
 //			save(event, wait2finish, url);
 //		}
 //	}
-//	
+//
 //	//console.debug('prevPage - - - - - - -  - -', dojo.byId('returnResult').value);
 //	document.forms['myform'].submit();
-//		
+//
 }
 
 function getContainerCell(node) {
 //	console.debug('getContainerCell', node);
 //	console.debug('getContainerCell', node.value);
 //	console.debug('getContainerCell', node.widgetid);
-	
+
     var body = dojo.body();
     while(node && node != body && !dojo.hasClass(node, "colorme")) {
 //    	console.debug('checking node', node);
@@ -1444,10 +1444,10 @@ function colorMe(evt)
 //	}
 //function colorParent(node)
 //{
-//	
+//
 //	console.debug('colorParent', node, dojo.byId(node.id));
 ////	console.debug('container', getContainerCell(node));
-//	
+//
 ////    var body = dojo.body();
 //	// && node != body
 //    while(node) {// && !dojo.hasClass(node, "colorme")
@@ -1506,20 +1506,20 @@ function colorMeById(id, wrapper)
 //    			console.debug('not editor');
     			divID = wrapper+'-colorme';
     			divToColor = dojo.byId(divID);
-    		}	
+    		}
     	} else {
 //    		console.debug('no wrapper');
     		divID = id;
     		divToColor = dojo.byId(id+'-colorme');
     		if(null == divToColor)
-    		{	
-    			
+    		{
+
     			// radio button parsing numbers off end
     			dash = id.lastIndexOf('-');
     			type = dojo.attr(id, "type");
-    			
+
     			//console.debug('divToColor', id+'-colorme', divToColor == null);
-    			
+
     			if(null == type) {
     				var firstPart = id.substring(0, dash);
 //    				console.debug('divToColor2 ', firstPart);
@@ -1550,7 +1550,7 @@ function colorMeById(id, wrapper)
     	var input = dojo.byId(id);
 //    	console.debug('input', input, id);
 //    	console.debug('divToColor', divToColor, divID);
-    	
+
     	if(input != null) {
             if(null == divToColor) {
                 console.debug(id + ' is missing it\'s colorme wrapper');
@@ -1567,7 +1567,7 @@ function colorMeById(id, wrapper)
     	console.log(error);
     	//execute this block if error
     }
-    
+
 //    console.debug('end of colorme');
 	return true
 }
@@ -1599,7 +1599,7 @@ function colorMeRed(id, wrapper)
 	if(null == wrapper)
 	{
 		$('#'+id+'-colorme').addClass('errored');
-		
+
 		if(foundElement = dojo.byId(id+'-colorme'))
 		{
 //			dojo.addClass(foundElement, "errored");
@@ -1637,16 +1637,16 @@ function refresh_date(node)
     if( dijit.byId(dojo.attr(node, "name")) ){
         dijit.byId(dojo.attr(node, "name")).destroy();
     }
-    
+
     // build a new date widget
     var newDateBox = new PgDateTextBox({
         value: node.value,
         id: dojo.attr(node, "name"),
         name: dojo.attr(node, "name"),
-        
+
         // copy styles from the original widget
         style: "width: "+storeStyle.width,
-        
+
         // add modified
         onClick: function(v) {
             modified();
@@ -1662,7 +1662,7 @@ function refresh_editor(node)
 	// ==============================================================================================================
 	// get the refresh_editor node and delete all children
 	refreshContainer = dojo.byId(dojo.attr(node, "id")+"-Editor").parentNode;
-    
+
 	// get the editor before we remove it to store properties from it
 	srcEditor = dojo.byId(dojo.attr(node, "id")+"-Editor");
 
@@ -1674,20 +1674,20 @@ function refresh_editor(node)
 	leftBracket = editorName.indexOf('[');
 	if(leftBracket > 0)
 	{
-		rightBracket = editorName.indexOf(']'); 
-	
+		rightBracket = editorName.indexOf(']');
+
 		subformName = editorName.substring(0, leftBracket);
 		fieldName = editorName.substring(leftBracket+1, rightBracket);
 		editorId = subformName+'-'+fieldName;
 	} else {
 		editorId = editorName;
 	}
-	
+
 	// delete all children
 	while (refreshContainer.hasChildNodes()) {
 		refreshContainer.removeChild(refreshContainer.lastChild);
-	}   
-	
+	}
+
 
 	// if the editor still exists in the dojo index, delete it
     if( dijit.byId(editorId) ){
@@ -1699,7 +1699,7 @@ function refresh_editor(node)
 //    	console.debug(editorId+'-Editor', 'element still existed', dijit.byId(editorId+'-Editor'));
         dijit.byId(editorId+'-Editor').destroy();
     }
-    
+
     // dojo editors have accompanying hidden input fields
     // we need to build our own
     // place the input field inside out refresh_editor container
@@ -1709,7 +1709,7 @@ function refresh_editor(node)
 	    input.setAttribute("id", editorId);
 	    input.setAttribute("value", editorValue);
 	refreshContainer.appendChild(input);
-    
+
     // build a new editor widget
     // append '-Editor' to match the editors created by Zend Framework
     // place the editor inside our refresh_editor container
@@ -1725,16 +1725,16 @@ function refresh_editor(node)
     var newEditor = new SrsEditorTextBox({
         id: editorId+'-Editor',
         name: editorName+'-Editor',
-        value: editorValue 
+        value: editorValue
     });
 
 //    var newEditor = new dijit.Editor({height: '', extraPlugins: ['dijit._editor.plugins.AlwaysShowToolbar']}, dojo.byId('programmatic2')); dojo.query('#create2').orphan();
 	newEditor.setAttribute("class", dojo.attr(srcEditor, "class"));
 	newEditor.setAttribute("height", "");
-	
+
     newEditor.placeAt(refreshContainer);
-    
-    
+
+
 }
 function refreshDijitsNew() {
 //	console.debug('refreshDijits', zendDijits);
@@ -1771,19 +1771,19 @@ function refresh_button(node)
 	// ==============================================================================================================
     // store the style obj from the existing node
     var storeStyle = node.style;
-    
+
     // if this dijit exists, destroy it
     if( dijit.byId(dojo.attr(node, "name")) ){
         dijit.byId(dojo.attr(node, "name")).destroy();
     }
-    
+
     var newButton = new dijit.form.Button({
         label: dojo.attr(node, "label"),
         onClick: function(v) {
         	eval(removeFunctionWrapping(dojo.attr(node, "onclick")));
     	}
     });
-    
+
     newButton.placeAt(node, 'replace');
 }
 
@@ -1796,7 +1796,7 @@ function refresh_dijits(subformname, row)
 	// ==============================================================================================================
 	// get nodes to refresh Goal
 	if('all'==row)
-	{		
+	{
 		var foundDateFields = dojo.query("span.refresh_date input:first-child", subformname+'_parent');
 	} else {
 		var foundDateFields = dojo.query("span.refresh_date input:first-child", subformname+'_'+row);
@@ -1814,7 +1814,7 @@ function refresh_dijits(subformname, row)
 	// ==============================================================================================================
 	// get nodes to refresh
 	if('all'==row)
-	{		
+	{
 		var foundButtonFields = dojo.query("span.refresh_button input:first-child", subformname+'_parent');
 	} else {
 		var foundButtonFields = dojo.query("span.refresh_button input:first-child", subformname+'_'+row);
@@ -1831,7 +1831,7 @@ function refresh_dijits(subformname, row)
 	// ==============================================================================================================
 	// get nodes to refresh
 	if('all'==row)
-	{		
+	{
 		var foundEditorFields = dojo.query("span.refresh_editor input:first-child", subformname+'_parent');
 	} else {
 		var foundEditorFields = dojo.query("span.refresh_editor input:first-child", subformname+'_'+row);
@@ -1841,19 +1841,19 @@ function refresh_dijits(subformname, row)
 		refresh_editor(node);
 	});
 
-	
-	
+
+
 	//
 	// refresh new editors
 	// ==============================================================================================================
 	// get nodes to refresh
 	if('all'==row)
-	{		
+	{
 		var foundNewEditorFields = dojo.query("textarea", subformname+'_parent');
 	} else {
 		var foundNewEditorFields = dojo.query("textarea", subformname+'_'+row);
 	}
-	
+
 //	console.debug(dojo.query("span.refresh_editor input:first-child", subformname+'_'+row), 'one');
 //	console.debug(dojo.query("span.refresh_editor input", subformname+'_'+row), 'two');
 //	console.debug(dojo.query("span.refresh_editor", subformname+'_'+row), 'three');
@@ -1882,16 +1882,16 @@ function refresh_textarea_editor(node) {
     if( dijit.byId(dojo.attr(node, "name")) ){
         dijit.byId(dojo.attr(node, "name")).destroy();
     }
-    
+
     // build a new widget
 //    var newTextAreaEditor = new PgDateTextBox({
 //        value: node.value,
 //        id: dojo.attr(node, "name"),
 //        name: dojo.attr(node, "name"),
-//        
+//
 //        // copy styles from the original widget
 //        style: "width: "+storeStyle.width,
-//        
+//
 //        // add modified
 //        onClick: function(v) {
 //            modified();
@@ -1924,7 +1924,7 @@ function addSubformRow(subformName)
 				var countVarName = subformName+'-count';
 				// update count of subform rows
 				var subformCount = $('#'+countVarName).val(parseInt($('#'+countVarName).val(), 10)+1).val();
-        		
+
 				if(tabContainer.length>0)
         		{
 					console.debug('tabContainer', tabContainer);
@@ -1960,13 +1960,13 @@ function addSubformRow(subformName)
 				$.each(returneditems[0]['validationArr'], function(index, object) {
 					validationTable.append('<tr><td valign="top">&bull;</td><td style="width:100%;"><b>'+object.label+'</b> '+object.message+'</td></tr>');
 				});
-	        }   
+	        }
 		});
-		
+
 		if (arguments[1] != 'undefined') {
 			window[arguments[1]]();
 		}
-		
+
 	} else {
 		//	console.debug('addSubformRow');
 	    var formNum = dojo.byId("form_number").value;
@@ -1974,7 +1974,7 @@ function addSubformRow(subformName)
 	    var page = dojo.byId("page").value;
 	    // ==============================================================================
 	    // xhrGet
-	    // load the main form from the server 
+	    // load the main form from the server
 	    // ==============================================================================
 	        dojo.xhrGet( {
 	            // The following URL must match that used to test the server.
@@ -1988,11 +1988,11 @@ function addSubformRow(subformName)
 	                var returneditems = data.items;
 					var tbl = dojo.byId(subformName+"_parent");
 					var countVarName = subformName+'-count';
-					
+
 					// update count of subform rows
 					dojo.byId(countVarName).value = (dojo.byId(countVarName).value *1) + 1;
 					tabNum = dojo.byId(countVarName).value;
-					
+
 	        		if(dijit.byId(subformName+"_tab_container"))
 	        		{
 	        			tabContainerFound = true;
@@ -2000,7 +2000,7 @@ function addSubformRow(subformName)
 	        			tabContainerFound = false;
 	        		}
 	        		if(tabContainerFound)
-					{	
+					{
 						// build and insert a content pane
 	                    if (subformName == 'ifsp_goals')
 	                        var tabTitle = 'Goal ';
@@ -2014,45 +2014,45 @@ function addSubformRow(subformName)
 	                    	var tabTitle = 'Supplemental Form ';
 	                    else
 						    var tabTitle = 'Tab ';
-	
+
 						tabname = subformName+'_'+tabNum;
 						var tab4 = new dijit.layout.ContentPane(
 							//properties
-							{ 		
+							{
 								title:tabTitle + tabNum,
 								id:subformName + '_' + tabNum,
 								content:""
 							},
 							tabname
 						);
-						
+
 						var tc = dijit.byId(subformName+"_tab_container");
-	
+
 						tab4.setContent(returneditems[0]['new_html']);
 						tc.addChild(tab4);
 						tc.selectChild(tab4);
-						
+
 						// append stylesheets
 						addEditorStyleSheets(subformName, tabNum);
-						tab4.startup(); 
-						
-						
-	
+						tab4.startup();
+
+
+
 						// Changing validation messages - From Here ---------------
 						currentValidationMessages = [];
-						// returneditems[0]['validationArraySubform'] currently 
+						// returneditems[0]['validationArraySubform'] currently
 						// has validation for all forms
-						var newValidationList = currentValidationMessages + "<br>---------<br/>" 
+						var newValidationList = currentValidationMessages + "<br>---------<br/>"
 												+returneditems[0]['validationArraySubform'];
-						
+
 						//dojo.byId("validationList").innerHTML = newValidationList;
 						dojox.html.set(dojo.byId("validationList"), newValidationList);
-						
+
 						// Until Here ---------------------------------------------
 					} else {
-						
+
 						var uniqueRowId = 'refresh_me_'+subformName+'_'+dojo.byId(countVarName).value;
-						
+
 						var insertRow = '<tr><td id="'+uniqueRowId+'">' + returneditems[0]['new_html'] +  '</td></tr>';
 						dojo.place(insertRow,tbl);
 						dojo.parser.parse(dojo.byId(uniqueRowId));
@@ -2073,7 +2073,7 @@ function addSubformRow(subformName)
 					return data;
 	            }
 	            // More properties for xhrGet...
-	        });    
+	        });
 	    // ==============================================================================
 	    // end xhrGet
 	    // ==============================================================================
@@ -2099,10 +2099,10 @@ function addSubformRow(subformName)
 function updateFadingOtherTextboxes() {
     if(typeof setOtherFieldsDisplay == 'function') {
     	setOtherFieldsDisplay();
-    } 
+    }
     if(typeof connectOtherCheckboxes == 'function') {
     	connectOtherCheckboxes();
-    } 
+    }
 }
 
 function colorColormeDivs()
@@ -2111,15 +2111,15 @@ function colorColormeDivs()
 	// color them when they have been modified
 	dojo.query(".colorme input:first-child").forEach(function(node){
 		dojo.connect(node, 'onchange', 'colorMe');
-	});	
-	
+	});
+
 	// date boxes need to change on blur instead of onchange
 	// add the blurColorDate to the form element in the form definition
 	// it should also have the colorme div decorator
 	//
 	dojo.query(".colorme .blurColorDate input:first-child").forEach(function(node){
 		dojo.connect(node, 'onblur', 'colorMe');
-	});	
+	});
 }
 
 function destroyRecursive(node){
@@ -2140,21 +2140,21 @@ function firstLoadColorValidationErrors(){
 
 function colorTabText(id_tab, tabNumber, color) {
 //    dijit.byId(id_tab).tablist.getChildren()[tabNumber].domNode.style.color=color;
-//    dijit.byId(id_tab).tablist.getChildren()[tabNumber].innerDiv.style.color=color;              
+//    dijit.byId(id_tab).tablist.getChildren()[tabNumber].innerDiv.style.color=color;
 //    dijit.byId(id_tab).tablist.getChildren()[tabNumber].backgroundImage='images_dojo/tabValidateEnabled.gif';
-    
+
 //  dijit.byId(id_tab).tablist.getChildren()[tabNumber].innerDiv.style.backgroundColor=color;
     dijit.byId(id_tab).tablist.getChildren()[tabNumber].domNode.style.backgroundImage='url("images_dojo/tabValidateEnabled.gif")';
     dijit.byId(id_tab).tablist.getChildren()[tabNumber].innerDiv.style.backgroundImage='url("images_dojo/tabValidateHover.gif")';
     dijit.byId(id_tab).tablist.getChildren()[tabNumber].tabContent.style.backgroundImage='url("images_dojo/tabValidateEnabled.gif")';
-    
+
 //    dijit.byId(id_tab).tablist.getChildren()[tabNumber].tabContent.style.color=color;
 }
 
 function setTabText(id_tab, tabNumber, text) {
 //	console.debug('setTabText', id_tab, tabNumber, dijit.byId(id_tab).tablist.getChildren()[tabNumber]);
-//    console.debug('title', dijit.byId(id_tab).tablist.getChildren()[tabNumber].tabContent.title);                
-//    dijit.byId(id_tab).tablist.getChildren()[tabNumber].innerDiv.title=text;              
+//    console.debug('title', dijit.byId(id_tab).tablist.getChildren()[tabNumber].tabContent.title);
+//    dijit.byId(id_tab).tablist.getChildren()[tabNumber].innerDiv.title=text;
 //    dijit.byId(id_tab).tablist.getChildren()[tabNumber].tabContent.title=text;
 }
 
@@ -2167,7 +2167,7 @@ function getSubformRowIdentifierFromId(id)
 		divID = id.substring(0, dash);
 	} else {
 		divID = '';
-	}	
+	}
 	return divID;
 }
 
@@ -2180,7 +2180,7 @@ function getRowNumFromSubformRowIdentifier(rowIdent)
 		divID = rowIdent.substring(dash+1);
 	} else {
 		divID = '';
-	}	
+	}
 	return divID;
 }
 
@@ -2188,13 +2188,13 @@ function getRowNumFromSubformRowIdentifier(rowIdent)
 /*
  * show or hide a field
  * gets the subform identifier and constructs the proper id
- */ 
-function subformShowHideField(id, fieldToHide, value, matchValue) { 
+ */
+function subformShowHideField(id, fieldToHide, value, matchValue) {
 //	console.debug('fieldToHide id', id, value, matchValue);
 	rowIdentifier = getSubformRowIdentifierFromId(id);
 	fieldToHide = rowIdentifier + '-' + fieldToHide + '-colorme';
 //	console.debug('fieldToHide', fieldToHide);
-	if(value == matchValue) 
+	if(value == matchValue)
 	{
 //		console.debug(fieldToHide, 'show');
 //		fadeNode(fieldToHide, 'in');
@@ -2209,16 +2209,16 @@ function subformShowHideField(id, fieldToHide, value, matchValue) {
 //function getGmtTime()
 //{
 //	  var curDateTime = new Date()
-//	  var curHour = curDateTime.getHours() 
+//	  var curHour = curDateTime.getHours()
 //	     + curDateTime.getTimezoneOffset()/60
 //	  if (curHour > 24)  curHour -= 24
 //	  if (curHour < 0) curHour += 24
 //	  var curMin = curDateTime.getMinutes()
 //	  var curSec = curDateTime.getSeconds()
-//	  var curTime = 
-//	    ((curHour < 10) ? "0" : "") + curHour + ":" 
-//	    + ((curMin < 10) ? "0" : "") + curMin + ":" 
-//	    + ((curSec < 10) ? "0" : "") + curSec 
+//	  var curTime =
+//	    ((curHour < 10) ? "0" : "") + curHour + ":"
+//	    + ((curMin < 10) ? "0" : "") + curMin + ":"
+//	    + ((curSec < 10) ? "0" : "") + curSec
 ////	  document.write(curTime + " GMT")
 //	  return curDateTime;
 //}
@@ -2227,11 +2227,11 @@ function subformShowHideField(id, fieldToHide, value, matchValue) {
 //{
 //	  var TimezoneOffset = -6  // adjust for time zone
 //	  var localTime = new Date()
-//	  var ms = localTime.getTime() 
+//	  var ms = localTime.getTime()
 //	             + (localTime.getTimezoneOffset() * 60000)
 //	             + TimezoneOffset * 3600000
-//	  var time =  new Date(ms) 
-//	  var hour = time.getHours() 
+//	  var time =  new Date(ms)
+//	  var hour = time.getHours()
 //	  var minute = time.getMinutes()
 //	  var second = time.getSeconds()
 //	  var curTime = "" + ((hour > 12) ? hour - 12 : hour)
@@ -2243,14 +2243,14 @@ function subformShowHideField(id, fieldToHide, value, matchValue) {
 //	  return time;
 //}
 //
-//function startTimer() { 
+//function startTimer() {
 //	if(dojo.byId('zend_checkout_time')) countDownTimer('form_timer', dojo.byId('zend_checkout_time').value);
 //}
 //
 //var t = new dojox.timing.Timer();
 //function countDownTimer(divchannel, expdate) {
 //	var redirect = false;
-//	
+//
 //    dojo.subscribe("/"+divchannel,function(e){
 //    	dojox.html.set(dojo.byId(divchannel), e);
 ////    	dojo.byId(divchannel).innerHTML = e;
@@ -2266,13 +2266,13 @@ function subformShowHideField(id, fieldToHide, value, matchValue) {
 //			this.stop();
 //			return;
 //		}
-//		
+//
 //		dojo.publish("/"+divchannel, [local_time.format("MM:ss")+' minutes']);
-//		
+//
 //	}
-//	
+//
 //    this.onStart = function(){ console.debug('start'); console.debug('version', dojo.version);};
-//    this.onStop = function(){ 
+//    this.onStop = function(){
 //    	if(this.redirect)
 //    	{
 //	    	this.redirect = false;
@@ -2286,13 +2286,13 @@ function subformShowHideField(id, fieldToHide, value, matchValue) {
 //				// {
 //					// saving of page NOT required
 //					// console.debug('saving of page NOT required');
-//				// } else { 
+//				// } else {
 //				    var form_num = dojo.byId("form_number").value;
 //					var wait2finish = true;
 //					// saving of page required
 ////					console.debug('saving of page required');
 //					save(null, true, "/form"+form_num+"/jsonupdateiep");
-//	
+//
 //				// }
 //			}
 //			dojo.byId("mode").value = 'view';
@@ -2302,19 +2302,19 @@ function subformShowHideField(id, fieldToHide, value, matchValue) {
 //
 //    t.onStart = this.onStart;
 //    t.onStop = this.onStop;
-//	
+//
 //  t.start();
 //}
 
 function callPageInit()
 {
-	// pageInit can be defined in the individual  
+	// pageInit can be defined in the individual
 	// JS page for the form
 	// if it exists, it will be called
 	if(typeof pageInit == 'function') {
 		pageInit();
-	} 
-	
+	}
+
 }
 function callPageReload(returneditems)
 {
@@ -2323,14 +2323,14 @@ function callPageReload(returneditems)
     } catch (error) {
     	console.debug('blockIU not loading');
     }
-	
-	// pageInit can be defined in the individual  
+
+	// pageInit can be defined in the individual
 	// JS page for the form
 	// if it exists, it will be called
 	if(typeof pageReload == 'function') {
 //		console.debug('page relod function found');
 		pageReload(returneditems);
-	} 
+	}
 }
 
 
@@ -2338,7 +2338,7 @@ function callPageReload(returneditems)
 
 function attachSaveAction() {
 //    console.debug('running attachSaveAction', dojo.version);
-    
+
     // form id is stored on the form in a hidden field
     // get the value here
 	try {
@@ -2348,9 +2348,9 @@ function attachSaveAction() {
 	  //Handle errors here
 		return;
 	}
-    
+
 //    var formID = dojo.byId('id_form_'+form_num).value;
-    
+
     // attach save function (defined in /public/js/srs_forms/common_form_functions.js)
     // to the submit button
     var button = dijit.byId("submitButton");
@@ -2363,13 +2363,13 @@ function attachSaveAction() {
     	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");
 //    	return false;
     });
-    if(button2 != null) dojo.connect(button2, "onClick", function(evt){ 
+    if(button2 != null) dojo.connect(button2, "onClick", function(evt){
 //    	dojo.stopEvent(evt);
 //    	save(evt, false, "/form"+form_num+"/jsonupdateiep");
-    	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");    	
+    	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");
     });
-    
-    if(button3 != null) dojo.connect(button3, "onClick", function(evt){ 
+
+    if(button3 != null) dojo.connect(button3, "onClick", function(evt){
 //    	dojo.stopEvent(evt);
     	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");
     });
@@ -2378,7 +2378,7 @@ function attachSaveAction() {
     // to the student options menu
     var studentOptions = dojo.byId("student_options");
     //console.debug('studentOptions', studentOptions);
-    if(studentOptions != null) dojo.connect(studentOptions, "onchange", 
+    if(studentOptions != null) dojo.connect(studentOptions, "onchange",
     		function(evt){
 
                 var ret = true;
@@ -2393,36 +2393,36 @@ function attachSaveAction() {
                     ret = confirm("ALERT! You haven't saved your changes.\nAre you sure you want to continue?");
                 }
 
-                if (ret) 
+                if (ret)
                 {
 
 			        var submitButton = dijit.byId('submitButton');
 	                var submitButton2 = dijit.byId('submitButton2');
 	                var submitButton3 = dijit.byId('submitButton3');
-	                /* No more disabled save button 
+	                /* No more disabled save button
 			        if(null != submitButton && false == submitButton.disabled)
 			    	{
 			        	save(evt, false, "/form"+form_num+"/jsonupdateiep");
 			        }
 	                */
-	                if(null != submitButton)                      
+	                if(null != submitButton)
 	                {
 	                    if (modFlag)
 	                    	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");
 	                    //save(evt, false, "/form"+form_num+"/jsonupdateiep");
 	                }
-	                if(null != submitButton2)                                      
-	                {                    
-	                    if (modFlag)
-	                    	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");                    
-	                }
-	                if(null != submitButton3)                                      
-	                {                    
+	                if(null != submitButton2)
+	                {
 	                    if (modFlag)
 	                    	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");
-	//                        save(evt, false, "/form"+form_num+"/jsonupdateiep");                    
 	                }
-	    
+	                if(null != submitButton3)
+	                {
+	                    if (modFlag)
+	                    	savePageDeferred(evt, "/form"+form_num+"/jsonupdateiep");
+	//                        save(evt, false, "/form"+form_num+"/jsonupdateiep");
+	                }
+
 	    			//console.debug('redirect', studentOptions.value);
 	                if (studentOptions.value != '') {
 						if (studentOptions.value.match(/IEP/) == 'IEP' ||
@@ -2443,35 +2443,35 @@ function attachSaveAction() {
 	                    } else {
 	                    	window.location.href = studentOptions.value;
 	                    }
-	
+
 					}
-	                
+
 	                // Leaving to catch any missed cases
 	    			if('View Student' == studentOptions.value) {
 	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=view';
-	    				
+
 	    			} else if ('Edit Student' == studentOptions.value) {
 	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=edit';
-	    				
+
 	    			} else if ('Student Charting' == studentOptions.value) {
 	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=charting';
-	    				
+
 	    			} else if ('Parent/Guardians' == studentOptions.value) {
 	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=parents';
-	    				
+
 	    			} else if ('Student Team' == studentOptions.value) {
 	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=team';
-	    				
+
 	    			} else if ('Student Forms' == studentOptions.value) {
 	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=forms';
-	    				
+
 	    			} else if ('Student Log' == studentOptions.value) {
-	    				window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=log';
+	    		    	window.location.href='https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=log';
 	    			}
                 }
     		}
     );
-    
+
     // attach nextPage function (defined in /public/js/srs_forms/common_form_functions.js)
     // to the nextPage button
     var nextButton = dijit.byId("nextPage");
@@ -2494,7 +2494,7 @@ function attachSaveAction() {
 
     var prevButton3 = dijit.byId("prevPage3");
     if(prevButton3 != null) dojo.connect(prevButton3, "onClick",  function(evt){ prevPage(evt, "/form"+form_num+"/jsonupdateiep"); });
-    
+
     // attach selectPage function (defined in /public/js/srs_forms/common_form_functions.js)
     // to the navPage select menu
     var pageSelectButton = dojo.byId("navPage");
@@ -2504,14 +2504,14 @@ function attachSaveAction() {
     if(pageSelectButton2 != null) dojo.connect(pageSelectButton2, "onchange",  function(evt){ selectPage(evt, "/form"+form_num+"/jsonupdateiep", 2); });
 
     var pageSelectButton3 = dojo.byId("navPage3placeholder");
-    if(pageSelectButton3 != null) dojo.connect(pageSelectButton3, "onchange",  function(evt){ 
+    if(pageSelectButton3 != null) dojo.connect(pageSelectButton3, "onchange",  function(evt){
     	selectPage(evt, "/form"+form_num+"/jsonupdateiep", 3); });
-    
+
 //  var pageSelectButton = dijit.byId("navPage_1");
 //  if(pageSelectButton != null) dojo.connect(pageSelectButton, "onchange",  function(evt){ selectPage(evt, "/form"+form_num+"/jsonupdateiep"); });
 //
 //  var pageSelectButton = dijit.byId("navPage_2");
-//  
+//
 //  if(pageSelectButton != null) dojo.connect(pageSelectButton, "onchange",  function(evt){ selectPage(evt, "/form"+form_num+"/jsonupdateiep"); });
 //  console.debug('pageSelectButton', pageSelectButton);
 
@@ -2532,7 +2532,7 @@ function getParentIdBeginningWith(node, beginWith)
     } catch (error) {
     	console.debug('javscript error in getParentIdBeginningWith');
     }
-	
+
 }
 
 function getNodeIdBeginningWith(node, beginWith)
@@ -2560,7 +2560,7 @@ function getNodeIdEndsWith(node, endsWith)
 
 
 //=========================================================================================================
-// animation 
+// animation
 //=========================================================================================================
 	dojo.require("dojo.fx");
 	var currentAnimation;
@@ -2573,8 +2573,8 @@ function getNodeIdEndsWith(node, endsWith)
 	{
 		return (this.match("^"+str)==str);
 	};
-	
-	//ends with 
+
+	//ends with
 	String.prototype.endsWith = function(str)
 	{
 		return (this.match(str+"$")==str);
@@ -2589,7 +2589,7 @@ function getNodeIdEndsWith(node, endsWith)
 				case 'hide':
 			        currentAnimation = dojo.fx.wipeOut({node:id, duration: 1000});
 			        break;
-			    case 'show': 
+			    case 'show':
 			        currentAnimation = dojo.fx.wipeIn({node:id, duration: 1000});
 			        break;
 			}
@@ -2605,21 +2605,21 @@ function getNodeIdEndsWith(node, endsWith)
 			console.debug('ERROR: showHideAnimation NODE NOT FOUND:', id);
 		}
 	}
-	
+
 	function toggleShowHideRow(element, parentPrefix,  value) {
-		
+
 		rowContainerId = getParentIdBeginningWith(element, parentPrefix);
 //		console.debug("found row container: ", rowContainerId, value);
-	
+
 		if(value == 1) {
 			modified();
 			showHideAnimation(rowContainerId, 'hide');
-		} 
+		}
 		else {
 			showHideAnimation(rowContainerId, 'show');
 		}
 	}
-	
+
 	function toggleShowOnMatchById(matchElementValue, matchValue, showHideId) {
 //		console.debug('toggleShowHideOnMatchById matchElementValue', matchElementValue);
 //		console.debug('toggleShowHideOnMatchById matchValue', matchValue);
@@ -2643,14 +2643,14 @@ function getNodeIdEndsWith(node, endsWith)
 			showHideAnimation(rowIdentifier+'-'+showHideId, 'hide');
 		}
 	}
-	
-	
+
+
 	function doAnimation(index) {
 	    switch(index) {
 	      case 1:
 	        currentAnimation = wipeOut;
 	        break;
-	      case 2: 
+	      case 2:
 	        currentAnimation = wipeIn;
 	        break;
 	      case 3:
@@ -2662,7 +2662,7 @@ function getNodeIdEndsWith(node, endsWith)
 	    //Play the animation. Without this call, it will not run.
 	    currentAnimation.play();
 	}
-	
+
 	function fadeNode(nodeId, inOut, delayBeforeStart)
 	{
 		//console.debug('fade', nodeId, dojo.byId(nodeId));
@@ -2705,7 +2705,7 @@ function createWindow2(pageURL, pageTitle, pageWidth, pageHeight, resizeable, sc
 }
 
 function redirectToIep() {
-	
+
 }
 
 function recordAction(formObj, action, docRoot, area, sub, keyName, id, page) {
@@ -2716,7 +2716,7 @@ function recordAction(formObj, action, docRoot, area, sub, keyName, id, page) {
     var submitButton = dijit.byId('submitButton');
     var submitButton2 = dijit.byId('submitButton2');
     var submitButton3 = dijit.byId('submitButton3');
-    /* No more Save Button Disabled 
+    /* No more Save Button Disabled
     if(submitButton && false == submitButton.disabled)
 	{
     	modFlag = 1;
@@ -2727,7 +2727,7 @@ function recordAction(formObj, action, docRoot, area, sub, keyName, id, page) {
     $('.changed').each(function() {
         modFlag = 1;
     });
-    
+
     switch (action) {
         case "cancel":
             if (modFlag == 1) {
@@ -2795,7 +2795,7 @@ function recordAction(formObj, action, docRoot, area, sub, keyName, id, page) {
 //                if (obj) {
 //                    obj.innerHTML = "<a accesskey=\"p\" href=\"javascript:print('" + docRoot + "/form_print.php?area=" + area + "&sub=" + sub + "&" + keyName + "=" + id + "', '" + id + "', 'scrollbars=1,status=1,toolbar=1,resizable=1,location=1,width=800,top=10,left=10');\" onMouseOver=\"javascript:window.status='Click here to view a printable PDF version of this document.'; return true;\" onMouseOut=\"javascript:window.status=''; return true;\">print</a>";
 //                }
-//                
+//
 //                obj = eval("document." + coll + "print_bottom");
 //                if (obj) {
 //                //confirm( "tweaking print_bottom");
@@ -2822,14 +2822,14 @@ function recordAction(formObj, action, docRoot, area, sub, keyName, id, page) {
     }
 }
 function setToRefresh() {
-	
+
 	if(dojo.byId('refresh_page')) {
 		dojo.byId('refresh_page').value = true;
 	} else {
 //		console.debug('setToRefresh() has been called, but the dojo element could not be found.');
-		
+
 		myform = dojo.byId("myform");
-		
+
 	    var input = document.createElement("input");
 	    input.setAttribute("type", "hidden");
 	    input.setAttribute("name", 'refresh_page');
@@ -2847,10 +2847,10 @@ function checkEditedStatus(url)
 
      /* Check to see if any elements were changed */
      $('.changed').each(function() {
-          modFlag = 1;                
+          modFlag = 1;
      });
 
-     if (modFlag == 1) 
+     if (modFlag == 1)
         ret = confirm("ALERT! You haven't saved your changes.\nAre you sure you want to continue?");
 
      if (ret)
@@ -2872,7 +2872,7 @@ function showDataAssistants() {
 		)
     } catch (error) {
     	console.debug('catch - showDataAssistants');
-    }  
+    }
     //console.debug('end - showDataAssistants');
 
 }
@@ -2885,8 +2885,8 @@ function resetModFlag() {
 
 
 function html_entity_decode (string, quote_style) {
-    // Convert all HTML entities to their applicable characters  
-    // 
+    // Convert all HTML entities to their applicable characters
+    //
     // version: 1102.614
     // discuss at: http://phpjs.org/functions/html_entity_decode    // +   original by: john (http://www.jd-tech.net)
     // +      input by: ger
@@ -2905,19 +2905,19 @@ function html_entity_decode (string, quote_style) {
         symbol = '',
         tmp_str = '',
         entity = '';    tmp_str = string.toString();
- 
+
     if (false === (hash_map = this.get_html_translation_table('HTML_ENTITIES', quote_style))) {
         return false;
-    } 
+    }
     // fix &amp; problem
     // http://phpjs.org/functions/get_html_translation_table:416#comment_97660
     delete(hash_map['&']);
-    hash_map['&'] = '&amp;'; 
+    hash_map['&'] = '&amp;';
     for (symbol in hash_map) {
         entity = hash_map[symbol];
         tmp_str = tmp_str.split(entity).join(symbol);
     }    tmp_str = tmp_str.split('&#039;').join("'");
- 
+
     return tmp_str;
 }
 /// Replaces commonly-used Windows 1252 encoded chars that do not exist in ASCII or ISO-8859-1 with ISO-8859-1 cognates.
@@ -2980,27 +2980,27 @@ var sanitizeString = function(text) {
 }
 
 var stripWordFormatting = function(text) {
-    var s = text;    
+    var s = text;
     // Meta tags, link tags, and prefixed tags
-    s = s.replace(/(<meta\s*[^>]*\s*>)|(<\s*link\s* href="file:[^>]*\s*>)|(<\/?\s*\w+:[^>]*\s*>)/gim, ""); 
+    s = s.replace(/(<meta\s*[^>]*\s*>)|(<\s*link\s* href="file:[^>]*\s*>)|(<\/?\s*\w+:[^>]*\s*>)/gim, "");
 
     // MS class tags and comment tags.
     s = s.replace(/(\s*class="Mso[^"]*")|(<!--(.|\s){1,}?-->)/gim, "");//
 
     // MS class tags and comment tags.
     s = s.replace(/\sstyle\=(\'|\")(.*?)(\1)/gim, "");//
-    
+
     // blank p tags
-//  s = s.replace(/(<p[^>]*>\s*(\&nbsp;|\u00A0)*\s*<\/p[^>]*>)|(<p[^>]*>\s*<font[^>]*>\s*(\&nbsp;|\u00A0)*\s*<\/\s*font\s*>\s<\/p[^>]*>)/ig, ""); 
-//    s = s.replace(/(<p[^>]*>\s*<font[^>]*>\s*(\&nbsp;|\u00A0| )*\s*<\/\s*font\s*>\s<\/p[^>]*>)/gim, ""); 
+//  s = s.replace(/(<p[^>]*>\s*(\&nbsp;|\u00A0)*\s*<\/p[^>]*>)|(<p[^>]*>\s*<font[^>]*>\s*(\&nbsp;|\u00A0)*\s*<\/\s*font\s*>\s<\/p[^>]*>)/ig, "");
+//    s = s.replace(/(<p[^>]*>\s*<font[^>]*>\s*(\&nbsp;|\u00A0| )*\s*<\/\s*font\s*>\s<\/p[^>]*>)/gim, "");
 
     // blank font tags with p wrappers
-    s = s.replace(/(<p[^>]*>\s*<font[^>]*>\s*(&nbsp;|\u00A0| )*\s*<\/\s*font\s*>\s*<\/p[^>]*>)/gim, "$2"); 
-    
+    s = s.replace(/(<p[^>]*>\s*<font[^>]*>\s*(&nbsp;|\u00A0| )*\s*<\/\s*font\s*>\s*<\/p[^>]*>)/gim, "$2");
+
     // full font tags
-    s = s.replace(/<font[^>]*>([^<]*)<\/\s*font\s*>/gim, "$1"); 
-    s = s.replace(/<font[^>]*>/gim, ""); 
-    s = s.replace(/<\/font>/gim, ""); 
+    s = s.replace(/<font[^>]*>([^<]*)<\/\s*font\s*>/gim, "$1");
+    s = s.replace(/<font[^>]*>/gim, "");
+    s = s.replace(/<\/font>/gim, "");
 
     // Strip out styles containing mso defs and margins, as likely added in IE and are not good to have as it mangles presentation.
 //    s = s.replace(/(style="[^"]*mso-[^;][^"]*")|(style="margin:\s*[^;"]*;")/gim, "");
@@ -3025,39 +3025,39 @@ function editorInputCleaner(updateValue) {
 
 	debugCount = false;
 	debugValue = true;
-	
+
 	preCleanLen = updateValue.length;
 	if(debugCount) console.debug('preCleanLen:', updateValue.length, stripHtml(updateValue).length);
-	
+
 	// Replace all of those weird MS Word quotes and other high characters
 	updateValue = sanitizeString(updateValue);
 //	dojo.byId('debugger').value += "___sanitizeString----------------------------------\r\n" + updateValue;
-	
-	// set preLength AFTER sanitize because the multi-byte 
+
+	// set preLength AFTER sanitize because the multi-byte
 	// conversion can throw off counts
 	preLength = stripHtml(updateValue).length;
 	if(debugValue) console.debug('updateValue 2', updateValue);
 	if(debugCount) console.debug('___after sanitizeString:', updateValue.length, stripHtml(updateValue).length);
-	
+
 	// stripWordFormatting
 	updateValue = stripWordFormatting(updateValue);
 	if(debugValue) console.debug('updateValue 3', updateValue);
 	if(debugCount) console.debug('after stripWordFormatting:', updateValue.length, stripHtml(updateValue).length);
 //	dojo.byId('debugger').value += "___stripWordFormatting----------------------------------\r\n" + updateValue;
-	
+
 	// strip tag internal style and class tags
 	updateValue = strip_styleClassPadding(updateValue);
 	postLength = stripHtml(updateValue).length;
 	if(debugValue) console.debug('updateValue 4', updateValue);
 	if(debugCount) console.debug('after strip_styleClassPadding:', updateValue.length, stripHtml(updateValue).length);
 //	dojo.byId('debugger').value += "___strip_styleClassPadding----------------------------------\r\n" + updateValue;
-	
+
 	updateValue = strip_multipleSpaces(updateValue);
 	wsLength = stripHtml(updateValue).length;
 	if(debugValue) console.debug('updateValue 5', updateValue);
 	if(debugCount) console.debug('after strip_multipleSpaces set wsLength:', updateValue.length, stripHtml(updateValue).length);
 //	dojo.byId('debugger').value += "___strip_multipleSpaces----------------------------------\r\n" + updateValue;
-	
+
 	// run through JS Html Parser to make sure it's valid html
 	// this helps stop the nested <p> issue on windows IE
 	updateValue = HTMLtoXML(updateValue);
@@ -3065,20 +3065,20 @@ function editorInputCleaner(updateValue) {
 	if(debugValue) console.debug('updateValue 6', updateValue);
 	if(debugCount) console.debug('after HTMLtoXML:', updateValue.length, stripHtml(updateValue).length);
 //	dojo.byId('debugger').value += "___HTMLtoXML----------------------------------\r\n" + updateValue;
-	
+
 	updateValue = strip_multipleSpaces(updateValue);
 	wsLength += stripHtml(updateValue).length;
 	if(debugValue) console.debug('updateValue 7', updateValue);
 	if(debugCount) console.debug('after strip_multipleSpaces:', updateValue.length, stripHtml(updateValue).length);
 //	dojo.byId('debugger').value += "___strip_multipleSpaces----------------------------------\r\n" + updateValue;
-	
+
 	updateValue = replaceParagraphsWithDivs(updateValue);
 //	updateValue = replaceEmptySpansWithSpanBr(updateValue);
 //	 console.debug('replaceParagraphsWithDivs 88', updateValue);
-	 
+
 	updateInlineValue_counter_visible_difference += (preLength - postLength);
 	updateInlineValue_counter_hidden_difference += (postLength - wsLength);
-	
+
 	if(preCleanLen != updateValue.length) {
 		return editorInputCleaner(updateValue);
 	} else {
@@ -3098,17 +3098,17 @@ function revertEditor(editorID, editorRevertId) {
 }
 
 function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
-	
+
 	debugValue = false;
-	
+
 	// for editors
 	console.debug('PROCESS TEXT PRIOR TO EDITOR PROCESSING', updateValue);
-	
+
 	updateInlineValue_counter_visible_difference=0;
 	updateInlineValue_counter_hidden_difference=0;
-	
+
 	updateInlineValue_messageText = 'Your text has been cleaned. ';
-	
+
 	editorMessageId = editorID+'-message';
 	editorRevertId = editorID+'-revert';
 
@@ -3120,23 +3120,23 @@ function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
 	} else if(purify === true) {
 //		console.debug('PURIFY');
 	    try {
-	    	
-	    	
+
+
 	    	updateValue = editorPreProcess(updateValue, debugValue);
-	    	
+
 			// be sure words dont jam together
 			updateValue = lineBreakToSpace(updateValue);
 //			if(debugValue) console.debug('lineBreakToSpace', updateValue);
 
-			
+
 	//		updateValue = spacesToUnderscores(updateValue);
 	//		console.debug('spacesToUnderscores', updateValue);
-			
+
 			// decode html entities
 //			updateValue = dojox.html.entities.decode(updateValue);
 //			if(debugValue) console.debug('updateValue',  editorID, updateValue);
 			//dojo.byId('debugger').value += "___dojox.html.entities.decode----------------------------------\r\n" + updateValue;
-			
+
 //			updateValue = ajacentParagraphTags(updateValue);
 //			if(debugValue) console.debug('ajacentParagraphTags', updateValue);
 
@@ -3144,19 +3144,19 @@ function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
 			updateValue = editorInputCleaner(updateValue);
 			if(debugValue) console.debug('updateValue',  editorID, updateValue);
 			//dojo.byId('debugger').value += "___editorInputCleaner----------------------------------\r\n" + updateValue;
-			
-			
-			
+
+
+
 			updateValue = trimText(updateValue);
 			if(debugValue) console.debug('trimText', updateValue);
 			//dojo.byId('debugger').value += "___trimText----------------------------------\r\n" + updateValue;
-			
+
 			// replace <span> </span> with <span>&nbsp;</span>
 			// this allows the user to click on the line created by the span
 //			updateValue = spanSpaceToNonBreakingSpace(updateValue);
-			
+
 //			updateValue = removeLineBreaksAndIeEmptyParagraphs(updateValue);
-			
+
 			// update message displayed to user
 			if(0 == updateInlineValue_counter_visible_difference) {
 				updateInlineValue_messageText += 'There were no modifications to visible text. ';
@@ -3172,19 +3172,19 @@ function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
 	    	console.debug('ERROR');
 	    	updateInlineValue_messageText = 'There was an error processing the submitted text. Please contact the system administrator for help.';
 	    }
-		
-		
-//		dojo.fadeOut({ 
-//			node:editorMessageId, 
+
+
+//		dojo.fadeOut({
+//			node:editorMessageId,
 //			delay:5000,
 //		    onEnd: function(){
 //	              // executed when the animation is done
 //		    	dojo.byId(editorMessageId).style.display = 'none';
 //	      },
 //	    }).play();
-		
+
 	}
-	
+
     try {
 		//alert(editorID);
 		if('-Editor' == editorID.substring(editorID.length-7))
@@ -3194,8 +3194,8 @@ function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
 			var hiddenEditorID = editorID.substring(0, editorID.length-7);
 			var hiddenElement = dojo.byId(hiddenEditorID);
 			var originalValue = hiddenElement.value;
-			
-	
+
+
 	        // set values into page elements
 			dijit.byId(editorID).setValue(updateValue);
 			dojo.byId(hiddenEditorID).value = updateValue;
@@ -3212,7 +3212,7 @@ function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
     	//execute this block if error
     	updateInlineValue_messageText = 'There was an error trying to insert the processed text. Please contact the system administrator for help.';
     }
-	
+
 
 	messageDiv = dojo.byId(editorMessageId);
 //	console.debug('messageDiv', messageDiv);
@@ -3220,13 +3220,13 @@ function updateInlineValue(editorID, updateValue, purify, revertLinkFlag){
 		dojo.destroy(messageDiv);
 	}
 	dojo.place('<div id="'+editorMessageId+'">'+updateInlineValue_messageText+'</div>', editorID, 'before');
-	
+
 	countTextArea(editorID);
 }
 var currentFocus = '';
 $().ready(function() {
 
-   /*	
+   /*
    $('#submitButton').focus(function() {
        currentFocus = 'submitButton';
    });
@@ -3265,24 +3265,24 @@ function updateInlineValueTest(editorID, updateValue, purify, revertLinkFlag){
 
 	//console.debug('PROCESS TEXT PRIOR TO EDITOR PROCESSING', updateValue);
 	debugValue = false;
-	
+
 	// for editors
-	
+
 	updateInlineValue_counter_visible_difference=0;
 	updateInlineValue_counter_hidden_difference=0;
-	
+
 	updateInlineValue_messageText = 'Your text has been cleaned. ';
-	
+
 	editorMessageId = editorID+'-message';
 	editorRevertId = editorID+'-revert';
 
 	submitObj = new Object();
 	x = new Object();
-	
+
 	submitObj.data = dojo.toJson(updateValue);
 	submitObj.id_editor = editorID;
 //	submitObj.id_form = dojo.attr('formnum', 'value');
-	
+
     var formNum = dojo.byId("form_number").value;
     try {
     	submitObj.id_form = dojo.byId("id_form_"+formNum).value;
@@ -3290,7 +3290,7 @@ function updateInlineValueTest(editorID, updateValue, purify, revertLinkFlag){
     	//execute this block if error
     	//'There was an error getting the form id';
     }
-	
+
     // send to server to be saved
 	var xhrArgs = {
 		content : submitObj,
@@ -3302,8 +3302,8 @@ function updateInlineValueTest(editorID, updateValue, purify, revertLinkFlag){
 		load : updateEditorCallback,
 		error : updateEditorError
 	};
-	var deferred = dojo.xhrPost(xhrArgs); 
-	
+	var deferred = dojo.xhrPost(xhrArgs);
+
 }
 
 /*
@@ -3316,10 +3316,10 @@ function updateEditorCallback(data)
 	editorID = returneditems[0]['id_editor'];
 
 	updateValue = returneditems[0]['id_editor_data'];
-	
+
 	editorMessageId = editorID+'-message';
 	editorRevertId = editorID+'-revert';
-	
+
 	console.debug('editorID', editorID, editorID.substring(editorID.length-4));
 
     try {
@@ -3363,18 +3363,18 @@ function updateEditorCallback(data)
     	updateInlineValue_messageText = 'There was an error trying to insert the processed text. Please contact the system administrator for help.';
         console.debug('updateInlineValue_messageText', updateInlineValue_messageText);
     }
- 
-    
+
+
     try {
-    if ('submitButton' == currentFocus) { savePageDeferred(null, "/form"+form_num+"/jsonupdateiep"); } 
+    if ('submitButton' == currentFocus) { savePageDeferred(null, "/form"+form_num+"/jsonupdateiep"); }
     } catch (error) {
         //execute this block if error
         updateInlineValue_messageText = 'There was an error trying to insert the processed text. Please contact the system administrator for help.';
     }
-   
 
-    /*    
-    setTimeout(function() { 
+
+    /*
+    setTimeout(function() {
     	console.debug('jSaveFocused', jSaveFocused);
     	if ('mouseover' == jSaveFocused) { savePageDeferred(null, "/form"+form_num+"/jsonupdateiep"); } }, 200);
      */
@@ -3394,16 +3394,16 @@ function updateInlineValueTextArea(textareaID, updateValue, purify) {
     var hiddenElement = dojo.byId(textareaID);
     var originalValue = hiddenElement.value;
     colorMeEditor(textareaID, originalValue);
-    
+
     //
 	submitObj = new Object();
 	x = new Object();
-	
+
 	submitObj.data = dojo.toJson(updateValue);
 	submitObj.id_editor = textareaID;
-	
+
     var formNum = dojo.byId("form_number").value;
-	
+
     // send to server to be saved
 	var xhrArgs = {
 		content : submitObj,
@@ -3415,7 +3415,7 @@ function updateInlineValueTextArea(textareaID, updateValue, purify) {
 		load : updateTextAreaCallback,
 		error : updateEditorError
 	};
-	dojo.xhrPost(xhrArgs); 
+	dojo.xhrPost(xhrArgs);
 }
 /*
  * CALLBACK for updateInlineValueTest
@@ -3426,7 +3426,7 @@ function updateTextAreaCallback(data)
 	editorID = returneditems[0]['id_editor'];
 
 	updateValue = returneditems[0]['id_editor_data'];
-	
+
     try {
     	dojo.byId(editorID).value = updateValue;
     } catch (error) {
@@ -3455,7 +3455,7 @@ function countTextArea(editorID) {
 		counterMessage = 'This editor has exceeded the recommended capacity of '+maxlimit+' characters. Please remove some text before saving. Current count:'+editor.length+' characters.'
 	} else {
 		messageStyle = '';
-		counterMessage = 'This editor currently contains '+editor.length+' characters. The max is '+maxlimit+'. '+(maxlimit-editor.length)+' remain.'; 
+		counterMessage = 'This editor currently contains '+editor.length+' characters. The max is '+maxlimit+'. '+(maxlimit-editor.length)+' remain.';
 	}
 	counterDiv = dojo.byId(editorCounterId);
 //	console.debug('counterDiv', counterDiv);
@@ -3463,7 +3463,7 @@ function countTextArea(editorID) {
 		dojo.destroy(counterDiv);
 	}
 	dojo.place('<div id="'+editorCounterId+'" style="'+messageStyle+'">'+counterMessage+'</div>', editorID, 'before');
-	
+
 }
 
 
@@ -3478,11 +3478,11 @@ var editorPreProcess = function(updateValue, debugValue, debugCount) {
 
 	//console.debug('match count', updateValue.match(/(.*?)<p>(.*?)<p>(.*?)<\/p><\/p>(.*?)/gim));
 	// hoping to keep this browser independent
-	
+
 	// remove styles before decoding because of
 	// double quoted fonts
 	// <span style="font-size: 12pt; font-family: &quot;Lucida Grande&quot;;">
-	// becomes 
+	// becomes
 	// <span style="font-size: 12pt; font-family: "Lucida Grande";">
 	// after decoding
 	updateValue = removeStyles(updateValue);
@@ -3493,20 +3493,20 @@ var editorPreProcess = function(updateValue, debugValue, debugCount) {
 	// when strip() is run and that throws off char counts
 	updateValue = strip_styleTagsWhole(updateValue);
 	//dojo.byId('debugger').value += "___strip_styleTagsWhole----------------------------------\r\n" + updateValue;
-	
+
 //	preLength = stripHtml(updateValue).length;
 	if(debugValue) console.debug('updateValue 1', updateValue);
 //	if(debugCount) console.debug('___after strip_styleTagsWhole:', updateValue.length, stripHtml(updateValue).length);
-	
+
 	updateValue = msEmptyLineToBr(updateValue);
 	if(debugValue) console.debug('msEmptyLineToBr', updateValue);
 	//dojo.byId('debugger').value += "___msEmptyLineToBr----------------------------------\r\n" + updateValue;
-	
+
 	updateValue = trimText(updateValue);
 
-	
+
 //	console.debug('editorPreProcess', updateValue);
-	
+
 	return updateValue;
 }
 
@@ -3515,41 +3515,41 @@ var removeStyles = function(text) {
 	// remove styles before decoding because of
 	// double quoted fonts
 	// <span style="font-size: 12pt; font-family: &quot;Lucida Grande&quot;;">
-	// becomes 
+	// becomes
 	// <span style="font-size: 12pt; font-family: "Lucida Grande";">
 	// after decoding
-	var s = text;    
+	var s = text;
     // MS class tags and comment tags.
     s = s.replace(/\sstyle\=(\'|\")(.*?)(\1)/gim, "");//
     return s;
 }
 var replaceParagraphsWithDivs = function(text) {
-	var s = text;    
+	var s = text;
     s = s.replace(/<p>(&nbsp;|\u00A0| )*<\/p>/gim, "<div></div>");
     s = s.replace(/<p>/gim, "<div>");
     s = s.replace(/<\/p>/gim, "</div>");
     return s;
 }
 var replaceEmptySpansWithSpanBr = function(text) {
-	var s = text;    
+	var s = text;
     s = s.replace(/<span><\/span>/gim, "<span><br /></span>");//(&nbsp;|\u00A0| )*
     return s;
 }
 var strip_styleTagsWhole = function(text) {
-    var s = text;    
+    var s = text;
     // Style tags
-    s = s.replace(/(?:<style([^>]*)>([\s\S]*?)<\/style>|<link\s+(?=[^>]*rel=['"]?stylesheet)([^>]*?href=(['"])([^>]*?)\4[^>\/]*)\/?>)/gi, ""); 
+    s = s.replace(/(?:<style([^>]*)>([\s\S]*?)<\/style>|<link\s+(?=[^>]*rel=['"]?stylesheet)([^>]*?href=(['"])([^>]*?)\4[^>\/]*)\/?>)/gi, "");
     return s;
 }
 
 var msEmptyLineToBr= function(text) {
-    var s = text;    
-    
+    var s = text;
+
     // ff on win
     // WORD Empty Paragraph
 	s = s.replace(/<p class="MsoNormal">(&nbsp;|\u00A0| )*<\/p>/gim, "<br />");
-	
-	// FF on mac - spans are added inside the p when pasting in 
+
+	// FF on mac - spans are added inside the p when pasting in
 	// WORD Empty Paragraph
 	s = s.replace(/<p class="MsoNormal"([^>]*)><span([^>]*)>(&nbsp;|\u00A0| )*<\/span><\/p>/gim, "<br />");
 	return s;
@@ -3557,7 +3557,7 @@ var msEmptyLineToBr= function(text) {
 
 
 var spacesToUnderscores = function(text) {
-    var s = text;    
+    var s = text;
     // MS class tags and comment tags.
     s = s.replace(/ /gim, "_");//
     return s;
@@ -3569,48 +3569,48 @@ var stripHtml = function(html) {
    return tmp.textContent||tmp.innerText;
 }
 var strip_styleTagsWhole = function(text) {
-    var s = text;    
+    var s = text;
     // Style tags
-    s = s.replace(/(?:<style([^>]*)>([\s\S]*?)<\/style>|<link\s+(?=[^>]*rel=['"]?stylesheet)([^>]*?href=(['"])([^>]*?)\4[^>\/]*)\/?>)/gi, ""); 
+    s = s.replace(/(?:<style([^>]*)>([\s\S]*?)<\/style>|<link\s+(?=[^>]*rel=['"]?stylesheet)([^>]*?href=(['"])([^>]*?)\4[^>\/]*)\/?>)/gi, "");
     return s;
 }
 
 var strip_styleClassPadding= function(text) {
-    var s = text;    
+    var s = text;
     // remove additional class, padding
-    s = s.replace(/\sclass\=(\'|\")(.*?)(\1)/gim, ""); 
-    s = s.replace(/\scellpadding\=(\'|\")(.*?)(\1)/gim, ""); 
-    
+    s = s.replace(/\sclass\=(\'|\")(.*?)(\1)/gim, "");
+    s = s.replace(/\scellpadding\=(\'|\")(.*?)(\1)/gim, "");
+
     return s;
 }
 var strip_multipleSpaces= function(text) {
-    var s = text;    
+    var s = text;
     // condense multiple whitespaces
-    s = s.replace(/ +/gim, " "); 
+    s = s.replace(/ +/gim, " ");
 //    s = s.replace(/<[\S]+?><\/[\S]+?>/gim, "");
-    
+
     //This javascript code removes all 3 types of line breaks
 //    s = s.replace(/\n/g,"").replace(/\r/g,"");
     return s;
 }
 var lineBreakToSpace= function(text) {
-    var s = text;    
-    
+    var s = text;
+
     //replace line breaks with spaces
 //    s = s.replace(/\n/gim," ").replace(/\r/gim," ");
     s = s.replace(/([^>])\n([^<])/gim,"$1 $2").replace(/([^>])\r([^<])/gim,"$1 $2");
     return s;
 }
 var removeLineBreaksAndIeEmptyParagraphs= function(text) {
-    var s = text;    
-    
+    var s = text;
+
     //replace line breaks with spaces
     s = s.replace(/[\u000d]/gim, ""); // \r
 	s = s.replace(/[\u000a][\u000a]/gim, ""); // \n
 	s = s.replace(/[\u000a]/gim, ""); // \n
 	s = s.replace(/[\u2028]/gim, ""); // Line separator
 	s = s.replace(/[\u2029]/gim, ""); // Paragraph separator
-	
+
 	if(dojo.isIE >= 6){
 		s = s.replace(/<p><\/p>/gim, ""); // IE Empty Paragraph
 	}
@@ -3620,20 +3620,20 @@ var removeLineBreaksAndIeEmptyParagraphs= function(text) {
     return s;
 }
 var spanSpaceToNonBreakingSpace= function(text) {
-    var s = text;    
-    
+    var s = text;
+
     //replace line breaks with spaces
 //    s = s.replace(/<p><span> *<\/span><\/p>/gim,"<BR />");
     return s;
 }
 
 var ajacentParagraphTags= function(text) {
-    var s = text;    
+    var s = text;
 	s = s.replace(/<\/p><p>/gim, "</p><p>");
 	return s;
 }
 var trimText= function(text) {
-    var s = text;    
+    var s = text;
 	s = s.replace(/^\s*/gim, "");
 	s = s.replace(/^\r\n*/gim, "");
 	s = s.replace(/^\r*/gim, "");
@@ -3643,21 +3643,21 @@ var trimText= function(text) {
 
 //var clickInsert= function(text) {
 //	alert('here');
-//    var s = text;    
+//    var s = text;
 //	s = s.replace(/&apos;/gim, "'");
 //	return s;
 //}
 
 //dojo.addOnLoad(
-//		function() { 
+//		function() {
 //			setTimeout(
-//					function() { 
+//					function() {
 //						dojo.byId('debugger').value += 'Hidden.....' +dojo.byId('present_lev_perf').value;
 //						dojo.byId('debugger').value += 'Onload.....' +dijit.byId('present_lev_perf-Editor').getValue();
-//						}, 
+//						},
 //						3000
 //						)
-//						} 
+//						}
 //		);
 //
 //function setFromHidden(editorID) {
@@ -3686,12 +3686,12 @@ var trimText= function(text) {
 //	// make center content pane wider and align left
 //	dojo.style(dijit.byId('srs_mainPane').domNode, "left", "0px");
 //	dojo.style(dijit.byId('srs_mainPane').domNode, "width", "900px");
-//	
+//
 //	// show page_navigation_controlbar
 //	dojo.style(dojo.byId('page_navigation_controlbar'), "display", "inline");
 //	dojo.style(dojo.byId('page_navigation_controlbar2'), "display", "inline");
-//	
-//	
+//
+//
 //}
 
 
