@@ -125,7 +125,8 @@ SRS DISTRICT = 87-0017 (Winnebago)
 
 
         //$APIUrl="https://adviserstagingods.nebraskacloud.org/api/api/v2.0/";
-        $APIUrl="https://adviserstagingods.nebraskacloud.org/api";
+
+        $APIUrl="https://adviserods.nebraskacloud.org/api";
 
         $sync= new Model_EdfiSync();
 	    $sync->set_DbConnString($connstr);

@@ -2,23 +2,23 @@
 
 /**
  * StudentTable
- *  
+ *
  * @author jesse
- * @version 
+ * @version
  */
 
-require_once 'Zend/Db/Table/Abstract.php'; 
+require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 	/**
-	 * The default table name 
+	 * The default table name
 	 */
 	protected $_name = 'iep_student';
 	protected $_primary = 'id_student';
-	
-	 
+
+
 	function writevar1($var1,$var2) {
-	
+
 	    ob_start();
 	    var_dump($var1);
 	    $data = ob_get_clean();
@@ -26,10 +26,30 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 	    $fp = fopen("/tmp/textfile.txt", "a");
 	    fwrite($fp, $data2);
 	    fclose($fp);
-	} 
-	 
-	
-	
+	}
+
+
+	// Mike added this 3-1-2018 So that we can get an id_district and id_county of where the student belongs
+
+	public function getStudentDistrict($id) {
+
+	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+	    $database = Zend_Db::factory($dbConfig->db2);
+
+	    $sql =('SELECT name_first,name_last,id_county,id_district,id_school  from iep_student
+                where id_student=\''.$id.'\'' );
+	   // $this->writevar1($sql,'this is the sql statement');
+	   try{
+	    $result=$database->fetchRow($sql);
+	   }
+	   catch(Exception $e) {
+	       $this->writevar1($e,'here is the db problem.');
+	   }
+
+	  // $this->writevar1($result,'this is the result');
+	   return $result;
+	}
+
 
 // 	protected $_referenceMap = array(
 // 		'ContactTypes' => array(
@@ -39,34 +59,34 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 // 		)
 // 	);
 
-	
+
 
 	public function setRights($Id) {
 	    // include("Writeit.php");
 	    //  writevar($Id,'this is the array');
-	
+
 	    $x=1;
 	    while ($x <= $Id['Count'] ){
-	
+
 	        $staffid = $x."_id_personnel" ;
 	        $did=$Id['id_district'];
 	        //  $row = $row = $this->fetchRow('id_district='".$did.")
 	        //  writevar($row,'this is the row');
 	        $x=$x+1;
 	    }
-	    
-	
+
+
 	    /*
 	     *
 	     select count(*) from foo where id = 5
-	      
+
 	     */
 	}
-	
+
 	public function getStudentList($idCounty,$idDistrict,$idSchool)   // Written by Mike for staffController. teamAction to get just a list of students
 	{
 
-	    // 
+	    //
 	    $dbConfig = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 	    $database = Zend_Db::factory($dbConfig->db2);
 	/*    $studentsInfo=new Model_Table_StudentTable2();
@@ -78,38 +98,38 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
             ->order('name_last'));
       //  $this->writevar1($results,'these are the results in the student list model StudentTable2');
 	   */
-	  
+
 	    $sql =('SELECT s.* ,p.name_first as cm_first,p.name_last as cm_last from iep_student s,iep_personnel p
-                where s.id_case_mgr=p.id_personnel and s.status=\'Active\' and 
+                where s.id_case_mgr=p.id_personnel and s.status=\'Active\' and
 	            s.id_school=\''.$idSchool.'\' and s.id_county=\''.$idCounty.
 	            '\'and s.id_district=\''.$idDistrict.'\' order by s.name_last');
-	    
-	    
-	    
-	    
+
+
+
+
 	  // $this->writevar1($sql,'this is the sql command');
 	    $results=$database->fetchAll($sql);
       // $this->writevar1($results,'these are the results');
-	    
+
 	    return $results;
-	   
-	    
+
+
 	}
-	
+
 	public function studentInfo2($id){
-	    
+
 	    $studentsInfo=new Model_Table_StudentTable2();
 	    $results=$studentsInfo->fetchAll($studentsInfo->select()
 	        ->where('id_student = ?',$id));
 	    return $results;
-	       
+
 	}
-	
+
 	public function studentInfo($id)
 	{
 	    $db = Zend_Registry::get('db');
 	    $id = $db->quote($id);
-	
+
 	    $select = $db->select()
 	                 ->from( 'iep_student',
 			            array(
@@ -121,7 +141,7 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 			                'age_days_into_year' =>
 			                    new Zend_Db_Expr("date_part('days',age(dob))"),
 			                'address' =>
-			                    new Zend_Db_Expr("CASE WHEN address_street2 IS NOT NULL THEN address_street1 || ' ' || address_street2 || ' ' || address_city || ', ' || address_state || ' ' || address_zip ELSE address_street1 || ' ' || address_city || ', ' || address_state || ' ' || address_zip END"), 
+			                    new Zend_Db_Expr("CASE WHEN address_street2 IS NOT NULL THEN address_street1 || ' ' || address_street2 || ' ' || address_city || ', ' || address_state || ' ' || address_zip ELSE address_street1 || ' ' || address_city || ', ' || address_state || ' ' || address_zip END"),
 			                'most_recent_dis' =>
 			                    new Zend_Db_Expr("get_most_recent_mdt_disability_primary(id_student)"),
 			                'most_recent_date_mdt' =>
@@ -218,16 +238,16 @@ class Model_Table_StudentTable2 extends Model_Table_AbstractIepForm {
 // 		die();
 		$results = $db->fetchAll($select);
 	    return $results;
-	    
+
 	}
-	
+
 	public function getEntryAndExitDates($studentId) {
 		return $this->fetchRow(
 				$this->select()
 				     ->from(
-				     		$this->_name, 
+				     		$this->_name,
 				     		array(
-				     				'entry_date', 
+				     				'entry_date',
 				     				'exit_date')
 				     		)
 				     ->where(

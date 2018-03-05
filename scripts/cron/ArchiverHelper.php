@@ -121,7 +121,7 @@ class ArchiverHelper
         }
     }
 
-    public static function formsToBeArchived($tableName, $keyName, $dateField = 'date_notice', $beforeDate)
+    public static function formsToBeArchived($tableName, $keyName, $dateField = 'date_notice', $beforeDate,$lengthYrs)
     {
         $columnExistsQuery = "SELECT attname FROM pg_attribute WHERE attrelid =
         (SELECT oid FROM pg_class WHERE relname = '$tableName') AND attname = '$dateField';";
@@ -133,10 +133,12 @@ class ArchiverHelper
             $studentSql = " and id_student = '$limitToStudent' ";
         }
 
-
+      echo "$lengthYrs this is length of years";
         $dateArr=explode('/',$beforeDate);
 
-        $t=$dateArr[2]-1;
+      //  $t=$dateArr[2]-1;
+        echo "$dateArr[2] this is the year we are trying to subtract\n";
+        $t=($dateArr[2]) - ($lengthYrs);
 
         $beforeDateStart=($dateArr[0].'/'.$dateArr[1].'/'.$t);
         $tt=$beforeDateStart;

@@ -24,11 +24,12 @@ require_once 'ArchiverHelper.php';
 require_once 'Archiver.php';
 
 // get cmd line params
-$args = getopt("e:n:b:d:");
+$args = getopt("e:n:b:d:l:");
 $passedEnv = @$args["e"];
 $formNumber = @$args["n"];
 $beforeDate = @$args["b"];
 $delete = @$args["d"];
+$lengthYrs=@$args["l"];
 
 
 
@@ -111,11 +112,12 @@ if($user && App_Helper_Session::grantArchiverSiteAccess($user, false)) {
 }
 echo "User logged in.\n";
 
+
 $startTime = strtotime('now');
 
 // get forms to be archived
 $formsToArchive = ArchiverHelper::formsToBeArchived('iep_form_' . $formNumber, 'id_form_' . $formNumber,
-                'date_conference', $beforeDate);
+                'date_conference', $beforeDate,$lengthYrs);
 //writevar1($formsToArchive,'these are the forms to archive');
 
 /* forms to archive looks like this .  All 200,000 plus
@@ -138,6 +140,32 @@ $formsToArchive = ArchiverHelper::formsToBeArchived('iep_form_' . $formNumber, '
 
 
 $formsToArchiveCount = count($formsToArchive);
+-
+$checkForNoDistrict= new Model_Table_StudentTable2();
+
+
+for($x=0;$x<$formsToArchiveCount;$x++) {
+
+
+    if($formsToArchive[$x]['id_district']==NULL || $formsToArchive[$x]['id_district']=='' )  {
+        $noDistrict=$checkForNoDistrict->getStudentDistrict($formsToArchive[$x]['id_student']);
+        $formsToArchive[$x]['id_district']=$noDistrict['id_district'];
+
+
+
+        $formsToArchive[$x]['id_county']=$noDistrict['id_county'];
+        $formsToArchive[$x]['id_school']=$noDistrict['id_school'];
+     //   writevar1($formsToArchive[$x],'here is the form now');
+    }
+    else {
+      //  writevar1($formsToArchive[$x],'here is the form not changed');
+    }
+
+}
+foreach($formsToArchive as $it) writevar1($it['id_district'],'here is the district');
+//writevar1($formsToArchive,'these are the forms to archive');
+
+
 
 $counter = 1;
 $formsArchived = array();

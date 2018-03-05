@@ -64,8 +64,15 @@ class App_Application {
          //   $birthYear=$yearArr[0];
         //    $year18=$birthYear+18;
            //   $formDate=
+// Mike added this 3-2-2018 because some of the forms have no district or county number in them.  iep_form_002 is an exmple; over 8000.
+         if($dbData['id_district']==Null ||$dbData['id_district']==''){
+             $stuDistrict=new Model_Table_StudentTable2();
+             $stuInfo=$stuDistrict->getStudentDistrict($dbData['id_student']);
+             $dbData['id_county']=$stuInfo['id_county'];
+             $dbData['id_district']=$stuInfo['id_district'];
+             $dbData['id_school']=$stuInfo['id_school'];
 
-
+         }
 
               $formDte=date('Y-m-d',$formDate);
 
@@ -113,7 +120,8 @@ class App_Application {
             'id_school'=>$dbData['id_school'],
             'version_number'=>$dbData['version_number']
              );
-  //    writevar1($MetaDbData,'this is the data to be put in the db line 116 applicaion.php');
+
+         writevar1($MetaDbData['id_school'],'this is the data to be put in the db line 116 applicaion.php');
          $t=false;
             $metaData=new Model_Table_ArchiveNew();
          //   writevar1($metaData,'this is the archiveNew data');
