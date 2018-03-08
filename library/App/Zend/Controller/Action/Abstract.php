@@ -66,7 +66,7 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
             $this->view->currentSearchPref = $personnel->pref_student_search_location;
             if ('srs' == $this->view->currentSearchPref && 'iepweb03' != APPLICATION_ENV) {
                 // redirect to ZF
-                header("Location:https://iep.unl.edu/srs.php?area=student&sub=list");
+                header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=list");
                 exit;
             }
         }

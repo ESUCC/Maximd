@@ -185,7 +185,7 @@ class Form024Controller extends My_Form_AbstractFormController {
 //        {          
 //            // return to the student list
 //            $stuID = $this->view->formData['id_student'];
-//            header("Location: https://iep.unl.edu/srs.php?area=student&sub=student&student=$stuID&option=forms");
+//            header("Location: https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=$stuID&option=forms");
 //            exit;
 //        }
 //

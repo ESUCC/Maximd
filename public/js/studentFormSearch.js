@@ -65,7 +65,7 @@ function runSearchCall(url)
 			$('#searchResults .studentOptions').each(function() { 
 				$(this).change(function() {
 					if ($(this).val() != '')
-						window.location.href = 'https://iep.unl.edu/srs.php?area=student&sub=student'+$(this).val();
+						window.location.href = 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student'+$(this).val();
 				});
 			});
 			$('.loading').fadeOut();
