@@ -521,7 +521,7 @@ class ApiStudentController extends My_Form_AbstractFormController
 
         $myStudentsObj = new Model_Table_MyStudents();
         $student = $myStudentsObj->find($this->usersession->sessIdUser, $this->getRequest()->getParam('id'));
-
+      //  $this->writevar1($student,'this is the student in ApiStudentController line 524');
 //        Zend_Debug::dump($collectionItems);die;
         if (!is_null($student)) {
             echo Zend_Json::encode(array('success' => '1', 'data' => $student->toArray()));

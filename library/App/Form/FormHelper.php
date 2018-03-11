@@ -1,28 +1,10 @@
 <?php
 
 class App_Form_FormHelper {
-
-    public function writevar1($var1,$var2) {
-
-        ob_start();
-        var_dump($var1);
-        $data = ob_get_clean();
-        $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
-        $fp = fopen("/tmp/textfile.txt", "a");
-        fwrite($fp, $data2);
-        fclose($fp);
-    }
-
-
-
-
-
-
 		//ceiroa 122309 - the only two references to this methods are in this same file,
 		// in the "saveSubformRows" and "persistData" methods.
 		function updateForm($formTableName, $tempForm, $formValues)
 		{
-//		    $this->writevar1($formTableName,'this is the form table name line 25 in formhelper');
 			$formTable = new $formTableName();
 			$id = $formValues[$formTable->get_primary()];
 			$cleanData = $this->cleanForm($formValues, $tempForm, $formTable->get_primary());
@@ -30,11 +12,7 @@ class App_Form_FormHelper {
             if(null!=$id) {
                 $where = $formTable->getAdapter()->quoteInto($formTable->get_primary().' = ?', $id);
                 if(count($cleanData) > 0) {
-
-
-                   $result = $formTable->update($cleanData,$where);
-
-
+                    $result = $formTable->update($cleanData,$where);
                 }
             } else {
                 // something has gone wrong
@@ -158,13 +136,8 @@ class App_Form_FormHelper {
 
 		//ceiroa 122209 - The only reference to it is in the 'jsonupdateiepAction'
 		//in abstractFormController.php
-
 		public function persistData($formNum, $form, $accessMode, $page, $version, $checkout, $subformsArr)
 		{
-
-
-
-		  //  $this->writevar1($subformsArr,'this is the form linee 160 FormHelper.php');
 			$tempForm = clone($form);
             $formValues = $form->clearSubForms()->getValues();
             // convert array elements to pipe delimited string
@@ -229,30 +202,7 @@ class App_Form_FormHelper {
 			}
 //			print_r($formValues);
 			// save the main form
-
-
-
-			/* Mike Modified this so that pwn would work 2-28-2018 SRS-151
-			However the $this->updateForm unfortunately sends it to the datbase correctly without the EMPTY1 in  it,
-			but it also renders it to the page since it is ajax call.  So, we need to follow updateForm
-			*/
-                $resetPwn=false;
-
-              if ($formNum='004' ){
-           //     if($formValues['pwn_describe_action']=='EMPTY1') $formValues['pwn_describe_action']='';
-           //     if($formValues['pwn_describe_reason']=='EMPTY1') $formValues['pwn_describe_reason']='';
-            //    if($formValues['pwn_options_other']=='EMPTY1') $formValues['pwn_options_other']='';
-           //    if($formValues['pwn_justify_action']=='EMPTY1') $formValues['pwn_justify_action']='';
-           //    if($formValues['pwn_other_factors']=='EMPTY1') $formValues['pwn_other_factors']='';
-            //   $resetPwn=true;
-
-              }
 			$this->updateForm('Model_Table_Form'.$formNum, $tempForm, $formValues);
-
-
-
-         //   $this->writevar1($subformsToReturn,'sub forms to return line 246');
-
 
 			return $subformsToReturn;
 		}
@@ -261,8 +211,6 @@ class App_Form_FormHelper {
 		public function cleanForm($passedData, Zend_form $form, $pkName)
 		{
 			$saveData = $passedData;
-
-			//$this->writevar1($saveData,'this is the passedData line 264 formHelper.php');
 //			print_r($saveData);
 	        foreach($form->getElements() as $n => $e)
 	        {
@@ -297,7 +245,7 @@ class App_Form_FormHelper {
 	                // unset the primary key
 	                unset($saveData[$pkName]);
 	            }
-               //  $this->writevar1($saveData,'this is the save data to save line 295');
+
 	            if(isset($saveData[$e->getName()]) && $saveData[$e->getName()] == '') $saveData[$e->getName()] = null;
 	        }
 	        return $saveData;

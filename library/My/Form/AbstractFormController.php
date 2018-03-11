@@ -1969,7 +1969,7 @@ END;
 	public function buildModel($document, $mode) {
 		// build the model
 		$modelName = $this->getModelName ();
-      //   $this->writevar1($modelName,'this is the model name');
+       //  $this->writevar1($modelName,'this is the model name');
 		//$this->writevar1($modelName,'this is the model name line 1924');
 		// return Model_Form008
 
@@ -1978,7 +1978,7 @@ END;
 		// also including student data
 		$modelform = new $modelName ( $this->getFormNumber (), $this->usersession );
 
-		//$this->writevar1($modelform,'this is the model Form linke 1931');
+	   // $this->writevar1($modelform,'this is the model Form linke 1931');
 		// looks like the form
 
 
@@ -1987,7 +1987,7 @@ END;
 
 
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true );
-     //   $this->writevar1($dbData,'this is the db data');
+      //  $this->writevar1($document,'this is the $document data inside the build model function line 1990 called from json ');
 		// Mike added this 3-8-2017 so that no 2 people can edit a form together.
 		if(isset($dbData[0]['message'])) {
 		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
@@ -2168,6 +2168,8 @@ END;
 	  //  $this->writevar1($data,'this is the data line 2163');
 
 	    }
+
+	 //   $this->writevar1($data,'here is hte config line 2172 inside buildzendform');
         $appconfig = Zend_Registry::get ( 'config' );
         $refreshCode = '?refreshCode=' . $appconfig->externals->refresh;
 
@@ -2259,14 +2261,28 @@ END;
       $districtInfo= new Model_Table_District();
       $districtIn=$districtInfo->getDistrict($pwnData['id_county'], $pwnData['id_district']);
       if($districtIn['use_form004_pwn']==false){
-         if($pwnData['pwn_describe_action']!=''|| $pwnData['pwn_describe_action']== NULL) $pwnData['pwn_describe_action']='EMPTY1';
-         if($pwnData['pwn_describe_reason']!=''||$pwnData['pwn_describe_reason']==NULL) $pwnData['pwn_describe_reason']='EMPTY1';
-         if($pwnData['pwn_options_other']!=''|| $pwnData['pwn_options_other']==NULL)   $pwnData['pwn_options_other']='EMPTY1';
-         if($pwnData['pwn_other_factors']!=''|| $pwnData['pwn_other_factors']==NULL)   $pwnData['pwn_other_factors']='EMPTY1';
-         if ($pwnData['pwn_justify_action']!=''|| $pwnData['pwn_justify_action']==NULL) $pwnData['pwn_justify_action']='EMPTY1';
+         if($pwnData['pwn_describe_action']==''|| $pwnData['pwn_describe_action']== NULL) $pwnData['pwn_describe_action']='EMPTY1';
+         if($pwnData['pwn_describe_reason']==''||$pwnData['pwn_describe_reason']==NULL) $pwnData['pwn_describe_reason']='EMPTY1';
+         if($pwnData['pwn_options_other']==''|| $pwnData['pwn_options_other']==NULL)   $pwnData['pwn_options_other']='EMPTY1';
+         if($pwnData['pwn_other_factors']==''|| $pwnData['pwn_other_factors']==NULL)   $pwnData['pwn_other_factors']='EMPTY1';
+         if ($pwnData['pwn_justify_action']==''|| $pwnData['pwn_justify_action']==NULL) $pwnData['pwn_justify_action']='EMPTY1';
 
 
 	  }
+
+
+	  // Mike needs to take it out if the form is to use PWN.
+
+	  if($districtIn['use_form004_pwn']==true){
+
+	      if($pwnData['pwn_describe_action']=='EMPTY1') $pwnData['pwn_describe_action']='';
+	      if($pwnData['pwn_describe_reason']='EMPTY1' ) $pwnData['pwn_describe_reason']='';
+	      if($pwnData['pwn_options_other']=='EMPTY1'  )   $pwnData['pwn_options_other']='';
+	      if($pwnData['pwn_other_factors']=='EMPTY1'  )   $pwnData['pwn_other_factors']='';
+	      if ($pwnData['pwn_justify_action']=='EMPTY1') $pwnData['pwn_justify_action']='';
+	  }
+
+
 	  return $pwnData;
 	}
 
@@ -2309,7 +2325,7 @@ END;
 		$pwnCheck=$this->getRequest()->getControllerName();
 
 		if($pwnCheck=='form004'){
-		  $this->writevar1($pwnCheck,'this is the pwn check ');
+		//  $this->writevar1($pwnCheck,'this is the pwn check ');
            $distInfo = new Model_Table_District();
            $idCty=$this->view->db_form_data['id_county'];
            $idDst=$this->view->db_form_data['id_district'];
@@ -2339,13 +2355,18 @@ END;
 		$config = array ('className' => $this->getFormClass (), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps );
 
 
-		$config['use_form004_pwn']=$usePwn['use_form004_pwn'];
+		if ($pwnCheck=='form004') $config['use_form004_pwn']=$usePwn['use_form004_pwn'];
 
 
 	//	$this->writevar1($config,'this is the config line 2316');
 		// build zend form
 		$this->view->form = $this->buildZendForm ( $this->getFormClass (), $this->view->db_form_data, $this->view->version, $config, $this->view->page );
-        $this->writevar1($this->view->form,'this is the whole form');
+
+		/*
+		When it gets here it is coming off the db directly.  When do ajax save it never reaches this.
+		$this->writevar1($this->view->form,'this is the whole form');
+
+		*/
 		// build array of boolean page validity from the internal var
 		// built in buildZendForm()
 		$pagesValidArr = $this->arraysKeyExtract ( $this->formPagesValidArr, 'valid', 1 );
@@ -2534,17 +2555,39 @@ END;
 
 		// retrieve data from the request
 		$request = $this->getRequest ();
-		$post = $this->getRequest ()->getPost ();
-		$checkout = ($this->getRequest ()->getParam ( 'zend_checkout' ) > 0) ? $this->getRequest ()->getParam ( 'zend_checkout' ) : 1;
 
+	//	$this->writevar1($request,'this is the  get request  in $request line 2542');
+
+
+		$post = $this->getRequest ()->getPost ();
+
+		//$this->writevar1($post,'this is the post request in $post line 2548');
+
+		$checkout = ($this->getRequest ()->getParam ( 'zend_checkout' ) > 0) ? $this->getRequest ()->getParam ( 'zend_checkout' ) : 1;
+       // $this->writevar1($checkout,'this is the checkout line 2551');
 		// get requested page, if any
-		$this->view->page = ($this->getRequest ()->getParam ( 'page' ) > 0) ? $this->getRequest ()->getParam ( 'page' ) : $this->startPage;
+
+
+        $this->view->page = ($this->getRequest ()->getParam ( 'page' ) > 0) ? $this->getRequest ()->getParam ( 'page' ) : $this->startPage;
 
 		// build the model
 		// getting db data so we can confirm version from db
 		// also sets $this->view->lps based on county and district
-		$this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getPost ( $this->getPrimaryKeyName (), null ), $this->view->mode );
 
+        //$this->writevar1($this->getRequest ()->getPost ( $this->getPrimaryKeyName (), null ),'this is the view line 2561');
+      //  $this->writevar1($this->view->mode,'this is the view mode line 2562');
+
+
+
+        /*
+         * Mike added notes 3-9-2018
+         * onley the form id and mode are being passed to the buildModel. NO DATA
+         *
+         */
+
+
+        $this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getPost ( $this->getPrimaryKeyName (), null ), $this->view->mode );
+      //  $this->writevar1($this->view->db_form_data,'this is the db from data line 2570');
         // Check to see if this is a finalized form
         // If it is, we don't want to update so return an error and exit
         if ('Final' == $this->view->db_form_data['status']) {
@@ -2577,7 +2620,7 @@ END;
     	// $this->formPagesValidArr[pageNumber]['errors'] = $formPage->getErrors();
     	// $this->formPagesValidArr[pageNumber]['messages'] = $formPage->getMessages();
 
-
+   //    $this->writevar1($config,'this is the config line 2601');
 
 
 
@@ -2595,20 +2638,25 @@ END;
 		// all pages should have the right
 		// page_status EXCEPT the current page
 
-
+      //   $this->writevar1($this->getRequest()->getParams(),'this is beofre the populate in jsonupdate line 2627');
 
 		// $this->view->form->populate ( $t, true);
         $this->view->form->populate ( $this->getRequest ()->getParams(), true);
+// GETS to here ok
 
-      //    $this->writevar1($this->getRequest()->getParams(),'these are parameters in abstracformcontroller line 2604');
+      // $this->writevar1($this->getRequest()->getParams(),'these are parameters in abstracformcontroller line 2633');
 
 		 $valid = $this->view->form->isValid( $this->getRequest ()->getParams() );
-		// $valid = $this->view->form->isValid( $t );
+		// $this->writevar1($valid,'this is valid line 2638');
 
 		/*
 		 * build the error message array for the CURRENT page
 		 * if this has a length of 0, the page is valid
+		 * Mike added
+		 * the buildValidationArray is on line 555 models/AbstractForm 3-8-2018
 		 */
+
+		// $this->writevar1($this->view->form,'this is the form view line 2645 inside json befroe buidValidationArray');
 		$currentPageValidationArray = $this->view->form->formHelper->buildValidationArray ( $this->view->form, $this->view->form->getMessages () );
 
         /*
@@ -2638,13 +2686,13 @@ END;
 
 		$rowsToRebuild = $this->view->form->formHelper->persistData ( $this->getFormNumber (), $this->view->form, $this->view->mode, $this->view->page, $this->view->db_form_data ['version_number'], $checkout, $this->subFormsArray );
 
+     //   $this->writevar1($rowsToRebuild,'number of rows to buld inside the jsonupdate line 2675');
 
 
 
 
 
-
-	//	$this->writevar1($post,'post value line 2643');
+	//	$this->writevar1($this,'this  value line 2681');
 		if (method_exists ( $this, 'saveAdditional' )) {
 			$this->saveAdditional ( $post );
 		}

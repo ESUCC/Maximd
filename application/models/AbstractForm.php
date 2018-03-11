@@ -40,7 +40,7 @@ class Model_AbstractForm
 	}
 
 	public function writevar1($var1,$var2) {
-	
+
 	    ob_start();
 	    var_dump($var1);
 	    $data = ob_get_clean();
@@ -49,7 +49,7 @@ class Model_AbstractForm
 	    fwrite($fp, $data2);
 	    fclose($fp);
 	}
-	
+
 	public function buildFormAccess($id_student)
 	{
       	$student_auth = new App_Auth_StudentAuthenticator();
@@ -86,6 +86,10 @@ class Model_AbstractForm
 	}
 	public function buildDbForm($id, $accessMode = "view", $page =1, $versionNumber = 1, $checkout = 0)
 	{
+
+
+
+
 		// called from the Form0xx in application/models
 		if(null != $id)
 		{
@@ -94,6 +98,8 @@ class Model_AbstractForm
 
 			// isolate current row
 			$this->db_form = $db_form_rows->current();
+
+			//$this->writevar1($this->db_form,'this is the db form line 98');
 
 			if(null != $db_form_rows->current())
 			{
@@ -266,16 +272,16 @@ class Model_AbstractForm
         		// checkout active
         		if($this->db_form_data['zend_checkout_user'] != $this->usersession->sessIdUser)
         		{
-        		    
+
                     $personnel = new Model_Table_PersonnelTable();
-                  
-                
-                    
+
+
+
                     $person = $personnel->find($this->db_form_data['zend_checkout_user'])->current()->toArray();
                    // $this->writevar1($person,'this is hte person');
-                    
+
                     throw new App_Exception_Checkout("This form is currently being used by {$person['name_first']} {$person['name_last']}. This form will remain locked until " . $this->db_form_data['zend_checkout_time'] . " or until {$person['name_first']} {$person['name_last']} clicks the DONE button on this form.");
-                  
+
                    return false;
         		}
         	}
@@ -327,12 +333,12 @@ class Model_AbstractForm
 			$formTable = $this->table;
 
 			// Mike added this 11-10-2017 so that we can finalize edfi forms in the db table edfi.
-			
-			
+
+
 			// end of Mike add
-			
-			
-			
+
+
+
 			// derive pk name
 			$pkArr = $formTable->get_primary();
 			$keyName = is_array($pkArr) ? array_shift($pkArr) : $pkArr;
@@ -358,34 +364,34 @@ class Model_AbstractForm
 //			$msgText = "Sorry, this form can&rsquo;t be finalized because the date of conference is too far in the future.";
 //			return true;
 //		}
-      
+
       // Mike added this 11-10-2017 in order to update the edfi db when a form is finalized.
-      
+
 					 $edfi=new Model_Table_Edfi();
-					
+
 					 // Mike changed this 1-8-2018 because people couuld not finalize form010 or progress reports.
 					// if(isset($currentForm['id_form_004']).  there is an id_form_004 in form010
-					
+
 					 if(isset($currentForm['id_form_004']) && !isset($currentForm['id_form_010'])){
 					     $edfi->updateOneStudent($currentForm);
 					 }
-					 	
+
 					 if(isset($currentForm['id_form_023'])){
 					     $edfi->updateOneStudent($currentForm);
 					 }
-					 	
+
 					 if(isset($currentForm['id_form_002'])){
 					     $edfi->updateOneStudent($currentForm);
 					 }
-					 	
+
 					 if(isset($currentForm['id_form_022'])){
 					     //      $this->writevar1($currentForm,'this is current form in abstractform model line 349');
-					      
+
 					     $edfi->updateOneStudent($currentForm);
-					      
-					 }			 
-					 
-					 
+
+					 }
+
+
 		return $formTable->update(
 			array(
 				'status'=>'Final',
@@ -636,6 +642,7 @@ class Model_AbstractForm
 
 	public function populateForm($data)
 	{
+
 		$this->form->populate($data);
 	}
 

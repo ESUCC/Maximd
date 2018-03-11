@@ -8,12 +8,11 @@ echo $this->element->page;
 echo $this->element->dob;
 ?>
 
-
-    <table class="formTitleHead">
+   <table class="formTitleHead">
         <tr>
             <td><?php  echo $this->translate('Transportation');?></td>
         </tr>
-    </table>
+</table>
 
     <table class="formInput noBorder">
         <tr>
@@ -26,9 +25,9 @@ echo $this->element->dob;
                 echo $this->element->transportation_why;
                 ?>  </td>
         </tr>
-    </table>
+</table>
 
-    <table class="sc_formInputBlock">
+<table class="sc_formInputBlock">
         <tr>
             <td><?php echo $this->translate('special education transportation'); ?>:</td>
         </tr>
@@ -39,7 +38,7 @@ echo $this->element->dob;
         </tr>
     </table>
 
-    <table class="formSectionHead">
+ <table class="formSectionHead">
         <tr>
             <td><?php echo $this->translate('Assessment '); ?></td>
         </tr>
@@ -85,8 +84,11 @@ echo $this->element->dob;
                 ?>
             </td>
         </tr>
-    </table>
-    <table class="sc_formInputBlock">
+</table>
+
+
+
+  <table class="sc_formInputBlock">
         <tr>
             <td><?php echo $this->translate('academic and functional performance'); ?>:</td>
         </tr>
@@ -97,7 +99,8 @@ echo $this->element->dob;
         </tr>
     </table>
 
-<?php if (!$view->lps || 10 <= $view->version) { ?>
+
+    <?php if (!$view->lps || 10 <= $view->version) { ?>
     <table class="formTitleHead">
         <tr>
             <td><?php echo $this->translate('Extended School Year Services for '); echo $view->db_form_data['id_district']." ".$view->db_form_data['id_county'] ?></td>
@@ -119,51 +122,37 @@ echo $this->element->dob;
                 <?php echo $this->element->ext_school_year_desc; ?>
             </td>
         </tr>
-    </table>
+</table>
+<?php }?>
+
+
 
 
 <?php
 $usePWN=new Model_Table_District();
 $distInfo=$usePWN->getDistrict($view->db_form_data['id_county'],$view->db_form_data['id_district']);
 $distResult=$distInfo['use_form004_pwn'];
+//$distResult=true;
 
 
-
-if($distResult!=true){
+if($distResult!='1'){
 ?>
 
 <script type="text/javascript">
-
-
 $("document").ready(function() {
-
 $("#disappear").hide(1000);
-
 });
 </script>
 
-<?php }
+<?php }  ?>
 
-
-
-    ?>
-
-
-</script>
-
- <script type="text/javascript">
-
-
+<script type="text/javascript">
 $("document").ready(function() {
-
-
 	$('textarea').text(function() {
 		return $(this).text().replace("EMPTY1","EMPTY2");
 	});
 ​
-
 });
-
 </script>
 
 <div id="disappear">
@@ -174,10 +163,10 @@ $("document").ready(function() {
             <td><h1><center> <?php echo $this->translate('Prior Written Notice Section'); ?></center></h1></td>
         </tr>
        </tbody>
-    </table>
+</table>
 
 
-    <table class="sc_formInputBlock">
+  <table class="sc_formInputBlock">
       <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
         <tr>
             <td><?php echo $this->translate('A description of the action proposed or refused by the school district or approved cooperative:'); ?>:</td>
@@ -188,9 +177,10 @@ $("document").ready(function() {
             </td>
         </tr>
     <tbody>
-    </table>
+</table>
 
-    <table class="sc_formInputBlock">
+
+  <table class="sc_formInputBlock">
        <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
         <tr>
             <td><?php echo $this->translate('An explanation of why the district or approved cooperative proposes or refuses to take the action:'); ?>:</td>
@@ -202,6 +192,7 @@ $("document").ready(function() {
         </tr>
      </tbody>
     </table>
+
 
     <table class="sc_formInputBlock">
 
@@ -216,7 +207,8 @@ $("document").ready(function() {
             </td>
         </tr>
 
-    </table>
+</table>
+
 
     <table class="sc_formInputBlock">
      <?php if (!$distResult) { ?> <tbody style="display:none"> <?php }?>
@@ -243,10 +235,10 @@ $("document").ready(function() {
             </td>
         </tr>
        </tbody>
-    </table>
+</table>
+
 </div>
 
 
-<?php
-         }
-       ?>
+
+
