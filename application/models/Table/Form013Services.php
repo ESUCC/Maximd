@@ -131,8 +131,8 @@ class Model_Table_Form013Services extends Model_Table_AbstractIepForm {
           //   $this->writevar1($result,'this is the whole form');
 
           if($id_form=='53559') {
-              $this->writevar1($id_form,'this is hte form id');
-              $this->writevar1($result,'this is the result');
+            //  $this->writevar1($id_form,'this is hte form id');
+           //   $this->writevar1($result,'this is the result');
           }
 
            return $result;

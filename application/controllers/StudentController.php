@@ -648,7 +648,7 @@ class StudentController extends My_Form_AbstractFormController
     }
 
     public function searchAction() {
-       //include("Writeit.php");
+
         /**
          * update personnel if user changes pref for student search screen
          */
@@ -1130,7 +1130,7 @@ class StudentController extends My_Form_AbstractFormController
             if($formValid) {
                 // valid to save
                 $data = $form->getValues();
-                $this->writevar1($data,'this is the data line 1078');
+       //         $this->writevar1($data,'this is the data line 1078');
 
                 if($data['grade']!='EI 0-2'){
                     $data['id_ser_cord']=NULL;

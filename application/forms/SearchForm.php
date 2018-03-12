@@ -82,7 +82,6 @@ class Form_SearchForm extends Zend_Form {
                         '028' => "Equitable Service Plan",
                         '030' => "Notice of Equitable Service Meeting",
                         '024' => "Agency Consent Invitation",
-
                     ),
                     'OPTIONAL FORMS' => array(
                         '011' => "Notice of MDT Conference",
@@ -326,7 +325,6 @@ class Form_SearchForm extends Zend_Form {
                 '026' => "Revocation of Consent for Special Education and Related Services",
                 '028' => "Equitable Service Plan",
                 '030' => "Notice of Equitable Service Meeting",
-
             ),
             'OPTIONAL FORMS' => array(
                 '011' => "Notice of MDT Conference",
@@ -350,8 +348,6 @@ class Form_SearchForm extends Zend_Form {
                 '031' => "Notice of Initial Eval and Child Assessment",
          //      '025' => "Notification Of Multidisciplinary Team Planning Meeting",
                 '033' => "Annual Transition Notice",
-
-
             ),
         );
         return $createForms;

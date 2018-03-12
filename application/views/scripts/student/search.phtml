@@ -20,11 +20,11 @@ $this->headScript()->appendFile('/js/studentSearch.js' . $refreshCode );
 $this->headLink()->appendStylesheet('/css/collectionManager.css');
 ?>
 
-<?php  
-//Michael 3-18-2016 This was taken out to stop the intial load on the student data. 
+<?php
+//Michael 3-18-2016 This was taken out to stop the intial load on the student data.
 if ($this->cacheKey) :
     $this->headScript()->captureStart(); ?>
-     $(document).ready(function() { 
+     $(document).ready(function() {
      runSearchCall('/student/search-student/page/<?php echo $this->searchPage; ?>/defaultCacheResult/1/key/<?php echo $this->cacheKey?>');
     });
 <?php
@@ -33,8 +33,8 @@ elseif ($this->showAll) :
     $this->headScript()->appendFile('/js/defaultSearchAll.js');
 endif;
  ?>
- 
- 
+
+
 <table border="0">
     <!-- logo row -->
     <?php $auth = Zend_Auth::getInstance(); ?>
@@ -49,7 +49,7 @@ endif;
 	</td>
     </tr>
 </table>
-<? 
+<?
 /**
  * left sidebar
  */
@@ -79,15 +79,15 @@ echo $this->partial('searchSidebarScripts.phtml', array(
                     </tr>
                     <? } ?>
   <tr> <td><a href="http://72.15.175.198/video/CheckAltAssessment.docx"style="color:#FF0000;">Download instructions on how Check Alternate Assessment Issue </a></td></tr>
-   
+
                 </table>
             </form>
         </div>
         <h3 id="searchStudents">Search Students</h3>
-        
 
 
-		
+
+
 
         <?php echo $this->searchForm; ?>
     </div>

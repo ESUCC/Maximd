@@ -564,7 +564,7 @@ ul#tabnav a:hover {
 /* format search result rows */
 /* student search forms display */
 #searchResults {
-    /*width:100%;*/
+  /*  width:100%; */
     width: 900px;
     font-size: 11px;
 }

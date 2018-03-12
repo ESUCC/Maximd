@@ -159,7 +159,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     }
 
     function updateEditStudentEdfi($student){
-        $this->writevar1($student,'this is the student line 151 in edfi ');
+      //  $this->writevar1($student,'this is the student line 151 in edfi ');
         /*
          * 1 check for district edfi
          * 2 check for existing entry in edfi table

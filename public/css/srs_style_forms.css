@@ -4,7 +4,7 @@ table {
     border-spacing:0;
     border-collapse:collapse;
 	width:100%;
-} 
+}
 table td {vertical-align:text-top;}
 
 /* standard spacing for text left of input */
@@ -23,7 +23,7 @@ table.sc_subSectionHead span.menuTextLink {font-size:11px; float:right;}
 
 .navTopMenu {
     border: 0px;
-    min-width: 1024px;	
+    min-width: 1024px;
     width: 100%;
 
 }
@@ -48,13 +48,13 @@ tr.sc_richTextBox .RichTextEditable {border:none;}
 
 /* Table placed just below progress report tabs */
 table.formTabTable {
-    width:100%; 
-    height: 15px; 
-    font-weight:800; 
-    font-size: 7pt; 
-    font-family:verdana,helvetica,arial; 
-    color: black; 
-    background-color: white; 
+    width:100%;
+    height: 15px;
+    font-weight:800;
+    font-size: 7pt;
+    font-family:verdana,helvetica,arial;
+    color: black;
+    background-color: white;
     margin-top:5px;
 	border-bottom: 2px solid #000;
 }
@@ -416,7 +416,7 @@ color: white;
     background-color:#fff;
     width:100%;
     min-height:288px;
-    position:absolute; 
+    position:absolute;
     border:1px solid #777;
     opacity:0.7;
     filter:alpha(opacity=70);
@@ -496,8 +496,8 @@ div.divNotification {
 }
 
 .SchoolForm {
-    width: 100%; 
-    margin: 5px;   
+    width: 100%;
+    margin: 5px;
 }
 
 .SchoolForm .NameSchool{
@@ -516,12 +516,12 @@ div.divNotification {
 .SchoolForm .SchoolButtons{
     text-align: right;
     margin-right: 10px;
-    
+
 }
 
 .SchoolForm td, .SchoolForm th {
     padding: 3px;
-    margin: 1px;   
+    margin: 1px;
 }
 
 .SchoolForm .SchoolHeader{
@@ -531,7 +531,7 @@ div.divNotification {
     font-size: 14px;
 }
 .SchoolForm .SchoolFormTitle{
-    width: 180px;    
+    width: 180px;
     background: #fafafa;
     margin-left: 5px;
     font-weight: 600;
