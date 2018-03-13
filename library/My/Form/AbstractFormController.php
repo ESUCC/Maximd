@@ -399,12 +399,29 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 
         // retrieve data from the request
 		$request = $this->getRequest ();
+
+		//$this->writevar1($request->document,'this is the request line 402 abstformctrl');
+
+
 		$this->view->document = $request->document;
 		$this->view->page = $request->page;
 		$this->view->formNum = $this->getFormNumber ();
 
 		$modelName = $this->getModelName ();
+
 		//$this->writevar1($modelName,'this is the model name');
+
+// Mike made this change on 3-13-2018 SRS-151 so that pwn does not interfere with districts that want to finalize.
+		if ($modelName=='Model_Form004') {
+
+		    $contents= new Model_Table_Form004();
+		    $formContents=$contents->getForm($request->document);
+		    $this->writevar1($formContents,'these are the form contents lline 418');
+		    $this->pwnMod($formContents);
+		}
+
+		// End of Mike add
+
 		$modelobj = new $modelName ( $this->getFormNumber (), $this->usersession );
 		$formData = $modelobj->find ( $request->document );
 
@@ -2335,7 +2352,9 @@ END;
            $idDst=$this->view->db_form_data['id_district'];
 
            $data=$this->view->db_form_data;
-          $this->view->db_form_data=$this->pwnMod($data);
+
+           // Mike took this out 3-13-2018 so that it would happen upon finalization instead of just in edit mode SRS-151
+         // $this->view->db_form_data=$this->pwnMod($data);
 
 		}
 

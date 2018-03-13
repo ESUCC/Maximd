@@ -64,6 +64,19 @@ class Model_Table_Form004 extends Model_Table_AbstractIepForm
 
     }   // end of the function
 
+// Mike added this 3-13-2018 so that people could finalize forms without saving in PWN secton of iep. SRS-151
+    public function getForm004($id) {
+        $sql="select * from iep_form_004 where id_form_004='$id'";
+        $result=$this->db->fetchAll($sql);
+
+        if (!empty($resut)) {
+
+            return $result;
+        }
+        else {
+            return null;
+        }
+    }
 
     function dupe($document) {
 
