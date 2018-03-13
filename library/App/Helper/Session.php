@@ -99,7 +99,7 @@ class App_Helper_Session extends Zend_Acl
         }
 
         // new HTTP request to old site
-        $oldSiteClient = new Zend_Http_Client('https://iep.nebraskacloud.org/logon.php?option=1', $httpParams);
+        $oldSiteClient = new Zend_Http_Client('https://iep.unl.edu/logon.php?option=1', $httpParams);
         $oldSiteClient->setMethod(Zend_Http_Client::POST);
         $oldSiteClient->setCookieJar();
         $oldSiteClient->setParameterPost('userName', 'archiver');
@@ -111,10 +111,10 @@ class App_Helper_Session extends Zend_Acl
         $dom = new Zend_Dom_Query($response->getBody());
         if($dom->query('#ferpa')->count()>=1) {
             // login failed
-            Zend_Debug::dump('login failed on iep.nebraskacloud.org');
+            Zend_Debug::dump('login failed on iep.unl.edu');
             return false;
         } else {
-            Zend_Debug::dump('login SUCCESS to iep.nebraskacloud.org');
+            Zend_Debug::dump('login SUCCESS to iep.unl.edu');
         }
 
         $sessUser = new Zend_Session_Namespace('user');
