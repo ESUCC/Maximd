@@ -172,6 +172,13 @@ $usePWN=new Model_Table_District();
 $distInfo=$usePWN->getDistrict($view->db_form_data['id_county'],$view->db_form_data['id_district']);
 $distResult=$distInfo['use_form004_pwn'];
 
+//MIke added this 3-14-2018 so that empty fields would be determine if this part of the form is printed.  SRS-151
+if(($this->element->pwn_describe_action->getValue()=='EMPTY1'||$this->element->pwn_describe_action->getValue()==null || $this->element->pwn_describe_action->getValue()=='')
+    and ($this->element->pwn_describe_reason->getValue()=='EMPTY1'||$this->element->pwn_describe_reason->getValue()==null || $this->element->pwn_describe_reason->getValue()=='')
+    and ($this->element->pwn_options_other->getValue()=='EMPTY1'||$this->element->pwn_options_other->getValue()==null || $this->element->pwn_options_other->getValue()=='')
+    and ($this->element->pwn_justify_action->getValue()=='EMPTY1'||$this->element->pwn_justify_action->getValue()==null || $this->element->pwn_justify_action->getValue()=='')
+    and ($this->element->pwn_other_factors->getValue()=='EMPTY1'||$this->element->pwn_other_factors->getValue()==null || $this->element->pwn_other_factors->getValue()=='')
+    )  $distResult=false;
 
 
 if($distResult==true){
