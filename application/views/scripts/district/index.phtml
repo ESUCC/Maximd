@@ -2,18 +2,18 @@
 #srs_left .subBar_top {
     /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
     height: 0px;
-    padding-bottom: 0; 
+    padding-bottom: 0;
 }
 
 #srs_left .subBar_btm {
     /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
-    height: 0px; 
+    height: 0px;
 }
-#leftTop { 
+#leftTop {
     /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
     height: 2px;
     padding: 0;
-}	
+}
 
 #srs_left {
     position: fixed;
@@ -130,10 +130,10 @@
 }
 
 </style>
-
 <script src="/js/validate/jquery.validate.min.js"></script>
 <script src="/js/validate/additional-methods.min.js"></script>
-<?    
+
+<?
 
     $countyList = Array();
     $districtArray = "";
@@ -148,12 +148,12 @@
 ?>
 
 <script type="text/javascript">
-    $(document).ready(function() { 
+    $(document).ready(function() {
 
       var reports = Array;
       var districtsList = [ <?=$districtArray?> ];
       $("#searchAlphabet").val("");
-	
+
 
       $(document).on("change keyup", ".options", function () {
         var title = $(this).attr("title");
@@ -175,7 +175,7 @@
         var url = data_var[1];
 
 	if (url != ""){
-	$("#dialog").html(""); 
+	$("#dialog").html("");
         $("#dialog").load( url,
           function() {
             $(".openWindow").prop('selectedIndex',0);
@@ -303,7 +303,7 @@
                 if (response.err == 1) $("#successSave").html(response.msg).removeClass("blueAlert").addClass("redAlert").show({ effect: "fade", duration: 500 });
                    else {
                       $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
-                      $(".DistrictEditSave, .DistrictEditCancel").prop("disabled", true); //.DistrictEditReturn, 
+                      $(".DistrictEditSave, .DistrictEditCancel").prop("disabled", true); //.DistrictEditReturn,
                    }
                    setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
 
@@ -318,16 +318,16 @@
 
 
     $(document).on("change", "#fileToUpload", function() {
-	      var file_data = $("#fileToUpload").prop("files")[0]; 
+	      var file_data = $("#fileToUpload").prop("files")[0];
 
-        if (typeof file_data != undefined && 
-              (file_data["type"] == "image/jpg" 
-              || file_data["type"] == "image/gif" 
-              || file_data["type"] == "image/jpeg" 
+        if (typeof file_data != undefined &&
+              (file_data["type"] == "image/jpg"
+              || file_data["type"] == "image/gif"
+              || file_data["type"] == "image/jpeg"
               || file_data["type"] == "image/png")) {
 	          $("#districtLogo").html('<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>');
-	          var form_data = new FormData();          
-            form_data.append("file", file_data);            
+	          var form_data = new FormData();
+            form_data.append("file", file_data);
 	          form_data.append("id_district", $("#id_district").val());
             form_data.append("id_county", $("#id_county").val());
             $.ajax({
@@ -336,7 +336,7 @@
                 cache: false,
                 contentType: false,
                 processData: false,
-                data: form_data,   
+                data: form_data,
                 type: 'post',
 		            success: function (data) {
 			              $("#fileToUpload").val("");
@@ -356,7 +356,7 @@
 
     $(document).on("click", "#fileRemove", function() {
 
-        var form_data = new FormData();                
+        var form_data = new FormData();
         form_data.append("id_district", $("#id_district").val());
         form_data.append("id_county", $("#id_county").val());
         $.ajax({
@@ -365,7 +365,7 @@
             cache: false,
             contentType: false,
             processData: false,
-            data: form_data,   
+            data: form_data,
             type: 'post',
 		        success: function (data) {
 			          $("#fileToUpload").val("");
@@ -374,13 +374,14 @@
 			          console.log(data);
 	          }
         });
-	      return false; 
+	      return false;
     });
 
     $(document).on( "click", "#cancelSearch", function() {
         $("#searchAlphabet").val("");
+
         $("#searchTable").html("");
-        $("#searchTable").hide();	        
+        $("#searchTable").hide();
         $("#originalTable").show();
 	    return false;
     });
@@ -391,13 +392,13 @@
 
         if (searchAlphabet == "") {
 	    $("#searchAlphabet").val("");
-	    $("#searchTable").html("");		
-	    $("#searchTable").hide();	        
+	    $("#searchTable").html("");
+	    $("#searchTable").hide();
 	    $("#originalTable").show();
          } else if ( searchAlphabetLength > 0 && searchAlphabet != "" ) {
-	    $("#searchTable").html("");	    
+	    $("#searchTable").html("");
 	    $("#originalTable").hide();
-	    $("#searchTable").show();	        
+	    $("#searchTable").show();
 
 	    var i = 0;
 	    var color = "#B0C4DE";
@@ -428,20 +429,20 @@
 
     	    if (finded == 0) $("#findres").append('<center><br><br>No matches<br><br></center>');
 
-         } 
+         }
 
 	    return false;
     });
 
 });
 </script>
-    
+
     <table class="navTopMenu">
         <!-- logo row -->
         <?php $auth = Zend_Auth::getInstance(); ?>
             <td>
                 <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
-                    echo $this->navigationTopTabs('simple');
+                  echo $this->navigationTopTabs('simple');
                 } ?>
             </td>
         </tr>
@@ -462,62 +463,62 @@
 
 <div>
 
-<?php 
+<?php
 if(count($this->districtList) != 0) {
 ?>
     <h2> <b><u>Edit the Following Districts</u></b></h2>
     <select class="openWindow">
       <option>Choose District to Edit</option>
-<?php 
+<?php
 
 foreach ($this->districtListAll as $indx => $distList){
     if($distList != '' && $distList != NULL){
     ?>
 
- 
-  
+
+
 
     <option value="<?=$this->escape($distList);?>|<?php echo $this->url(array('controller'=>'district','action'=>'editdistrict','name_district'=>$distList,
     'id_district'=>$this->districtList[$indx]["id_district"],'id_county'=>$this->districtList[$indx]["id_county"] ));?>/"><?=$this->escape($distList);?></option>
- 
+
 <?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
 
-    <?  
+    <?
     }
    }
-  }    
-?> 
+  }
+?>
     </select>
  </div>
-    
+
   <br>
- <div id="directme">  
-    
+ <div id="directme">
+
 
     <h2> <b><u>View Advisor Data for the Following Districts</u></b></h2>
     <select class="tooltip" data-tip-source="tooltip-sidebar" onChange="window.location.href=this.value">
       <option>Choose District to View</option>
-<?php 
+<?php
 
 foreach ($this->EdFiList as $List){
-  
+
     ?>
-     
+
     <option value="<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2',
                                           'id_district'=>$List['id_district'],'id_county'=>$List['id_county'] ));?>/"><?=$this->escape($List['name_district']);?></option>
-  
+
 <?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
 
-    <?  
+    <?
     }
-   
- // }    
-?> 
-    
-    
+
+ // }
+?>
+
+
    </select>
-    
-   
+
+
 </div>
 <br>
 
@@ -533,7 +534,7 @@ foreach ($this->EdFiList as $List){
 <br>
 <br>
 
-<div id="searchTable"></div> 
+<div id="searchTable"></div>
 
 <div id="originalTable">
 <center><?php echo $this->paginationControl($this->paginator3,'sliding','sqlpaginator.phtml',array('route'=> 'district')); ?> </center>
@@ -584,7 +585,7 @@ foreach ($this->EdFiList as $List){
 </select></td>
 <?php //<td><a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit', 'name_district'=>$iep_districts->name_district)); ">Edit</a></td> ?>
 <?php //<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'delete', 'id_district'=>$iep_districts->id_district));">Delete</a></td> ?>
-</tr> 
+</tr>
 <?}?>
 </tbody>
 </table>
