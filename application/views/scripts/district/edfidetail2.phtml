@@ -17,7 +17,7 @@
     }
 
 .CellTable {
-    border: width 0px;  
+    border: width 0px;
     border-style: none;
     padding:0px;
     background-color: red;
@@ -32,18 +32,18 @@
 #srs_left .subBar_top {
     /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
     height: 0px;
-    padding-bottom: 0; 
+    padding-bottom: 0;
 }
 
 #srs_left .subBar_btm {
     /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
-    height: 0px; 
+    height: 0px;
 }
 #leftTop {
     /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
     height: 2px;
     padding: 0;
-}	
+}
 
 #srs_left {
     position: fixed;
@@ -60,18 +60,39 @@
 .TableList tbody tr:hover td {
     background: 		#F4A460;
     }
-	
+
 </style>
+<?php
+function writevar1($var1,$var2) {
+
+    ob_start();
+    var_dump($var1);
+    $data = ob_get_clean();
+    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+    $fp = fopen("/tmp/textfile.txt", "a");
+    fwrite($fp, $data2);
+    fclose($fp);
+}
+
+
+$studentsJq = substr($this->studentsJqueryArray, 2);
+?>
+
+
 <script type="text/javascript">
-        $("document").ready(function() {
+
+
+
+
+            $("document").ready(function() {
         	$(".paginationControl").css("width","80%");
-        	 
+
             $(".paginationControl").css("font-size",'14px');
             $(".paginationControl").css("margin-bottom",'14px');
             $(".paginationControl").css("margin-top",'14px');
-            $(".paginationControl").css("float",'left'); 
+            $(".paginationControl").css("float",'left');
 
-        
+
         $(".TableList").css("width","80%");
        	$(".TableList").css("border", "4px solid LightSkyblue");
        	$(".Tablelist th").css('width','50px');
@@ -80,17 +101,143 @@
         $(".TableList a").css("color","MidnightBlue");
         $(".TableList  tr:even").css("background-color","LightSteelBlue");
         $(".TableList tr:odd").css("background-color","bisque");
-        
-        
+
+
         $(".tableCell").css("width","100%");
         $(".TableList").css("font-size","0.9em");
         $(".tableCell  tr:even").css("background-color","transparent");
         $(".tableCell tr:odd").css("background-color","transparent");
         $(".tableCell td").css("border-bottom", "1px solid silver");
-        
+
+
+    	// Mike added 3-16-2018 so that we can search for students
+
+        $(document).on( "keyup", "#searchAlphabet", function() {
+            var searchAlphabet = $.trim($("#searchAlphabet").val());
+            var searchAlphabetLength = searchAlphabet.length;
+            var studentsArrayList = [ <?= $studentsJq ?> ];
+            $("#searchAlphabet").val("");
+
+            if (searchAlphabet == "") {
+    	    $("#searchAlphabet").val("");
+    	    $("#searchTable").html("");
+    	    $("#searchTable").hide();
+    	    $("#originalTable").show();
+             } else if ( searchAlphabetLength > 0 && searchAlphabet != "" ) {
+    	    $("#searchTable").html("");
+    	    $("#originalTable").hide();
+    	    $("#searchTable").show();
+
+    	    var i = 0;
+    	    var color = "#B0C4DE";
+    	    var finded = 0;
+    	    var searchRes = "";
+            console.log(studentsArrayList[0]);
+        	$.each(studentsArrayList, function(key, val) {
+
+    	        color = (finded % 2) ? "#B0C4DE" : "#FFE4C4";
+    		if (i == 0){
+
+            	    searchRes += '<table class="TableList" border="4px solid LightSkyblue">';
+            	    searchRes += '<tr><th width="20%">Student and Ids</th><th width="10%">Org ID </th><th style="text-align:center;">Result</th><th>Error</th><th width="20%">School and Publish time</th><th width="20%">Dates/Reason exited </th><th width="20%">Details</th></tr>'
+
+
+            	//	searchRes +='<tr bgcolor="red"><td>heading one<</td></tr>';
+          		    searchRes += '<tbody>';
+    		   }
+
+    	        if ((val[1].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
+    		    finded++;
+    	       //     searchRes += '<tr bgcolor="' + color + '" class="TableRow"><td><b><a href="/district/view/name_district/' + encodeURIComponent(val[0]) + '/id_district/' + val[4] + '/id_county/' + val[3] + '">' + val[0] + '</a></b></td><td>' + val[1] + '</td><td>' + val[3] + '</td><td>' + val[3] + '</td><td>' + val[4] + '</td><td>' + val[5] + '</td><td>' + val[6] + '</td><td>' + val[7] + '</td><td style="width: 70px; padding: 2px;"><select class="options" title="' + val[0] + '"><option value="" selected>Choose...</option><option value="/district/viewdistrict/id_county/' + val[3] + '/id_district/' + val[4] + '/">View District</option></select></td></tr>';
+
+                searchRes += '<tr bgcolor="' + color + '"><td><b>' + val[0] + ' ' + val[1] + '</b><br>Id Student:<b> '+ val[2]+ '</b><br>Unique Id State: '+ val[3] +'</td>';
+                searchRes += '<td>' +val[4] + '</td>';
+                searchRes += '<td><center>' +val[5] + '</center></td>'; // Error code
+
+                searchRes += '<td>' + val[6] +'</td>' // Error Message
+                searchRes += '<td> School Name:<b>' + val[7] + '</b></br>';
+                searchRes += val[8] + '</td>';
+                searchRes += '<td> Begin Date: ' +val[9] +'<br>';
+                searchRes += 'End Date: '+ val[10] + '<br>';
+                searchRes += 'Reason Exited Desciptor: ' +val[11] + '<br>';
+                searchRes +='<a href="/student/edit/id_student/'+ val[2] + '">Edit Student Link</a><br>';
+
+                if(val[12]=='form004'){
+                searchRes +='<a href=/form004/view/document/'+ val[13]+'/page/6">View Latest IEP</a><br>';
+                }
+
+                if(val[12]=='form023'){
+                    searchRes +='<a href=/form023/view/document/'+ val[13]+'/page/1">View Latest IEP Card</a><br>';
+                    }
+
+                if(val[14]=='form002'){
+                    searchRes +='<a href=/form004/view/document/'+ val[15]+'/page/3">View Latest MDT</a><br>';
+                    }
+
+                if(val[14]=='form022'){
+                    searchRes +='<a href=/form004/view/document/'+ val[15]+'/page/1">View Latest MDT Card</a><br>';
+                    }
+
+                searchRes +='<a href="/student/search-forms/id_student/'+ val[2] +'">Search Student Forms</a><br><br></td>'
+
+
+                // Do the Details column
+
+               searchRes +='<td>Special Ed Setting:<b> '+ val[16]+ '</b><br>';
+                searchRes +='Level of Program Participation:<b> '+ val[17] + '</b><br>';
+                searchRes +='Placement Type: <b>'+ val[18]+ '</b><br>';
+                searchRes +='SPED Percent Time %: <b>'+val[19]+ '</b><br>';
+                searchRes +='To Take Alt Assessment: <b>'+ val[20]+ '</b><br>';
+                searchRes +='Disabilities: <b>'+ val[21]+ '</b><br>';
+                searchRes +='Speech Language: <b>'+ val[22]+ '</b><br>';
+                searchRes +='Occupational Therapy: <b>'+ val[23]+  '</b><br>';
+                searchRes +='Physical Therapy: <b>'+ val[24]+  '</b><br><br>';
+
+
+
+                searchRes +'</td><tr>';
+
+
+                console.log(val[12]);
+                console.log(val[13]);
+   	        }
+
+    		if (i == studentsArrayList.length - 1) {
+    		    searchRes += '</tbody>';
+    		    searchRes += '</table><br><br>';
+    		}
+
+    	        i++;
+
+    	    });
+    	    $("#searchTable").html(searchRes)
+
+        	    if (finded == 0) $("#findres").append('<center><br><br>No matches<br><br></center>');
+
+             }
+
+    	    return false;
         });
+    //End of Mike add for search.
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
     </script>
-    
+
     <table border="0">
         <!-- logo row -->
         <?php $auth = Zend_Auth::getInstance(); ?>
@@ -109,70 +256,67 @@
         </tr>
     </table>
 
-<?php include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
+<?php //include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
 
 <?php if ($auth->hasIdentity()) { ?>
 
 
 <?php  echo $this->current_date_and_time; ?><br>
 
-<?  
-   }    
-?> 
+<?
+   }
+?>
 <script type="text/javascript">
 $("document").ready(function() {
+
 	document.getElementById("change").addEventListener("click", function (evt) {
         changeContent();
     });
-    document.getElementById("create").addEventListener("click", function (evt) {
-        createContent();
-    });
-    
-    document.getElementById("changeAll").addEventListener("click", function (evt) {
-        changeAllTheContent();
-    });
-    // use the html() function to get the current HTML of an element
-    //alert($("#example").html());
+
+
+
+
 });
- 
+
 function changeContent() {
     // use the html() function to change the content of the div
     var Message= $("<p><font size=\"+1\">Warning: Please wait until this message disappears before leaving this page. </p><p><font size=\"+1\">SRS is updating the State ODS with your Districts Data! </p>")
     $(".new").html(Message);
-   
+
     $(".new").css("color","red");
-    
-    
 }
 
-function createContent() {
-    // set the text content of the last paragraph
-    var newItem = $("<p>This is a new paragraph</p>");
-    $("#example").html(newItem);
-}
-
-function changeAllTheContent() {
-    $("#example p").text("<p>This is a paragraph</p>");
-}
 
 
 </script>
 
-<?php 
-?>
+
+
+
 
 <h2 id="change" class="new" ><a href="/ods/advisorset/id_county/<?php echo $this->countyId?>/id_district/<?php echo $this->districtId?>"> <b> Update ODS with Student's Data </b></a></h2>
 
 
+<div id="searchAlphabetArea">
+    Search by Alphabet<br>
+    <div id="searchArea">
+        <input type="text" value="" id="searchAlphabet">
+        <div id="cancelSearch"><i class="fa fa-times fa-lg"></i></div>
+    </div>
+</div>
+<br>
+<br>
 
+
+<div id="searchTable"></div>
 
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 
 <table class="TableList" id="ResultsTable" width="100%">
 <tr >
     <th width="20%">
-        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
-        
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Student and Ids</a>
+
     </th>
     <th width="10%">
         <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
@@ -184,7 +328,7 @@ function changeAllTheContent() {
         Error
     </th>
     <th width="20%">
-        Student
+        School and Publish time
     </th>
     <th width="20%">
         Dates/Reason exited
@@ -197,22 +341,34 @@ function changeAllTheContent() {
 <style>
 
 </style>
-<?php 
 
-?>
-<?php  
+<div id="searchTable"></div>
+
+<div id="originalTable">
+<?php
     foreach($this->districtModel as $district) {
-    
+
         ?>
 <tr >
-    <td >
-        School Name:<b><?php echo $this->escape($district['name_school']);?> </b><br>
-        <?php echo $this->escape($district['edfipublishtime']);?>
+    <td>
+        <b><?php echo $this->escape($district['name_first'])." ".$this->escape($district['name_last'])?></b>
+        <br>
+        Id: <?php echo $this->escape($district['id_student']);?>
+        <br/>
+        Unique: <?php echo $this->escape($district['studentuniqueid']);?>
     </td>
+
+
+
+
+
+
+
+
     <td>
         <?php echo $this->escape($district['educationorganzationid']);?>
     </td>
-    <td style="text-align:center;"> 
+    <td style="text-align:center;">
 <b>
         <?php
          $color="";
@@ -229,31 +385,28 @@ function changeAllTheContent() {
         ?>
 
         <span style='color:<?php echo($color) ?>'><?php echo ($this->escape($district['edfipublishstatus'])) ?>  <span>
-        
-   </b>     
-        
+
+   </b>
+
     </td>
     <td>
-        <?php 
+        <?php
         $error_msg1="Authorization denied. The claim does not have any established relationships with the requested resource.";
         $replacement_msg1='The student does not seem to have an entry from your SIS.  Please check your SIS and make sure the student is being exported to the State ODS.';
-        
-        
-        
+
+
+
         echo $this->escape($district['edfierrormessage']);?>
     </td>
-    <td>
-        Name:<b><?php echo $this->escape($district['name_first'])." ".$this->escape($district['name_last'])?></b>
-        <br>
-        Id: <?php echo $this->escape($district['id_student']);?>
-        <br/>
-        Unique: <?php echo $this->escape($district['studentuniqueid']);?>
-    </td>
-    
+
+   <td >
+        School Name:<b><?php echo $this->escape($district['name_school']);?> </b><br>
+        <?php echo $this->escape($district['edfipublishtime']);?>
+
     <td>
         Begin: <?php echo $this->escape($district['begindate']);?>
         <br>
-        End: <?php 
+        End: <?php
             echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
         <br>
         Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
@@ -265,7 +418,7 @@ function changeAllTheContent() {
                    $pageIep='6';
         }
               if($district['iep_ifsp_code']=='form023'){
-                  $iepFormName='Latest IEP Data Card';          
+                  $iepFormName='Latest IEP Data Card';
                   $pageIep='1';
               }
               if($district['mdt_code']=='form002'){
@@ -276,7 +429,7 @@ function changeAllTheContent() {
                   $mdtFormName='Latest MDT Card';
                   $pageMdt='1';
               }
-              
+
          //     echo $district['iep_ifsp_code'];
             ?>
         <a href="/<?php echo $district['iep_ifsp_code']?>/view/document/<?php echo $district['iep_ifsp_id']?>/page/<?php echo $pageIep?>">View <?php echo $iepFormName?></a>
@@ -297,7 +450,7 @@ function changeAllTheContent() {
             </tr>
             <tr>
                 <td>
-                    Level Program Participation: 
+                    Level Program Participation:
                 </td>
                 <td>
                     <?php echo $this->escape($district['levelofprogramparticipationdescriptor']);?>
@@ -321,7 +474,7 @@ function changeAllTheContent() {
             </tr>
             <tr>
                 <td>
-                    To Take Alt Assessment: 
+                    To Take Alt Assessment:
                 </td>
                 <td>
                     <?php echo $this->escape($district['totakealternateassessment']);?>
@@ -329,52 +482,52 @@ function changeAllTheContent() {
             </tr>
             <tr>
                 <td>
-                    Disabilities: 
+                    Disabilities:
                 </td>
                 <td>
                     <?php echo $this->escape($district['disabilities']);?>
                 </td>
-                
+
             </tr>
             <tr>
                 <td>
-                    Speach Language: 
+                    Speach Language:
                 </td>
                 <td>
                     <?php echo $this->escape($district['servicedescriptor_slt']);?>
                 </td>
-                
+
             </tr>
             <tr>
                 <td>
-                    Occupational Therapy: 
+                    Occupational Therapy:
                 </td>
                 <td>
                     <?php echo $this->escape($district['servicedescriptor_ot']);?>
                 </td>
-                
+
             </tr>
-            
+
             <tr>
                 <td>
-                    Physical Therapy: 
+                    Physical Therapy:
                 </td>
                 <td>
                     <?php echo $this->escape($district['servicedescriptor_pt']);?>
                 </td>
-                
+
             </tr>
-            
-            
+
+
         </table><br>
-        
+
     </td>
 </td>
 
-</tr> 
+</tr>
 <? } ?>
 </tbody>
 </table>
-
+</div>
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 

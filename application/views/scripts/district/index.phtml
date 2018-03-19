@@ -134,6 +134,17 @@
 <script src="/js/validate/additional-methods.min.js"></script>
 
 <?
+function writevar1($var1,$var2) {
+
+    ob_start();
+    var_dump($var1);
+    $data = ob_get_clean();
+    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+    $fp = fopen("/tmp/textfile.txt", "a");
+    fwrite($fp, $data2);
+    fclose($fp);
+}
+
 
     $countyList = Array();
     $districtArray = "";
@@ -145,6 +156,7 @@
     }
 
     $districtArray = substr($districtArray, 2);
+
 ?>
 
 <script type="text/javascript">
@@ -382,12 +394,13 @@
 
         $("#searchTable").html("");
         $("#searchTable").hide();
-        $("#originalTable").show();
+       $("#originalTable").show();
 	    return false;
     });
 
     $(document).on( "keyup", "#searchAlphabet", function() {
         var searchAlphabet = $.trim($("#searchAlphabet").val());
+        console.log(searchAlphabet);
         var searchAlphabetLength = searchAlphabet.length;
 
         if (searchAlphabet == "") {
@@ -397,6 +410,7 @@
 	    $("#originalTable").show();
          } else if ( searchAlphabetLength > 0 && searchAlphabet != "" ) {
 	    $("#searchTable").html("");
+	    console.log($("#searchTable").html(""))
 	    $("#originalTable").hide();
 	    $("#searchTable").show();
 
@@ -404,14 +418,19 @@
 	    var color = "#B0C4DE";
 	    var finded = 0;
 	    var searchRes = "";
+            console.log(districtsList[0]);
 
     	    $.each(districtsList, function(indx, val) {
+        	    t=indx + 'this is the index';
+             //console.log(val);
+          //   console.log(val);
 	        color = (finded % 2) ? "#B0C4DE" : "#FFE4C4";
 		if (i == 0){
         	    searchRes += '<table class="TableList">';
 		    searchRes += '<tr bgcolor="#B0C4DE"><th>District\'s Name</th><th>District Phone</th><th>County Name </td><th>County ID</th><th>District ID</th><th>City</th><th>Zip Code</th><th>State</th><th>&nbsp;</th></tr>';
 		    searchRes += '<tbody>';
 		}
+
 	        if ((val[0].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
 		    finded++;
 	            searchRes += '<tr bgcolor="' + color + '" class="TableRow"><td><b><a href="/district/view/name_district/' + encodeURIComponent(val[0]) + '/id_district/' + val[4] + '/id_county/' + val[3] + '">' + val[0] + '</a></b></td><td>' + val[1] + '</td><td>' + val[2] + '</td><td>' + val[3] + '</td><td>' + val[4] + '</td><td>' + val[5] + '</td><td>' + val[6] + '</td><td>' + val[7] + '</td><td style="width: 70px; padding: 2px;"><select class="options" title="' + val[0] + '"><option value="" selected>Choose...</option><option value="/district/viewdistrict/id_county/' + val[3] + '/id_district/' + val[4] + '/">View District</option></select></td></tr>';

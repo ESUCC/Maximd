@@ -2,11 +2,11 @@
 
 /**
  * iep_district
- *  
+ *
  * @author jlavere
- * @version 
+ * @version
  */
-	
+
 require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
@@ -15,7 +15,7 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
 
 
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -24,11 +24,11 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     public function getDistrictsResume($page, $maxRecs, $sortfield)
     {
         $db = Zend_Registry::get('db');
-        
+
         $sql="select id_county, id_district, name_district, 0 as cok, 0 as cerr, 0 as cpen, 0 as chold, 0 as cnostate from iep_district order by " . $sortfield;
         $result = $db->fetchAll($sql);
 
@@ -43,7 +43,7 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
             $district["cerr"] =$status["cerr"];
             $district["cpen"] =$status["cpen"];
             $district["chold"] =$status["chold"];
-            
+
             $db2 = Zend_Registry::get('db');
             $sql2="select count(*) as total from iep_student where id_county='" . $idc .  "' and id_district='" . $idd ."' and unique_id_state < 1000000000 " ;
             $total_nostateid=$db2->fetchCol($sql2);
@@ -62,13 +62,32 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
       //  $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by " . $sortfield;
       //  $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by edfipublishstatus,name_last" . $sortfield;
         $sql="select * from edfi where educationorganzationid='".$organizationalId."' order by edfipublishstatus,id_school,name_last ";
-        
-        
+
+
         $result = $db->fetchAll($sql);
 
         $paginator = Zend_Paginator::factory($result)->setItemCountPerPage($maxRecs)->setCurrentPageNumber(empty($page) ? 1 : $page);
 
         return $paginator;
+
+    }
+
+
+    // Mike added this 3-16-2018 so that we can search easily in jquery.  COme back to this latter.
+    public function getDistrictsDetailNoPag($id_district, $id_county, $page, $maxRecs, $sortfield)
+    {
+        $db = Zend_Registry::get('db');
+        $organizationalId=$id_county.$id_district.'000';
+        //  $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by " . $sortfield;
+        //  $sql="select * from edfi where educationorganzationid like '" . $id_county . $id_district . "%' order by edfipublishstatus,name_last" . $sortfield;
+        $sql="select * from edfi where educationorganzationid='".$organizationalId."' order by edfipublishstatus,id_school,name_last ";
+
+
+        $result = $db->fetchAll($sql);
+
+
+
+        return $result;
 
     }
 
@@ -88,7 +107,7 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
         $results = $db->fetchAll($sql);
 
        foreach($results as $r){
-            
+
             switch($r["edfipublishstatus"])
             {
                 case "W":
@@ -112,7 +131,6 @@ class Model_Table_EdFiReport extends Zend_Db_Table_Abstract
         return array("cok" => $count_ok,"cerr" => $count_error,"cpen" =>  $count_pending, "chold" => $count_hold);
 
     }
-    
 
-} 
-  
+
+}

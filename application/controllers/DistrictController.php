@@ -157,7 +157,39 @@ class DistrictController extends Zend_Controller_Action
         //   $this->writevar1($results,'this is the result dist controller line 122');
         $this->view->districtModel= $results;
 
+        $resultsNoPag=$districtModel->getDistrictsDetailNoPag($id_district, $id_county, $page, $maxRecs, $fieldname);
+        $this->view->studentsJqueryArray=$this->makeJqueryArray($resultsNoPag);
+
+
     }
+
+
+    public function makeJqueryArray($data) {
+
+        $x=0;
+        foreach($data as $key => $val) {
+            $studentArray .= ", [ '".addslashes($val['name_first'])."', '".addslashes($val['name_last'])."','"
+            .$val['id_student']."', '".$val['studentuniqueid']."','".$val['educationorganzationid']."','".$val['edfipublishstatus'].
+            "','".addslashes($val['edfierrormessage'])."','".addslashes($val['name_school'])."','".addslashes($val['edfipublishtime'])."'
+            ,'".addslashes($val['begindate'])."','".addslashes($val['enddate'])."','".addslashes($val['reasonexiteddescriptor'])."'
+             ,'".$val['iep_ifsp_code']."','".$val['iep_ifsp_id']."','".$val['mdt_code']."','".$val['mdt_id']."'
+             ,'".$val['specialeducationsettingdescriptor']."','".$val['levelofprogramparticipationdescriptor']."','".$val['placementtypedescriptor']."'
+              ,'".$val['specialeducationpercentage']."','".$val['totakealternateassessment']."','".$val['disabilities']."'
+              ,'".$val['servicedescriptor_slt']."','".$val['servicedescriptor_ot']."','".$val['servicedescriptor_pt']."']";
+
+            //$studentArray .= ", [ '".addslashes($val['name_first'])."', '".addslashes($val['name_last'])."']";
+
+
+            $x=$x+1;
+        }
+        $this->writevar1($data,'this is the data line 174 in makeJqueryArray ');
+        $this->writevar1($studentArray,'this is the student array line 171 dist controller');
+        return $studentArray;
+    }
+
+
+
+
 
     public function edfidetailAction(){
         $districtModel = new Model_Table_EdFiReport();
