@@ -1,10 +1,51 @@
 <script src="/js/validate/jquery.validate.min.js"></script>
 <script src="/js/validate/additional-methods.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" >
+</script>
 
 <style>
 
 #ResultsTable {
     font-size:0.7em;
+}
+
+.ui-accordion-header .ui-icon {
+    display: block;
+    position: relative;
+}
+
+.ui-accordion-header .ui-header {
+    display: block;
+    position: relative;
+    margin-left: 25px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#searchAlphabetArea {
+    position: relative;
+    font-weight: 700;
+}
+
+#searchArea {
+    position: relative;
+    width: 300px;
+}
+
+#searchAlphabet {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 300px;
+}
+
+
+#cancelSearch {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #a0a0a0;
+    cursor: pointer;
 }
 
 #ResultsTable th {
@@ -111,12 +152,23 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
 
 
     	// Mike added 3-16-2018 so that we can search for students
+        $(document).on( "click", "#cancelSearch", function() {
+            $("#searchAlphabet").val("");
+
+            $("#searchTable").html("");
+            $("#searchTable").hide();
+           $("#originalTable").show();
+    	    return false;
+        });
+
+
 
         $(document).on( "keyup", "#searchAlphabet", function() {
             var searchAlphabet = $.trim($("#searchAlphabet").val());
             var searchAlphabetLength = searchAlphabet.length;
+            console.log(searchAlphabetLength);
             var studentsArrayList = [ <?= $studentsJq ?> ];
-            $("#searchAlphabet").val("");
+
 
             if (searchAlphabet == "") {
     	    $("#searchAlphabet").val("");
@@ -139,7 +191,10 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
     		if (i == 0){
 
             	    searchRes += '<table class="TableList" border="4px solid LightSkyblue">';
-            	    searchRes += '<tr><th width="20%">Student and Ids</th><th width="10%">Org ID </th><th style="text-align:center;">Result</th><th>Error</th><th width="20%">School and Publish time</th><th width="20%">Dates/Reason exited </th><th width="20%">Details</th></tr>'
+            	    searchRes += '<tr style="background-color: lightsteelblue"><b><th width="20%">Student and Ids</th><th width="10%">Org ID </th><th style="text-align:center;">Result</th><th>Error</th><th width="20%">School and Publish time</th><th width="20%">Dates/Reason exited </th><th width="20%">Details</th><br><br></b></tr>'
+
+
+
 
 
             	//	searchRes +='<tr bgcolor="red"><td>heading one<</td></tr>';
@@ -152,7 +207,10 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
 
                 searchRes += '<tr bgcolor="' + color + '"><td><b>' + val[0] + ' ' + val[1] + '</b><br>Id Student:<b> '+ val[2]+ '</b><br>Unique Id State: '+ val[3] +'</td>';
                 searchRes += '<td>' +val[4] + '</td>';
-                searchRes += '<td><center>' +val[5] + '</center></td>'; // Error code
+                if(val[5]=='E') clr='#FF0000';
+                if(val[5]=='S') clr='#009933';
+                if(val[5]=='W') clr='#800080';
+                searchRes += '<td><span style="color:'+ clr +'"><center><b>' +val[5] + '</b></center></span></td>'; // Error code
 
                 searchRes += '<td>' + val[6] +'</td>' // Error Message
                 searchRes += '<td> School Name:<b>' + val[7] + '</b></br>';
@@ -198,8 +256,7 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
                 searchRes +'</td><tr>';
 
 
-                console.log(val[12]);
-                console.log(val[13]);
+
    	        }
 
     		if (i == studentsArrayList.length - 1) {
@@ -298,7 +355,7 @@ function changeContent() {
 
 
 <div id="searchAlphabetArea">
-    Search by Alphabet<br>
+    Search by Last Name<br>
     <div id="searchArea">
         <input type="text" value="" id="searchAlphabet">
         <div id="cancelSearch"><i class="fa fa-times fa-lg"></i></div>
@@ -310,6 +367,7 @@ function changeContent() {
 
 <div id="searchTable"></div>
 
+<div id="originalTable">
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 
 <table class="TableList" id="ResultsTable" width="100%">
@@ -528,6 +586,7 @@ function changeContent() {
 <? } ?>
 </tbody>
 </table>
-</div>
+
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 
+</div>
