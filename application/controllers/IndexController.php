@@ -42,7 +42,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
         $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
         //Zend_Debug::dump($config->NONZEND_ROOT);die();
     	if('production' == APPLICATION_ENV) {
-    		$this->_redirect('https://iep.nebraskacloud.org/');
+    		$this->_redirect('https://iep.unl.edu/');
     	}
     	$this->restoreMessage();
         //ERROR_REPORTING(E_ALL);//  ^ E_NOTICE ^ E_WARNING
@@ -67,7 +67,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
 			App_Helper_Session::cleanSessionForReuse();
 	        
 	        // get IEP session record from passed token
-			// this is the session record for the iep.nebraskacloud.org site
+			// this is the session record for the iep.unl.edu site
 			$tk = new Model_Table_IepSession();
 			$session = $tk->getSessionByToken($token);
 			
@@ -131,7 +131,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
 //	    		}
 	    		
 	    		
-	    		return $this->_redirect('https://iep.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination='.$this->getRequest()->getParam('destination'));
+	    		return $this->_redirect('https://iep.unl.edu/srs.php?area=personnel&sub=gettoken&destination='.$this->getRequest()->getParam('destination'));
 	    	} else {
 	    		return $this->_redirect('/home');
 	    	}
@@ -140,7 +140,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
         if($this->getRequest()->getParam('destination')) {
         	$this->_redirect(str_replace('-', '/', $this->getRequest()->getParam('destination')));
         } elseif('production' == APPLICATION_ENV) {
-    		$this->_redirect('https://iep.nebraskacloud.org/srs.php?area=home&sub=home&option=1');
+    		$this->_redirect('https://iep.unl.edu/srs.php?area=home&sub=home&option=1');
     	} else {
     		$this->_redirect('/home');
     	} 
