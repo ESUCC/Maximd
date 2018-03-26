@@ -76,9 +76,9 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         $this->JSmodifiedCode = "onFocus=\"javascript:modified('', '', '', '', '', '');\"";
 
     }
-    
+
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -95,7 +95,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
             $this->studentID = $studentData;
         //    $this->writevar1($this->sesis_collection_wSearch($studentData),'this is the sesis data line 96');
             return $this->sesis_collection_wSearch($studentData);
-          
+
         }
 
         $this->studentID = $studentData['id_student'];
@@ -104,7 +104,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         # COLLECT THE SESIS DATA (IN FUNCTION GENERAL)
         #
         $this->sesisData = $this->build_sesis_data($studentData);
-         
+
         $this->validate_sesis_data($this->sesisData);
 
         return $this->sesisData;
@@ -128,7 +128,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         }
 
         $this->sesisData = $sesisData;
-        
+
         $this->studentData = $transferData;
         $this->studentID = $transferData['id_student'];
         $this->exclude_from_nssrs_report = $transferData['exclude_from_nssrs_report'];
@@ -146,7 +146,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
 
         $this->sesisData['035'] = $this->nssrsSubmissionPeriod;
         $this->sesisData['003'] = $this->nssrsSnapshotDate;
-       
+
         return $this->sesisData;
     }
 
@@ -177,7 +177,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
             $this->sesisData = $this->build_sesis_data($studentData);
         //    $this->writevar1($this->sesisData,'this is the sesis data after build line 178');
             $this->validate_sesis_data($this->sesisData);
-            $this->writevar1($this->sesisData,'this is sesis data line 180');
+          //  $this->writevar1($this->sesisData,'this is sesis data line 180');
             return $this->sesisData;
         } else {
             return false;
@@ -502,7 +502,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         # BUILDS THE sesisValidation VARIABLE IN THIS OBJECT
         #
         $evalObj = new App_Student_SesisValidate();
-        
+
         $evalObj->validate($sesisData, $this->sesisValidation, $this->arrValidationResults);
     }
 
@@ -702,7 +702,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         } else {
             $this->IEP_locationValueListName = "NO DOC";
         }
-         
+
       //  $this->writevar1($settingCode,'this is setting code line 705');
         // if null setting code, check exit date
         if('' == $settingCode) {
@@ -725,7 +725,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
       //  $this->writevar1($settingCode,'this is setting code line 724');
 
         if('' == $settingCode) {
-           
+
             return null;
         }
 
@@ -765,7 +765,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         // regardless of what the student's IEP or Data card say.
        // Mike changed this from 1 to 0 12-01-2017
         if($ageAtSubmissionDate >= 6 && 0==$parentalPlacement) {
-           
+
             return 14;
         }
 
@@ -1366,7 +1366,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
         } else {
             $exitDate = date('Y-m-d', strtotime($arr['sesis_exit_date']));
         }
-        $this->writevar1($arr['sesis_exit_date'],'this is the exist date line 1368 sesis.php');
+      //  $this->writevar1($arr['sesis_exit_date'],'this is the exist date line 1368 sesis.php');
         $import['034'] = new App_Student_SesisItem($exitDate,'EXITDATE','Datetime','10','Empty or a valid date, see Exit table below, if present, exit reason must be present','','Formerly row 55');
 
         // Field#35 SNAPSHOT DATE
@@ -3840,7 +3840,7 @@ class App_Student_Sesis // file: class_nssrs_collect_08
             return;
         }
 
-        # strtotime mishandles dates with '-' 
+        # strtotime mishandles dates with '-'
         $dateField=str_replace("-","/",$dateField);
         date_default_timezone_set('GMT');
         return date($dateFormat, strtotime($dateField));

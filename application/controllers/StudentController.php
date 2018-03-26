@@ -330,7 +330,7 @@ class StudentController extends My_Form_AbstractFormController
             $this->view->student = $request->id_student;
         }
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
+        header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=parents");
         exit;
     }
 
@@ -469,7 +469,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        //header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
+        //header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=team");
         exit;
 
     }
@@ -490,7 +490,7 @@ class StudentController extends My_Form_AbstractFormController
         }
 
 
-        header("Location:https://iep.unl.edu/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
+        header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$request->id_student."&option=charting");
         exit;
 
 
@@ -1096,7 +1096,7 @@ class StudentController extends My_Form_AbstractFormController
             !('77' == $dbStudent['id_county'] && '0027' == $dbStudent['id_district']) &&
             '1010818' != $this->usersession->sessIdUser
             ) {
-            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.unl.edu/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
+            $url = Zend_Controller_Request_Http::SCHEME_HTTPS . "://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=".$dbStudent['id_student']."&option=edit";
             $this->_redirector->gotoUrl($url);
             exit;
             }
@@ -1419,7 +1419,7 @@ class StudentController extends My_Form_AbstractFormController
         $studentCollectionObj = new App_Collection_Student();
 
         $studentCollection = $studentCollectionObj->getNames($this->usersession->sessIdUser, $groupName);
-     //   $this->writevar1($studentCollection,'this is the collection of what we need');
+      // $this->writevar1($studentCollection,'this is the collection of what we need');
         // This returns the students in the list array format with full name and as 'name' and id as 'id' ass array
 
         switch ($this->getRequest()->getParam('run')) {
@@ -1440,27 +1440,83 @@ class StudentController extends My_Form_AbstractFormController
                // writevar($filePath,'this is the file path'); // It gets the file path correct
                 break;
 
+
             case 'transfer':
+
+                $dontTransfer=false;
+                $names='';
+                // Mike added this 3-23-2018 to force people to inactivate students before they transfer them.  SRS-205
+
+
+
+                $cty=$this->getRequest()->getParam('county');
+                $dst=$this->getRequest()->getParam('district');
+                $ctyDst=$cty.$dst;
+
+                $this->writevar1($cty." ".$dst,'this is hte cty district');
+             // $this->writevar1($studentCollection,'this is the student collection');
+
+                foreach($studentCollection as $stu) {
+                     $stuCtyDst=$stu['id_county'].$stu['id_district'];
+
+              //     if( ($stu['sesis_exit_date']==NULL or $stu['sesis_exit_code']==NULL or $stu['sesis_exit_code']=='') and $stu['status']=='Active' and $ctyDst!=$stuCtyDst){
+
+                     if( ($stu['sesis_exit_date']==NULL or  $stu['sesis_exit_date']=='' or
+                          $stu['sesis_exit_code']==NULL or $stu['sesis_exit_code']=='')  and $ctyDst!=$stuCtyDst){
+
+
+
+                     $link='<a href="edit/id_student/'.$stu['id'].'" style="color:#c3e1ec" >'.$stu['name'].'</a><br>';
+
+                  //   $this->writevar1($link,'this is hte link');
+                     $name.=$link;
+                     $errorMessage = "You can not  transfer <b>any students</b> until the following students are made <b><i>Inactive and an exit date and exit reason</i></b> are given: </center><br>". $name;
+                     $result=false;
+                     $dontTransfer=true;
+
+
+                 }
+
+                }
+
 
 
                 /**
                  * transfer students action
                  */
+         //        $this->writevar1($studentCollection,'this is the student collection line 1449');
 
-                if(count($studentCollection)>0) {
+ // Mike added the notransfer as part of SRS-205
+
+
+// Check to see if they are in the same district but going to a different school
+
+
+
+
+
+                   if(count($studentCollection)>0 and $dontTransfer==false) {
 
                     $transferCollectionObj = new App_Student_Transfer_Collection();
+                    //$this->writevar1($this->getRequest(),'this is the request from line 1498');
                     $transferCollectionObj->transferCollection(
                         $studentCollection,
                         $this->getRequest()->getParam('county'),
                         $this->getRequest()->getParam('district'),
+
                         $this->getRequest()->getParam('school'),
                         $this->usersession->sessIdUser,
                         $this->getRequest()->getParam('autoMoveForAsmOrBetter')
                     );
                    echo Zend_Json::encode(array('success' => '1', 'message'=>$transferCollectionObj->notificationMessage));
                 } else {
+
+                    if($dontTransfer==true){
+              //          $errorMessage='This student must be Inactivated before transfer';
+                    }
+                    else {
                     $errorMessage = "No students found.";
+                    }
                     echo Zend_Json::encode(array('success' => '0', 'errorMessage'=>$errorMessage));
                 }
                 exit;
@@ -1476,6 +1532,7 @@ class StudentController extends My_Form_AbstractFormController
             //  writevar($job,'this is the job');  //this prints out an integer it was 184 in our case with 3 kids
             if(isset($filePath)) {
                echo Zend_Json::encode(array('success' => '1', 'job'=>$job, 'fileName'=>basename($filePath)));
+
             } else {
                 echo Zend_Json::encode(array('success' => '1', 'job'=>$job));
             }
@@ -1603,6 +1660,7 @@ class StudentController extends My_Form_AbstractFormController
         $transferRequestsTable = new Model_Table_TransferRequest();
 
         if($this->getRequest()->getParam('id_transfer_request')) {
+
             if('confirm' == $this->getRequest()->getParam('confirmTransferAction')) {
                 $transferRequestsTable->confirmTransferRequest($this->getRequest()->getParam('id_transfer_request'));
 
@@ -1615,7 +1673,10 @@ class StudentController extends My_Form_AbstractFormController
         $this->view->myRecentlyChangedTransferRequests = $transferRequestsTable->getMyTransferRequests(array('Cancelled', 'Confirmed'), 20);
     }
     public function transferCenterAction() {
+
+
         $transferRequestsTable = new Model_Table_TransferRequest();
+        $this->writevar1($transferRequestsTable->getMyTransferRequests(array('initiate')),'this is the array transfer request');
         $this->view->myTransferRequests = $transferRequestsTable->getMyTransferRequests(array('initiate'));
     }
 

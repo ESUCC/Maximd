@@ -522,7 +522,7 @@ App.processCollections = function(collections, response, collectionManagerLayout
             collection: collections
         });
         App.collectionListContainer.show(collectionsView);
-        
+
         if(null != localStorage.getItem("studentCollectionMenuValue")) {
         	var collection_menu_id = localStorage.getItem("studentCollectionMenuValue");
             var collection_menu_name = localStorage.getItem("studentCollectionMenuText");
@@ -530,7 +530,7 @@ App.processCollections = function(collections, response, collectionManagerLayout
         	var collection_menu_id = response[0].id_collection;
             var collection_menu_name = response[0].name;
         }
-        
+
         var studentCollection = new App.StudentCollection({
             id: collection_menu_id,
             name: collection_menu_name
@@ -765,13 +765,13 @@ App.groupTransfer = function () {
 //                            console.debug('json', json.success, json.errorMessage);
                             if(1==json.success && false!=json.job) {
                                 if(''!=json.message) {
-                                    $.growlUI('Success', json.message, 10000);
+                                    $.growlUI('Success', json.message, 8000);
                                 } else {
-                                    $.growlUI('Success', 'Student transfers initiated.', 10000);
+                                    $.growlUI('Success', 'Student transfers initiated.', 8000);
                                 }
                             } else{
                                 console.debug('An error occured in the transfer.');
-                                $.growlUI('Error', json.errorMessage, 2000);
+                                $.growlUI('Errors', json.errorMessage, 30000);
                             }
 
                         },

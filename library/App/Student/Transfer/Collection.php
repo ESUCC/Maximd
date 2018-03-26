@@ -6,7 +6,7 @@ class App_Student_Transfer_Collection extends Zend_Acl
     public $notificationMessage = '';
 
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -15,9 +15,12 @@ class App_Student_Transfer_Collection extends Zend_Acl
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     public function transferCollection($studentList, $idCounty, $idDistrict, $idSchool, $sessIdUser, $autoMoveForAsmOrBetter=true)
     {
+
+
+
         $studentTable = new Model_Table_StudentTable();
         $uniqueSchools = array();
         foreach($studentList as $passedStudent) {
@@ -59,7 +62,7 @@ class App_Student_Transfer_Collection extends Zend_Acl
                 $uniqueSchool['student_name_list'],
                 'initiate'
             );
-          //  $this->writevar1($insertedTransferRequestIds,'this is line 62 collection');
+           $this->writevar1($insertedTransferRequestIds,'this is line 62 collection');
         }
 
         /**

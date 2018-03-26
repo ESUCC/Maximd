@@ -31,11 +31,18 @@ class App_Collection_Student extends Model_Table_Collection
                 if (count($studentArr) == 0) {
                     continue;
                 }
+               //  $this->writevar1($studentArr,'this is the student array iline 34 app/collection');
+                // Mike added  3-23-2018 sesis_exit_code and data for SRS-205
                 $student = $studentArr[0];
                 if (!is_null($student)) {
                     $tempData = array(
                         'id' => $student['id_student'],
-                        'name' => $student['name_student_full']
+                        'name' => $student['name_student_full'],
+                        'sesis_exit_code'=>$student['sesis_exit_code'],
+                        'sesis_exit_date'=>$student['sesis_exit_date'],
+                        'status'=>$student['status'],
+                        'id_district'=>$student['id_district'],
+                        'id_county'=>$student['id_county']
                     );
                     foreach($additionalFields as $key => $fieldName) {
                         if(isset($student[$fieldName])) {
