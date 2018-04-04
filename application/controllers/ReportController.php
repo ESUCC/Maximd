@@ -9,7 +9,7 @@ class ReportController extends My_Form_AbstractFormController
     public function indexAction()
     {
         if('production' == APPLICATION_ENV) {
-             return $this->_redirect('https://iep.unl.edu/srs.php?area=reports&sub=reports');
+             return $this->_redirect('https://iep.nebraskacloud.org/srs.php?area=reports&sub=reports');
         }
         return $this->_redirect('/report/nssrs');
 

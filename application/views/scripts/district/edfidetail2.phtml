@@ -229,11 +229,11 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
                     }
 
                 if(val[14]=='form002'){
-                    searchRes +='<a href=/form004/view/document/'+ val[15]+'/page/3">View Latest MDT</a><br>';
+                    searchRes +='<a href=/form002/view/document/'+ val[15]+'/page/3">View Latest MDT</a><br>';
                     }
 
                 if(val[14]=='form022'){
-                    searchRes +='<a href=/form004/view/document/'+ val[15]+'/page/1">View Latest MDT Card</a><br>';
+                    searchRes +='<a href=/form022/view/document/'+ val[15]+'/page/1">View Latest MDT Card</a><br>';
                     }
 
                 searchRes +='<a href="/student/search-forms/id_student/'+ val[2] +'">Search Student Forms</a><br><br></td>'
@@ -241,11 +241,16 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
 
                 // Do the Details column
 
-               searchRes +='<td>Special Ed Setting:<b> '+ val[16]+ '</b><br>';
+                 searchRes +='<td>Special Ed Setting:<b> '+ val[16]+ '</b><br>';
                 searchRes +='Level of Program Participation:<b> '+ val[17] + '</b><br>';
                 searchRes +='Placement Type: <b>'+ val[18]+ '</b><br>';
                 searchRes +='SPED Percent Time %: <b>'+val[19]+ '</b><br>';
-                searchRes +='To Take Alt Assessment: <b>'+ val[20]+ '</b><br>';
+                if(val[20]==0) altassment='No';
+                if(val[20]==1) altassment='Yes';
+                searchRes +='To Take Alt Assessment: <b>' + altassment +'</b><br>';
+      // Mike changed this val[20] 4-3-2018 so that it would say yes or no.
+
+                  //    searchRes +='To Take Alt Assessment: <b>'+ val[20]+ '</b><br>';
                 searchRes +='Disabilities: <b>'+ val[21]+ '</b><br>';
                 searchRes +='Speech Language: <b>'+ val[22]+ '</b><br>';
                 searchRes +='Occupational Therapy: <b>'+ val[23]+  '</b><br>';
@@ -535,7 +540,13 @@ function changeContent() {
                     To Take Alt Assessment:
                 </td>
                 <td>
-                    <?php echo $this->escape($district['totakealternateassessment']);?>
+                <?php
+                if($this->escape($district['totakealternateassessment'])=='1') $answer='Yes';
+                if($this->escape($district['totakealternateassessment'])=='0') $answer='No';
+                echo $answer;
+
+               // echo $this->escape($district['totakealternateassessment']);?>
+
                 </td>
             </tr>
             <tr>

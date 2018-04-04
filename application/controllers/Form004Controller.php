@@ -49,7 +49,7 @@ class Form004Controller extends My_Form_AbstractFormController {
 			// in Model_Table_Form004
 			$newId = $formObj->dupeFull ( $this->getRequest ()->document );
 		} else {
-            // javascript:%20goToURLZend('http://iepweb02.unl.edu',%20'student',%20'form004/dupe',%20'document',%201392135,%20'/page//option/dupe_form_004');
+            // javascript:%20goToURLZend('http://iepweb02.nebraskacloud.org',%20'student',%20'form004/dupe',%20'document',%201392135,%20'/page//option/dupe_form_004');
             // option/dupe_form_004
 			$newId = $formObj->dupe ( $this->getRequest ()->document );
 		}
@@ -434,6 +434,7 @@ class Form004Controller extends My_Form_AbstractFormController {
 	        $iep->received_copy = null;
 	        $iep->parental_rights = null;
     	    $iep->doc_signed_parent = null;
+    	    $iep->pwn_agree=null;
     		$iep->save();
     	}
         if(6 == $post['page']) {
@@ -453,7 +454,7 @@ class Form004Controller extends My_Form_AbstractFormController {
         $additionalFields['fte_total_qualifying_min_se'] = $this->fteMostRecentSave->fte_total_qualifying_min_se;
         $additionalFields['fte_total_qualifying_min_re'] = $this->fteMostRecentSave->fte_total_qualifying_min_re;
         $dojoData[$post['id_form_004']] = array_merge($dojoData->getItem($post['id_form_004']), $additionalFields);
-        
+
 
         return $dojoData;
     }

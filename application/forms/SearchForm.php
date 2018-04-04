@@ -86,6 +86,7 @@ class Form_SearchForm extends Zend_Form {
                     'OPTIONAL FORMS' => array(
                         '011' => "Notice of MDT Conference",
                         '012' => "Determination Notice",
+                        '016' => "Notice and Consent for Initial Placement (IFSP)",
                         '019' => "Functional Assessment",
                         '020' => "Specialized Transportation",
                         '021' => "Assistive Technology Considerations",
@@ -99,7 +100,7 @@ class Form_SearchForm extends Zend_Form {
                         */
                         '032' => "Notice of Meeting (Part C)",
                    //     '014' => "Notification of IFSP Meeting (Outdated)",
-                        '016' => "Notice and Consent for Initial Placement (IFSP)",
+                    // Mike moved this 3-29-2018    '016' => "Notice and Consent for Initial Placement (IFSP)",
                         '027' => "Notice and Consent for Early Intervention Initial Screening",
                         '031' => "Notice of Initial Eval and Child Assessment",
                       //  '025' => "Notification Of Multidisciplinary Team Planning Meeting",

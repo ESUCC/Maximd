@@ -1,13 +1,13 @@
 <?php
 
 /**
- * 
- * Handles HTTP API calls to EdFi 
+ *
+ * Handles HTTP API calls to EdFi
  *
  * @author odiaz@doublelinepartners.com
  * @version 1.0
  *
- */ 
+ */
 
 class Model_EdfiClient  {
 
@@ -23,9 +23,9 @@ class Model_EdfiClient  {
 
 
     /*Holds current toke for reques*/
-    var $currentToken = ""; 
+    var $currentToken = "";
     /*Points to EdFi URL*/
-    var $currentAPIUrl = ""; 
+    var $currentAPIUrl = "";
     /*Current studen information*/
     var $currentStudent;
 
@@ -36,55 +36,55 @@ class Model_EdfiClient  {
 
 /*Gets authorization code for client*/
 function getAuthCode($edfiBaseUrl, $edfiClientId){
-	 
-	$edfiApiCodeUrl = "$edfiBaseUrl/oauth/authorize";	
+
+	$edfiApiCodeUrl = "$edfiBaseUrl/oauth/authorize";
 	$data = "Client_id=$edfiClientId&Response_type=code";
 	$urlWithData = "$edfiApiCodeUrl?$data";
-	
+
   //  $this->writevar1("Request to ",$edfiApiCodeUrl);
 
     try
     {
         $curl = curl_init();
-	 
+
 	    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	    curl_setopt($curl, CURLOPT_URL, $edfiApiCodeUrl);
 	    curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-	
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
 	    $result = curl_exec($curl);
 	    $jsonResult = json_decode($result);
 	    curl_close($curl);
       //  $this->writevar1($data,'this is the json results');
 	    return $jsonResult->code;
-    } 
+    }
     catch(Exception $e) {
     // $this->writevar1("", 'Message: ' .$e->getMessage());
         return "";
     }
-} 
+}
 
  /*Get the acceso token*/
  function getAuthToken($edfiBaseUrl,$edfiClientId,$edfiClientSecret,$authCode){
-	 
+
 	$edfiApiTokenUrl = "$edfiBaseUrl/oauth/token";
 	$paramsToPost = "Client_id=$edfiClientId&Client_secret=$edfiClientSecret&Code=$authCode&Grant_type=authorization_code";
 	//$this->writevar1($paramsToPost,'parameters to post');
 	//$this->writevar1($edfiApiTokenUrl,'edfi token url');
-	
+
       try
     {
        $curl = curl_init();
-	 
+
 	    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	    curl_setopt($curl, CURLOPT_URL, "$edfiApiTokenUrl");
 	    curl_setopt($curl, CURLOPT_POST, 1);
 	    curl_setopt($curl, CURLOPT_POSTFIELDS, $paramsToPost);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-		 
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
 	    $result = curl_exec($curl);
-	    
+
 	    /*$this->writevar1($result,'this is the curl');
 	     * this is what it looks like
 	     * this is the curl
@@ -110,21 +110,21 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 
 	     */
 	    curl_close($curl);
-	     
+
 	    return $jsonResult->access_token;
-    } 
+    }
     catch(Exception $e) {
      //   $this->writevar1("", 'Message: ' .$e->getMessage());
         return "";
     }
 
-	
+
  }
 
  /*Authenticate and returns barier token or empty string if an error occurs */
  function edfiApiAuthenticate($edfiBaseUrl,$edfiClientId,$edfiClientSecret){
     $this->currentToken="";
-    
+
   //  $this->writevar1($edfiBaseUrl,'the base url');
     try {
          $authCode = $this->getAuthCode($edfiBaseUrl, $edfiClientId);
@@ -133,7 +133,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
             $this->currentAPIUrl = $edfiBaseUrl;
             $this->currentToken = $this->getAuthToken($edfiBaseUrl,$edfiClientId,$edfiClientSecret,$authCode);
          }
-    } 
+    }
     catch(Exception $e) {
   //   $this->writevar1("", 'Message: ' .$e->getMessage());
     }
@@ -148,40 +148,40 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 /*Check if a student exists and if so keeps response in cache variable
  * This actually checks on the edfi site.
  */
- 
+
 function studentExists($id_student){
-    
+
 	$authorization = "Authorization: Bearer " . $this->currentToken;
-    $url = $this->currentAPIUrl . "/api/v2.0/2017/students?studentUniqueId=" . $id_student;  
-    
+    $url = $this->currentAPIUrl . "/api/v2.0/2017/students?studentUniqueId=" . $id_student;
+
 	$curl = curl_init();
-	 
+
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization ));
 	curl_setopt($curl, CURLOPT_URL, "$url");
 
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-		 
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
 	$result = curl_exec($curl);
 
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
     curl_close($curl);
    // $this->writevar1($httpCode,'this is hte http code');
-   
-    
-    
-   // Mike added this 11-15-2017 because it was not taking into account that the student does not exists in 
+
+
+
+   // Mike added this 11-15-2017 because it was not taking into account that the student does not exists in
    // the SIS .IT was not changing the db to show an E in the edfipublishstatus
     if ($httpCode=='404') return '404';
-   
-    
-    
+
+
+
     if($httpCode == 200) {
         $this->currentStudent=$result;
-       
+
       // Pull this from edfi
-      
+
         return true;
     } else {
         return false;
@@ -194,12 +194,12 @@ function updateCurrentStudent(){
     $eresponse = new edfi_response();
 
     $jsonResult = json_decode($this->currentStudent);
-    
-    
+
+
     $id_student = $jsonResult->id;
     $data_string = $this->currentStudent;
 	$authorization = "Authorization: Bearer " . $this->currentToken;
-    $url = $this->currentAPIUrl . "/api/v2.0/2017/students/" . $id_student;  
+    $url = $this->currentAPIUrl . "/api/v2.0/2017/students/" . $id_student;
 	$curl = curl_init();
 	$payloadLength = 'Content-Length: ' . strlen($data_string);
 
@@ -210,8 +210,8 @@ function updateCurrentStudent(){
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization , $payloadLength ));
 	curl_setopt($curl, CURLOPT_URL, "$url");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); 
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
 
 	$result = curl_exec($curl);
 
@@ -231,7 +231,7 @@ function updateStudentSpecialEducationProgramAssociation($data){
     $jsonResult = json_decode($this->currentStudent);
     $id_student = $jsonResult->id;
 	$authorization = "Authorization: Bearer " . $this->currentToken;
-    $url = $this->currentAPIUrl . "/api/v2.0/2017/studentSpecialEducationProgramAssociations";  
+    $url = $this->currentAPIUrl . "/api/v2.0/2017/studentSpecialEducationProgramAssociations";
 	$curl = curl_init();
 	$payloadLength = 'Content-Length: ' . strlen($data);
 
@@ -245,8 +245,8 @@ function updateStudentSpecialEducationProgramAssociation($data){
 	curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization , $payloadLength ));
 	curl_setopt($curl, CURLOPT_URL, "$url");
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-    curl_setopt($curl, CURLOPT_POSTFIELDS, $data); 
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
 	$result = curl_exec($curl);
 
@@ -257,7 +257,7 @@ function updateStudentSpecialEducationProgramAssociation($data){
   //  $this->writevar1("",  $httpCode . " < return HTTP CODE");
 
     $eresponse->set_resultCode($httpCode, $result);
-   
+
     return $eresponse;
 
 }
@@ -275,11 +275,11 @@ class edfi_response{
     var $resultCode = "0";
     var $errorMessage ="";
     var $publishStatus="";
-  
-    
-    
+
+
+
     function set_resultCode($resultCode, $result){
-        
+
 		$this->resultCode=$resultCode;
 	//	$this->writevar1($resultCode,'this is the result code');
         $jsonResult = json_decode($result);

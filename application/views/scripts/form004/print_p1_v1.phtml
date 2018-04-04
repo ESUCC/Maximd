@@ -2,11 +2,11 @@
 $view = $this->element->page->getView();
 
 $showAbsentCheckbox = false;
-for($i = 1; $i <= $view->db_form_data['team_member']['count']; $i++) { 
+for($i = 1; $i <= $view->db_form_data['team_member']['count']; $i++) {
 	if($view->db_form_data['team_member_'.$i]['absent'])
 	{
 		$showAbsentCheckbox = true;
-	} 
+	}
 }
 
 if(isset($view->db_form_data['team_member'])) { ?>
@@ -60,7 +60,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     <?php } ?>
 	<tr>
 		<td colspan="4" style="padding-right:10px;">
-			<? 
+			<?
 			$this->element->necessary_action->setDecorators(array('ViewHelper'));
 			echo $this->element->necessary_action;?>
 		</td>
@@ -69,7 +69,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     <?php if ($view->lps) { ?>
     <tr>
         <td colspan="4" style="padding-right:10px;">
-            <? 
+            <?
             $this->element->lps_sig_understand_process->setDecorators(array('ViewHelper'));
             echo $this->element->lps_sig_understand_process;?>
         </td>
@@ -79,7 +79,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     </tr>
     <tr>
         <td colspan="4" style="padding-right:10px;">
-            <?             
+            <?
             $this->element->lps_sig_participated->setDecorators(array('ViewHelper'));
             echo $this->element->lps_sig_participated;?>
         </td>
@@ -89,7 +89,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     </tr>
     <tr>
         <td colspan="4" style="padding-right:10px;">
-            <?                         
+            <?
             $this->element->lps_sig_agree->setDecorators(array('ViewHelper'));
             echo $this->element->lps_sig_agree;?>
         </td>
@@ -102,12 +102,12 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
             <?php echo $this->translate('If no, reason:'); ?>
         </td>
         <td>
-           <? echo $this->element->lps_sig_no_agree_reason;?> 
+           <? echo $this->element->lps_sig_no_agree_reason;?>
         </td>
     </tr>
     <tr>
         <td colspan="4" style="padding-right:10px;">
-            <?                                     
+            <?
             $this->element->lps_sig_understand_purpose->setDecorators(array('ViewHelper'));
             echo $this->element->lps_sig_understand_purpose;?>
         </td>
@@ -117,7 +117,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     </tr>
     <tr>
         <td colspan="4" style="padding-right:10px;">
-            <?                                                 
+            <?
             $this->element->lps_sig_understand_covers->setDecorators(array('ViewHelper'));
             echo $this->element->lps_sig_understand_covers;?>
         </td>
@@ -127,7 +127,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     </tr>
     <tr>
         <td colspan="4" style="padding-right:10px;">
-            <?                                                             
+            <?
             $this->element->lps_sig_understand_receive->setDecorators(array('ViewHelper'));
             echo $this->element->lps_sig_understand_receive;?>
         </td>
@@ -147,7 +147,7 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     <?php } ?>
 	<tr>
 		<td colspan="4" style="white-space:nowrap;padding-right:10px;">
-			<? 
+			<?
 			$this->element->received_copy->setDecorators(array('ViewHelper'));
 			echo $this->element->received_copy;?>
 		</td>
@@ -161,10 +161,32 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
 		</td>
 		<td><?php echo $this->translate('I have been offered a copy of my parental rights at no cost:'); ?></td>
 	</tr>
+
+
+<?php //Mike put this in 4-2-2018 per request SRS-208 for Bellevue PS only
+
+   if($view->db_form_data['id_county']=='77' and $view->db_form_data['id_district']=='0001') {?>
+
+	<tr><td></td></tr>
+	<tr>
+		<td valign="top" colspan="4" style="white-space:nowrap;padding-right:10px;">
+			<?
+			$this->element->pwn_agree->setDecorators(array('ViewHelper'));
+			echo $this->element->pwn_agree;?>
+		</td>
+		<td valign="top"><?php echo $this->translate('I have received Prior Written Notice of proposed services and agree to them starting as outlined in the IEP. (Should you check ‘no’, your child will receive comparable services from the previous IEP for the following 5 school days, at which time the services specified in this IEP will be implemented:'); ?></td>
+	</tr>
+
+
+<?php }?>
+
+
+
+
     <?php if($view->lps) { ?>
     <tr>
     	<td colspan="4" style="white-space:nowrap;padding-right:10px;">
-			<? 
+			<?
 			$this->element->recieve_electronic_copy->setDecorators(array('ViewHelper'));
 			echo $this->element->recieve_electronic_copy;?>
 		</td>
@@ -178,8 +200,8 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
     <?php } ?>
 	<tr>
         <td colspan="5">
-            <? 
-            if('' == $this->element->doc_signed_parent->getValue()) 
+            <?
+            if('' == $this->element->doc_signed_parent->getValue())
             {
             	echo $this->translate('Parent Signature').": ________________________ ".$this->translate('Date').": _____________________ ";
             } else {

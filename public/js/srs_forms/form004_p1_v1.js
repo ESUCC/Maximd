@@ -3,8 +3,8 @@ dojo.require("dijit.form.DateTextBox");
 /*
  * when conf date is altered, update all team_member rows with the date
  */
-function updateDateConference(arg) { 
-    $('.participant-names').each(function() { 
+function updateDateConference(arg) {
+    $('.participant-names').each(function() {
         if ($(this).val().length >= 2)
             $('#' + $(this).attr('id') + '-conference-date').html($('#date_conference').val());
     });
@@ -16,7 +16,7 @@ function updateDateConference(arg) {
 		if('' != node.innerHTML) {
 			node.innerHTML = dijit.byId('date_conference').attr('displayedValue');
 		}
-		
+
 		if(' ' == node.innerHTML) {
 			console.debug('one space');
 		}
@@ -36,7 +36,7 @@ function toggleShowHideAbsenceApproval() {
 	console.debug('toggleShowHideAbsenceApproval');
 	show = false;
 	showId = "showHideAbsenceApproval";
-	
+
 	var showAbsencesApproved = false;
 	// related disability
 	dojo.query("input[type=checkbox]").forEach(
@@ -61,7 +61,7 @@ function toggleShowHideAbsenceApproval() {
 }
 
 function clearParentSigSectionRadioButtons(evt)
-{	
+{
 	//
 	// clear radio buttons on page 1 of IEP
 	// values are not currently cleared, just the display
@@ -76,6 +76,9 @@ function clearParentSigSectionRadioButtons(evt)
 		    	selectTag.checked = false;
 		    }
 		);
+
+
+
 	dojo.query("input[name=doc_signed_parent]").forEach(
 		    function(selectTag) {
 		    	selectTag.checked = false;
@@ -98,7 +101,7 @@ function clearParentSigSectionRadioButtons(evt)
 
 //dojo.addOnLoad(toggleShowHideAbsenceApproval);
 $().ready(function() {
-	
+
 	/**
 	 * autofill effect_to_date
 	 * dreiss
@@ -117,8 +120,8 @@ $("#effect_from_date").change(function(){
     var date = (curr_month + "/" + curr_day + "/" + curr_year);
 	$("#effect_to_date").val(date);
 });
-	
-	
+
+
 	try {
 		$("input:checkbox[id$='-absent']").change(function() {
 		     if(this.checked) {
@@ -149,7 +152,7 @@ $("#effect_from_date").change(function(){
 
 function anyAbsence() {
 	var absenceChecked = false;
-	$('.absentCheckbox:checked').each(function(key, value) { 
+	$('.absentCheckbox:checked').each(function(key, value) {
 		//console.debug(key, $(this).is(':checked'));
 		absenceChecked = true;
 	});

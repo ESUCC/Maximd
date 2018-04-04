@@ -1,4 +1,24 @@
+<style type="text/css">
+<!--
+.tab { margin-left: 40px; }
+-->
+</style>
+
 <?php
+
+
+
+function writevar1($var1,$var2) {
+
+    ob_start();
+    var_dump($var1);
+    $data = ob_get_clean();
+    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+    $fp = fopen("/tmp/textfile.txt", "a");
+    fwrite($fp, $data2);
+    fclose($fp);
+}
+
 $view = $this->element->page->getView();
 
 /*
@@ -19,6 +39,8 @@ echo $this->element->id_form_004;
 echo $this->element->page;
 echo $this->element->dob;
 echo "</div>";
+
+
 if(isset($view->db_form_data['team_member'])) { ?>
 	<table class="formTitleHead" id="team_member_parent">
 	<tr><td>
@@ -146,6 +168,22 @@ echo $this->subform($view, 'team_district'); ?>
 			<? echo $this->element->parental_rights;?>
 		</td>
 	</tr>
+
+
+
+<?php  // Miike put this section in on 4-2=2018   SRS-208 request for Bellevue
+
+		if($view->db_form_data['id_county']=='77' and $view->db_form_data['id_district']=='0001') {?>
+
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->pwn_agree;?>
+		</td>
+
+	</tr>
+
+<?php  }?>
+
 	<?php if($view->lps) { ?>
     <tr>
         <td colspan="4">

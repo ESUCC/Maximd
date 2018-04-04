@@ -1,10 +1,10 @@
 <?php
 
 class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
-	
+
 	protected $_name = 'form_004_related_service';
     protected $_primary = 'id_form_004_related_service';
-	
+
     protected $_referenceMap    = array(
         'Model_Table_Form004' => array(
             'columns'           => array('id_form_004'),
@@ -12,10 +12,10 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
             'refColumns'        => array('id_form_004')
         )
     );
-  
+
     // Mike added these functions in order to get the csv to work 10-17-2017
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -24,7 +24,7 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     function getRelatedServicesStateForCsv($id_form004){
         $sql="select * from form_004_related_service where id_form_004='$id_form004' and status='Active'";
         $forms=$this->db->fetchAll($sql);
@@ -37,9 +37,9 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
             return null;
         }
     }
-    
-    
-    
+
+
+
     function getRelatedServicesState($id_form004){
         $sql="select * from form_004_related_service where id_form_004='$id_form004' and status='Active'";
         $forms=$this->db->fetchAll($sql);
@@ -50,12 +50,12 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
         $result['serviceBeginDate_pt']=null;
         $result['serviceDescriptor_slt']='0';
         $result['serviceBeginDate_slt']=null;
-    
-         
+
+
         if(!empty($forms)) {
             foreach ($forms as $fm){
                 //   $this->writevar1($fm['related_service_drop'],'related service drop value');
-                if ($fm['related_service_drop']=='Occupational Therapy Services'){
+                if ($fm['related_service_drop']=='Occupational Therapy Services'|| $fm['related_service_drop']=='Occupational Therapy' ){
                     $result['serviceDescriptor_ot']='1';
                     $result['serviceBeginDate_ot']=$fm['related_service_from_date'];
                 }
@@ -63,11 +63,11 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
                     $result['serviceDescriptor_pt']='2';
                     $result['serviceBeginDate_pt']=$fm['related_service_from_date'];
                 }
-                if ($fm['related_service_drop']=='Speech-language therapy'){
+                if ($fm['related_service_drop']=='Speech-language therapy'|| $fm['related_service_drop']=='Speech/Language Therapy'){
                     $result['serviceDescriptor_slt']='3';
                     $result['serviceBeginDate_slt']=$fm['related_service_from_date'];
                 }
-    
+
             } // end of looking at the table for that id_form_004
             //return $result;
             return $result;
@@ -76,6 +76,6 @@ class Model_Table_Form004RelatedService extends Model_Table_AbstractIepForm {
             return null;
         }
     }
-    
-    
+
+
 }

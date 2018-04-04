@@ -143,6 +143,8 @@ class Form_Form004 extends Form_AbstractForm
         $this->received_copy->setAllowEmpty(false);
         $this->received_copy->setRequired(false);
         $this->received_copy->removeDecorator('Label');
+
+
         $multiOptions = array('1' => 'Yes', '0' => 'No');
         $this->parental_rights = new App_Form_Element_Radio('parental_rights', array(
             'Label' => 'I have been offered a copy of my parental rights at no cost:',
@@ -155,6 +157,25 @@ class Form_Form004 extends Form_AbstractForm
         $this->parental_rights->setAllowEmpty(false);
         $this->parental_rights->setRequired(false);
         $this->parental_rights->removeDecorator('Label');
+
+
+        // Mike added this 4-1-2018 SRS-208
+        $multiOptions = array('1' => 'Yes', '0' => 'No');
+        $this->pwn_agree = new App_Form_Element_Radio('pwn_agree', array(
+            'Label' => 'Received Prior Written Notice',
+            'multiOptions' => $multiOptions
+        ));
+        $this->pwn_agree->addErrorMessage(
+            'Please select Yes or No if you agree to proposed services.'
+            );
+        $this->pwn_agree->setDescription('I have received Prior Written Notice of proposed services and agree to them starting as outlined in the IEP. (Should you check ‘no’, your child will receive comparable services from the previous IEP for the following 5 school days, at which time the services specified in this IEP will be implemented:
+');
+        $this->pwn_agree->setAllowEmpty(false);
+        $this->pwn_agree->setRequired(false);
+        $this->pwn_agree->removeDecorator('Label');
+
+
+
         $multiOptions = array('1' => 'Yes', '0' => 'No');
         $this->necessary_action = new App_Form_Element_Radio('necessary_action', array(
             'Label' => 'Necessary action:',
@@ -1494,6 +1515,7 @@ class Form_Form004 extends Form_AbstractForm
         $this->pwn_describe_action->addErrorMessage('Description of Action must be entered');
         $this->pwn_describe_action->removeEditorEmptyValidator();
         $this->pwn_describe_action->addValidator(new My_Validate_EditorNotEmptyIf('pwn_describe_action', '1'));
+
         $this->pwn_describe_reason = $this->buildEditor(
             'pwn_describe_reason',
             array('Label', 'A description of other options the IEP team considered and the reasons why those options were rejected')
@@ -1501,6 +1523,7 @@ class Form_Form004 extends Form_AbstractForm
         $this->pwn_describe_reason->addErrorMessage('Explanation of approval must be entered.');
         $this->pwn_describe_reason->removeEditorEmptyValidator();
         $this->pwn_describe_reason->addValidator(new My_Validate_EditorNotEmptyIf('pwn_describe_reason', '1'));
+
         $this->pwn_options_other = $this->buildEditor(
             'pwn_options_other',
             array('Label', 'Prior Written Notice')
@@ -1508,6 +1531,7 @@ class Form_Form004 extends Form_AbstractForm
         $this->pwn_options_other->addErrorMessage('Description of other options must be entered.');
         $this->pwn_options_other->removeEditorEmptyValidator();
         $this->pwn_options_other->addValidator(new My_Validate_EditorNotEmptyIf('pwn_options_other', '1'));
+
         $this->pwn_justify_action = $this->buildEditor(
             'pwn_justify_action',
             array('Label', 'Prior Written Notice')
@@ -1515,6 +1539,7 @@ class Form_Form004 extends Form_AbstractForm
         $this->pwn_justify_action->addErrorMessage('Evaluation or Record description must be entered.');
         $this->pwn_justify_action->removeEditorEmptyValidator();
         $this->pwn_justify_action->addValidator(new My_Validate_EditorNotEmptyIf('pwn_justify_action', '1'));
+
         $this->pwn_other_factors = $this->buildEditor(
             'pwn_other_factors',
             array('Label', 'Prior Written Notice')
@@ -1522,6 +1547,15 @@ class Form_Form004 extends Form_AbstractForm
        $this->pwn_other_factors->addErrorMessage('PWN Section 5: Description of relevant factors for proposal or refusal must be entered.');
        $this->pwn_other_factors->removeEditorEmptyValidator();
        $this->pwn_other_factors->addValidator(new My_Validate_EditorNotEmptyIf('pwn_other_factors', '1'));
+
+
+       $this->pwn_idea_name = new App_Form_Element_ValidationTextBox('pwn_idea_name', array('Label' => "Name:"));
+       $this->pwn_idea_name->setAttrib('style', 'width:180px');
+
+       $this->pwn_idea_phone = new App_Form_Element_ValidationTextBox('pwn_idea_phone', array('Label' => "Phone Number:"));
+       $this->pwn_idea_phone->setAttrib('style', 'width:80px');
+
+
     }
     public function edit_p8_v2()
     {

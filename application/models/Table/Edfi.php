@@ -43,9 +43,8 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $id=$stuData['id_student'];
         $table = new Model_Table_Edfi();
         $item=$table->fetchrow('id_student = '."'".$id."'");
-      //  $this->writevar1($item,'this is the item');
 
-      //  $this->writevar1($stuData['specialeducationsettingdescriptor'],'placement type descriptor');
+        if($stuData['id_student']=='1325325') $this->writevar1($stuData,'this is the edfi.php model table line 47');
 
 
         if(empty($item)) {
@@ -53,11 +52,66 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
          //   $this->writevar1($item['id_student'],'this is the student not entered');
         }
 
+        if($stuData['edfiPublishStatus']=='W') {
+
+            $this->updateEdfi($stuData);
+        }
+
+
   }
+
+   function updateEdfi($stuData){
+       $data = array(
+           //   'educationorganzationid'        => $stuData['educationOrganizationID'],
+
+           'educationorganzationid'        => $stuData['educationOrganizationID'].'000',
+           'id_student'                   => $stuData['id_student'],
+           'studentuniqueid'              =>$stuData['studentUniqueID'],
+           'begindate'                    =>$this->changeDatetoNull($stuData['beginDate']),
+           'enddate'                      =>$stuData['enddate'],
+           'reasonexiteddescriptor'       =>$stuData['reasonExitedDescriptor'],
+           'specialeducationsettingdescriptor'    =>$stuData['specialeducationsettingdescriptor'],
+           'levelofprogramparticipationdescriptor'=>$stuData['levelOfProgramParticipationDescriptor'],
+           'placementtypedescriptor'      =>$stuData['placementtypedescriptor'],
+           'specialeducationpercentage'   =>$stuData['specialEducationPercentage'],
+           'totakealternateassessment'    =>$stuData['toTakeAlternateAssessment'],
+           'servicedescriptor_pt'         =>$stuData['serviceDescriptor_pt'],
+           'servicebegindate_pt'          =>$this->changeDatetoNull($stuData['serviceBeginDate_pt']),
+           'servicedescriptor_ot'         =>$stuData['serviceDescriptor_ot'],
+           'servicebegindate_ot'          =>$this->changeDatetoNull($stuData['serviceBeginDate_ot']),
+           'servicedescriptor_slt'        =>$stuData['serviceDescriptor_slt'],
+           'servicebegindate_slt'         =>$this->changeDatetoNull($stuData['serviceBeginDate_slt']),
+           'disabilities'                 =>$stuData['disabilities'],
+
+           'edfipublishstatus'            =>$stuData['edfiPublishStatus'],
+           'edfiresultcode'               =>$stuData['edfiResultCode'],
+           'edfipublishtime'              =>$stuData['edfiPublishTime'],
+           'id_author'                    =>$stuData['id_author'],
+           'mdt_code'                     =>$stuData['mdt_code'],
+           'mdt_id'                       =>$stuData['mdt_id'],
+           'iep_ifsp_code'                =>$stuData['iep_ifsp_code'],
+           'iep_ifsp_id'                  =>$stuData['iep_ifsp_id'],
+           'name_first'                   =>$stuData['name_first'],
+           'name_last'                    =>$stuData['name_last'],
+           'name_school'                  =>$stuData['name_school'],
+           'id_county'                    =>$stuData['id_county'],
+           'id_district'                    =>$stuData['id_district'],
+           'id_school'                    =>$stuData['id_school']
+       );
+
+
+       $id=$data['id_student'];
+       $where =  "id_student = '$id' ";
+       $db = Zend_Registry::get('db');
+
+      // $this->writevar1($data,'this is hte data line 107 edfi.php');
+      // $this->writevar1($where,'this is the where line 108 edfi.php model table');
+       $this->update($data,$where);
+   }
 
     function insertEdfi($stuData){
     //    $this->writevar1($stuData['specialeducationsettingdescriptor'],' '.$stuData['id_student']);
-
+        if ($stuData['id_student']=='1459029')$this->writevar1($stuData,'special student data in insertEdfi in edfi.php line 59 ');
         $data = array(
          //   'educationorganzationid'        => $stuData['educationOrganizationID'],
 
@@ -100,10 +154,10 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
         $db = Zend_Registry::get('db');
 
-        if($stuData['id_student']=='1411436'){
-        //    $this->writevar1($data,'this is the student data edfi.model');
+        if($data['id_student']=='1459029'){
+            $this->writevar1($data,'this is the student data edfi.model');
         }
-     //   $this->writevar1($data,'this is the data');
+        // $this->writevar1($data,'this is the data from edfi.php ');
         $db->insert('edfi', $data);
 
     } // End of the function
@@ -259,6 +313,9 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $edfiDist=$edfiDistrict->getEdfiSecretKey($currentForm['id_county'],$currentForm['id_district']);
 
         // if it is set update the edfi table otherwise go back to the abstractForm.php
+        $this->writevar1($edfiDist,'this should be true for winne line 316 edfi.php table');
+      //  $this->writevar1($currentForm,'this is the currentForm line 317 in abstractform.php');
+
         if($edfiDist['use_edfi']==true) {
 
 
@@ -272,14 +329,14 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         if(isset($currentForm['id_form_004'])) {
 
 
-        if ($currentForm['primary_disability_drop']=='Occupational Therapy Services'){
+            if ($currentForm['primary_disability_drop']=='Occupational Therapy Services'|| $currentForm['primary_disability_drop']=='Occupational Therapy'){
         $ot=1;
 
         }
         if ($currentForm['primary_disability_drop']=='Physical Therapy'){
             $pt=2;
         }
-        if ($currentForm['primary_disability_drop']=='Speech-language therapy'){
+        if ($currentForm['primary_disability_drop']=='Speech-language therapy'|| $currentForm['primary_disability_drop']=='Speech/Language Therapy' ){
             $slt=3;
         }
         // Get related services
@@ -296,10 +353,13 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             'servicedescriptor_slt'=>$slt,
             'edfipublishstatus'=>'W',
             'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
-            'levelofprogramparticipationdescriptor'=>"06",
+        // Mike changed this 4-3-2018 as per SRS-212
+        //    'levelofprogramparticipationdescriptor'=>"06",
+            'levelofprogramparticipationdescriptor'=>"05",
             'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent'],
             'iep_ifsp_code'=>'form004',
-            'iep_ifsp_id'=>$currentForm['id_form_004']
+            'iep_ifsp_id'=>$currentForm['id_form_004'],
+
 
             );
 
@@ -341,7 +401,8 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         }  //end of iep data card;
 
         if(isset($currentForm['id_form_002'])){
-          // $this->writevar1($currentForm['disability_primary'],'disability primary line 191');
+         //  $this->writevar1($currentForm,'current form line 402');
+
            $mdtCode=$this->getMdtCode($currentForm['disability_primary']);
          //  $this->writevar1($mdtCode,'this is the number of the code line 193');
 
@@ -350,9 +411,10 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
                'edfipublishstatus'=>'W',
                'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
                'mdt_code'=>'form002',
-               'mdt_id'=>$currentForm['id_form_002']
+               'mdt_id'=>$currentForm['id_form_002'],
+               'begindate'=>$currentForm['date_mdt']
            );
-
+// Mike added begindate above SRS-212 not working correctly without the date.
 
            $where =  "id_student = '$studentId'";
            //$this->writevar1($data,'  '.$where);
@@ -363,15 +425,18 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
       //  $this->writevar1($currentForm['id_form_022'],' this is hte id of form 022 line 208');
         if(isset($currentForm['id_form_022'])){
+
+            $this->writevar1($currentForm,'this is the current form022 line 424 so we got here');
             $mdtCode=$this->getMdtCode($currentForm['disability_primary']);
             $data=array(
                 'disabilities'=>$mdtCode,
                 'edfipublishstatus'=>'W',
                 'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
                 'mdt_code'=>'form022',
-                'mdt_id'=>$currentForm['id_form_022']
+                'mdt_id'=>$currentForm['id_form_022'],
+                'begindate'=>$currentForm['date_mdt']
             );
-
+            // Mike added begindate above SRS-212 not working correctly without the date.
 
             $where =  "id_student = '$studentId'";
          //   $this->writevar1($data,' This is line 219  '.$where);
