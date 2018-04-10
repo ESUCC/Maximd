@@ -164,21 +164,21 @@ if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view,
 
 
 <?php //Mike put this in 4-2-2018 per request SRS-208 for Bellevue PS only
-
-   if($view->db_form_data['id_county']=='77' and $view->db_form_data['id_district']=='0001') {?>
-
+//Mike Turned this off 4-10-2018 because they only want it on July 1
+ //  if($view->db_form_data['id_county']=='77' and $view->db_form_data['id_district']=='0001') {?>
+<!--
 	<tr><td></td></tr>
 	<tr>
 		<td valign="top" colspan="4" style="white-space:nowrap;padding-right:10px;">
 			<?
-			$this->element->pwn_agree->setDecorators(array('ViewHelper'));
-			echo $this->element->pwn_agree;?>
+		//	$this->element->pwn_agree->setDecorators(array('ViewHelper'));
+		//	echo $this->element->pwn_agree;?>
 		</td>
-		<td valign="top"><?php echo $this->translate('I have received Prior Written Notice of proposed services and agree to them starting as outlined in the IEP. (Should you check ‘no’, your child will receive comparable services from the previous IEP for the following 5 school days, at which time the services specified in this IEP will be implemented:'); ?></td>
+		<td valign="top"><?php //echo $this->translate('I have received Prior Written Notice of proposed services and agree to them starting as outlined in the IEP. (Should you check ‘no’, your child will receive comparable services from the previous IEP for the following 5 school days, at which time the services specified in this IEP will be implemented:'); ?></td>
 	</tr>
 
-
-<?php }?>
+--->
+<?php //}?>
 
 
 

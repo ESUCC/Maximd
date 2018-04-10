@@ -14,6 +14,11 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         fclose($fp);
     }
 
+   function returnTableEntry($id){
+       $result= $this->fetchrow('id_student = '."'".$id."'");
+       return $result;
+   }
+
     function removeTableEntry($form_code,$form_id){
     // Mike added this 10-14-2017 so that we can remove table row entry from edfi should end user
     // decide to delete a form.  Best to start over with edfi.
@@ -329,16 +334,30 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         if(isset($currentForm['id_form_004'])) {
 
 
-            if ($currentForm['primary_disability_drop']=='Occupational Therapy Services'|| $currentForm['primary_disability_drop']=='Occupational Therapy'){
+        if ($currentForm['primary_disability_drop']=='Occupational Therapy Services'|| $currentForm['primary_disability_drop']=='Occupational Therapy'){
         $ot=1;
 
         }
+        else {
+            $ot='0';
+        }
+
         if ($currentForm['primary_disability_drop']=='Physical Therapy'){
             $pt=2;
         }
+        else {
+            $pt='0';
+        }
+
+
         if ($currentForm['primary_disability_drop']=='Speech-language therapy'|| $currentForm['primary_disability_drop']=='Speech/Language Therapy' ){
             $slt=3;
         }
+        else {
+            $slt='0';
+        }
+
+
         // Get related services
         $relatedServices=new Model_Table_Form004RelatedService();
         $result=$relatedServices->getRelatedServicesState($currentForm['id_form_004']);
@@ -375,11 +394,20 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             if($currentForm['service_ot']==true){
                 $ot=1;
             }
+            else {
+                $ot='0';
+            }
             if($currentForm['service_pt']==true){
                 $pt=2;
             }
+            else{
+                $pt='0';
+            }
             if($currentForm['service_slt']==true){
                 $slt=3;
+            }
+            else {
+                $slt='0';
             }
             $data = array(
                 'servicedescriptor_ot'=>$ot,
@@ -387,10 +415,11 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
                 'servicedescriptor_slt'=>$slt,
                 'edfipublishstatus'=>'W',
                 'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
-                'levelofprogramparticipationdescriptor'=>"06",
+                'levelofprogramparticipationdescriptor'=>"05",
                 'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent'],
                 'iep_ifsp_code'=>'form023',
-                'iep_ifsp_id'=>$currentForm['id_form_023']
+                'iep_ifsp_id'=>$currentForm['id_form_023'],
+                'specialeducationsettingdescriptor'=>$currentForm['service_where']
             );
 
 
@@ -404,7 +433,6 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
          //  $this->writevar1($currentForm,'current form line 402');
 
            $mdtCode=$this->getMdtCode($currentForm['disability_primary']);
-         //  $this->writevar1($mdtCode,'this is the number of the code line 193');
 
            $data=array(
                'disabilities'=>$mdtCode,

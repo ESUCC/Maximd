@@ -172,17 +172,17 @@ echo $this->subform($view, 'team_district'); ?>
 
 
 <?php  // Miike put this section in on 4-2=2018   SRS-208 request for Bellevue
-
-		if($view->db_form_data['id_county']=='77' and $view->db_form_data['id_district']=='0001') {?>
-
+// Mike commented this out 4-10-2018 because don't want to start until July
+	//	if($view->db_form_data['id_county']=='77' and $view->db_form_data['id_district']=='0001') {?>
+<!--
 	<tr>
 		<td colspan="4">
-			<? echo $this->element->pwn_agree;?>
+			<? //echo $this->element->pwn_agree;?>
 		</td>
 
 	</tr>
-
-<?php  }?>
+--->
+<?php // }?>
 
 	<?php if($view->lps) { ?>
     <tr>

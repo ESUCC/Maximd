@@ -63,6 +63,14 @@ class OdsController extends Zend_Controller_Action
      // This loop ends at line 446
       foreach($districtStudents as $student) {
 
+      // CHeck to see if there already is an edfi entry
+      $checkForEdfiTable= new Model_Table_Edfi();
+       $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
+       //$this->writevar1($edfiEntry['edfipublishstatus'],'this is the array for a student line 69');
+if($edfiEntry['edfipublishstatus']!='S') {
+
+
+
      // Take this out when ready to run the whole thing.
   //   if($student['id_student']=='1473206') {
       $continue=true;
@@ -326,25 +334,37 @@ class OdsController extends Zend_Controller_Action
               $advisorStudentData['specialeducationsettingdescriptor']=$fm[0]['primary_service_location'];
 
 
-
               if ($fm[0]['primary_disability_drop']=='Occupational Therapy Services'||
                   $fm[0]['primary_disability_drop']=='Occupational Therapy'){
                   $advisorStudentData['serviceDescriptor_ot']='1';
                   $advisorStudentData['serviceBeginDate_ot']=$fm[0]['primary_service_from'];
               }
+              else {
+                  $advisorStudentData['serviceDescriptor_ot']='0';
+              }
+
+
               if ($fm[0]['primary_disability_drop']=='Physical Therapy'){
                   $advisorStudentData['serviceDescriptor_pt']='2';
                   $advisorStudentData['serviceBeginDate_pt']=$fm[0]['primary_service_from'];
               }
+              else {
+                  $advisorStudentData['serviceDescriptor_pt']='0';
+              }
+
+
               if ($fm[0]['primary_disability_drop']=='Speech-language therapy'||
                   $fm[0]['primary_disability_drop']=='Speech/Language Therapy'){
                   $advisorStudentData['serviceDescriptor_slt']='3';
                   $advisorStudentData['serviceBeginDate_slt']=$fm[0]['primary_service_from'];
 
               }
+              else {
+                  $advisorStudentData['serviceDescriptor_slt']='0';
+              }
 
-          //    if($advisorStudentData['id_student']=='1384091')
-            //  $this->writevar1($fm,'this is data from fm'.$advisorStudentData['serviceDescriptor_slt']);
+
+
 
               $result=$relatedServices->getRelatedServicesState($fm[0]['id_form_004']);
 
@@ -353,14 +373,26 @@ class OdsController extends Zend_Controller_Action
                  $advisorStudentData['serviceDescriptor_ot']='1';
                  $advisorStudentData['serviceBeginDate_ot']=$result['serviceBeginDate_ot'];
                }
+               else {
+                   $advisorStudentData['serviceDescriptor_ot']='0';
+               }
+
               if ($result['serviceDescriptor_pt']=='2'){
                    $advisorStudentData['serviceDescriptor_pt']='2';
                    $advisorStudentData['serviceBeginDate_pt']=$result['serviceBeginDate_pt'];
                }
+               else {
+                   $advisorStudentData['serviceDescriptor_pt']='0';
+               }
+
                if ($result['serviceDescriptor_slt']=='3'){
                    $advisorStudentData['serviceDescriptor_slt']='3';
                    $advisorStudentData['serviceBeginDate_slt']=$result['serviceBeginDate_slt'];
                }
+               else {
+                   $advisorStudentData['serviceDescriptor_slt']='0';
+               }
+
 
             } // end of check for related services form form_004_related_services
          //  $this->writevar1($result,' data after decision');
@@ -424,7 +456,7 @@ class OdsController extends Zend_Controller_Action
              $advisorStudentData['levelOfProgramParticipationDescriptor']='05';
 
             $result=$this->decideWhereToGetIepData($mostRecentIep,$mostRecentIepCard);
-            $this->writevar1($result,'this is the result for one student line 416 ods controller');
+           // $this->writevar1($result,'this is the result for one student line 416 ods controller');
           //  $this->writevar1($result,' data after decision');
             $advisorStudentData['iep_ifsp_code']=$result['iep_ifsp_code'];
             $advisorStudentData['iep_ifsp_id']=$result['iep_ifsp_id'];
@@ -436,10 +468,7 @@ class OdsController extends Zend_Controller_Action
         //    $advisorStudentData['iep_ifsp_id']=
 
 
-            // Mike put this in 4-3-2018 per Wades request SRS-215
-            $advisorStudentData['serviceDescriptor_ot']='0';
-            $advisorStudentData['serviceDescriptor_pt']='0';
-            $advisorStudentData['serviceDescriptor_slt']='0';
+
 
             $advisorStudentData['serviceDescriptor_ot']=$result['serviceDescriptor_ot'];
             $advisorStudentData['serviceBeginDate_ot']=$result['serviceBeginDate_ot'];
@@ -450,6 +479,10 @@ class OdsController extends Zend_Controller_Action
 
             $advisorStudentData['serviceDescriptor_slt']=$result['serviceDescriptor_slt'];
             $advisorStudentData['serviceBeginDate_slt']=$result['serviceBeginDate_slt'];
+
+            if($advisorStudentData['serviceDescriptor_ot']!='1')$advisorStudentData['serviceDescriptor_ot']='0';
+            if($advisorStudentData['serviceDescriptor_pt']!='2')$advisorStudentData['serviceDescriptor_pt']='0';
+            if($advisorStudentData['serviceDescriptor_slt']!='3')$advisorStudentData['serviceDescriptor_slt']='0';
 
             $advisorStudentData['specialeducationsettingdescriptor']=$result['specialeducationsettingdescriptor'];
 
@@ -490,7 +523,9 @@ class OdsController extends Zend_Controller_Action
       } // end of the if continue line 218 if continue==true
 
   //    } // Take this out when ready to run the whole thing
-    } // end of the for loop way up there searching for each districts students
+
+   } //if($edfiEntry['edfipublishstatus']!='S') {  this entry will only go through those without an S
+} // end of the for loop way up there searching for each districts students
 
      $insertEdfi=new Model_EdfiOds();
 

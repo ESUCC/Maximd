@@ -178,7 +178,7 @@ class DistrictController extends Zend_Controller_Action
               ,'".$val['servicedescriptor_slt']."','".$val['servicedescriptor_ot']."','".$val['servicedescriptor_pt']."']";
 
             //$studentArray .= ", [ '".addslashes($val['name_first'])."', '".addslashes($val['name_last'])."']";
-
+             $this->writevar1($studentArray,'this is the student array');
 
             $x=$x+1;
         }

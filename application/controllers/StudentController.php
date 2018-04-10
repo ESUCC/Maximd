@@ -1463,16 +1463,25 @@ class StudentController extends My_Form_AbstractFormController
                 $dst=$this->getRequest()->getParam('district');
                 $ctyDst=$cty.$dst;
 
-                $this->writevar1($cty." ".$dst,'this is hte cty district');
+           //     $this->writevar1($cty." ".$dst,'this is hte cty district');
              // $this->writevar1($studentCollection,'this is the student collection');
+
+
+                // Mike added this 4-5-2018 so that schools not using adviser are not required to sunset a student
+
+                $dist=new Model_Table_District();
+
+
 
                 foreach($studentCollection as $stu) {
                      $stuCtyDst=$stu['id_county'].$stu['id_district'];
 
+                     $usesEdfi=$dist->getDistrictUseEdfi($stu['id_district'], $stu['id_county']);
+
               //     if( ($stu['sesis_exit_date']==NULL or $stu['sesis_exit_code']==NULL or $stu['sesis_exit_code']=='') and $stu['status']=='Active' and $ctyDst!=$stuCtyDst){
 
                      if( ($stu['sesis_exit_date']==NULL or  $stu['sesis_exit_date']=='' or
-                          $stu['sesis_exit_code']==NULL or $stu['sesis_exit_code']=='')  and $ctyDst!=$stuCtyDst){
+                          $stu['sesis_exit_code']==NULL or $stu['sesis_exit_code']=='')  and $ctyDst!=$stuCtyDst and $usesEdfi==true){
 
 
 

@@ -279,13 +279,14 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
                 </td>
             </tr>
             </table>
-
+                <p>
              <table class="formInput" style="margin-top:1px;">
+             <tr><br></tr>
             <tr>
                 <td>
 		        <?php
 		            echo "<i>Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individual with Disabilities Education Act (IDEA).";
-                    echo "If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:</i><br><b> ";
+                    echo "If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:</i><br><br><b> ";
                     echo $this->element->pwn_idea_name->getValue().' at :'.$this->element->pwn_idea_phone->getValue();
 
 		        ?>
@@ -293,8 +294,8 @@ echo $this->studentInfoHeader($view->db_form_data, '004');
             </tr>
 
             <tr>
-              <td><b>*Additional Resources* </b>You may contact any of the following resources to help you understand the federal and state laws for educating children with disabilities and parental rights granted by those laws. An explanation of your rights will be provided at no cost by any of the following organizations: <br>
-                     Nebraska Parent Training Center: <b>800-284-8520 or 402-346-0525</b>
+              <td><b>Additional Resources </b><br>You may contact any of the following resources to help you understand the federal and state laws for educating children with disabilities and parental rights granted by those laws. An explanation of your rights will be provided at no cost by any of the following organizations: <br><br>
+                     Nebraska Parent Training Center: <b>800-284-8520 or 402-346-0525</b><br><br>
                      Nebraska Advocacy Services: <b>800-422-6091 or 402-474-3183
           </td></tr>
             </table>
