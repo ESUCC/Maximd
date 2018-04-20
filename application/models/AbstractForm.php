@@ -367,7 +367,9 @@ class Model_AbstractForm
 
       // Mike added this 11-10-2017 in order to update the edfi db when a form is finalized.
 
+
 					 $edfi=new Model_Table_Edfi();
+
 
 					 // Mike changed this 1-8-2018 because people couuld not finalize form010 or progress reports.
 					// if(isset($currentForm['id_form_004']).  there is an id_form_004 in form010
@@ -953,7 +955,7 @@ class Model_AbstractForm
     public function studentFormOptions($status)
     {
     	// these array names should match the access_levels defined in App_FormRoles
-		$editaccess = array("View", "Edit", "Finalize", "Log", "Print");
+		$editaccess = array("View", "Edit", "Finalize", "Log", "Print","Unfinalize");
 		$viewaccess = array("View", "Log", "Print");
 
 		if('Draft' != $status)
@@ -963,6 +965,7 @@ class Model_AbstractForm
         }
 
 		$accessLevel = $this->formAccessObj->access_level;
+		$this->writevar1($this->formNumber,'this is the config line 968 AbstractFrom.php');
 		return $$accessLevel;
     }
 

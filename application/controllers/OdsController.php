@@ -52,9 +52,11 @@ class OdsController extends Zend_Controller_Action
    //   $id_county='11';
      // $id_district='0014';
       $listStudents = new Model_Table_StudentTable();
+
       $juneCutoff=$this->getJuneCutoff();
-      $districtStudents=$listStudents->studentsInDistrict($id_county,$id_district,$juneCutoff);
-     // $this->writevar1($districtStudents,'this is a list of the districts studetns');
+      // Mike added this 4-13-2018 SRS-221 so that the button to include in state report works from the edit screen.
+      $includeInStateReport='1';
+      $districtStudents=$listStudents->studentsInDistrict($id_county,$id_district,$juneCutoff,$includeInStateReport);
 
       // Mike added 10-11-2017 in order to get a list of the schools.
       $schoolList=new Model_Table_IepSchoolm();
@@ -66,8 +68,10 @@ class OdsController extends Zend_Controller_Action
       // CHeck to see if there already is an edfi entry
       $checkForEdfiTable= new Model_Table_Edfi();
        $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
-       //$this->writevar1($edfiEntry['edfipublishstatus'],'this is the array for a student line 69');
-if($edfiEntry['edfipublishstatus']!='S') {
+       $this->writevar1($edfiEntry['edfipublishstatus'],'this is the array for a student line 69');
+
+
+    if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
 
 
 
@@ -152,7 +156,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
       if($student['pub_school_student']==false) {
 
       $advisorStudentData['placementtypedescriptor']=$student['parental_placement'];
-     $this->writevar1($student['id_student']." ".$student['parental_placement'],' this is the parental placement');
+   //  $this->writevar1($student['id_student']." ".$student['parental_placement'],' this is the parental placement');
       }
         else {
             $advisorStudentData['placementtypedescriptor']='00';
@@ -353,6 +357,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
               }
 
 
+
               if ($fm[0]['primary_disability_drop']=='Speech-language therapy'||
                   $fm[0]['primary_disability_drop']=='Speech/Language Therapy'){
                   $advisorStudentData['serviceDescriptor_slt']='3';
@@ -415,7 +420,12 @@ if($edfiEntry['edfipublishstatus']!='S') {
 
               $advisorStudentData['levelOfProgramParticipationDescriptor']='06';
               $advisorStudentData['specialEducationPercentage']=$card[0]['special_ed_non_peer_percent'];
+
+              if($card[0]['service_where']=='1')$card[0]['service_where']='01';
               $advisorStudentData['specialeducationsettingdescriptor']=$card[0]['service_where'];
+
+
+          //    $this->writevar1($card[0]['service_where'],'student only has iep card line 419');
 
             //  if ($fm[0]['id_student']=='1345747')
              //     $this->writevar1($fm[0],' id of student iepcard'.$fm[0]['id_student']);
@@ -487,8 +497,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
             $advisorStudentData['specialeducationsettingdescriptor']=$result['specialeducationsettingdescriptor'];
 
 
-
-            if($advisorStudentData['studentUniqueID']=='1194008801')$this->writevar1($advisorStudentData,'this is the advisor student data line 441');
+       //     if($advisorStudentData['studentUniqueID']=='1194008801')$this->writevar1($advisorStudentData,'this is the advisor student data line 441');
           //  if ($advisorStudentData['id_student']=='1345747')
         //   $this->writevar1($result,'this is the id of the student  for 2 nulls'.$result['specialEducationSettingDescriptor']);
 
@@ -509,7 +518,6 @@ if($edfiEntry['edfipublishstatus']!='S') {
 
         // if($advisorStudentData['id_student']=='1384091') $this->writevar1($advisorStudentData,'this is the advisor at the end line 381');
           $insert=new Model_Table_Edfi();
-
 
          $insert->setupAdvisor($advisorStudentData);
 
@@ -540,7 +548,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
 
 
     function decideWhereToGetIepData($iep,$iepCard) {
-
+      //$this->writevar1($iepCard[0]['service_where'],'this is the iepcard');
       if($iep[0]['date_conference']>= $iepCard[0]['date_conference']) {
 
 
@@ -580,6 +588,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
         }
 
         if($iep[0]['date_conference']< $iepCard[0]['date_conference']) {
+        //    $this->writevar1($iepCard[0]['service_where'],'this is the result from the card line 582');
             $result['iep_ifsp_code']='form023';
             $result['iep_ifsp_id']=$iepCard[0]['id_form_023'];
             $result['specialeducationpercentage']=$iepCard[0]['special_ed_non_peer_percent'];
@@ -603,8 +612,9 @@ if($edfiEntry['edfipublishstatus']!='S') {
             else {
                 $result['serviceDescriptor_slt']='0';
             }
+            if($iepCard[0]['service_where']=='1')$iepcard[0]['service_where']='01';
             $result['specialeducationsettingdescriptor']=$iepCard[0]['service_where'];
-          //  $this->writevar1($result,'this is the result from the card');
+
 
             return $result;
 
@@ -624,7 +634,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
          // Mike added 10.10-2017 in order to get code and id for db
          $result['mdt_code']='form002';
          $result['mdt_id']=$mdt[0]['id_form_002'];
-         if($mdtCard[0]['id_student']=='1307343') $this->writevar1($result,'this is hte result line 581 mdt');
+     //    if($mdtCard[0]['id_student']=='1307343') $this->writevar1($result,'this is hte result line 581 mdt');
          return $result;
      }
 
@@ -640,7 +650,7 @@ if($edfiEntry['edfipublishstatus']!='S') {
          $result['mdt_code']='form022';
          $result['mdt_id']=$mdtCard[0]['id_form_022'];
 
-         if($mdtCard[0]['id_student']=='1307343') $this->writevar1($result,'this is hte result line 597 card');
+        // if($mdtCard[0]['id_student']=='1307343') $this->writevar1($result,'this is hte result line 597 card');
          return $result;
      }
     }

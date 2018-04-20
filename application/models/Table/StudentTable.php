@@ -7,6 +7,7 @@
  * @version
  */
 
+
 require_once 'Zend/Db/Table/Abstract.php';
 
 class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
@@ -26,27 +27,6 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 // 	);
 
 
-	// Mike added this 9-7-2017 in order to make edfi work
-
-	public function studentsInDistrict($id_cnty,$id_dist,$juneCutoff){
-	    //$sql = "SELECT id_student,tempid,alternate_assessment,pub_school_student,parental_placement,unique_id_state,name_first,name_last,sesis_exit_code,status,id_county,id_district,id_school FROM iep_student WHERE id_county = '$id_cnty' AND id_district = '$id_dist' AND status = 'Active'";
-	    $sql = "SELECT id_student,grade,tempid,alternate_assessment,
-	    pub_school_student,parental_placement,
-	    unique_id_state,name_first,name_last,
-	    sesis_exit_code,sesis_exit_date,status,id_county,id_district,id_school
-	    FROM iep_student WHERE id_county = '$id_cnty'
-	    AND id_district = '$id_dist'
-	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' ) order by id_school desc,name_last";
-
-	    $result = $this->db->fetchAll($sql);
-	    $x=1;
-
-
-
-	    return $result;
-
-	}
-
 	function writevar1($var1,$var2) {
 
 	    ob_start();
@@ -57,6 +37,47 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	    fwrite($fp, $data2);
 	    fclose($fp);
 	}
+
+	public function getOneStudent($id){
+	    $sql="select * from iep_student where id_student='".$id."'";
+	    $result = $this->db->fetchAll($sql);
+	    return $result;
+	}
+
+	// Mike added this 9-7-2017 in order to make edfi work
+
+	public function studentsInDistrict($id_cnty,$id_dist,$juneCutoff,$includeInStateReport='0'){
+	    //$sql = "SELECT id_student,tempid,alternate_assessment,pub_school_student,parental_placement,unique_id_state,name_first,name_last,sesis_exit_code,status,id_county,id_district,id_school FROM iep_student WHERE id_county = '$id_cnty' AND id_district = '$id_dist' AND status = 'Active'";
+
+	    // Mike added the if statement SRS-221 4-13-2018 so that sql does not change for other parts of the code.  Note: Being called from CSVcontroller.
+	    if($includeInStateReport=='1'){
+	    $sql = "SELECT id_student,grade,tempid,alternate_assessment,
+	    pub_school_student,parental_placement,
+	    unique_id_state,name_first,name_last,
+	    sesis_exit_code,sesis_exit_date,status,id_county,id_district,id_school
+	    FROM iep_student WHERE id_county = '$id_cnty'
+	    AND id_district = '$id_dist'AND exclude_from_nssrs_report !='true'
+	    AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' ) order by id_school desc,name_last";
+	    }
+	    else {
+	        $sql = "SELECT id_student,grade,tempid,alternate_assessment,
+	        pub_school_student,parental_placement,
+	        unique_id_state,name_first,name_last,
+	        sesis_exit_code,sesis_exit_date,status,id_county,id_district,id_school
+	        FROM iep_student WHERE id_county = '$id_cnty'
+	        AND id_district = '$id_dist'
+	        AND ( status = 'Active' or sesis_exit_date > '$juneCutoff' ) order by id_school desc,name_last";
+	    }
+	    $result = $this->db->fetchAll($sql);
+	    $x=1;
+
+
+
+	    return $result;
+
+	}
+
+
 
 	public function studentInfo($id)
 	{

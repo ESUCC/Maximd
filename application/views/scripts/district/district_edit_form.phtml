@@ -307,6 +307,30 @@
 <!--  Mike added 2-26-2018 SRS-151 -->
 <tr><td class="fieldInput2"><input type="checkbox" name="use_form004_pwn" id="use_form004_pwn"<?=(($this->data['use_form004_pwn'] ==1) ? " checked" : "");?>/></td><td class="labelText2"><b>Include Prior Written Notice on page 7 of the IEP</b></td></tr>
 
+<!-- Mike added 4-18-2018 for unfinalized -->
+
+<?php
+$cty=$this->data['id_county'];
+$dst=$this->data['id_district'];
+$dm=false;
+foreach ($_SESSION['user']['user']->privs as $privs) {
+    if($privs['id_district']==$dst and $privs['id_county']==$cty and $privs['class']=='2' and $privs['status']=='Active') $dm=true;
+    if($privs['class']==1 and $privs['status']=='Active') $dm=true;
+}
+if ($dm==true) {
+?>
+<tr><td class="fieldInput2"><input type="checkbox"  name="allow_unfinalize_adm" id="allow_unfinalize_adm"<?=(($this->data['allow_unfinalize_adm'] ==1) ? " checked" : "");?>/></td><td class="labelText2"><b>Allow Associate District Manger the ability to Unfinalize a form.</b></td></tr>
+
+<?php }
+
+if ($dm==false){
+?>
+<tr><td class="fieldInput2"><input type="checkbox" disabled readonly name="allow_unfinalize_adm" id="allow_unfinalize_adm"<?=(($this->data['allow_unfinalize_adm'] ==1) ? " checked" : "");?>/></td><td class="labelText2"><b>Allow Associate District Manger the ability to Unfinalize a form.</b></td></tr>
+<?php }?>
+
+
+
+
 <tr><td colspan="2" class="labelText2"><b>NSSRS Email</b> <input type="text" name="email_nssrs" id="email_nssrs" value="<?=$this->data['email_nssrs']?>" /></td></tr>
 
 <tr><td class="fieldInput2"><input type="checkbox" name="use_zf_forms"<?=(($this->data['use_zf_forms'] || $this->data['use_zf_forms'] == 1) ? " checked" : "");?> /></td><td class="labelText2"><b>Use New Style Forms</b></td></tr>

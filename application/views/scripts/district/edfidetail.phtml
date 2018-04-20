@@ -17,7 +17,7 @@
     }
 
 .CellTable {
-    border: width 0px;  
+    border: width 0px;
     border-style: none;
     padding:0px;
     background-color: red;
@@ -32,18 +32,18 @@
 #srs_left .subBar_top {
     /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
     height: 0px;
-    padding-bottom: 0; 
+    padding-bottom: 0;
 }
 
 #srs_left .subBar_btm {
     /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
-    height: 0px; 
+    height: 0px;
 }
 #leftTop {
     /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
     height: 2px;
     padding: 0;
-}	
+}
 
 #srs_left {
     position: fixed;
@@ -60,18 +60,18 @@
 .TableList tbody tr:hover td {
     background: 		#F4A460;
     }
-	
+
 </style>
 <script type="text/javascript">
         $("document").ready(function() {
         	$(".paginationControl").css("width","80%");
-        	 
+
             $(".paginationControl").css("font-size",'14px');
             $(".paginationControl").css("margin-bottom",'14px');
             $(".paginationControl").css("margin-top",'14px');
-            $(".paginationControl").css("float",'left'); 
+            $(".paginationControl").css("float",'left');
 
-        
+
         $(".TableList").css("width","80%");
        	$(".TableList").css("border", "4px solid LightSkyblue");
        	$(".Tablelist th").css('width','50px');
@@ -80,17 +80,17 @@
         $(".TableList a").css("color","MidnightBlue");
         $(".TableList  tr:even").css("background-color","LightSteelBlue");
         $(".TableList tr:odd").css("background-color","bisque");
-        
-        
+
+
         $(".tableCell").css("width","100%");
         $(".TableList").css("font-size","0.9em");
         $(".tableCell  tr:even").css("background-color","transparent");
         $(".tableCell tr:odd").css("background-color","transparent");
         $(".tableCell td").css("border-bottom", "1px solid silver");
-        
+
         });
     </script>
-    
+
     <table border="0">
         <!-- logo row -->
         <?php $auth = Zend_Auth::getInstance(); ?>
@@ -116,9 +116,9 @@
 
 <?php  echo $this->current_date_and_time; ?><br>
 
-<?  
-   }    
-?> 
+<?
+   }
+?>
 
 <center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
 
@@ -126,7 +126,7 @@
 <tr >
     <th width="20%">
         <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
-        
+
     </th>
     <th width="10%">
         <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
@@ -151,9 +151,9 @@
 <style>
 
 </style>
-<?php  
+<?php
     foreach($this->districtModel as $district) {
-    
+
         ?>
 <tr >
     <td >
@@ -163,7 +163,7 @@
     <td>
         <?php echo $this->escape($district['educationorganzationid']);?>
     </td>
-    <td style="text-align:center;"> 
+    <td style="text-align:center;">
 <b>
         <?php
          $color="";
@@ -180,9 +180,9 @@
         ?>
 
         <span style='color:<?php echo($color) ?>'><?php echo ($this->escape($district['edfipublishstatus'])) ?>  <span>
-        
-   </b>     
-        
+
+   </b>
+
     </td>
     <td>
         <?php echo $this->escape($district['edfierrormessage']);?>
@@ -194,11 +194,11 @@
         <br/>
         Unique: <?php echo $this->escape($district['studentuniqueid']);?>
     </td>
-    
+
     <td>
         Begin: <?php echo $this->escape($district['begindate']);?>
         <br>
-        End: <?php 
+        End: <?php
             echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
         <br>
         Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
@@ -215,7 +215,7 @@
             </tr>
             <tr>
                 <td>
-                    Level Program Participation: 
+                    Level Program Participation:
                 </td>
                 <td>
                     <?php echo $this->escape($district['levelofprogramparticipationdescriptor']);?>
@@ -239,7 +239,7 @@
             </tr>
             <tr>
                 <td>
-                    To Take Alt Assessment: 
+                    To Take Alt Assessment:
                 </td>
                 <td>
                     <?php echo $this->escape($district['totakealternateassessment']);?>
@@ -247,49 +247,49 @@
             </tr>
             <tr>
                 <td>
-                    Disabilities: 
+                    Disabilities:
                 </td>
                 <td>
                     <?php echo $this->escape($district['disabilities']);?>
                 </td>
-                
+
             </tr>
             <tr>
                 <td>
-                    Speach Language: 
+                    Speach Language:
                 </td>
                 <td>
                     <?php echo $this->escape($district['servicedescriptor_slt']);?>
                 </td>
-                
+
             </tr>
             <tr>
                 <td>
-                    Occupational Therapy: 
+                    Occupational Therapy:
                 </td>
                 <td>
                     <?php echo $this->escape($district['servicedescriptor_ot']);?>
                 </td>
-                
+
             </tr>
-            
+
             <tr>
                 <td>
-                    Physical Therapy: 
+                    Physical Therapy:
                 </td>
                 <td>
                     <?php echo $this->escape($district['servicedescriptor_pt']);?>
                 </td>
-                
+
             </tr>
-            
-            
+
+
         </table><br>
-        
+
     </td>
 </td>
 
-</tr> 
+</tr>
 <? } ?>
 </tbody>
 </table>

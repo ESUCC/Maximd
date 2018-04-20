@@ -12,7 +12,7 @@ class Model_Table_ArchiveNew extends Model_Table_AbstractIepForm {
         fclose($fp);
     }
     function addTo($Data){
-        $this->writevar1($Data,'this is the data line 15 in archivenew.php');
+       // $this->writevar1($Data,'this is the data line 15 in archivenew.php');
         $table='iep_archive_meta_data';
         $config = Zend_Registry::get('config');
         $db2= $this->seetupDb($config);
@@ -23,7 +23,7 @@ class Model_Table_ArchiveNew extends Model_Table_AbstractIepForm {
         $sql1='select form_id,form_type,id_student from iep_archive_meta_data where form_type=\''.$formNum.'\' and id_student=\''.$stuid.'\' and
                form_id=\''.$formId.'\' ';
         $formExists=$db2->fetchRow($sql1);
-        $this->writevar1($formExists,'this form exist here in model tb archivenew.php');
+   //     $this->writevar1($formExists,'this form exist here in model tb archivenew.php');
         if($formExists==null ) {
        $MetaDbData=array (
            'path_location'=>$Data['path_location'],

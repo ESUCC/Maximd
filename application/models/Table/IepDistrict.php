@@ -236,9 +236,11 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
 
     public function getIepDistrictByID($id_cty, $id_dst)
     {
+
        $row = $this->fetchRow($this->select()
             ->where('id_county =?',$id_cty)
             ->where('id_district =?',$id_dst) );
+      // $this->writevar1($row,'this is the row in iepdistrict');
        return $row->toArray();
     }
 
@@ -376,12 +378,14 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
 
     public function updateIepDistrictForm($options)
     {
+        $this->writevar1($options,'this is the data');
 
         /*
          * Mike added the if statement because the database field is a char varring.  Thus it will not take a 1 or 0.  This is SRS-157
          */
         if($options['nssrs_send_tonight']=="1") $options['nssrs_send_tonight']="t";
         if($options['nssrs_send_tonight']=="0") $options['nssrs_send_tonight']="";
+
         // Mike added this 5-11-17 so that the edfi_refresh field would update
       //  $this->writevar1($options['nssrs_send_tonight'],'this are the options in the table');
         $data['edfi_refresh']=$options['edfi_refresh'];
@@ -458,6 +462,9 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
         // Mike added 2-26-2018 SRS-151
 
        $data['use_form004_pwn']=$options['use_form004_pwn'];
+       // MIke added this 4-18-2018 SRS-222
+
+       $data['allow_unfinalize_adm']=$options['allow_unfinalize_adm'];
 
     if ($options['assurance_stmt'] == 1) $data['assurance_stmt'] = 'true'; else $data['assurance_stmt'] = 'false';
 	if ($options['optional_features'] == 1) $data['optional_features'] = 'true'; else $data['optional_features'] = 'false';
@@ -482,6 +489,9 @@ class Model_Table_IepDistrict extends Zend_Db_Table_Abstract
      //   $this->writevar1($data['use_form004_pwn'],'this is the data line 482');
 
         try{
+           $this->writevar1($data,'this is the data lnie 492 on the district update');
+           if($data['allow_unfinalize_adm']=='1')$data['allow_unfinalize_adm']=true;
+          // $this->writevar1($data['allow_unfinalize_adm'],'this is the data lnie 492 on the district update');
           $this->update($data,$where);
         } catch(Exception $e){
             $this->writevar1($e,'this is the catch error');

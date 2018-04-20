@@ -152,7 +152,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 function studentExists($id_student){
 
 	$authorization = "Authorization: Bearer " . $this->currentToken;
-    $url = $this->currentAPIUrl . "/api/v2.0/2017/students?studentUniqueId=" . $id_student;
+    $url = $this->currentAPIUrl . "/api/v2.0/2018/students?studentUniqueId=" . $id_student;
 
 	$curl = curl_init();
 

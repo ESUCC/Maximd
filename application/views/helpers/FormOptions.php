@@ -96,6 +96,8 @@ class Zend_View_Helper_FormOptions extends Zend_View_Helper_Abstract
             if (isset($formAccessArr['Final']['dupe_form_004_update']) && $formAccessArr['Final']['dupe_form_004_update']) {
                 $options[] = '<a href="/form004/dupe/document/'.$form->id.'/option/dupe_form_004/dupe_type/full">Update</a>';
             }
+
+
         }
         if('Final'==$form->status && '002' == $form->form_no) {
             if (isset($formAccessArr['Final']['dupe']) && $formAccessArr['Final']['dupe']) {

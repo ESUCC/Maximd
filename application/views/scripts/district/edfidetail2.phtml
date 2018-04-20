@@ -209,6 +209,7 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
                 searchRes += '<td>' +val[4] + '</td>';
                 if(val[5]=='E') clr='#FF0000';
                 if(val[5]=='S') clr='#009933';
+                if(val[5]=='X') clr='#CA9A52'
                 if(val[5]=='W') clr='#800080';
                 searchRes += '<td><span style="color:'+ clr +'"><center><b>' +val[5] + '</b></center></span></td>'; // Error code
 
@@ -436,7 +437,11 @@ function changeContent() {
         <?php
          $color="";
          switch($district['edfipublishstatus']){
-            case "S":
+             case "X":
+                 $color="#CA9A52";
+                 break;
+
+             case "S":
                 $color="#009933";
                 break;
 

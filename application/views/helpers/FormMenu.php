@@ -124,6 +124,9 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             if (isset($formAccessArr[$form->status]['finalize']) && $formAccessArr[$form->status]['finalize']) {
                 $options[] = '<option href="/form'.$form->form_no.'/finalize/document/'.$form->id.'">Finalize</option >';
             }
+
+
+
         }
         if('Suspended'==$form->status) {
             if (isset($formAccessArr['Draft']['view']) && $formAccessArr['Draft']['view']) {
@@ -136,8 +139,47 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             if (isset($formAccessArr['Draft']['edit']) && $formAccessArr['Draft']['edit']) {
                 $options[] = '<option href="/form'.$form->form_no.'/resume/document/'.$form->id.'">Resume Draft Status</option >';
             }
+
         }
 
+        // Mike added this 4-14-2018 SRS-222 so that users can unfinalize with the correct privileges
+      //  $this->writevar1($form,'this is the form located in line 146 of FormMenu.php'.$form->id_district);
+        $Unfinalize=false;
+
+        $stuInfo=new Model_Table_IepStudent();
+        $studentInfor=$stuInfo->getUserById($form->id_student);
+        $cty=$studentInfor['id_county'];
+        $dst=$studentInfor['id_district'];
+
+       $distInfo=new Model_Table_IepDistrict();
+       $districtInfo=$distInfo->getIepDistrictByID($cty, $dst);
+
+       $finalizeForm=$districtInfo['allow_unfinalize_adm'];
+
+       $this->writevar1($finalizeForm,'this should be true or false');
+       if($finalizeForm==true){
+           $class=3;
+       }
+       else {
+           $class=2;
+       }
+
+       //  $this->writevar1($cty,'this is the county coming from the student');
+       //  $this->writevar1($dst,'this is the district coming from the student');
+
+        $listPrivs=$_SESSION['user']['user']->privs;
+        foreach($listPrivs as $privs){
+
+
+            if($privs['class']<=$class and $privs['status']=='Active'
+               and $privs['id_district']==$dst and $privs['id_county']==$cty) $Unfinalize=true;
+        }
+
+        if($form->status=='Final' && $Unfinalize==true){
+            $options[] = '<option href="/form'.$form->form_no.'/unfinalize/document/'.$form->id.'">Unfinalize</option >';
+        }
+
+    // End of Mike SRS-222
         if('Final'==$form->status && '004' == $form->form_no) {
             if (isset($formAccessArr['Final']['delete']) && $formAccessArr['Final']['delete']) {
                 $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';

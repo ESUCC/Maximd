@@ -170,18 +170,20 @@ function writevar1($var1,$var2) {
 
 
       $(document).on("change keyup", ".options", function () {
-        var title = $(this).attr("title");
-        var url = $(this).val();
-        if (url != ""){
-         $("#dialog").load( url,
-           function() {
-            $(".options").prop('selectedIndex',0);
-            $("#dialog").dialog({  show: { effect: "fade" }, hide: {effect: "fade", duration: 500}, width: 620, height: 550, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $( ".accordion" ).accordion('destroy'); $("#dialog").html(""); }, buttons: { "Close": function() { $(this).dialog("close"); } } } );
-         });
-        }
-        return false;
+          var title = $(this).attr("title");
+          console.log(title);
+          var url = $(this).val();
+          console.log(url);
+          if (url != ""){
+           $("#dialog").load( url,
+             function() {
+              $(".options").prop('selectedIndex',0);
+              $("#dialog").dialog({  show: { effect: "fade" }, hide: {effect: "fade", duration: 500}, width: 620, height: 550, resizable : true, title: title, modal: true, beforeClose: function(event, ui) { $( ".accordion" ).accordion('destroy'); $("#dialog").html(""); }, buttons: { "Close": function() { $(this).dialog("close"); } } } );
+           });
+          }
+          return false;
 
-      });
+        });
 
       $(document).on("change keyup", ".openWindow", function () {
         var data_var = $(this).attr("value").split("|");
@@ -551,7 +553,7 @@ foreach ($this->EdFiList as $List){
     </div>
 </div>
 
-
+F
 <br>
 <br>
 

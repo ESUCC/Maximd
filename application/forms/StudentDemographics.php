@@ -48,7 +48,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->unique_id_state->addFilter(new Zend_Filter_Null());
 
 
-        $this->exclude_from_nssrs_report = new App_Form_Element_Checkbox('exclude_from_nssrs_report', array('label' => 'Exclude file from NSSRS Upload'));
+        $this->exclude_from_nssrs_report = new App_Form_Element_Checkbox('exclude_from_nssrs_report', array('label' => 'Exclude file from EdFi Upload'));
         $this->exclude_from_nssrs_report->getDecorator('label')->setOption('placement', 'prepend');
 //        $this->exclude_from_nssrs_report->addFilter(new Zend_Filter_Int());
 
@@ -108,8 +108,8 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->id_school = new App_Form_Element_Select('id_school', array('label' => 'School'));
 
         $this->id_county_display = new App_Form_Element_Text('id_county_display', array('label' => 'County:'));
-       
-        
+
+
         $this->id_county_display->setIgnore(true);
         $this->id_county_display->setAllowEmpty(true);
         $this->id_county_display->setRequired(false);
@@ -143,7 +143,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
             1 => 'Yes',
             0 => 'No'
         ));
- 
+
         $this->parental_placement = new App_Form_Element_Radio('parental_placement', array('label' => 'Parental Placement'));
         $this->parental_placement->setRequired(false);
         $this->parental_placement->setAllowEmpty(true);
@@ -152,7 +152,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->parental_placement->addFilter(new Zend_Filter_Int());
         $this->parental_placement->setMultiOptions(array(
 	    0 => 'Not Applicable - Does not attend a Nonpublic School',
-            2 => 'Nonpublic Placement - Other than Parental Placement',           
+            2 => 'Nonpublic Placement - Other than Parental Placement',
             3 => 'Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on IEP',
 	    4 => 'Nonpublic Placement - Parental Placement, Special Education Services from Resident District, Student on Equitable Service Plan'
         ));
@@ -255,7 +255,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
         $this->ell_student->setMultiOptions(array(
             '1' => 'Yes',
             '0' => 'No'
-        )); 
+        ));
 
         $this->alternate_assessment = new App_Form_Element_Radio('alternate_assessment'); //, array('label' => 'Alternate assessment'));
         $this->alternate_assessment->getDecorator('label')->setOption('placement', 'prepend');
@@ -697,7 +697,7 @@ class Form_StudentDemographics extends Form_AbstractForm {
             }
         }
 */
-        
+
         // SRS-127 the default values for hte district county school did not show up.
         //the coment was below this line. Mike moved it up 9-26-2017
         $this->setDisabledValues();

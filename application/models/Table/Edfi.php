@@ -49,7 +49,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $table = new Model_Table_Edfi();
         $item=$table->fetchrow('id_student = '."'".$id."'");
 
-        if($stuData['id_student']=='1325325') $this->writevar1($stuData,'this is the edfi.php model table line 47');
+       // if($stuData['id_student']=='1325325') $this->writevar1($stuData,'this is the edfi.php model table line 47');
 
 
         if(empty($item)) {
@@ -57,6 +57,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
          //   $this->writevar1($item['id_student'],'this is the student not entered');
         }
 
+   //$this->writevar1($stuData,'this is the student data line 60 in edfi model table');
         if($stuData['edfiPublishStatus']=='W') {
 
             $this->updateEdfi($stuData);
@@ -66,6 +67,8 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
   }
 
    function updateEdfi($stuData){
+
+
        $data = array(
            //   'educationorganzationid'        => $stuData['educationOrganizationID'],
 
@@ -109,16 +112,24 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
        $where =  "id_student = '$id' ";
        $db = Zend_Registry::get('db');
 
-      // $this->writevar1($data,'this is hte data line 107 edfi.php');
+    //   $this->writevar1($data,'this is hte data line 107 edfi.php');
       // $this->writevar1($where,'this is the where line 108 edfi.php model table');
+
        $this->update($data,$where);
    }
 
     function insertEdfi($stuData){
-    //    $this->writevar1($stuData['specialeducationsettingdescriptor'],' '.$stuData['id_student']);
-        if ($stuData['id_student']=='1459029')$this->writevar1($stuData,'special student data in insertEdfi in edfi.php line 59 ');
+
+        // Mike added this 4-12-2018 because 200 entries have 1 instead of 01 or 0X
+        if(strlen($stuData['specialeducationsettingdescriptor'])==1){
+            $stuData['specialeducationsettingdescriptor']="0".$stuData['specialeducationsettingdescriptor'];
+
+        }
+
         $data = array(
          //   'educationorganzationid'        => $stuData['educationOrganizationID'],
+
+
 
             'educationorganzationid'        => $stuData['educationOrganizationID'].'000',
             'id_student'                   => $stuData['id_student'],
@@ -267,16 +278,18 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
                       $placementType=0;
                   }
 
-
+                $edFiPublishStatus='W';
+                if($student['exclude_from_nssrs_report']==true) $edFiPublishStatus='X';
+              //  $this->writevar1($edFiPublishStatus,'this is the edfi publish status');
                $data=array(
                    'reasonexiteddescriptor'=>$student['sesis_exit_code'],
                    'enddate'=>$date,
                    'placementtypedescriptor'=>$placementType,
                    'totakealternateassessment'=>$student['alternate_assessment'],
-                   'edfipublishstatus'=>'W',
+                   'edfipublishstatus'=>$edFiPublishStatus,
                    'id_author_last_mod'=>$_SESSION['user']['id_personnel']
                );
-
+               // $this->writevar1($data,'this is the data to go into the db edfi line 292 edfi.php');
                 $id=$student['id_student'];
                 $where =  "id_student = '$id' ";
                 //   $this->writevar1($data,' This is line 219  '.$where);
@@ -312,13 +325,27 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
     function updateOneStudent($currentForm) {
 
+
+        // Mike added this 4-13-2018 SRS-221
+        $stu=new Model_Table_StudentTable();
+        $student=$stu->getOneStudent($currentForm['id_student']);
+
+
+
+        if($student[0]['exclude_from_nssrs_report']==true) {
+            $edfiPublish='X';
+        }
+        else {
+            $edfiPublish='W';
+        }
+
         // Mike added 11-10-2017 to see if the district has edfi set
         $edfiDistrict= new Model_Table_IepDistrict();
 
         $edfiDist=$edfiDistrict->getEdfiSecretKey($currentForm['id_county'],$currentForm['id_district']);
 
         // if it is set update the edfi table otherwise go back to the abstractForm.php
-        $this->writevar1($edfiDist,'this should be true for winne line 316 edfi.php table');
+      //  $this->writevar1($edfiDist,'this should be true for winne line 316 edfi.php table');
       //  $this->writevar1($currentForm,'this is the currentForm line 317 in abstractform.php');
 
         if($edfiDist['use_edfi']==true) {
@@ -366,11 +393,13 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         if($result['serviceDescriptor_slt']==3) $slt=3;
 
 
-        $data = array(
+
+
+      $data = array(
             'servicedescriptor_ot'=>$ot,
             'servicedescriptor_pt'=>$pt,
             'servicedescriptor_slt'=>$slt,
-            'edfipublishstatus'=>'W',
+            'edfipublishstatus'=>$edfiPublish,
             'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
         // Mike changed this 4-3-2018 as per SRS-212
         //    'levelofprogramparticipationdescriptor'=>"06",
@@ -409,11 +438,19 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             else {
                 $slt='0';
             }
+
+            // Mike added this 4-12-2018 because 200 entries have 1 instead of 01 or 0X
+          if(strlen($currentForm['service_where'])==1){
+               $currentForm['service_where']="0".$currentForm['service_where'];
+
+            }
+
+
             $data = array(
                 'servicedescriptor_ot'=>$ot,
                 'servicedescriptor_pt'=>$pt,
                 'servicedescriptor_slt'=>$slt,
-                'edfipublishstatus'=>'W',
+                'edfipublishstatus'=>$edfiPublish,
                 'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
                 'levelofprogramparticipationdescriptor'=>"05",
                 'specialeducationpercentage'=>$currentForm['special_ed_non_peer_percent'],
@@ -424,7 +461,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
 
             $where =  "id_student = '$studentId'";
-          //  $this->writevar1($data,'  '.$where);
+           // $this->writevar1($data,'  '.$where);
 
             $this->update($data,$where);
         }  //end of iep data card;
@@ -436,7 +473,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
            $data=array(
                'disabilities'=>$mdtCode,
-               'edfipublishstatus'=>'W',
+               'edfipublishstatus'=>$edfiPublish,
                'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
                'mdt_code'=>'form002',
                'mdt_id'=>$currentForm['id_form_002'],
@@ -451,14 +488,14 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         }
         // end of the id_form_002
 
-      //  $this->writevar1($currentForm['id_form_022'],' this is hte id of form 022 line 208');
+
         if(isset($currentForm['id_form_022'])){
 
-            $this->writevar1($currentForm,'this is the current form022 line 424 so we got here');
+          //  $this->writevar1($currentForm,'this is the current form022 line 495 so we got here');
             $mdtCode=$this->getMdtCode($currentForm['disability_primary']);
             $data=array(
                 'disabilities'=>$mdtCode,
-                'edfipublishstatus'=>'W',
+                'edfipublishstatus'=>$edfiPublish,
                 'id_author_last_mod'=>$_SESSION['user']['id_personnel'],
                 'mdt_code'=>'form022',
                 'mdt_id'=>$currentForm['id_form_022'],

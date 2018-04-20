@@ -1,52 +1,52 @@
 <?php
 require_once(APPLICATION_PATH.'/../library/My/Classes/privCheck.php');
 class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
- 
+
     protected $_name = 'iep_student';
     protected $_primary = 'id_student';
     protected $_sequence = "iep_student_id_student_seq";
-    
+
     protected $_dependentTables = array(
         'Model_Table_StudentTeamMember',
     );
-    
+
     static public function getUserById($id_student)
     {
 
         $db = Zend_Registry::get('db');
-        $select = $db->select('name_first, name_middle, name_last')
+        $select = $db->select('name_first, name_middle, name_last,id_county,id_district')
                      ->from( 'iep_student' )
                      ->where( "id_student = ?", $id_student )
                      ->order( "name_first", "name_last" );
-    
+
         $result = $db->fetchAll($select);
-        
+
         return $result[0];
-        
+
     }
-    
+
     public function getStudentForParentById($id){
         $db = Zend_Registry::get('db');
         $select = $db->select('name_first, name_middle, name_last,id_case_mgr,id_district,id_county,id_school')
         ->from( 'iep_student' )
         ->where( "id_student = ?", $id);
         $result = $db->fetchrow($select);
-        
+
         return $result;
     }
-    
+
 	public function studentPersonnelAccess($id_student, $id_personnel, $checkout = true, $writeLog = false)
 	{
 		$sessUser = new Zend_Session_Namespace('user');
 		$sessPrivCheckObj = $sessUser->sessPrivCheckObj;
 		$sessIdUser = $sessUser->sessIdUser;
-		
+
 		// get the current user priv object
 		//		Zend_debug::dump( Model_Table_IepStudent::getStudent($id_student));
-		
+
 		$student = Model_Table_IepStudent::getStudent($id_student);
 		if(false == $student)
-		{	
+		{
 			// student doesn't exist
 			return false;
 		} else {
@@ -97,19 +97,19 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 //        		Zend_debug::dump('access granted');
         		return true;
 //        	}
-			
-			
+
+
 		}
 	}
 
 	function accessValidation($id_student, $id_personnel, $accessVariablesArr, $studentArr = false) {
-		
+
 //		Zend_debug::dump("Model_Table_IepStudent::accessValidation");
 		#
 		# 11/03 JL new validation through privCheck
 		#
 //		global $sessPrivCheckObj;
-		
+
 		$sessUser = new Zend_Session_Namespace('user');
 //		$sessPrivCheckObj = $sessUser->sessPrivCheckObj;
 		$sessPrivCheckObj = user_session_manager::getSessPrivCheckObj();
@@ -120,7 +120,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 		#
 		# VALIDATE USER HAS ACCESS TO STUDENT/AREA/SUB
 
-		if($sessPrivCheckObj->validateStudentAccess($id_student, $id_personnel, $accessVariablesArr, $studentArr)) { 
+		if($sessPrivCheckObj->validateStudentAccess($id_student, $id_personnel, $accessVariablesArr, $studentArr)) {
 //			$this->id_student = $id_student;
 			$this->accessArrName = $sessPrivCheckObj->accessArrName;
 //			Zend_debug::dump($this->accessArrName);
@@ -132,9 +132,9 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 		#
 		#
 		#########################################################################################
-		##		
+		##
 	}
-	
+
     static private function getStudent($id_student)
     {
         $db = Zend_Registry::get('db');
@@ -150,14 +150,14 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 								'get_name_school(id_county, id_district, id_school) as name_school',
 								'get_name_personnel(id_case_mgr) as name_case_mgr',
 								'get_name_personnel(id_ei_case_mgr) as name_ei_case_mgr',
-								'get_name_personnel(id_ser_cord) as name_ser_cord',   
+								'get_name_personnel(id_ser_cord) as name_ser_cord',
                              )
                         )
                      ->where( "id_student = '$id_student'" )
                      ->order('name_first',  'name_middle', 'name_last');
 
         $result = $db->fetchRow($select);
-            
+
 //        if (count($result) <= 0) {
 //        	return false;
 //        } else {
@@ -221,14 +221,14 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 //        	}
 //        }
         return $result;
-        
+
     }
 
     static public function save($id, $data)
     {
         unset($data['submit']);
         unset($data['id_student']);
-        
+
         try
         {
             $db = Zend_Registry::get('db');
@@ -242,7 +242,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
         }
         return false;
     }
-    
+
 	static function searchStudent($searchfield, $searchvalue)
 	{
             try
@@ -251,7 +251,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
                 $select = $db->select('name_first, name_middle, name_last')
                     		  ->from( 'iep_student' )
                     		  ->where( $searchfield . " ilike ?", '%'.$searchvalue.'%' );
-                
+
                 $results = $db->fetchAll($select);
                 return $results;
             }
@@ -260,10 +260,10 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
                 // generate error
                 // but as long as we're not
                 // don't swallow the exception
-                throw new Zend_Db_Statement_Exception($e);    
+                throw new Zend_Db_Statement_Exception($e);
             }
 	}
-	
+
 	function checkout($mode, $studentData)
 	{
 		$sessUser = new Zend_Session_Namespace('user');
@@ -274,7 +274,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 			$this->errorMsg = $studentData['checkout_id_user'];
 			return false;
 		} else {
-			
+
 			$result = Model_Table_IepStudent::save($studentData['id_student'], array('checkout_id_user' => $sessIdUser, 'checkout_time' => time()));
 			if (false === $result) {
 				return false;
@@ -290,13 +290,13 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 
 	function buildAdminStudentSearch()
 	{
-		
+
 		// IF WE GOT HERE BY HITTING A SEARCH BUTTON ON THIS PAGE, BUILD NEW SQL STMT
 		// COUNT = 1 INDICATES THE SUBMISSION CAME FROM THE FORM SEE ELSE CLAUSE FOR THE ALTERNATIVE
 		#debugLog("sesis test");
-		
+
         $sessStudentSearch = new Zend_Session_Namespace('student');
-		
+
         $format = $sessStudentSearch->sessCurrentStudentFormat;
 
 		$sessUser = new Zend_Session_Namespace('user');
@@ -309,9 +309,9 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 		$searchType = $sessStudentSearch->searchType;
 		$searchField = $sessStudentSearch->searchfield;
 		$searchValue = $sessStudentSearch->searchvalue;
-		
+
 		$showRowsSEARCH = $sessStudentSearch->showRowsSEARCH;
-		
+
 //		Zend_debug::dump($searchType, 'searchType');
 //		Zend_debug::dump($sessStudentSearch->sessCurrentSearchStatus, 'sessCurrentSearchStatus');
 		//		foreach($sessUser as $k => $v)
@@ -341,14 +341,14 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 		$sort = !isset($sort)?"School":$sort;
 		# ================================================================
 		$sqlStmtTop  = "SELECT *,
-			id_student, 
-			get_name_personnel(id_case_mgr) AS name_case_mgr, 
+			id_student,
+			get_name_personnel(id_case_mgr) AS name_case_mgr,
     		\n";
 
 		//
 		// 20061122 jlavere - STUDENT REPORT ADDITIONS
 		//
-		
+
 		switch ($format) {
 			case "Phonebook":
 			case "School List":
@@ -427,8 +427,8 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 
 
 		$sqlStmtTop  .= "
-	get_name_county(id_county) as name_county, 
-	get_name_district(id_county, id_district) as name_district, 
+	get_name_county(id_county) as name_county,
+	get_name_district(id_county, id_district) as name_district,
 	get_name_school(id_county, id_district, id_school) as name_school,
 	CASE WHEN name_middle IS NOT NULL THEN name_first || ' ' || name_middle || ' ' || name_last ELSE name_first || ' ' || name_last END AS name_full,
 	name_last || ', ' || name_first as name_last_first,
@@ -605,9 +605,9 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 
 		// add criteria that was submitted in the search form to the query
 		$op = "LIKE"; // this will eventually be added to search form, but for now it's hard coded
-		
+
 //		Zend_debug::dump($showRowsSEARCH, 'showRowsSEARCH');
-		
+
 		for ($i=1; $i <= $showRowsSEARCH; $i++) {
 			$v = $i - 1;
 //			Zend_debug::dump($searchType, "searchType");
@@ -624,7 +624,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 					}
 					#debugLog("SEARCH TYPE: ".$searchField[$v]);
 					#debugLog("SEARCH VALUE: ".$searchValue[$v]);
-						
+
 					// CASE ADDED 1/28/03 FOR PUBLIC STUDENT SEARCH - JL
 					if($searchField[$v] == "pub_school_student") {
 						if ($value == "T" || $value == "t" || $value == "true") {
@@ -636,35 +636,35 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 						} else {
 							$errorArr[] = "Bad value entered for Public School Student";
 						}
-							
+
 					} elseif($searchField[$v] == "onteam") {
 						//
 						// search for students on this users team
 						//
 						$sqlStmt .= " $conditional ";
 						$sqlStmt .= " id_student IN (SELECT id_student FROM iep_student_team WHERE id_personnel = '$value' AND status = 'Active') ";
-							
+
 					} elseif($searchField[$v] == "isCM") {
 						//
 						// search for students on this users team
 						//
 						$sqlStmt .= " $conditional ";
 						$sqlStmt .= " id_case_mgr = '$value' ";
-							
+
 					} elseif($searchField[$v] == "isSC") {
 						//
 						// search for students on this users team
 						//
 						$sqlStmt .= " $conditional ";
 						$sqlStmt .= " id_ser_cord = '$value' ";
-							
+
 					} elseif($searchField[$v] == "isEICM") {
 						//
 						// search for students on this users team
 						//
 						$sqlStmt .= " $conditional ";
 						$sqlStmt .= " id_ei_case_mgr = '$value' ";
-							
+
 					} elseif($searchField[$v] == "id_student") {
 						//
 						// SCHOOL NAME
@@ -879,8 +879,8 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 //		echo $sqlStmt."<BR>";
 		//if($sessIdUser == '1000254') print($sqlStmt);
 		// done building a new SQL stmt
-		
-		
+
+
 //		echo $sqlStmt;
 // die();
 		return $this->performQuery($sqlStmt);
@@ -900,27 +900,27 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
     			// don't swallow the exception
     			throw new Zend_Db_Statement_Exception($e);
     		}
-    	
-    	return $results;	
-    } 
-	
+
+    	return $results;
+    }
+
 	static public function devDelay($startDate, $endDate) {
 			//	Zend_debug::dump($startDate, 'startDate');
 			//	Zend_debug::dump($endDate, 'endDate');
-			
+
 			if( $startDate == '' || $endDate == '') return "";
 			$today = getdate(strtotime($endDate));
 			$doy = $today['yday'];
 			$mday = $today['mday'];
 			$year = $today['year'];
 			$month = $today['mon'];
-	
+
 			$b_day = getdate(strtotime($startDate));
 			$b_doy = $b_day['yday'];
 			$b_mday = $b_day['mday'];
 			$b_year = $b_day['year'];
 			$b_month = $b_day['mon'];
-	
+
 			# if ( $doy < $b_doy ) {
 			# This code seems suspect - if both days are
 			# March 1, but startDate is in a leap year,
@@ -932,26 +932,26 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 			} else {
                 $age = $year - $b_year;
 			}
-	
+
 			if ($mday<$b_mday) {
 			   $month=$month-1;
 			   if ($month<1) { $month=12; }
 			}
-	
+
 			if( ($month - $b_month) < 0 ) {
                 $months = $month - $b_month + 12;
 			} else {
                 $months = $month - $b_month;
 			}
-		
+
 			if($age < 3) {
-				return 0;		
+				return 0;
 			} elseif($age < 6) {
-				return 1;		
+				return 1;
 			} elseif($age < 22) {
-				return 2;		
+				return 2;
 			} else {
-				return 3;		
+				return 3;
 			}
 	}
 
@@ -965,7 +965,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
     if (!is_int($time2)) {
       $time2 = strtotime($time2);
     }
- 
+
     // If time1 is bigger than time2
     // Then swap time1 and time2
     if ($time1 > $time2) {
@@ -973,11 +973,11 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
       $time1 = $time2;
       $time2 = $ttime;
     }
- 
+
     // Set up intervals and diffs arrays
     $intervals = array('year','month','day','hour','minute','second');
     $diffs = array();
- 
+
     // Loop thru all intervals
     foreach ($intervals as $interval) {
       // Set default diff to 0
@@ -992,7 +992,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
 	$ttime = strtotime("+1 " . $interval, $time1);
       }
     }
- 
+
     $count = 0;
     $times = array();
     // Loop thru all diffs
@@ -1001,7 +1001,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
       if ($count >= $precision) {
 	break;
       }
-      // Add value and interval 
+      // Add value and interval
       // if value is bigger than 0
       if ($value > 0) {
 	// Add s if value is not 1
@@ -1017,7 +1017,7 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
     // Return string with times
     return implode(", ", $times);
   }
-	
+
   /**
    * Get District For Student Id
    * @param int $idStudent
@@ -1027,5 +1027,5 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
    		$student = $this->getStudent($idStudent);
    		return $student['id_district'];
   }
-  
+
 }

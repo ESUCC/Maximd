@@ -24,7 +24,7 @@ class DistrictController extends Zend_Controller_Action
 
     function testprintAction1() {
 
-      //  $filename='/usr/local/zend/var/apps/https/iepweb02.unl.edu/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
+      //  $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
 
         $pdf1=new Zend_Pdf;
         $result=$pdf1->load($filename);
@@ -48,7 +48,7 @@ class DistrictController extends Zend_Controller_Action
 
     function testprintAction() {
 
-     // $filename='/usr/local/zend/var/apps/https/iepweb02.unl.edu/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
+     // $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
        // $filename=$path.'/'.$file;
         $pdf1=new Zend_Pdf;
         $iep_form_number=$this->_getParam('id');
@@ -178,7 +178,7 @@ class DistrictController extends Zend_Controller_Action
               ,'".$val['servicedescriptor_slt']."','".$val['servicedescriptor_ot']."','".$val['servicedescriptor_pt']."']";
 
             //$studentArray .= ", [ '".addslashes($val['name_first'])."', '".addslashes($val['name_last'])."']";
-             $this->writevar1($studentArray,'this is the student array');
+          //   $this->writevar1($studentArray,'this is the student array');
 
             $x=$x+1;
         }
@@ -753,7 +753,7 @@ class DistrictController extends Zend_Controller_Action
 	      // JUNY 30, 2017
 	      // get all Schools from county and district
         $results = $district->getIepSchoolList($id_county, $id_district);
-        $this->view->schools = $results;
+       $this->view->schools = $results;
 
 	      // get all Managers
         $results = $district->getIepManagersList();
