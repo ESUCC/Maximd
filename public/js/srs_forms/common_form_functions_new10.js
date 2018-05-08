@@ -2448,25 +2448,25 @@ function attachSaveAction() {
 
 	                // Leaving to catch any missed cases
 	    			if('View Student' == studentOptions.value) {
-	    				window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=view';
+	    				window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=view';
 
 	    			} else if ('Edit Student' == studentOptions.value) {
-	    				window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=edit';
+	    				window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=edit';
 
 	    			} else if ('Student Charting' == studentOptions.value) {
-	    				window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=charting';
+	    				window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=charting';
 
 	    			} else if ('Parent/Guardians' == studentOptions.value) {
-	    				window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=parents';
+	    				window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=parents';
 
 	    			} else if ('Student Team' == studentOptions.value) {
-	    				window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=team';
+	    				window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=team';
 
 	    			} else if ('Student Forms' == studentOptions.value) {
-	    				window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=forms';
+	    				window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=forms';
 
 	    			} else if ('Student Log' == studentOptions.value) {
-	    		    	window.location.href='https://iep.unl.eduu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=log';
+	    		    	window.location.href='https://iep.unl.edu/srs.php?area=student&sub=student&student='+dojo.byId('id_student').value+'&option=log';
 	    			}
                 }
     		}

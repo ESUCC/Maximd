@@ -27,7 +27,7 @@ class HomeController extends My_Form_AbstractFormController {
 //                   ->headTitle($request->getActionName());
                    
     	if('production' == APPLICATION_ENV) {
-     		$this->_redirect('https://iep.unl.eduu/srs.php?area=home&sub=home');
+     		$this->_redirect('https://iep.unl.edu/srs.php?area=home&sub=home');
     	}
 //    	if('iepweb03' == APPLICATION_ENV && '1018436' == $sessUser->id_personnel) {
 //    		$this->_redirect('/student/forms/student/1366090');
