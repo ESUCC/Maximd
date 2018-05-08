@@ -199,7 +199,7 @@ function updateCurrentStudent(){
     $id_student = $jsonResult->id;
     $data_string = $this->currentStudent;
 	$authorization = "Authorization: Bearer " . $this->currentToken;
-    $url = $this->currentAPIUrl . "/api/v2.0/2017/students/" . $id_student;
+    $url = $this->currentAPIUrl . "/api/v2.0/2018/students/" . $id_student;
 	$curl = curl_init();
 	$payloadLength = 'Content-Length: ' . strlen($data_string);
 
@@ -231,7 +231,7 @@ function updateStudentSpecialEducationProgramAssociation($data){
     $jsonResult = json_decode($this->currentStudent);
     $id_student = $jsonResult->id;
 	$authorization = "Authorization: Bearer " . $this->currentToken;
-    $url = $this->currentAPIUrl . "/api/v2.0/2017/studentSpecialEducationProgramAssociations";
+    $url = $this->currentAPIUrl . "/api/v2.0/2018/studentSpecialEducationProgramAssociations";
 	$curl = curl_init();
 	$payloadLength = 'Content-Length: ' . strlen($data);
 

@@ -467,6 +467,19 @@ $exportLine[24]=$this->nssrsChangeValue($exportLine[22]);
      //    $exportLine[18]='';
          $exportLine[30]='';
          $exportLine[28]='';
+/*
+         $relatedService=$exportLine[19];
+
+         if($relatedService=='1') $exportLine[19]='Occupational Therapy';
+         if($relatedService=='2') $exportLine[19]='Physical Therapy';
+         if($relatedService=='3') $exportLine[19]='Speech Language Therapy';
+         if($relatedService=='4') $exportLine[19]='Occupational/Physcial Therapy';
+         if($relatedService=='5') $exportLine[19]='Speech Language/Physical Therapy';
+         if($relatedService=='6') $exportLine[19]='Speech Language/Occupational Therapy';
+         if($relatedService=='7') $exportLine[19]='Speech Lang/Occupational/Physical Therapy';
+         if($relatedService=='8') $exportLine[19]='Other Services';
+
+*/
 
 
             file_put_contents($exportPath, $this->arrayToCsv($exportLine) . $this->eol, FILE_APPEND);

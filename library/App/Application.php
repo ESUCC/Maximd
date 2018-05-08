@@ -158,7 +158,7 @@ class App_Application {
 				$client = $sessUser->newSiteClient;
 			} else {
                 // old site
-				$url = 'https://iep.unl.edu/form_print.php?form=form_'.$formNumber.'&document='.$document.'&archive=true';
+				$url = 'https://iep.nebraskacloud.orgu/form_print.php?form=form_'.$formNumber.'&document='.$document.'&archive=true';
 				if(!isset($sid)) $sid = trim($legacySiteSessionId);
                 $client = $sessUser->oldSiteClient;
 			}
@@ -173,7 +173,7 @@ class App_Application {
             if($dbData['version_number'] >= 9) {
                 $cookie = new Zend_Http_Cookie('PHPSESSID-ARCHIVE', $sid, $config->DOC_ROOT);
             } else {
-                $cookie = new Zend_Http_Cookie('PHPSESSID-ARCHIVE', $sid, 'iep.unl.edu');
+                $cookie = new Zend_Http_Cookie('PHPSESSID-ARCHIVE', $sid, 'iep.nebraskacloud.orgu');
             }
 
 			$client->setCookie($cookie);

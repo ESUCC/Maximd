@@ -640,7 +640,7 @@ class BellevueExport extends ExportFactoryBellevue {
         }
     }
 
-  /*  public function relatedServices($student) {
+    public function relatedServices2($student) {
         $iep = $this->lastIep($student);
 
         if ($student->id_student=='1463037'){ $this->writevar1($iep,'this is the iep'); }
@@ -667,7 +667,7 @@ class BellevueExport extends ExportFactoryBellevue {
         }
     }
 
-*/
+
 
 
  public function relatedServices($student) {

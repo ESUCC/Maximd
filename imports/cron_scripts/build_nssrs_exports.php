@@ -29,12 +29,12 @@ if($onXanthos == true) {
 
 //     $DB_NAME        = "iep_db";
 //     $DB_USER_NAME   = "postgres";
-//     $DB_HOST		= "iepdata01.unl.edu";
+//     $DB_HOST		= "iepdatastage.nebraskacloud.org";
 //     $DB_PORT        = "5432";
 
     $DB_NAME        = "nebraska_srs";
     $DB_USER_NAME   = "psql-primary";
-    $DB_HOST		= "iepdata01.unl.edu";
+    $DB_HOST		= "iepdatastage.nebraskacloud.org";
     $DB_PORT        = "5434";
 
 }
@@ -104,7 +104,7 @@ if(!$result = sqlExec($getDistrictsToBuild, $errorID = "", $errorMsg = "")) {
 
         
         $subject = "{$ad['county_name']} - {$ad['district_name']} NSSRS FILE " . date_massage("yesterday");
-        $from = "nssrs@iep.unl.edu";
+        $from = "nssrs@iep.nebraskacloud.orgu";
         $to = $ad['email_nssrs']; //'mdanahy@esucc.org';
 
         #$result = mail( $to, $subject, $logContent);

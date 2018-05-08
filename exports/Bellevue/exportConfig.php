@@ -45,7 +45,7 @@ $configArr['U_SPED.AT_Considerations']=array('assistive_tech'=>'004-final');
 
 //19  the troubleing one
 //$configArr['related_services'] = array( 'related_service_drop' => '004-final-Model_Table_Form004RelatedService' );
-$configArr['related_services'] =  array( 'relatedServices' => 'function' );
+$configArr['related_services2'] =  array( 'relatedServices2' => 'function' );
 //20
 $configArr['S_NE_STU_SPED_X.Sped_Entry_Date']= array('initial_verification_date'=>'002-final');
 //21
