@@ -183,9 +183,15 @@ class OdsController extends Zend_Controller_Action
 
            $primaryDisability=$this->getMdtCode($mostRecentMdt[0]['disability_primary']);
            $advisorStudentData['disabilities']=$primaryDisability;
-          //
-          //  $advisorStudentData['beginDate']=$mostRecentMdt[0]['date_mdt'];
-           $advisorStudentData['beginDate']=$mostRecentMdt[0]['date_mdt'];
+
+
+          //Mike changed this 5-9-2018 because begin date must be initial verification date
+
+           //$advisorStudentData['beginDate']=$mostRecentMdt[0]['date_mdt'];
+           $advisorStudentData['beginDate']=$mostRecentMdt[0]['initial_verification_date'];
+
+
+
            $advisorStudentData['mdt_id']=$mostRecentMdt[0]['id_form_002'];
            $advisorStudentData['mdt_code']='form002';
        }
@@ -194,7 +200,11 @@ class OdsController extends Zend_Controller_Action
            // $this->writevar1($mostRecentMdt,'this is the most mdt card');
            $primaryDisability=$this->getMdtCode($mostRecentMdtCard[0]['disability_primary']);
            $advisorStudentData['disabilities']=$primaryDisability;
-           $advisorStudentData['beginDate']=$mostRecentMdtCard[0]['date_mdt'];
+
+           // Mike changed this 5-9-2018 because the start date was incorrect
+         //  $advisorStudentData['beginDate']=$mostRecentMdtCard[0]['date_mdt'];
+           $advisorStudentData['beginDate']=$mostRecentMdtCard[0]['initial_verification_date'];
+
            $advisorStudentData['mdt_id']=$mostRecentMdt[0]['id_form_022'];
            $advisorStudentData['mdt_code']='form022';
 
@@ -630,7 +640,12 @@ class OdsController extends Zend_Controller_Action
 
          if ($mdt[0]['date_mdt']>=$mdtCard[0]['date_mdt']){
          $result['disabilities']=$this->getMdtCode($mdt[0]['disability_primary']);
-         $result['beginDate']=$mdt[0]['date_mdt'];
+
+         // Mike changed this 5-9-2018 because it must be initial_verification date;
+         //$result['beginDate']=$mdt[0]['date_mdt'];
+         $result['beginDate']=$mdt[0]['initial_verification_date'];
+
+
          // Mike added 10.10-2017 in order to get code and id for db
          $result['mdt_code']='form002';
          $result['mdt_id']=$mdt[0]['id_form_002'];
@@ -644,7 +659,11 @@ class OdsController extends Zend_Controller_Action
 
          // Mike changed 4-3-2018 SRS-212
        //  $result['beginDate']=$mdtCard[0]['date_mdt'];
-          $result['beginDate']=$mdtCard[0]['date_mdt'];
+       // Mike changed again 5-9-2018
+      //    $result['beginDate']=$mdtCard[0]['date_mdt'];
+         $result['beginDate']=$mdtCard[0]['initial_verification_date'];
+
+
          // Mike added this 10-11-2017 in order to allow view to work correctly for the edfi
          // correction protocol.
          $result['mdt_code']='form022';

@@ -9,7 +9,7 @@ if('student'==$controllerName) {
 
 
 // get refresh code for externals
-// changing this code will cause clients 
+// changing this code will cause clients
 // to get fresh coppies of the external files
 $config = Zend_Registry::get('config');
 $refreshCode = '?refreshCode=' . $config->externals->refresh;
@@ -26,9 +26,9 @@ if (Zend_Controller_Front::getInstance()->getRequest()->getParam('nojs', false))
     $content = preg_replace('#href="([^"]*)"#s', 'href="$1?nojs=true"', $content);
 }
 
-$this->headLink()->appendStylesheet('/css/srs_style_IE9.css', 'screen', 'IE 9');    
-$this->headLink()->appendStylesheet('/css/srs_style_IE8.css', 'screen', 'IE 8');    
-$this->headLink()->appendStylesheet('/css/srs_style_IE7.css', 'screen', 'IE 7');    
+$this->headLink()->appendStylesheet('/css/srs_style_IE9.css', 'screen', 'IE 9');
+$this->headLink()->appendStylesheet('/css/srs_style_IE8.css', 'screen', 'IE 8');
+$this->headLink()->appendStylesheet('/css/srs_style_IE7.css', 'screen', 'IE 7');
 $this->headLink()->appendStylesheet('/css/srs_style_IE6.css', 'screen', 'IE 6');
 $this->headLink()->appendStylesheet('/css/srs_style_IE.css', 'screen', 'IE');
 $this->headLink()->appendStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', 'screen');
@@ -68,15 +68,15 @@ if(false==$disableDojo) {
     <?php if(0 && $config->jsErrLogEnabled) { ?>
     <script type="text/javascript" src="/js/jsErrLog/src/static/jserrlog.js<?php echo $refreshCode ?>"></script>
     <script type="text/javascript">
-    <?php 
+    <?php
     	if(isset($_SERVER['HTTPS']) && 'on'==$_SERVER['HTTPS']) {
     		$prefix = "https://".$_SERVER['HTTP_HOST'];
     	} else {
     		$prefix = "http://".$_SERVER['HTTP_HOST'];
     	} ?>
-    	jsErrLog.url = "<?php echo $prefix; ?>/errorlog/log/file/logger/userid/<?php echo $sessUser->sessIdUser; 
-    		?>/form_key/<?php echo $this->formNum; 
-    		?>/form_number/<?php echo $this->formId; 
+    	jsErrLog.url = "<?php echo $prefix; ?>/errorlog/log/file/logger/userid/<?php echo $sessUser->sessIdUser;
+    		?>/form_key/<?php echo $this->formNum;
+    		?>/form_number/<?php echo $this->formId;
     		?>/user_name/<?php echo $this->userName;
     		?>/page_number/<?php echo $this->page;
     		?>/student_id/<?php echo $this->db_form_data['student_data']['id_student'];
@@ -102,12 +102,12 @@ if(false==$disableDojo) {
     <?php if('student' != $controllerName && ('edit' == $actionName || 'view' == $actionName || 'delete' == $actionName || 'finalize' == $actionName || 'log' == $actionName || 'google-editors' == $actionName)) { ?>
 	    <?php $this->headScript()->appendFile('/js/custom/custom_functions.js'.$refreshCode); ?>
 	    <?php $this->headScript()->appendFile('/js/srs_forms/common_form_functions_new10.js'.$refreshCode); ?>
-	    
-	    
+
+
     <?php } ?>
     <?php if('personnel' != $controllerName && 'student' != $controllerName && 'edit' == $actionName) { ?>
     	<?php $this->headScript()->appendFile('/js/srs_forms/jsave2.js'.$refreshCode); ?>
-	    <?php 
+	    <?php
 	    if('on' == $config->backbuttonwarning->users || $backButtonForce) { ?>
 	        <?php $this->headScript()->appendFile('/js/srs_forms/back_button_warning.js'.$refreshCode); ?>
 	    <?php } ?>
@@ -123,10 +123,10 @@ if(false==$disableDojo) {
         <?php $this->headScript()->appendFile('/js/srs_forms/goal_helper.js'.$refreshCode); ?>
 
     <?php } ?>
-    
+
     <?php // custom JS - browser fix ?>
     <?php $this->headScript()->appendFile('/js/ie_fix_checkboxesById.js'.$refreshCode); ?>
-    
+
     <?php
       //
       // HACK - include v1 JS forms when version is 9
@@ -146,16 +146,16 @@ if(false==$disableDojo) {
     {
     	$this->headScript()->appendFile('/'.$jsFile.$refreshCode);
     }
-    
+
     if('print' == $actionName) { ?>
 	<SCRIPT type="javascript">
 		function redirect() {
 		   <? if(!empty($this->fullUrl)) echo "window.location.href='$this->fullUrl';"; ?>
 		}
 	</SCRIPT>
-    
+
     <?php } else { ?>
-    
+
     <script type="javascript">
         // error array generated on page load
         // regenerated after save
@@ -165,18 +165,18 @@ if(false==$disableDojo) {
         echo "var validationMsgs = " . $jsonArr->toJson() . ";";
         ?>
     </script>
-    
-    
-    <?php 
+
+
+    <?php
     } // end print conditional
 
     //echo $this->headScript(); ?>
-    
-    
+
+
 </head>
 <body class="tundra" <?php if('print' == $actionName) {echo 'onLoad="redirect()"'; } ?>>
-    <?php echo $content; ?> 
-    <?php //Zend_Debug::dump($_SERVER); ?> 
+    <?php echo $content; ?>
+    <?php //Zend_Debug::dump($_SERVER); ?>
     <div class="loading"><div><img src="/images/loading.gif" alt="loading" /><br />Loading ...</div></div>
 <?php echo $this->headScript(); ?>
 <script type="text/javascript">
@@ -184,7 +184,7 @@ if(false==$disableDojo) {
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-48191906-1']);
 //_gaq.push(['_setDomainName', 'unl.edu']);
-// Mike changed this 4-19  
+// Mike changed this 4-19
   _gaq.push(['_setDomainName', 'unl.edu']);
   _gaq.push(['_trackPageview']);
 

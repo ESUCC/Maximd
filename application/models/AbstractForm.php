@@ -965,7 +965,7 @@ class Model_AbstractForm
         }
 
 		$accessLevel = $this->formAccessObj->access_level;
-		$this->writevar1($this->formNumber,'this is the config line 968 AbstractFrom.php');
+	//	$this->writevar1($this->formNumber,'this is the config line 968 AbstractFrom.php');
 		return $$accessLevel;
     }
 

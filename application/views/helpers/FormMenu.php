@@ -156,7 +156,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
 
        $finalizeForm=$districtInfo['allow_unfinalize_adm'];
 
-       $this->writevar1($finalizeForm,'this should be true or false');
+    //   $this->writevar1($finalizeForm,'this should be true or false');
        if($finalizeForm==true){
            $class=3;
        }

@@ -14,17 +14,17 @@ class Model_Form018 extends Model_AbstractForm
      * @var array
      */
 	var $subformIndexToModel = array();
-	
+
     /**
      * $db_form_data - array
      *
      * @var array
      */
-	var $db_form_data = array(); 
-	
-	
+	var $db_form_data = array();
+
+
 	public function writevar1($var1,$var2) {
-	
+
 	    ob_start();
 	    var_dump($var1);
 	    $data = ob_get_clean();
@@ -41,7 +41,7 @@ class Model_Form018 extends Model_AbstractForm
 			return false;
 		}
 
-				
+
         // if date_mdt is empty, update with date from most recent final form 11
 //        if('' == $this->db_form_data['date_mdt'] && 1 == $page)
 //        {
@@ -49,11 +49,11 @@ class Model_Form018 extends Model_AbstractForm
 //            $form004 = $form004Obj->mostRecentFinalForm($id_student);
 //            $this->db_form_data['date_mdt'] = $form004['date_notice'];
 //        }
-        
+
         if('all' == $page || 1 == $page)
         {
-            
-            
+
+
             // GOALS
             $select         = $this->db_form->select()->where("lower(status) != 'deleted' OR status is null")->order('timestamp_created ASC');
             $subformRecords     = $this->db_form->findDependentRowset('Model_Table_Form018Goal', 'Model_Table_Form018', $select);
@@ -69,21 +69,21 @@ class Model_Form018 extends Model_AbstractForm
                 $rownum++;
             }
             $this->subformIndexToModel['iep_form_018_goal'] = "Model_Table_Form018Goal";
-            
+
             // AGENCY
             $select         = $this->db_form->select()->where("lower(status) != 'deleted' OR status is null")->order('timestamp_created ASC');
          //  $this->writevar1($select,'this is the select statement');
-           
+
             $subformRecords     = $this->db_form->findDependentRowset('Model_Table_Form018Agency', 'Model_Table_Form018', $select);
-          //  $this->writevar1($subformRecords,'this is sub form records');           
-            
+          //  $this->writevar1($subformRecords,'this is sub form records');
+
             $this->db_form_data['iep_form_018_agency']['count'] = count($subformRecords);
             $this->db_form_data['iep_form_018_agency']['subformTitle'] = 'Part 3: Community Contacts';
             $rownum = 1;
             foreach($subformRecords as $db_row)
             {
-                $this->writevar1($db_row,'thjis is where we are supposed to add it');
-                
+               // $this->writevar1($db_row,'thjis is where we are supposed to add it');
+
                 // add the db data for this subform to the main form data array
                 $this->db_form_data['iep_form_018_agency_'.$rownum] = $db_row->toArray();
                 // add a row number based on sort position - just used for user display
@@ -91,7 +91,7 @@ class Model_Form018 extends Model_AbstractForm
                 $rownum++;
             }
             $this->subformIndexToModel['iep_form_018_agency'] = "Model_Table_Form018Agency";
-            
+
             // TEAM MEMBERS
             $select         = $this->db_form->select()->where("lower(status) != 'deleted' OR status is null")->order('timestamp_created ASC');
             $subformRecords     = $this->db_form->findDependentRowset('Model_Table_Form018TeamMember', 'Model_Table_Form018', $select);
@@ -126,8 +126,8 @@ class Model_Form018 extends Model_AbstractForm
                 $rownum++;
             }
             $this->subformIndexToModel['iep_form_018_supp'] = "Model_Table_Form018SupplementalForm";
-        }            
+        }
 		return $this->db_form_data;
-	}	
+	}
 
 }

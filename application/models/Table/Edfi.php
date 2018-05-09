@@ -66,7 +66,46 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
   }
 
+
+  // Mike added this 5-8-2018 because reasonexited must be preceeded by SPED
+
+  function  appendReasonExited ($reason){
+
+      switch ($reason){
+          case "01":$reason='SPED01';break;
+          case "02":$reason='SPED02';break;
+          case "03":$reason='SPED03';break;
+          case "04":$reason='SPED04';break;
+          case "05":$reason='SPED05';break;
+          case "06":$reason='SPED06';break;
+          case "07":$reason='SPED07';break;
+          case "08":$reason='SPED08';break;
+          case "09":$reason='SPED09';break;
+          case "10":$reason='SPED10';break;
+          case "11":$reason='SPED11';break;
+          case "12":$reason='SPED12';break;
+          case "13":$reason='SPED13';break;
+          case "14":$reason='SPED14';break;
+          case "15":$reason='SPED15';break;
+          case "16":$reason='SPED16';break;
+          case "17":$reason='SPED17';break;
+      }
+
+      return $reason;
+  }
    function updateEdfi($stuData){
+
+       // Mike added this 5-08-2018 because 200 entries have 1 instead of 01 or 0X and forgot to get this
+       // as well as the new ones.  Same as function insertedfi
+       if(strlen($stuData['specialeducationsettingdescriptor'])==1){
+           $stuData['specialeducationsettingdescriptor']="0".$stuData['specialeducationsettingdescriptor'];
+
+
+       }
+
+       $stuData['reasonExitedDescriptor']=$this->appendReasonExited($stuData['reasonExitedDescriptor']);
+
+
 
 
        $data = array(
@@ -125,6 +164,8 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             $stuData['specialeducationsettingdescriptor']="0".$stuData['specialeducationsettingdescriptor'];
 
         }
+
+        $stuData['reasonExitedDescriptor']=$this->appendReasonExited($stuData['reasonExitedDescriptor']);
 
         $data = array(
          //   'educationorganzationid'        => $stuData['educationOrganizationID'],
