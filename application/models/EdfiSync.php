@@ -1,20 +1,20 @@
 <?php
 
 /**
- * 
- * Handles synchronization to EdFi for student 
+ *
+ * Handles synchronization to EdFi for student
  * special education program associations
  *
  * @author odiaz@doublelinepartners.com
  * @version 1.0
  *
- */ 
+ */
 
 define("TOKENRETRY",     "TOKENRETRY");
 define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 
  class Model_EdfiSync {
-	
+
 	function writevar1($var1,$var2){
         ob_start();
         var_dump($var1);
@@ -24,8 +24,8 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
         fwrite($fp, $data2);
         fclose($fp);
     }
-	
-	
+
+
 	/*DB params*/
 	var $connstr="";
 	var $APIUrl="";
@@ -37,12 +37,12 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*List of dictricts to sync*/
 	var $districts=array();
 	var $pending_students=array();
-	
+
 	function __construct() {
-		$this->edfi_client=new Model_EdfiClient(); 
+		$this->edfi_client=new Model_EdfiClient();
 		$this->edfi_models=new Model_EdfiJsonModels();
 	}
-	
+
 
 
 
@@ -55,7 +55,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	function set_APIUrl($APIUrl){
 		$this->APIUrl=$APIUrl;
 	}
-	
+
 
 
 	public function receiveEdfiSync($edfiDistrictarray) {
@@ -64,25 +64,25 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		 // $this->writevar1("", "Processing  " .  count($edfiDistrictarray) . " districts <br/><br/>");
             /*
              * This will look through each district that is edfi capable and look for the "W" in
-             * the publish and do just that to the ods. If the ods is a success then a "S" is put 
+             * the publish and do just that to the ods. If the ods is a success then a "S" is put
              * in this field. If there is an error then an "E" gets put into this field.
-             * 
+             *
              */
 			foreach ($edfiDistrictarray as $value){
-			 //  $this->writevar1($value,'this is the value');
-			   
+			   //$this->writevar1($value,'this is the value');
+
 				$result="";
 
 				while($result=="") {
 
 					$result=$this->syncDistrict($value[0], $value[1], $value[2] , $value[3]);
-	         
-	          
-	          // Returned PARTIALLYSYNCED				
+
+
+	          // Returned PARTIALLYSYNCED
 	        //   $this->writevar1($result,'this is the results');
-			  // When I change the db entry to W to simulate a finalized iep it works. 	
-			  
-					// Resutl 
+			  // When I change the db entry to W to simulate a finalized iep it works.
+
+					// Resutl
 					switch($result){
 						case TOKENRETRY:
 						/*IF token retry needed loops again to get a new one*/
@@ -96,13 +96,13 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 						// never seems to get here
 					}
 
-				} /*No more results*/ 
-				
+				} /*No more results*/
+
 			} /*End districts loop*/
-			
+
 
 		//	$this->writevar1("", "Sync procces finished");
-		 
+
 
 		} else {
 
@@ -117,32 +117,32 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		/* If pending db updates exists */
 	 //  $this->writevar1($this->updateList,'this is the updatelist ');
 		// always returned array(0);
-		
+
 		if(count($this->updateList)>0 ){
 			/*Commit*/
-			$con = pg_connect($this->connstr) or die ("Could not connect to server\n"); 
+			$con = pg_connect($this->connstr) or die ("Could not connect to server\n");
 			foreach ($this->updateList as $query){
 			//	  $this->writevar1("", "Executing " . $query);
-				
-				
+
+
 				pg_query($con, $query);
 
 			}
-			pg_close($con); 
+			pg_close($con);
 		}
 
 		/*clears temp update list*/
-		unset($this->updateList); 
-		$this->updateList = array(); 
+		unset($this->updateList);
+		$this->updateList = array();
 	}
 
 
 	/*Get JSON representation from Students association*/
 	private function getStudentJson($student){
-	   
+
 	 // $this->writevar1($student,'student info from db line 136');
-	   
-	    
+
+
 				$studentUniqueId=$student[8];
 				$educationOrganizationId=$student[4];
 				$beginDate=$student[9];
@@ -153,13 +153,13 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 				$specialEducationPercentage=$student[15];
 				$toTakeAlternateAssessment=$student[16];
 				$endDate = $student[10];
-				
+
 				$disabilities=$student[20];
            //     $this->writevar1($student[20],'this should be disabilities');
 				if(is_null($reasonExitedDescriptor)){
 							$reasonExitedDescriptor="";
 						}
- 
+
 						if(is_null($specialEducationSettingDescriptor)){
 				 			$specialEducationSettingDescriptor="";
 						}
@@ -183,20 +183,20 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 						} else {
 							$beginDate=$beginDate . "T00:00:00";
 						}
-                        
-						
+
+
 						// Mike took this out because it was messing up the field
 						// also added the =1 and =0 parts for true false
 						//$toTakeAlternateAssessment="false";
 						if(!is_null($toTakeAlternateAssessment)){
 							if($toTakeAlternateAssessment==true){
 								$toTakeAlternateAssessment="1";
-								
+
 							}
 							else{
 							    $toTakeAlternateAssessment='0';
 							}
-						} 
+						}
 
 						$servicedescriptor_pt=$student[21];
 						$servicedescriptor_ot=$student[22];
@@ -234,8 +234,8 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
         						$endDate,
         						$services,
 						        $disabilities
-						); 
- 
+						);
+
                    // $this->writevar1($jsonUpdate,'this is the jsonupdate line 219');
               //    $this->writevar1($jsonUpdate,'this is the jasonUpdate');
 					return $jsonUpdate;
@@ -249,52 +249,52 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		$this->commitPendingUpdates();
         //
         //
-        
-		
-	//	$this->writevar1("",  "Get students for " . $id_district);	
+
+
+	//	$this->writevar1("",  "Get students for " . $id_district);
 		$this->pending_students = $this->getPendingSyncStudents($id_district,$id_county);
-		
+
 		//$this->writevar1($this->pending_students,'these are the pending studeents line 235');
 		//$this->writevar1("", "Processing " . count($this->pending_students). " students for district " . $id_district);
         // student come back in array as expected
-        
-		
+
+
 		//Get auth token for current disctrict call
 	 	$this->currToken=$this->edfi_client->edfiApiAuthenticate($this->APIUrl,$key,$secret);
-		
+
 	//	$this->writevar1("TOKEN",$this->currToken);
-        
+
 
 		/*If a valid token is received*/
 		if($this->currToken!=""){
-			
+
 			/*Sync each student*/
 			foreach ($this->pending_students as $student){
-			   
+
 				$studentUniqueId=$student[8];
-          		
+
 				if($this->edfi_client->studentExists($studentUniqueId)==true or $this->edfi_client->studentExists='404'){
 				  // $this->writevar1($studentUniqueId , "=" . "OK 2" );
-						
-								
+
+
 						/*$result = $this->edfi_client->updateCurrentStudent();*/
 						$data=$this->getStudentJson($student);
-                       
+
 						$result = $this->edfi_client->updateStudentSpecialEducationProgramAssociation($data);
                        // $this->writevar1($data,'this is the data');
-                        
-                   
+
+
 						$status=$result->get_publishStatus();
 					  // $this->writevar1("", "Status " . $status  );
 					 // Just displays S or E
 
-                         
+
 						switch($result->get_publishStatus()){
 							case "S":
 								/*Sync data is OK*/
 							//	$this->writevar1("", "Data OK");
 								$this->updateStudent($studentUniqueId,
-										$result->get_publishStatus(), 
+										$result->get_publishStatus(),
 										$result->get_resultCode(),
 										$result->get_errorMessage()
 										 );
@@ -308,17 +308,17 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 								} else {
 									// $this->writevar1("",  $result->errorMessage);
 									$this->updateStudent($studentUniqueId,
-										$result->get_publishStatus(), 
+										$result->get_publishStatus(),
 										$result->get_resultCode(),
-										str_replace("'","''", $result->get_errorMessage()) 
+										str_replace("'","''", $result->get_errorMessage())
 										 );
 								}
  							break;
 						}
 
-						 
+
 				} else {
-						/* What if?*/				
+						/* What if?*/
 						}
 			}
 
@@ -328,15 +328,15 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 
 		return PARTIALSYNCEND;
 	}
-	
-	
+
+
 	/*Update stedent after PUT */
 	private function updateStudent($id_student, $status, $code, $message){
 
-	//	 $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status ); 
+	//	 $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status );
      //    $this->writevar1($id_student.' '.$status.' '.$message,' this is the id status and message');
-	
-	    
+
+
 	    if($status!=""){
 	        $d=date("h:i:sa");
 	        $time=date('Y-m-d H:i:s');
@@ -346,50 +346,50 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 					", edfierrormessage='" . $message  . "'" .
 					", edfiresultcode=" . $code  . "" .
 					" where studentuniqueid=" . $id_student;
-			// $this->writevar1("",   $query ); 		
-			$this->updateList[]=$query; 
+			// $this->writevar1("",   $query );
+			$this->updateList[]=$query;
 		}
-		
+
 	}
 
 	/*Get pending students for dictrict*/
 	private function getPendingSyncStudents($district,$county){
 		$students=array();
-		
-		$con = pg_connect($this->connstr) or die ("Could not connect to server\n"); 
+
+		$con = pg_connect($this->connstr) or die ("Could not connect to server\n");
 		//$query = "select * from edfi where edfipublishstatus='W' and id_student in " .
 		//		"(select id_student from iep_student where id_district='" . $district . "')";
-		
-		$query="select e.* from edfi e,iep_student s where e.edfipublishstatus='W' and 
-		            s.id_student=e.id_student and s.id_district='".$district."' 
+
+		$query="select e.* from edfi e,iep_student s where e.edfipublishstatus='W' and
+		            s.id_student=e.id_student and s.id_district='".$district."'
 		            and s.id_county='".$county."'";
-		
+
 	//	$this->writevar1($query,'this is the bad query');
 		// $this->writevar1($query,'this is the query');
-		
+
 		 $rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
-		  
-     	 
+
+
 		while ($row = pg_fetch_row($rs)) {
 		  $students[]=$row;
 		//  $this->writevar1($row,'this is the row data');
 		}
-		
-		pg_close($con); 
-	
-		
+
+		pg_close($con);
+
+
 		return $students;
-		
-	} 
-	
+
+	}
+
 
 	private function getCredential($id_county, $id_district){
 		$credential = new credentials("","");
-		$con = pg_connect($this->connstr) or die ("Could not connect to server\n"); 
+		$con = pg_connect($this->connstr) or die ("Could not connect to server\n");
 		$query = "SELECT edfi_key, edfi_secret FROM iep_district WHERE id_county='" . $id_county .  "' AND id_district='" . $id_district . "'";
-		 
+
 		$rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
-		
+
 		 if($rs){
 			  if ( (pg_field_is_null($rs, 0, "edfi_key") == 0) and (pg_field_is_null($rs, 0, "edfi_secret") == 0)) {
 				$row = pg_fetch_row($rs);
@@ -397,9 +397,9 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 				$credential->set_secret($row[1]);
      		 }
 		 }
-		
-		pg_close($con); 
-	
+
+		pg_close($con);
+
 		return $credential;
 	}
 

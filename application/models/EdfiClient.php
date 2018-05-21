@@ -45,6 +45,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 
     try
     {
+
         $curl = curl_init();
 
 	    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -56,7 +57,7 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	    $result = curl_exec($curl);
 	    $jsonResult = json_decode($result);
 	    curl_close($curl);
-      //  $this->writevar1($data,'this is the json results');
+
 	    return $jsonResult->code;
     }
     catch(Exception $e) {
@@ -203,7 +204,7 @@ function updateCurrentStudent(){
 	$curl = curl_init();
 	$payloadLength = 'Content-Length: ' . strlen($data_string);
 
-   // $this->writevar1("","Preparing to post  " . $id_student . " opx=" );
+
 
 
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -227,8 +228,11 @@ function updateCurrentStudent(){
 /*Updates Student Special Education Program*/
 function updateStudentSpecialEducationProgramAssociation($data){
     $eresponse = new edfi_response();
-   // $this->writevar1($data,'thisis the data');
+
+
     $jsonResult = json_decode($this->currentStudent);
+   // $this->writevar1($data,'this is the data result');
+
     $id_student = $jsonResult->id;
 	$authorization = "Authorization: Bearer " . $this->currentToken;
     $url = $this->currentAPIUrl . "/api/v2.0/2018/studentSpecialEducationProgramAssociations";

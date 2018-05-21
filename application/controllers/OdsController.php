@@ -17,6 +17,27 @@ class OdsController extends Zend_Controller_Action
 
   }
 
+  function districtodslistAction(){
+      $sysAdmin=false;
+      foreach($_SESSION['user']['user']->privs as $priv)  {
+          if ($priv['class']==1 && $priv['status']=='Active') $sysAdmin=true;
+
+      }
+
+      if($sysAdmin==true){
+      $getToUpdateList=new Model_Table_Edfi();
+
+      $results=$getToUpdateList->getDistrictW();
+      foreach ($results as $r ){
+
+         $this->advisorsetAction($r['id_county'],$r['id_district'],1);
+        }
+      $this->view->districtList=$results;
+      }
+      else {
+          $this->_redirect( '/district');
+      }
+  }
   function getJuneCutoff()
   {
       if (date("m", strtotime("today")) >= 7) {
@@ -28,26 +49,34 @@ class OdsController extends Zend_Controller_Action
       return $juneCutoff;
   }
 
-  public function advisorsetAction($id_county=0,$id_district=0) {
+  public function advisorsetAction($id_county=0,$id_district=0,$cronjob=0) {
 
       // Check to see if they have publish to advisor set
-
 
       $iep=new Model_Table_Form004();
       $ifsp=new Model_Table_Form013();
       $iepCard=new Model_Table_Form023();
       $relatedServices=new Model_Table_Form004RelatedService();
+
+      // Mike put this in 5-17-2018 SRS-235 cronjob being equal to 1 means it is a cronjob
+      if($cronjob!=1){
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
+      }
+
 
       $dist=new Model_Table_District();
 
+     //$this->writevar1($id_county,'the county number ');
+    //  $this->writevar1($id_district,'the district number ');
 
 
-      if($dist->getDistrictUseEdfi($id_district,$id_county)!=true)
+      if($dist->getDistrictUseEdfi($id_district,$id_county)!=true and $cronjob!=1){
+
+
        $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);
 
-
+      }
 
    //   $id_county='11';
      // $id_district='0014';
@@ -68,7 +97,7 @@ class OdsController extends Zend_Controller_Action
       // CHeck to see if there already is an edfi entry
       $checkForEdfiTable= new Model_Table_Edfi();
        $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
-       $this->writevar1($edfiEntry['edfipublishstatus'],'this is the array for a student line 69');
+    //   $this->writevar1($edfiEntry['edfipublishstatus'],'this is the array for a student line 69');
 
 
     if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
@@ -549,11 +578,13 @@ class OdsController extends Zend_Controller_Action
 
      $insertEdfi->receiveFromOdsController($id_county,$id_district);
 
+
+     if($cronjob ==0){
      $this->_redirector = $this->_helper->getHelper('Redirector');
    //  $this->_redirect( '/district/edfireport/page/11');
    // $this->_redirect( '/district/edfidetail/id_district/5901/id_county/25');
      $this->_redirect( '/district/edfidetail2/id_district/'.$id_district.'/id_county/'.$id_county);
-
+     }
  } // end of the advisorSetAction function
 
 

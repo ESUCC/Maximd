@@ -518,11 +518,19 @@ foreach ($this->districtListAll as $indx => $distList){
  <div id="directme">
 
 
-    <h2> <b><u>View Advisor Data for the Following Districts</u></b></h2>
-    <select class="tooltip" data-tip-source="tooltip-sidebar" onChange="window.location.href=this.value">
-      <option>Choose District to View</option>
-<?php
 
+ <h2> <b><u>View Advisor Data for the Following Districts</u></b></h2>
+    <select class="tooltip" data-tip-source="tooltip-sidebar" onChange="window.location.href=this.value">
+      <option>Choose District to View</option></td>
+      <td>
+
+<?php if($this->sysad==true) {?>
+
+<option value="<?php echo $this->url(array('controller'=>'ods','action'=>'districtodslist'));?>/">Update all Districts Wade</option>
+<?php }?>
+
+
+<?php
 foreach ($this->EdFiList as $List){
 
     ?>

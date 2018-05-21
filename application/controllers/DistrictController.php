@@ -22,6 +22,9 @@ class DistrictController extends Zend_Controller_Action
         fclose($fp);
     }
 
+
+
+
     function testprintAction1() {
 
       //  $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
@@ -279,6 +282,10 @@ class DistrictController extends Zend_Controller_Action
     public function indexAction()
     {
 
+        $sysAd=false;
+        foreach($_SESSION['user']['user']->privs as $priv)  {
+            if ($priv['class']==1 && $priv['status']=='Active') $sysAd=true;
+        }
       // include("Writeit.php");
 
         // $data = range(1,10);
@@ -329,7 +336,7 @@ class DistrictController extends Zend_Controller_Action
     //   $distlist=json_encode($district_list);
         $this->view->districtListAll = $district_list;
         $this->view->person = $this->getUserInfo($data1);
-
+        $this->view->sysad=$sysAd;
     }
 
 

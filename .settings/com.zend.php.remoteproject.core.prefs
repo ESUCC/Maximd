@@ -1,6 +1,6 @@
-Save\ Mode=MANUALLY
-SelectedHostGUID=a2215465-cedc-4bcb-ad32-243d054ef208
-UploadFolder=/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268
+Save\ Mode=ON_SAVE
+SelectedHostGUID=116020c5-1121-42b0-b0c1-46ca2133de57
+UploadFolder=usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268
 eclipse.preferences.version=1
 isLocalProjectEnabled=false
 isRemoteProjectEnabled=true

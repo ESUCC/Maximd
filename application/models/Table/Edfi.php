@@ -14,6 +14,17 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         fclose($fp);
     }
 
+    function getDistrictW(){
+        $db = Zend_Registry::get('db');
+
+        $sql="select distinct(d.name_district),d.id_district,d.id_county from edfi e,iep_district d where d.id_district=e.id_district and e.id_county=d.id_county and e.edfipublishstatus='W' order by d.name_district";
+        $result = $db->fetchAll($sql);
+
+
+        return $result;
+    }
+
+
    function returnTableEntry($id){
        $result= $this->fetchrow('id_student = '."'".$id."'");
        return $result;
