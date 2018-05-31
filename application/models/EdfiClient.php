@@ -41,11 +41,10 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 	$data = "Client_id=$edfiClientId&Response_type=code";
 	$urlWithData = "$edfiApiCodeUrl?$data";
 
-  //  $this->writevar1("Request to ",$edfiApiCodeUrl);
+   // $this->writevar1("Request to ",$edfiApiCodeUrl);
 
     try
     {
-
         $curl = curl_init();
 
 	    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -55,7 +54,9 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 	    $result = curl_exec($curl);
+
 	    $jsonResult = json_decode($result);
+
 	    curl_close($curl);
 
 	    return $jsonResult->code;
@@ -71,8 +72,6 @@ function getAuthCode($edfiBaseUrl, $edfiClientId){
 
 	$edfiApiTokenUrl = "$edfiBaseUrl/oauth/token";
 	$paramsToPost = "Client_id=$edfiClientId&Client_secret=$edfiClientSecret&Code=$authCode&Grant_type=authorization_code";
-	//$this->writevar1($paramsToPost,'parameters to post');
-	//$this->writevar1($edfiApiTokenUrl,'edfi token url');
 
       try
     {
@@ -242,7 +241,7 @@ function updateStudentSpecialEducationProgramAssociation($data){
   //  $this->writevar1("","Preparing to post  " . $id_student . " token=" . $this->currentToken . " opx=" );
 
 //	$this->writevar1("","..................................................");
- // $this->writevar1("Student data to upload", $data);
+ //  $this->writevar1("Student data to upload", $data);
 //	$this->writevar1("", "..................................................");
 
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);

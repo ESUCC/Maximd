@@ -38,6 +38,10 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	    fclose($fp);
 	}
 
+
+
+
+
 	public function getOneStudent($id){
 	    $sql="select * from iep_student where id_student='".$id."'";
 	    $result = $this->db->fetchAll($sql);

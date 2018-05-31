@@ -14,6 +14,36 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         fclose($fp);
     }
 
+
+    function modifyEdfiTransfer($id_edFi_entry,$choose) {
+     //  $this->writevar1($id_edFi_entry,'this is the edfi entry id');
+       if ($choose==1) {
+        $db = Zend_Registry::get('db');
+        $data = array(
+            'edfipublishstatus' => 'T'
+        );
+        $where = "id_edfi_entry = '$id_edFi_entry'";
+        $table='edfi';
+        $db->update($table,$data, $where);
+       }
+
+       if ($choose==2) {
+           $db = Zend_Registry::get('db');
+           $data = array(
+               'edfipublishstatus' => 'W'
+           );
+           $where = "id_edfi_entry = '$id_edFi_entry'";
+           $table='edfi';
+           $db->update($table,$data, $where);
+       }
+
+
+
+        return;
+
+    }
+
+
     function getDistrictW(){
         $db = Zend_Registry::get('db');
 
@@ -25,10 +55,21 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     }
 
 
+   function returnAllTableEntries($id_cty,$id_dist){
+       $db = Zend_Registry::get('db');
+       $sql="select * from edfi where id_county ='".$id_cty."'and id_district='".$id_dist."'";
+       $result = $db->fetchAll($sql);
+
+
+       return $result;
+   }
+
    function returnTableEntry($id){
        $result= $this->fetchrow('id_student = '."'".$id."'");
        return $result;
    }
+
+
 
     function removeTableEntry($form_code,$form_id){
     // Mike added this 10-14-2017 so that we can remove table row entry from edfi should end user
@@ -60,12 +101,11 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $table = new Model_Table_Edfi();
         $item=$table->fetchrow('id_student = '."'".$id."'");
 
-       // if($stuData['id_student']=='1325325') $this->writevar1($stuData,'this is the edfi.php model table line 47');
 
 
         if(empty($item)) {
             $this->insertEdfi($stuData);
-         //   $this->writevar1($item['id_student'],'this is the student not entered');
+
         }
 
    //$this->writevar1($stuData,'this is the student data line 60 in edfi model table');
@@ -117,7 +157,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
        $stuData['reasonExitedDescriptor']=$this->appendReasonExited($stuData['reasonExitedDescriptor']);
 
 
-
+      //$this->writevar1($stuData['educationOrganizationID'], 'looking for orgainizational id line 120 edfi.php');
 
        $data = array(
            //   'educationorganzationid'        => $stuData['educationOrganizationID'],
@@ -161,9 +201,6 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
        $id=$data['id_student'];
        $where =  "id_student = '$id' ";
        $db = Zend_Registry::get('db');
-
-    //   $this->writevar1($data,'this is hte data line 107 edfi.php');
-      // $this->writevar1($where,'this is the where line 108 edfi.php model table');
 
        $this->update($data,$where);
    }
@@ -218,12 +255,12 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
             'id_school'                    =>$stuData['id_school']
             );
 
-     //   $this->writevar1($data,'this is the data before it goes in');
+       // $this->writevar1($data,'this is the data before it goes in line 221');
 
         $db = Zend_Registry::get('db');
 
         if($data['id_student']=='1459029'){
-            $this->writevar1($data,'this is the student data edfi.model');
+
         }
         // $this->writevar1($data,'this is the data from edfi.php ');
         $db->insert('edfi', $data);

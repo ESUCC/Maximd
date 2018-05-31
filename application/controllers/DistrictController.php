@@ -24,10 +24,9 @@ class DistrictController extends Zend_Controller_Action
 
 
 
-
     function testprintAction1() {
 
-      //  $filename='/usr/local/zend/var/apps/https/iepweb02.unl.edu/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
+      //  $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
 
 
 
@@ -53,7 +52,7 @@ class DistrictController extends Zend_Controller_Action
 
     function testprintAction() {
 
-     // $filename='/usr/local/zend/var/apps/https/iepweb02.unl.edu/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
+     // $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
        // $filename=$path.'/'.$file;
         $pdf1=new Zend_Pdf;
         $iep_form_number=$this->_getParam('id');
@@ -132,6 +131,13 @@ class DistrictController extends Zend_Controller_Action
         $this->view->countyId=$id_county;
         $this->view->districtId=$id_district;
 
+        $continue=false;
+        foreach($_SESSION['user']['user']->privs as $priv)  {
+            if ($priv['class']<=8 && $priv['status']=='Active') $continue=true;
+
+        }
+
+      if ($continue==false) die();
 
         $fieldname = $this->_getParam('fieldname');
         if ($fieldname == "") $fieldname = "edfipublishtime";

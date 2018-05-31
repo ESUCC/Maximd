@@ -209,9 +209,18 @@ $studentsJq = substr($this->studentsJqueryArray, 2);
                 searchRes += '<td>' +val[4] + '</td>';
                 if(val[5]=='E') clr='#FF0000';
                 if(val[5]=='S') clr='#009933';
-                if(val[5]=='X') clr='#CA9A52'
+                if(val[5]=='X') clr='#CA9A52';
                 if(val[5]=='W') clr='#800080';
-                searchRes += '<td><span style="color:'+ clr +'"><center><b>' +val[5] + '</b></center></span></td>'; // Error code
+                if(val[5]=='T') clr='#800080';
+
+                if(val[5]=='T') {
+                	searchRes += '<td><span style="color:'+ clr +'"><center><b>' +val[5] + '</b></center></span> <br> Student transferred to another district. The student was last uploaded from your district to edfi on.<br>' +val[8] +' </td>';
+                }
+
+                if(val[5]!='T') {
+                	searchRes += '<td><span style="color:'+ clr +'"><center><b>' +val[5] + '</b></center></span></td>'; // Error code
+               }
+             //   searchRes += '<td><span style="color:'+ clr +'"><center><b>' +val[5] + '</b></center></span></td>'; // Error code
 
                 searchRes += '<td>' + val[6] +'</td>' // Error Message
                 searchRes += '<td> School Name:<b>' + val[7] + '</b></br>';
@@ -433,7 +442,14 @@ function changeContent() {
     <td>
         <?php echo $this->escape($district['educationorganzationid']);?>
     </td>
-    <td style="text-align:center;">
+    <?php if ($district['edfipublishstatus']=='T' ){
+      echo '<td style="text-align:left;">';
+    }
+      else {
+          echo '<td style="text-align:center;">';
+    }
+        ?>
+
 <b>
         <?php
          $color="";
@@ -449,11 +465,22 @@ function changeContent() {
             case "E":
                 $color="#FF0000";
                 break;
+            case "I":
+                $color="#800080";
+                break;
+            case "T":
+                $color="#800080";
+                break;
 
         };
         ?>
 
-        <span style='color:<?php echo($color) ?>'><?php echo ($this->escape($district['edfipublishstatus'])) ?>  <span>
+        <span style='color:<?php echo($color) ?>'><center><?php echo ($this->escape($district['edfipublishstatus']));?>
+        </center> </span><br>
+       <?php
+
+       if($district['edfipublishstatus']=='T') echo '<br style="text-align:left;"> Student transferred to another district. The student was last uploaded from your district to edfi on '.$district['edfipublishtime'].'.';
+        ?>
 
    </b>
 

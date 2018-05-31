@@ -19,6 +19,7 @@ class OdsController extends Zend_Controller_Action
 
   function districtodslistAction(){
       $sysAdmin=false;
+
       foreach($_SESSION['user']['user']->privs as $priv)  {
           if ($priv['class']==1 && $priv['status']=='Active') $sysAdmin=true;
 
@@ -78,14 +79,47 @@ class OdsController extends Zend_Controller_Action
 
       }
 
-   //   $id_county='11';
-     // $id_district='0014';
+      $checkForEdfiTable= new Model_Table_Edfi();
       $listStudents = new Model_Table_StudentTable();
+
+
+      /*
+       * Need to check the edfi table based on id_county and id_district
+       * compare that against id_county id_districts of student in the iep_students table.
+       * check to see if they match,
+       * if they don't set edfipublishstatus to "T".
+       */
+
+      $allTableEntries=$checkForEdfiTable->returnAllTableEntries($id_county, $id_district);
+      foreach ($allTableEntries as $tableEntry){
+       //   $this->writevar1($tableEntry['id_student'],'here is the student id');
+          $stu=$listStudents->getOneStudent($tableEntry['id_student']);
+
+          if($tableEntry['id_county']!= $stu[0]['id_county']|| $tableEntry['id_district']!=$stu[0]['id_district']){
+             $checkForEdfiTable->modifyEdfiTransfer($tableEntry['id_edfi_entry'],1);
+          }
+
+          if($tableEntry['id_county']== $stu[0]['id_county'] and  $tableEntry['id_district']==$stu[0]['id_district'] and
+             $tableEntry['edfipublishstatus']=='T'){
+                 $checkForEdfiTable->modifyEdfiTransfer($tableEntry['id_edfi_entry'],2);
+          }
+
+        //  if($tableEntry['publishstatus']=='T' )
+      }
+
+
+
+
+
 
       $juneCutoff=$this->getJuneCutoff();
       // Mike added this 4-13-2018 SRS-221 so that the button to include in state report works from the edit screen.
       $includeInStateReport='1';
       $districtStudents=$listStudents->studentsInDistrict($id_county,$id_district,$juneCutoff,$includeInStateReport);
+
+
+
+
 
       // Mike added 10-11-2017 in order to get a list of the schools.
       $schoolList=new Model_Table_IepSchoolm();
@@ -94,10 +128,16 @@ class OdsController extends Zend_Controller_Action
      // This loop ends at line 446
       foreach($districtStudents as $student) {
 
+
+
+
       // CHeck to see if there already is an edfi entry
-      $checkForEdfiTable= new Model_Table_Edfi();
        $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
-    //   $this->writevar1($edfiEntry['edfipublishstatus'],'this is the array for a student line 69');
+
+
+       $transfer=false;
+
+
 
 
     if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
@@ -253,7 +293,7 @@ class OdsController extends Zend_Controller_Action
 
        if($mostRecentMdt==null && $mostRecentMdtCard==null && $ifsp==null ) {
            $continue=false;
-           $this->writevar1($advisorStudentData['id_student'],' this student has no MDT card');
+
        }
 
 

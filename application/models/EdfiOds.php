@@ -82,6 +82,7 @@ SRS DISTRICT = 87-0017 (Winnebago)
 	    $edfiDistrictarray=array( array($id_district,$id_county,$keyedfi,$secret));
 
 
+
     //:q!    $this->writevar1("",'!!!!! USING DEMO DATA REMOVE  LINES 34-36 EdfiODSController !!!!!');
 
 
@@ -124,9 +125,9 @@ SRS DISTRICT = 87-0017 (Winnebago)
         // Unfortunately can't see json data on ods. 10-9-2017
 
 
-        //$APIUrl="https://adviserods.nebraskacloud.org/api/api/v2.0/";
+        //$APIUrl="https://adviserstagingods.nebraskacloud.org/api/api/v2.0/";
 
-        $APIUrl="https://adviserods.nebraskacloud.org/api";
+        $APIUrl="https://adviserstagingods.nebraskacloud.org/api";
 
         $sync= new Model_EdfiSync();
 	    $sync->set_DbConnString($connstr);

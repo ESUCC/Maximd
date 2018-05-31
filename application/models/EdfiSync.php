@@ -61,7 +61,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	public function receiveEdfiSync($edfiDistrictarray) {
 		if(($this->connstr!="") and ($this->APIUrl!="")){
 
-		 // $this->writevar1("", "Processing  " .  count($edfiDistrictarray) . " districts <br/><br/>");
+		// $this->writevar1("", "Processing  " .  count($edfiDistrictarray) . " districts <br/><br/>");
             /*
              * This will look through each district that is edfi capable and look for the "W" in
              * the publish and do just that to the ods. If the ods is a success then a "S" is put
@@ -122,8 +122,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 			/*Commit*/
 			$con = pg_connect($this->connstr) or die ("Could not connect to server\n");
 			foreach ($this->updateList as $query){
-			//	  $this->writevar1("", "Executing " . $query);
-
+		 	//  $this->writevar1("", "Executing " . $query);
 
 				pg_query($con, $query);
 
@@ -140,11 +139,45 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 	/*Get JSON representation from Students association*/
 	private function getStudentJson($student){
 
-	 // $this->writevar1($student,'student info from db line 136');
+
 
 
 				$studentUniqueId=$student[8];
 				$educationOrganizationId=$student[4];
+
+				if ($educationOrganizationId=='010123000') $educationOrganizationId='10123000';
+				if ($educationOrganizationId=='010090000') $educationOrganizationId='10090000';
+				if ($educationOrganizationId=='010018000') $educationOrganizationId='10018000';
+				if ($educationOrganizationId=='010003000') $educationOrganizationId='10003000';
+
+				if ($educationOrganizationId=='022001000') $educationOrganizationId='22001000';
+				if ($educationOrganizationId=='020018000') $educationOrganizationId='20018000';
+				if ($educationOrganizationId=='020009000') $educationOrganizationId='20009000';
+
+				if ($educationOrganizationId=='030500000') $educationOrganizationId='30500000';
+
+				if ($educationOrganizationId=='040001000') $educationOrganizationId='40001000';
+
+				if ($educationOrganizationId=='050071000') $educationOrganizationId='50071000';
+
+				if ($educationOrganizationId=='060001000') $educationOrganizationId='60001000';
+				if ($educationOrganizationId=='060075000') $educationOrganizationId='60075000';
+				if ($educationOrganizationId=='060017000') $educationOrganizationId='60017000';
+				if ($educationOrganizationId=='060006000') $educationOrganizationId='60006000';
+
+				if ($educationOrganizationId=='070039000') $educationOrganizationId='70039000';
+				if ($educationOrganizationId=='070006000') $educationOrganizationId='70006000';
+				if ($educationOrganizationId=='070042000') $educationOrganizationId='70042000';
+				if ($educationOrganizationId=='070044000') $educationOrganizationId='70044000';
+				if ($educationOrganizationId=='070010000') $educationOrganizationId='70010000';
+
+				if ($educationOrganizationId=='080036000') $educationOrganizationId='80036000';
+				if ($educationOrganizationId=='080050000') $educationOrganizationId='80050000';
+				if ($educationOrganizationId=='080051000') $educationOrganizationId='80051000';
+
+				if ($educationOrganizationId=='090010000') $educationOrganizationId='90010000';
+				if ($educationOrganizationId=='090009000') $educationOrganizationId='90009000';
+
 				$beginDate=$student[9];
 				$reasonExitedDescriptor=$student[11];
 				$specialEducationSettingDescriptor=$student[12];
@@ -236,7 +269,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 						        $disabilities
 						);
 
-                   // $this->writevar1($jsonUpdate,'this is the jsonupdate line 219');
+
               //    $this->writevar1($jsonUpdate,'this is the jasonUpdate');
 					return $jsonUpdate;
 
@@ -364,7 +397,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 		            s.id_student=e.id_student and s.id_district='".$district."'
 		            and s.id_county='".$county."'";
 
-	//	$this->writevar1($query,'this is the bad query');
+
 		// $this->writevar1($query,'this is the query');
 
 		 $rs = pg_query($con, $query) or die("Cannot execute query: $query\n");
@@ -384,6 +417,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 
 
 	private function getCredential($id_county, $id_district){
+
 		$credential = new credentials("","");
 		$con = pg_connect($this->connstr) or die ("Could not connect to server\n");
 		$query = "SELECT edfi_key, edfi_secret FROM iep_district WHERE id_county='" . $id_county .  "' AND id_district='" . $id_district . "'";
