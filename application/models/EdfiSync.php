@@ -122,7 +122,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 			/*Commit*/
 			$con = pg_connect($this->connstr) or die ("Could not connect to server\n");
 			foreach ($this->updateList as $query){
-		 	//  $this->writevar1("", "Executing " . $query);
+
 
 				pg_query($con, $query);
 
@@ -305,6 +305,11 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 			foreach ($this->pending_students as $student){
 
 				$studentUniqueId=$student[8];
+                 $this->writevar1($student,'this is the array of students in edfiSync.php line 308');
+
+                $countyId=$student[36];
+                $districtId=$student[37];
+
 
 				if($this->edfi_client->studentExists($studentUniqueId)==true or $this->edfi_client->studentExists='404'){
 				  // $this->writevar1($studentUniqueId , "=" . "OK 2" );
@@ -329,7 +334,9 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 								$this->updateStudent($studentUniqueId,
 										$result->get_publishStatus(),
 										$result->get_resultCode(),
-										$result->get_errorMessage()
+										$result->get_errorMessage(),
+										$countyId,
+										$districtId
 										 );
 							break;
 
@@ -343,7 +350,9 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 									$this->updateStudent($studentUniqueId,
 										$result->get_publishStatus(),
 										$result->get_resultCode(),
-										str_replace("'","''", $result->get_errorMessage())
+										str_replace("'","''", $result->get_errorMessage(),
+										    $countyId,
+										    $districtId)
 										 );
 								}
  							break;
@@ -364,22 +373,30 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 
 
 	/*Update stedent after PUT */
-	private function updateStudent($id_student, $status, $code, $message){
+//	private function updateStudent($id_student, $status, $code, $message){
+	private function updateStudent($id_student, $status, $code, $message,$idCty,$idDist){
 
 	//	 $this->writevar1("",  "DB UPDATE " . $id_student . "=" . $status );
      //    $this->writevar1($id_student.' '.$status.' '.$message,' this is the id status and message');
 
-
+// This is where it is messing up.  6-3-2018 Mike needs to get the id_county,id_district in here.
 	    if($status!=""){
 	        $d=date("h:i:sa");
 	        $time=date('Y-m-d H:i:s');
+
+
+
 			$query= "update edfi set edfipublishstatus='" . $status  . "' " .
 					//", edfipublishtime=now() " .
 					", edfipublishtime='".$time ."'".
 					", edfierrormessage='" . $message  . "'" .
 					", edfiresultcode=" . $code  . "" .
-					" where studentuniqueid=" . $id_student;
-			// $this->writevar1("",   $query );
+					" where studentuniqueid='" . $id_student."' and id_county='".$idCty."' and id_district='".$idDist."'";
+
+
+
+
+			$this->writevar1("",   $query );
 			$this->updateList[]=$query;
 		}
 

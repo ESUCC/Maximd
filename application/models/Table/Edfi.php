@@ -4,7 +4,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     protected $_primary = 'id_edfi_entry';
 
     function writevar1($var1,$var2) {
-
+// Mike was here.
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -61,11 +61,22 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
        $result = $db->fetchAll($sql);
 
 
+
        return $result;
    }
 
-   function returnTableEntry($id){
-       $result= $this->fetchrow('id_student = '."'".$id."'");
+   function returnTableEntry($student){
+
+       $db = Zend_Registry::get('db');
+
+       // Mike changed it to this so that we can have multiple entries on students in different districts 5-31-2018
+       $sql="select * from edfi where id_county ='".$student['id_county']."'and id_district='".$student['id_district']."' and
+             id_student='".$student['id_student']."'";
+
+       $result = $db->fetchAll($sql);
+
+      // $result= $this->fetchrow('id_student = '."'".$student['id_student']."'");
+
        return $result;
    }
 
@@ -99,8 +110,13 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     function setupAdvisor($stuData){
         $id=$stuData['id_student'];
         $table = new Model_Table_Edfi();
-        $item=$table->fetchrow('id_student = '."'".$id."'");
+     // Mike Changed this 6-1-2018 so that we could see if this district had anything
+     //   $item=$table->fetchrow('id_student = '."'".$id."'");
 
+        $item=$table->fetchrow($this->select()
+            ->where('id_student =?',$stuData['id_student'])
+            ->where('id_county =?',$stuData['id_county'])
+            ->where('id_district=?',$stuData['id_district']));
 
 
         if(empty($item)) {
@@ -108,12 +124,14 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
         }
 
-   //$this->writevar1($stuData,'this is the student data line 60 in edfi model table');
-        if($stuData['edfiPublishStatus']=='W') {
+        else {
+
+            // Mike changed this 6-2-2018 to make sure that if it is W to not change it with the other T district
+        if($stuData['edfiPublishStatus']=='W' ) {
 
             $this->updateEdfi($stuData);
+         }
         }
-
 
   }
 
@@ -199,8 +217,18 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
 
        $id=$data['id_student'];
-       $where =  "id_student = '$id' ";
+       /*
+        * Mike changed the where Jun 2 2018 from $where=  "id_student = '$id'. Otherwise it will write over the other Transfered districts data
+        */
+       $cty=$stuData['id_county'];
+       $dst=$stuData['id_district'];
+
+       $where =  "id_student = '$id' and id_county='$cty' and id_district='$dst'";
+
        $db = Zend_Registry::get('db');
+       $this->writevar1($where,'this is the where clause');
+       $this->writevar1($data,'this is hte array data');
+       die();
 
        $this->update($data,$where);
    }
@@ -318,7 +346,7 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     }
 
     function updateEditStudentEdfi($student){
-      //  $this->writevar1($student,'this is the student line 151 in edfi ');
+
         /*
          * 1 check for district edfi
          * 2 check for existing entry in edfi table
@@ -331,16 +359,17 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $disId=$student['id_district'];
         $countyId=$student['id_county'];
     //    $distUseEdfi=$dist->getDistrictUseEdfi($disId,$countyId);
-      //  $this->writevar1($distUseEdfi,'this is the district info');
+
 
         $distUseEdfi=true;
 
         if($distUseEdfi==true) {
             // #2
-           $studentEdfiEntry=$this->checkForTableEntry($student['id_student']);
 
-           // Note: Mike put this in for the sandbox stuff take the and part out when goto
-           // Staging 6-20-2017
+            // Mike changed 5-31-2018
+        //  $studentEdfiEntry=$this->checkForTableEntry($student['id_student']);
+            $studentEdfiEntry=$this->checkForTableEntry($student);
+
 
            if($studentEdfiEntry!=null ){
 
@@ -380,7 +409,17 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
                );
                // $this->writevar1($data,'this is the data to go into the db edfi line 292 edfi.php');
                 $id=$student['id_student'];
-                $where =  "id_student = '$id' ";
+
+                // Mike added 6-4-2018
+                $cty=$student['id_county'];
+                $dst=$student['id_district'];
+
+
+              // Mike changed this
+              //  $where =  "id_student = '$id' ";
+
+                $where="id_student='".$id."' and id_county = '".$cty."' and id_district='".$dst."'";
+
                 //   $this->writevar1($data,' This is line 219  '.$where);
                 $this->update($data,$where);
 
@@ -398,17 +437,28 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
     }
 
     function checkForTableEntry($student){
-      //  $this->writevar1($student,'this is the studentline 171');
+
+        /*
+         * Mike changed this 5-31-2018
         $tab= new Model_Table_Edfi();
         $row = $tab->fetchrow($this->select()
             ->where('id_student = ?',$student));
+*/
+        $t=$student['id_student'];
+        $tab=new Model_Table_edfi();
+        $row=$tab->fetchrow($this->select()
+              ->where('id_student =?',$student['id_student'])
+              ->where('id_county =?',$student['id_county'])
+              ->where('id_district=?',$student['id_district']));
 
+        if($t='1329927'){
+   //         $this->writevar1($row,'this is the row after retrieving from table edfi');
 
-
+        }
 
        // $this->writevar1($row,'this is the row line 177');
 
-        //$row = $this->fetchRow('id_student = ' . "'" . $student['id_student'] . "'");
+     //  $row = $this->fetchRow('id_student = ' . "'" . $student['id_student'] . "'");
        return $row;
     }
 
@@ -500,9 +550,11 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
 
             );
 
-
-       // $where = "id_district = '$id_district' and id_county='$id_county' ";
-        $where =  "id_student = '$studentId'";
+       /*
+        * Mike added this june 3rd 2018
+        */
+      $where =  "id_student = '$studentId' and id_district = '$id_district' and id_county='$id_county' ";
+      //  $where =  "id_student = '$studentId'";
         $this->update($data,$where);
 
         } // end of if form_oo4

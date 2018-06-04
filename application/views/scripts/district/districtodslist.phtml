@@ -1,0 +1,37 @@
+<h1> <center>We got to it yea!</center></h1>
+
+<table>
+
+<?php
+
+function writevar1($var1,$var2) {
+
+    ob_start();
+    var_dump($var1);
+    $data = ob_get_clean();
+    $data2 = "-------------------------------------------------------\n".$var2."\n". $data . "\n";
+    $fp = fopen("/tmp/textfile.txt", "a");
+    fwrite($fp, $data2);
+    fclose($fp);
+}
+
+foreach($this->districtList as $list) {
+
+    echo "<tr><td>".$list['name_district']."</td><td>".$list['id_county']."</td><td>".$list['id_district']."</td></tr>";
+}
+echo "</table>";
+$front = Zend_Controller_Front::getInstance(OdsController::class);
+
+
+
+
+    ?>
+
+
+
+
+
+
+
+
+</table>

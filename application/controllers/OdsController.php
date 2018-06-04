@@ -91,6 +91,8 @@ class OdsController extends Zend_Controller_Action
        */
 
       $allTableEntries=$checkForEdfiTable->returnAllTableEntries($id_county, $id_district);
+
+
       foreach ($allTableEntries as $tableEntry){
        //   $this->writevar1($tableEntry['id_student'],'here is the student id');
           $stu=$listStudents->getOneStudent($tableEntry['id_student']);
@@ -129,10 +131,11 @@ class OdsController extends Zend_Controller_Action
       foreach($districtStudents as $student) {
 
 
-
+      // $this->writevar1($student,'this is the student');
 
       // CHeck to see if there already is an edfi entry
-       $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
+    //   $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
+      $edfiEntry=$checkForEdfiTable->returnTableEntry($student);
 
 
        $transfer=false;
