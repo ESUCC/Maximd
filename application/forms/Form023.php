@@ -103,7 +103,7 @@ class Form_Form023 extends Form_AbstractForm {
 	function getLocation_version1($options)
 	{
   /*
-   * SRS-242 on June 6 by Mike 
+   * SRS-242 on June 6 by Mike
    */
        $diffdate=strtotime(date("Y-m-d"))-strtotime($options['dob']);
 
@@ -136,16 +136,16 @@ class Form_Form023 extends Form_AbstractForm {
 
 
         // student is under 3 years old
-       
+
        /*This is what the if statement was.  SRS-242 Mike changed 6-6-2018
         * if(-1==$today->compareTimestamp($cutoffDate))
-        * 
+        *
         */
-       
-       
+
+
        $res=$today->compareTimestamp($cutoffDate);
 
-        if($diffdate<=365 ) $res=-1;
+         if($diffdate<=365 ) $res=-1;
 
         if (-1 == $res ) {
         	// cutoffDate is earlier than today
