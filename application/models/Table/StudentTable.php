@@ -53,7 +53,13 @@ class Model_Table_StudentTable extends Model_Table_AbstractIepForm {
 	public function studentsInDistrict($id_cnty,$id_dist,$juneCutoff,$includeInStateReport='0'){
 	    //$sql = "SELECT id_student,tempid,alternate_assessment,pub_school_student,parental_placement,unique_id_state,name_first,name_last,sesis_exit_code,status,id_county,id_district,id_school FROM iep_student WHERE id_county = '$id_cnty' AND id_district = '$id_dist' AND status = 'Active'";
 
-	    // Mike added the if statement SRS-221 4-13-2018 so that sql does not change for other parts of the code.  Note: Being called from CSVcontroller.
+	    /*
+
+	      Mike added the if statement SRS-221 4-13-2018 so that sql does not change for other parts of the code.  Note: Being called from CSVcontroller.
+
+	    */
+
+
 	    if($includeInStateReport=='1'){
 	    $sql = "SELECT id_student,grade,tempid,alternate_assessment,
 	    pub_school_student,parental_placement,

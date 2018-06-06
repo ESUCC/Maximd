@@ -50,6 +50,23 @@ class OdsController extends Zend_Controller_Action
       return $juneCutoff;
   }
 
+
+  /*
+   * Description: /ods/id_county/id_district url will obviously run through this function.  It will capture data from the iep_student table.
+   * It will take data from the iep_form_004 (iep form), or iep_form_023 (iep data card) or iep_form_013 table.  If there is form 023 or form 004
+   * present then it will ignore
+   * any form 013 forms.  If both form 004 and form 023 are present then data should be taken from the most recent finalized of these two forms.
+   *
+   *
+   *If there is no form 004 or form 023 present then take the lattest finalize form 013 .
+   *
+   *Data will also be taken from the MDT forms (iep_form_002)  or the MDT data card(iep_form_022).
+   *
+   */
+
+  /*
+   * Please note that $cronjob was added so that we can run a cron job from scripts
+   */
   public function advisorsetAction($id_county=0,$id_district=0,$cronjob=0) {
 
       // Check to see if they have publish to advisor set
@@ -59,11 +76,16 @@ class OdsController extends Zend_Controller_Action
       $iepCard=new Model_Table_Form023();
       $relatedServices=new Model_Table_Form004RelatedService();
 
-      // Mike put this in 5-17-2018 SRS-235 cronjob being equal to 1 means it is a cronjob
+      /* Mike put this in 5-17-2018 SRS-235 cronjob being equal to 1 means it is a cronjob
+         Only the system admin will see the link in the pull down for View dvisor Data for the Following Districts".  The pull down says "Update
+         all districts Wade" which mean only sysadmin class=1 can see this much less use it.  It call $this->districtodslist function in this
+         class, goes through and passed the id_county and id_district plus a value of 1 to key the following below.
+     */
       if($cronjob!=1){
       $id_county=$this->getRequest()->getParam('id_county');
       $id_district=$this->getRequest()->getParam('id_district');
       }
+
 
 
       $dist=new Model_Table_District();
@@ -72,6 +94,9 @@ class OdsController extends Zend_Controller_Action
     //  $this->writevar1($id_district,'the district number ');
 
 
+      /*
+       * In iep_district table there is a column entry called use_edfi. If true continue else do the following below.
+       */
       if($dist->getDistrictUseEdfi($id_district,$id_county)!=true and $cronjob!=1){
 
 
@@ -84,19 +109,45 @@ class OdsController extends Zend_Controller_Action
 
 
       /*
+       * This was added 6-2-2018 because when students transfer from a district  we decided to put value of "T" in the result
+       * column of edfidetail2.phtml view.
+       *
+       * This means they transfered, but their edfi data is still on the ods until the end of the following year when NDE
+       * erases all the data and starts again.
+       *
        * Need to check the edfi table based on id_county and id_district
        * compare that against id_county id_districts of student in the iep_students table.
        * check to see if they match,
        * if they don't set edfipublishstatus to "T".
-       */
+       *
+       * It happens a lot that students transfer back into a district.  In this case if there is a "T" in the table change it to a W if the
+       * county and district ids match between iep_student and edfi.
 
+
+
+      */
+
+
+      /*
+       * This will get all the table entries for a certain school district from the edfi table.
+       */
       $allTableEntries=$checkForEdfiTable->returnAllTableEntries($id_county, $id_district);
 
 
-      foreach ($allTableEntries as $tableEntry){
-       //   $this->writevar1($tableEntry['id_student'],'here is the student id');
-          $stu=$listStudents->getOneStudent($tableEntry['id_student']);
+      /* go through each table entry in the edfi table and check to make sure each the id_county and id_district in the iep_student match
+       * the student id_county,id_district from the edfi table.
+       *
+       * Also, check to see if the edfipublishstatus = "T" (T means Transfered out of district)  and the id_district,id_county match
+       * each other in the respective tables.
+       * if so, make the edfipublishstatus="W'.
+       */
 
+      foreach ($allTableEntries as $tableEntry){
+
+          $stu=$listStudents->getOneStudent($tableEntry['id_student']);
+          /*
+
+           */
           if($tableEntry['id_county']!= $stu[0]['id_county']|| $tableEntry['id_district']!=$stu[0]['id_district']){
              $checkForEdfiTable->modifyEdfiTransfer($tableEntry['id_edfi_entry'],1);
           }
@@ -110,12 +161,18 @@ class OdsController extends Zend_Controller_Action
       }
 
 
+/*
+ * End of Mike add 6-5-2018
+ */
 
 
-
-
+      // This is usually June 30th or so of each end of school year.
       $juneCutoff=$this->getJuneCutoff();
-      // Mike added this 4-13-2018 SRS-221 so that the button to include in state report works from the edit screen.
+
+
+      // Mike added this 4-13-2018 SRS-221 so that the button to include in state report works from the
+      // iep_student edit edit screen.
+
       $includeInStateReport='1';
       $districtStudents=$listStudents->studentsInDistrict($id_county,$id_district,$juneCutoff,$includeInStateReport);
 
@@ -127,28 +184,36 @@ class OdsController extends Zend_Controller_Action
       $schoolList=new Model_Table_IepSchoolm();
       $schools=$schoolList->getIepSchoolInfo($id_county,$id_district);
 
-     // This loop ends at line 446
-      foreach($districtStudents as $student) {
+
+   foreach($districtStudents as $student) {
 
 
-      // $this->writevar1($student,'this is the student');
 
-      // CHeck to see if there already is an edfi entry
-    //   $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
-      $edfiEntry=$checkForEdfiTable->returnTableEntry($student);
+
+      /* 6-01-2018 Mike Changed. CHeck to see if there already is an edfi entry
+       * We had to change this and pass the whole student from iep_student into returnTableEntry so
+       * that we could check to see if a district unique edfi entry existed.  The commented out one will pull
+       * edfi entries belonging to this student but not to the district running the update.
+       *
+         $edfiEntry=$checkForEdfiTable->returnTableEntry($student['id_student']);
+
+       */
+       $edfiEntry=$checkForEdfiTable->returnTableEntry($student);
 
 
        $transfer=false;
 
 
-
+/*
+ * Other controllers such as StudentController and Form004Controller will mark the edfipublishstatus and change it to a "W" (means ready to write to edfi)
+ * should changes occur or a new form is finalized.
+ * this will all be reflected at this point in the edfi table.
+ * Only go into write process to the ods if the edfi entry doesn't exist, or the edfipublish="W" or "E".
+ * Otherwise it does not get into this loop.
+ */
 
     if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
 
-
-
-     // Take this out when ready to run the whole thing.
-  //   if($student['id_student']=='1473206') {
       $continue=true;
 
       $advisorStudentData='';
@@ -164,11 +229,17 @@ class OdsController extends Zend_Controller_Action
        * in them. 10-12-2017
        */
 
+      /*
+       * At this point start collecting data for the ods from the student iep_student table.
+       */
       $advisorStudentData['id_county']=$student['id_county'];
       $advisorStudentData['id_district']=$student['id_district'];
       $advisorStudentData['id_school']=$student['id_school'];
       $advisorStudentData['name_first']=$student['name_first'];
       $advisorStudentData['name_last']=$student['name_last'];
+
+      // Mike needs to check this 6-5-2018 to make sure it works correctly. I believe we can now take it out.
+      // Further note: this data is not in the iep_student table.
       $advisorStudentData['mdt_code']='NOMDT';
       $advisorStudentData['iep_ifsp_code']='noiepifsp';
       $advisorStudentData['mdt_id']=1000;
@@ -176,20 +247,25 @@ class OdsController extends Zend_Controller_Action
 
 
 
+     /*
+      * Mike 6-5-2018.  At a latter time 3 '000' will be tacked onto this.
+      * Not sure why we did not do it here, but leave it alone for right now.
+      * eventually the code will send $advisorStudentData['educationOrgainzationID'=$student['id_county'].$student['id_district'].'000';
+      *
+      */
      $advisorStudentData['educationOrganizationID']=$student['id_county'].$student['id_district'];
-   //   $this->writevar1($advisorStudentData['educationOrganizationID'],'id ofthe school');
-     // Took this out 9-14-2017
-     // $advisorStudentData['educationOrganizationID']='255901';
-
-     // $advisorStudentData['studentUniqueID']=$student['unique_id_state'];
 
 
-      // took this out 9-14-2017 $advisorStudentData['studentUniqueID']=$student['tempid'];
+
+
       // Put this in 9-14-2017
       $advisorStudentData['studentUniqueID']=$student['unique_id_state'];
 
       $advisorStudentData['id_student']=$student['id_student'];
 
+      /*
+       * Added May 2018 by Mike: Some of the data won't be accepted as integers.  Must be text with leading '0' if one digit.
+       */
       $ps=$student['sesis_exit_code'];
       if(strlen($ps)==1){
           $ps="0".$ps;
@@ -198,8 +274,8 @@ class OdsController extends Zend_Controller_Action
       else {
       $advisorStudentData['reasonExitedDescriptor']=$student['sesis_exit_code'];
       }
-      //$this->writevar1($advisorStudentData['reasonExitedDescriptor'],'this is the reson exited line 117 ods controller');
 
+ // Fix the exit date if none.
       $advisorStudentData['enddate']=$student['sesis_exit_date'];
       if($student['alternate_assessment']==null ) {
           $advisorStudentData['toTakeAlternateAssessment']=0;
@@ -234,20 +310,37 @@ class OdsController extends Zend_Controller_Action
             $advisorStudentData['placementtypedescriptor']='00';
         }
 
-      /*Form 002 find the beginDate in the mdt form.  It will either be in
-       * the mdt card latest or the form002 latest for the child
-      */
-      $stuId=$student['id_student'];
 
+        $stuId=$student['id_student'];
+
+      /*This ends getting information from the iep_student table
+       *
+       * NOW BEGIN the rest of the info.
+       * There must be an MDT card form_022 or a MDT form form_002 to continue.
+       * Form 002 find the beginDate in the mdt form.  It will either be in
+       * the mdt card latest or the form002 latest for the child
+       */
+
+
+
+      //GO fetch the lattest MDT if it exists:
       $lastMdt=new Model_Table_Form002();
       $mostRecentMdt=$lastMdt->getMostRecentMDT($stuId);
 
+      // Go fetch the lattest MDT card if it exists
       $lastMdtCard= new Model_Table_Form022();
       $mostRecentMdtCard=$lastMdtCard->getMostRecentMdtCard($stuId);
 
 
 
-      // This will use the MDT because no MDT card
+      /* From here down to the line starting with  if($continue==true)   {
+       * we will check for an MDT or an MDT Card.
+       * Also, we will check to see which one if the lattest and make sure it
+       * is finalized. The status on each of the forms must be a value of 'finalized'
+       * The lattest form (MDT or MDT Card ) will be used to fill in the edfi data.
+       *
+       */
+
        if($mostRecentMdtCard==null && $mostRecentMdt!=null) {
 
 
@@ -300,16 +393,18 @@ class OdsController extends Zend_Controller_Action
        }
 
 
-       // No need to go out to the database if there is no mdt or mdt card
-      // changed this 9-14-2017 from 'tempid'
+       
        if($student['unique_id_state']<='1000000000'){
-         //  $this->writevar1($student['unique_id_state'],' id of the state');
+        
            $continue=false;
        }
 
+/*
+ * If both the MDT and MDT Card (forms 002 and 022 respectively) don't exist then no sense going on.  Also, the forms  may exist
+ * but each student needs to have a 10 digit state id. If this requirement is not fullfilled then we won't continue.
+ */
 
-
-      if($continue==true)   {   // end is down at 449 or so
+   if($continue==true)   {
        $mostRecentIep=null;
        $mostRecentIepCard=null;
        $mostRecentIfsp=null;
@@ -318,12 +413,26 @@ class OdsController extends Zend_Controller_Action
        $mostRecentIfsp=$ifsp->getMostRecentIfspState($stuId);
        $mostRecentIepCard=$iepCard->getMostRecentIepCardState($stuId);
 
-     // $this->writevar1($continue,'this is the value of continue line 227');
+/*
+ * From here to the bottom of the if($continue==true) it finds the correct form to use.  It can only gather information from one of them.
+ * Conditions:
+ *  If there is a iep_form_013 and no finalize iep_form_004 or finalized iep_form_023 then use the iep_form_013.
+ *  If there is an iep_form_013 and a finalized iep_form_004 or a finalized iep_form_023 DONT USER THE iep_form_013. Use one or the other.
+ *  
+ *  If there are both a finalized iep_form_004 and a finalized iep_form_023 compare meeting dates and use the information from the one with the
+ *  most recent date.
+ *  
+ *  
+ *  BIG NOTE: UNFORTUNATELY, numeric representation in the tables is not used very often for figuring out the services rendered for Occupational Therapy,
+ *  Physical Therapy and Speech Language Therapy.  To further complicate things the text has many different ways to identify the same services even if 
+ *  though it was a pull down selection.
+ *  
+ */
 
 
   if (($mostRecentIfsp!=null || $mostRecentIep!=null || $mostRecentIepCard!=null) && $continue==true) {
 
-   //    $this->writevar1($mostRecentIepCard,'this is the most recent iep card line 232');
+   
       $advisorStudentData['serviceDescriptor_ot']=0;
       $advisorStudentData['serviceBeginDate_ot']=null;
       $advisorStudentData['serviceDescriptor_pt']=0;
@@ -344,7 +453,8 @@ class OdsController extends Zend_Controller_Action
                // Mike changed this 4-3-2018 as per wades request to flip.  SRS-212
               // $advisorStudentData['levelOfProgramParticipationDescriptor']='05';
                $advisorStudentData['levelOfProgramParticipationDescriptor']='06';
-
+             // Further note: 6-5-2018.  Have been informed this logic will change next year sometime.
+             
 
 
 
@@ -357,15 +467,16 @@ class OdsController extends Zend_Controller_Action
                //$serviceifsp=new Model_Table_Form013Services();
                //$serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
 
+               
+               /* Mike had to add this because the services for  specialEducationSettingDescriptor
+                are in table ifsp_services
+                Need to use Form013Services.php
+                You can find the services from this form because the id_form_013 field will match in both tables.
+                */
                $serviceifsp=new Model_Table_Form013Services();
                $serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
 
 
-               /* Mike had to add this because the services for  specialEducationSettingDescriptor
-                are in table ifsp_services
-                Need to use Form013Services.php
-                */
-               //$this->writevar1($serviceDescription['specialeducationsettingdescriptor'],'this is the form set descript out of hte db');
 
 
                 $edSetDescript='';
@@ -386,10 +497,16 @@ class OdsController extends Zend_Controller_Action
                $advisorStudentData['serviceBeginDate_slt']=$serviceDescription['serviceBeginDate_slt'];;
 
 
-             //  $this->writevar1($advisorStudentData,'this is the advisordata entry');
+             
            }
 
-
+/*
+ * This ends the part if there is a legitimate iep_form_013 to use.
+ * 
+ *  
+ *  
+ *  Being part where you are checking for just a iep_form_004 because there is not legitimate iep_form_023
+ */
 
 
          if($mostRecentIepCard==null and  $mostRecentIep!=null){
@@ -484,8 +601,15 @@ class OdsController extends Zend_Controller_Action
             } // end of check for related services form form_004_related_services
          //  $this->writevar1($result,' data after decision');
 
-          }   // end of the existence of an iep only.
-
+          }  
+          
+/* end of the existence of an iep only.
+ * 
+ * 
+ * 
+ * Beginning of a check to see if there is legitimate iep_form_023 only.  Many times there exists a more recent iep_form_004, but since it is not finalized
+ * you cannot use it.  This was checked in the call to get the $mostRecentIep
+ */
 
 
 
@@ -535,7 +659,12 @@ class OdsController extends Zend_Controller_Action
 
           }
 
-
+/*
+ * End of the iep_form_023 only
+ * 
+ * Start of the section to check if there exists both an iep_form_004 and iep_form_023.  If so, do the date comparison and go glean the
+ * data
+ */
 
 
          if($mostRecentIep!=null and $mostRecentIepCard!=null ) {
@@ -543,13 +672,13 @@ class OdsController extends Zend_Controller_Action
          //   $this->writevar1($mostRecentIepCard,'this is the most recent iep card line 410');
 
              $advisorStudentData['section']='HAS BOTH IEP AND IEPCARD';
+        
            // Mike changed this 4-3-2018 as  per wades clarification  SRS-212
          //    $advisorStudentData['levelOfProgramParticipationDescriptor']='06';
              $advisorStudentData['levelOfProgramParticipationDescriptor']='05';
 
             $result=$this->decideWhereToGetIepData($mostRecentIep,$mostRecentIepCard);
-           // $this->writevar1($result,'this is the result for one student line 416 ods controller');
-          //  $this->writevar1($result,' data after decision');
+        
             $advisorStudentData['iep_ifsp_code']=$result['iep_ifsp_code'];
             $advisorStudentData['iep_ifsp_id']=$result['iep_ifsp_id'];
 
@@ -579,11 +708,10 @@ class OdsController extends Zend_Controller_Action
             $advisorStudentData['specialeducationsettingdescriptor']=$result['specialeducationsettingdescriptor'];
 
 
-       //     if($advisorStudentData['studentUniqueID']=='1194008801')$this->writevar1($advisorStudentData,'this is the advisor student data line 441');
-          //  if ($advisorStudentData['id_student']=='1345747')
-        //   $this->writevar1($result,'this is the id of the student  for 2 nulls'.$result['specialEducationSettingDescriptor']);
-
-         } // end of getting values if using iep
+         } 
+         /* end of getting values if using iep
+          * that should get all the data
+          */
 
 
 
@@ -595,12 +723,14 @@ class OdsController extends Zend_Controller_Action
          $advisorStudentData['edfiPublishStatus']='W';
          $advisorStudentData['edfiResultCode']=null;
          $advisorStudentData['edfiPublishTime']=date("Y-m-d");
-     //    $advisorStudentData['id_author']=$_SESSION["user"]["user"]->user["id_personnel"];
+     /*    $advisorStudentData['id_author']=$_SESSION["user"]["user"]->user["id_personnel"];
+      *    Had trouble taking it in the db. need to get back to it.  Not critical.
+      */
            $advisorStudentData['id_author']=0;
 
-        // if($advisorStudentData['id_student']=='1384091') $this->writevar1($advisorStudentData,'this is the advisor at the end line 381');
           $insert=new Model_Table_Edfi();
 
+          
          $insert->setupAdvisor($advisorStudentData);
 
 
@@ -610,12 +740,24 @@ class OdsController extends Zend_Controller_Action
          }  //this is the end of publishing to the datastore 376
 
 
-      } // end of the if continue line 218 if continue==true
+   } // if($continue==true)   {
 
-  //    } // Take this out when ready to run the whole thing
 
-   } //if($edfiEntry['edfipublishstatus']!='S') {  this entry will only go through those without an S
-} // end of the for loop way up there searching for each districts students
+
+    }  // end of the if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
+
+
+   } 
+   /*end of the foreach($districtStudents as $student)  each districts students
+    * This ends putting all the data in the edfi table or updating the data in the edfi table.  
+    * 
+    */
+   
+  
+   /*
+    * Once all the data is in the edfi table it is compiled and ready to be sent to the state ods.
+    * 
+    */
 
      $insertEdfi=new Model_EdfiOds();
 
