@@ -393,9 +393,9 @@ class OdsController extends Zend_Controller_Action
        }
 
 
-       
+
        if($student['unique_id_state']<='1000000000'){
-        
+
            $continue=false;
        }
 
@@ -403,6 +403,11 @@ class OdsController extends Zend_Controller_Action
  * If both the MDT and MDT Card (forms 002 and 022 respectively) don't exist then no sense going on.  Also, the forms  may exist
  * but each student needs to have a 10 digit state id. If this requirement is not fullfilled then we won't continue.
  */
+
+
+
+
+
 
    if($continue==true)   {
        $mostRecentIep=null;
@@ -418,21 +423,21 @@ class OdsController extends Zend_Controller_Action
  * Conditions:
  *  If there is a iep_form_013 and no finalize iep_form_004 or finalized iep_form_023 then use the iep_form_013.
  *  If there is an iep_form_013 and a finalized iep_form_004 or a finalized iep_form_023 DONT USER THE iep_form_013. Use one or the other.
- *  
+ *
  *  If there are both a finalized iep_form_004 and a finalized iep_form_023 compare meeting dates and use the information from the one with the
  *  most recent date.
- *  
- *  
+ *
+ *
  *  BIG NOTE: UNFORTUNATELY, numeric representation in the tables is not used very often for figuring out the services rendered for Occupational Therapy,
- *  Physical Therapy and Speech Language Therapy.  To further complicate things the text has many different ways to identify the same services even if 
+ *  Physical Therapy and Speech Language Therapy.  To further complicate things the text has many different ways to identify the same services even if
  *  though it was a pull down selection.
- *  
+ *
  */
 
 
   if (($mostRecentIfsp!=null || $mostRecentIep!=null || $mostRecentIepCard!=null) && $continue==true) {
 
-   
+
       $advisorStudentData['serviceDescriptor_ot']=0;
       $advisorStudentData['serviceBeginDate_ot']=null;
       $advisorStudentData['serviceDescriptor_pt']=0;
@@ -454,7 +459,7 @@ class OdsController extends Zend_Controller_Action
               // $advisorStudentData['levelOfProgramParticipationDescriptor']='05';
                $advisorStudentData['levelOfProgramParticipationDescriptor']='06';
              // Further note: 6-5-2018.  Have been informed this logic will change next year sometime.
-             
+
 
 
 
@@ -467,7 +472,7 @@ class OdsController extends Zend_Controller_Action
                //$serviceifsp=new Model_Table_Form013Services();
                //$serviceDescription=$serviceifsp->getIfspServicesState($id_form013);
 
-               
+
                /* Mike had to add this because the services for  specialEducationSettingDescriptor
                 are in table ifsp_services
                 Need to use Form013Services.php
@@ -497,14 +502,14 @@ class OdsController extends Zend_Controller_Action
                $advisorStudentData['serviceBeginDate_slt']=$serviceDescription['serviceBeginDate_slt'];;
 
 
-             
+
            }
 
 /*
  * This ends the part if there is a legitimate iep_form_013 to use.
- * 
- *  
- *  
+ *
+ *
+ *
  *  Being part where you are checking for just a iep_form_004 because there is not legitimate iep_form_023
  */
 
@@ -601,12 +606,12 @@ class OdsController extends Zend_Controller_Action
             } // end of check for related services form form_004_related_services
          //  $this->writevar1($result,' data after decision');
 
-          }  
-          
+          }
+
 /* end of the existence of an iep only.
- * 
- * 
- * 
+ *
+ *
+ *
  * Beginning of a check to see if there is legitimate iep_form_023 only.  Many times there exists a more recent iep_form_004, but since it is not finalized
  * you cannot use it.  This was checked in the call to get the $mostRecentIep
  */
@@ -661,7 +666,7 @@ class OdsController extends Zend_Controller_Action
 
 /*
  * End of the iep_form_023 only
- * 
+ *
  * Start of the section to check if there exists both an iep_form_004 and iep_form_023.  If so, do the date comparison and go glean the
  * data
  */
@@ -672,13 +677,13 @@ class OdsController extends Zend_Controller_Action
          //   $this->writevar1($mostRecentIepCard,'this is the most recent iep card line 410');
 
              $advisorStudentData['section']='HAS BOTH IEP AND IEPCARD';
-        
+
            // Mike changed this 4-3-2018 as  per wades clarification  SRS-212
          //    $advisorStudentData['levelOfProgramParticipationDescriptor']='06';
              $advisorStudentData['levelOfProgramParticipationDescriptor']='05';
 
             $result=$this->decideWhereToGetIepData($mostRecentIep,$mostRecentIepCard);
-        
+
             $advisorStudentData['iep_ifsp_code']=$result['iep_ifsp_code'];
             $advisorStudentData['iep_ifsp_id']=$result['iep_ifsp_id'];
 
@@ -708,7 +713,7 @@ class OdsController extends Zend_Controller_Action
             $advisorStudentData['specialeducationsettingdescriptor']=$result['specialeducationsettingdescriptor'];
 
 
-         } 
+         }
          /* end of getting values if using iep
           * that should get all the data
           */
@@ -730,7 +735,7 @@ class OdsController extends Zend_Controller_Action
 
           $insert=new Model_Table_Edfi();
 
-          
+
          $insert->setupAdvisor($advisorStudentData);
 
 
@@ -747,16 +752,16 @@ class OdsController extends Zend_Controller_Action
     }  // end of the if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
 
 
-   } 
+   }
    /*end of the foreach($districtStudents as $student)  each districts students
-    * This ends putting all the data in the edfi table or updating the data in the edfi table.  
-    * 
+    * This ends putting all the data in the edfi table or updating the data in the edfi table.
+    *
     */
-   
-  
+
+
    /*
     * Once all the data is in the edfi table it is compiled and ready to be sent to the state ods.
-    * 
+    *
     */
 
      $insertEdfi=new Model_EdfiOds();
