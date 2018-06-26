@@ -69,7 +69,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
              *
              */
 			foreach ($edfiDistrictarray as $value){
-			   //$this->writevar1($value,'this is the value');
+		//	   $this->writevar1($value,'this is the value line 72 edfisync');
 
 				$result="";
 
@@ -79,7 +79,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 
 
 	          // Returned PARTIALLYSYNCED
-	        //   $this->writevar1($result,'this is the results');
+	     //      $this->writevar1($result,'this is the results line 82 edfisync');
 			  // When I change the db entry to W to simulate a finalized iep it works.
 
 					// Resutl
@@ -305,17 +305,22 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 			foreach ($this->pending_students as $student){
 
 				$studentUniqueId=$student[8];
-                 $this->writevar1($student,'this is the array of students in edfiSync.php line 308');
+              //  $this->writevar1($student[8],'this is the array of students in edfiSync.php line 308');
 
                 $countyId=$student[36];
                 $districtId=$student[37];
 
 
-				if($this->edfi_client->studentExists($studentUniqueId)==true or $this->edfi_client->studentExists='404'){
-				  // $this->writevar1($studentUniqueId , "=" . "OK 2" );
+
+                if($student[8]=='5515996615'){
+               // $this->writevar1($this->edfi_client->studentExists($studentUniqueId),'does student exists');
+              //  $this->writevar1($this->edfi_client->studentExists,' type of error');
+                }
+				if($this->edfi_client->studentExists($studentUniqueId)==true or $this->edfi_client->studentExists=='404'){
+				  $this->writevar1($studentUniqueId , "=" . "OK 2" );
 
 
-						/*$result = $this->edfi_client->updateCurrentStudent();*/
+				//		$result = $this->edfi_client->updateCurrentStudent();
 						$data=$this->getStudentJson($student);
 
 						$result = $this->edfi_client->updateStudentSpecialEducationProgramAssociation($data);
@@ -396,7 +401,7 @@ define("PARTIALSYNCEND",     "PARTIALSYNCEND");
 
 
 
-			$this->writevar1("",   $query );
+		//	$this->writevar1("",   $query );
 			$this->updateList[]=$query;
 		}
 

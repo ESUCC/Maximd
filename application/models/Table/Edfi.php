@@ -74,6 +74,8 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
              id_student='".$student['id_student']."'";
 
        $result = $db->fetchAll($sql);
+       if ($result!=null ) $result=$result[0];
+
 
       // $result= $this->fetchrow('id_student = '."'".$student['id_student']."'");
 
@@ -226,9 +228,9 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
        $where =  "id_student = '$id' and id_county='$cty' and id_district='$dst'";
 
        $db = Zend_Registry::get('db');
-       $this->writevar1($where,'this is the where clause');
-       $this->writevar1($data,'this is hte array data');
-       die();
+     //  $this->writevar1($where,'this is the where clause');
+    //   $this->writevar1($data,'this is hte array data');
+
 
        $this->update($data,$where);
    }
@@ -444,17 +446,14 @@ class Model_Table_Edfi extends Model_Table_AbstractIepForm {
         $row = $tab->fetchrow($this->select()
             ->where('id_student = ?',$student));
 */
-        $t=$student['id_student'];
+
         $tab=new Model_Table_edfi();
         $row=$tab->fetchrow($this->select()
               ->where('id_student =?',$student['id_student'])
               ->where('id_county =?',$student['id_county'])
               ->where('id_district=?',$student['id_district']));
 
-        if($t='1329927'){
-   //         $this->writevar1($row,'this is the row after retrieving from table edfi');
 
-        }
 
        // $this->writevar1($row,'this is the row line 177');
 

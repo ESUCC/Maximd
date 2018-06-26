@@ -2,15 +2,15 @@
 class ParentController extends My_Form_AbstractFormController
 {
     public function init()
-    { 
+    {
         // Auth check
         $this->identity = My_Helper_Auth::check();
         if($this->identity == false) { $this->_redirect('/'); }
         $this->_redirector = $this->_helper->getHelper('Redirector');
     }
-    
+
     function writevar1($var1,$var2) {
-    
+
         ob_start();
         var_dump($var1);
         $data = ob_get_clean();
@@ -19,11 +19,11 @@ class ParentController extends My_Form_AbstractFormController
         fwrite($fp, $data2);
         fclose($fp);
     }
-    
+
     public function indexAction() { }
-   
-    
-    public function searchAction() 
+
+
+    public function searchAction()
     {
         $this->_helper->viewRenderer->setNoRender(true);
         $session = new Zend_Session_Namespace('searchParentForm');
@@ -36,12 +36,12 @@ class ParentController extends My_Form_AbstractFormController
             $priv[$x] = array( key($this->usersession->user->privs), $this->usersession->user->privs[$x]['id_school'] );
             $x++;
         }
-        if (intval($this->getRequest()->getParam('nb') * 1) == 1) 
+        if (intval($this->getRequest()->getParam('nb') * 1) == 1)
         {
             $options = array();
             if ($session->id_student > 0)
                 $options['id_student'] = $session->id_student;
-	          else 
+	          else
                 $options['id_student'] = 0;
             $result = $parentQuery->studentDetails($options['id_student']); // Get result
 	          // Get Priv
@@ -50,7 +50,7 @@ class ParentController extends My_Form_AbstractFormController
             {
   	            foreach($priv_array as $key => $value)
                 {
-	                  if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) ) 
+	                  if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) )
                         $this->view->priv_student = 1;
     	          }
 	          }
@@ -58,7 +58,7 @@ class ParentController extends My_Form_AbstractFormController
 	          $options['page'] = intval($this->getRequest()->getParam('page') * 1);
             $options['maxRecs'] = 25; // default 25
           	// Generate KEY by district and county
-          	if (!isset($options['key']) || !isset($session->searchKey)) 
+          	if (!isset($options['key']) || !isset($session->searchKey))
             {
                 $options['key'] = "parents_".$options['id_student'];
                 $session->searchKey = $options['key'];
@@ -73,13 +73,13 @@ class ParentController extends My_Form_AbstractFormController
             $this->view->maxRecs = $options['maxRecs'];
             $this->view->resultCount = $result[3];
             $this->view->results = $result[1];
-            
-          
-            
-            // Generate pagination 
-            if(count($result[3]) > 0) 
+
+
+
+            // Generate pagination
+            if(count($result[3]) > 0)
             {
-                
+
                 $student=new Model_Table_IepStudent;
                 $StudentInfo=$student->getStudentForParentById($options['id_student']);
                 $caseMgr=$StudentInfo['id_case_mgr'];
@@ -93,10 +93,10 @@ class ParentController extends My_Form_AbstractFormController
             }
              echo $this->view->render('parent/list.phtml');
         }
-        else 
+        else
         {
-            
-            
+
+
             //	$OptionsMenu = new Zend_View_Helper_StudentOptions();
             //	$result = $OptionsMenu->StudentOptions($id_student, $id_district = false);
             //	print $result;
@@ -114,17 +114,17 @@ class ParentController extends My_Form_AbstractFormController
 	    $priv_student = 0;
 	    foreach($priv as $priv_array)
             {
-  	        foreach($priv_array as $key => $value) 
+  	        foreach($priv_array as $key => $value)
                 {
-	              if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) ) 
+	              if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) )
                       $this->view->priv_student = 1;
     	          }
-    	            
+
 	       }
 	       $student=new Model_Table_IepStudent;
 	       $StudentInfo=$student->getStudentForParentById($id_student);
 	       $caseMgr=$StudentInfo['id_case_mgr'];
-	       
+
             $this->view->caseMgr=$caseMgr;
             $this->view->studentInfo=$StudentInfo;
             $this->view->id_student = $id_student;
@@ -152,13 +152,13 @@ class ParentController extends My_Form_AbstractFormController
         $datetime = new DateTime();
         $this->view->CurrentSchoolYear = $datetime->format('Y');
         $this->view->fullname = $this->usersession->user->user['name_first'] . " " . $this->usersession->user->user['name_middle'] . " " . $this->usersession->user->user['name_last'];
-        if ($this->view->print == 1) 
+        if ($this->view->print == 1)
         {
             echo $this->view->render('parent/header.phtml');
             echo $this->view->render('parent/view.phtml');
             echo $this->view->render('parent/footer.phtml');
-	} 
-        else 
+	}
+        else
             echo $this->view->render('parent/view.phtml');
     }
     public function editAction()
@@ -183,20 +183,20 @@ class ParentController extends My_Form_AbstractFormController
 	$priv_student = 0;
 	foreach($priv as $priv_array)
         {
-  	    foreach($priv_array as $key => $value) 
+  	    foreach($priv_array as $key => $value)
             {
-             // $this->writevar1($key," The value is ".$value);  
-	          if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) ) 
+             // $this->writevar1($key," The value is ".$value);
+	          if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) )
                   $priv_student = 1;
-                  
+
             }
 	}
         // --------------------------------------------------------
      //   $this->writevar1($options,'this is the id guardian');
-        if ( $options['id_guardian'] > 0) 
+        if ( $options['id_guardian'] > 0)
         {
             $result = $parentQuery->parentView($options); // Get Parent View result
-            $this->writevar1($result,'this is the result');
+         //   $this->writevar1($result,'this is the result');
             $this->view->result = $result;
         }
         $result_student = $parentQuery->studentDetails($options['id_student']); // Get result
@@ -216,7 +216,7 @@ class ParentController extends My_Form_AbstractFormController
     public function saveAction ()
     {
         $parentQuery = new Model_Table_Parent();
-        
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->contextSwitch()->addActionContext('getJsonResponse', array('json'))->initContext();
@@ -224,7 +224,7 @@ class ParentController extends My_Form_AbstractFormController
 	$options_reports = Array();
         $request = $this->_request->getParams();
         $this->writevar1($request,'this is the request');
-        
+
 	foreach ($request as $nameField => $valueField)
         {
 	  $value = urldecode($nameField);
@@ -243,14 +243,14 @@ class ParentController extends My_Form_AbstractFormController
 	$priv_student = 0;
 	foreach($priv as $priv_array)
         {
-  	    foreach($priv_array as $key => $value) 
+  	    foreach($priv_array as $key => $value)
             {
-	          if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) ) 
+	          if ( (($key >= 0 && $key <= 3) && $value == "") || (($key >= 4) && $value == $result["id_school"]) )
                   $priv_student = 1;
     	    }
 	}
         // --------------------------------------------------------
-        if ($priv_student == 1) 
+        if ($priv_student == 1)
         {
             $session = new Zend_Session_Namespace('searchParentForm');
             $options['key'] = $session->searchKey;
@@ -261,33 +261,33 @@ class ParentController extends My_Form_AbstractFormController
             $validator_zip = new Zend_Validate_Regex('/\d{5}-\d{4}$|^\d{5}$/');
             $validator_phone = new Zend_Validate_Regex('/^\d{3}-\d{3}-\d{4}$/');
             $validator_email = new Zend_Validate_Regex('/\S+@\S+\.\S+/');
-            if (intval($options["id_guardian"] * 1) >= 0 && 
-                intval($options["id_student"] * 1) > 0 && 
-                strlen($options["name_first"]) >= 2 && 
-                strlen($options["name_last"]) >= 2 && 
-                strlen($options["address_city"]) > 2 && 
-                strlen($options["address_street1"]) > 2 && 
-                strlen($options["relation_to_child"]) > 2 && 
-                strlen($options["password"]) > 2 && 
-                strlen($options["user_name"]) > 2 && 
-                $validator_state->isValid( $options["address_state"] ) &&   
-                ($validator_phone->isValid( $options["phone_home"] ) || strlen( $options["phone_home"] ) == 0) && 
-                ($validator_phone->isValid( $options["phone_work"] ) || strlen( $options["phone_work"] ) == 0)  && 
+            if (intval($options["id_guardian"] * 1) >= 0 &&
+                intval($options["id_student"] * 1) > 0 &&
+                strlen($options["name_first"]) >= 2 &&
+                strlen($options["name_last"]) >= 2 &&
+                strlen($options["address_city"]) > 2 &&
+                strlen($options["address_street1"]) > 2 &&
+                strlen($options["relation_to_child"]) > 2 &&
+                strlen($options["password"]) > 2 &&
+                strlen($options["user_name"]) > 2 &&
+                $validator_state->isValid( $options["address_state"] ) &&
+                ($validator_phone->isValid( $options["phone_home"] ) || strlen( $options["phone_home"] ) == 0) &&
+                ($validator_phone->isValid( $options["phone_work"] ) || strlen( $options["phone_work"] ) == 0)  &&
                 $validator_zip->isValid( $options["address_zip"] ) &&
-                ($validator_email->isValid( $options["email_address"] ) || strlen( $options["email_address"] ) == 0) ) 
+                ($validator_email->isValid( $options["email_address"] ) || strlen( $options["email_address"] ) == 0) )
             {
                 $parentQuery = new Model_Table_Parent();
                 $result = $parentQuery->parentSave($options);  // Save data
                 $msg = 'Saved!';
                 $err = 0;
                 $id_guardian = $result;
-            }  
-            else 
-            { 
+            }
+            else
+            {
                 $msg = 'Please, fill all Field with asterisk "*"';
                 $err = 1;
             }
- 
+
             $jsonData = array ( 'msg' => $msg, 'err' => $err, 'id_guardian' => $id_guardian ); // your json response
             $this->_helper->json->sendJson($jsonData);
         }

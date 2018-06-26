@@ -167,7 +167,7 @@ function studentExists($id_student){
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
     curl_close($curl);
-   // $this->writevar1($httpCode,'this is hte http code');
+    //$this->writevar1($httpCode,'this is hte http code');
 
 
 
@@ -195,6 +195,7 @@ function updateCurrentStudent(){
 
     $jsonResult = json_decode($this->currentStudent);
 
+$this->writevar1($jsonResult,'this is the json result line 198 edficlient');
 
     $id_student = $jsonResult->id;
     $data_string = $this->currentStudent;
@@ -230,7 +231,9 @@ function updateStudentSpecialEducationProgramAssociation($data){
 
 
     $jsonResult = json_decode($this->currentStudent);
-   // $this->writevar1($data,'this is the data result');
+
+
+
 
     $id_student = $jsonResult->id;
 	$authorization = "Authorization: Bearer " . $this->currentToken;
@@ -257,9 +260,11 @@ function updateStudentSpecialEducationProgramAssociation($data){
 
     curl_close($curl);
 
-  //  $this->writevar1("",  $httpCode . " < return HTTP CODE");
-
+   // $this->writevar1("",  $httpCode . " < return HTTP CODE");
+   // $this->writevar1($result,'this is the result');
     $eresponse->set_resultCode($httpCode, $result);
+
+
 
     return $eresponse;
 

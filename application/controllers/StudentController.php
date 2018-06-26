@@ -1695,7 +1695,7 @@ class StudentController extends My_Form_AbstractFormController
 
 
         $transferRequestsTable = new Model_Table_TransferRequest();
-        $this->writevar1($transferRequestsTable->getMyTransferRequests(array('initiate')),'this is the array transfer request');
+       // $this->writevar1($transferRequestsTable->getMyTransferRequests(array('initiate')),'this is the array transfer request');
         $this->view->myTransferRequests = $transferRequestsTable->getMyTransferRequests(array('initiate'));
     }
 

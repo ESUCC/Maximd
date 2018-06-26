@@ -107,7 +107,7 @@ class Form_Form023 extends Form_AbstractForm {
    */
        $diffdate=strtotime(date("Y-m-d"))-strtotime($options['dob']);
 
-       $this->writevar1($diffdate,'this is the diff date');
+      // $this->writevar1($diffdate,'this is the diff date');
 
        $diffdate=(($diffdate/60)/60)/24;
 // End add top part SRS-242

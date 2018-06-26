@@ -212,7 +212,10 @@ class OdsController extends Zend_Controller_Action
  * Otherwise it does not get into this loop.
  */
 
-    if($edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E'|| $edfiEntry==Null) {
+
+
+
+       if($edfiEntry==null || $edfiEntry['edfipublishstatus']=='W'|| $edfiEntry['edfipublishstatus']=='E' ) {
 
       $continue=true;
 
