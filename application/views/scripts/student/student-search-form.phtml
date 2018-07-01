@@ -1,0 +1,243 @@
+<?php
+?>
+<form id="studentSearchForm" name="studentSearchForm" action="" method="post" class="srsSearchForm">
+<div id="search-fields-contain">
+    <div id="advanced-options-contain">
+        <ul class="advanced-options clearfix">
+            <li id="format-container">
+                <ul class="sub">
+                    <li><?php echo $this->element->format->getLabel(); ?></li>
+                    <li><?php echo $this->element->format; ?></li>
+                    <li class="removeFormat"> <a href="javascript:removeFormat();">(x) Remove Format </a> </li>
+                </ul>
+                <ul class="sub">
+                    <li> <a href="javascript:addNewSearchFormat();">+ New Search Format </a> </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+        </ul>
+        <ul id="column-container" class="advanced-options clearfix">
+            <li><div class="searchHr">&nbsp; </div></li>
+            <li>
+                <ul class="sub">
+                    <li><?php echo $this->element->formatColumn0->getLabel(); ?></li>
+                    <li><?php echo $this->element->formatColumn0; ?></li>
+                    <li> &nbsp; </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="sub">
+                    <li><?php echo $this->element->formatColumn1->getLabel(); ?></li>
+                    <li><?php echo $this->element->formatColumn1; ?></li>
+                    <li> &nbsp; </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="sub">
+                    <li><?php echo $this->element->formatColumn2->getLabel(); ?></li>
+                    <li><?php echo $this->element->formatColumn2; ?></li>
+                    <li> &nbsp; </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="sub">
+                    <li><?php echo $this->element->formatColumn3->getLabel(); ?></li>
+                    <li><?php echo $this->element->formatColumn3; ?></li>
+                    <li> &nbsp; </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="sub">
+                    <li><?php echo $this->element->formatColumn4->getLabel(); ?></li>
+                    <li><?php echo $this->element->formatColumn4; ?></li>
+                    <li> &nbsp; </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+            <li>
+                <ul class="sub">
+                    <li><?php echo $this->element->formatColumn5->getLabel(); ?></li>
+                    <li><?php echo $this->element->formatColumn5; ?></li>
+                    <li> &nbsp; </li>
+                    <li> &nbsp; </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+<ul class="search-by-field">
+	<li>
+		<ul class="sub">
+			<li>Search This Field</li>
+			<li>For This Value</li>
+		</ul>
+	</li>
+</ul>
+<ul id="search-fields" class="search-by-field">
+</ul>
+<ul class="search-by-field">
+	<li>
+		<ul class="sub template">
+			<li><?php echo $this->element->searchFieldTemplate0; ?></li>
+			<li><?php echo $this->element->searchValueTemplate0; ?> <div class="removeHidden">X</div></li>
+		</ul>
+	</li>
+</ul>
+<br /> <br />
+<ul class="advanced-options clearfix">
+	<li>
+		<ul class="sub">
+			<li><?php echo $this->element->searchStatus->getLabel(); ?></li>
+			<li><?php echo $this->element->searchStatus; ?></li>
+			<li> &nbsp; </li>
+			<li> &nbsp; </li>
+		</ul>
+	</li>
+	<li>
+		<ul class="sub">
+			<li><?php echo $this->element->searchFilter->getLabel(); ?></li>
+			<li><?php echo $this->element->searchFilter; ?></li>
+			<li> &nbsp; </li>
+			<li> &nbsp; </li>
+		</ul>
+	</li>
+	<li>
+		<ul class="sub">
+			<li><?php echo $this->element->maxRecs->getLabel(); ?></li>
+			<li><?php echo $this->element->maxRecs; ?></li>
+			<li> &nbsp; </li>
+			<li> &nbsp; </li>
+		</ul>
+	</li>
+</ul>
+</div>
+<select id="gradeOptions">
+<option value="">Choose...</option>
+<option value="EI 0-2">EI 0-2</option>
+<option value="ECSE">ECSE (Age 3-5)</option>
+<option value="K">K</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="12+">12+</option>
+</select>
+<select id="primaryServiceOptions">
+    <option value="">Choose Special Ed. Service</option>
+    <option value="Assistive technology services/devices">Assistive Technology Services/Devices</option>
+    <option value="Audiology">Audiology</option>
+    <option value="Family training, counseling, home visits and other supports">Family Training, Counseling, Home visits and other Supports</option>
+    <option value="Health services">Health Services</option>
+    <option value="Interpreting Services">Interpreting Services</option>
+    <option value="Medical services (for diagnostic or evaluation purposes)">Medical Services (for diagnostic or evaluation purposes)</option>
+    <option value="Nursing services">Nursing Services</option>
+    <option value="Nutrition services">Nutrition Services</option>
+    <option value="Occupational Therapy Services">Occupational Therapy Services</option>
+    <option value="Orientation and Mobility">Orientation and Mobility</option>
+    <option value="Physical Therapy">Physical Therapy</option>
+    <option value="Psychological services">Psychological Services</option>
+    <option value="Respite care">Respite Care</option>
+    <option value="Services coordination">Services Coordination</option>
+    <option value="Social work services">Social Work Services</option>
+    <option value="Special Instruction (Resource)">Special Instruction (Resource)</option>
+    <option value="Speech-language therapy">Speech/language Therapy</option>
+    <option value="Teacher of the Hearing Impaired">Teacher of the Hearing Impaired</option>
+    <option value="Teacher of the Visually Impaired">Teacher of the Visually Impaired</option>
+    <option value="Transportation">Transportation</option>
+    <option value="Vision Services">Vision Services</option>
+</select>
+<select id="primaryLanguageOptions">
+    <option value="">Choose...</option>
+    <option value="Sign primary_language">Sign primary_language</option>
+    <option value="English">English</option>
+    <option value="Afrikaans">Afrikaans</option>
+    <option value="Albanian">Albanian</option>
+    <option value="Amharic">Amharic</option>
+    <option value="Arabic">Arabic</option>
+    <option value="Bangle">Bangle</option>
+    <option value="Bhutanese">Bhutanese</option>
+    <option value="Bosnian">Bosnian</option>
+    <option value="Chinese">Chinese</option>
+    <option value="Croatian">Croatian</option>
+    <option value="Czech">Czech</option>
+    <option value="Danish">Danish</option>
+    <option value="Dari">Dari</option>
+    <option value="Dinka">Dinka</option>
+    <option value="Dutch">Dutch</option>
+    <option value="Farsi">Farsi</option>
+    <option value="Finnish">Finnish</option>
+    <option value="French">French</option>
+    <option value="German">German</option>
+    <option value="Gujarati">Gujarati</option>
+    <option value="Hindi">Hindi</option>
+    <option value="Hungarian">Hungarian</option>
+    <option value="Indonesian">Indonesian</option>
+    <option value="Italian">Italian</option>
+    <option value="Japanese">Japanese</option>
+    <option value="Khana">Khana</option>
+    <option value="Khmer">Khmer</option>
+    <option value="Korean">Korean</option>
+    <option value="Kurdish">Kurdish</option>
+    <option value="Latvian">Latvian</option>
+    <option value="Luganda">Luganda</option>
+    <option value="Lumasaba">Lumasaba</option>
+    <option value="Mandarin">Mandarin</option>
+    <option value="Nepalis">Nepalis</option>
+    <option value="Nuer">Nuer</option>
+    <option value="Nyanja">Nyanja</option>
+    <option value="Ogoni">Ogoni</option>
+    <option value="Oriya">Oriya</option>
+    <option value="Pashtu">Pashtu</option>
+    <option value="Persian">Persian</option>
+    <option value="Pilipino">Pilipino</option>
+    <option value="Polish">Polish</option>
+    <option value="Portuguese">Portuguese</option>
+    <option value="Punjabi">Punjabi</option>
+    <option value="Romanian">Romanian</option>
+    <option value="Russian">Russian</option>
+    <option value="Serbo-Croat">Serbo-Croat</option>
+    <option value="Sinhala">Sinhala</option>
+    <option value="Somali">Somali</option>
+    <option value="Spanish">Spanish</option>
+    <option value="Swahili">Swahili</option>
+    <option value="Tagalog">Tagalog</option>
+    <option value="Tajik">Tajik</option>
+    <option value="Tamil">Tamil</option>
+    <option value="Telegu">Telegu</option>
+    <option value="Thai">Thai</option>
+    <option value="Tigrbea">Tigrbea</option>
+    <option value="Tigrigna">Tigrigna</option>
+    <option value="Tonga">Tonga</option>
+    <option value="Tswana">Tswana</option>
+    <option value="Turkish">Turkish</option>
+    <option value="Ukrainian">Ukrainian</option>
+    <option value="Urdu">Urdu</option>
+    <option value="Vietnamese">Vietnamese</option>
+    <option value="Other">Other</option>
+</select>
+<select id="ethnicGroupOptions">
+    <option value="">Choose...</option>
+    <option value="A">White, Not Hispanic</option>
+    <option value="B">Black, Not Hispanic</option>
+    <option value="C">Hispanic</option>
+    <option value="D">American Indian / Alaska Native</option>
+    <option value="E">Asian / Pacific Islander</option>
+</select>
+<ul id="add-new-format">
+    <li>Format Name: <input type="text" id="custom-format" name="custom_format" value="" /> <input type="button" id="add-format" name="add_format" value="Add Format" />&nbsp;<input type="button" name="cancel" value="Cancel" id="cancel-add-new-format" /></li>
+</ul>
+<div class="searchHr">&nbsp; </div>
+<input type="button" name="search" id="search" value="Search" class="searchButton" />
+<input type="button" name="showAll" id="showAll" value="Show All" class="searchButton" />
+</form>

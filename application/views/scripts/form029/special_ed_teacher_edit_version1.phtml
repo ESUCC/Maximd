@@ -1,0 +1,29 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+<table class="formInput" style="width:100%;" cellpadding="0" cellspacing="0" id="special_ed_teacher_<?= $rowNum; ?>" style="margin-top:1px;" width="60%">
+	<tr>
+		<td style="width:5px;">
+		<?php echo $this->element->id_form_029_special_ed_teacher; ?>
+		<div>
+			<?php echo $this->element->id_form_029_special_ed_teacher; ?>
+			<?= $rowNum; ?>.
+		</div>
+		</td>
+		<td class="smallInput" style="width:100px;">
+		<div id="special_ed_teacher_<?= $rowNum; ?>-name-colorme" class="colorme make-strong-print">
+		<?php echo $this->element->name; ?>
+		</div>
+		</td>
+		<td class="meeting_type_containter" style="width:100px;<?php echo ($this->element->getView()->form->getElement('meeting_type_eligible_iep')->getValue() != 't') ? 'display:none;' : ''; ?>">
+		<?php echo $this->element->id_form_029_special_ed_teacher; ?>
+		<div id="special_ed_teacher_<?= $rowNum; ?>-meeting_type-colorme" class="colorme">
+			<?php echo $this->element->meeting_type; ?>
+		</div>
+		</td>
+		<td class="smallInput noprint" style="width:75px;">
+		<div id="special_ed_teacher_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+        <?php echo $this->element->remove_row; ?> &nbsp; Remove
+        </div>
+		</td>
+    </tr>
+</table>

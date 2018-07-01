@@ -1,0 +1,8 @@
+div { 
+	background-color: LightBlue;
+}
+
+div .highlighted { 
+	background-color: red;
+}
+

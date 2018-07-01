@@ -1,0 +1,40 @@
+<div>View User Detail</div>
+<div><a href="/personnel/edit/id_personnel/<?= $this->id_personnel; ?>">Edit</a></div>
+
+<BR/>
+<?= $this->personnelForm; ?>
+
+
+
+<!-- PRIVILEGES -->
+<?php if (count($this->privResults) < 1) { ?>
+    
+    <div>No privileges found.</div>
+
+<?php } else { ?>
+
+    <div><?= count($this->privResults).' results' ?></div>
+    <table border="1">
+        <tr>
+            <th>County</th>
+            <th>District</th>
+            <th>School</th>
+            <th>Class</th>
+            <th>Status</th>
+        </tr>
+
+        <?php foreach ($this->privResults as $k => $r) { ?>
+        <?php $i = 0; ?>
+            <tr>
+                <td><?= $r['name_county'] ?></td>
+                <td><?= $r['name_district'] ?></td>
+                <td><?= $r['name_school'] ?></td>
+                <td><?= $r['class'] ?></td>
+                <td><?= $r['status']; ?></td>
+            </tr>
+            <?php $i++; ?>
+        <?php } ?>
+    
+    </table>
+
+<?php }

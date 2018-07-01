@@ -1,0 +1,47 @@
+<!-- Student Search Widget -->
+<div style="float:left;text-align:right;width:100%;" dojoType="soliant.widget.StudentSearch" id_student_search="<?=$this->form->id_student_search->getValue();?>"></div>
+
+
+<?php if (isset($this->results)) { ?>
+  <?php if (count($this->results) < 1) { ?>
+    
+      <div>No results matched your search</div>
+
+  <?php } else { ?>
+      <div><?= count($this->results).' results' ?></div>
+      <?= $this->formHidden('page', $this->page); ?>
+      <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?><BR>
+      <table width="100%" id="result">
+      <tr>
+          <th width="5%" nowrap="nowrap">County Name</th>
+          <th width="5%">County</th>
+          <th width="5%">&nbsp;</th>
+          <th width="5%">&nbsp;</th>
+          <th width="5%">Options;</th>
+          <th width="*">&nbsp;</th>
+      </tr>
+      <?php 
+      	$rownum = 0;
+      	foreach($this->paginator as $k => $r) {      
+      		$rowClassAddition = ($rownum++ % 2) ? 'evenrow' : 'oddrow';
+      		?>
+          <tr class="result <? echo $rowClassAddition; ?>">
+              <td nowrap="nowrap"><?= $r['name_first'] ?></td>
+              <td nowrap="nowrap"><?= $r['name_last'] ?></td>
+              <td><a href="/student/view/id_student/<?= $r['id_student'] ?>">View</a></td>
+              <td><a href="/student/edit/id_student/<?= $r['id_student'] ?>">Edit</a></td>
+              <td nowrap="nowrap"><?=$this->studentOptionsMenu($this->studentOptionsMenu_MultiOptions, $r['id_student']);?></td>
+              <td nowrap="nowrap">
+              <?
+              if($this->stuObj->studentPersonnelAccess($r['id_student'], $this->sessIdUser)) {
+              	echo "access granted to {$r['id_student']} for {$this->sessIdUser} {$this->stuObj->accessArrName}<BR>";
+              } else {
+              	echo "<span style=\"color:red\">access DENIED to {$r['id_student']} for {$this->sessIdUser}</span><BR>";
+              }
+              ?>
+              </td>
+          </tr>
+      <?php } ?>
+      </table>
+  <?php } ?>
+<?php } ?>

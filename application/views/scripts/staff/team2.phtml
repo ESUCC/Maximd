@@ -1,0 +1,401 @@
+<?php $auth = Zend_Auth::getInstance(); ?>
+ <table class="navTopMenu"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+               echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                    
+                   
+                 echo   $this->navigationSubmenu('Student');
+                } ?>
+            </td>
+        </tr>
+        
+    </table>
+
+<style>
+.topMenu {
+    position: relative;
+    float: left;
+    margin: 20px;
+    margin-left: 0px;
+}
+
+.leftMenu {
+    position: relative;
+    width:28%;
+    min-height: 300px;
+    float: left;
+    margin: 2px;
+    padding: 4px;
+    border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    border: 1px solid #fa0303;
+}
+
+.rightMenu {
+    position: relative;
+    width:68%;
+    min-height: 300px;
+    float: left;
+    margin: 2px;
+    padding: 4px;
+    border-radius: 6px 6px 6px 6px;
+    -moz-border-radius: 6px 6px 6px 6px;
+    -webkit-border-radius: 6px 6px 6px 6px;
+    border: 1px solid #fa0303;
+}
+
+.rightMenu select {
+    position: relative;
+    float: right;
+}
+
+#searchTable {
+    display: none;
+}
+
+#cancelSearch {
+    position: absolute;
+    top: 41px;
+    right: 10px;
+    color: #a0a0a0;
+    cursor: pointer;
+}
+
+.teacherList tr {
+    height: 24px;
+}
+
+.teacherList th {
+    margin: 2px;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 2px;
+}
+
+.teacherList td {
+    margin: 2px;
+    padding: 6px;
+}
+
+.pagination {
+    font-size: 13px;
+    font-weight: 700;
+    background: #efefef;
+}
+
+.tableHeader {
+    height: 30px;
+    background: #efefef;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+</style>
+
+<?
+    $Stu_id_county= $_SESSION["user"]["user"]->user["id_county"]; 
+    $Stu_id_district = $_SESSION["user"]["user"]->user["id_district"];
+    $cnt=count($this->schoolName);
+    $school_sv=$this->id_school;
+    $county_sv=$this->id_county;
+    $district_sv=$this->id_district;
+    $user_id=$this->user_id;
+
+    $all = $this->districtList;
+    $all2 = $this->districtAdmin;
+    $x=0;
+    $numberTeach = count($all);
+    $teachersList = Array();
+    $teachersArray = "";
+?>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+<?
+    foreach($all2 as $key => $val) { // Admins
+        $teachersList[] = [ $val['name_first'], $val['name_last'], $val['id_personnel'], 'admin' ];
+        $teachersArray .= ", [ '".addslashes($val['name_first'])."', '". addslashes($val['name_last'])."', '".$val['id_personnel']."', 'admin']";
+    }
+    foreach($all as $key => $val) { // Other
+        $teachersList[] = [ $val['name_first'], $val['name_last'], $val['id_personnel'], '' ];
+        $teachersArray .= ", [ '".addslashes($val['name_first'])."', '". addslashes($val['name_last'])."', '".$val['id_personnel']."', '']";
+    }
+    $teachersArray = substr($teachersArray, 2);
+?>
+	var teachersList = [ <?=$teachersArray?> ];
+
+
+
+        $(document).on( "keyup", "#searchAlphabet", function() {
+            var searchAlphabet = $.trim($("#searchAlphabet").val());
+            var searchAlphabetLength = searchAlphabet.length;
+
+            if (searchAlphabet == "") {
+                $("#searchAlphabet").val("");
+                $("#searchTable").html("");
+                $("#searchTable").hide();
+                $("#originalTable").show();
+             } else if ( searchAlphabetLength > 0 && searchAlphabet != "") {
+                $("#originalTable").hide();
+                $("#searchTable").show();
+                var i = 0;
+                var color = "#FFFFFF";
+                var finded = 0;
+                $("#searchTable").html("<table width='100%' id='findres' class='teacherList'>")
+                        $.each(teachersList, function(indx, val) {
+                            color = (i % 2) ? "#FFFFFF" : "#F0F0F0";
+                            i++;
+                            if ((val[1].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
+                                finded++;
+                                if (val[3] == 'admin') $("#findres").append('<tr bgcolor="' + color + '"><td><a href="/staff/team2/id_personnel/' + val[2] + '/id_county/<?=$county_sv?>/id_district/<?=$district_sv?>/id_school/<?=$school_sv?>"><font color="red">' + val[2] + ' ' + val[0] + ' ' + val[1] + '</font></a></td></tr>');
+					          else $("#findres").append('<tr bgcolor="' + color + '"><td><a href="/staff/team2/id_personnel/' + val[2] + '/id_county/<?=$county_sv?>/id_district/<?=$district_sv?>/id_school/<?=$school_sv?>">' + val[2] + ' ' + val[0] + ' ' + val[1] + '</a></td></tr>');
+                            }           
+                        });
+
+                if (finded == 0) $("#findres").append('<tr><td><center><br><br>No matches<br><br></center></td></tr>');
+                $("#searchTable").append("</table>")
+             }
+
+            return false;
+        });
+
+
+        $(document).on( "click", "#cancelSearch", function() {
+            $("#searchAlphabet").val("");
+            $("#searchTable").html("");
+            $("#searchTable").hide();
+            $("#originalTable").show();
+            return false;
+        });
+
+});
+
+</script>
+
+
+  <select onChange="window.location.href=this.value" class="topMenu">
+    <option value=''>Please Select A School</option>
+  
+   <? 
+    for ($x=0;$x<$cnt;$x++){
+   ?>
+    <option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team2','id_personnel'=>$user_id, 
+                    'id_county'=>$county_sv,
+                     'id_district'=>$district_sv,
+                     'id_school'=>$this->schoolName[$x]['id_school']));?>"><?php echo $this->schoolName[$x]['name_school'] ?>
+                     </option>
+         
+   <?} ?>
+  </select>
+<br><br>
+<?
+   for ($x=0;$x<$cnt;$x++){
+ 
+   if($this->districtList[0]['id_school']==$this->schoolName[$x]['id_school']) {
+        echo "<h1><center>".$this->schoolName[$x]['name_school']."</h1></center>";
+           }
+   } 
+?>
+
+    <br>
+
+<div class="leftMenu">
+
+<table class="teacherList">
+<tr><th class="tableHeader">List of Teachers</th></tr>
+<tr><th>
+    <input type="text" value="" style="width: 99%;" id="searchAlphabet">
+    <div id="cancelSearch"><i class="fa fa-times"></i></div>
+</th></tr>
+</table>
+
+<i>Teachers in RED are Administrators</i>
+
+<div id="originalTable">
+ <table class="teacherList">
+   <?php 
+    $school_sv=$this->id_school;
+    $county_sv=$this->id_county;
+    $district_sv=$this->id_district;
+    $user_id=$this->user_id;
+    $incStaff=1;
+    $count=count($this->districtAdmin);
+
+    $i = 1;
+    
+    foreach($this->districtAdmin as $Admin)
+    {
+        $fullName= ($Admin['name_first']." ".$Admin['name_last']."   ");
+        $staffId=$Admin['id_personnel'];
+        $adminID=$staffId;
+        $schId=$this->districtList[0]['id_school']; 
+        $color = ($i % 2) ? "#F0F0F0" : "#FFFFFF";
+        $i++;
+
+?>
+     <tr bgcolor="<?=$color?>"><td><a href="/staff/team2/id_personnel/<?php echo $staffId;?>/id_county/<?php echo $county_sv?>/id_district/<?php echo $district_sv?>/id_school/<?php echo $schId ?>"><font color="red"> <?php echo $staffId." ". $fullName;?></font></a></td></tr>
+<? } 
+
+   foreach($this->paginator as $staffMember ){
+
+	$color = ($i % 2) ? "#F0F0F0" : "#FFFFFF";
+        $i++;
+   
+   ?>
+     <tr bgcolor="<?=$color?>"><td> <a href="/staff/team2/id_personnel/<?php echo $staffMember['id_personnel']?>/id_county/<?php echo $county_sv?>/id_district/<?php echo $district_sv?>/id_school/<?php echo $school_sv ?>"><?php echo $staffMember['id_personnel']." ". $staffMember['name_first']." ".$staffMember['name_last'];?></td></tr>
+   <?}?>
+
+       
+    <tr><td class="pagination"> <?php echo $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team2'));?></td></tr>
+   </table>
+   
+  </div>
+
+
+  <div id="searchTable">
+    <center><i class="fa fa-spinner fa-pulse fa-2x fa-fw" style="margin: 20px auto;"></i></center>
+  </div>
+
+</div>
+  
+<!-- This ENDS the LIST OF TEACHERS   NOW GET THE LIST OF STUDENTs -->
+
+<div class="rightMenu">   
+ <form action ="/staff/updates/" method="post">
+  <table class="teacherList">
+    <tr class="tableHeader"><th colspan="7">List of Students on <?php echo $this->staffMemberFullName; echo "'s team";?></th></tr>
+  </table>
+ 
+  <table class="teacherList">
+ <?
+   $count=count($this->studentsOfTeam);
+   $all=$this->studentsOfTeam;
+   $trackTotal=0;
+   $nameDist='';
+
+   $i = 1;
+   foreach($this->studentsOfTeam as $team) {
+       $colorbg = ($i % 2) ? "#F0F0F0" : "#FFFFFF";
+       $i++;
+
+       $display='no';
+       $cboxE='';
+       $cboxV='';
+       $cboxC='';
+        
+       if($team['flag_edit']==1) $cboxE='checked';
+       if($team['flag_view']==1) $cboxV='checked';
+       if($team['flag_create']==1) $cboxC='checked';
+       $team['exists']='yes';
+       
+            
+         // NOTE: in order to get the list of all the students even outside the district the id_district and id_county must
+         // be taken out of model_table_iep_students function  sql statement of the getTeamStudents function.  
+         if($team['id_district']<>$district_sv || $team['id_county']<>$county_sv) {
+                 $color="red";
+                 $display='no';
+          /*   foreach($this->nameDistricts as $distName){
+             if($team['id_district']==$distName['id_district'] && $team['id_county']== $distName['id_county']) {
+	         $nameDist=$distName['name_district'];
+     
+             }
+          } */
+
+           } else {
+    	     $color="blue";
+	     $nameDist='';
+             $display='yes';
+         }
+                     
+         if($display == 'yes') {?>
+	    <tr bgcolor="<?=$colorbg?>">
+	      <td><font color="<?=$color?>"><?=$team['id_student']?></font></td>
+              <td><font color="<?=$color?>"><b><?=$team['name_first']?> <?=$team['name_last']?></b> <?=$nameDist?> <?=$team['id_district']?> <?=$team['id_county']?></font></td>
+              <td><input type="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo $team['id_student']?>"></td>
+              <td><input type="checkbox" name="<?php echo("E_".$team['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</td>
+              <td><input type="checkbox" name="<?php echo("V_".$team['id_student'])?>" value="1"<?php echo($cboxV)?>>view</td>
+              <td><input type="checkbox" name="<?php echo("C_".$team['id_student'])?>" value="1"<?php echo($cboxC)?>>create</td>
+              <td><input type="hidden" name="<?php echo("X_".$team['id_student'])?>" value="<?php echo $team['exists']?>"></td>
+	    </tr>
+     
+       <?
+          $trackTotal=$trackTotal+1;
+        }  // only display those in the district
+    }
+   ?>
+ 
+   </table><br><br>
+   
+   <table class="teacherList">
+      <tr class="tableHeader"><th colspan="7"><u>List of Students not on <?php echo $this->staffMemberFullName; echo "'s team";?></u></th></tr>
+   </table>
+
+   <table class="teacherList">
+   <?
+    $i = 1;
+    foreach($this->paginator1 as $listStudent ) {
+       $colorbg = ($i % 2) ? "#F0F0F0" : "#FFFFFF";
+       $i++;
+   
+       $cboxE='';
+       $cboxV='';
+       $cboxC='';
+       $listStudent['exists']='no'; 
+       
+       
+       $view='no';
+       $insideInc=0;
+       foreach($this->studentsOfTeam as $team ){
+           
+           if($team['id_student']==$listStudent['id_student'])
+           {
+              $insideInc=1;
+              $view='no';
+              $listStudent['exists']='yes';
+           }
+           else 
+           {
+               if($insideInc!=1)
+               $view='yes';
+               
+           }
+           
+       }
+
+	?>
+	    <tr bgcolor="<?=$colorbg?>">
+	     <td> <?=$listStudent['id_student']?></td>
+             <td> <?=$listStudent['name_first']?> <?=$listStudent['name_last']?> <?=$listStudent['id_district']?></td>
+             <td> <input type="hidden" name="<?php echo($trackTotal."_id_student")?>" value="<?php echo $listStudent['id_student']?>"></td>
+             <td> <input type="checkbox" name="<?php echo("E_".$listStudent['id_student'])?>" value="1"<?php echo($cboxE)?>>edit</td>
+             <td> <input type="checkbox" name="<?php echo("V_".$listStudent['id_student'])?>" value="1"<?php echo($cboxV)?>>view</td>
+             <td> <input type="checkbox" name="<?php echo("C_".$listStudent['id_student'])?>" value="1"<?php echo($cboxC)?>>create</td>
+             <td> <input type="hidden" name="<?php echo("X_".$listStudent['id_student'])?>" value="<?php echo$listStudent['exists']?>"></td>
+	    </tr>
+
+      <?
+            $trackTotal=$trackTotal+1;
+	   } // end of this paginator
+      ?>
+	<tr><td colspan="7" style="padding: 6px 0;">
+	   <input type="hidden" name="id_district" value="<?=$district_sv?>">
+	   <input type="hidden" name="id_county" value="<?=$county_sv?>">
+	   <input type="hidden" name="total_count" value="<?=$trackTotal?>">
+	   <input type="hidden" name="id_personnel" value="<?=$this->staffMemberId?>">
+	   <input type="hidden" name="id_school" value="<?=$school_sv?>">
+	   <input type="submit" value="SAVE" style="float: right; margin-right: 30px;">
+	</td></tr>
+	<tr><td class="pagination" colspan="7"> <?=$this->paginationControl($this->paginator1,'sliding','sqlpaginator.phtml',array('route'=> 'staff/team2'));?></td></tr>
+    </table>
+   </form>
+  </div>

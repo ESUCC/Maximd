@@ -1,0 +1,116 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+
+    if ($this->element->never_verified->getValue() == 1)
+    {
+        $this->element->initial_verification->setValue(null);
+    } 
+?>
+<?= $this->element->id_form_002; ?>
+<?= $this->element->page; ?>
+<table>
+	<tr>
+		<td class="tanHead"><?php echo $this->translate('evaluations consisted of procedures'); ?> </td>
+	</tr>
+</table>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0" width="100%">
+    <tr>
+        <td><div class="printBoldLabeWithBorder"><?php echo $this->translate('Check all that apply to this MDT Report'); ?></div></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;"> 
+<?php if('print' != $view->mode) { ?>
+     <tr>
+        <td>
+            <?php echo $this->element->date_mdt; ?>
+        </td>
+    </tr>    
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>
+<?php } ?>
+<?php if('print' != $view->mode) { ?>
+	<tr>
+        <td>
+	    <b><?php echo $this->translate('Initial Verification'); ?></b>
+            <div id="initial_verification-colorme" class="colorme">
+            <?php  echo $this->element->initial_verification; ?>
+            <span>
+            <label class="sc_bulletInputLeft" for="initial_verification-2">
+            <input type="radio" name="never_verified" value="1" id="never_verified-1" <?php if ($this->element->never_verified->getValue() == '1') { echo 'checked="CHECKED"'; } ?> onChange="colorMeById(this.id);" onfocus="javascript:modified('', '', '', '', '', '');" jsmodifiedcode="javascript:modified('', '', '', '', '', '');" onClick="sudoRadioButton(this.id);" /><?php echo $this->translate('Student Has Never Verified'); ?>
+            <input type="radio" name="never_verified" value="0" id="never_verified-0" style="visibility:hidden;" />
+            </label>
+            </span>
+            </div>
+        </td>
+	</tr>
+<?php } elseif($this->element->initial_verification->getValue()) { ?>
+    <tr>
+        <td>
+            <?php echo $this->translate('This an initial Special Education verification according to 92 NAC 51 (Rule 51)'); ?>
+        </td>
+    </tr>
+<?php } ?>   
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td width="40%"><?php echo $this->element->initial_verification_date; ?></td>
+        <?php
+            if('t' != $this->element->initial_verification->getValue()) {
+                echo "<TD class=\"noprint\">'.$this->translate('Initial Verification date not found. Please add').'</TD>";
+            }
+        ?>
+        <td><?php 
+        if('print' != $view->mode || '1' == $this->element->never_verified->getValue()) {
+        }
+        ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">    
+    <tr>
+        <td><?php echo $this->element->mdt_00602b1a; ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;padding-left:20px;">  
+    <tr>
+        <td><b><?php echo $this->translate('Check either A or B'); ?>:</b><br/><?php echo $this->element->mdt_00602b1b; ?>
+  	  		<br/>
+  	  		 <b><?php echo $this->translate('Explanation'); ?>:</b>
+  	  		 <?php echo $this->element->mdt_00602b1b_text; ?>
+        </td>
+    </tr>
+    <tr>
+    	<td>
+    		<?php echo $this->element->reasons; ?>  
+    	</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+    <tr>
+        <td><?php echo $this->element->mdt_00602b2; ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+    <tr>
+        <td><?php echo $this->element->mdt_00602b3; ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+    <tr>
+        <td> <?php echo $this->element->mdt_00602b4; ?>
+        <br/>
+        <b><?php echo $this->translate('Summary of data obtained'); ?>:</b>
+        <?php echo $this->element->mdt_00602b4_text; ?>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+    <tr>
+    	<td><?php echo $this->element->mdt_00602b4a; ?></td>
+    </tr>
+</table>

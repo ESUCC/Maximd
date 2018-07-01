@@ -1,0 +1,35 @@
+<table border="1">
+  <tr>
+    <td colspan="2">
+		<h1>Simple Example</h1>
+		<p>This is a custom built widget. It uses ajax to query the server for data. It is passed an id on load and/or from an event (like a button push).</p>
+		<p>Saving uses an ajax call to modify the record based on the last set id.</p>
+	</td>
+  </tr>
+  <tr>
+    <td style="width:270px;vertical-align:top;">
+		<div dojoType="soliant.widget.{WidgetName}"
+			id="{WidgetName}Example"
+			id_{UnderscoreName}="2"
+	 		style="height:30px;background-color:LightGrey;"
+		></div>
+	</td>
+    <td style="vertical-align:top;">
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('{WidgetName}Example')._setId('1');dijit.byId('{WidgetName}Example').search();">Set widget related value to 1</button>
+		<br />
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('{WidgetName}Example')._setId('2');dijit.byId('{WidgetName}Example').search();">Set widget related value to 2</button>
+	</td>
+  </tr>
+</table>
+<BR />
+<p>Code to create the table in Postgres</p>
+<pre>
+create table {UnderscoreName} (
+    timestamp_created timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    id_{UnderscoreName} serial NOT NULL,
+    status varchar DEFAULT 'Active' NOT NULL,
+    name varchar
+);
+insert into {UnderscoreName} (name) VALUES ('this is the first entry');
+</pre>

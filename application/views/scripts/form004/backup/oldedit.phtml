@@ -1,0 +1,22 @@
+<form action="/form004/changepage" id="myform" method="post">
+	<?= $this->form->zend_checkout_time; ?>
+	<?php 
+		// zend_checkout set to 0 on autosave when checkout time runs out
+		echo $this->formHidden('zend_checkout', '1', array('ignore'=>true));
+	?>
+	<?= '<span class="btsb">You have this form checked out for</span>: <span id="form_timer">---</span><BR/>'; ?>
+	<?php    	
+	require_once('../application/views/srs_includes/include_form_head_024.php');
+	echo $this->form;
+	
+	// this element is used by the changepage action
+	echo $this->formHidden('mode', 'edit', array('ignore'=>true));
+//	echo "<PRE>";
+//	print_r($this);
+//	echo array_key_exists('age', $this->student_data);
+//	echo $this->student_data['age'];
+	?>
+</form>
+
+
+<?php //print_r($this->db_form_data);?>

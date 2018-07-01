@@ -1,0 +1,96 @@
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationSubmenu();
+            } ?>
+        </td>
+    </tr>
+</table>
+
+<div style="">
+    <div style="" class="clearfix">
+        <h3>Confirm Transfer Requests</h3>
+
+        <div style="padding:10px">
+            <? if (count($this->myTransferRequests) > 0) { ?>
+                <table border="0">
+                    <tr>
+                        <th>Created</th>
+                        <th>From District</th>
+                        <th>From School</th>
+                        <th>To District</th>
+                        <th>To School</th>
+                        <th style="width:200px;">Students</th>
+                        <th>Actions</th>
+                    </tr>
+                    <? foreach ($this->myTransferRequests as $tr) { ?>
+                        <TR>
+                            <td><?= date('m/d/Y', strtotime($tr['timestamp_created'])); ?></td>
+                            <td><?= $tr['name_district_from']; ?></td>
+                            <td><?= $tr['name_school_from']; ?></td>
+                            <td><?= $tr['name_district_to']; ?></td>
+                            <td><?= $tr['name_school_to']; ?></td>
+                            <td><?= str_replace(
+                                    ':',
+                                    ' ',
+                                    str_replace('|', '<br />', trim($tr['student_name_list'], '|'))
+                                ); ?></td>
+                            <td>
+                                <a href="/student/confirm-transfer/id_transfer_request/<?= $tr['id_transfer_request']; ?>/confirmTransferAction/confirm">Confirm</a>
+                                |
+                                <a href="/student/confirm-transfer/id_transfer_request/<?= $tr['id_transfer_request']; ?>/confirmTransferAction/delete">Delete</a>
+                            </td>
+                        </TR>
+                    <? } ?>
+                </table>
+            <? } else { ?>
+                <div class="message">You have no transfer requests at this time.</div>
+            <? } ?>
+        </div>
+    </div>
+    <div style="" class="clearfix">
+        <h3>Recently Confirmed Transfer Requests</h3>
+
+        <div style="padding:10px">
+            <? if (count($this->myRecentlyChangedTransferRequests) > 0) { ?>
+                <table border="0">
+                    <tr>
+                        <th>Created</th>
+                        <th>From District</th>
+                        <th>From School</th>
+                        <th>To District</th>
+                        <th>To School</th>
+                        <th>Students</th>
+                    </tr>
+                    <? foreach ($this->myRecentlyChangedTransferRequests as $tr) { ?>
+                        <TR>
+                            <td><?= date('m/d/Y', strtotime($tr['timestamp_created'])); ?></td>
+                            <td><?= $tr['name_district_from']; ?></td>
+                            <td><?= $tr['name_school_from']; ?></td>
+                            <td><?= $tr['name_district_to']; ?></td>
+                            <td><?= $tr['name_school_to']; ?></td>
+                            <td><?= str_replace(
+                                    ':',
+                                    ' ',
+                                    str_replace('|', ', ', trim($tr['student_name_list'], '|'))
+                                ); ?></td>
+                        </TR>
+                    <? } ?>
+                </table>
+            <? } else { ?>
+                <div class="message">You have no transfer requests at this time.</div>
+            <? } ?>
+        </div>
+    </div>
+</div>
+<?

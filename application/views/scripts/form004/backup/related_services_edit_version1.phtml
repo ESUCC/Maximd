@@ -1,0 +1,77 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<table class="formInput noBorder" border="0" id="related_services_<?= $rowNum; ?>">
+    <tr class="bgLight2">
+        <td>
+            <?= $rowNum; ?>.
+        </td>
+        <td>
+        	<div id="related_services_<?= $rowNum; ?>-related_service_drop-colorme" class="colorme">
+            <? $this->element->related_service_drop->setAttrib('onchange', 
+"javascript:modified('', '', '', '', '', '');colorMeById(this.id);toggleShowHideMips();"); ?>
+            <?= $this->element->related_service_drop; ?>
+            </div>
+            <? if('' != $this->element->related_service->getValue()) { ?>
+            	<?php echo $this->translate('If other, specify'); ?>:
+            	<div id="related_services_<?= $rowNum; ?>-related_service_drop-colorme" class="colorme">
+            	<?= $this->element->related_service; ?>
+            	</div>
+            <? } ?>
+        </td>
+        <td class="noprint" style="padding-right:20px;" align="right" >
+            <div id="related_services_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        	<?= $this->element->id_form_004_related_service; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="related_services_<?= $rowNum; ?>-dates_wrapper-colorme" class="colorme">
+            <?php echo $this->translate('Duration Dates From/To'); ?>: 
+            <?= $this->element->related_service_from_date; ?>
+             <?php echo $this->translate('to'); ?> 
+            <?= $this->element->related_service_to_date; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="related_services_<?= $rowNum; ?>-related_service_location-colorme" class="colorme">
+            <?php echo $this->translate('Location'); ?> <?= $this->element->related_service_location; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="related_services_<?= $rowNum; ?>-tpd_wrapper-colorme" class="colorme" style="white-space:nowrap;">
+            <?= $this->element->related_service_tpd; ?>&nbsp;
+            <?= $this->element->related_service_tpd_unit; ?>
+            </div>
+            <div id="related_services_<?= $rowNum; ?>-days_wrapper-colorme" class="colorme" style="white-space:nowrap;">
+            <?= $this->element->related_service_days_value; ?>&nbsp;
+            <?= $this->element->related_service_days_unit; ?>
+            </div>
+            <div id="related_services_<?= $rowNum; ?>-related_service_mpy-colorme" class="colorme">
+            <?= $this->element->related_service_mpy; ?>&nbsp;<span style="margin-left:4px;"><?php echo $this->translate('months'); ?></span>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="related_services_<?= $rowNum; ?>-related_service_calendar-colorme" class="colorme">
+            <?php echo $this->translate('Does Service Follow School Calendar'); ?>? <?= $this->element->related_service_calendar; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="3"><hr /></td>
+    </tr>
+</table>

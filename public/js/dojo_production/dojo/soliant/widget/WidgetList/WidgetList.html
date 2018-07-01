@@ -1,0 +1,12 @@
+<div dojoType="soliant.widget.WidgetList">
+    <div style="float:left;" style="display:none;" dojoAttachPoint="AddRowContainer">
+	    <button dojoType="dijit.form.Button" dojoAttachEvent="onClick: addrow">Add Row</button>
+	</div>		    
+    <div style="float:left;" style="display:none;" dojoAttachPoint="SaveAllContainer">
+	    <button dojoType="dijit.form.Button" dojoAttachEvent="onClick: save">Save All</button>
+	</div>		    
+	<div dojoType="dijit.form.Form" dojoAttachPoint="WidgetListForm">
+		<input type="hidden" name="id_foreign_key" dojoType="dijit.form.TextBox" dojoAttachPoint="WidgetListForeignKey">
+		<div dojoAttachPoint="RelatedRows"></div>
+	</div>
+</div>

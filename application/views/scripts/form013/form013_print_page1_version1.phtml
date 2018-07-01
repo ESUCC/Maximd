@@ -1,0 +1,256 @@
+<?php
+$view = $this->element->page->getView();
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+<div id="ifsptypechosen" style="clear:both;font-size:10pt;">
+<table class="" cellpadding="2" cellspacing="0" border="0">
+<tr>
+    <td colspan="4" class="printCellUnderline"><span
+            class="printBoldLabel boldLabel"><?php echo $view->db_form_data['ifsptype']; ?> IFSP</span></td>
+</tr>
+<tr>
+    <td style="width:25%;">
+        <span class="printBoldLabel boldLabel">Child's Name:</span>
+    </td>
+    <td style="width:25%;"
+        class=""><?php echo $view->db_form_data['student_data']['name_student']; ?></td>
+    <td style="width:25%;">
+        <span class="printBoldLabel boldLabel">Phone:</span>
+    </td>
+    <td style="width:25%;" class=""><?php echo $view->db_form_data['student_data']['phone']; ?></td>
+</tr>
+
+<tr>
+    <td style="">
+        <span class="printBoldLabel boldLabel">Child's Birthdate:</span>
+    </td>
+    <td class=""><?php echo $view->db_form_data['student_data']['dob']; ?></td>
+    <td style="">
+        <span class="printBoldLabel boldLabel">Age:</span>
+    </td>
+    <td class=""><?php echo $view->db_form_data['student_data']['age']; ?></td>
+</tr>
+
+<tr>
+    <td style="">
+        <span class="printBoldLabel boldLabel">Referral to Early Intervention:</span>
+    </td>
+    <td class=""><?php echo $view->db_form_data['student_data']['ei_ref_date']; ?></td>
+    <td>
+        <span class="printBoldLabel boldLabel">Address:</span>
+    </td>
+    <td class=""> <?php echo $view->db_form_data['student_data']['address']; ?></td>
+</tr>
+
+<tr>
+    <td style="">
+        <?php $this->element->family_lang->removeDecorator('label'); ?>
+        <span class="printBoldLabel boldLabel">Family's Language Choice:</span></td>
+    <td class="">
+        <?php echo $this->element->family_lang; ?>
+    </td>
+    <?php $this->element->eval_date->removeDecorator('label');?>
+    <td style="">
+	    	<span class="printBoldLabel boldLabel">
+	    		Date of Consent for Evaluation:
+	    	</span>
+    </td>
+    <td class=""><?php echo $this->element->eval_date; ?></td>
+</tr>
+<?php if ('Annual' != $view->db_form_data['ifsptype']) { ?>
+<tr>
+    <td style="">
+        <?php $this->element->family_lang_second->removeDecorator('label'); ?>
+        <span class="printBoldLabel boldLabel">Additional Language:</span>
+    </td>
+    <td>
+        <?php echo $this->element->family_lang_second; ?>
+    </td>
+    <td>
+        &nbsp;
+    </td>
+</tr>
+    <?php } ?>
+<tr>
+    <td style="">
+        <?php
+        if ($this->element->date_notice) {
+            $this->element->date_notice->removeDecorator('label');
+        }
+        ?>
+        <span class="printBoldLabel boldLabel">Family would like an interpreter:</span>
+    </td>
+    <td class="">
+        <?php
+        switch ($this->element->interpreter->getValue()) {
+            case '1':
+                echo 'Yes';
+                break;
+            case '0':
+                echo 'No';
+                break;
+        }
+        ?>
+    </td>
+    <td style="">
+	    	<span class="printBoldLabel boldLabel">
+	    		Date MDT:
+	    	</span>
+    </td>
+    <td class="">
+        <?php $this->element->date_mdt->removeDecorator('label');echo $this->element->date_mdt; ?>
+    </td>
+</tr>
+
+
+<tr>
+    <td colspan="4" class="printCellUnderline"><span class="printBoldLabel boldLabel">Parent(s) / Guardian</span></td>
+</tr>
+<?php
+for ($rowNum = 1; $rowNum <= $view->db_form_data['ifsp_parents']['count']; $rowNum++) {
+    $subformData = $view->db_form_data['ifsp_parents_' . $rowNum];
+    ?>
+<tr id="RS<?= $rowNum; ?>">
+    <td style="width:10px;">
+        <?= $rowNum; ?>.
+        <?= $subformData['pg_name']; ?>
+    </td>
+    <td style="width:200px;vertical-align: top">
+        <span class="printBoldLabel boldLabel">Role:</span>
+        <?= $subformData['pg_role']; ?>
+    </td>
+    <td style="vertical-align: top" colspan="2" rowspan="2">
+        <span class="printBoldLabel boldLabel">Address:</span>
+        <?= $subformData['pg_address']; ?>
+    </td>
+</tr>
+<tr>
+    <td style="padding-left:18px;">
+        <span class="printBoldLabel boldLabel">Home Phone:</span>
+        <?= $subformData['pg_home_phone']; ?>
+    </td>
+    <td>
+        <span class="printBoldLabel boldLabel">Work Phone:</span>
+        <?= $subformData['pg_work_phone']; ?>
+    </td>
+</tr>
+    <?php } ?>
+
+<tr>
+    <td colspan="4" class="printCellUnderline"><span class="printBoldLabel boldLabel">Service Coordinator / Case Manager Information</span>
+    </td>
+</tr>
+<tr>
+    <td class="tanHead" colspan="4">
+        If you have any questions about this plan or any of the people working with your child,
+        please call the person listed as the Services Coordinator / Case Manager.
+    </td>
+</tr>
+<tr>
+    <td><span class="printBoldLabel boldLabel">Name:</span>
+        <?php $this->element->sc_name->removeDecorator('label');
+        echo $this->element->sc_name->getValue(); ?>
+    </td>
+    <td><span class="printBoldLabel boldLabel">Phone:</span>
+        <?php $this->element->sc_phone->removeDecorator('label');
+        echo $this->element->sc_phone->getValue(); ?>
+    </td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td style="vertical-align: top"><span class="printBoldLabel boldLabel">Agency:</span>
+        <?php $this->element->sc_agency->removeDecorator('label');
+        echo $this->element->sc_agency->getValue(); ?>
+    </td>
+    <td colspan="3"><span class="printBoldLabel boldLabel">Address:</span>
+        <?php $this->element->sc_address->removeDecorator('label');
+        echo $this->element->sc_address; ?>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="4" class="printCellUnderline"><span class="printBoldLabel boldLabel">IFSP Meeting Dates</span></td>
+</tr>
+<tr class="tanHead">
+    <td class="printBoldLabel boldLabel">
+        Type
+    </td>
+<!--    <td class="printBoldLabel boldLabel">-->
+<!--        Secondary Role-->
+<!--    </td>-->
+    <td class="printBoldLabel boldLabel">
+        Date
+    </td>
+    <td class="printBoldLabel boldLabel">
+        Date Sent
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php echo $view->db_form_data['ifsptype']; ?>
+    </td>
+<!--    <td>-->
+<!--        --><?php //echo $this->element->ifsptype_secondary_role; ?>
+<!--    </td>-->
+    <td>
+        <?php echo $this->element->meeting_date; ?>
+    </td>
+    <td>
+        <?php echo $this->element->meeting_date_sent; ?>
+    </td>
+</tr>
+
+
+<tr>
+    <td colspan="4" class="printCellUnderline"><span class="printBoldLabel boldLabel">IFSP Previous Meeting Dates</span>
+    </td>
+</tr>
+<tr class="tanHead">
+    <td class="printBoldLabel boldLabel">
+        Type
+    </td>
+    <td class="printBoldLabel boldLabel">
+    </td>
+    <td class="printBoldLabel boldLabel">
+        Date
+    </td>
+    <td class="printBoldLabel boldLabel">
+        Date Sent
+    </td>
+</tr>
+<?php
+if (isset($view->db_form_data['previousMeetingDates']) && count($view->db_form_data['previousMeetingDates']) > 0) {
+    foreach(array_reverse($view->db_form_data['previousMeetingDates']) as $meetingDate) {
+        if('Annual' == $meetingDate['ifsptype']) {
+            continue;
+        }
+        $checked = "";
+        $printCss = "noprint"; // do not print is default
+        if (substr_count($view->db_form_data['previous_dates_hide_print_ids'], $meetingDate['id_form_013'] . "\n") > 0) {
+            $checked = " checked";
+            $printCss = ""; // print lines that are checked
+        }
+        echo "<tr class=\"" . $printCss . "\">";
+        if ('edit' == $view->mode) {
+            echo "<td><input $checked type=\"checkbox\" name=\"previous_dates_hide_print_ids[]\" value=\"" . $meetingDate['id_form_013'] . "\"></td>";
+        }
+        echo "<td>" . $meetingDate['ifsptype'] . "</td>";
+        echo "<td> </td>";
+        echo "<td>" . $meetingDate['meeting_date'] . "</td>";
+        echo "<td>" . $meetingDate['meeting_date_sent'] . "</td>";
+        echo "</tr>";
+    }
+} else echo "<tr><TD colspan='4'>No previous meeting dates found.</td></tr>";
+
+?>
+
+</table>
+
+</div>
+
+<?php ?>
+

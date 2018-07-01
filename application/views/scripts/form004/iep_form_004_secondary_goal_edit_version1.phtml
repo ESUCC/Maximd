@@ -1,0 +1,21 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<table class="formInput noBorder" style="width:100%;" border="0" id="iep_form_004_secondary_goal_<?= $rowNum; ?>">
+    <tr class="bgLight3 bts" id="RS<?= $rowNum; ?>">
+        <td width="20px">
+            <?= $rowNum; ?>.
+            <?= $this->element->id_form_004_secondary_goal; ?>
+            <?= $this->element->transition_plan_sub; ?>
+            <?= $this->element->dob_sub; ?>
+        </td>
+        <td>
+        	<div id="iep_form_004_secondary_goal_<?= $rowNum; ?>-post_secondary-colorme" class="colorme">
+            <?= $this->element->post_secondary; ?>
+            </div>
+        </td>
+        <td class="sectionSubText noprint">
+        	<div id="iep_form_004_secondary_goal_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+    </tr>
+</table>

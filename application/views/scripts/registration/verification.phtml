@@ -1,0 +1,26 @@
+<? // registration/verification.phtml ?>
+<h2>Thank you for registering!</h2>
+<p>
+    Here is the information you provided:
+</p>
+
+<?
+// Have to do this construct due to how items are stored in session
+// namespaces
+foreach ($this->info as $info):
+    foreach ($info as $form => $data): ?>
+<h4><?= ucfirst($form) ?>:</h4>
+<dl>
+    <? foreach ($data as $key => $value): ?>
+    <dt><?= ucfirst($key) ?></dt>
+    <? if (is_array($value)):
+        foreach ($value as $label => $val): ?>
+    <dd><?= $val ?></dd>
+        <? endforeach;
+       else: ?>
+    <dd><?= $this->escape($value) ?></dd>
+    <? endif;
+    endforeach; ?>
+</dl>
+<? endforeach;
+endforeach ?>

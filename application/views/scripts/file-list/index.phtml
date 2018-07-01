@@ -1,0 +1,35 @@
+<table border="1">
+  <tr>
+    <td colspan="2">
+		<h1>Simple Example</h1>
+		<p>This is a custom built widget. It uses ajax to query the server for data. It is passed an id on load and/or from an event (like a button push).</p>
+		<p>Saving uses an ajax call to modify the record based on the last set id.</p>
+	</td>
+  </tr>
+  <tr>
+    <td style="width:270px;vertical-align:top;">
+		<div dojoType="soliant.widget.FileList"
+			id="FileListExample"
+			form_number="4"
+			document_id="22"
+		></div>
+	</td>
+    <td style="vertical-align:top;">
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('FileListExample')._setId('1');dijit.byId('FileListExample').search();">Set widget related value to 1</button>
+		<br />
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('FileListExample')._setId('2');dijit.byId('FileListExample').search();">Set widget related value to 2</button>
+	</td>
+  </tr>
+</table>
+<BR />
+<p>Code to create the table in Postgres</p>
+<pre>
+create table file_list (
+    timestamp_created timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    id_file_list serial NOT NULL,
+    status varchar DEFAULT 'Active' NOT NULL,
+    name varchar
+);
+insert into file_list (name) VALUES ('this is the first entry');
+</pre>

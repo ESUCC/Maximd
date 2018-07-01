@@ -1,0 +1,47 @@
+
+Editor History<br />
+
+<div style="width: 850px; height: 650px">
+    <div dojoType="dijit.layout.TabContainer" style="width: 100%; height: 100%;">
+    	<form>
+		<?php 
+			$tabNumber = 1;
+			foreach ($this->res as $saveLogRow) {
+				$date = new Zend_Date($saveLogRow['timestamp_created'], 
+					Zend_Date::YEAR . '-' . 
+					Zend_Date::MONTH . '-' . 
+					Zend_Date::DAY .' ' .
+					Zend_Date::HOUR .':' .
+					Zend_Date::MINUTE .':' .
+					Zend_Date::SECOND .'.' .
+					Zend_Date::MILLISECOND
+				);
+				
+		        echo '<div dojoType="dijit.layout.ContentPane" title="'.$date->get(
+					Zend_Date::MONTH . '/' . 
+					Zend_Date::DAY .'/' .
+					Zend_Date::YEAR . ' ' . 
+					Zend_Date::HOUR .':' .
+					Zend_Date::MINUTE .':' .
+					Zend_Date::SECOND
+		        ).'<br />'.Model_Table_PersonnelTable::getUserName($saveLogRow['id_user']).'" >';
+		        
+			        $editor = new App_Form_Element_TestEditor('editor_'.$tabNumber);
+			        $editor->setValue($saveLogRow['field_value']);
+			        $editor->setDijitParam('history_link', false);
+					$editor->setAttrib('onchange', '');
+					$editor->setAttrib('onfocus', '');
+					$editor->setDijitParam('onKeyUp', '');
+			        $editor->setAttrib('height', '550px');
+		        	echo $editor;
+
+//		        echo $saveLogRow['field_value'];
+		        echo '</div>';
+		        $tabNumber++;
+			}
+		?>
+		</form>
+    </div>
+</div>
+
+

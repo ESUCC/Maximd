@@ -1,0 +1,147 @@
+<?php
+$view = $this->element->rownumber->getView();
+$rowNum = $this->element->rownumber->getValue();
+
+// build the helper for common reference for value lists
+$valueListHelper = new App_Form_ValueListHelper();
+$scheduleArr = $valueListHelper->goalSchedule();
+$evalArr = $valueListHelper->goalEvalProcedure();
+?>
+    <table style="width:100%;" class="formSectionHead">
+        <tr>
+            <td><?php echo $this->translate('Goal'); ?> <?php echo $rowNum; ?></td>
+        </tr>
+    </table>
+    <table class="formChart">
+        <?php if('' != $this->element->progress_chart_id->getValue()) { ?>
+            <tr>
+                <td class="p2424">
+                    <?php
+                    $dbScaleValue = $view->db_form_data["goal_progress_$rowNum"]['progress_chart_scale'];
+                    $width = ('' == $dbScaleValue) ? 100 : $dbScaleValue;
+		    $styleWidth = ('print' != $view->mode) ? ' style="width:'.$width.'%;"' : ''; ?>
+                    <div style="width:<?= $width; ?>%">
+                        <img class="form010Chart"<?php echo $styleWidth;?> src="https://iepweb03.esucc.org/chart/chart/<?php echo session_name() . '/' . urlencode(session_id()); ?>/chartid/<?php echo $this->element->progress_chart_id->getValue(); ?>" />
+                    </div>
+                    <div class="noprint" align="left"><?php  echo $this->element->progress_chart_scale; ?></div>
+                </td>
+            </tr>
+        <?php } ?>
+        <?php if('edit' == $view->mode) { ?>
+            <tr>
+                <td style="background-color:#b0c4de;padding: 5px;font-family: sans-serif;font-size: 12px; }" valign="top" nowrap="nowrap" width="29%">
+                    <?php
+                    $chartArr = App_Classes_StudentChart::getAllForSelectMenu($view->db_form_data['id_student']);
+                    if(0 == count($chartArr)) {
+                        echo "<b>Chart List: </B>No charts found for this student. (Charts can be created on the student chart page.)";
+                    } else {
+                        echo '<div id="goal_progress_'. $rowNum.'-progress_chart_id-colorme" class="colorme">';
+                        $this->element->progress_chart_id->setMultiOptions($chartArr);
+                        echo $this->element->progress_chart_id;
+                        echo '</div>';
+                    }
+                    ?>
+                </td>
+            </tr>
+        <?php } ?>
+    </table>
+<?
+/**
+ * make sure no bad data is displayed
+ */
+$tinyFilter = new Zend_Filter_PregReplace(
+    array(
+        'match' => array('/\<br id="tinymce" class="mceContentBody " \/>/', '/id="tinymce"/'),
+        'replace' => '<br />',
+    )
+);
+
+
+$goalData = $view->db_form_data['goal_progress_'.$rowNum]['goal']['measurable_ann_goal'];
+$goalData = $tinyFilter->filter($goalData);
+
+
+$benchmarkData = $view->db_form_data['goal_progress_'.$rowNum]['goal']['short_term_obj'];
+$benchmarkData = $tinyFilter->filter($benchmarkData);
+
+?>
+    <table class="" cellpadding="0" cellspacing="0">
+        <?php if('edit' == $view->mode) { ?>
+            <tr>
+                <td style="text-align:center"><?php echo $this->form010FillFromPrevious($view->db_form_data, $view, $rowNum); ?></td>
+            </tr>
+        <?php } ?>
+        <tr>
+            <td><span class=""><b><?php echo $this->translate('Goal'); ?>:</b> <?=$goalData?></span></td>
+        </tr>
+        <tr>
+            <td><span class=""><b><?php echo $this->translate('Benchmarks'); ?>:</b> <?=$benchmarkData?></span>
+            </td>
+        </tr>
+        <tr>
+            <td><span class=""><b><?php echo $this->translate('Schedule'); ?>:</b>
+                    <?php
+
+                    $scheduleVal = $view->db_form_data['goal_progress_'.$rowNum]['goal']['schedule'];
+                    echo $this->translate($scheduleArr[$scheduleVal]);
+                    ?>
+    </span>
+            </td>
+        </tr>
+        <tr>
+            <td><span class=""><b><?php echo $this->translate('Evaluation Procedure'); ?>:</b>
+                    <?php
+
+                    $evalValArr = explode("\n", $view->db_form_data['goal_progress_'.$rowNum]['goal']['eval_procedure']);
+                    $comma = false;
+                    foreach($evalValArr as $e) {
+                        if($comma) echo ", ";
+                        if(key_exists($e, $evalArr)) {
+                            echo $this->translate($evalArr[$e]);
+                        }
+                        $comma = true;
+                    }
+                    ?>
+    </span>
+            </td>
+        </tr>
+    </table>
+    <table class="">
+        <tr>
+            <td align="left">
+                <div id="goal_progress_<?= $rowNum; ?>-progress_measurement-colorme" class="colorme">
+                    <?php
+                    echo '<b>'.$this->translate('Progress Measurement').'</b>';
+                    $this->element->progress_measurement->removeDecorator('Label');
+                    echo $this->element->progress_measurement;
+                    echo $this->element->id_goal_progress;
+                    ?>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left">
+                <div id="goal_progress_<?= $rowNum; ?>-progress_sufficient-colorme" class="colorme">
+                    <?php
+                    echo '<b>'.$this->translate('Sufficient').'</b>';
+                    $this->element->progress_sufficient->removeDecorator('Label');
+                    echo $this->element->progress_sufficient; ?>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left" id="goal_progress_<?= $rowNum; ?>-show_hide_progress_measurement_explain" style="<?php if('print' != $view->mode && 'D' != $this->element->progress_measurement->getValue()) echo "display: none;height:auto;"; ?>"><?php echo $this->translate('If other, explain'); ?>:<br/>
+                <div id="goal_progress_<?= $rowNum; ?>-progress_measurement_explain-colorme" class="colorme">
+                    <?php echo $this->element->progress_measurement_explain; ?>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="left"><?php echo $this->translate('Comments'); ?><br/>
+                <div id="goal_progress_<?= $rowNum; ?>-progress_comment-colorme" class="colorme">
+                    <?php echo $this->element->progress_comment; ?>
+                </div>
+            </td>
+        </tr>
+    </table>
+<?php 

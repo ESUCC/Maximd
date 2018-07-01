@@ -1,0 +1,14 @@
+<div dojoType="soliant.widget.FirstWidget"
+	id_first_widget="1"
+>
+</div>
+
+<pre>
+create table first_widget (
+    timestamp_created timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    id_first_widget serial NOT NULL,
+    status varchar DEFAULT 'Active' NOT NULL,
+    name varchar
+);
+</pre>

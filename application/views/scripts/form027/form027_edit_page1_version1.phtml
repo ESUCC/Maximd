@@ -1,0 +1,84 @@
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_027; ?>
+<?= $this->element->page; ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+    <tr class="noprint">
+        <td>Notice and Consent for Early Intervention Initial Screening</td>
+    </tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+    <tr>
+    	<td colspan="4"><strong><?php echo $view->db_form_data['name_district']; ?></strong> proposes to conduct an initial screening of your child to determine whether s/he is suspected of having a disability and is in need of a multidisciplinary evaluation.  The screening will include: 
+			<ul style="margin-bottom:15px;">
+				<li>Gathering information on your child through parent/caregiver interview(s)</li>
+				<li>Observations of your child</li>
+				<li>Use of a screening instrument by trained personnel</li>
+				<li>Review of other available information (such as medical records)</li>
+			</ul>
+    	</td>
+    </tr>
+    <tr>
+    	<td colspan="4">The district proposes to conduct screening procedures with your child because:</td>
+  	</tr>
+  	<tr>
+  		<td class="sc_richTextBox" style="padding:15px;">
+  			<?php echo $this->element->conduct_screening_procedures; ?>
+		</td>
+	</tr>
+  	<tr>
+  		<td colspan="4">The time required to complete the screening and subsequent multidisciplinary evaluation, if necessary to determine your child has a disability, is 45 calendar days from the time the referral was received by the Early Development Network.  If exceptional family circumstances exist, the screening and multidisciplinary evaluation process may be delayed.</td>
+  	</tr>
+  	<tr>
+  		<td colspan="4">As a parent, you have the right to:
+			<ul style="margin-bottom:15px;">
+				<li>Request a multidisciplinary evaluation before the screening process begins or at any time during the screening process.</li>
+				<li>Request a multidisciplinary evaluation even if the screening results determine that your child is not suspected of having a disability.</li>
+				<li>A written summary of the results of the screening</li>
+			</ul>
+		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="4">Parents of children with a suspected disability have protection under the procedural safeguards of the Individuals with Disabilities Education Act (IDEA).  A copy of these "Part C Procedural Safeguards," as well as, a copy of <?php if ('print' != $view->mode) { ?><a target="_blank" href="http://iepweb02d.nebraskacloud.org/pdf/NDE-Rule51-Sec.009.11.pdf"><?php } ?>92 NAC 51-009.11-92 NAC 51-009.11C10<?php if ('print' != $view->mode) { ?></a><?php } ?>, and <?php if ('print' != $view->mode) { ?><a target="_blank" href="http://iepweb02d.nebraskacloud.org/pdf/CLEANRule55_2012.pdf"><?php } ?>Rule 55<?php if ('print' != $view->mode) { ?></a><?php } ?>, which is the procedure for filing complaints and requests for due process hearings is provided with this notice.</td>
+  	</tr>
+  	<tr>
+  		<td colspan="4">If at any time you want to request an evaluation, or if you have questions regarding your rights, you may contact <?php echo ($view->mode == 'print' && $this->element->rights_contact->getValue() == '') ? '<span class="printCellUnderlineThin"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>' : '<span class="printBoldLabel">' . $this->element->rights_contact . '</span>'; ?> at <?php echo ($view->mode == 'print' && $this->element->rights_contact_at->getValue() == '') ? '<span class="printCellUnderlineThin"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>' : '<span class="printBoldLabel">' . $this->element->rights_contact_at . '</span>'; ?>.
+  	</tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+	<tr>
+		<td align="center">
+			<strong>ADDITIONAL INFORMATION:</strong>
+		</td>
+	</tr>
+	<tr>
+		<td>You may contact any of the following resources to help you understand the federal and state laws for educating children with disabilities and parental rights granted by those laws. An explanation of your rights will be provided at no cost by any of the following organizations:</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<table class="formInput" style="padding-bottom: 10px;text-align: left;">
+				<tr>
+					<td colspan="3">Nebraska Department of Education Regional Offices of Special Education:</td>
+				</tr>
+				<tr>
+					<td>Lincoln <br />402-471-2471</td>
+					<td>Omaha <br /> 402-595-2177</td>
+					<td>Scottsbluff <br /> 308-632-1349</td>
+				</tr>
+			</table>
+			<table class="formInput" style="padding-bottom: 10px;text-align: left;">
+				<tr><td colspan="3">&nbsp;</td></tr>
+				<tr>
+					<td colspan="3"><?php echo $view->add_resource1; ?></td>
+				</tr>
+				<tr>
+					<td colspan="3"><?php echo $view->add_resource2; ?></td>
+				</tr>
+			</table>
+		</td>
+	</tr>        
+</table>

@@ -1,0 +1,96 @@
+<?php
+$config = Zend_Registry::get ( 'config' );
+$refreshCode = '?refreshCode=' . $config->externals->refresh;
+
+$sessUser = new Zend_Session_Namespace ( 'user' );
+$privCheck = new My_Classes_privCheck($sessUser->user->privs);
+
+$this->headScript()->appendFile('/js/backbone.marionette/mustache.js' . $refreshCode );
+$this->headScript()->appendFile('/js/backbone.marionette/underscore.js' . $refreshCode );
+$this->headScript()->appendFile('/js/backbone.marionette/backbone.js' . $refreshCode );
+$this->headScript()->appendFile('/js/backbone.marionette/backbone.marionette.js' . $refreshCode );
+$this->headScript()->appendFile('/js/collection/srs.backbone.collection.js' . $refreshCode );
+
+$parent = $sessUser->parent;
+$parentCss = '';
+if($parent) {
+    $parentCss = "display:none;";
+}
+$this->headScript()->appendFile('/js/studentSearch.js' . $refreshCode );
+$this->headLink()->appendStylesheet('/css/collectionManager.css');
+?>
+
+
+<?php /*Michael changed this 3-18-2016 so there is not autoload
+       we changed it back because it was not allowing people to print  4-22-2016*/
+ 
+ if ($this->cacheKey) :
+    $this->headScript()->captureStart(); ?>
+    $(document).ready(function() {
+        runSearchCall('/student/search-student/page/<?php echo $this->searchPage; ?>/defaultCacheResult/1/key/<?php echo $this->cacheKey?>');
+    });
+<?php
+    $this->headScript()->captureEnd();
+elseif ($this->showAll) :
+    $this->headScript()->appendFile('/js/defaultSearchAll.js');
+endif; 
+  // This was the end of the change
+?>  
+  
+
+  
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td colspan="2">
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu(); ?>
+	</td>
+    </tr>
+</table>
+<?
+/**
+ * left sidebar
+ */
+echo $this->partial('searchSidebarScripts.phtml', array(
+    'sessUser' => $sessUser,
+    'privCheck' => $privCheck,
+    'showEditLink' => true,
+    'showGroupAction' => true,
+    'clickStudentLink' => 'viewStudent',
+)); ?><div style="<?if($this->collectionEditing) echo 'float:left;'; ?>">
+    <div id="searchContainer" class="clearfix" style="<?=$parentCss?>">
+        <div style="padding:10px">
+            This is the new and improved student search screen. You can turn the new search screen on and off by clicking the appropriate radio button below.
+            Please note that we do not yet have student transfer capability built into this new search.
+            If you need to transfer a student you will temporarily have to switch back to the original search screen.
+            <form id="change_search_format" action="/student/search" method="post">
+                <table style="width:100%;">
+                    <tr>
+                        <td width="" style="padding-left:6px;">Use student search:</td>
+                        <td style="padding-left:6px;" class="bgLight">
+                            <input type="radio" onclick="$('form#change_search_format').submit()" <? if('srs'==$this->currentSearchPref) echo 'checked="checked"';?> value="srs" name="pref_student_search_location">Original&nbsp;
+                            <input type="radio" onclick="$('form#change_search_format').submit()" <? if('srs-zf'==$this->currentSearchPref) echo 'checked="checked"';?> value="srs-zf" name="pref_student_search_location">New&nbsp;</td>
+                    </tr>
+                    <? if(!$this->collectionEditing) { ?>
+                    <tr>
+                        <td width="" style="padding-left:6px;"><a href="/student/search/collection/student">Start student collection.</a></td>
+                    </tr>
+                    <? } ?>
+                </table>
+            </form>
+        </div>
+        <h3 id="searchStudents">Search Students</h3>
+        <?php echo $this->searchForm; ?>
+    </div>
+    <div id="searchResults" class="clearfix">
+
+    </div>
+</div>
+
+

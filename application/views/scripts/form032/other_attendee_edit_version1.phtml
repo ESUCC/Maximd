@@ -1,0 +1,31 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+<table class="formInput" style="width:100%;" cellpadding="0" cellspacing="0" id="other_attendee_<?= $rowNum; ?>" style="margin-top:1px;" width="60%">
+	<?php if ($view->mode != 'print' || ($this->element->other_type->getValue() != 'Choose ...' && $view->mode == 'print')) : ?>
+	<tr>
+		<td style="width:5px;">
+		<?php echo $this->element->id_form_032_other_attendee; ?>
+		<div>
+			<?php echo $this->element->id_form_032_other_attendee; ?>
+			<?= $rowNum; ?>.
+		</div>
+		</td>
+		<td style="width:100px;">
+		<?php echo $this->element->id_form_032_other_attendee; ?>
+		<div id="other_attendee_<?= $rowNum; ?>-other_type-colorme" class="colorme">
+			<?php echo $this->element->other_type; ?>
+		</div>
+		</td>
+		<td class="smallInput" style="width:100px;">
+		<div id="other_attendee_<?= $rowNum; ?>-other_name-colorme" class="colorme make-strong-print">
+		<?php echo $this->element->other_name; ?>
+		</div>
+		</td>
+		<td class="smallInput noprint" style="width:75px;">
+		<div id="other_attendee_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+        <?php echo $this->element->remove_row; ?>
+        </div>
+		</td>
+    </tr>
+    <?php endif; ?>
+</table>

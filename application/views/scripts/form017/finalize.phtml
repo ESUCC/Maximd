@@ -1,0 +1,31 @@
+<form action="/form017/finalize" id="myform" method="post">
+	<?php 
+	echo $this->formHidden('document', $this->document);
+	echo $this->formHidden('page', $this->page);
+	?>
+	<BR/>
+	<BR/>
+	<table border="0" width="80%">
+		<tr>
+			<td>
+			<?php 
+			if(!$this->form_valid){
+				echo "Some pages of this form are not valid. Please return to the form and correct this before validating.";
+			} else {
+				echo "This form is valid. Are you sure you want to finalize this form?";
+			}
+			?>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<?php echo $this->formSubmit("cancel", "Cancel", array('onClick'=>"javascript:history.back(2);")); ?>
+			<?php 
+			if($this->form_valid){
+				echo $this->formSubmit("confirm", "Confirm");
+			}
+			?>
+			</td>
+		</tr>
+	</table>
+</form>

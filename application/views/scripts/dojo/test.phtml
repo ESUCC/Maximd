@@ -1,0 +1,18 @@
+<?php  echo $this->form;
+
+if(0) {
+?><button dojoType="dijit.form.Button" id="helloButton">
+        Hello World!
+        <script type="dojo/method" event="onClick">
+        dojo.xhrGet({
+           url: 'HelloWorldResponseGET.php',
+           load: helloCallback,
+           error: helloError,
+           content: {name: dojo.byId('name').value }
+        });
+        </script>
+     </button>
+     Please enter your name: <input type="text" id="name">
+     
+     
+<? } ?>

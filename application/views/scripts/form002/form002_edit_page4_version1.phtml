@@ -1,0 +1,38 @@
+<?php 
+	$view = $this->element->page->getView();
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_002; ?>
+<?= $this->element->page; ?>
+<? if('edit'==$view->mode) { ?>
+    <div style="text-align:right;"><?= $this->element->print_blank_rows; ?></div>
+<? } ?>
+<?php echo $this->subform($view, 'team_member'); ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td></td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:0px;">
+	<tr>
+		<td><?php echo $this->translate('For students attending non-public schools, an administrator or a designated representative of the non-public school shall be a member of the MDT'); ?>.</td>
+	</tr>
+	<tr>
+		<td>* <?php echo $this->translate('Should a member(s) of the MDT not agree with the conclusion(s) of the report, they must submit a separate statement (minority report) presenting his or her conclusion(s)'); ?>.</td>
+
+	</tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+	<tr>
+		<td style="white-space: nowrap;"><?php echo $this->element->date_provided; ?></td>
+
+</table>
+<table class="formInput" style="margin-top:0px;">
+	<tr>
+		<td style="white-space: nowrap;"><?php echo $this->element->name_provided_by; ?></td>
+</table>
+<table class="formInput" style="margin-top:0px;">
+	<tr>
+		<td style="white-space: nowrap;"><?php echo $this->translate('MDT has been provided at no cost'); ?></td>
+</table>

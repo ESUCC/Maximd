@@ -1,0 +1,90 @@
+<style>
+
+    .pseudoTable {
+        margin:0;
+        padding:0;
+    }
+
+    .pseudoTable li {
+        display:block;
+        clear:both;
+    }
+
+    .pseudoTable li ul {
+        display:block;
+        clear:both;  
+        padding-left:0;
+    }
+
+    .pseudoTable li.head {
+        font-size:12px;
+        font-weight:bold;
+        border-bottom: 1px dashed #cdcdcd;
+    }
+
+    .pseudoTable li.head ul li {
+        color:#666;
+        min-width:75px;
+    }
+
+    .pseudoTable li.head:before, .pseudoTable:before, .pseudoTable li.odd:before, .pseudoTable li.even:before,
+    .pseudoTable li.head:after, .pseudoTable:after, .pseudoTable li.even:after, .pseudoTable li.odd:after {
+        content: '\0020';
+        display: block;
+        overflow: hidden;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+
+    .pseudoTable li.head:after, .pseudoTable:after, .pseudoTable li.even:after, .pseudoTable li.odd:after {
+        clear: both;
+    }
+
+    .pseudoTable li ul li {
+        float:left;
+        padding:5px 20px;
+        margin:5px;
+        text-align:left;
+        clear:none;
+        min-width:75px;
+    }
+
+    .pseudoTable .even {
+        background-color:#e8e8e8;
+    }
+
+    .date {
+        width:200px;
+    }
+
+    .user {
+        width:200px;
+    }
+
+    .type {
+        width:250px;
+    }
+</style>
+<?
+// this element is used by the changepage action
+echo $this->formHidden('mode', 'edit', array('ignore'=>true));
+echo $this->formHidden('form_number', '001', array('ignore'=>true));
+echo $this->formHidden('id_student', $this->db_form_data['id_student'], array('ignore'=>true));
+
+?>
+<?php include_once('../application/views/scripts/formEditHeader.phtml'); ?>
+<br /><br />
+<form action="/form<?php echo $this->results[0]['table_name']; ?>/changepage" id="myform" method="post">
+    <p style="margin-left:20px;">(<strong><?php echo count($this->results); ?></strong>) records were found.</p>
+    <ul class="pseudoTable">
+        <li class="head">
+            <ul>
+                <li class="date">Date</li>
+                <li class="user">User</li>
+                <li class="type">Type Of Access</li>
+            </ul>
+        </li>
+        <?php echo $this->partialLoop('/partials/logs.phtml', $this->results); ?>
+    </ul>
+</form>

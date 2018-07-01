@@ -1,0 +1,39 @@
+<div>Personnel List</div>
+
+<?= $this->searchForm; ?>
+
+<?php if (isset($this->results)) { ?>
+  <?php if (count($this->results) < 1) { ?>
+    
+      <div>No results matched your search</div>
+
+  <?php } else { ?>
+  	<form id="Search" enctype="application/x-www-form-urlencoded" method="post" action="/personnel/list">
+      <div><?= count($this->results).' results' ?></div>
+      <?= $this->formHidden('page', $this->page); ?>
+      <?= $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+      <table id="result">
+      <tr>
+          <th>County Name</th>
+          <th>County</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+      </tr>
+      <?php 
+      	
+      	$rownum = 0;
+//      	foreach ($this->results as $k => $r) {
+      	foreach($this->paginator as $k => $r) {      
+      		$rowClassAddition = ($rownum++ % 2) ? 'evenrow' : 'oddrow';
+      		?>
+          <tr class="result <? echo $rowClassAddition; ?>">
+              <td><?= $r['name_first'] ?></td>
+              <td><?= $r['name_last'] ?></td>
+              <td><a href="/personnel/view/id_personnel/<?= $r['id_personnel'] ?>">View</a></td>
+              <td><a href="/personnel/edit/id_personnel/<?= $r['id_personnel'] ?>">Edit</a></td>
+          </tr>
+      <?php } ?>
+      </table>
+      </form>
+  <?php } ?>
+<?php } ?>

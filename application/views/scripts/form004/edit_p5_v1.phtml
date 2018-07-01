@@ -1,0 +1,231 @@
+<?php
+$view = $this->element->page->getView();
+if (isset($view->db_form_data['summary_form']) && true == $view->db_form_data['summary_form']) {
+	$summaryForm = true;
+} else {
+	$summaryForm = false;
+}
+if(isset($view->db_form_data['district'])) {
+    $district = $view->db_form_data['district'][0];
+} else {
+    $district = array();
+}
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo $this->element->id_form_004;
+echo $this->element->page;
+//echo $this->element->dob_sub;
+//echo $this->element->transition_plan_sub; // jl-I don't think this is right....this is a subform element
+?>
+<table class="formTitleHead">
+	<tr>
+		<td><?php echo $this->translate('Transition'); ?></td>
+	</tr>
+</table>
+
+<?php if('print' != $view->mode) { ?>
+<table class="formInput noBorder">
+	<tr class="bgLight2">
+		<td>
+            <?php if ($view->studentOlderThan15) {
+            	// some of this functionality has been moved to model/form004.php
+                $this->element->transition_plan->setAttrib('disabled', true); 
+                $this->element->transition_plan->setChecked(true);
+             } ?>
+            <?=$this->element->transition_plan;?>
+
+            <?php if ($view->studentOlderThan15) { ?>
+                <div id="checkboxText" class="sc_inlineText"><?php echo $this->translate('is or will turn 16'); ?>.</div>
+            <?php } elseif ($this->element->transition_plan->getValue() === 'f' && !$view->studentOlderThan15) { ?>
+		        <div id="checkboxText" class="sc_inlineText"><?php echo $this->translate('will not turn 16')?>.</div>
+            <?php } elseif ($this->element->transition_plan->getValue() == '1' && !$view->studentOlderThan15) { ?>
+            <div id="checkboxText" class="sc_inlineText"><?php echo $this->translate('Uncheck the box to the left to dissolve the Transition Plan'); ?>.</div>
+            <?php } ?>
+		</td>
+	</tr>
+</table>
+<?php
+}
+?>
+
+<?php
+if ($this->element->transition_plan->getValue() === 'f' && 'print' == $view->mode && !$view->studentOlderThan15) {
+	?>
+<table class="formInput" cellspacing="5">
+	<tr>
+		<td align="left"><?php echo $this->translate('No Transition Plan'); ?>.</td>
+	</tr>
+</table>
+<?php } ?>
+
+<?php if($this->element->transition_plan->getValue() === 'f' && 'print' == $view->mode && !$view->studentOlderThan15) { 
+	// do not print if box is not checked.
+	// we output this in edit mode so that it can dynamically appear
+	?>
+
+<?php } else { ?>
+<!-- <div id="subformToChange"></div> -->
+<div id="subformToChange" style="<? if(($this->element->transition_plan->getValue() === 'f' && !$view->studentOlderThan15)) echo "display:none;"; ?>">
+<table class="formInput">        
+	     <?php if('print' != $view->mode) { ?>
+    <?php /* ?>
+	<tr class="bgLight2">
+		<td><span><strong>This student will not turn 16 during this IEP, so a
+		statement of the child's transition services is not required.</strong></span>
+		</td>
+	</tr>
+    <?php */ ?>
+	<tr>
+		<td style=""><?php echo $this->translate('Complete all that apply'); ?>.</td>
+	</tr>
+	<?php } ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_secgoals']) :?>
+	<tr class="bgLight2">
+		<td><strong><?php echo $this->translate('Measurable post-secondary goals'); ?></strong></td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->subform($view, 'iep_form_004_secondary_goal', true, true, true); ?>
+	    </td>
+	</tr>
+	<?php endif; ?>
+	<tr class="noprint">
+		<td>
+	       <?php echo $this->element->transition_secgoals; ?>
+	    </td>
+	</tr>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_course_study']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Course of Study'); ?></span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_course_study; ?><BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_instruction']
+			  || $district['iep_summary_transition_16_rel_services']
+			  || $district['iep_summary_transition_16_comm_exp']
+			  || $district['iep_summary_transition_16_emp_options']
+			  || $district['iep_summary_transition_16_dly_liv_skills']
+			  || $district['iep_summary_transition_16_func_voc_eval']
+			  || $district['iep_summary_transition_16_inter_agency_link']
+			  || $district['iep_summary_transition_activity']) :?>
+	<tr>
+		<td><strong><?php echo $this->translate('Beginning no later than'); ?></strong>
+		<?php if ('print' != $view->mode) { ?>(<?php echo $this->translate('indicate the strengths'); ?>)<?php } ?>:</td>
+	</tr>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_instruction']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Instruction'); ?>:</span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_instruction; ?><BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_rel_services']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Related Services'); ?>: <?php if ('print' != $view->mode) { ?><?php echo $this->translate($this->element->transition_16_rel_services->getDescription()); ?><?php } ?></span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_rel_services; ?><BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_comm_exp']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Community Experiences'); ?>: <?php if ('print' != $view->mode) { ?><?php echo $this->translate($this->element->transition_16_comm_exp->getDescription()); ?><?php } ?></span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_comm_exp; ?> <BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_emp_options']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Development of employment'); ?>: <?php if ('print' != $view->mode) { ?>(<?php echo $this->translate('Development of employment IE'); ?>):<?php } ?></span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_emp_options; ?><BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_dly_liv_skills']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Daily Living Skills'); ?>: <?php if ('print' != $view->mode) { ?><?php echo $this->translate($this->element->transition_16_dly_liv_skills->getDescription()); ?><?php } ?></span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_dly_liv_skills; ?><BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_func_voc_eval']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Functional Vocational Evaluation'); ?>: <?php if ('print' != $view->mode) { ?><?php echo $this->translate($this->element->transition_16_func_voc_eval->getDescription()); ?><?php } ?></span></td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_func_voc_eval; ?>  <BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_16_inter_agency_link']) :?>
+	<tr class="bgLight2">
+		<td><span class="btsb"><?php echo $this->translate('Interagency Linkages and Responsibilities'); ?>:</span>
+		</td>
+	</tr>
+	<tr>
+		<td>
+	    		<?php echo $this->element->transition_16_inter_agency_link; ?>  <BR />
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php if (!$summaryForm || $district['iep_summary_transition_activity']) :?>
+	<tr >
+		<td>
+		<table class="bgLight2">
+			<tr>
+				<td><span class="btsb"><?php echo $this->translate('Transition Activities'); ?></span></td>
+				<td><span class="btsb"><?php echo $this->translate('Agency Responsible'); ?></span></td>
+				<td><span class="btsb"><?php echo $this->translate('Date Due'); ?></span></td>
+			</tr>
+			<tr>
+				<td>
+                <?php echo $this->element->transition_activity1; ?></td>
+				<td><?php echo $this->element->transition_agency1; ?></td>
+				<td><?php echo $this->element->transition_date1; ?></td>
+			</tr>
+			<tr>
+				<td><?php echo $this->element->transition_activity2; ?></td>
+				<td><?php echo $this->element->transition_agency2; ?></td>
+				<td><?php echo $this->element->transition_date2; ?></td>
+			</tr>
+			<tr>
+				<td><?php echo $this->element->transition_activity3; ?></td>
+				<td><?php echo $this->element->transition_agency3; ?></td>
+				<td><?php echo $this->element->transition_date3; ?></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	<?php endif; ?>
+	<?php endif; ?>
+</table>
+</div>
+<?php }
+
+//echo $view->editor(
+//    'foo',
+//    'Start writing here...',
+//    array('always'),
+//    array('style' => 'width: 300px;', 'style' => 'height: 0px;')
+//);
+?>

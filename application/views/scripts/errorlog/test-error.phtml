@@ -1,0 +1,11 @@
+<div>Generate Simple JS Error to test JS Error Capture</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		try{
+			thisisbadcode;			
+		} catch(err) {
+			console.debug('JAVASCRIPT ERROR: There has been an error trying to initialize the datatable.');
+		}
+
+	});
+</script>

@@ -1,0 +1,235 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<? $view = $this->element->rownumber->getView(); ?>
+<?php if('print' == $view->mode) { ?>
+<hr />
+<?php } ?>
+<table class="formInput" style="margin-top:1px; float:right;">
+    <tr>
+        <td style="<?= ('print' == $view->mode)?'width:100%;':'width:70%;'; ?>">
+            <div style="">
+	            <div id="ifsp_services_<?= $rowNum; ?>-service_service-colorme" class="colorme">
+	            <?php
+		            if('print' == $view->mode) {
+			            if ($this->element->service_service->getValue() == 'Other') {
+			            	echo "<div style=\"float:left;\" class=\"printBoldLabel\">Service:</div>&nbsp;".$this->element->service_service->getValue() .
+			            		 " (" . $this->element->service_other->getValue() . ")";
+			            } else {
+			            	echo $this->element->service_service;
+			            }
+		            } else {
+                        $this->element->service_service->removeDecorator('label');
+		            	//echo $this->element->service_service;
+                        $this->element->service_service->setAttrib('style', 'float:left;');
+                        ?>
+                        <div id="service_service-colorme" class="colorme">
+                            <span>
+                                <span id="ifsp_services_<?= $rowNum; ?>-service_service-label">
+                                    <label style="float:left;margin-top:10px;" class="printBoldLabel required" for="ifsp_services_<?= $rowNum; ?>-service_service"><?= $this->element->service_service->getLabel();?></label>
+                                </span>
+                                <div id="service_service-colorme" class="colorme">
+                                    <span>
+                                        <?= $this->element->service_service;?>
+                                    </span>
+                                </div>
+                            </span>
+                        </div>
+                        <?
+		            }
+	            ?>
+	            </div>
+	            <div id="ifsp_services_<?= $rowNum; ?>-service_other-colorme" class="colorme"
+	            <?php
+	                // fade the element if 'other' is not selected
+	                if($this->element->service_service->getValue() != 'Other') echo ' style="display:none;"';
+	            ?>
+	            >
+	            <?php
+		            if('print' != $view->mode) {
+		            	echo $this->element->service_other;
+		            }
+		        ?>
+	            </div>
+			</div>
+        </td>
+        <td class="noprint" style="padding-right:10px; width: 30%;" align="right" >
+            <div id="iep_form_004_suppform_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+            <?= $this->element->id_ifsp_services; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+	            <div id="ifsp_services_<?= $rowNum; ?>-service_where-colorme" class="colorme">
+	            <?php
+		            if('print' == $view->mode) {
+			            if ($this->element->service_where->getValue() == 'Other') {
+			            	echo "<div style=\"float:left;\" class=\"printBoldLabel\">Setting:</div>&nbsp;".$this->element->service_where->getValue() .
+			            		 " (" . $this->element->service_where_other->getValue() . ")";
+			            } else {
+			            	echo $this->element->service_where;
+			            }
+		            } else {
+                        //echo '<span id="ifsp_services_1-service_where-label" class="colorme">';
+		            	echo $this->element->service_where;
+		            	echo '<span style="padding-left:10px;display:inline;" class="popupHelp ui-icon ui-icon-help">&nbsp;</span>';
+		                
+                    }
+	            ?>
+	            </div>
+	            <div id="ifsp_services_<?= $rowNum; ?>-service_where_other-colorme" class="colorme"
+	            <?php
+	                // fade the element if 'other' is not selected
+	                if($this->element->service_where->getValue() != 'Other') echo ' style="display:none;"'; ?>
+	            >
+	            <?php
+		            if('print' != $view->mode) {
+		            	echo $this->element->service_where_other;
+		            }
+		        ?>
+	            </div>
+        </td>
+    </tr>
+</table>
+<?php if('print' != $view->mode) { ?>
+<hr />
+<?php } ?>
+
+<table class="formInput">
+    <tr>
+        <td style="width:25%;" class="printBoldLabel">
+            How Often?
+        </td>
+        <td style="width:25%;" class="printBoldLabel">
+            How Much?
+        </td>
+        <td style="width:25%;" class="printBoldLabel">
+            Group/Individual?
+        </td>
+        <td style="width:25%;" class="printBoldLabel">
+            Natural Environment?
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_dwm-colorme" class="colorme">
+            <?php echo $this->element->service_dwm; ?>
+            <?php echo $this->element->service_dwm_unit; ?>
+            </div>
+        </td>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_tpd-colorme" class="colorme">
+            <?php echo $this->element->service_tpd; ?>
+            <?php echo $this->element->service_tpd_unit; ?>
+            </div>
+        </td>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_group_ind-colorme" class="colorme">
+            <?php echo $this->element->service_group_ind; ?>
+            </div>
+        </td>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_natural-colorme" class="colorme">
+            <?php echo $this->element->service_natural; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<?php if('print' != $view->mode) { ?>
+<hr />
+<?php } ?>
+
+<table class="formInput">
+    <tr>
+        <td style="width:50%;" class="printBoldLabel">
+            When service Starts and Ends?
+        </td>
+        <td style="width:25%;" class="printBoldLabel">
+            Who pays?
+        </td>
+        <td style="width:25%;" class="printBoldLabel">
+            Who's Responsible?
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-dates_wrapper-colorme" class="colorme">
+            <?php echo $this->element->service_start; ?> /
+            <?php echo $this->element->service_end; ?>
+            </div>
+        </td>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_who_pays-colorme" class="colorme">
+            <?php
+	            if('print' == $view->mode) {
+		            if ($this->element->service_who_pays->getValue() == 'Other') {
+		            	echo $this->element->service_who_pays->getValue() .
+		            		 " (" . $this->element->service_who_pays_other->getValue() . ")";
+		            } else {
+		            	echo $this->element->service_who_pays;
+		            }
+	            } else {
+	            	echo $this->element->service_who_pays;
+	            }
+	        ?>
+	        </div>
+			<?php
+            	// fade the element if 'other' is not selected
+            	$whereOtherDisplay = '';
+            	if($this->element->service_who_pays->getValue() != 'Other') $whereOtherDisplay = ' style="display:none;"';
+            	?>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_who_pays_other-colorme" <?= $whereOtherDisplay; ?> class="noprint colorme">
+            <?php echo $this->element->service_who_pays_other; ?>
+            </div>
+        </td>
+        <td>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_responsible-colorme" class="colorme">
+            <?php //echo $this->element->service_responsible; ?>
+            <?php
+	            if('print' == $view->mode) {
+		            if ($this->element->service_responsible->getValue() == 'Other') {
+		            	echo $this->element->service_responsible->getValue() .
+		            		 " (" . $this->element->service_responsible_other->getValue() . ")";
+		            } else {
+		            	echo $this->element->service_responsible;
+		            }
+	            } else {
+	            	echo $this->element->service_responsible;
+	            }
+	        ?>
+            </div>
+
+            <?php
+            	// fade the element if 'other' is not selected
+            	$whereOtherDisplay = '';
+            	if($this->element->service_responsible->getValue() != 'Other') $whereOtherDisplay = ' style="display:none;"';
+            	?>
+            <div id="ifsp_services_<?= $rowNum; ?>-service_responsible_other-colorme" <?= $whereOtherDisplay; ?> class="noprint colorme">
+            <?php echo $this->element->service_responsible_other; ?>
+            </div>
+        </td>
+    </tr>
+    <?php if('print' != $view->mode) { ?>
+    <tr>
+        <td colspan="3">
+            <HR />
+        </td>
+    </tr>
+    <?php } ?>
+    <?php if('print' != $view->mode || ('print' == $view->mode && 0==$this->element->service_natural->getValue() &&
+                'School district'==$this->element->service_who_pays->getValue())) { ?>
+    <tr id="ifsp_services_<?= $rowNum; ?>-service_justification-label_row">
+        <td colspan="3">
+            Include a justification of the extent, if any, to which a service will not be provided
+            in a natural environment.<br />
+        </td>
+    </tr>
+    <tr id="ifsp_services_<?= $rowNum; ?>-service_justification-element_row">
+        <td colspan="3">
+            <div id="ifsp_services_<?= $rowNum; ?>-service_justification-colorme" class="colorme">
+            <?php echo $this->element->service_justification; ?>
+            </div>
+        </td>
+    </tr>
+    <?php } ?>
+</table>

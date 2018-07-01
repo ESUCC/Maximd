@@ -1,0 +1,260 @@
+<?php if(0) { ?>
+<script language="JavaScript" type="text/javascript">
+  dojo.require("dojo.data.ItemFileReadStore");
+  dojo.require("dijit.Tree");
+  dojo.require("dojo.parser");  // scan page for widgets and instantiate them
+</script>
+
+<div dojoType="dojo.data.ItemFileReadStore" jsId="continentStore"
+  url="/survey/distcd"></div>
+
+<h3>Tree with hardcoded root node (not corresponding to any item in the store)</h3>
+<div dojoType="dijit.Tree" id="tree1" store="continentStore" query="{type:'county'}"
+  labelAttr="name" label="Continents">
+  <script type="dojo/method" event="onClick" args="item">
+    if(item){
+      alert("Execute of node " + continentStore.getLabel(item)
+        +", population=" + continentStore.getValue(item, "population"));
+    }else{
+      alert("Execute on root node");
+    }
+  </script>
+</div>
+
+<? } elseif(0) { ?>
+
+
+        <div id="response"></div>
+        
+        <div dojoType="dijit.layout.SplitContainer"
+             orientation="horizontal"
+             sizerWidth="7"
+             activeSizing="false"
+             style="border: 1px solid #bfbfbf; float: left; width: 800px; height: 500px;">
+            <div id="leftpanel" dojoType="dijit.layout.ContentPane" sizeMin="40" sizeShare="50">
+                
+            </div>
+            <div id="rightpanel" dojoType="dijit.layout.ContentPane" sizeMin="50" sizeShare="50">
+                <div id="rightPanelText"></div>
+            </div>
+        </div>        
+
+<? } else { ?>
+
+    <div>Survey Distribute</div>
+    <BR/>
+    <?//= $this->searchForm; ?>
+    <BR/>
+    <br/>
+    <form enctype="application/x-www-form-urlencoded" action="/survey/savedistribute" method="post" name="">
+
+    <? if (isset($this->dojoData)) { ?>
+        
+        <?
+            //
+            // loop compares current iteration to previous iteration
+            // if county or esu have changed, new rows are output
+            //
+            
+//             $currentState       = 'NE';
+//             $currentCountyID    = $this->dojoData[0]['id_county'];
+//             $currentEsuID       = $this->dojoData[0]['id_neb_esu'];
+//             $currentDistrictID  = $this->dojoData[0]['id_district'];
+            $currentState       = "";
+            $currentCountyID    = "";
+            $currentEsuID       = "";
+            $currentDistrictID  = "";
+        ?>
+        <table>
+        <tr><td colspan="3"><?
+            $submit = new Zend_Form_Element_Submit('save');
+            $submit->setLabel('Distribute')
+                   ->setDecorators(array('ViewHelper' , 'Errors')); 
+                
+            echo $submit;
+            ?>
+        </td></TR>
+        <? foreach($this->dojoData as $row) { ?>    
+        <?  
+                
+            //
+            // state
+            //
+            if($currentState != 'NE')
+            {
+                    
+                // can push to state, it gets a checkbox
+                
+                ?>
+                <tr><td colspan="4"><?
+                    $chkbox = new Zend_Form_Element_Checkbox('root');
+                    $chkbox->setCheckedValue(1)
+                           ->setValue(isset($this->checkedArr['root']))
+                           ->setDecorators(array('ViewHelper' , 'Errors')); 
+                        
+                    echo $chkbox . ' ' . 'State';
+                    ?>
+                </td></TR>
+                <?
+                $currentState = 'NE';            
+            }
+
+            //
+            // county
+            //
+            if($currentCountyID != $row['id_county'])
+            {
+                    
+                // can push to state, it gets a checkbox
+                
+                ?><tr>
+                <td colspan="1" width="30px" >&nbsp;</td>
+                <td colspan="3"><B><? 
+                echo $row['name_county']; ?></B></td></TR><?
+                $currentCountyID = $row['id_county'];
+            }
+
+            //
+            // esu
+            //
+            if(0 && $currentEsuID != $row['id_neb_esu'])
+            {
+                    
+                // can push to esu, they get checkboxes
+                //print_r($row);
+                ?>
+                <tr>
+                    <td width="30px">&nbsp;</td>
+                    <td width="30px">&nbsp;</td>
+                    <td colspan="2"><?
+                    $chkbox = new Zend_Form_Element_Checkbox('esu_'.$row['id_neb_esu']);
+                    $chkbox->setLabel($row['esu_name'])
+                           ->setCheckedValue(1)
+                           ->setValue(isset($this->checkedArr[$row['id_neb_esu']]))
+                           ->setDecorators(array('ViewHelper' , 'Errors')); 
+                        
+                    echo $chkbox . ' ' . $row['esu_name'];
+                    ?>
+                </td></TR>
+                <?
+                $currentEsuID = $row['id_neb_esu'];
+            }
+
+            //
+            // district
+            //
+            if($currentDistrictID != $row['id_county'] . '_' . $row['id_district'])
+            {
+                $currentDistrictID = $row['id_county'] . '_' . $row['id_district'];
+
+                // can push to esu, they get checkboxes
+                //print_r($row);
+                ?>
+                <tr>
+                    <td width="30px">&nbsp;</td>
+                    <td width="30px">&nbsp;</td>
+                    <td width="30px">&nbsp;</td>
+                    <td><?
+                    $chkbox = new Zend_Form_Element_Checkbox($currentDistrictID);
+                    $chkbox->setLabel($row['esu_name'])
+                           ->setCheckedValue(1)
+                           ->setValue(isset($this->checkedArr[$currentDistrictID]))
+                           ->setDecorators(array('ViewHelper' , 'Errors')); 
+                        
+                    echo $chkbox . ' ' . $row['name_district'];
+                    ?>
+                </td></TR>
+                <?
+            }
+
+
+//                     [id_county] => 79
+//                     [id_district] => 0064
+//                     [id_neb_esu] => 
+//                     [name_county] => Scottsbluff
+//                     [esu_name] => 
+//                     [name_district] => Lake Minatare Public School
+
+
+
+
+
+if(0) {
+
+                    
+                if($row['type'] == 'state')
+                {
+                    
+                    // can push to state, it gets a checkbox
+                    
+                    ?>
+                    <tr><td colspan="4"><?
+                        $chkbox = new Zend_Form_Element_Checkbox($row['id']);
+                        $chkbox->setLabel($row['name'])
+                               ->setCheckedValue(1)
+                               ->setValue(isset($this->checkedArr[$row['id']]))
+                               ->setDecorators(array('ViewHelper' , 'Errors')); 
+                            
+                        echo $chkbox . ' ' . $row['name'];
+                        ?>
+                    </td></TR>
+                    <?
+                } elseif($row['type'] == 'county' && isset($row['children']) && count($row['children']))
+                {
+                    // can't push surveys to counties, so they don't get checkboxes
+                    //
+                    // only displaying county if it has districts
+                    
+                    ?><tr><td colspan="1">&nbsp;</td><td colspan="3"><? echo $row['name']; ?></td></TR><?
+                    
+                } elseif($row['type'] == 'district') {
+                    
+                    // can push to districts, they get checkboxes
+                    
+                    ?>
+                    <tr><td colspan="2">&nbsp;</td><td colspan="2"><?
+                        $chkbox = new Zend_Form_Element_Checkbox($row['id']);
+                        $chkbox->setLabel($row['name'])
+                               ->setCheckedValue(1)
+                               ->setValue(isset($this->checkedArr[$row['id']]))
+                               ->setDecorators(array('ViewHelper' , 'Errors')); 
+                            
+                        echo $chkbox . ' ' . $row['name'];
+                        ?>
+                    </td></TR>
+                    <?
+
+                } elseif($row['type'] == 'esu' && isset($row['children']) && count($row['children'])) {
+                    
+                    // can push to esu, they get checkboxes
+                    //print_r($row);
+                    ?>
+                    <tr><td colspan="3">&nbsp;</td><td colspan="1"><?
+                         $chkbox = new Zend_Form_Element_Checkbox('esu_'.$row['id']);
+                        $chkbox->setLabel($row['name'])
+                               ->setCheckedValue(1)
+                               ->setValue(isset($this->checkedArr[$row['id']]))
+                               ->setDecorators(array('ViewHelper' , 'Errors')); 
+                            
+                        echo $chkbox . ' ' . $row['name'];
+                        echo $row['name'];
+                        ?>
+                    </td></TR>
+                    <?
+                }
+}
+                ?>
+        <? } ?>
+        
+    <? } ?>
+    <?
+    $surveyid = new Zend_Form_Element_Hidden('surveyid');
+    $surveyid->setValue($this->surveyid);
+        
+    echo $surveyid;
+    ?>
+    </form>
+<? } ?>
+
+
+<? //print_r($this->checkedArr);

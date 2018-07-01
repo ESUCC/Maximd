@@ -1,0 +1,12 @@
+<?
+$this->element->related_service_drop->removeDecorator('Label');
+    ?><tr>
+    <td class="print_bgWhiteSmall" style="text-align:left;padding-left: 8px;"><? echo $this->element->related_service_drop; ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;white-space: nowrap;"><? echo ($this->element->related_service_from_date); ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;white-space: nowrap;"><? echo ($this->element->related_service_to_date); ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;"><? echo $this->element->related_service_location; ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;white-space: nowrap;"><? echo $this->element->related_service_tpd . " " . $this->element->related_service_tpd_unit; ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;white-space: nowrap;"><? echo $this->element->related_service_days_value . " " . $this->element->related_service_days_unit; ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;white-space: nowrap;"><? echo $this->element->related_service_mpy; ?></td>
+    <td class="print_bgWhiteSmall" style="text-align:center;white-space: nowrap;"><? echo $this->element->related_service_calendar->getValue(); ?></td>
+</tr>

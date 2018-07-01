@@ -1,0 +1,32 @@
+.fileUploader {
+	width:370px;
+	margin:3px;
+}
+
+.FileList {
+	clear:both;
+}
+
+.FileUploaderInput {
+	float:left;
+}
+
+.UploadButton {
+	float:right;
+	visibility:visible;
+	height:18px;
+}
+
+.soliantFileUploaderIE {
+	width:364px;
+}
+
+.FileInputIE {
+	float:left;
+}
+
+.UploadButtonIE {
+	float:right;
+	visibility:hidden;
+	height:18px;
+}

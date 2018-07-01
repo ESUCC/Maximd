@@ -1,0 +1,71 @@
+
+.collectionManager {
+    /*background-color: #d3d3d3;*/
+    float: left;
+    width: 200px;
+}
+.addCollection {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*.collectionTabs {*/
+    /*font-size: 8px;*/
+/*}*/
+
+collectionTabs .ui-tabs-nav {
+    padding: 0em;
+    background: transparent;
+    border-width: 0px;
+}
+collectionTabs .ui-tabs {
+    padding: 0em;
+}
+collectionTabs .ui-state-default {
+    color: #ffffff !important;
+}
+collectionTabs .ui-tabs-nav li {
+    position: static;
+    margin: 0px;
+    border-bottom: 1px solid #327e04 !important;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+collectionTabs .ui-tabs-nav li:first-child {
+    -moz-border-radius: 6px 0px 0px 6px;
+    -webkit-border-radius: 6px 0px 0px 6px;
+    border-radius: 6px 0px 0px 6px;
+}
+collectionTabs .ui-tabs-nav li:last-child {
+    -moz-border-radius: 0px 6px 6px 0px;
+    -webkit-border-radius: 0px 6px 6px 0px;
+    border-radius: 0px 6px 6px 0px;
+}
+collectionTabs .ui-tabs-nav li.ui-tabs-selected {
+    padding-bottom: 0px;
+    border-bottom: 1px solid #d4ccb0 !important;
+}
+
+ul#groupContainer {
+    padding: 0;
+    list-style-type: none;
+    display: inline;
+    font-size: 10px;
+}
+ul#groupContainer div {
+    padding: 4px;
+}
+ul#collectionListContainer, ul#listOfStudentsInCurrentCollection, ul#studentCollectionList {
+    padding: 0;
+    list-style-type: none;
+    display: inline;
+    font-size: 10px;
+}
+ul#collectionListContainer div, ul#listOfStudentsInCurrentCollection div, ul#studentCollectionList div {
+    padding: 4px;
+}
+
+div.collectionMessage {
+    color:red;
+}

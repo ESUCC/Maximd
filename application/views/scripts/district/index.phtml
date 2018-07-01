@@ -1,0 +1,562 @@
+<style>
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+
+.TableList {
+    width: 100%;
+    min-width: 100%;
+    border: 4px solid LightSkyblue;
+    font-size: 14px;
+}
+
+.TableList td, .TableList th {
+    padding: 4px;
+    border: 2px solid LightSkyblue;
+    font-size: 14px;
+}
+
+.TableList .TableRow:hover {
+    background-color: #F4A460;
+}
+
+
+.paginationControl {
+    width: 80%;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+}
+
+.schoolInfo {
+    height: 170px;
+}
+
+.optionInfo {
+    min-height: 170px;
+}
+
+.schoolInfoTable {
+    width: 100%;
+
+}
+
+.DistrictView .DistrictViewTitle {
+    font-size: 14px;
+    font-weight: 700;
+    height: 30px;
+}
+
+.schoolInfoTable .schoolInfoTableTitle {
+    width: 170px;
+    font-weight: 700;
+}
+
+.ui-accordion-header .ui-icon {
+    display: block;
+    position: relative;
+}
+
+.ui-accordion-header .ui-header {
+    display: block;
+    position: relative;
+    margin-left: 25px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#searchAlphabetArea {
+    position: relative;
+    font-weight: 700;
+}
+
+#searchArea {
+    position: relative;
+    width: 300px;
+}
+
+#searchAlphabet {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 300px;
+}
+
+#cancelSearch {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #a0a0a0;
+    cursor: pointer;
+}
+
+.Logo {
+    height: 150px;
+    width: auto;
+}
+
+#districtLogo {
+    position: relative;
+    margin: 10px;
+}
+
+#fileRemove {
+    display: none;
+}
+
+</style>
+
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+<?    
+
+    $countyList = Array();
+    $districtArray = "";
+
+    foreach($this->iep_county as $key => $val) $countyList[$val["id_county"]] = $val["name_county"];
+
+    foreach($this->ListDistricts as $key => $val) {
+        $districtArray .= ", [ '".addslashes($val['name_district'])."', '". addslashes($val['phone_main'])."', '".$countyList[$val['id_county']]."', '".$val['id_county']."', '".$val['id_district']."', '".$val['address_city']."', '".$val['address_zip']."', '".$val['address_state']."']";
+    }
+
+    $districtArray = substr($districtArray, 2);
+?>
+
+<script type="text/javascript">
+    $(document).ready(function() { 
+
+      var reports = Array;
+      var districtsList = [ <?=$districtArray?> ];
+      $("#searchAlphabet").val("");
+	
+
+      $(document).on("change keyup", ".options", function () {
+        var title = $(this).attr("title");
+        var url = $(this).val();
+        if (url != ""){
+         $("#dialog").load( url,
+           function() {
+            $(".options").prop('selectedIndex',0);
+            $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 620, height: 550, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $( ".accordion" ).accordion('destroy'); $("#dialog").html(""); }, buttons: { "Close": function() { $(this).dialog("close"); } } } );
+         });
+        }
+        return false;
+
+      });
+
+      $(document).on("change keyup", ".openWindow", function () {
+        var data_var = $(this).attr("value").split("|");
+        var title = data_var[0];
+        var url = data_var[1];
+
+	if (url != ""){
+	$("#dialog").html(""); 
+        $("#dialog").load( url,
+          function() {
+            $(".openWindow").prop('selectedIndex',0);
+            $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 900, height: 750, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); }, buttons: { } } );
+            $( "#tabs" ).tabs();
+
+           var validator = $("#DistrictForm").validate({
+             rules: {
+                id_district_mgr: {
+                  required: true,
+                },
+                id_account_sprv: {
+                  required: true,
+                },
+                email_student_transfers_to: {
+                  required: true,
+                },
+                name_district: {
+                  required: true,
+                  minlength: 2
+                },
+                address_city: {
+                  required: true,
+                  minlength: 1
+                },
+                address_street1: {
+                  required: true,
+                  minlength: 5
+                },
+                address_zip: {
+                  zipcodeUS: true,
+                  required: true,
+                  minlength: 5,
+                  maxlength: 10
+                },
+                address_state: {
+                  required: true
+                },
+                phone_main: {
+                  phoneUS: true,
+                  maxlength: 12,
+                  minlength: 0
+                }
+           },
+           submitHandler: function(form) {
+             $("div.error").hide();
+             return false;
+           },
+           highlight: function (element, required) {
+              $(element).css('border', '2px solid #FDADAF');
+           },
+           unhighlight: function (element, errorClass, validClass) {
+             $(element).css('border', '');
+           }
+        });
+
+        $.validator.addMethod("zipcodeUS", function(value, element) {
+           return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+        }, "The specified US ZIP Code is invalid");
+
+        $.validator.addMethod('phoneUS', function (value, element) {
+           return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
+        }, "Please enter a valid phone number");
+
+
+        });
+	}
+        return false;
+      });
+
+      $(document).on("click", ".DistrictEditReturn", function () {
+        var url = $(this).attr('rel');
+        if ((!$(".DistrictEditSave").prop("disabled") && confirm("You haven't saved your changes. Are you sure you want to Exit?")) || $(".DistrictEditSave").prop("disabled"))  $("#dialog").dialog("close");
+        return false;
+      });
+
+
+      $(document).on("keyup change", "#DistrictForm input, #DistrictForm select", function () {
+        $(".DistrictEditSave, .DistrictEditCancel").prop("disabled", false);
+        return false;
+      });
+
+      $(document).on("click", ".DistrictEditCancel", function () {
+        $("#DistrictForm").trigger('reset');
+        $(".DistrictEditSave, .DistrictEditCancel").prop("disabled", true);
+        validator.resetForm();
+        $( ":input" ).css('border', '');
+        return false;
+      });
+
+      $(document).on("click", ".DistrictEditSave", function () {
+
+        if ($("#DistrictForm").valid()) {
+
+           var data_var = Array;
+    	   data_var = {};
+
+	   var data_reports = Array;
+    	   data_reports = {};
+
+           $("#DistrictForm input, #DistrictForm select").each( function(index, element) {
+                    if($(element).attr('type') == "checkbox" && $(element).prop('checked')) data_var[encodeURIComponent($(element).attr("name"))] = '1';
+                       else if($(element).attr('type') == "checkbox" && !$(element).prop('checked')) data_var[encodeURIComponent($(element).attr("name"))] = '0';
+                       else data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+           });
+
+    	   $.each(reports, function(index, element) {
+        	  data_reports[index] =  [ encodeURIComponent(element[0]), encodeURIComponent(element[1]), encodeURIComponent(element[2]), encodeURIComponent(element[3]), encodeURIComponent(element[4]), encodeURIComponent(element[5]) ];
+           });
+
+	  data_var["reports"] = data_reports;
+
+	  console.log(data_var);
+
+          $.ajax({
+              type       : "POST",
+              url        : "/district/save",
+              crossDomain: true,
+              cache      : false,
+              data       : data_var,
+	      dataType   : "json",
+//              dataType   : "html",
+              success    : function(response) {
+
+                if (response.err == 1) $("#successSave").html(response.msg).removeClass("blueAlert").addClass("redAlert").show({ effect: "fade", duration: 500 });
+                   else {
+                      $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                      $(".DistrictEditSave, .DistrictEditCancel").prop("disabled", true); //.DistrictEditReturn, 
+                   }
+                   setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+
+//                  $("#successSave").html(response).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+
+              }
+          });
+
+        }
+        return false;
+      });
+
+
+    $(document).on("change", "#fileToUpload", function() {
+	      var file_data = $("#fileToUpload").prop("files")[0]; 
+
+        if (typeof file_data != undefined && 
+              (file_data["type"] == "image/jpg" 
+              || file_data["type"] == "image/gif" 
+              || file_data["type"] == "image/jpeg" 
+              || file_data["type"] == "image/png")) {
+	          $("#districtLogo").html('<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>');
+	          var form_data = new FormData();          
+            form_data.append("file", file_data);            
+	          form_data.append("id_district", $("#id_district").val());
+            form_data.append("id_county", $("#id_county").val());
+            $.ajax({
+                url: "/district/uploadfile",
+		            dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,   
+                type: 'post',
+		            success: function (data) {
+			              $("#fileToUpload").val("");
+			              $("#districtLogo").html('<img src="' + data.msg + '" class="Logo">');
+			              $("#fileRemove").show();
+	              },
+		            error: function() {
+		                $("#fileToUpload").val("");
+		                $("#fileRemove").hide();
+		                $("#districtLogo").html('');
+		            }
+    	      });
+	      } else $("#fileToUpload").val("");
+
+	      return false;
+    });
+
+    $(document).on("click", "#fileRemove", function() {
+
+        var form_data = new FormData();                
+        form_data.append("id_district", $("#id_district").val());
+        form_data.append("id_county", $("#id_county").val());
+        $.ajax({
+            url: "/district/removefile",
+		        dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,   
+            type: 'post',
+		        success: function (data) {
+			          $("#fileToUpload").val("");
+			          $("#districtLogo").html("");
+			          $("#fileRemove").hide("");
+			          console.log(data);
+	          }
+        });
+	      return false;
+    });
+
+    $(document).on( "click", "#cancelSearch", function() {
+        $("#searchAlphabet").val("");
+        $("#searchTable").html("");
+        $("#searchTable").hide();	        
+        $("#originalTable").show();
+	    return false;
+    });
+
+    $(document).on( "keyup", "#searchAlphabet", function() {
+        var searchAlphabet = $.trim($("#searchAlphabet").val());
+        var searchAlphabetLength = searchAlphabet.length;
+
+        if (searchAlphabet == "") {
+	    $("#searchAlphabet").val("");
+	    $("#searchTable").html("");		
+	    $("#searchTable").hide();	        
+	    $("#originalTable").show();
+         } else if ( searchAlphabetLength > 0 && searchAlphabet != "" ) {
+	    $("#searchTable").html("");	    
+	    $("#originalTable").hide();
+	    $("#searchTable").show();	        
+
+	    var i = 0;
+	    var color = "#B0C4DE";
+	    var finded = 0;
+	    var searchRes = "";
+
+    	    $.each(districtsList, function(indx, val) {
+	        color = (finded % 2) ? "#B0C4DE" : "#FFE4C4";
+		if (i == 0){
+        	    searchRes += '<table class="TableList">';
+		    searchRes += '<tr bgcolor="#B0C4DE"><th>District\'s Name</th><th>District Phone</th><th>County Name </td><th>County ID</th><th>District ID</th><th>City</th><th>Zip Code</th><th>State</th><th>&nbsp;</th></tr>';
+		    searchRes += '<tbody>';
+		}
+	        if ((val[0].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
+		    finded++;
+	            searchRes += '<tr bgcolor="' + color + '" class="TableRow"><td><b><a href="/district/view/name_district/' + encodeURIComponent(val[0]) + '/id_district/' + val[4] + '/id_county/' + val[3] + '">' + val[0] + '</a></b></td><td>' + val[1] + '</td><td>' + val[2] + '</td><td>' + val[3] + '</td><td>' + val[4] + '</td><td>' + val[5] + '</td><td>' + val[6] + '</td><td>' + val[7] + '</td><td style="width: 70px; padding: 2px;"><select class="options" title="' + val[0] + '"><option value="" selected>Choose...</option><option value="/district/viewdistrict/id_county/' + val[3] + '/id_district/' + val[4] + '/">View District</option></select></td></tr>';
+	        }
+
+		if (i == districtsList.length - 1) {
+		    searchRes += '</tbody>';
+		    searchRes += '</table><br><br>';
+		}
+
+	        i++;
+
+	    });
+	    $("#searchTable").html(searchRes)
+
+    	    if (finded == 0) $("#findres").append('<center><br><br>No matches<br><br></center>');
+
+         } 
+
+	    return false;
+    });
+
+});
+</script>
+    
+    <table class="navTopMenu">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('district');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<?php include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
+
+<?php if ($auth->hasIdentity()) { ?>
+
+<?php  echo $this->current_date_and_time; ?><br>
+
+<div>
+<?php 
+if(count($this->districtList) != 0) {
+?>
+    <h2> <b><u>Edit the Following Districts</u></b></h2>
+    <select class="openWindow">
+      <option>Choose District to Edit</option>
+<?php 
+
+foreach ($this->districtListAll as $indx => $distList){
+    if($distList != '' && $distList != NULL){
+    ?>
+
+    <option value="<?=$this->escape($distList);?>|<?php echo $this->url(array('controller'=>'district','action'=>'editdistrict','name_district'=>$distList,
+                                          'id_district'=>$this->districtList[$indx]["id_district"],'id_county'=>$this->districtList[$indx]["id_county"] ));?>/"><?=$this->escape($distList);?></option>
+
+<?/*   <a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$distList["name_district"], 'id_district'=>$distList["id_district"],'id_county'=>$distList["id_county"] ));?>/">old</a>*/?>
+
+    <?  
+    }
+   }
+  }    
+?> 
+    </select>
+</div>
+<br>
+
+<div id="searchAlphabetArea">
+    Search by Aplhabet<br>
+    <div id="searchArea">
+        <input type="text" value="" id="searchAlphabet">
+        <div id="cancelSearch"><i class="fa fa-times fa-lg"></i></div>
+    </div>
+</div>
+
+
+<br>
+<br>
+
+<div id="searchTable"></div> 
+
+<div id="originalTable">
+<center><?php echo $this->paginationControl($this->paginator3,'sliding','sqlpaginator.phtml',array('route'=> 'district')); ?> </center>
+<table class="TableList">
+<tr bgcolor="#B0C4DE">
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'name_district'));?>>District's Name</a></th>
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'phone_main'));?>>District Phone</a></th>
+<th>County Name </td>
+
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'id_county'));?>>County ID</a></th>
+
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'id_district'));?>>District ID</a></th>
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'address_city'));?>>City</a></th>
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'address_zip'));?>>Zip Code</a></th>
+<th><a href =<?php echo $this->url(array('controller'=>'district','action'=>'index','fieldname'=>'address_state'));?>>State</a></th>
+<th>&nbsp;</th>
+</tr>
+<tbody>
+<?
+    $i = 0;
+    $editAction='view';
+    foreach($this->paginator3 as $iep_districts) {
+    $i = $i + 1;
+?>
+<tr bgcolor="<?=($i % 2) ? "#FFE4C4" : "#B0C4DE"?>" class="TableRow">
+ <td><b><a href="<?php echo $this->url(array('controller'=>'district','action'=>$editAction,'name_district'=>$iep_districts->name_district,
+                  'id_district'=>$iep_districts->id_district,'id_county'=>$iep_districts->id_county));?>">
+<?php echo $this->escape($iep_districts->name_district);?></a></td>
+
+<?php //echo $this->escape($iep_districts->name_district); This is what it was?>
+ <td><?php echo $this->escape($iep_districts->phone_main);?></td>
+ <td>
+<?php foreach($this->iep_county as $iep_countys) {
+   if ($this->escape($iep_districts->id_county)== $this->escape($iep_countys->id_county))
+   {
+    echo $this->escape($iep_countys->name_county);
+   }
+  }?></td>
+
+<td><?php echo $this->escape($iep_districts->id_county);?></td>
+<td><?php echo $this->escape($iep_districts->id_district)?></td>
+<td><?php echo $this->escape($iep_districts->address_city)?></td>
+<td><?php echo $this->escape($iep_districts->address_zip)?></td>
+<td><?php echo $this->escape($iep_districts->address_state)?></td>
+<td style="width: 70px; padding: 2px;"><select class="options" title="<?=$this->escape($iep_districts->name_district)?>">
+          <option value="" selected>Choose...</option>
+          <option value="/district/viewdistrict/id_county/<?=$iep_districts->id_county?>/id_district/<?=$iep_districts->id_district?>/">View District</option>
+</select></td>
+<?php //<td><a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit', 'name_district'=>$iep_districts->name_district)); ">Edit</a></td> ?>
+<?php //<td><a href="<?php echo $this->url(array('controller'=>'index','action'=>'delete', 'id_district'=>$iep_districts->id_district));">Delete</a></td> ?>
+</tr> 
+<?}?>
+</tbody>
+</table>
+<center><?php echo $this->paginationControl($this->paginator3,'sliding','sqlpaginator.phtml',array('route'=> 'district')); ?> </center>
+</table>
+<?}?>
+
+
+<div id="dialog"></div>

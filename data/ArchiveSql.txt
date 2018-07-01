@@ -1,0 +1,25 @@
+alter table iep_form_001 add column pdf_archived boolean default false;
+alter table iep_form_002 add column pdf_archived boolean default false;
+alter table iep_form_003 add column pdf_archived boolean default false;
+alter table iep_form_004 add column pdf_archived boolean default false;
+alter table iep_form_005 add column pdf_archived boolean default false;
+alter table iep_form_006 add column pdf_archived boolean default false;
+alter table iep_form_007 add column pdf_archived boolean default false;
+alter table iep_form_008 add column pdf_archived boolean default false;
+alter table iep_form_009 add column pdf_archived boolean default false;
+alter table iep_form_010 add column pdf_archived boolean default false;
+alter table iep_form_011 add column pdf_archived boolean default false;
+alter table iep_form_012 add column pdf_archived boolean default false;
+alter table iep_form_013 add column pdf_archived boolean default false;
+alter table iep_form_014 add column pdf_archived boolean default false;
+alter table iep_form_015 add column pdf_archived boolean default false;
+alter table iep_form_016 add column pdf_archived boolean default false;
+alter table iep_form_017 add column pdf_archived boolean default false;
+alter table iep_form_018 add column pdf_archived boolean default false;
+alter table iep_form_019 add column pdf_archived boolean default false;
+alter table iep_form_020 add column pdf_archived boolean default false;
+alter table iep_form_021 add column pdf_archived boolean default false;
+alter table iep_form_022 add column pdf_archived boolean default false;
+alter table iep_form_023 add column pdf_archived boolean default false;
+alter table iep_form_024 add column pdf_archived boolean default false;
+

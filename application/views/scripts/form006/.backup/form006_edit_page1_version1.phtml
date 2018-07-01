@@ -1,0 +1,111 @@
+<?php 
+	$view = $this->element->page->getView();
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_006; ?>
+<?= $this->element->page; ?>
+    
+<table class="formTitleHead noprint" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notice of School District's Decision Regarding Requested 
+        Special Education Services</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+        <strong><?php echo $this->element->date_notice; ?></strong>
+	
+	<?php // This is how you import parents.
+	//echo $view->db_form_data['student_data']['parents']; ?>
+        </td>
+    </tr>
+    <tr>
+		<td>
+			You have requested that <?php echo $view->db_form_data['student_data']['name_district']; ?>:
+			<?php echo $this->element->describe_action; ?>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+		<div id="reason_wrapper-colorme" class="colorme">
+			The reason the school district
+            <?php 
+            if('print' == $view->mode) {
+            	$option = $this->element->proposition_reason->getValue();
+            	echo $this->element->proposition_reason->getMultiOption($option);
+            } else {
+                echo $this->element->proposition_reason; 
+            } ?>
+            to take this action is:
+        </div>
+	   <?php echo $this->element->describe_reason; ?>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+			The school district considered the following option(s):
+			<?php echo $this->element->options_considered; ?>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+		<div id="proposition_wrapper-colorme" class="colorme">
+			The options were
+            <?php 
+            if('print' == $view->mode) {
+                $option = $this->element->proposition_option_accept->getValue();
+                echo $this->element->proposition_option_accept->getMultiOption($option);
+            } else {
+                echo $this->element->proposition_option_accept; 
+            } ?>
+            because:
+		</div>
+		<?php echo $this->element->options_rejected; ?>
+		</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+			This decision is based on the evaluation procedures, tests, records, 
+            or reports described below:
+			<?php echo $this->element->decision_based; ?>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+			Any other factors relevant to the district's decision are:
+			<?php echo $this->element->other_factors; ?>
+		</td>
+    </tr>
+</table> 
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td colspan="2">
+        Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individual with Disabilities Education Act (IDEA). If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:
+        </td>
+    </tr>
+    <tr>
+		<td>
+			<?php echo $this->element->contact_name; ?>
+		</td>
+		<td>
+			<?php echo $this->element->contact_num; ?>
+		</td>
+    </tr>
+</table> 
+
+			
+<?php echo $this->additionalResources(); ?>

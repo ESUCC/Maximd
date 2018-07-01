@@ -1,0 +1,31 @@
+CREATE OR REPLACE FUNCTION ifsp_active_form_ids(integer) RETURNS SETOF iep_form_013
+    AS $_$DECLARE
+
+    ssSearch            record;
+    rec iep_form_013%rowtype;
+
+    MASTER_ID           varchar;
+    RETTEXT             varchar;
+    i                   integer;
+    ret                 integer;
+    RET_ARRAY           integer[];
+BEGIN
+    i := 1;
+    RAISE NOTICE 'student id: %', $1;
+    FOR ssSearch IN select distinct ifsp_master_parent(id_form_013) as masterid from iep_form_013 where id_student = $1 LOOP
+        MASTER_ID := ssSearch.masterid;
+        RAISE NOTICE 'field: %', MASTER_ID;
+
+        FOR rec IN select * from iep_form_013 where ifsp_master_parent(id_form_013)::integer = MASTER_ID::integer order by timestamp_created desc limit 1
+        LOOP
+            RAISE NOTICE 'rec: %', rec.id_form_013;
+            RETURN NEXT rec;
+
+        END LOOP;
+        i := i + 1;
+    END LOOP;
+
+    RETURN;
+
+END;$_$
+    LANGUAGE plpgsql;

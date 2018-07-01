@@ -1,0 +1,13 @@
+
+
+<div>View School Page</div>
+<div>
+    <a href="<?php echo $this->url(array(
+    'controller' => 'esu',
+    'action' => 'edit',
+    'id' => $this->esuID,
+    ));?>">Edit</a>
+</div>
+
+<br/>
+<?= $this->esuForm; ?>

@@ -1,0 +1,74 @@
+CREATE SEQUENCE form_029_gen_ed_teacher_id_form_029_gen_ed_teacher_seq;
+
+CREATE TABLE form_029_gen_ed_teacher (
+    id_form_029_gen_ed_teacher integer DEFAULT nextval('form_029_gen_ed_teacher_id_form_029_gen_ed_teacher_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_029 integer DEFAULT nextval('iep_form_029_id_form_029_seq'),
+    meeting_type character varying,
+    name character varying
+);
+
+CREATE SEQUENCE form_029_special_ed_teacher_id_form_029_special_ed_teacher_seq;
+
+CREATE TABLE form_029_special_ed_teacher (
+    id_form_029_special_ed_teacher integer DEFAULT nextval('form_029_special_ed_teacher_id_form_029_special_ed_teacher_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_029 integer DEFAULT nextval('iep_form_029_id_form_029_seq'),
+    meeting_type character varying,
+    name character varying
+);
+
+CREATE SEQUENCE form_029_school_representative_id_form_029_school_representative_seq;
+
+CREATE TABLE form_029_school_representative (
+    id_form_029_school_representative integer DEFAULT nextval('form_029_school_representative_id_form_029_school_representative_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_029 integer DEFAULT nextval('iep_form_029_id_form_029_seq'),
+    meeting_type character varying,
+    name character varying
+);
+
+CREATE SEQUENCE form_029_eval_results_id_form_029_eval_results_seq;
+
+CREATE TABLE form_029_eval_results (
+    id_form_029_eval_results integer DEFAULT nextval('form_029_eval_results_id_form_029_eval_results_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_029 integer DEFAULT nextval('iep_form_029_id_form_029_seq'),
+    meeting_type character varying,
+    name character varying
+);
+
+CREATE SEQUENCE form_029_special_knowledge_id_form_029_special_knowledge_seq;
+
+CREATE TABLE form_029_special_knowledge (
+    id_form_029_special_knowledge integer DEFAULT nextval('form_029_special_knowledge_id_form_029_special_knowledge_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_029 integer DEFAULT nextval('iep_form_029_id_form_029_seq'),
+    meeting_type character varying,
+    name character varying
+);

@@ -1,0 +1,70 @@
+<div dojoType="soliant.widget.StudentSearch">
+	<style type="text/css">
+	  @import "/js/dojo_development/dojo/dojox/grid/resources/Grid.css";
+	  @import "/js/dojo_development/dojo/dojox/grid/resources/{{ theme }}Grid.css";
+	  .dojoxGrid table {
+	    margin: 0;
+	  }
+	</style>
+	<div dojoType="dijit.form.Form" dojoAttachPoint="studentSearchForm">
+		<div style="padding-left:10px;float:left;">
+			<input type="hidden" id="id_student_search" name="id_student_search" value="${id_student_search}" dojoType="dijit.form.TextBox">
+		    <div style="float:left;">
+		    	Limit to:
+		    </div>
+		    <div style="float:left;">
+		    	<select name="limitto" id="limitto" dojoType="dijit.form.Select" dojoAttachPoint="studentSearchLimitTo">
+		    		<option value="all">All</option>
+		    		<option value="caseload">Caseload</option>
+		    	</select>
+			</div>		    
+		    <div style="float:left;">
+		    	Status:
+		    </div>
+		    <div style="float:left;">
+		    	<select name="status" id="status" dojoType="dijit.form.Select" dojoAttachPoint="studentSearchStatus">
+		    		<option value="All">All</option>
+		    		<option value="Active">Active</option>
+		    		<option value="Inactive">Inactive</option>
+		    		<option value="Never Qualified">Never Qualified</option>
+		    		<option value="No Longer Qualifies">No Longer Qualifies</option>
+		    		<option value="Transferred to Non-SRS District">Transferred to Non-SRS District</option>
+		    	</select>
+			</div>		    
+		    <div style="float:left;">
+		    	Order by:
+		    </div>
+		    <div style="float:left;">
+		    	<select name="sort_order" id="orderby" dojoType="dijit.form.Select" dojoAttachPoint="studentSearchOrder">
+		    		<option value="name">Name</option>
+		    		<option value="school">School</option>
+		    	</select>
+			</div>		    
+		</div>
+		<div style="padding-left:5px;float:left;">
+		    <div style="float:left;">
+		    	Records per page:
+		    </div>
+		    <div style="float:left;">
+		    	<select name="recs_per" id="recsPer" dojoType="dijit.form.Select" dojoAttachPoint="studentSearchRecsPer">
+		    		<option value="2">2</option>
+		    		<option value="5">5</option>
+		    		<option selected="selected" value="20">20</option>
+		    	</select>
+			</div>		    
+		    <div style="float:left;">
+		        <button id="search" name="search" dojoType="dijit.form.Button" dojoAttachEvent="onClick: search">Search</button>
+		    </div>
+		    <div style="float:left;">
+		        <button dojoType="dijit.form.Button" dojoAttachEvent="onClick: save">Save Search</button>
+		    </div>
+		    <div style="float:left;">
+			    <button dojoType="dijit.form.Button" dojoAttachEvent="onClick: getsearchrow">Add Row</button>
+			</div>		    
+		</div>
+		<div style="padding-left:10px;float:right;">
+			<div dojoAttachPoint="studentSearchFormRows"></div>
+		</div>
+	</div>
+	<div class="claro" style="height:400px;clear:both;margin-top:10px;" dojoAttachPoint="studentSearchGrid"></div>
+</div>

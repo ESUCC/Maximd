@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Give Consent for Initial Evaluation">
+           <tuv xml:lang="es"><seg>Doy consentimiento para que se realice la evaluaci&#xF3;n inicial</seg></tuv>
+           <tuv xml:lang="en"><seg>Give Consent for Initial Evaluation</seg></tuv>
+       </tu>
+       <tu tuid="Do Not Give Consent for Initial Evaluation">
+           <tuv xml:lang="es"><seg>No doy consentimiento para que se realice la evaluaci&#xF3;n inicial</seg></tuv>
+           <tuv xml:lang="en"><seg>Do Not Give Consent for Initial Evaluation</seg></tuv>
+       </tu>
+       <tu tuid="I have received a copy of the Notice">
+           <tuv xml:lang="es"><seg>He recibido una copia de la notificaci&#xF3;n sobre esta evaluaci&#xF3;n propuesta y sobre mis derechos como padre de familia, entiendo el contenido de la notificaci&#xF3;n y &lt;B&gt; doy mi consentimiento&lt;/B&gt;para  la evaluaci&#xF3;n multidisciplinaria que se especifica en esta notificaci&#xF3;n. Entiendo que este consentimiento es voluntario y que puede ser revocado en cualquier momento.</seg></tuv>
+           <tuv xml:lang="en"><seg>I have received a copy of the Notice of this proposed evaluation and my parental rights, understand the content of the Notice and <![CDATA[<]]>B<![CDATA[>]]>give consent<![CDATA[<]]>/B<![CDATA[>]]> for the multidisciplinary evaluation specified in this Notice. I understand this consent is voluntary and may be revoked at any time.</seg></tuv>
+       </tu>
+       <tu tuid="I do not give consent">
+           <tuv xml:lang="es"><seg>He recibido una copia de la notificaci&#xF3;n sobre esta evaluaci&#xF3;n propuesta y sobre mis derechos como padre de familia, entiendo el contenido de la notificaci&#xF3;n y &lt;B&gt; no doy mi consentimiento&lt;/B&gt; para la evaluaci&#xF3;n multidisciplinaria que se especifica en esta notificaci&#xF3;n. El motivo por el cual no doy mi consentimiento es:</seg></tuv>
+           <tuv xml:lang="en"><seg>I have received a copy of the Notice of this proposed evaluation and my parental rights, understand the content of the Notice and <![CDATA[<]]>B<![CDATA[>]]>do not give consent<![CDATA[<]]>/B<![CDATA[>]]> for the multidisciplinary evaluation specified in this Notice. The reason for not giving consent to the evaluation is:</seg></tuv>
+       </tu>
+       <tu tuid="Parent Signature">
+           <tuv xml:lang="es"><seg>Firma del padre/madre</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Signature</seg></tuv>
+       </tu>
+       <tu tuid="Consent Date">
+           <tuv xml:lang="es"><seg>Fecha del Consentimiento</seg></tuv>
+           <tuv xml:lang="en"><seg>Consent Date</seg></tuv>
+       </tu>
+       <tu tuid="Signature on File">
+           <tuv xml:lang="es"><seg>Firma en el archivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Signature on File</seg></tuv>
+       </tu>
+       <tu tuid="Date Received by District:">
+           <tuv xml:lang="es"><seg>Fecha recibida por el distrito</seg></tuv>
+           <tuv xml:lang="en"><seg>Date Received by District:</seg></tuv>
+       </tu>
+       <tu tuid="Date of Parent Signature:">
+           <tuv xml:lang="es"><seg>Fecha en que los padres de familia firman</seg></tuv>
+           <tuv xml:lang="en"><seg>Date of Parent Signature:</seg></tuv>
+       </tu>
+   </body>
+</tmx>

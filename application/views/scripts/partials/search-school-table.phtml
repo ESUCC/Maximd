@@ -1,0 +1,26 @@
+<?php 
+for ($x = 1; $x <= $this->pages->pageCount; $x ++) {
+    if ($x == $this->pages->current) {
+        $pageLinks[] = $x;
+    } else {
+        $pageLinks[] = $this->view->srsAjaxLink($x, 
+                $this->getUrl(), 
+                array('update' => $updateId, 'class' => 'ajaxLink', 
+                        'dataType' => 'html', 'addOnLoad' => false, 
+                        'attribs' => array('p' => $x, 
+                                'c' => $itemsPerPage, 
+                                'getUrl' => $this->getUrl(), 
+                                'updateRef' => $updateId)));
+    }
+}
+
+?><table>
+<tr>
+    <td><?= ucwords(strtolower($this->name_full)); ?></td>
+    <td><?= ucwords(strtolower($this->id_personnel)); ?></td>
+    <td><?= ucwords(strtolower($this->address)); ?></td>
+    <td><?= ucwords(strtolower($this->phone_work)); ?></td>
+    <td><?= ucwords(strtolower($this->email_address)); ?></td>
+</tr>
+
+</table>

@@ -1,0 +1,58 @@
+<div class="headerHome">
+<?php if (!Zend_Auth::getInstance()->hasIdentity()) { ?>
+	<p>Returning Customer?&nbsp;&nbsp;<a href="profile/register">Register here.</a></p>
+<?php } ?>
+<?php echo $this->loginForm;?>
+</div>
+
+<!--<div class="iconsHome"></div>-->
+
+
+
+<p class="introHome">Lorem ipsum dolor sit amet, consectetuer adipiscing
+elit. Cras mollis. Phasellus eu ligula. Sed tortor odio, facilisis at,
+ultrices ultrices, mattis non, eros. Quisque ut neque vitae felis
+consectetuer molestie.</p>
+
+<div class="contentMain" id="contentMain">
+    <div class="leftColHome">
+        <?php if($this->searchType == 'advanced') { ?>
+        	<div><a href="search/basicsearch">Basic Search</a></div>
+        <?php } else { ?>
+        	<div><a href="search/advancedsearch">Advanced Search</a></div>
+        <?php } ?>
+        
+        <h2 class="columnHeaders">What's your business?</h2>
+        <?php echo $this->searchForm; ?>
+        <?php if(isset($this->refreshCounter) && $this->refreshCounter == 1) echo "<div style=\"color:red\"><B>Nothing was found during your last search</b></div>"; ?>
+    </div>
+    <div class="rightColHome">
+    <h2 class="columnHeaders">Find keywords</h2>
+    <?php echo $this->categorySearchForm; ?>
+    <p class="foo">Cras mollis. Phasellus eu ligula. Sed tortor odio, facilisis at,
+    ultrices ultrices, mattis non, eros. Quisque ut neque vitae felis
+    consectetuer molestie. Duis in erat vel ligula volutpat tempus. Nam
+    sollicitudin consectetuer mauris. Aliquam enim neque, molestie quis,
+    lacinia quis, feugiat et, purus. Vivamus in quam. Praesent dolor nisl,
+    porta non, mollis vel, pretium ut, sem. Pellentesque ante tortor,
+    sollicitudin et, vehicula a, auctor sit amet, enim.</p>
+    </div>
+</div>
+
+
+<!-- end content -->
+
+<!--<div class="footer">-->
+<!--<h3>Footer</h3>-->
+<!--</div>-->
+<!-- end footer -->
+<pre>
+<?php //pre_print_r($this->rObj); ?>
+<?php //echo "sid: " . Zend_Session::getId(); //pre_print_r($_SESSION); ?>
+<?php //echo 'version: ' . $this->version . "<BR>"; ?>
+<?php //pre_print_r($this->searchValues); ?>
+<?php //echo "sqlStmt: " . $this->sqlStmt . "<BR>"; ?>
+<?php //echo "jesse: " . $this->jesse; ?>
+<?php //pre_print_r($this->rObj->displayCheckedStatusTree()); ?>
+<?php //echo "refreshCounter: " . $this->refreshCounter; ?>
+</pre>

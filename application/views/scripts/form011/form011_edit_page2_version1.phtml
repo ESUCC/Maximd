@@ -1,0 +1,151 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_011; ?>
+<?= $this->element->page; ?>
+
+<?php echo $this->additionalResources(); ?>
+
+<table style="page-break-before: always;" class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Response Form</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+			<table class="formInput" style="margin-top:1px;">
+				<tr>
+					<td class="printBoldLabel">Parent/Guardian:</td>
+					<td><?php echo $this->element->name_list_guardian->getValue(); ?></td>
+                    <?php if ('print' == $view->mode) { ?>
+                    <?php $this->element->date_sent->removeDecorator('label'); ?>
+                    <td class="printBoldLabel">
+                    <?php echo $this->element->date_sent->getLabel(); ?>
+                    </td>
+                    <td>
+                    <?php echo $this->element->date_sent->getValue(); ?>
+                    </td>
+                    <?php } else { ?> 
+                    <td><?php echo $this->element->date_sent; ?></td>
+                    <?php } ?>
+				</tr>
+			</table>
+			<br/>
+			If you cannot attend this meeting as scheduled, you have the right to schedule this meeting 
+			at an alternate time and/or location. To reschedule this meeting, please contact:
+			<table class="formInput" style="margin-top:1px;">
+				<tr>
+					<td><?php echo $this->element->contact_name; ?></td>
+					<td><?php echo $this->element->contact_num; ?></td>
+				</tr>
+			</table>
+			<br/>
+            <?php if ('print' == $view->mode) { ?>
+            <?php $this->element->attend->setSeparator('<br /><br />'); ?>
+            <?php } ?>
+			<?php echo $this->element->attend; ?>	
+            <?php if ('print' == $view->mode) { ?>
+            <br />
+            <?php } ?>
+            <?php if ('print' == $view->mode && strlen($this->element->pg_invites->getValue()) < 1) { ?>
+            <p>You have not listed any invitees. If you have invited no one to attend, please indicate that this is the case.</p>
+            <?php } else { ?>
+			<p>I have invited to the meeting, at my own expense, the following person(s) whom I have 
+			determined have special knowledge or expertise regarding my child:</p>
+			<?php echo $this->element->pg_invites; ?>
+            <?php } ?>
+            <?php if ('print' == $view->mode) { ?>
+            <br />
+            <?php } ?>
+			<p>Parents/Guardians of children with disabilities have rights under the procedural 
+			safegueards of the Individuals with Disabilities Education Act (IDEA). I/we have been 
+			fully informed of all information relevant to the proposed meeting and understand the 
+			purpose of the meeting. I/we also have been provided a statement of parental rights and 
+			procedural safeguards and understand these rights and safeguards.</p>
+            <?php if('print' != $view->mode) { ?>
+            <table class="formInput" style="margin-top:1px;">
+                <tr>
+                    <td>Parent Signature: _______________________________</td>
+                    <td><?php echo $this->element->signature_on_file; ?></td>
+                </tr>
+                <tr>
+                    <td>Parent Signature: _______________________________</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->element->parent_date_1; ?></td>
+                    <td><?php echo $this->element->no_signature_reason; ?></td>
+                </tr>
+            </table>
+            <?php }elseif('t' == $this->element->signature_on_file->getValue()) { ?>
+            <table class="formInput" style="margin-top:1px;">
+                <tr>
+                    <td colspan="2"><?php echo $this->element->signature_on_file; ?></td>
+                </tr>
+                <tr>
+                    <td>
+                    <?php 
+                        if('' == $this->element->parent_date_1->getValue()) {
+                        	echo $this->element->parent_date_1 . "_________________________";
+                        } else {
+                            echo $this->element->parent_date_1;
+                        }
+                    ?>
+                    </td>
+                </tr>
+            </table>
+            <?php } else { ?>
+            <table class="formInput" style="margin-top:1px;">
+                <tr>
+                    <td colspan="2">Parent Signature: _______________________________</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Parent Signature: _______________________________</td>
+                </tr>
+                <tr>
+                    <td>
+                    <?php 
+                        if('' == $this->element->parent_date_1->getValue()) {
+                            echo $this->element->parent_date_1 . "_________________________";
+                        } else {
+                            echo $this->element->parent_date_1;
+                        }
+                    ?>
+                    </td>
+                    <td><?php echo $this->element->no_signature_reason; ?></td>
+                </tr>
+            </table>
+			<?php } ?>
+		</td>
+    </tr>
+</table> 
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Please sign, date and return this form to:</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+			<table class="formInput" style="margin-top:1px;">
+				<tr>
+					<td><?php echo $this->element->school_contact; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->response_address; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->city_state_zip; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->school_phone; ?></td>
+				</tr>
+			</table>
+		</td>
+    </tr>
+</table> 

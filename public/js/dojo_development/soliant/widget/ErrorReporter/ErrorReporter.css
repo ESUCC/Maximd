@@ -1,0 +1,25 @@
+.dijitFileInput {
+      position:relative;
+      height:4em;
+      padding:2px;
+}
+.dijitFileInputReal {
+      position:absolute;
+      z-index:2;
+      opacity:0;
+      filter:alpha(opacity:0);
+}
+.dijitFileInputButton,
+.dijitFileInputText {
+      border:1px solid #333;
+      padding:2px 12px 2px 12px;
+      cursor:pointer;
+}
+.dijitFileInputButton {
+      opacity:0;
+      filter:alpha(opacity:0);
+      z-index:3;
+      visibility:hidden;
+
+}
+.dijitFakeInput { position:absolute; top:0; left:0; z-index:1; }

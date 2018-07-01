@@ -1,0 +1,1 @@
+<?$_Reports_List = array (						"Case Load" => UC_SA,						"SESIS" => UC_ADM,						//"NSSRS" => UC_CM,						"NSSRS" => UC_ADM,						"NSSRS Transfers" => UC_ADM,						"Evaluation Date Report" => UC_ASM,						"NSSRSS File" => UC_SA,						//"Snapshot Editing" => UC_ADM,						//"Jesse Testing Area" => UC_SA,						//"District Only Report" => UC_DM                 );?>

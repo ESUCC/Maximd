@@ -1,0 +1,92 @@
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php  }?> 
+<style>
+
+.topMenu {
+    position: relative;
+    float: left;
+    margin: 20px;
+    margin-left: 0px;
+}
+
+#srs_mainPane {
+    top: 115px;
+    border: none;
+}
+
+#srs_left .subBar_top {
+    height: 0px;
+    padding-bottom: 0;
+}
+
+#srs_left .subBar_btm {
+    height: 0px;
+}
+
+#leftTop {
+    height: 2px;
+    padding: 0;
+}
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    font-size: 1em;
+    color: #FFF;
+}
+
+</style>
+
+
+    <table class="navTopMenu"> 
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?> 
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('staff');
+                } ?>
+            </td>
+        </tr>
+    </table>
+    
+<select onChange="window.location.href=this.value" class="topMenu">
+<option value=''>Please Select A District</option>
+ 
+<?php 
+
+foreach ($this->privileges as $privilege)
+{
+    $privilege['id_school']='001';
+    if($privilege['name_district'])
+    { 
+        if(($privilege['class']==2 || $privilege['class']==3 )&& $privilege['status']=='Active'){    
+              $privilege['id_school']='001';
+        }
+         ?>   
+         
+             <option value="<?php echo $this->url(array('controller'=>'staff','action'=>'team2','id_county'=>$privilege['id_county'],
+                        'id_district'=>$privilege['id_district'],
+                       'id_school'=>$privilege['id_school'],
+                       'status'=>'true'));?>"><?php  echo $privilege['name_district'];?>
+             </option>
+<?php      
+    }
+}?>
+</select>
+
+<br><br><br><br>
+<center><h1>Please Select a District to edit a staff member's team of students </h1></center>
+<br><br><br><br>
+      

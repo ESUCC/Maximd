@@ -1,0 +1,68 @@
+<?php 
+    // We need to split off the MIPS Form and put it on a separate page
+//    $matches = split('STARTMIPS', $this->pages[6]);
+    $matches = preg_split('/STARTMIPS/', $this->pages[6]);
+
+    /*
+     * Check to see if summary form is set.  Remove first page if it is
+     */
+    if (true !== $this->db_form_data['summary_form']) {
+	    echo '<div class="page1LandscapeNoStatus">';
+	    echo $this->header;
+	    echo $this->footer;
+	    echo $this->student_header;
+	    echo $this->pages [1] . '</div>';
+	    $summaryForm = false;
+	    $firstEnabledPage = false;
+    } else {
+    	$summaryForm = true;
+    	if ($this->db_form_data['district'][0]['iep_summary_special_considerations'])
+    		$firstEnabledPage = 2;
+    	elseif ($this->db_form_data['district'][0]['iep_summary_present_lev_perf'])
+    		$firstEnabledPage = 3;
+    	elseif ($this->db_form_data['district'][0]['iep_summary_goals'])
+    		$firstEnabledPage = 4;
+    	elseif ($this->db_form_data['district'][0]['iep_summary_transition'])
+    		$firstEnabledPage = 5;
+    	elseif ($this->db_form_data['district'][0]['iep_summary_services'])
+    		$firstEnabledPage = 6;
+    	elseif ($this->db_form_data['district'][0]['iep_summary_transportation'] ||
+    			$this->db_form_data['district'][0]['iep_summary_assessment'] ||
+    			$this->db_form_data['district'][0]['iep_summary_extended_school_services'])
+    		$firstEnabledPage = 7;
+    	elseif ($this->db_form_data['district'][0]['iep_summary_supplemental_pages'])
+    		$firstEnabledPage = 8;
+    	
+    	$studentInfo = $this->header
+	    			 .= $this->footer
+	    			 .= $this->student_header;
+    }
+    if (!$summaryForm || $this->db_form_data['district'][0]['iep_summary_special_considerations'])
+    	echo '<div class="page2" style="page-break-before: always;">'.(2 == $firstEnabledPage ? $studentInfo : '').$this->pages[2].'</div>';
+    if (!$summaryForm || $this->db_form_data['district'][0]['iep_summary_present_lev_perf'])
+    	echo '<div class="page3">'.(3 == $firstEnabledPage ? $studentInfo : '').$this->pages[3].'</div>';
+    if (!$summaryForm || $this->db_form_data['district'][0]['iep_summary_goals'])
+    	echo '<div class="page4" style="page-break-before: always;">'.(4 == $firstEnabledPage ? $studentInfo : '').$this->pages[4].'</div>';
+    if (!$summaryForm || $this->db_form_data['district'][0]['iep_summary_transition']) {
+	    if (($this->db_form_data['transition_plan'] !== 'f' && $this->db_form_data['transition_plan'] != '') || $this->studentOlderThan15)
+	    {
+			echo '<div class="page5" style="page-break-before: always;">'.(5 == $firstEnabledPage ? $studentInfo : '').$this->pages[5].'</div>';
+	    }
+    }
+    if (!$summaryForm || $this->db_form_data['district'][0]['iep_summary_services'])
+		echo '<div class="page6" style="page-break-before: always;">'.(6 == $firstEnabledPage ? $studentInfo : '').$matches[0].'</div>';
+    if (!$summaryForm || ($this->db_form_data['district'][0]['iep_summary_transportation'] || $this->db_form_data['district'][0]['iep_summary_assessment'] || $this->db_form_data['district'][0]['iep_summary_extended_school_services']))
+    	echo '<div class="page7">'.(7 == $firstEnabledPage ? $studentInfo : '').$this->pages[7].'</div>';
+    if (!$summaryForm || $this->db_form_data['district'][0]['iep_summary_supplemental_pages']) {
+	    if ($this->db_form_data['iep_form_004_suppform']['count'] > 0 || ( isset($this->db_form_data['accomodations_checklist_1']) && $this->db_form_data['accomodations_checklist_1']['hide'] == 't')) { 
+			echo '<div class="page8">'.(8 == $firstEnabledPage ? $studentInfo : '').$this->pages[8].'</div>';
+	    } 
+	    // Show the MIPS consent form as the last page if it's there
+	    if (!empty($matches[1])) {
+		    if (strlen($matches[1]) > 0) {
+		    	echo '<div class="page8">'.(8 == $firstEnabledPage ? $studentInfo : '').$matches[1].'</div>';
+		    }
+	    }
+	}
+
+

@@ -1,0 +1,82 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+
+<?php if('print' != $view->mode && 'view' != $view->mode) { ?>
+<table class="formInput" style="width:100%;" border="1" id="team_members_<?= $rowNum; ?>">
+    <?php } ?>
+
+    <?php if(('print' != $view->mode && 'view' != $view->mode) && 1 == $rowNum) { ?>
+        <tr class="tanHead">
+            <td style="width:auto;">
+                Print Name
+            </td>
+            <td style="width:auto;">
+                Role/Other
+            </td>
+            <td style="width:200px;">
+                Address and Phone
+            </td>
+            <td class="nodialog" style="width:45px;">
+                Remove
+            </td>
+        </tr>
+    <?php } ?>
+
+    <tr>
+        <td class="printCellUnderlineThin" style="width:auto;vertical-align: bottom;min-height:30px;">
+            <div id="team_members_<?= $rowNum; ?>-tm_signature-colorme" class="colorme">
+                <?php echo $this->element->tm_signature; ?>
+                <?php echo $this->element->id_ifsp_team_members; ?>
+                <?php if('edit' == $view->mode) { ?>
+                    <br /><a href="javascript:void(0);" class="myrecords_edit_link nodialog noprint" >Replace With Personnel<br />from Previous IFSP</a>
+                <?php } ?>
+            </div>
+        </td>
+        <?
+//        $printClass = '';
+//        if('Choose...' == $this->element->tm_role->getValue() && '' == $this->element->tm_role_other->getValue()) {
+//            $printClass = 'printCellUnderlineThin';
+//        }
+        ?>
+        <td valign="top" class="printCellUnderlineThin<?//=$printClass?>" style="width:auto;vertical-align: bottom;">
+            <? if('print' == $view->mode || 'view' == $view->mode) {
+                if('Choose...' == $this->element->tm_role->getValue() && '' == $this->element->tm_role_other->getValue()) {
+
+                } else {
+                    echo $this->element->tm_role->getValue();
+                    if('Other' == $this->element->tm_role->getValue() && '' != $this->element->tm_role_other->getValue()) {
+                        echo " (" . $this->element->tm_role_other->getValue() . ")";
+                    }
+                } ?>
+            <?php } else { ?>
+                <div id="team_members_<?= $rowNum; ?>-tm_role-colorme" class="colorme">
+                    <?php echo $this->element->tm_role; ?>
+                </div>
+                <div id="team_members_<?= $rowNum; ?>-tm_role_other-colorme" class="colorme">
+                    <?php echo $this->element->tm_role_other; ?>
+                </div>
+            <?php } ?>
+        </td>
+        <td class="printCellUnderlineThin" valign="top" style="width:200px;vertical-align: top;">
+            <div id="team_members_<?= $rowNum; ?>-tm_address-colorme" class="colorme">
+                <?php echo $this->element->tm_address; ?>
+            </div>
+        </td>
+        <?php /* Commenting this out for SRSSUPP-550
+        <td valign="top" style="width:40px;vertical-align: top;">
+            <div id="team_members_<?= $rowNum; ?>-tm_sig_on_file-colorme" class="colorme">
+            <?php echo $this->element->tm_sig_on_file; ?>
+            </div>
+        </td> */ ?>
+        <td class="noprint noview nodialog" style="width:45px;vertical-align: top;" align="center" >
+            <div id="ifsp_parents_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+                <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+    </tr>
+
+    <?php
+
+    if('print' != $view->mode && 'view' != $view->mode) { ?>
+</table>
+<?php } ?>

@@ -1,0 +1,64 @@
+<?php ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>RESPONSE FORM</td>
+    </tr>
+</table>
+
+<table class="formDesc" style="margin-top:1px;" border="0">
+    <tr>
+        <td colspan="2" style="">
+            <?php echo $this->element->give_consent; ?> I give my consent for <?php echo $this->element->consent_receiver; ?> to be invited to the IEP meeting.  I understand that my consent is voluntary and may be revoked at any time before the identified representative(s) has/have been invited.  I also give my consent to release the following education records.
+            
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="padding-left:60px">
+            <?php echo $this->element->consent_all_records; ?> All records about Student and any other information requested by Recipient<BR>
+            <?php echo $this->element->consent_scholastic; ?> Scolastic Grades<BR>
+            <?php echo $this->element->consent_psychological; ?> Psychological Evaluations<BR>
+            <?php echo $this->element->consent_activity; ?> Activity Records<BR>
+            <?php echo $this->element->consent_discipline; ?> Discipline Records<BR>
+            <?php echo $this->element->consent_health; ?> Health Records<BR>
+            <?php echo $this->element->consent_standard_tests; ?> Standardized Test Scores<BR>
+            <?php echo $this->element->consent_special_ed; ?> Special Education Records<BR>
+            <?php echo $this->element->consent_other; ?> Other <?php echo $this->element->consent_other_comment; ?><BR>
+            <?php echo $this->element->consent_all_of_the_above; ?> ALL of the Above<BR>
+            <?php echo $this->element->consent_none_of_the_above; ?> NONE of the Above<BR>
+            
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" style="">
+            <?php echo $this->element->do_not_give_consent; ?> I do not give consent for the above indicated agency representative(s) to be invited to IEP meeting. I do not give consent to release the listed education records. 
+            
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-left:60px">
+            <BR><BR>
+            ___________________________________________<BR>
+            Signature of Parent or Majority Age Student<BR><BR>
+            <?php echo $this->element->sig_on_file; ?> Signature on File            
+        </td>
+        <td style="">
+            <BR><BR>
+            ___________________________________________<BR>
+            Date<BR><BR>
+            <?php echo $this->element->sig_date; ?> Date
+        </td>
+    </tr>
+</table>
+	
+	
+	
+<?php echo $this->element->id_form_024_consent; ?>
+<?php echo $this->element->subformnum; ?>
+
+<?php echo $this->element->submit; ?>
+
+
+
+
+

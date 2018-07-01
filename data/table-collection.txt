@@ -1,0 +1,33 @@
+drop table collection_item;
+drop table collection;
+
+
+
+CREATE TABLE collection (
+    id_collection serial,
+    id_personnel integer,
+    name character varying
+);
+
+CREATE TABLE collection_item (
+    id_collection_item serial,
+    id_collection integer,
+    value character varying
+);
+
+insert into collection (name, id_personnel) VALUES ('student', '1000254');
+insert into collection_item (id_collection, value) VALUES (1, '1034387');
+insert into collection_item (id_collection, value) VALUES (1, '1080303');
+insert into collection_item (id_collection, value) VALUES (1, '1384438');
+insert into collection_item (id_collection, value) VALUES (1, '1360154');
+insert into collection_item (id_collection, value) VALUES (1, '1380350');
+insert into collection_item (id_collection, value) VALUES (1, '1052521');
+
+select * from collection;
+select * from collection_item;
+
+
+
+    
+    
+    

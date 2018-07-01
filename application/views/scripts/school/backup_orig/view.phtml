@@ -1,0 +1,109 @@
+
+<table class="SchoolForm">
+<tr><th colspan="3" class="NameSchool">
+  <?=$this->school["name_school"]?>
+<br>
+ <small>Student Record System for Special Education</small>
+</th>
+<th class="SchoolButtons">
+<?if ($this->print != "1"){?>
+
+  <button class="ui-button ui-widget ui-corner-all doneWindow" style="padding: 2px;">Done</button>
+  <button class="ui-button ui-widget ui-corner-all printWindow" style="padding: 2px;" rel="/school/view/print/1/id_school/<?=$this->school["id_school"]?>/id_district/<?=$this->school["id_district"]?>/id_county/<?=$this->school["id_county"]?>/">Print</button>
+
+<?}?>
+</th>
+</tr>
+
+<tr class="SchoolHeader">
+ <td colspan="4">School Information</td>
+</tr>
+
+<tr>
+ <td class="SchoolFormTitle">County</td><td class="SchoolFormValue" colspan="3"><?=$this->county["name_county"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">District</td><td class="SchoolFormValue" colspan="3"><?=$this->district["name_district"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">School </td><td class="SchoolFormValue" colspan="3"><?=$this->school["name_school"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">School ID</td><td class="SchoolFormValue" colspan="3"><?=$this->school["id_county"]?>-<?=$this->school["id_district"]?>-<?=$this->school["id_school"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Status </td><td class="SchoolFormValue" colspan="3"><?=$this->school["status"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">School Manager </td><td class="SchoolFormValue" colspan="3"><?foreach ($this->schoolmng as $k => $r) if ($this->school["id_school_mgr"] == $r["id_personnel"]){?><?=$r["name_first"]?> <?=$r["name_middle"]?> <?=$r["name_last"]?><?}?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Acct Supervisor </td><td class="SchoolFormValue" colspan="3"><?foreach ($this->schoolsprv as $k => $r) if ($this->school["id_account_sprv"] == $r["id_personnel"]){?><?=$r["name_first"]?> <?=$r["name_middle"]?> <?=$r["name_last"]?><?}?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Street 1 </td><td class="SchoolFormValue" colspan="3"><?=$this->school["address_street1"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Street 2 </td><td class="SchoolFormValue" colspan="3"><?=$this->school["address_street2"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">City </td><td class="SchoolFormValue" colspan="3"><?=$this->school["address_city"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">State </td><td class="SchoolFormValue" colspan="3"><?=$this->school["address_state"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">ZIP </td><td class="SchoolFormValue" colspan="3"><?=$this->school["address_zip"]?></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Phone </td><td class="SchoolFormValue" colspan="3"><?=$this->school["phone_main"]?></td>
+</tr>
+</tr class="SchoolFormTitle"><td colspan="4">&nbsp;</td></tr>
+
+<tr class="SchoolHeader">
+ <td colspan="4">School Settings</td>
+</tr>
+<?
+if ($this->reports[count($this->reports)-1]["year_identifier"] == $this->CurrentSchoolYear) {
+    $x = count($this->reports) - 1;
+    $y = count($this->reports);
+} else if ($this->reports[count($this->reports)-1]["year_identifier"] > $this->CurrentSchoolYear){
+    $x = count($this->reports) - 2;
+    $y = count($this->reports) - 1;
+} else {
+    $x = count($this->reports) + 1;
+    $y = count($this->reports) + 1;
+}
+?>
+<tr>
+ <td class="SchoolFormTitle">School Year</td><td class="SchoolFormValue" style="font-weight: bold;"><?=$this->CurrentSchoolYear?>-<?=$this->CurrentSchoolYear+1?></td><td class="SchoolFormValue" style="font-weight: bold;"><?=$this->CurrentSchoolYear+1?>-<?=$this->CurrentSchoolYear+2?></td><td></td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 1</td><td class="SchoolFormValue"><?if (isset($this->reports[$x]["date_report1"])) echo $this->reports[$x]["date_report1"]?></td><td class="SchoolFormValue"><?if (isset($this->reports[$y]["date_report1"])) echo $this->reports[$y]["date_report1"]?></td><td class="SchoolFormValue">if required, sixth scheduled progress report date</td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 2</td><td class="SchoolFormValue"><?if (isset($this->reports[$x]["date_report2"])) echo $this->reports[$x]["date_report2"]?></td><td class="SchoolFormValue"><?if (isset($this->reports[$y]["date_report2"])) echo $this->reports[$y]["date_report2"]?></td><td class="SchoolFormValue">first scheduled progress report date</td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 3</td><td class="SchoolFormValue"><?if (isset($this->reports[$x]["date_report3"])) echo $this->reports[$x]["date_report3"]?></td><td class="SchoolFormValue"><?if (isset($this->reports[$y]["date_report3"])) echo $this->reports[$y]["date_report3"]?></td><td class="SchoolFormValue">second scheduled progress report date</td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 4</td><td class="SchoolFormValue"><?if (isset($this->reports[$x]["date_report4"])) echo $this->reports[$x]["date_report4"]?></td><td class="SchoolFormValue"><?if (isset($this->reports[$y]["date_report4"])) echo $this->reports[$y]["date_report4"]?></td><td class="SchoolFormValue">third scheduled progress report date</td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 5</td><td class="SchoolFormValue"><?if (isset($this->reports[$x]["date_report5"])) echo $this->reports[$x]["date_report5"]?></td><td class="SchoolFormValue"><?if (isset($this->reports[$y]["date_report5"])) echo $this->reports[$y]["date_report5"]?></td><td class="SchoolFormValue">fourth scheduled progress report date</td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Report Date 6</td><td class="SchoolFormValue"><?if (isset($this->reports[$x]["date_report6"])) echo $this->reports[$x]["date_report6"]?></td><td class="SchoolFormValue"><?if (isset($this->reports[$y]["date_report6"])) echo $this->reports[$y]["date_report6"]?></td><td class="SchoolFormValue">if required, fifth scheduled progress report date</td>
+</tr>
+<tr>
+ <td class="SchoolFormTitle">Minutes Per Week </td><td colspan="2" class="SchoolFormValue"><?=$this->school["minutes_per_week"]?></td><td class="SchoolFormValue">calculated number of minutes in 1 week for your school</td>
+</tr>
+
+<?if ($this->print == "1"){?>
+<tr>
+ <td colspan="4" class="Printed"> <br>Printed by: <?=$this->fullname?> - <?=date("m/d/Y h:i A", time())?> CDT</td>
+</tr>
+<?}?>
+
+</table>

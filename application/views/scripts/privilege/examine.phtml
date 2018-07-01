@@ -1,0 +1,56 @@
+<?php //= $this->form ?>
+
+
+                    <div style="position: relative; width: 99%; height: 3000px; border: 1px #ccc solid;">
+                      <div dojoType="dijit.layout.BorderContainer" design="sidebar" gutters="true" liveSplitters="true" class="borderContainer">
+                        <div dojoType="dijit.layout.ContentPane" splitter="true" id="left_<?= $i ?>" region="left" style="background-color:#99CCFF;width: 400px;">
+                            <!-- PRIVILEGES -->
+                            <?php if (count($this->privResults) < 1) { ?>
+                                
+                                <div>No privileges found.</div>
+                            
+                            <?php } else { ?>
+                            
+                                <div><?= count($this->privResults).' results' ?></div>
+                                <table border="1">
+                                    <tr>
+                                        <th>County</th>
+                                        <th>District</th>
+                                        <th>School</th>
+                                        <th>Class</th>
+                                        <th>Status</th>
+                                        <th>id_county</th>
+                                        <th>id_district</th>
+                                        <th>id_school</th>
+                                        <th>id_neb_esu</th>
+                                    </tr>
+                            
+                                    <?php foreach ($this->privResults as $k => $r) { ?>
+                                    <?php $i = 0; ?>
+                                        <tr>
+                                            <td><?= $r['name_county'] ?></td>
+                                            <td><?= $r['name_district'] ?></td>
+                                            <td><?= $r['name_school'] ?></td>
+                                            <td><?= $r['class'] ?></td>
+                                            <td><?= $r['status']; ?></td>
+                                            <td><?= $r['id_county']; ?></td>
+                                            <td><?= $r['id_district']; ?></td>
+                                            <td><?= $r['id_school']; ?></td>
+                                            <td><?= $r['id_neb_esu']; ?></td>
+                                        </tr>
+                                        <?php $i++; ?>
+                                    <?php } ?>
+                                
+                                </table>
+                            
+                            <?php } ?>
+                        </div>
+                        
+                        
+                        <div dojoType="dijit.layout.ContentPane" splitter="true" region="center">center</div>
+
+                        <div dojoType="dijit.layout.ContentPane" id="right_<?= $i ?>" splitter="true" region="center" style="">
+                                <?= $this->allowedContent; ?>
+                        </div>
+                      </div>
+                    </div>

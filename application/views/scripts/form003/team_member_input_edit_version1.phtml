@@ -1,0 +1,26 @@
+<? 
+	$rowNum = $this->element->rownumber->getValue(); 
+	$view = $this->element->rownumber->getView();
+?>
+<?= $this->element->id_iep_absence; ?>
+<table width="100%" border="0" class="bts">
+    <tbody>
+	<tr>
+	    <td class="noprint" style="padding-right:20px;" align="right" >
+        	<div id="team_member_input_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+	</tr>
+	</tbody>
+</table>
+
+<table cellpadding="5" border="0" class="formInput">
+    <tr>
+        <td valign="top" align="left" class="bt">
+            <div id="team_member_input_<?= $rowNum; ?>-input_information-colorme" class="colorme">
+            <?php echo $this->element->input_information; ?>
+            </div>
+        </td>
+    </tr>
+</table>

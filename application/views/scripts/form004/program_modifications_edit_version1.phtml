@@ -1,0 +1,72 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<table class="formInput noBorder" border="0" id="program_modifications_<?= $rowNum; ?>">
+    <tr class="bgLight2">
+        <td>
+            <?= $rowNum; ?>.
+        </td>
+        <td>
+        	<div id="program_modifications_<?= $rowNum; ?>-prog_mod-colorme" class="colorme">
+            <?= $this->element->prog_mod; ?>
+            </div>
+            <?//= $this->element->prog_mod_drop; ?>
+            <? if('' != $this->element->prog_mod->getValue()) { ?>
+            	If other, specify:
+            	<?//= $this->element->prog_mod; ?>
+            <? } ?>
+        </td>
+        <td class="noprint" style="padding-right:20px;" align="right" >
+        	<div id="program_modifications_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        	<?= $this->element->id_form_004_prog_mods; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="program_modifications_<?= $rowNum; ?>-dates_wrapper-colorme" class="colorme">
+            Duration Dates From/To: 
+            <?= $this->element->prog_mod_from_date; ?> to <?= $this->element->prog_mod_to_date; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr  id="RS2<?= $rowNum; ?>">
+        <td>&nbsp;</td>
+        <td>
+            <div id="program_modifications_<?= $rowNum; ?>-prog_mod_location-colorme" class="colorme">
+            Location <?= $this->element->prog_mod_location; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="program_modifications_<?= $rowNum; ?>-tpd_wrapper-colorme" class="colorme" style="white-space:nowrap;">
+            <?= $this->element->prog_mod_tpd; ?>&nbsp;
+            <?= $this->element->prog_mod_tpd_unit; ?>
+            </div>
+            <div id="program_modifications_<?= $rowNum; ?>-days_wrapper-colorme" class="colorme" style="white-space:nowrap;">
+            <?= $this->element->prog_mod_days_value; ?>&nbsp;
+            <?= $this->element->prog_mod_days_unit; ?>
+            </div>
+            <div id="program_modifications_<?= $rowNum; ?>-prog_mod_mpy-colorme" class="colorme" style="white-space:nowrap;">
+            <?= $this->element->prog_mod_mpy; ?>&nbsp;months
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="program_modifications_<?= $rowNum; ?>-prog_mod_calendar-colorme" class="colorme" style="white-space:nowrap;">
+            Does Service Follow School Calendar? <?= $this->element->prog_mod_calendar; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="3"><hr /></td>
+    </tr>
+</table>

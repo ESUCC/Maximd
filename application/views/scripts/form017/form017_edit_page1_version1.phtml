@@ -1,0 +1,46 @@
+<?php 
+$view = $this->element->title->getView();
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_017; ?>
+<?= $this->element->page; ?>
+
+<BR />
+<?
+// uploader
+$addTableCss = '';
+if('print'!=$view->mode) {
+    echo $this->fileUploader();
+    $addTableCss .= "width:800px;";
+}
+?>
+
+<table class="formTitleHead">
+   <tr>
+        <td>Notes</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;<?=$addTableCss?>">     
+    <tr>
+		<td style="background:#EEE8CD; margin:0px;padding:0px;">
+		Title
+		</td>
+		<td style="background:#EEE8CD; margin:0px;padding:0px;width:100px;">
+		Date
+		</td>
+    </tr>
+    <tr>
+    	<td><?php echo $this->element->title; ?></td>
+    	<td><?php echo $this->element->date_notice; ?></td>
+    </tr>
+    <tr>
+		<td colspan="2" style="background:#EEE8CD; margin:0px;padding:0px;">
+		Text
+		</td>
+    </tr>
+    <tr>
+    	<td colspan="2"><?php echo $this->element->dialog_text; ?></td>
+    </tr>
+</table> 
+<?php echo $this->element->submit; ?>

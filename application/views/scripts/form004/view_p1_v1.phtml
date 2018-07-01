@@ -1,0 +1,81 @@
+<?php ?>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>CONSENT TO INVITE OUTSIDE AGENCY REPRESENTATIVE(S) TO THE IEP MEETING WHEN POSTSECONDARY GOALS AND TRANSITION SERVICES ARE BEING CONSIDERED (007.03A10b)</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;" border="0">
+    <tr>
+        <td nowrap="nowrap" style="width:33%"><span class="btsb">Dear</span>:&nbsp;<?php echo $this->element->parent_names; ?></td>
+        <td nowrap="nowrap" style="width:*; text-align:right"><span class="btsb">Date</span>:&nbsp;<?php echo $this->element->date_notice; ?></td>
+    </tr>
+    <tr>
+        <td colspan="2" style="">
+            One of the purposes of your child's Individualized Education Program (IEP) meeting scheduled on 
+            <?php echo $this->element->iep_date; ?> is to consider postsecondary goals and the transition 
+            services needed to assist your child in reaching those goals.<BR><BR>
+            A review of your child's IEP and/or transition records indicates that an agency representative(s) be invited to the IEP meeting to assist with the transition planning for your child.  The reason that the district proposes to invite the representative(s) is that there is a possibility that the agency may provide or pay for services. Your consent to invite the agency representative(s) to the upcoming IEP meeting is required.<BR><BR>
+            The district has considered the following options including the reasons why those options were rejected:  The  agency representative(s) listed are those determined to be appropriate for this IEP meeting.  No other agency representative was considered to be necessary; however, we will discuss agency participation at the IEP meeting and will obtain your input.<BR>
+            <?php echo $this->element->options_considered; ?>
+            <BR><BR>
+
+            In order to assist the agency representative(s) in preparing for the IEP meeting, the district proposes to release education records.  Prior to releasing records, consent is needed and should be indicated.<BR><BR>
+        </td>
+    </tr>
+		
+    <tr>
+        <td nowrap="nowrap" colspan="2">
+            Please complete and return this form to: 
+        </td>
+    </tr>
+	
+    <tr>
+        <td nowrap="nowrap">
+            School Contact
+        </td>
+        <td nowrap="nowrap" style="width:*; text-align:left">
+            <?php echo $this->element->return_contact; ?>
+        </td>
+    </tr>
+	
+    <tr>
+        <td nowrap="nowrap">
+            Address
+        </td>
+        <td nowrap="nowrap" style="width:*; text-align:left">
+            <?php echo $this->element->return_address; ?>
+        </td>
+    </tr>
+	
+    <tr>
+        <td nowrap="nowrap">
+            City, State, Zip
+        </td>
+        <td nowrap="nowrap" style="width:*; text-align:left">
+            <?php echo $this->element->return_city_st_zip; ?>
+        </td>
+    </tr>
+	
+    <tr>
+        <td colspan="2" style="">
+            <BR>Sincerely,<BR><BR>
+
+            <?php echo $this->element->district_contact; ?> Name and Title of District Contact Person<BR><BR>
+
+            You and your child have protection under the procedural safeguards of the Individuals with Disabilities Education Act (IDEA).  The school district must provide you with a copy of your procedural safeguards once a year.  If you would like another copy, have questions or need assistance understanding this notice or your rights you may contact: <BR><BR>
+            District Contact <?php echo $this->element->district_contact_name_title; ?> at (phone xxx-xxx-xxxx) <?php echo $this->element->district_contact_phone; ?>.		
+
+        </td>
+    </tr>
+</table>
+
+
+
+<?php echo $this->element->submit; ?>
+
+
+
+
+

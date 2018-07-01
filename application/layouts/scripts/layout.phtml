@@ -1,0 +1,200 @@
+<?php
+$controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+$actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+
+$disableDojo = false;
+if('student'==$controllerName) {
+    $disableDojo = true;
+}
+
+
+// get refresh code for externals
+// changing this code will cause clients 
+// to get fresh coppies of the external files
+$config = Zend_Registry::get('config');
+$refreshCode = '?refreshCode=' . $config->externals->refresh;
+
+if(isset($this->jqueryLayout) && $this->jqueryLayout) {
+    $content = $this->render('jqueryLayout.phtml');
+} else {
+    $content = $this->render('_layout.phtml');
+}
+
+
+if (Zend_Controller_Front::getInstance()->getRequest()->getParam('nojs', false)) {
+    $this->dojo()->disable();
+    $content = preg_replace('#href="([^"]*)"#s', 'href="$1?nojs=true"', $content);
+}
+
+$this->headLink()->appendStylesheet('/css/srs_style_IE9.css', 'screen', 'IE 9');    
+$this->headLink()->appendStylesheet('/css/srs_style_IE8.css', 'screen', 'IE 8');    
+$this->headLink()->appendStylesheet('/css/srs_style_IE7.css', 'screen', 'IE 7');    
+$this->headLink()->appendStylesheet('/css/srs_style_IE6.css', 'screen', 'IE 6');
+$this->headLink()->appendStylesheet('/css/srs_style_IE.css', 'screen', 'IE');
+$this->headLink()->appendStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', 'screen');
+
+// bad browser display/detection
+$this->jQuery()->addJavascriptFile('/js/jquery_addons/jquery.badBrowser.js');
+$this->jQuery()->addJavascriptFile('/js/jquery.blockUI.js'.$refreshCode);
+$this->jQuery()->addJavascriptFile('/js/jquery_addons/jquery.client.js'.$refreshCode);
+
+$this->jQuery()->addJavascriptFile('/js/jsrs.js'.$refreshCode);
+
+/**
+ * jquery is setup in bootstrap
+ */
+//$this->headScript()->appendFile('/js/jquery-ui-1.8.16.custom.smoothness/js/jquery-ui-1.8.16.custom.min.js');
+
+
+$backButtonForce = false;
+$sessUser = new Zend_Session_Namespace('user');
+
+if(false==$disableDojo) {
+    if('edit' == $actionName)
+    {
+        $this->headScript()->appendFile('/js/srs_forms/jsHtmlParser.js'.$refreshCode);
+        $this->headLink()->appendStylesheet($config->dojoPath . '/../dojox/editor/plugins/resources/css/PasteFromWord.css'.$refreshCode);
+    } elseif('view' == $actionName) {
+        if(isset($this->tinyMce) && true===$this->tinyMce) {
+        } else {
+            $this->headLink()->appendStylesheet('/css/dojo_editor_additional_view.css'.$refreshCode);
+        }
+    } else {
+        $this->headLink()->appendStylesheet('/css/dojo_editor_additional_view.css'.$refreshCode);
+    }
+}
+
+?><?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <?php if(0 && $config->jsErrLogEnabled) { ?>
+    <script type="text/javascript" src="/js/jsErrLog/src/static/jserrlog.js<?php echo $refreshCode ?>"></script>
+    <script type="text/javascript">
+    <?php 
+    	if(isset($_SERVER['HTTPS']) && 'on'==$_SERVER['HTTPS']) {
+    		$prefix = "https://".$_SERVER['HTTP_HOST'];
+    	} else {
+    		$prefix = "http://".$_SERVER['HTTP_HOST'];
+    	} ?>
+    	jsErrLog.url = "<?php echo $prefix; ?>/errorlog/log/file/logger/userid/<?php echo $sessUser->sessIdUser; 
+    		?>/form_key/<?php echo $this->formNum; 
+    		?>/form_number/<?php echo $this->formId; 
+    		?>/user_name/<?php echo $this->userName;
+    		?>/page_number/<?php echo $this->page;
+    		?>/student_id/<?php echo $this->db_form_data['student_data']['id_student'];
+    	?>";
+    	//Configure site parameters
+    	//jsErrLog.debugMode = true;
+    	//Optionally add additional debug information to the jsErrLog.info message field
+    	//jsErrLog.info = "Populated the Info Message to pass to logger"
+    </script>
+    <?php } ?>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headMeta() ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle() ?>
+	<?php echo $this->jQuery(); ?>
+    <?php
+    if(false==$disableDojo) {
+        echo $this->dojo();
+    }
+    ?>
+    <script type="text/javascript" src="/js/JavaScriptSpellCheck/include.js"></script>
+    <?php // custom JS - common srs JS form functions ?>
+    <?php if('student' != $controllerName && ('edit' == $actionName || 'view' == $actionName || 'delete' == $actionName || 'finalize' == $actionName || 'log' == $actionName || 'google-editors' == $actionName)) { ?>
+	    <?php $this->headScript()->appendFile('/js/custom/custom_functions.js'.$refreshCode); ?>
+	    <?php $this->headScript()->appendFile('/js/srs_forms/common_form_functions_new10.js'.$refreshCode); ?>
+	    
+	    
+    <?php } ?>
+    <?php if('personnel' != $controllerName && 'student' != $controllerName && 'edit' == $actionName) { ?>
+    	<?php $this->headScript()->appendFile('/js/srs_forms/jsave2.js'.$refreshCode); ?>
+	    <?php 
+	    if('on' == $config->backbuttonwarning->users || $backButtonForce) { ?>
+	        <?php $this->headScript()->appendFile('/js/srs_forms/back_button_warning.js'.$refreshCode); ?>
+	    <?php } ?>
+    <?php } ?>
+    <?php if('form004' == $controllerName && 'goalhelper' == $actionName) { ?>
+	    <script type="text/javascript">
+			function loadGoalHelperArrays() {
+				console.debug('loadGoalHelperArrays');
+	        	<?= $this->jsArrString;?>
+			}
+			dojo.addOnLoad(loadGoalHelperArrays);
+	    </script>
+        <?php $this->headScript()->appendFile('/js/srs_forms/goal_helper.js'.$refreshCode); ?>
+
+    <?php } ?>
+    
+    <?php // custom JS - browser fix ?>
+    <?php $this->headScript()->appendFile('/js/ie_fix_checkboxesById.js'.$refreshCode); ?>
+    
+    <?php
+      //
+      // HACK - include v1 JS forms when version is 9
+      //
+    $ver = 1;
+   	if($this->version == 2) $ver = 1;
+   	if($this->version == 3) $ver = 1;
+   	if($this->version == 4) $ver = 1;
+   	if($this->version == 5) $ver = 1;
+   	if($this->version == 6) $ver = 1;
+   	if($this->version == 7) $ver = 1;
+   	if($this->version == 8) $ver = 1;
+   	if($this->version == 9) $ver = 1;
+   	if($this->version == 10 && $controllerName == 'form029' && $this->page == '4') $ver = 10;
+    $jsFile = 'js/srs_forms/'.$controllerName.'_p'.$this->page.'_v'.$ver.'.js';
+    if(file_exists($jsFile))
+    {
+    	$this->headScript()->appendFile('/'.$jsFile.$refreshCode);
+    }
+    
+    if('print' == $actionName) { ?>
+	<SCRIPT type="javascript">
+		function redirect() {
+		   <? if(!empty($this->fullUrl)) echo "window.location.href='$this->fullUrl';"; ?>
+		}
+	</SCRIPT>
+    
+    <?php } else { ?>
+    
+    <script type="javascript">
+        // error array generated on page load
+        // regenerated after save
+        <?php
+        if(!isset($this->validationArr)) $this->validationArr = array();
+        $jsonArr = new Zend_Dojo_Data('id', $this->validationArr, 'id');
+        echo "var validationMsgs = " . $jsonArr->toJson() . ";";
+        ?>
+    </script>
+    
+    
+    <?php 
+    } // end print conditional
+
+    //echo $this->headScript(); ?>
+    
+    
+</head>
+<body class="tundra" <?php if('print' == $actionName) {echo 'onLoad="redirect()"'; } ?>>
+    <?php echo $content; ?> 
+    <?php //Zend_Debug::dump($_SERVER); ?> 
+    <div class="loading"><div><img src="/images/loading.gif" alt="loading" /><br />Loading ...</div></div>
+<?php echo $this->headScript(); ?>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-48191906-1']);
+  _gaq.push(['_setDomainName', 'unl.edu']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

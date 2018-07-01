@@ -1,0 +1,135 @@
+html,body{
+    height: 100%
+}
+
+#header{
+    height: 120px;
+    width: 100%;
+}
+
+#container {
+    min-height: 100%;
+    position:relative;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+#footer{
+    bottom: 0;
+    height: 35px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    background-color: #666;
+    color: #DDDDDD;
+    font-size: 10px;
+    padding-left: 10px;
+}
+
+#footer a, #mainFooter a:visited {
+    color: #FFF;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+}
+
+fieldset {
+    margin-left: 50px;
+}
+.zend_form {
+    /*padding-right: 40px;*/
+}
+.zend_form label.srsLabel {
+    width:180px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5px;
+    background-color: lightgrey;
+}
+.zend_form span.hint {
+    width: 50%;
+    display: inline-block;
+    text-align: left;
+}
+.zend_form input:not([type="radio"]) {
+    width: 170px;
+}
+
+.wrapperDiv {
+    margin-bottom: 2px;
+}
+.wrapperDiv>span span {
+    vertical-align: top;
+}
+
+div.sectionContainer {
+    border:1px solid #AAAAAA;
+    background:url('../images/bg-highlight.png') repeat-x scroll 50% top #eee;
+}
+
+div.sectionContainer .message {
+    font-size: 18;
+    color:red;
+    text-align: center;
+}
+
+div.sectionContainer div.content{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+div.sectionContainer div.contentRow{
+    clear: both;
+}
+div.sectionContainer span.contentRowCell{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.blueHeadline {
+    border:1px solid #AAAAAA;
+    font-size:14px;
+    background-color:#3366cc;
+    color:#fff;
+    padding:7px 10px;
+    margin:2px 5px;
+}
+
+input[readonly="readonly"] {
+    background-color:#d3d3d3;
+}
+
+#srs_mainPane {
+    margin-left:0px;
+}
+
+
+/** FORM NAVIGATION (CANCEL/SAVE) **/
+/** VIEW/EDIT PERSONNEL/STUDENT **/
+fieldset.navigation>dl>div.wrapperDiv>div {
+    float:left;
+}
+fieldset.navigation>dl>div.wrapperDiv:first-child {
+    padding-left:650px;
+}
+
+/** MESSAGING **/
+div.sectionContainer .errorMessage {
+    color:red;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+div.sectionContainer .successMessage {
+    color:green;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+div.sectionContainer .note {
+    font-size: 12pt;
+    font-weight: bold;
+}

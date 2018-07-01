@@ -1,0 +1,126 @@
+
+<div class="header">
+<h1>Header</h1>
+<div class="loginBox">
+<?php echo $this->loginForm; ?>
+</div>
+<!-- end loginBox --></div>
+<!-- end header -->
+
+<div class="navMain">
+<div><a href="search/basicsearch">Basic Search</a></div>
+<div><a href="search/advancedsearch">Advanced Search</a></div>
+</div>
+<!-- end navMain -->
+
+<div class="dashboard">
+<h3>Conduct Another Search:</h3>
+<?php echo $this->searchForm; ?>
+
+<div class="priceBox">
+<?php echo $this->PriceAndCount; ?>
+</div>
+<!-- end priceBox --></div>
+
+
+
+<div class="contentMain">
+<h2>Search Results</h2>
+<form name="resultsform" id="resultsform" action="" method="post">
+
+<?php if($this->displayedNodeCount > 1) { ?>
+<input type="button" name="CheckAll" value="Check All" onClick="javascript:checkAllSubcategories('viewSubcategories', 1, <?php echo $this->displayedNodeCount-1; ?>)">
+<input type="button" name="UnCheckAll" value="Uncheck All" onClick="javascript:uncheckAllSubcategories('viewSubcategories', 1, <?php echo $this->displayedNodeCount-1; ?>)">
+<br>
+<?php } ?>
+<table name="treeTable" class="treeTable" border="1" style="width: 100%;">
+
+	<?php if('basic' == $this->searchMode || 'advanced' == $this->searchMode) { ?>
+    	<tr>
+    		<th>Category</th>
+    		<th>Match Rate for<BR>
+    		Search Term</th>
+    		<th>View Subcategories</th>
+    		<th>Exact Matches Containing<BR>
+    		Search Term</th>
+    		<th></th>
+    		<th>Keywords Related to Category</th>
+    		<th></th>
+    		<th>Total Keywords in Category</th>
+    	</tr>
+	<?php } elseif($this->searchMode == 'category') { ?>
+    	<tr>
+    		<th>Category</th>
+    		<th>View Subcategories</th>
+    		<th>Total Keywords in Category</th>
+    	</tr>
+	<?php } ?>
+	<?php
+	    /*
+	     * Display the rows of the form
+	     */ 
+	    echo $this->resultsForm;
+
+	    ?>
+	    <TR><TD colspan="8">&nbsp;</TD></TR>
+	<?php
+	    /*
+	     * Display the uncategorized results row of the form
+	     */ 
+        if(count($this->uncat_results) >0) {
+            echo $this->uncat_resultsForm;
+        }
+	
+
+	
+
+	    
+    /*
+     * Display button row on bottom of form
+     */ 
+	?>
+	<tr>
+		<td colspan="8" style="text-align: right;">
+			<?php echo $this->formHidden('discount', $this->payRate); ?>
+			<?php echo $this->formHidden('displayedNodeCount', $this->displayedNodeCount); ?>
+			<?php echo $this->formHidden('showCatLev', $this->depth + 1); ?>
+			<?php echo $this->formHidden('submissionType', ''); ?>
+			<b><?php if ($this->depth > 0) { ?>
+				<input type="button" value="Back"
+			onclick="javascript:document.getElementById('submissionType').value='back'; document.getElementById('showCatLev').value -=2;this.form.submit();"
+			id="refineCategoryOne" name="refineCategoryOne" /> 			
+	        <?php } ?>
+	        <?php if ($this->depth < 3) { ?>
+				<input type="button" value="Continue Refining Search" onclick="javascript:if(checkAnyChecked('viewSubcategories', 1, <?php echo $this->displayedNodeCount; ?>)) { this.form.submit(); } else { alert('You must check at least one checkbox to continue.'); }" id="showCatLev2" name="showCatLev2" />
+		    <?php } ?>
+			<input type="button" value="Purchase" onclick="javascript:if(checkAnyChecked('viewSubcategories', 1, <?php echo $this->displayedNodeCount; ?>)) { document.getElementById('submissionType').value='purchase';this.form.submit(); } else { alert('You must check at least one checkbox to continue.'); }" id="Purchase" name="Purchase" />
+			</b>
+		</td>
+	</tr>
+</table>
+
+</form>
+</div>
+<!-- end content -->
+
+
+
+
+<!--<div class="footer">-->
+<!--<h3>Footer</h3>-->
+<!--</div>-->
+<!-- end footer -->
+
+<pre>
+<?php //pre_print_r($this->searchValues); ?>
+<?php //Zend_Debug::dump($this->rObj);?>
+<?php //echo 'userPrefs: ' . $this->userPrefs->discount_pay_percentage . "<BR>"; ?>
+<?php //echo "" . $this->sqlStmt . "<BR>"; ?>
+<?php //echo "uncat_sqlStmt: " . $this->uncat_sqlStmt . "<BR>"; ?>
+<?php //echo "jesse: " . $this->purchaseCheckboxChecked . "<BR>"; ?>
+<?php //echo "phrase replaced: " . replaceSpacesInQuotes($this->phrase) . "<BR>"; ?>
+<?php //echo "phrase: "; pre_print_r($this->uncat_results); ?>
+<?php //pre_print_r($this->timeArr[]); ?>
+<?php //pre_print_r($this->rObj->displayCheckedStatusTree()); ?>
+<?php //phpinfo(); ?>
+</pre>

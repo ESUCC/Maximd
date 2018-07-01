@@ -1,0 +1,29 @@
+drop function get_related_services(integer) CASCADE;
+CREATE FUNCTION get_related_services(integer) RETURNS text
+    LANGUAGE plpgsql AS $_$
+    declare 
+        related_service_rec record; 
+        iep_rec record; 
+        retval text;  
+    begin 
+        -- passed param is id_form_004
+        Raise Notice 'id_form_004: %', $1;
+        retval := ''; 
+
+        select into iep_rec version_number, related_service_drop from iep_form_004 where id_form_004 = $1; 
+        IF iep_rec.version_number >= 9 THEN
+            for related_service_rec in select * from form_004_related_service where status='Active' and id_form_004=$1 LOOP
+                Raise Notice 'related_service_rec: %', related_service_rec.related_service_drop;
+                retval := retval || related_service_rec.related_service_drop  || ', '; 
+                
+            END LOOP; 
+        ELSE
+            retval := replace(iep_rec.related_service_drop, '|', ', ');
+        END IF;
+
+        retval := trim( trailing ' ' from retval);  
+        retval := trim( trailing ' ,' from retval); 
+        return retval; 
+    end;
+    $_$;
+--select get_related_services(1198891);

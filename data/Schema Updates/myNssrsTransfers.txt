@@ -1,0 +1,124 @@
+
+--
+-- my_students view
+-- view should only allow access to students that the personnel has privs that
+-- grant access to
+--
+CREATE or replace VIEW my_nssrs_transfers
+    AS 
+ 
+    select *
+    from
+ 
+    ( 
+    select 
+        id_student as id_stu, 
+        id_personnel,
+        min(class) as class,
+        case 
+            when min(class) = 1 then 'ADMIN' 
+            when min(class) = 2 then 'DM' 
+            when min(class) = 3 then 'ADM' 
+        end as access_type
+
+    from
+    (
+        select
+
+        nssrs_transfers.id_student,
+        nssrs_transfers.id_case_mgr,
+        nssrs_transfers.id_ei_case_mgr,
+        nssrs_transfers.id_ser_cord,
+        iep_personnel.id_personnel,
+        
+        iep_privileges.class as class
+        
+        from
+    
+            --
+            -- select personnel
+            --
+            "public"."iep_personnel" "iep_personnel" 
+                
+                --
+                -- joined to thier privileges
+                --
+                inner join "public"."iep_privileges" "iep_privileges" 
+                on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                    "iep_personnel"."status" = 'Active' and 
+                    "iep_privileges"."status" = 'Active'
+                    
+                    --
+                    -- joined to thier students where they have access
+                    --
+                    inner join "public"."nssrs_transfers" "nssrs_transfers"
+                    on  
+                            -- system admin
+                            -- joins to all students
+                            ("iep_privileges"."class" = 1)
+    
+    union 
+    
+        select 
+        
+        nssrs_transfers.id_student,
+        nssrs_transfers.id_case_mgr,
+        nssrs_transfers.id_ei_case_mgr,
+        nssrs_transfers.id_ser_cord,
+        iep_personnel.id_personnel,
+        
+        iep_privileges.class as class
+        
+        
+        from
+    
+            --
+            -- select personnel
+            --
+            "public"."iep_personnel" "iep_personnel" 
+                
+                --
+                -- joined to thier privileges
+                --
+                inner join "public"."iep_privileges" "iep_privileges" 
+                on  "iep_personnel"."id_personnel" = "iep_privileges"."id_personnel" and
+                    "iep_personnel"."status" = 'Active' and 
+                    "iep_privileges"."status" = 'Active'
+                    
+                    --
+                    -- joined to thier students where they have access
+                    --
+                    inner join "public"."nssrs_transfers" "nssrs_transfers"
+                    on  
+                            -- district mananger
+                            -- joins to students in the district
+                            (
+                                (
+                                    "iep_privileges"."class" = 2 OR
+                                    "iep_privileges"."class" = 3 
+                                ) AND
+                                "iep_privileges"."id_district" = "nssrs_transfers"."id_district" AND
+                                "iep_privileges"."id_county" = "nssrs_transfers"."id_county"
+                            )
+
+
+    
+    
+    ) as all_matches    
+    
+    group by 
+        id_personnel,
+        id_student,
+    id_case_mgr,
+    id_ei_case_mgr,
+    id_ser_cord
+    
+    ) as unique_matches    
+    
+    left join nssrs_transfers nssrs on "unique_matches".id_stu = nssrs.id_student
+
+    ;
+
+
+
+--select access_type, id_stu, class  from my_nssrs_transfers where id_personnel ='1000254' order by access_type;

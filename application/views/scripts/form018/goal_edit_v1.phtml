@@ -1,0 +1,71 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<table class="" style="width:100%;" border="0" id="iep_form_018_goal_<?= $rowNum; ?>">
+    <tr>
+        <td>
+			<table class="formSectionHead" style="width:100%;" border="0" id="iep_form_018_goal_<?= $rowNum; ?>">
+			    <tr>
+			        <td>
+			            Measurable Annual Goals (Including Academic and Functional Goals)
+			            <?= $this->element->id_form_018_goal; ?>
+			        </td>
+			        <td class="noprint" style="text-align: right; padding-right: 22px;">
+			            <div id="iep_form_018_goal_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+			            <?= $this->element->remove_row; ?>
+			            </div>
+			        </td>
+			    </tr>
+			</table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+		<table class="formDesc">     
+		    <tr>
+		        <td>
+		        This section states the student's specific postsecondary 
+		        goals and related activities/accomplishments (This section must 
+		        include education/training, employment, and when appropriate 
+		        independent living.)</td>
+		    </tr>
+		    <tr>
+		        <td>
+		            <table class="formDesc">
+		                <tr>
+		                    <td style="width: 33%;">Post Secondary Goal</td>
+		                    <td style="width: 33%;">Related Activities/Accomplishments</td>
+		                    <td style="width: 33%;">Recommendations to Assist the Student in 
+		                    Meeting Postsecondary Goals. (May include 
+		                    accommodations, assistive technology, and 
+		                    agency supports)</td>
+		                </tr>
+		            </table>
+		        </td>
+		    </tr>
+		    <tr>
+		        <td>
+		            <table class="formInput">
+		                <tr>
+		                    <td style="width: 33%;">
+		                    <div id="iep_form_018_goal_<?= $rowNum; ?>-post_secondary-colorme" class="colorme">
+		                    <?php echo $this->element->post_secondary; ?>
+		                    </div>
+		                    </td>
+		                    <td style="width: 33%;">
+		                    <div id="iep_form_018_goal_<?= $rowNum; ?>-related_activity-colorme" class="colorme">
+		                    <?php echo $this->element->related_activity; ?>
+		                    </div>
+		                    </td>
+		                    <td style="width: 33%;">
+		                    <div id="iep_form_018_goal_<?= $rowNum; ?>-recommendation-colorme" class="colorme">
+		                    <?php echo $this->element->recommendation; ?>
+		                    </div>
+		                    </td>
+		                </tr>
+		            </table>
+		        </td>
+		    </tr>
+		</table> 
+
+        </td>
+    </tr>
+</table>

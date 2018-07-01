@@ -1,0 +1,14 @@
+drop table srs_queue;
+CREATE TABLE srs_queue (
+    srs_queue_id serial NOT NULL,
+    queue_name varchar,
+    status varchar default 'off',
+    run_at timestamp,
+    processor_pid integer
+);
+
+Insert into srs_queue (queue_name, status) VALUES ('archive', 'off'); 
+
+
+
+

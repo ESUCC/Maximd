@@ -1,0 +1,292 @@
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<style>
+
+#ResultsTable {
+    font-size:0.7em;
+}
+
+#ResultsTable th {
+        font-weight:bold;
+        padding:2px;
+    }
+
+#ResultsTable td {
+        padding:2px;
+    }
+
+.CellTable {
+    border: width 0px;  
+    border-style: none;
+    padding:0px;
+    background-color: red;
+}
+
+.CellTable td th {
+    padding:0px;
+    background-color: red;
+}
+
+
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+.TableList tbody tr:hover td {
+    background: 		#F4A460;
+    }
+	
+</style>
+<script type="text/javascript">
+        $("document").ready(function() {
+        	$(".paginationControl").css("width","80%");
+        	 
+            $(".paginationControl").css("font-size",'14px');
+            $(".paginationControl").css("margin-bottom",'14px');
+            $(".paginationControl").css("margin-top",'14px');
+            $(".paginationControl").css("float",'left'); 
+
+        
+        $(".TableList").css("width","80%");
+       	$(".TableList").css("border", "4px solid LightSkyblue");
+       	$(".Tablelist th").css('width','50px');
+       	$(".Tablelist td").css('width','50px');
+      	$(".TableList").css("font-size","14px");
+        $(".TableList a").css("color","MidnightBlue");
+        $(".TableList  tr:even").css("background-color","LightSteelBlue");
+        $(".TableList tr:odd").css("background-color","bisque");
+        
+        
+        $(".tableCell").css("width","100%");
+        $(".TableList").css("font-size","0.9em");
+        $(".tableCell  tr:even").css("background-color","transparent");
+        $(".tableCell tr:odd").css("background-color","transparent");
+        $(".tableCell td").css("border-bottom", "1px solid silver");
+        
+        });
+    </script>
+    
+    <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('district');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<?php include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
+
+<?php if ($auth->hasIdentity()) { ?>
+
+
+<?php  echo $this->current_date_and_time; ?><br>
+
+<?  
+   }    
+?> 
+
+<center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
+
+<table class="TableList" id="ResultsTable" width="100%">
+<tr >
+    <th width="15%">
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
+        
+    </th>
+    <th width="10%">
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
+    </th>
+    <th style="text-align:center;">
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail','fieldname'=>'edfipublishstatus', "sort" => $this->sort ));?>>Result</a>
+    </th>
+    <th>
+        Error
+    </th>
+    <th width="10%">
+        Student
+    </th>
+    <th width="20%">
+        Dates/Reason exited
+    </th>
+    <th width="20%">
+        Details
+    </th>
+</tr>
+<tbody>
+<style>
+
+</style>
+<?php 
+    foreach($this->districtModel as $district) {?>
+<tr >
+    <td >
+        <?php echo $this->escape($district['edfipublishtime']);?>
+    </td>
+    <td>
+        <?php echo $this->escape($district['educationorganzationid']);?>
+    </td>
+    <td style="text-align:center;"> 
+<b>
+        <?php
+         $color="";
+         switch($district['edfipublishstatus']){
+            case "S":
+                $color="#009933";
+                break;
+
+            case "E":
+                $color="#FF0000";
+                break;
+
+        };
+        ?>
+
+        <span style='color:<?php echo($color) ?>'><?php echo ($this->escape($district['edfipublishstatus'])) ?>  <span>
+        
+   </b>     
+        
+    </td>
+    <td>
+        <?php echo $this->escape($district['edfierrormessage']);?>
+    </td>
+    <td>
+        Id: <?php echo $this->escape($district['id_student']);?>
+        <br/>
+        Unique: <?php echo $this->escape($district['studentuniqueid']);?>
+    </td>
+    
+    <td>
+        Begin: <?php echo $this->escape($district['begindate']);?>
+        <br>
+        End: <?php 
+            echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
+        <br>
+        Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
+    </td>
+    <td>
+        <table class="tableCell">
+            <tr>
+                <td>
+                    Special Ed Setting:
+                </td>
+                <td>
+                    <?php echo $this->escape($district['specialeducationsettingdescriptor']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Level Program Participation: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['levelofprogramparticipationdescriptor']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Placement Type:
+                </td>
+                <td>
+                    <?php echo $this->escape($district['placementtypedescriptor']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    SPED Percent Time  %:
+                </td>
+                <td>
+                     <?php echo $this->escape($district['specialeducationpercentage']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    To Take Alt Assessment: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['totakealternateassessment']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Disabilities: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['disabilities']);?>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    Speach Language: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_slt']);?>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    Occupational Therapy: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_ot']);?>
+                </td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    Physical Therapy: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_pt']);?>
+                </td>
+                
+            </tr>
+            
+            
+        </table><br>
+        
+    </td>
+</td>
+
+</tr> 
+<? } ?>
+</tbody>
+</table>
+
+<center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>

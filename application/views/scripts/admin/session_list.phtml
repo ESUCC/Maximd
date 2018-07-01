@@ -1,0 +1,37 @@
+<?php if ($this->resultCount > $this->maxRecs) echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>
+<?php if ($this->resultCount < 1) { ?>
+<br><br><center>No results matched your search</center>
+<?php } else { 
+
+if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
+?>
+<div style="margin: 8px;">Now showing <b><?=($page_real - 1) * $this->maxRecs + 1?></b> to <b><?if ($this->resultCount/$page_real < $this->maxRecs){?><?=$this->resultCount?><?}else{?><?=$this->maxRecs*$page_real?><?}?></b> of <b><?=$this->resultCount?></b> results. For <b><?=$this->usersCount?></b> users.</div>
+<ul class="pseudoTable schoolTable">
+    <li class="head">
+        <ul class="odd">
+	    <li class="sessionName">Name</li>
+	    <li class="sessionSchool">School</li>
+	    <li class="sessionPhone">Phone</li>
+	    <li class="sessionStart">Session Start</li>
+	    <li class="sessionIP">IP address</li>
+        </ul>
+
+    </li>
+    <?php 
+     $i = 0; 
+     foreach ($this->results as $k => $r) { 
+     ?> 
+    <li<?=($i > 0) ? ' style="border-bottom: 1px solid #e0e0e0;"' : ''?>>
+        <ul class="odd">
+	    <li class="sessionName"><?=$r['name_first']?> <?=$r['name_middle']?> <?=$r['name_last']?></li>
+	    <li class="sessionSchool"><?=$r['name_school']?></li>
+	    <li class="sessionPhone"><?=$r['phone_main']?></li>
+            <?preg_match("/([0-9]{4})\/([0-9]{2})\/([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})/", preg_replace('/\-/', '/', $r['timestamp_created']), $timestamp_created)?>
+	    <li class="sessionStart"><?=$timestamp_created[0]?></li>
+	    <li class="sessionIP"><?=$r['ip']?></li>
+        </ul>
+    </li>
+    <?php $i = 1; } ?>
+</ul>
+<?php } ?>
+<?php if ($this->resultCount > $this->maxRecs) echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>

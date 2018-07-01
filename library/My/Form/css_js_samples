@@ -1,0 +1,76 @@
+<script>
+
+
+
+
+document.getElementById("DistrictSettings").style.color = "green";
+document.getElementById("DistrictDemographics").style.color = "brown";
+document.getElementById("OptionalFeatures").style.color = "red";
+document.getElementById("IepSummaryFormA").style.color = "purple";
+
+
+
+
+
+
+</script>
+
+
+<style>
+#DistrictDemographics  {
+    width:400px;
+    float:left;
+    padding:10px;
+	color:blue;
+	font-weight:bold
+	font-size:0.85em
+}
+#DistrictSettings {
+    width:600px;
+    float:left;
+    padding:10px;
+	color:green;
+	font-size:0.85em
+	font-weight:bold
+}
+
+#OptionalFeatures {
+    width:500px;
+    float:left;
+    padding:10px;
+	color:purple;
+	font-size:0.85em
+	font-weight:bold
+}
+
+#IepSummaryFormA {
+    width:500px;
+    float:left;
+    padding:10px;
+	color:red;
+	font-size:0.85em
+	font-weight:bold
+}
+
+</style>
+
+<?php
+
+//echo "<table>";
+// for($x=1;$x< $this->staffCount;$x++) { 
+//    echo "<tr><td>";
+// echo $this->districtStaff[$x]['email_address']; echo "</td>";
+  //  echo "</tr>";
+//} 
+//echo "</table>";
+
+echo $this->current_date_and_time;
+echo $this->noDecorators;
+echo $this->form;
+?>
+
+
+
+
+
+

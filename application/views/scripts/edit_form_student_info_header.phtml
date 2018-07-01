@@ -1,0 +1,87 @@
+<?php
+/*
+ * this file is poorly named because this data shows up in VIEW mode.
+ */
+$controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName(); 
+$actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName(); 
+
+$view = $this->element->name_student->getView();
+
+
+if('Final' == $view->db_form_data['status'] && !empty($view->db_form_data['finalized_date'])) {
+    // display everything below based on the finalized fields in the db record
+    $student = $view->db_form_data['finalized_student_name'];
+    $age = $view->db_form_data['finalized_age'];
+    $schoolDistrict = $view->db_form_data['finalized_name_district'];
+    $gender = $view->db_form_data['finalized_gender'];
+    $nameSchool = $view->db_form_data['finalized_name_school'];
+    $grade = $view->db_form_data['finalized_grade'];
+    $parents = $view->db_form_data['finalized_parents'];
+    $address = $view->db_form_data['finalized_address'];
+    if(substr_count($view->db_form_data['finalized_dob'], '/')) {
+        $date = new Zend_Date( $view->db_form_data['finalized_dob'], Zend_Date::MONTH . '/' . Zend_Date::DAY . '/' . Zend_Date::YEAR);
+    } elseif(substr_count($view->db_form_data['finalized_dob'], '-')) {
+        $date = new Zend_Date( $view->db_form_data['finalized_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
+    }
+
+} elseif('Suspended' == $view->db_form_data['status'] && !empty($view->db_form_data['suspended_date'])) {
+    // display everything below based on the finalized fields in the db record
+    $student = $view->db_form_data['suspended_student_name'];
+    $age = $view->db_form_data['suspended_age'];
+    $schoolDistrict = $view->db_form_data['suspended_name_district'];
+    $gender = $view->db_form_data['suspended_gender'];
+    $nameSchool = $view->db_form_data['suspended_name_school'];
+    $grade = $view->db_form_data['suspended_grade'];
+    $parents = $view->db_form_data['suspended_parents'];
+    $address = $view->db_form_data['suspended_address'];
+    if(substr_count($view->db_form_data['suspended_dob'], '/')) {
+        $date = new Zend_Date( $view->db_form_data['suspended_dob'], Zend_Date::MONTH . '/' . Zend_Date::DAY . '/' . Zend_Date::YEAR);
+    } elseif(substr_count($view->db_form_data['suspended_dob'], '-')) {
+        $date = new Zend_Date( $view->db_form_data['suspended_dob'], Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
+    }
+
+} else {
+	$student = $this->element->name_student->getValue ();
+	$age = $this->element->age->getValue ();
+	$schoolDistrict = $this->element->name_district->getValue();
+	$gender = $this->element->gender->getValue();
+	$nameSchool = $this->element->name_school->getValue();
+	$grade = $this->element->grade->getValue();
+	$parents = $this->element->parents->getValue();
+	$address = $this->element->address->getValue();
+	if('edit' == $actionName) {
+		if(substr_count($this->element->dob->getValue (), '/')) {
+			$date = new Zend_Date( $this->element->dob->getValue (), Zend_Date::MONTH . '/' . Zend_Date::DAY . '/' . Zend_Date::YEAR);
+		} elseif(substr_count($this->element->dob->getValue (), '-')) {
+			$date = new Zend_Date( $this->element->dob->getValue (), Zend_Date::YEAR . '-' . Zend_Date::MONTH . '-' . Zend_Date::DAY);
+		} else {
+            $date = new Zend_Date( $this->element->dob->getValue ());
+        }
+	} else {
+		// dates are already converted in abstractFormController convertFormToPrint
+		$date = new Zend_Date( $this->element->dob->getValue ());
+	}
+}
+
+?>
+<table class="formDesc">
+	<tr>
+		<td><span class="btsb"><?php echo $this->translate('Student'); ?></span>: <?=$student; ?>&nbsp;</td>
+		<td><span class="btsb"><?php echo $this->translate('Age'); ?></span>: <?=$age?>&nbsp;</td>
+		<td><span class="btsb"><?php echo $this->translate('School District'); ?></span>: <?=$schoolDistrict?>&nbsp;</td>
+	</tr>
+	<? if ($this->option != "print") { ?>
+	<tr>
+		<td><span class="btsb"><?php echo $this->translate('Date of Birth'); ?></span>: <?= $date->toString (Zend_Date::MONTH . '/' . Zend_Date::DAY . '/' . Zend_Date::YEAR );?>&nbsp;</td>
+		<td><span class="btsb"><?php echo $this->translate('Gender'); ?></span>: <?=$gender;?>&nbsp;</td>
+		<td><span class="btsb"><?php echo $this->translate('School'); ?></span>: <?=$nameSchool;?>&nbsp;</td>
+	</tr>
+	<?php } ?>
+	<tr>
+		<td><span class="btsb"><?php echo $this->translate('Grade'); ?></span>: <?=$grade;?>&nbsp;</td>
+		
+		<?php // Note: Mike changed this 3-11-2017 from Parents to Parents/Guardians srs 51?>
+		<td><span class="btsb"><?php echo $this->translate('Parents/Guardians'); ?></span>: <?=$parents;?>&nbsp;</td>
+		<td><span class="btsb"><?php echo $this->translate('Address'); ?></span>: <?=$address;?>&nbsp;</td>
+	</tr>
+</table>

@@ -1,0 +1,300 @@
+<?php
+$content = $this->render('_layout.phtml');
+
+if (Zend_Controller_Front::getInstance()->getRequest()->getParam('nojs', false)) {
+    $this->dojo()->disable();
+    $content = preg_replace('#href="([^"]*)"#s', 'href="$1?nojs=true"', $content);
+}
+?>
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <?php echo $this->headTitle() ?> 
+    <?php echo $this->headMeta() ?> 
+    <?php echo $this->headLink() ?> 
+    <?php echo $this->headStyle() ?> 
+    
+    <?php //if('ajax' != Zend_Controller_Front::getInstance()->getRequest()->getControllerName() ) echo $this->dojo() ?> 
+    <?php $controllerName = Zend_Controller_Front::getInstance()->getRequest()->getControllerName(); ?> 
+    <?php $actionName = Zend_Controller_Front::getInstance()->getRequest()->getActionName(); ?> 
+    <?php echo $this->dojo() ?> 
+    
+    <?php $this->headScript()->appendFile('/js/info/ie_fix_checkboxesById.js'); ?>
+
+
+
+    <script type="text/javascript">
+        dojo.require("dojox.widget.Toaster");
+        dojo.require("dojo.parser");
+    </script>
+        
+    <script type="text/javascript">
+        var idform004 = '<?php echo $this->id; ?>';
+    </script>
+    
+    
+    <?php $this->headScript()->appendFile('/js/my_examples/'.$controllerName.'.js'); ?>
+
+    <?php echo $this->headScript() ?>
+    
+    <?php if(0) { ?>
+
+        <script type="text/javascript">
+            dojo.require("dojo.data.ItemFileReadStore");
+            dojo.require("dojox.grid.DataGrid");
+        </script>
+        <script type="text/javascript">
+            // pass the form 004 id from the view to the store
+            var idform004 = '<?php echo $this->id; ?>';
+    
+            //
+            // fetch data from the server
+            var jsonStore = new dojo.data.ItemFileReadStore({ url: "/ajax/data2/id/"+idform004 });
+            var grid = null;
+    
+            var gridLayout = [
+                        { field: "participant_name", name: "Name(s)", width: 12 },
+                        { field: "absent", name: "Absent", width: 8  },
+                        { field: "positin_desc", name: "Position", width: 30 },
+                        { field: "absent_reason", name: "Absent Reason", width: 8 }
+                    ];
+    
+            //
+            // pass data to the store
+            dojo.addOnLoad(function(){
+                grid = new dojox.grid.DataGrid({
+                    query: { id_iep_team_member: '*' },
+                    store: jsonStore,
+                    structure: gridLayout,
+                    rowsPerPage: 10,
+                }, 'gridNode');
+                grid.startup();
+            });
+    
+        </script>
+
+    <? } else { ?>
+
+        <script type="text/javascript">
+          dojo.require("dojox.grid.Grid");
+    //      dojo.require("dojox.grid._data.model");
+    //      dojo.require("dojox.grid._data.dijitEditors");
+          dojo.require("dojo.parser");
+    //      dojo.require("dijit.form.Button");
+          
+        </script>
+        
+        <? if(0) { ?>
+        <script type="text/javascript" src="/js/dojox/grid/tests/support/test_data.js"></script>
+        <? } ?>
+        
+        <script type="text/javascript">
+            // ==========================================================================
+            // Create a data model
+            // ==========================================================================
+            <? if(0) { ?>
+            
+                // build fake data
+                s = (new Date()).getTime();
+                data = [
+                  [ "normal", false, "new", 'But are not followed by two hexadecimal', 29.91, 10, false, s],
+                  [ "important", false, "new", 'Because a % sign always indicates', 9.33, -5, false, s ],
+                  [ "important", false, "read", 'Signs can be selectively', 19.34, 0, true, s ],
+                  [ "note", false, "read", 'However the reserved characters', 15.63, 0, true, s ],
+                  [ "normal", false, "replied", 'It is therefore necessary', 24.22, 5.50, true, s ],
+                  [ "important", false, "replied", 'To problems of corruption by', 9.12, -3, true, s ],
+                  [ "note", false, "replied", 'Which would simply be awkward in', 12.15, -4, false, s ]
+                ];
+                var rows = 3; // add this many rows to the data array above
+                for(var i=0, l=data.length; i<rows; i++){
+                  data.push(data[i%l].slice(0));
+                }
+                model = new dojox.grid.data.Table(null, data);
+
+                // ==========================================================================
+                // Tie some UI to the data model
+                // ==========================================================================
+                model.observer(this);
+                modelChange = function(){
+                    dojo.byId("rowCount").innerHTML = 'Row count: ' + model.count;
+                }
+                /*
+                modelInsertion = modelDatumChange = function(a1, a2, a3){
+                  console.debug(a1, a2, a3);
+                }
+                */
+                // ==========================================================================
+                // Custom formatters
+                // ==========================================================================
+                formatCurrency = function(inDatum){
+                  return isNaN(inDatum) ? '...' : dojo.currency.format(inDatum, this.constraint);
+                }
+                formatDate = function(inDatum){
+                  return dojo.date.locale.format(new Date(inDatum), this.constraint);
+                }
+                // ==========================================================================
+                // Grid structure
+                // ==========================================================================
+                statusCell = {
+                  field: 2, name: 'Status',
+                  styles: 'text-align: center;',
+                  editor: dojox.grid.editors.Select,
+                  options: [ "new", "read", "replied" ]
+                };
+            
+            
+                gridLayout2 = [{
+                  type: 'dojox.GridRowView', width: '20px'
+                },{
+                  defaultCell: { width: 15, editor: dojox.grid.editors.Input, styles: 'text-align: right;'  },
+                  rows: [[
+                    { name: 'Id',
+                      get: function(inRowIndex) { return inRowIndex+1;},
+                      editor: dojox.grid.editors.Dijit,
+                      editorClass: "dijit.form.NumberSpinner" },
+    
+                    { name: 'Date', width: 10, field: 7,
+                      editor: dojox.grid.editors.DateTextBox,
+                      formatter: formatDate,
+                      constraint: {formatLength: 'long', selector: "date"}},
+    
+                    { name: 'Priority', styles: 'text-align: center;', field: 0,
+                      editor: dojox.grid.editors.ComboBox,
+                      options: ["normal", "note", "important"], width: 10},
+    
+                    { name: 'Mark', width: 3, styles: 'text-align: center;',
+                      editor: dojox.grid.editors.CheckBox},
+                    statusCell,
+    
+                    { name: 'Message', styles: '', width: '10',
+                      editor: dojox.grid.editors.Editor, editorToolbar: true },
+    
+                    { name: 'Amount', formatter: formatCurrency, constraint: {currency: 'EUR'},
+                      editor: dojox.grid.editors.Dijit, editorClass: "dijit.form.CurrencyTextBox" },
+    
+                    { name: 'Amount', field: 4, formatter: formatCurrency, constraint: {currency: 'EUR'},
+                      editor: dojox.grid.editors.Dijit, editorClass: "dijit.form.HorizontalSlider", width: 10}
+                  ]]
+                }];
+
+            <? } else { ?>
+
+                // pass the form 004 id from the view to the store
+                var idform004 = '<?php echo $this->id; ?>';
+        
+                //
+                // fetch data from the server
+                //var data = new dojo.data.ItemFileReadStore({ url: "/ajax/data2/id/"+idform004 });
+                
+                
+
+
+             //Store
+            var store = new dojo.data.ItemFileReadStore({ url: "/ajax/data2/id/"+idform004 });
+            
+            //Model
+            //var model = new dojox.grid.data.Table(null, dojo.toJson(lines[j]));
+            var model = new dojox.grid.data.DojoData(null, store, {jsId: 'model', query:{ id_iep_team_member: '*' },clientSort:true});
+            
+            console.debug(model);
+            
+            
+                // ==========================================================================
+                // Tie some UI to the data model
+                // ==========================================================================
+                model.observer(this);
+                modelChange = function(){
+                    dojo.byId("rowCount").innerHTML = 'Row count: ' + model.count;
+                }
+
+                // ==========================================================================
+                // Tie some UI to the data model
+                // ==========================================================================
+                model.observer(this);
+                modelChange = function(){
+                    dojo.byId("rowCount").innerHTML = 'Row count: ' + model.count;
+                }
+                /*
+                modelInsertion = modelDatumChange = function(a1, a2, a3){
+                  console.debug(a1, a2, a3);
+                }
+                */
+                // ==========================================================================
+                // Custom formatters
+                // ==========================================================================
+                formatCurrency = function(inDatum){
+                  return isNaN(inDatum) ? '...' : dojo.currency.format(inDatum, this.constraint);
+                }
+                formatDate = function(inDatum){
+                  return dojo.date.locale.format(new Date(inDatum), this.constraint);
+                }
+                // ==========================================================================
+                // Grid structure - to enable pull down
+                // ==========================================================================
+//                 statusCell = {
+//                   field: 2, name: 'Status',
+//                   styles: 'text-align: center;',
+//                   editor: dojox.grid.editors.Select,
+//                   options: [ "new", "read", "replied" ]
+//                 };
+            
+            
+                gridLayout2 = [{
+                  type: 'dojox.GridRowView', width: '20px'
+                },{
+                  defaultCell: { width: 15, styles: 'text-align: right;'  }, //editor: dojox.grid.editors.Input, //dojox.grid.editors.ComboBox
+                  rows: [[
+//                     { name: 'id', field: 0,
+//                       //get: function(inRowIndex) { return inRowIndex+1;},
+//                       //editor: dojox.grid.editors.Dijit,
+//                       //editorClass: "dijit.form.NumberSpinner" 
+//                     },
+    
+    
+                    { name: 'Name(s)', styles: 'text-align: left;', field: 2,
+                      editor: dojox.grid.editors.Input, width: 12},
+
+                    { name: 'Absent', styles: 'text-align: left;', field: 3,
+                      editor: dojox.grid.editors.CheckBox, width: 5},
+
+                    { name: 'Position Description', styles: 'text-align: left;', field: 4, width: 40},
+
+                    { name: 'Absent Reason', styles: 'text-align: left;', field: 7,
+                      editor: dojox.grid.editors.Input, width: 12},
+    
+//                     { name: 'Absent', styles: '', width: '10',
+//                       editor: dojox.grid.editors.Editor, editorToolbar: true }
+//     
+//                     { name: 'Amount', formatter: formatCurrency, constraint: {currency: 'EUR'},
+//                       editor: dojox.grid.editors.Dijit, editorClass: "dijit.form.CurrencyTextBox" },
+//     
+//                     { name: 'Amount', field: 4, formatter: formatCurrency, constraint: {currency: 'EUR'},
+//                       editor: dojox.grid.editors.Dijit, editorClass: "dijit.form.HorizontalSlider", width: 10}
+//                     { name: 'Date', width: 10, field: 7,
+//                       editor: dojox.grid.editors.DateTextBox,
+//                       formatter: formatDate,
+//                       constraint: {formatLength: 'long', selector: "date"}},
+//                     { name: 'Mark', width: 3, styles: 'text-align: center;',
+//                       editor: dojox.grid.editors.CheckBox},
+//                     statusCell,
+    
+
+
+
+                  ]]
+                }];
+                
+            <? } ?>
+        
+    
+        </script>
+    <? } ?>
+
+
+</head>
+<body class="tundra">
+    <?php echo $content; ?> 
+    <?php //echo '<BR>' . $actionName; ?>
+</body>
+</html>

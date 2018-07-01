@@ -1,0 +1,64 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<table class="formInput noBorder" border="0" id="school_supp_<?= $rowNum; ?>">
+    <tr class="bgLight2">
+        <td>
+            <?= $rowNum; ?>.
+        </td>
+        <td>
+        	<div id="school_supp_<?= $rowNum; ?>-supports-colorme" class="colorme">
+            <?= $this->element->supports; ?>
+            </div>
+        </td>
+        <td class="noprint" style="padding-right:20px;" align="right" >
+        	<div id="school_supp_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        	<?= $this->element->id_form_004_school_supp; ?>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="school_supp_<?= $rowNum; ?>-dates_wrapper-colorme" class="colorme">
+            <?php echo $this->translate('Duration Dates From/To'); ?>:
+            <?= $this->element->school_supp_from_date; ?> <?php echo $this->translate('to'); ?> <?= $this->element->school_supp_to_date; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="school_supp_<?= $rowNum; ?>-school_supp_location-colorme" class="colorme">
+            <?php echo $this->translate('Location'); ?> <?= $this->element->school_supp_location; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+<!--    <tr>-->
+<!--        <td>&nbsp;</td>-->
+<!--        <td>-->
+<!--            <div id="school_supp_--><?//= $rowNum; ?><!---tpd_wrapper-colorme" class="colorme" style="white-space:nowrap;">-->
+<!--            --><?//= $this->element->school_supp_tpd; ?><!--&nbsp;-->
+<!--            --><?//= $this->element->school_supp_tpd_unit; ?>
+<!--            </div>-->
+<!--            <div id="school_supp_--><?//= $rowNum; ?><!---days_wrapper-colorme" class="colorme" style="white-space:nowrap;">-->
+<!--            --><?//= $this->element->school_supp_days_value; ?><!--&nbsp;-->
+<!--            --><?//= $this->element->school_supp_days_unit; ?>
+<!--            </div>-->
+<!--        </td>-->
+<!--        <td>&nbsp;</td>-->
+<!--    </tr>-->
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <div id="school_supp_<?= $rowNum; ?>-school_supp_calendar-colorme" class="colorme" style="white-space:nowrap;">
+            <?php echo $this->translate('Does Service Follow School Calendar'); ?>? <?= $this->element->school_supp_calendar; ?>
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td colspan="3"><hr /></td>
+    </tr>
+</table>

@@ -1,0 +1,78 @@
+	<?php 
+	   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+    ?>
+    <?= $this->element->id_form_014; ?>
+    <?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notification of Individualized Family Service Plan Meeting</td>
+    </tr>
+</table>
+<table class="formInput">  
+   <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+   <tr>
+        <td>
+        	<?php echo $this->element->notice_to; ?>
+        </td>
+    </tr>    
+    <tr>
+		<td>
+			<?php echo $this->element->address; ?>
+			On Behalf of: <strong>IFSP Student</strong>
+		</td>
+    </tr>
+    <tr>
+		<td>
+			<?php echo $this->element->iep_meeting; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>We must meet with you to develop your family service plan. Together, we 
+			can develop a service plan that is appropriate for you and your child. At 
+			the IFSP meeting we will be discussing:</p>
+			<ol>
+				<li>Your child's present levels of performance.</li>
+				<li>Any services which you or your child may require as it relates to your 
+				child's disability.</li>
+				<li>Appropriate goals/outcomes.</li>
+				<li>Family concerns, strengths, and priorities.</li>
+			</ol>
+			<p>In addition to yourself, the following people will be in attendance at the 
+			IFSP meeting:</p>
+			<table class="formInput">
+				<tr>
+					<td><?php echo $this->element->general_ed; ?></td>
+				</tr>
+				<tr>
+					<td><?php echo $this->element->special_ed; ?></td>
+				</tr>
+                <tr>
+                    <td><?php echo $this->element->school_rep; ?></td>
+                </tr>
+                <tr>
+                    <td><?php echo $this->element->other_attendees; ?></td>
+                </tr>
+			</table>	
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>In addition to the people we have invited, at your discretion, you may invite 
+			other individuals who have knowledge or special expertise regarding your child 
+			including:</p>
+			
+			<?php echo $this->element->other_staff; ?>
+			<p>If this person or persons is unable to attend a meeting, arrangements must be 
+			made for the person's involvement through other means, including: participating in 
+			a telephone conference call; having a knowledgeable authorized representative 
+			attend the meeting; or making pertinent records available at the meeting.</p>
+		</td>
+</table>

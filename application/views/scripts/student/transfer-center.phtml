@@ -1,0 +1,393 @@
+<?php $auth = Zend_Auth::getInstance();?>
+<style>
+    .transferTable th {
+	font-weight: 700;
+	padding: 4px;
+	text-decoration: underline;
+    }
+
+    .transferTable td {
+	padding: 4px;
+	width: 200px;
+    }
+
+    .transferTable .rowLabel {
+	font-weight: 700;
+	width: 50px;
+    }
+
+    .bottomLine {
+	border-bottom: 1px solid #111;
+    }
+
+    .transferTable select, .transferTable input {
+	width: 200px;
+    }
+
+    .transferTable .select_choose {
+	display: none;
+    }
+
+    .tdDot {
+	font-size: 6px;
+	text-align: center;
+    }
+
+    #addName {
+	width: 150px;
+    }
+
+    .transferTable th .delName {
+	width: 20px;
+    }
+
+    .AlertMsg {
+	margin: 50px 30px;
+	text-align: center;
+    }
+
+    #namesList {
+	position: absolute;
+	width: 190px;
+	height: 100px;
+	overflow: auto;
+	border: 1px solid #333;
+	padding: 4px;
+	background: #fff;
+    }
+
+    #namesListArea {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+    }
+    #namesListArea a {
+	margin: 2px;
+
+    }
+
+</style>
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    $(document).on("click", ".openUrl", function(event, ui) { 
+
+        var url = $(this).attr("url");
+        var title = $(this).attr("title");
+
+        $("#dialog").load( url, function() {
+	        $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 800, height: 400, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); } } );
+	});
+
+      return false;
+    });
+
+    $(document).on("keyup change", "#from_county, #from_district, #from_school, #to_county, #to_district, #to_school", function () {
+
+	var el = $(this).attr("id");
+
+	var from_county = $("#from_county").val();
+	var from_district = $("#from_district").val();
+	var from_school = $("#from_school").val();
+	var to_county = $("#to_county").val();
+	var to_district = $("#to_district").val();
+	var to_school = $("#to_school").val();
+
+	switch (el) {
+	    case 'from_county' : 
+				$("#from_district").empty().hide();
+				$("#from_school").empty().hide();
+				break;
+	    case 'from_district' : 
+				$("#from_school").empty().hide();
+				break;
+	    case 'to_county' : 
+				$("#to_district").empty().hide();
+				$("#to_school").empty().hide();
+				break;
+	    case 'to_district' : 
+				$("#to_school").empty().hide();
+				break;
+	}
+
+	$(".data_load").html('');
+
+	if ($(this).val() != "") {
+	    var data_var = { 'todo' : el, 'from_county' : from_county, 'from_district' : from_district, 'to_county' : to_county, 'to_district' : to_district };
+    
+    	    $.ajax({
+        	type       : "GET",
+        	url        : "/student/transfergetdata/",
+        	crossDomain: true,
+        	cache      : false,
+        	data       : data_var,
+        	dataType   : "json",
+		beforeSend : function() {
+		    $("#" + el + "_load").html('<i class="fa fa-spinner fa-pulse "></i>');
+		},
+        	success    : function(response) {
+
+	        if (typeof response.fromDistrictList != "undefined") {
+		    $("#from_district").show().html('<option value="" selected>Choose...</option>');
+		    $.each(response.fromDistrictList, function (indx, val) {
+			$("#from_district").append('<option value="' + indx + '">' + val + '</option>');
+		    });
+		}
+
+		if (typeof response.fromSchoolList != "undefined") {
+		    $("#from_school").show().html('<option value="" selected>Choose...</option>');
+    	    	    $.each(response.fromSchoolList, function (indx, val) {
+			$("#from_school").append('<option value="' + indx + '">' + val + '</option>');
+		    });
+		}
+
+		if (typeof response.toDistrictList != "undefined") {
+    		    $("#to_district").show().html('<option value="" selected>Choose...</option>');
+		    $.each(response.toDistrictList, function (indx, val) {
+			$("#to_district").append('<option value="' + indx + '">' + val + '</option>');
+		    });
+		}
+
+		if (typeof response.toSchoolList != "undefined") {
+		    $("#to_school").show().html('<option value="" selected>Choose...</option>');
+		    $.each(response.toSchoolList, function (indx, val) {
+			$("#to_school").append('<option value="' + indx + '">' + val + '</option>');
+		    });
+		}
+
+		$("#" + el + "_load").html('');
+          
+		}
+
+	    });
+	}
+
+      return false;
+    });
+
+    $(document).on("click", "#addName", function () {
+	var numList = Number($(this).attr("rel")) + 1;
+	$(this).attr("rel", numList);
+	$('#StudentList tr:last').after('<tr id="Row' + numList + '"><td class="rowLabel tdDot"> <i class="fa fa-circle"></i> </td><td><input type="text" id="fname_' + numList + '" class="fname" value=""> <span id="fname_' + numList + '_load" class="data_load"></span></td><td><input type="text" id="lname_' + numList + '" class="lname" value=""> <span id="lname_' + numList + '_load" class="data_load"></span></td><th><input type="button" value=" - " class="delName" rel="' + numList + '"></th></tr>');
+	$("#SendBtn").prop( "disabled", true );
+      return false;
+    });
+
+    $(document).on("click", ".delName", function () {
+	$("#Row" + $(this).attr("rel")).remove();
+	checkForm();
+      return false;
+    });
+
+
+    $(document).on("change keyup", "#from_county, #from_district, #from_school, #to_county, #to_district, #to_school, .fname, .lname", function () {
+	checkForm();
+      return false;
+    });
+
+
+    $(document).on("click change keyup", "#from_school, #to_school", function () {
+
+	if ($("#from_county").val() == $("#to_county").val() && $("#from_district").val() == $("#to_district").val()){
+	    $("#to_school option").prop("disabled", false);
+	    if ($("#from_school").val() != "") {
+		$("#to_school option[value='" + $("#from_school").val() + "']").prop("disabled", true);
+		if ($("#from_school").val() == $("#to_school").val()) { $("#to_school").prop('selectedIndex', 0); checkForm(); }
+
+	    }
+	}
+
+     
+    
+      return false;
+    });
+
+
+    function checkForm() {
+
+	var from_county = $("#from_county").val();
+	var from_district = $("#from_district").val();
+	var from_school = $("#from_school").val();
+	var to_county = $("#to_county").val();
+	var to_district = $("#to_district").val();
+	var to_school = $("#to_school").val();
+
+	var inputText = 0;
+	$("#studentList input[type=text]").each( function(index, element) {
+	    if ($(element).val() == "") { inputText = 0; return; } else inputText = 1;
+	});
+
+	if (inputText == 1 && from_county != "" && from_county != null && from_district != "" && from_district != null && from_school != "" && from_school != null && to_county != "" && to_county != null && to_district != "" && to_district != null && to_school != "" && to_school != null) $("#SendBtn").prop( "disabled", false ); else $("#SendBtn").prop( "disabled", true );
+
+    }
+
+    $(document).on("keyup", ".fname, .lname", function () {
+
+	var id = $(this).attr("id");
+	var charsName = $(this).val();
+
+	if (charsName.length >= 3) {
+
+	    var data_var = Array;
+	    data_var = { };
+
+	    data_var["charsName"] = charsName;
+	    if ($(this).attr("class") == "fname") data_var["typeName"] = "firstname"; else  data_var["typeName"] = "lastname";
+
+    		$.ajax({
+        	    type       : "GET",
+        	    url        : "/student/transfernamesearch/",
+        	    crossDomain: true,
+        	    cache      : false,
+        	    data       : data_var,
+        	    dataType   : "json",
+		    beforeSend : function() {
+			$('#' + id + '_load').html('<i class="fa fa-spinner fa-pulse "></i>');
+		    },
+        	    success    : function(response) {
+
+			var list = "";
+			if ((response.NameList).length > 0) {
+			    $.each (response.NameList, function(indx, val) {
+
+    				if (typeof val.name_first != "undefined") list += '<a href="#" class="fnameCopy" rel="' + id + '">' + val.name_first + '</a><br>';
+    				else if (typeof val.name_last != "undefined") list += '<a href="#" class="lnameCopy" rel="' + id + '">' + val.name_last + '</a><br>';
+
+			    });
+
+			    if (!$("div").is("#namesList")) $('<div id="namesList"><div id="namesListArea"><div></div>').insertAfter($('#' + id));
+			    $("#namesListArea").html(list);
+
+			} else {
+	        	    $("#namesList").hide();
+			    $("#namesListArea").html("");
+			    $("#namesList").remove();
+
+			}
+
+		       $("#" + id + "_load").html('');
+
+		    }
+
+		});
+	} else {
+    	    $("#namesList").hide();
+	    $("#namesListArea").html("");
+	    $("#namesList").remove();
+	}
+
+	return false;
+    });
+
+    $(document).on("click", ".fname, .lname, #studentTransfer, #addName, .delName, #SendBtn", function () {
+	$("#namesList").hide();
+	$("#namesListArea").html("");
+	$("#namesList").remove();
+	return false;
+    });
+
+    $(document).on("click", ".fnameCopy, .lnameCopy", function () {
+	var id = $(this).attr("rel");
+	$("#" + id).val($(this).html());
+	$("#namesList").hide();
+	$("#namesListArea").html("");
+	$("#namesList").remove();
+
+	return false;
+    });
+
+    $(document).on("click", "#SendBtn", function () {
+
+	var data_var = Array;
+	data_var = { };
+
+	var inputText = 0;
+	$("#studentTransfer select").each( function(index, element) {
+	    if ($(element).val() != "" && $(element).val != null) { data_var[$(element).attr("id")] = $(element).val(); inputText = 1; } else { inputText = 0; return; }  
+	});
+
+	$("#studentList input[type=text]").each( function(index, element) {
+	    if ($(element).val() != "") { data_var[$(element).attr("id")] = $(element).val(); inputText = 1; } else { inputText = 0; return; }  
+	});
+
+	if (inputText == 1) { 
+
+    	    $.ajax({
+        	type       : "POST",
+        	url        : "/student/transfersend/",
+        	crossDomain: true,
+        	cache      : false,
+        	data       : data_var,
+        	dataType   : "json",
+        	success    : function(response) {
+		    
+
+		    $("#dialog").html('<div class="AlertMsg">' + response.msg + '</div>');
+
+		}
+
+	    });
+
+	}
+
+	return false;
+    });
+
+
+  });
+</script>
+
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td>
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationTopTabs('simple');
+            } ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <?php if ($auth->hasIdentity()) {
+                echo $this->navigationSubmenu('student');
+            } ?>
+        </td>
+    </tr>
+</table>
+<div style="">
+    <div style="" class="clearfix">
+    <h3 id="searchStudents">Student Transfer Center</h3>
+    <div style="width:650px;padding:10px">
+        <p>Welcome to the student transfer center. Transferring students is a two-step process. Suppose three students are to be transferred from Brush Creek Elementary School to Brush Creek Middle School. The steps are as follows:</p>
+        <p>1. The school manager of Brush Creek Elementary begins the transfer process by selecting a group of students to transfer. She does this by searching for each student in the regular student list search screen, and then clicking the "Transfer" checkbox (on the student list screen) for each student to be transferred. When she has found and selected all three students, she clicks "initiate transfer" below. There she will select the destination school (Brush Creek Middle School).</p>
+        <p>2. The school manager at Brush Creek Middle School is notified by email that the transfer process has been initiated by Bush Creek Elementary. Pending transfers to Brush Creek Middle School are access by clicking "confirm transfer" below. The transfer comfirmation screen will show all pending transfers. Each one may be individually confirmed, or not. If Brush Creek Middle School's manager approves the transfer, all the chosen students are transferred to BCMS from BC Elementary.</p>
+        <p>As an optional feature, the school manager at Brush Creek Middle School could have explicitly requested the transfer. To request a transfer of students to your school, use the "request transfer" option below. You will be given slots to type in a number of student names. These names will then be sent in an email. (In the above example the email would have gone to the school manager at Brush Creek Elementary, naming the three students and requesting that the transfer process be initiated for them).</p>
+    </div>
+    <div style="padding:10px">
+        <table style="width:650px;">
+            <tbody>
+                <tr>
+                    <td style="padding-top:5px;" class="btb" colspan="4">Transfer Options</td>
+                </tr>
+                <tr>
+                    <td nowrap="nowrap">&nbsp;</td><td>&nbsp;</td>
+                    <td width="100%"><a href="#" url="/student/transfer_request" class="openUrl" title="Request Transfer">Request Transfer</a><br>Choose this option to send a transfer request to a school from which you wish to receive new students.</td>
+                </tr>
+                <tr>
+                    <td nowrap="nowrap">&nbsp;</td><td>&nbsp;</td>
+                    <td width="100%"><a href="/student/search/collection/student">Initiate Transfer</a><br>Choose this option to initiate a transfer of students from your school to some other other school. You will need to find and save a group of students before using this option. (Find the students using the search tools in Student List, and check the "Transfer" box for each student).</td>
+                </tr>
+                <tr>
+                    <td nowrap="nowrap">&nbsp;</td><td>&nbsp;</td>
+                    <td width="100%"><a href="/student/confirm-transfer">Confirm Transfer</a> You have <?= count($this->myTransferRequests)>=100?'100+':count($this->myTransferRequests) ?> transfer(s).
+                        <br>Choose this option to confirm a transfer of students to your school.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<div id="dialog"></div>

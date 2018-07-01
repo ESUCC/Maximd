@@ -1,0 +1,70 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_016; ?>
+<?= $this->element->page; ?>
+<? echo $this->additionalResources(); ?>
+
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Give Consent for Initial Placement</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <div id="consent_wrapper_1-colorme" class="colorme">
+            <?   
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::descLabelViewHelper());
+                $a->setMultiOptions(array(1 => $this->element->consent->getMultiOption(1)));
+                $a->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'consent_wrapper_1');");
+                $a->removeDecorator('label');
+                echo $a;
+            ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Do Not Give Consent for Initial Placement</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <div id="consent_wrapper_0-colorme" class="colorme">
+            <?   
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::descLabelViewHelper());
+                $a->setMultiOptions(array(0 => $this->element->consent->getMultiOption(0)));
+                $a->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'consent_wrapper_0');");
+                $a->removeDecorator('label');
+                echo $a;
+            ?>
+            </div>
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" class="p8888">
+        <?php echo $this->element->no_consent_reason; ?>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Parent Signature:</td>
+        <td width="250" align="left" valign="bottom" style="white-space: nowrap;"><img src="/images/line_black.gif" width="250" height="1" border="0">&nbsp;&nbsp;</td>
+        <td  style="white-space: nowrap;"><?php echo $this->element->signature_on_file; ?></td>
+    </tr>
+</table>
+<table class="formInput">
+    <tr>
+        <td style="white-space: nowrap;"><?php echo $this->element->consent_date; ?></td>
+
+    </tr>
+</table>

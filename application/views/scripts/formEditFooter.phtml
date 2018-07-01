@@ -1,0 +1,54 @@
+<div style="display:none;" id="page_navigation_controlbar2">
+
+    <table>
+        <tr>
+            <? if ($this->pageCount > 1) { ?>
+            <td class="bts"><span class="btsb">Page</span>:</td>
+            <td><?
+                echo My_Classes_iepFunctionGeneral::valueListNumbers("navPage2", $this->pageCount, 1, $this->page, $this->page, "none");
+                ?>
+            </td>
+            <? } ?>
+            <? if ($this->page > 1) { ?>
+            <td align="right">
+                <button dojoType="dijit.form.Button" id="prevPage2" >Prev Page</button>
+            </td>
+
+            <? } ?>
+            <? if ($this->page < $this->pageCount) { ?>
+            <td align="right">
+                <button dojoType="dijit.form.Button" id="nextPage2" >Next Page</button>
+            </td>
+            <? } ?>
+
+            <td align="right">
+                <?php echo $this->pageValidationListBottom; ?>
+            </td>
+
+            <td align="right">
+                <?php
+                echo $this->formButton('formDoneButton2', 'Done', array(
+                    'accesskey' => "d",
+                    'onclick' => "javascript:recordAction(dojo.byId('myform'), 'done');",
+                    'dojoType' => "dijit.form.Button"));
+                ?>
+            </td>
+
+            <?
+            // added spell checker option to config because of license trouble in dev env
+            $config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+            if ($this->mode == "edit" && $config->spellchecker->enabled) { ?>
+                <td align="right">
+                    <button dojoType="dijit.form.Button" id="spellCheck2" onClick="startSpellCheck();">Spell Check</button>
+                </td>
+                <? } ?>
+
+            <td align="right">
+                <button dojoType="dijit.form.Button" id="submitButton2">Save</button>
+            </td>
+            <td align="right">
+            </td>
+        </tr>
+    </table>
+</div>
+<br />

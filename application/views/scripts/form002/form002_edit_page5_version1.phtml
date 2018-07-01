@@ -1,0 +1,14 @@
+<?php 
+	$view = $this->element->page->getView();
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_002; ?>
+<?= $this->element->page; ?>
+<!-- File Uploader -->
+<?//= $this->pdfUpload($view, $this->element->id_form_002->getValue(), '002'); ?>
+<? // uploader
+if('print'!=$view->mode) { echo $this->fileUploader(); 
+} ?>
+
+<?php echo $this->jqueryTab($view, 'form_002_suppform', true, "Supplemental Form");?>

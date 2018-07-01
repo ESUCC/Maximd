@@ -1,0 +1,51 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<table class="formInput" style="width:100%;" border="0" id="iep_form_018_agency_<?= $rowNum; ?>">
+    <tr>
+        <td colspan="2" class="noprint" style="text-align: left;">
+            <?php echo "Community Contact $rowNum"; ?>
+        </td>
+        <td colspan="1" class="noprint" style="text-align: right;">
+            <div id="community_contact_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+	    <?= $this->element->id_form_018_agency; ?>
+            </div>
+        </td>
+        <td align="center" nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="left" width="33%" nowrap="nowrap"> 
+            <div id="iep_form_018_agency_<?= $rowNum; ?>-agency-colorme" class="colorme">
+            <? echo $this->element->agency; ?>
+            </div>                
+        </td>
+        <td align="left" width="33%" nowrap="nowrap">
+            <div id="iep_form_018_agency_<?= $rowNum; ?>-status_of_referral-colorme" class="colorme">
+            <? echo $this->element->status_of_referral; ?>
+            </div>
+        </td>
+        <td align="left" width="33%" nowrap="nowrap">
+            <div id="iep_form_018_agency_<?= $rowNum; ?>-status_other-colorme" class="colorme">
+            <? echo $this->element->status_other; ?>
+            </div>
+        </td>
+        <td align="center" nowrap="nowrap">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="left" nowrap="nowrap">
+            <div id="iep_form_018_agency_<?= $rowNum; ?>-name_or_position-colorme" class="colorme">
+            <? echo $this->element->name_or_position; ?>
+            </div>
+        </td>
+        <td align="left">
+            <div id="iep_form_018_agency_<?= $rowNum; ?>-phone-colorme" class="colorme">
+           <? echo $this->element->phone; ?>
+           </div>
+        </td>
+        <td align="left">
+            <div id="iep_form_018_agency_<?= $rowNum; ?>-email-colorme" class="colorme">
+            <? echo $this->element->email; ?>
+            </div>
+        </td>
+        <td align="center">&nbsp;</td>
+    </tr>
+</table>

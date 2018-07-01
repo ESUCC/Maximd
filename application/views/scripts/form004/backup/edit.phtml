@@ -1,0 +1,29 @@
+<form action="/form004/changepage" id="myform" method="post">
+	<?php
+		include_once('../application/views/scripts/formEditHeader.phtml');
+		//echo $this->form->getSubForm('student_data');
+		
+		echo $this->studentInfoHeader($this->db_form_data, '004');
+		
+		echo $this->form;
+		
+		// this element is used by the changepage action
+		echo $this->formHidden('mode', 'edit', array('ignore'=>true)); 
+		echo $this->formHidden('form_number', '004', array('ignore'=>true));
+		echo $this->formHidden('id_student', $this->db_form_data['id_student'], array('ignore'=>true));
+        include_once('../application/views/scripts/formEditFooter.phtml');
+		?>
+</form><BR><BR><BR>
+	
+<div id="myDialog" class="dialog" dojoType="dijit.Dialog" title="Edit Account">
+	<div id="dialogContentPane" dojoType="dijit.layout.ContentPane">
+		<div id="editerror" style="background-color:beige;width:300px;"></div>
+		<form name="gorilla" id="gorilla" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="MAX_FILE_SIZE" value="83886080" />
+			<div id="fFiles" class="field"></div>
+			<button id="fileUploadButton" style="width:100%;">Select a PDF</button>
+			<BR><BR>
+			<div id="editSubmitBtn" class="authButton" dojoType="dijit.form.Button">Submit</div>
+		</form>
+	</div>
+</div>

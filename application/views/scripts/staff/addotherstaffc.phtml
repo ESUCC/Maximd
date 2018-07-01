@@ -1,0 +1,136 @@
+<html>
+ <?php $auth = Zend_Auth::getInstance();  ?>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table><br><br>
+<!--  <link rel="stylesheet" href="https://mike-dev.aapnebraska.org/css/w3.css"> -->
+<link href="/css/w3.css" media="screen" rel="stylesheet" type="text/css">
+<body class="w3-container">
+<left>..
+<h4>
+
+<table border="0"><br>
+        <!-- logo row -->
+  
+ 
+ <form name="linkForm" action ="https://iepweb03.esucc.org/staff/addotherstaff" method="post" id='form'>  
+ 
+ 
+ <select name='mydropdown' class="styled" onchange="document.getElementById('form').setAttribute('action', this.value); document.linkForm.submit();">
+ 
+ <?php 
+ 
+ /*
+  * setup the remote user variables.  
+  
+ $distriRemote=$this->identityRemote['id_district'];
+ $countyRemote=$this->identityRemote['id_county'];
+ $idPersonnelRemote=$this->identityRemote['id_personnel'];
+ */
+ $selected='';
+//writevar($this->identityLocalDistrict,'this is the local district in the view');
+$x=0;
+ foreach($this->listOfDistricts as $districts){
+     if($this->identityLocalDistrict[0]['name_district']==$districts['name_district']) 
+     {
+         $selected='selected';
+  //       writevar($districts['name_district'],'this is the selected district');
+         
+     }
+     else {
+         $selected='';
+      //  writevar($districts['name_district'],'this is the selected district not selected');
+     }
+     $idcty_district=$districts['id_county']." ".$districts['id_district'];
+   echo '<option '.$selected.' value="'.$idcty_district.'">'.$districts['name_district'].'</option>';
+     
+    $x=$x+1;
+ }
+ ?>  
+ </select> 
+ 
+ 
+ <?php
+// echo $idcty_district;
+
+ ?>
+<input type="hidden" name="id_district" value ="<?php echo $this->identityRemote['id_district']?>">
+<input type="hidden" name="id_county" value ="<?php echo $this->identityRemote['id_county']?>"> 
+<input type="hidden" name="id_personnel" value ="<?php echo $this->identityRemote['id_personnel']?>"> 
+<input type="hidden" name="name_first" value ="<?php echo $this->identityRemote['name_first']?>">
+<input type="hidden" name="name_last" value ="<?php echo $this->identityRemote['name_last']?>">
+
+
+</form>
+
+
+<form action ="https://iepweb03.esucc.org/staff/addremotestaff/" method="post">
+
+ <select name='id_school'>
+   <?php 
+   $cnt=count($this->schooList);
+ 
+       for($x=0;$x<$cnt;$x++){  
+        
+          echo '<option value= "'.$this->schooList[$x]['id_school'].'">'.$this->schooList[$x]['name_school'].'</option><p>';
+      //  echo $this->schoolList[$x]['name_school'];
+        } ?>
+       
+        
+       </select>
+       <br><br>
+
+<?php echo "<h2><br>Grant <i><b> ". $this->identityRemote['name_first']." ".$this->identityRemote['name_last']." from ".$this->identityRemoteDistrict[0]['name_district'].
+           " access to ".$this->identityLocalDistrict[0]['name_district']." district staff";?></h2><br><br>
+           
+           
+
+
+
+
+<div class="w3-col w3-lightblue w3-left w3-striped w3-border w3-border-green  w3-round-xlarge w3-medium"style="width:30%">
+  <input type="radio" name="class" value="2" checked> District Manager<br>
+  <input type="radio" name="class" value="3"> Associate District Manager<br>
+  <input type="radio" name="class" value="4"> School Manager<br>
+  <input type="radio" name="class" value="5"> Assistant School Manager<br>
+  <input type="radio" name="class" value="6"> Case Manager<br>
+  <input type="radio" name="class" value="8"> Consultant<br>
+  <input type="radio" name="class" value="7"> School Staff/Teacher<br>
+  <input type="radio" name="class" value="10"> Service Coordinator
+  <input type="hidden" name="id_local_county" value= <?php echo $this->identityLocalDistrict[0]['id_county']?>>
+  <input type="hidden" name="id_local_district" value= <?php echo $this->identityLocalDistrict[0]['id_district']?>>
+  <input type="hidden" name="id_personnel" value = <?php echo $this->identityRemote['id_personnel'] ?>>
+  <input type="hidden" name="id_county" value= <?php echo $this->identityRemote['id_county']?>>
+  <input type="hidden" name="id_district" value= <?php echo $this->identityRemote['id_district']?>>
+  
+  
+  
+ 
+
+
+        
+       </div><br><br><br><br><br><br><br>
+    
+    
+   
+    
+    <input type="submit" value="SAVE"><p>
+   </form>
+   </table>
+   
+ 
+  <br><br>
+  
+   

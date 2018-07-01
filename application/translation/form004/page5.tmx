@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Transition">
+           <tuv xml:lang="es"><seg>Transici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Transition</seg></tuv>
+       </tu>
+       <tu tuid="Uncheck the box to the left to dissolve the Transition Plan">
+           <tuv xml:lang="es"><seg>Desmarcar el cuadro de la izquierda para disolver el Plan de Transici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Uncheck the box to the left to dissolve the Transition Plan</seg></tuv>
+       </tu>
+       <tu tuid="is or will turn 16">
+           <tuv xml:lang="es"><seg>Este estudiante tiene o cumplir&#xE1; 16 a&#xF1;os de edad durante este IEP.  Se requiere un plan de transici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>This student is or will turn 16 during this IEP.  Transition plan is required</seg></tuv>
+       </tu>
+       <tu tuid="will not turn 16">
+           <tuv xml:lang="es"><seg>Este estudiante no cumplir&#xE1; 16 a&#xF1;os durante este IEP, por lo que no se requiere una declaraci&#xF3;n de los servicios de transici&#xF3;n del ni&#xF1;o.&#xD;                      Marcar aqu&#xED; para establecer un plan de transici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>This student will not turn 16 during this IEP, so a statement of the child's transition services is not
+                     required. Check here to set up a transition plan</seg></tuv>
+       </tu>
+       <tu tuid="No Transition Plan">
+           <tuv xml:lang="es"><seg>No se ha dise&#xF1;ado  ning&#xFA;n plan de transici&#xF3;n para este estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>No Transition Plan has been designed for this Student</seg></tuv>
+       </tu>
+       <tu tuid="Complete all that apply">
+           <tuv xml:lang="es"><seg>Complete todos los que apliquen, de lo contrario explique por qu&#xE9; este &#xED;tem no aplica</seg></tuv>
+           <tuv xml:lang="en"><seg>Complete all that apply, otherwise explain why this item does not apply</seg></tuv>
+       </tu>
+       <tu tuid="Measurable post-secondary goals">
+           <tuv xml:lang="es"><seg>Objetivos medibles despu&#xE9;s de la secundaria (preparatoria) basados en evaluaciones de transici&#xF3;n apropiadas seg&#xFA;n la edad : (Esta secci&#xF3;n DEBE incluir educaci&#xF3;n/capacitaci&#xF3;n, empleo, y cuando sea apropiado, objetivos para vivir independientemente.)</seg></tuv>
+           <tuv xml:lang="en"><seg>Measurable post-secondary goals based on age appropriate
+        transition assessments: (This section MUST include education/training,
+        employment, and when appropriate independent living goals.)</seg></tuv>
+       </tu>
+       <tu tuid="Course of Study">
+           <tuv xml:lang="es"><seg>Curso de estudio</seg></tuv>
+           <tuv xml:lang="en"><seg>Course of Study</seg></tuv>
+       </tu>
+       <tu tuid="Beginning no later than">
+           <tuv xml:lang="es"><seg> Se requiere una declaraci&#xF3;n de los servicios de transici&#xF3;n necesarios comenzando a m&#xE1;s tardar con el primer IEP que est&#xE9; en vigencia cuando el ni&#xF1;o cumpla 16 a&#xF1;os de edad, o antes, si el equipo del IEP determina que es conveniente </seg></tuv>
+           <tuv xml:lang="en"><seg>Beginning no later than the first IEP to be in effect when
+        the child turns 16, or younger if determined appropriate by the IEP
+        team, a statement of needed transition services is required</seg></tuv>
+       </tu>
+       <tu tuid="indicate the strengths">
+           <tuv xml:lang="es"><seg>indicar las fortalezas y/o las necesidades para cada &#xE1;rea y de ser apropiado, una declaraci&#xF3;n sobre las responsabilidades entre las agencias y cualquier otra colaboraci&#xF3;n necesaria</seg></tuv>
+           <tuv xml:lang="en"><seg>indicate the strengths and/or needs for each area and when appropriate, statement of interagency responsibilities or any needed linkages</seg></tuv>
+       </tu>
+       <tu tuid="Instruction">
+           <tuv xml:lang="es"><seg>Instrucci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Instruction</seg></tuv>
+       </tu>
+       <tu tuid="Related Services">
+           <tuv xml:lang="es"><seg>Servicios relacionados</seg></tuv>
+           <tuv xml:lang="en"><seg>Related Services</seg></tuv>
+       </tu>
+       <tu tuid="Community Experiences">
+           <tuv xml:lang="es"><seg>Experiencias comunitarias</seg></tuv>
+           <tuv xml:lang="en"><seg>Community Experiences</seg></tuv>
+       </tu>
+       <tu tuid="Development of employment">
+           <tuv xml:lang="es"><seg>Desarrollo laboral y de otros&#xD;        objetivos post-escolares de vida adulta apropiados</seg></tuv>
+           <tuv xml:lang="en"><seg>Development of employment and other appropriate
+        post school adult living objectives</seg></tuv>
+       </tu>
+       <tu tuid="Development of employment IE">
+           <tuv xml:lang="es"><seg>ej: feria de trabajo, evaluaci&#xF3;n vocacional, observaci&#xF3;n de trabajos, experiencia laboral, habilidades de b&#xFA;squeda y mantenimiento laboral , visitas a universidades/programas de capacitaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>i.e. career fair, vocational evaluation, job shadowing, work experience, job seeking and keeping skills, visit college/training programs</seg></tuv>
+       </tu>
+       <tu tuid="Daily Living Skills">
+           <tuv xml:lang="es"><seg>Habilidades de la vida cotidiana</seg></tuv>
+           <tuv xml:lang="en"><seg>Daily Living Skills</seg></tuv>
+       </tu>
+       <tu tuid="Functional Vocational Evaluation">
+           <tuv xml:lang="es"><seg>Evaluaci&#xF3;n vocacional funcional</seg></tuv>
+           <tuv xml:lang="en"><seg>Functional Vocational Evaluation</seg></tuv>
+       </tu>
+       <tu tuid="Interagency Linkages and Responsibilities">
+           <tuv xml:lang="es"><seg>Asociaciones y  responsabilidades entre agencias </seg></tuv>
+           <tuv xml:lang="en"><seg>Interagency Linkages and Responsibilities</seg></tuv>
+       </tu>
+       <tu tuid="Transition Activities">
+           <tuv xml:lang="es"><seg>Actividades de transici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Transition Activities</seg></tuv>
+       </tu>
+       <tu tuid="Agency Responsible">
+           <tuv xml:lang="es"><seg>Agencia responsable </seg></tuv>
+           <tuv xml:lang="en"><seg>Agency Responsible</seg></tuv>
+       </tu>
+       <tu tuid="Date Due">
+           <tuv xml:lang="es"><seg>Fecha de vencimiento</seg></tuv>
+           <tuv xml:lang="en"><seg>Date Due</seg></tuv>
+       </tu>
+       <tu tuid="Post Secondary Goals">
+           <tuv xml:lang="es"><seg>Objetivos despu&#xE9;s de la secundaria (preparatoria)</seg></tuv>
+           <tuv xml:lang="en"><seg>Post Secondary Goals</seg></tuv>
+       </tu>
+       <tu tuid="The above goal(s) include education/training, employment, and when appropriate independent living goals.:">
+           <tuv xml:lang="es"><seg>El (Los) objetivo (s) anteriores incluyen educaci&#xF3;n/capacitaci&#xF3;n, empleo, y de ser apropiado, objetivos para vivir independientemente:</seg></tuv>
+           <tuv xml:lang="en"><seg>The above goal(s) include education/training, employment, and when appropriate independent living goals.:</seg></tuv>
+       </tu>
+       <tu tuid="(i.e. transportation for community activities, job coaching, assistive technology, assistance to participate in community activities, include planning for related post-school needs)">
+           <tuv xml:lang="es"><seg>(Ej. Transporte para actividades comunitarias, capacitaci&#xF3;n laboral, tecnolog&#xED;a asistiva, ayuda para participar en actividades comunitarias, incluyendo la planeaci&#xF3;n de las necesidades relacionadas al periodo despu&#xE9;s de la escuela)</seg></tuv>
+           <tuv xml:lang="en"><seg>(i.e. transportation for community activities, job coaching, assistive technology, assistance to participate in community activities, include planning for related post-school needs)</seg></tuv>
+       </tu>
+       <tu tuid="(i.e. leisure, recreation and socialization activities, accessing transportation, volunteer work and civic responsibilities)">
+           <tuv xml:lang="es"><seg>(Ej. Ocio, actividades de socializaci&#xF3;n y recreativas , acceso a transporte, trabajo voluntario y responsabilidad civil)</seg></tuv>
+           <tuv xml:lang="en"><seg>(i.e. leisure, recreation and socialization activities, accessing transportation, volunteer work and civic responsibilities)</seg></tuv>
+       </tu>
+       <tu tuid="(i.e. grooming, meal preparation, money management, laundry, maintaining residence)">
+           <tuv xml:lang="es"><seg>(Ej: Aseo, preparaci&#xF3;n de comidas, manejo del dinero, lavander&#xED;a, mantenimiento residencial)</seg></tuv>
+           <tuv xml:lang="en"><seg>(i.e. grooming, meal preparation, money management, laundry, maintaining residence)</seg></tuv>
+       </tu>
+       <tu tuid="(i.e. assessment process to identify interests, skills, and needs, usually through situational assessment/observation)">
+           <tuv xml:lang="es"><seg>(Ej.  Proceso de evaluaci&#xF3;n para identificar intereses, habilidades y necesidades, por lo general, a trav&#xE9;s de la evaluaci&#xF3;n/observaci&#xF3;n de situaciones)</seg></tuv>
+           <tuv xml:lang="en"><seg>(i.e. assessment process to identify interests, skills, and needs, usually through situational assessment/observation)</seg></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+   </body>
+</tmx>

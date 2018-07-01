@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Transportation">
+           <tuv xml:lang="es"><seg>Transporte</seg></tuv>
+           <tuv xml:lang="en"><seg>Transportation</seg></tuv>
+       </tu>
+       <tu tuid="special education transportation">
+           <tuv xml:lang="es"><seg>Si el ni&#xF1;o califica para recibir servicios de transportaci&#xF3;n de educaci&#xF3;n especial, por favor describa el plan de transportaci&#xF3;n, incluyendo cualquier condici&#xF3;n especial necesaria para una transportaci&#xF3;n segura</seg></tuv>
+           <tuv xml:lang="en"><seg>If the child qualifies for special education transportation, please describe the plan for transportation, including any special conditions necessary for safe transport</seg></tuv>
+       </tu>
+       <tu tuid="Assessment">
+           <tuv xml:lang="es"><seg>Evaluaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Assessment</seg></tuv>
+       </tu>
+       <tu tuid="academic and functional performance">
+           <tuv xml:lang="es"><seg>Debido al desarrollo acad&#xE9;mico y funcional del estudiante, el ni&#xF1;o participar&#xE1; en la siguiente evaluaci&#xF3;n alterna</seg></tuv>
+           <tuv xml:lang="en"><seg>Due to the student's academic and functional performance, the child will participate in the following alternate assessment</seg></tuv>
+       </tu>
+       <tu tuid="Extended School Year Services">
+           <tuv xml:lang="es"><seg>Servicios durante el a&#xF1;o escolar extendido</seg></tuv>
+           <tuv xml:lang="en"><seg>Extended School Year Services</seg></tuv>
+       </tu>
+       <tu tuid="child will participate">
+           <tuv xml:lang="es"><seg>Si el ni&#xF1;o participar&#xE1; en los servicios del a&#xF1;o escolar extendido, por favor describa</seg></tuv>
+           <tuv xml:lang="en"><seg>If the child will participate in extended school year services, please describe</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+       <tu tuid="Child qualifies for special education transportation:">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o califica para recibir servicios de trasportaci&#xF3;n de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Child qualifies for special education transportation:</seg></tuv>
+       </tu>
+       <tu tuid="Not Necessary">
+           <tuv xml:lang="es"><seg>No es necesario</seg></tuv>
+           <tuv xml:lang="en"><seg>Not Necessary</seg></tuv>
+       </tu>
+       <tu tuid="Child is below age 5">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o tiene menos de 5 a&#xF1;os de edad</seg></tuv>
+           <tuv xml:lang="en"><seg>Child is below age 5</seg></tuv>
+       </tu>
+       <tu tuid="Child is required to attend a facility other than the normal attendance facility">
+           <tuv xml:lang="es"><seg>Se requiere que el ni&#xF1;o asista a un instituto que es distinto al regular</seg></tuv>
+           <tuv xml:lang="en"><seg>Child is required to attend a facility other than the normal attendance facility</seg></tuv>
+       </tu>
+       <tu tuid="Nature of the child's disability is such that special education transportation is required">
+           <tuv xml:lang="es"><seg>La naturaleza de la discapacidad del ni&#xF1;o es tal que se requieren los servicios de transportaci&#xF3;n de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Nature of the child's disability is such that special education transportation is required</seg></tuv>
+       </tu>
+       <tu tuid="If child qualifies, why:">
+           <tuv xml:lang="es"><seg>Si el ni&#xF1;o reune los requisitos, indique por qu&#xE9;:</seg></tuv>
+           <tuv xml:lang="en"><seg>If child qualifies, why:</seg></tuv>
+       </tu>
+       <tu tuid="The child will participate in district-wide assessment WITHOUT accommodations">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o participar&#xE1; en la evaluaci&#xF3;n a nivel de distrito SIN modificaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>The child will participate in district-wide assessment WITHOUT accommodations</seg></tuv>
+       </tu>
+       <tu tuid="The child will participate in district-wide assessment WITH accommodations, as specified:">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o participar&#xE1; en la evaluaci&#xF3;n a nivel de distrino CON modificaciones seg&#xFA;n se especifican:</seg></tuv>
+           <tuv xml:lang="en"><seg>The child will participate in district-wide assessment WITH accommodations, as specified:</seg></tuv>
+       </tu>
+       <tu tuid="The child will participate in a combination of assessment systems as specified.">
+           <tuv xml:lang="es"><seg> El ni&#xF1;o participar&#xE1; en una combinaci&#xF3;n de sistemas de evaluaciones seg&#xFA;n se especifica</seg></tuv>
+           <tuv xml:lang="en"><seg>The child will participate in a combination of assessment systems as specified.</seg></tuv>
+       </tu>
+       <tu tuid="The child will NOT participate in district-wide assessment, for the following reasons:">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o NO participar&#xE1; en la evaluaci&#xF3;n a nivel de distrito por los siguientes motivos:</seg></tuv>
+           <tuv xml:lang="en"><seg>The child will NOT participate in district-wide assessment, for the following reasons:</seg></tuv>
+       </tu>
+       <tu tuid="Assessment participation:">
+           <tuv xml:lang="es"><seg>Participaci&#xF3;n en la evaluaci&#xF3;n:</seg></tuv>
+           <tuv xml:lang="en"><seg>Assessment participation:</seg></tuv>
+       </tu>
+       <tu tuid="Assessment description:">
+           <tuv xml:lang="es"><seg>Descripci&#xF3;n de la evaluaci&#xF3;n:</seg></tuv>
+           <tuv xml:lang="en"><seg>Assessment description:</seg></tuv>
+       </tu>
+       <tu tuid="Alternate assessment:">
+           <tuv xml:lang="es"><seg>Evaluaci&#xF3;n alterna:</seg></tuv>
+           <tuv xml:lang="en"><seg>Alternate assessment:</seg></tuv>
+       </tu>
+       <tu tuid="Description of extended school year:">
+           <tuv xml:lang="es"><seg>Descripci&#xF3;n del a&#xF1;o escolar extendido:</seg></tuv>
+           <tuv xml:lang="en"><seg>Description of extended school year:</seg></tuv>
+       </tu>
+       <tu tuid="Extended school year services">
+           <tuv xml:lang="es"><seg>Servicios del a&#xF1;o escolar extendido</seg></tuv>
+           <tuv xml:lang="en"><seg>Extended school year services</seg></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+       <tu tuid="">
+           <tuv xml:lang="es"><seg></seg></tuv>
+           <tuv xml:lang="en"><seg/></tuv>
+       </tu>
+   </body>
+</tmx>

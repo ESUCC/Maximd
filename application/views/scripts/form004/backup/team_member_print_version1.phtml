@@ -1,0 +1,64 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+<?php if($rowNum < 7 || ($rowNum >= 7 && '' != $this->element->participant_name->getValue())) { ?>
+<table class="formInput" style="width:100%;" border="0" id="team_member_<?= $rowNum; ?>">
+	<?php if(1 == $rowNum) { ?>
+	    <tr class="bgLight2 bts">
+	        <td style="">
+	            <B><?php echo $this->translate('Participant Name(s)'); ?></B>
+	        </td>
+	        <td>
+	            <B><?php echo $this->translate('Position/Relationship To Student'); ?></B>
+	        </td>
+	        <td>
+	            <B><?php echo $this->translate('Attendance'); ?></B>
+	        </td>
+	        <td>
+	            <B><?php echo $this->translate('Date'); ?></B>
+	        </td>
+		</tr>
+	<?php } ?>
+	
+    <tr>
+        <td>
+        	<div style="width:380px;padding-bottom:5px;padding-right:5px;" class="printTeammemberUnderline colorme">
+            <?= $this->element->participant_name; ?>
+            </div>
+        </td>
+        <td style="width:350px;padding-right:5px;">
+            <?= $this->translate($this->element->positin_desc->getValue()); ?>
+        </td>
+        <td style="width:100px;padding-right:5px;">
+        	<div style="white-space: nowrap; margin-right:5px;">
+            <? 
+            if(1 == $this->element->absent->getValue()) 
+            {
+            	if('Curriculum Area Not Discussed'==$this->element->absent_reason->getValue()) {
+                    echo $this->translate('Absent(1)');
+            	} elseif('Absent with Written Input (approved by parent)'==$this->element->absent_reason->getValue()) {
+            	    echo $this->translate('Absent(2)');
+            	} else {
+            	    echo $this->translate('Absent');
+            	}
+            } elseif(strlen($this->element->participant_name->getValue()) > 2) {
+            	echo $this->translate('In attendance');
+            }
+            ?>
+            </div>
+        </td>
+        <td style="width:100px;padding-right:5px;">
+        	<span class="page1_date_conference" style="white-space: nowrap">
+            <?php 
+            if (strlen($this->element->participant_name->getValue()) >= 2) {
+                // 
+                if (strlen($view->db_form_data['date_conference']) > 0) { 
+                    echo substr($view->db_form_data['date_conference'], 5, 2) . '/' . substr($view->db_form_data['date_conference'], 8, 2) . '/' . substr($view->db_form_data['date_conference'], 0, 4);
+                }
+            }
+            ?>
+            </span>
+        </td>
+	</tr>
+
+</table>
+<?php } ?>

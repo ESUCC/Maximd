@@ -1,0 +1,15 @@
+<h1>Error!</h1>
+<p><?php echo $this->message ?></p>
+<?php if (isset($this->info)): ?>
+<?php if (404 == $this->code): ?>
+    <p>
+        <b>Reason:</b> <?php echo $this->info ?>
+    </p>
+<?php elseif (500 == $this->code): ?>
+    <h2>Exception information:</h2>
+    <p>
+        <b>Message:</b> <?php echo $this->info->getMessage() ?>
+        <a href="/index/loginredirect/destination/<?= str_replace('/', '-', $_SERVER['REQUEST_URI']); ?>">Try Relogin</a>
+    </p>
+<?php endif ?>
+<?php endif ?>

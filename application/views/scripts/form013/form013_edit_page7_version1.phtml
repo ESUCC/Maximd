@@ -1,0 +1,139 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+<?php echo $this->element->dob; ?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $view->db_form_data['ifsptype']; ?> IFSP<br />IFSP TRANSITION PLAN</td>
+    </tr>
+</table>
+<?php if (strtotime('now') < strtotime($view->db_form_data['student_data']['dob'].'-3 months')) { ?>
+<table class="formInput noBorder">
+    <tr class="bgLight2">
+        <td>
+            <div id="checkboxText" class="sc_inlineText">A transition plan must be completed by <?= date('m/d/y',strtotime($view->db_form_data['student_data']['dob'].'-3 months'))?>.</div>
+        </td>
+    </tr>
+</table>
+<?php } ?>
+<?php if('print' != $view->mode) { ?>
+<table class="formInput noBorder">
+    <tr class="bgLight2">
+        <td>
+	        <?php
+	        if('' == $this->element->transition_plan->getValue()) { 
+		        if (!$view->studentYoungerThan3)
+		             $this->element->transition_plan->setChecked(false);
+		        else
+		             $this->element->transition_plan->setChecked(true);
+	        }
+	        ?>
+            <?=$this->element->transition_plan;?>
+            <div id="checkboxText" class="sc_inlineText">Set up a Transition Plan.</div>
+        </td>
+    </tr>
+</table>
+<?php
+}
+?>
+<? //(	!$this->element->transition_plan->getValue() && 
+//		false == $view->db_form_data['student_data']['force_tran_plan']) || 
+//		!$view->studentYoungerThan3
+	$styleDisplay = "";
+	if(!$this->element->transition_plan->getValue()) {
+		$styleDisplay = "display:none;"; 
+	}
+?>
+<div id="subformToChange" style="<?= $styleDisplay; ?>">
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td><?php echo $this->element->tran_con_date; ?></td>
+        <td><?php echo $this->element->extimated_tran_date; ?></td>
+    </tr>
+</table> 
+
+<?php echo $this->subform($view, 'tran_plan'); //Zend_Debug::dump($view->db_form_data); ?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+	   <tr>
+	        <td>Family Choice: Consent to the continuation of early intervention services or initiation of Special Education services</td>
+	    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;"> 
+    <tr>
+        <td>
+            <ul>
+                <li>I/We have received a copy of the Annual Transition Notice.</li>
+                <li>I/We have been informed about the differences between, and the right to choose, early intervention services provided through an IFSP under the Individuals with Disabilities Education Act (IDEA) and the preschool special education services provided through an Individualized Education Program (IEP) under IDEA once my/our child reaches age 3.</li>
+                <li>I/We understand that if I/we choose for my/our child to receive special education services through an IEP, my child and family will no longer receive early intervention services nor will receive early intervention services coordination.</li>
+                <li>I/We understand that if I/we choose for my/our child to continue to receive early intervention services through an IFSP, at any time I/we may elect to receive special education preschool services instead of early intervention services.</li>
+                <li>I/We understand that my/our consent to the continuation of early intervention services is voluntary and that I/we may revoke consent at any time.</li>
+            </ul>
+        </td>
+    </tr>
+</table>
+<button class="noprint" dojoType="dijit.form.Button" onClick="clearRadios();">Clear Selected Radio Buttons</button>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td><?php echo $this->element->parent_understand_content_p7; ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->parent_understand_distribition_p7; ?></td>
+    </tr>
+</table> 
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>PARENT / GUARDIAN SIGNATURE</td>
+    </tr>
+</table>
+<?php 
+$borderStyleLine1 = "";
+$printBorderStyleLine1 = false;
+if('print'==$view->mode && '' ==$this->element->parent_sig_1_p7->getValue()) {
+    $borderStyleLine1 = "width:400px; border-bottom:thin solid #000000;";
+    $printBorderStyleLine1 = true;
+}
+$borderStyleLine2 = "";
+$printBorderStyleLine2 = false;
+if('print'==$view->mode && '' ==$this->element->parent_sig_2_p7->getValue()) {
+    $borderStyleLine2 = "width:400px; border-bottom:thin solid #000000;";
+    $printBorderStyleLine2 = true;
+}
+?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td style="<?= $borderStyleLine1; ?>"><?php 
+        if($printBorderStyleLine1) {
+        } else {
+            echo $this->element->parent_sig_1_p7->getLabel() ."<br/>". $this->element->parent_sig_1_p7;
+        }
+        ?></td>
+        <td><?php echo $this->element->parent_date_1_p7->getLabel() ."<br/>". $this->element->parent_date_1_p7; ?></td>
+        <?php $this->element->parent_sig_1_on_file_p7->removeDecorator('Label'); ?>
+        <td><div id="parent_sig_1_on_file_p7-colorme" class="colorme"> <span id="parent_sig_1_on_file_p7-label"><?php echo $this->element->parent_sig_1_on_file_p7->getLabel() ."</span><br/>". $this->element->parent_sig_1_on_file_p7; ?></div></td>
+    </tr>
+    <tr>
+        <td style="<?= $borderStyleLine2; ?>"><?php 
+        if($printBorderStyleLine2) {
+        } else {
+            echo $this->element->parent_sig_2_p7->getLabel() ."<br/>". $this->element->parent_sig_2_p7;
+        }
+        ?>        
+        </td>
+        <td><?php echo $this->element->parent_date_2_p7->getLabel() ."<br/>". $this->element->parent_date_2_p7; ?></td>
+        <?php $this->element->parent_sig_2_on_file_p7->removeDecorator('Label'); ?>        <td><div id="parent_sig_2_on_file_p7-colorme" class="colorme"> <span id="parent_sig_2_on_file_p7-label"><?php echo $this->element->parent_sig_2_on_file_p7->getLabel() ."</span><br/>". $this->element->parent_sig_2_on_file_p7; ?></div></td>
+    </tr>
+</table> 
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>(If 'No' selected above, please explain) <br />
+        <?php echo $this->element->parent_sig_on_file_explain_p7; ?></td>
+    </tr>
+</table> 
+</div>

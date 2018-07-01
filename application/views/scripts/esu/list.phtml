@@ -1,0 +1,47 @@
+<div>ESU List</div>
+
+<?= $this->esuForm; ?>
+
+<?php if (isset($this->results)) { ?>
+  <?php if (count($this->results) < 1) { ?>
+    
+      <div>No results matched your search</div>
+
+  <?php } else { ?>
+      <div><?= count($this->results).' results' ?></div>
+      <table border="1">
+      <tr>
+          <td>ESU Name</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+      </tr>
+      <?php foreach ($this->results as $k => $r) { ?>
+          <tr>
+              <td><?= $r['esu_name'] ?></td>
+              <td>
+                <div>
+                    <a href="<?php echo $this->url(array(
+                    'controller' => 'esu',
+                    'action' => 'view',
+                    'id' => $r['id_neb_esu'],
+                    ));?>">View</a>
+                </div>
+              </td>
+              <td>
+                <div>
+                    <a href="<?php echo $this->url(array(
+                    'controller' => 'esu',
+                    'action' => 'edit',
+                    'id' => $r['id_neb_esu'],
+                    ));?>">Edit</a>
+                </div>
+              </td>
+          </tr>
+      <?php } ?>
+      </table>
+  <?php } ?>
+<?php } ?>
+
+<ul>
+
+</ul>

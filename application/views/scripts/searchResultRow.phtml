@@ -1,0 +1,37 @@
+<tr class="<?php echo $this->class?>">
+	<td class="cssCell">
+	    <?php echo $this->categoryName; ?>
+		<?php echo $this->element->nodeType; ?>
+		<?php echo $this->element->categoryName; ?>
+		<?php echo $this->element->countKeywords; ?>
+	</td>
+	<td class="cssCell">
+	    <?php 
+	        $matchRate = round($this->matchRate * 100, 0);
+	        
+	        if($matchRate == 0) {
+	            $matchRate = round($this->matchRate * 100, 2);
+	        }
+	        echo $matchRate;
+	    ?>%
+    </td>
+
+	<?php echo $this->formHidden('nodeType', $this->nodeType); ?>
+	
+    <td class="cssCell" style="white-space:nowrap;">
+        <?php echo $this->element->viewSubcategories; echo $this->element->id_subcategory; echo $this->hideNode; ?> 
+        View Subcategories
+
+	    <?php if('' == $this->kw_samples) { ?>
+            <a href="javascript:kwSamplesPopUp('<?php echo $this->categoryName; ?>', '<?php echo $this->kw_samples; ?>')">Sample Keywords</a>
+    	<?php } ?>
+    </td>
+	<td class="cssCell"><?php echo $this->freq_rank; ?></td>
+	<td class="cssCell">&nbsp;</td>
+	<td class="cssCell"><?php echo $this->relatedKeywords; ?>
+    </td>
+	<td class="cssCell">&nbsp;</td>
+	<td class="cssCell">
+	    <?php echo $this->countKeywords; ?><?php echo $this->element->kwcount; ?>
+    </td>
+</tr>

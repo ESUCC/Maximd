@@ -1,0 +1,82 @@
+<?php 
+   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_031; ?>
+<?= $this->element->page; ?>
+<?php $view = $this->element->page->getView(); ?>
+<table class="formTitleHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Give Consent for Initial Evaluation</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <div id="consent_wrapper_1-colorme" class="colorme">
+            <?   
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                $a->setMultiOptions(array("1" => $this->element->consent->getMultiOption("1")));
+                $a->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'consent_wrapper_1');");
+                $a->removeDecorator('label');
+                echo $a;
+            ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Do Not Give Consent for Initial Evaluation</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <div id="consent_wrapper_0-colorme" class="colorme">
+            <?   
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                $a->setMultiOptions(array("0" => $this->element->consent->getMultiOption("0")));
+                $a->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'consent_wrapper_0');");
+                $a->removeDecorator('label');
+                echo $a;
+            ?>
+            </div>
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" class="p8888">
+        <?php echo $this->element->no_consent_reason; ?>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+<?
+    if('print'==$view->mode){ //PRINT ?>
+        <tr>
+        	<td>
+        	<table width="100%">
+        	<?php if (1==$this->element->signature_on_file->getValue()) { ?>
+            <td>Signature is on File</td>
+            <?php } else { ?>
+            <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            <?php if (''!=$this->element->consent_date->getValue()) { ?>
+            <td>Date: <?php echo $this->element->consent_date->getValue(); ?></td>
+            <?php } else { ?>
+            <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderlineThin">&nbsp;</td>
+            <?php } ?>
+            </table>
+            </td>
+        </tr>
+    <? } ?>
+    <? if('print'!=$view->mode) { ?>
+    <tr>
+        <td align="right">Signature on File: </td><td><?php echo $this->element->signature_on_file; ?></td>
+        <td><?php echo $this->element->consent_date; ?></td>
+    </tr>
+    <? } ?>
+</table>

@@ -1,0 +1,442 @@
+<?php 
+   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_021; ?>
+<?= $this->element->page; ?>
+<?php $viewMode = trim($this->element->mode->getValue()); ?>
+  <table class="formInput" style="margin-top:1px;">
+    <tr>
+      <td class="tanHead">
+	  For each special education student, the IEP team must consider whether the child requires assistive technology devices and services. "Assistive technology devices means any item, piece of equipment, or product that is used to increase, maintain, or improve functional capabilities with disabilities." The range of assistive technology devices is quite wide. Many devices may be identified and provided by the IEP team and/or classroom staff. Devices requiring a high degree of individualization or specialized training on the part of staff should only be recommended following a formal assistive technology evaluation. 
+	  <br><br>The following check list contains a range of assistive technology devices which should be considered. 
+	  <br><br>Items marked with a *** require referral for a formal assistive technology evaluation prior to inclusion in the student's IEP. Non-starred items may be approved by the L.E.A. and should be procured though building special education funds.</td>
+    </tr>
+  </table>
+  <table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+    <tr>
+      <td valign="top">
+ 
+ 
+ 
+        <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>Written Language</td>
+          </tr>
+        </table>
+ <?php /*      
+	    <table class="formInput" style="margin-top:1px;">
+          <tr>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->wl_pencil->isChecked()) {echo $this->element->wl_pencil;} ?></td>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->wl_adapted_paper->isChecked()) {echo $this->element->wl_adapted_paper;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_slantboard->isChecked()) {echo $this->element->wl_slantboard;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_word_cards->isChecked()) {echo $this->element->wl_word_cards;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_pocket_dict->isChecked()) {echo $this->element->wl_pocket_dict;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_electronic_dict->isChecked()) {echo $this->element->wl_electronic_dict;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_use_class_computer->isChecked()) {echo $this->element->wl_use_class_computer;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_talk_word_process->isChecked()) {echo $this->element->wl_talk_word_process;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_wp_spell_check->isChecked()) {echo $this->element->wl_wp_spell_check;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_wp_grammar_check->isChecked()) {echo $this->element->wl_wp_grammar_check;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_portable_wp->isChecked()) {echo $this->element->wl_portable_wp;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_laptop_computer->isChecked()) {echo $this->element->wl_laptop_computer;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_word_predict->isChecked()) {echo $this->element->wl_word_predict;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_easy_access->isChecked()) {echo $this->element->wl_easy_access;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_keyguard->isChecked()) {echo $this->element->wl_keyguard;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_arm_support->isChecked()) {echo $this->element->wl_arm_support;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_tracball->isChecked()) {echo $this->element->wl_tracball;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_alternate_keyboard->isChecked()) {echo $this->element->wl_alternate_keyboard;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_onscreen_keyboard->isChecked()) {echo $this->element->wl_onscreen_keyboard;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_mouth_stick->isChecked()) {echo $this->element->wl_mouth_stick;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_switch_input->isChecked()) {echo $this->element->wl_switch_input;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_morse_code->isChecked()) {echo $this->element->wl_morse_code;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_scanning_sw->isChecked()) {echo $this->element->wl_scanning_sw;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_name_stamp->isChecked()) {echo $this->element->wl_name_stamp;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->wl_other->isChecked()) {echo $this->element->wl_other;} ?></td>
+          </tr>
+        </table>
+  */ ?>
+  
+  	    <div class="checkboxTableFix">
+          <?php if($viewMode != 'print' || $this->element->wl_pencil->isChecked()) {echo $this->element->wl_pencil;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_adapted_paper->isChecked()) {echo $this->element->wl_adapted_paper;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_slantboard->isChecked()) {echo $this->element->wl_slantboard;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_word_cards->isChecked()) {echo $this->element->wl_word_cards;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_pocket_dict->isChecked()) {echo $this->element->wl_pocket_dict;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_electronic_dict->isChecked()) {echo $this->element->wl_electronic_dict;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_use_class_computer->isChecked()) {echo $this->element->wl_use_class_computer;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_talk_word_process->isChecked()) {echo $this->element->wl_talk_word_process;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_wp_spell_check->isChecked()) {echo $this->element->wl_wp_spell_check;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_wp_grammar_check->isChecked()) {echo $this->element->wl_wp_grammar_check;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_portable_wp->isChecked()) {echo $this->element->wl_portable_wp;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_laptop_computer->isChecked()) {echo $this->element->wl_laptop_computer;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_word_predict->isChecked()) {echo $this->element->wl_word_predict;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_easy_access->isChecked()) {echo $this->element->wl_easy_access;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_keyguard->isChecked()) {echo $this->element->wl_keyguard;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_arm_support->isChecked()) {echo $this->element->wl_arm_support;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_tracball->isChecked()) {echo $this->element->wl_tracball;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_alternate_keyboard->isChecked()) {echo $this->element->wl_alternate_keyboard;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_onscreen_keyboard->isChecked()) {echo $this->element->wl_onscreen_keyboard;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_mouth_stick->isChecked()) {echo $this->element->wl_mouth_stick;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_switch_input->isChecked()) {echo $this->element->wl_switch_input;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_morse_code->isChecked()) {echo $this->element->wl_morse_code;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_scanning_sw->isChecked()) {echo $this->element->wl_scanning_sw;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_name_stamp->isChecked()) {echo $this->element->wl_name_stamp;} ?>
+          <?php if($viewMode != 'print' || $this->element->wl_other->isChecked()) {echo $this->element->wl_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+	    
+	
+		<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>Communication</td>
+          </tr>
+        </table>
+<?php /*     
+	    <table class="formInput" style="margin-top:1px;">
+          <tr>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->com_dict->isChecked()) {echo $this->element->com_dict;} ?></td>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->com_obj_symbols->isChecked()) {echo $this->element->com_obj_symbols;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_graphic_symbol->isChecked()) {echo $this->element->com_graphic_symbol;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_picture_symbol->isChecked()) {echo $this->element->com_picture_symbol;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_behavior_cue_cards->isChecked()) {echo $this->element->com_behavior_cue_cards;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_books_boards->isChecked()) {echo $this->element->com_books_boards;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_voice_output->isChecked()) {echo $this->element->com_voice_output;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_eye_gaze_board->isChecked()) {echo $this->element->com_eye_gaze_board;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_laptop_computer->isChecked()) {echo $this->element->com_laptop_computer;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->com_other->isChecked()) {echo $this->element->com_other;} ?></td>
+          </tr>
+        </table>
+*/ ?>
+		<div class="checkboxFix">
+          <?php if($viewMode != 'print' || $this->element->com_dict->isChecked()) {echo $this->element->com_dict;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_obj_symbols->isChecked()) {echo $this->element->com_obj_symbols;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_graphic_symbol->isChecked()) {echo $this->element->com_graphic_symbol;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_picture_symbol->isChecked()) {echo $this->element->com_picture_symbol;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_behavior_cue_cards->isChecked()) {echo $this->element->com_behavior_cue_cards;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_books_boards->isChecked()) {echo $this->element->com_books_boards;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_voice_output->isChecked()) {echo $this->element->com_voice_output;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_eye_gaze_board->isChecked()) {echo $this->element->com_eye_gaze_board;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_laptop_computer->isChecked()) {echo $this->element->com_laptop_computer;} ?>
+          <?php if($viewMode != 'print' || $this->element->com_other->isChecked()) {echo $this->element->com_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+
+
+        <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>Academics</td>
+          </tr>
+        </table>
+ 
+        <div class="checkboxTableFix">
+          <?php if($viewMode != 'print' || $this->element->aca_low_tech->isChecked()) {echo $this->element->aca_low_tech;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_abacus->isChecked()) {echo $this->element->aca_abacus;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_standard_calc->isChecked()) {echo $this->element->aca_standard_calc;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_large_key_calc->isChecked()) {echo $this->element->aca_large_key_calc;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_adapted_book->isChecked()) {echo $this->element->aca_adapted_book;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_book_holder->isChecked()) {echo $this->element->aca_book_holder;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_talking_electronic->isChecked()) {echo $this->element->aca_talking_electronic;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_taped_text->isChecked()) {echo $this->element->aca_taped_text;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_voice_output->isChecked()) {echo $this->element->aca_voice_output;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_sw_pict_text->isChecked()) {echo $this->element->aca_sw_pict_text;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_scanner_talking_sw->isChecked()) {echo $this->element->aca_scanner_talking_sw;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_electronic_book->isChecked()) {echo $this->element->aca_electronic_book;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_talking_calc->isChecked()) {echo $this->element->aca_talking_calc;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_adapted_aca_sw->isChecked()) {echo $this->element->aca_adapted_aca_sw;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_tactile_measuring->isChecked()) {echo $this->element->aca_tactile_measuring;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_electronic_research->isChecked()) {echo $this->element->aca_electronic_research;} ?>
+          <?php if($viewMode != 'print' || $this->element->aca_other->isChecked()) {echo $this->element->aca_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+
+
+
+        <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>Recreation &amp; Leisure</td>
+          </tr>
+        </table>
+<?php  /*
+        <table class="formInput" style="margin-top:1px;">
+          <tr>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->rec_adapted_toys->isChecked()) {echo $this->element->rec_adapted_toys;} ?></td>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->rec_adapted_sport_eq->isChecked()) {echo $this->element->rec_adapted_sport_eq;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_switch_ordered_toys->isChecked()) {echo $this->element->rec_switch_ordered_toys;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_app_relay->isChecked()) {echo $this->element->rec_app_relay;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_adapted_sw->isChecked()) {echo $this->element->rec_adapted_sw;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_universal_cuff->isChecked()) {echo $this->element->rec_universal_cuff;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_adapted_scissors->isChecked()) {echo $this->element->rec_adapted_scissors;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_env_control_unit->isChecked()) {echo $this->element->rec_env_control_unit;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->rec_other->isChecked()) {echo $this->element->rec_other;} ?></td>
+          </tr>
+        </table>
+*/ ?>
+		 <div class="checkboxTableFix">
+          <?php if($viewMode != 'print' || $this->element->rec_adapted_toys->isChecked()) {echo $this->element->rec_adapted_toys;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_adapted_sport_eq->isChecked()) {echo $this->element->rec_adapted_sport_eq;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_switch_ordered_toys->isChecked()) {echo $this->element->rec_switch_ordered_toys;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_app_relay->isChecked()) {echo $this->element->rec_app_relay;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_adapted_sw->isChecked()) {echo $this->element->rec_adapted_sw;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_universal_cuff->isChecked()) {echo $this->element->rec_universal_cuff;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_adapted_scissors->isChecked()) {echo $this->element->rec_adapted_scissors;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_env_control_unit->isChecked()) {echo $this->element->rec_env_control_unit;} ?>
+          <?php if($viewMode != 'print' || $this->element->rec_other->isChecked()) {echo $this->element->rec_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+
+
+        <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>OT/PT Input Required For Decision</td>
+          </tr>
+        </table>
+<?php /*
+        <table class="formInput" style="margin-top:1px;">
+          <tr>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->otpt_adapted_eating->isChecked()) {echo $this->element->otpt_adapted_eating;} ?></td>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->otpt_adapted_dressing->isChecked()) {echo $this->element->otpt_adapted_dressing;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_walker->isChecked()) {echo $this->element->otpt_walker;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_grab_rails->isChecked()) {echo $this->element->otpt_grab_rails;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_adapted_toilet->isChecked()) {echo $this->element->otpt_adapted_toilet;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_adapted_class->isChecked()) {echo $this->element->otpt_adapted_class;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_position_eq->isChecked()) {echo $this->element->otpt_position_eq;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_wheelchair->isChecked()) {echo $this->element->otpt_wheelchair;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->otpt_other->isChecked()) {echo $this->element->otpt_other;} ?></td>
+          </tr>
+        </table>
+*/ ?>
+		<div class="checkboxTableFix">
+          <?php if($viewMode != 'print' || $this->element->otpt_adapted_eating->isChecked()) {echo $this->element->otpt_adapted_eating;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_adapted_dressing->isChecked()) {echo $this->element->otpt_adapted_dressing;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_walker->isChecked()) {echo $this->element->otpt_walker;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_grab_rails->isChecked()) {echo $this->element->otpt_grab_rails;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_adapted_toilet->isChecked()) {echo $this->element->otpt_adapted_toilet;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_adapted_class->isChecked()) {echo $this->element->otpt_adapted_class;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_position_eq->isChecked()) {echo $this->element->otpt_position_eq;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_wheelchair->isChecked()) {echo $this->element->otpt_wheelchair;} ?>
+          <?php if($viewMode != 'print' || $this->element->otpt_other->isChecked()) {echo $this->element->otpt_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+
+
+        <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>Vision Consultant Input Required for Decision</td>
+          </tr>
+        </table>
+
+<?php /*
+        <table class="formInput" style="margin-top:1px;">
+          <tr>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->vis_magnigier->isChecked()) {echo $this->element->vis_magnigier;} ?></td>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->vis_large_print->isChecked()) {echo $this->element->vis_large_print;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_adapted_computer->isChecked()) {echo $this->element->vis_adapted_computer;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_cctv->isChecked()) {echo $this->element->vis_cctv;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_braille_keyboard->isChecked()) {echo $this->element->vis_braille_keyboard;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_braille_sw->isChecked()) {echo $this->element->vis_braille_sw;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_braille_printer->isChecked()) {echo $this->element->vis_braille_printer;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->vis_other;} ?></td>
+          </tr>
+        </table>
+*/ ?>
+		<div class="checkboxTableFix">
+          <?php if($viewMode != 'print' || $this->element->vis_magnigier->isChecked()) {echo $this->element->vis_magnigier;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_large_print->isChecked()) {echo $this->element->vis_large_print;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_adapted_computer->isChecked()) {echo $this->element->vis_adapted_computer;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_cctv->isChecked()) {echo $this->element->vis_cctv;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_braille_keyboard->isChecked()) {echo $this->element->vis_braille_keyboard;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_braille_sw->isChecked()) {echo $this->element->vis_braille_sw;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_braille_printer->isChecked()) {echo $this->element->vis_braille_printer;} ?>
+          <?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->vis_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+ 
+ 
+        <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+          <tr>
+            <td>Hearing Consultant Input Required for Decision</td>
+          </tr>
+        </table>
+
+<?php /*
+        <table class="formInput" style="margin-top:1px;">
+          <tr>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->hear_amplification;} ?></td>
+            <td valign="top" width="1%">&nbsp;</td>
+            <td width="49%"><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->hear_auditory_trainer;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->hear_captioning;} ?></td>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->hear_signaling;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->hear_tdd_tty;} ?></td>
+          </tr>
+          <tr>
+            <td valign="top" width="20px">&nbsp;</td>
+            <td><?php if($viewMode != 'print' || $this->element->vis_other->isChecked()) {echo $this->element->hear_other;} ?></td>
+          </tr>
+        </table>
+        */?>
+        <div class="checkboxTableFix">
+		  <?php if($viewMode != 'print' || $this->element->hear_amplification->isChecked()) {echo $this->element->hear_amplification;} ?>
+          <?php if($viewMode != 'print' || $this->element->hear_auditory_trainer->isChecked()) {echo $this->element->hear_auditory_trainer;} ?>
+          <?php if($viewMode != 'print' || $this->element->hear_captioning->isChecked()) {echo $this->element->hear_captioning;} ?>
+          <?php if($viewMode != 'print' || $this->element->hear_signaling->isChecked()) {echo $this->element->hear_signaling;} ?>
+          <?php if($viewMode != 'print' || $this->element->hear_tdd_tty->isChecked()) {echo $this->element->hear_tdd_tty;} ?>
+          <?php if($viewMode != 'print' || $this->element->hear_other->isChecked()) {echo $this->element->hear_other;} ?>
+          <span style="visibility:hidden;">&nbsp;</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+
+<?php if($viewMode != 'print' || $this->element->nothing_recommended->isChecked()) { ?>
+  <table class="formTitleHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+      <td>No recommendation</td>
+    </tr>
+  </table>
+  <table class="formInput" style="margin-top:1px;">
+    <tr>
+      <td valign="top" width="1%">&nbsp;</td>
+      <td><?php if($viewMode != 'print' || $this->element->nothing_recommended->isChecked()) {echo $this->element->nothing_recommended;} ?></td>
+    </tr>
+  </table>
+ <?php }?>
+  <table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+      <td>Other Assistive Technologies</td>
+    </tr>
+  </table>
+  <table class="formInput" style="margin-top:1px;">
+    <tr>
+      <td><?php echo $this->element->other_assistave_technologies; ?></td>
+    </tr>
+  </table>
+    

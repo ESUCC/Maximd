@@ -1,0 +1,90 @@
+<h3>Student Forms</h3>
+<? //= $this->studentOptionsMenu($this->studentOptionsMenu_MultiOptions, $this->id_student);
+	//echo $this->navigationTopTabs();
+
+	
+	//= $this->studentForm; 
+    	$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
+
+    	
+?><BR /><BR /><BR />
+<table>
+<?php if(0) { ?>
+  <tr>
+    <th><a href="<?= $config->DOC_ROOT .'personnel/stylescope'; ?>">Goto Stylescope</a></th>
+    <th>&nbsp;</th>
+  </tr>
+<?php } ?>
+  <tr>
+    <th><a href="<?= $config->DOC_ROOT .'archive/forms'; ?>">Goto Archive Forms</a></th>
+    <th>&nbsp;</th>
+  </tr>
+  <tr>
+    <th><a href="<?= $config->DOC_ROOT .'errorlog/jslist'; ?>">Goto JsErrLog</a></th>
+    <th>&nbsp;</th>
+  </tr>
+  <tr>
+    <th><a href="<?= $config->DOC_ROOT .'jslogger/test-error'; ?>">Generate JS Error</a></th>
+    <th>&nbsp;</th>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  <tr>
+    <th>Draft/Create</th>
+    <th>Final</th>
+  </tr>
+  <tr>
+    <td><?php 
+
+foreach ($this->draftFormsArr as $formCode => $formId) {
+	
+	if(NULL != $formId) {
+        $linkCode = $this->url(array(
+	        'controller' => "form$formCode",
+	        'action' => 'edit',
+	        'document' => $formId,
+	        'page' => 1,
+        ), null, true); // 3rd param removes default values 
+
+        echo "<a href=\"{$this->url_server}{$linkCode}\">Edit Form {$formCode}</a><BR />";
+
+	} else {
+        $linkCode = $this->url(array(
+            'controller' => "form$formCode",
+            'action' => 'create',
+            'student' => $this->student,
+        ), null, true); // 3rd param removes default values 
+         
+        $t= "<a href=\"{$this->url_server}{$linkCode}\">Create Form {$formCode}</a><BR />";
+        echo "<a href=\"{$this->url_server}{$linkCode}\">Create Form {$formCode}</a><BR />";
+
+		
+	}
+	
+}
+?>
+</td>
+    <td><?php 
+
+foreach ($this->finalFormsArr as $formCode => $formId) {
+	
+	if(NULL != $formId) {
+        $linkCode = $this->url(array(
+	        'controller' => "form$formCode",
+	        'action' => 'view',
+	        'document' => $formId,
+	        'page' => 1,
+        ), null, true); // 3rd param removes default values 
+
+        echo "<a href=\"{$this->url_server}{$linkCode}\">View Form {$formCode}</a><BR />";
+
+	}
+	
+}
+?>
+</td>
+  </tr>
+</table>
+

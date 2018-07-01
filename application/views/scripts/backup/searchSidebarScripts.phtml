@@ -1,0 +1,209 @@
+<div class="collectionManager">
+    <div id="collectionTabs">
+        <ul>
+            <li><a href="#tabs-1">Students</a></li>
+            <li><a href="#tabs-2">Manage</a></li>
+        </ul>
+        <div id="tabs-1">
+            <div id="bbStudentCollectionManager"></div>
+            <input type="hidden" id="clickStudentLink" value="<?=$this->clickStudentLink;?>">
+        </div>
+
+        <div id="tabs-2">
+            <h2>Manage Collections</h2>
+
+            <div id="bbCollectionListWrapper"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        /**
+         * connect function to current and future collection checkboxes
+         */
+        $(document).on('click', '.collectionCheckbox', function (e) {
+            App.clickCheckbox(this, e);
+            return false;
+        });
+        $(document).on('click', '#CollectionCheckAll', function (e) {
+            var deferredCollection = [];
+            $('.collectionCheckbox').attr('checked', 'checked');
+            $('.collectionCheckbox').each(function (index, checkbox) {
+                deferredCollection.push(clickCheckboxNoCallback(checkbox));
+            });
+            $.when.apply(this, deferredCollection).done(function () {
+                refreshCollectionList('groupContainer');
+            });
+            return false;
+        });
+        $(document).on('click', '#CollectionUncheckAll', function (e) {
+            var deferredCollection = [];
+            $('.collectionCheckbox').attr('checked', null);
+            $('.collectionCheckbox').each(function (index, checkbox) {
+                deferredCollection.push(clickCheckboxNoCallback(checkbox));
+            });
+            $.when.apply(this, deferredCollection).done(function () {
+                refreshCollectionList('groupContainer');
+            });
+            return false;
+        });
+
+        $("#collectionTabs").tabs();
+
+        $(document).ready(function () {
+            App.start();
+
+        });
+
+
+    });
+</script>
+<script type="text/template" id="student-template">
+    <div style="width:100%;">
+        <span style="float:left;display:inline;width:15px;"><a href="#" data-student-id="{{id}}"
+                                                               class="groupCollectionDelete">X</a></span>
+        <span style="display:inline;"><a href="" class="collectionLink" data-student-id="{{id}}">{{name}}</a></span>
+        <? if ($this->showEditLink): ?>
+            <span style="float:right;display:inline;"><a href="#" data-student-id="{{id}}" class="groupCollectionEdit">Edit</a></span>
+        <? endif; ?>
+    </div>
+</script>
+<script type="text/template" id="collection-item">
+    <div style="width:100%;">
+        <span style="display:inline;">{{name}}</span>
+    <span style="float:right;display:inline;width:15px;">
+        <a href="#" data-collection-id="{{id_collection}}" class="deleteLink">X</a>
+    </span>
+    </div>
+</script>
+<script type="text/template" id="select-collection-option">
+    {{name}}
+</script>
+<script type="text/template" id="bbCollectionManager">
+    <div class="addCollection"><a href="" class="addCollectionLink">Add Collection</a></div>
+    <div class="collectionOperations" style="display:none;">
+        Select Collection:
+        <div id="currentCollectionMenu"></div>
+        <br/>
+    </div>
+    <div class="studentCollectionOperations" style="display:none;">
+        <? if ($this->showGroupAction): ?>
+            <select id="groupAction">
+                <option value=""><b>Select Group Action...</b></option>
+                <option value="print">Print</option>
+                <option value="transfer">Transfer Students</option>
+                <? if ($this->privCheck->getMinPriv() <= UC_ASM): ?>
+                    <option value="assign-team-member">Assign Team Member</option>
+                <? endif; ?>
+                <? if ($this->privCheck->getMinPriv() <= UC_CM): ?>
+                    <option value="assign-case-manager">Assign Case Manager</option>
+                <? endif; ?>
+                <? if ($this->privCheck->getMinPriv() <= UC_CM): ?>
+                    <option value="nssrs-report">NSSRS Rreports</option>
+                <? endif; ?>
+            </select>
+            </br>
+            <br/>
+        <? endif; ?>
+        <ul id="listOfStudentsInCurrentCollection"></ul>
+        <? if (strlen($this->message) > 0): ?>
+            <div style="margin-top: 15px"><b><?= $this->message; ?></b></div>
+        <? endif; ?>
+        <div>
+            <ul id="printJobs"></ul>
+        </div>
+    </div>
+</script>
+<div id="dialog-region"></div>
+<script type='text/html' id='add-collection'>
+    <form class="submissionData">
+        <div class="collectionMessage" style="display:none;"></div>
+        Collection Name: <input type="text" class="collection_name">
+        Overwrite: <input type="checkbox" class="collection_overwrite" value="1">
+    </form>
+</script>
+<div id="groupPrint" style="display:none;">Select type of form to batch print:<br/>
+    <select id="printType">
+        <option value="mostRecentFinal" value="">Most recent Final form</option>
+        <option value="mostRecentDraft" value="">Most recent Draft form</option>
+        <option value="mostRecent" value="">Most recent form</option>
+    </select>
+    <select id="formNum">
+        <option label="--- All Forms Types ---" value="">Which version of that form shall be printed?</option>
+        <option label="Notice and Consent for Initial Evaluation (IEP)" value="001">Notice and Consent for Initial
+            Evaluation (IEP)
+        </option>
+        <option label="Multidisciplinary Evaluation Team (MDT) Report" value="002">Multidisciplinary Evaluation Team
+            (MDT) Report
+        </option>
+        <option label="Notification of IEP Meeting" value="003">Notification of IEP Meeting</option>
+        <option label="Individual Education Program (IEP)" value="004">Individual Education Program (IEP)</option>
+        <option label="Individual Education Program (IEP) - Summary" value="004s">Individual Education Program (IEP)
+            - Summary
+        </option>
+        <option label="Notice and Consent for Initial Placement (IEP)" value="005">Notice and Consent for Initial
+            Placement (IEP)
+        </option>
+        <option label="Notice of School District's Decision" value="006">Notice of School District's Decision</option>
+        <option label="Notice and Consent for Reevaluation" value="007">Notice and Consent for Reevaluation</option>
+        <option label="Notice of Change of Placement" value="008">Notice of Change of Placement</option>
+        <option label="Notice of Discontinuation" value="009">Notice of Discontinuation</option>
+        <option selected="selected" label="Progress Report" value="010">Progress Report</option>
+        <option label="Notice of MDT Conference" value="011">Notice of MDT Conference</option>
+        <option label="Determination Notice" value="012">Determination Notice</option>
+        <option label="IFSP" value="013">IFSP</option>
+        <option label="Notification of IFSP Meeting (IFSP)" value="014">Notification of IFSP Meeting (IFSP)</option>
+        <option label="Notice and Consent for Initial Evaluation (IFSP)" value="015">Notice and Consent for Initial
+            Evaluation (IFSP)
+        </option>
+        <option label="Notice and Consent for Initial Placement (IFSP)" value="016">Notice and Consent for Initial
+            Placement (IFSP)
+        </option>
+        <option label="Notes Page" value="017">Notes Page</option>
+        <option label="Summary of Performance" value="018">Summary of Performance</option>
+        <option label="Functional Assessment" value="019">Functional Assessment</option>
+        <option label="Specialized Transportation" value="020">Specialized Transportation</option>
+        <option label="Assistive Technology Considerations" value="021">Assistive Technology Considerations</option>
+        <option label="MDT Data Card" value="022">MDT Data Card</option>
+        <option label="IEP Data Card" value="023">IEP Data Card</option>
+        <option label="Agency Consent Invitation" value="024">Agency Consent Invitation</option>
+    </select>
+</div>
+<div id="groupTransfer" style="display:none;">Batch transfer options:<br/>
+
+    <div>Where would you like to send the selected records?</div>
+    <?= $this->countyDistrictSchool(null, null, null, true); ?>
+    <input type="checkbox" id="autoMoveForAsmOrBetter" value="true"> <label for="autoMoveForAsmOrBetter">Automatically
+        confirm transfers in schools where privs allow?</label>
+</div>
+<div id="assignCaseManager" style="display:none;">
+    <div class="areaFetchingMsg">Fetching data...</div>
+    <div class="areaError" class="display:none;"></div>
+    <div class="areaMain" class="display:none;">
+        <div>Who would you like to assign as Case Manager for these students?</div>
+        <div>
+            <label>Case Manager</label>: <select class="caseMgr"></select>
+            <input type="hidden" class="studentId" value="">
+        </div>
+    </div>
+
+</div>
+<div id="assignTeamMember" style="display:none;">
+    <div class="areaFetchingMsg">Fetching student data...</div>
+    <div class="areaError" class="display:none;"></div>
+    <div class="areaMain" class="display:none;">
+        <div>Who would you like to assign as Case Manager for these students?</div>
+        <div>
+            <label>Case Manager</label>: <select class="teamMember"></select><br/>
+            <label>Role</label>: <select class="role">
+                <option value="View Forms">View Forms</option>
+                <option value="Edit Forms">Edit Forms</option>
+                <option value="Limit to Early Education">Limit to Early Education</option>
+            </select>
+        </div>
+        <div class="areaConfirm" style="display:none">Overwrite existing privileges? <input type="checkbox"
+                                                                                            class="confirm" value="1">
+        </div>
+    </div>
+</div>
+

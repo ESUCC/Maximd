@@ -1,0 +1,91 @@
+<?php
+    $view = $this->element->page->getView(); 
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_008; ?>
+<?= $this->element->page; ?> 
+
+<?php if('print' != $view->mode) { ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notice of Change of Placement</td>
+    </tr>
+</table>
+<?php } ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+        <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>
+    <tr>
+		<td>
+		<div id="dates_wrapper-colorme" class="colorme">
+		 On <?php echo $this->element->date_met; ?> the Individual Education Program 
+		 (IEP) Team met to review the educational program for your child.<br/>
+		 To the maximum extent appropriate, your child will be educated with other 
+		 children in the general education environment. Your child will be moved from 
+		 the general education environment only when the nature or severity of needs 
+		 are such that the education in general education classes with supplementary 
+		 services cannot be achieved satisfactorily.
+		 </div>
+		 <br/><br>
+		<b>1. Based on the IEP which has been developed for your child, the </b><strong><?php echo $view->db_form_data['student_data']['name_district']; ?></strong> 
+		<b> proposes to change the placement of your child accordingly</b><span class="noprint"> (describe proposed changes)</span>:
+		<br/>
+		<?php echo "<blockquote>"; echo $this->element->describe_changes;echo "</blockquote";?>
+		</td>
+    </tr>
+</table> <br>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td><b>
+		2. The suggested change of placement is based on (describe the reasons why the district 
+        proposes to change the placement)</b>:<blockquote>
+		<?php echo $this->element->reasons; ?></blockquote>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td><b>
+		3. To determine the appropriate placement for your child, the school district considered 
+        the following option(s) prior to reaching the placement decision, and rejected those 
+        option(s) because<span class="noprint"> (provide a description of any options the district considered and the 
+        reasons why these options were rejected)</b></span>:<blockquote>
+		<?php echo $this->element->rejected; ?></blockquote>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+	   <b>4. The proposed change of placement is based upon the following evaluation procedures, 
+        tests, records, or reports:</b>
+		<blockquote><?php echo $this->element->change_based; ?></blockquote>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td>
+	<b>5. Other factors which are relevant to the school district's proposal, if any, are:</b>
+	<blockquote><?php echo $this->element->other_factors; ?></blockquote>
+		</td>
+    </tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td colspan="2">
+	   <b> <i>Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individual with Disabilities Education Act (IDEA). If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:
+	</b></i></td>
+    </tr>
+    <tr>
+		<td><b><?php echo $this->element->contact_name; ?></td>
+		<td><?php echo $this->element->contact_num; ?></td>
+   </b> </tr>
+</table> 
+		
+<?php echo $this->additionalResources(); ?>
+

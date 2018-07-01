@@ -1,0 +1,476 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="This IEP will be in effect from">
+           <tuv xml:lang="es"><seg>Este IEP ser&#xE1; v&#xE1;lido a partir del</seg></tuv>
+           <tuv xml:lang="en"><seg>This IEP will be in effect from</seg></tuv>
+       </tu>
+       <tu tuid="to">
+           <tuv xml:lang="es"><seg>hasta el</seg></tuv>
+           <tuv xml:lang="en"><seg>to</seg></tuv>
+       </tu>
+       <tu tuid="Parent Signature">
+           <tuv xml:lang="es"><seg>Firma del Padre/Madre</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Signature</seg></tuv>
+       </tu>
+       <tu tuid="Clear Radio Buttons">
+           <tuv xml:lang="es"><seg>Botones de Selecci&#xF3;n en Blanco (verificar y guardar)</seg></tuv>
+           <tuv xml:lang="en"><seg>Clear Radio Buttons (Check and save)</seg></tuv>
+       </tu>
+       <tu tuid="Special Education records">
+           <tuv xml:lang="es"><seg>Los registros de Educaci&#xF3;n Especial de mi hijo se mantendr&#xE1;n archivados por cinco (5) a&#xF1;os despu&#xE9;s de completar sus servicios de educaci&#xF3;n especial</seg></tuv>
+           <tuv xml:lang="en"><seg>Special Education records for my child will be retained for five (5) years after completion of his/her special education services</seg></tuv>
+       </tu>
+       <tu tuid="signature is on file">
+           <tuv xml:lang="es"><seg>Seleccione 'S&#xED;' para indicar que esa firma est&#xE1; en el archivo</seg></tuv>
+           <tuv xml:lang="en"><seg>Select 'Yes' to indicate that signature is on file</seg></tuv>
+       </tu>
+       <tu tuid="I have received a copy of the IEP at no cost:">
+           <tuv xml:lang="es"><seg>He recibido una copia gratuita del IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>I have received a copy of the IEP at no cost:</seg></tuv>
+       </tu>
+       <tu tuid="I have been offered a copy of my parental rights at no cost:">
+           <tuv xml:lang="es"><seg>He recibido una copia de mis Parental Rights (derechos del padre) sin costo alguno:</seg></tuv>
+           <tuv xml:lang="en"><seg>I have been offered a copy of my parental rights at no cost:</seg></tuv>
+       </tu>
+       <tu tuid="Date document signed by parent:">
+           <tuv xml:lang="es"><seg>Fecha del documento firmado por el padre o la madre:</seg></tuv>
+           <tuv xml:lang="en"><seg>Date document signed by parent:</seg></tuv>
+       </tu>
+       <tu tuid="Received Copy if IEP">
+           <tuv xml:lang="es"><seg>Recib&#xED; una copia del IEP</seg></tuv>
+           <tuv xml:lang="en"><seg>Received Copy if IEP</seg></tuv>
+       </tu>
+       <tu tuid="(If No selected above, please explain)">
+           <tuv xml:lang="es"><seg>(Si seleccion&#xF3; NO anteriormente, por favor explique el motivo)</seg></tuv>
+           <tuv xml:lang="en"><seg>(If 'No' selected above, please explain)</seg></tuv>
+       </tu>
+       <tu tuid="Parent Signature:">
+           <tuv xml:lang="es"><seg>Firma del Padre/Madre:</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Signature:</seg></tuv>
+       </tu>
+       <tu tuid="I have received a copy of the IEP at no cost:">
+           <tuv xml:lang="es"><seg>He recibido una copia gratuita del IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>I have received a copy of the IEP at no cost:</seg></tuv>
+       </tu>
+       <tu tuid="I have been offered a copy of my parental rights at no cost:">
+           <tuv xml:lang="es" retranslate="true"><seg>He Recibido una copia de mis Parental Rights (derechos del padre) sin costo alguno:</seg></tuv>
+           <tuv xml:lang="en"><seg>I have been offered a copy of my parental rights at no cost:</seg></tuv>
+       </tu>
+       <tu tuid="Team Member Absences">
+           <tuv xml:lang="es"><seg>Todas las ausencias de los miembros de equipo del IEP han sido aprobadas por escrito por los padres de los estudiantes y por el distrito escolar, y el asistente excusado proporcion&#xF3; informaci&#xF3;n por escrito cuando se consider&#xF3; conveniente</seg></tuv>
+           <tuv xml:lang="en"><seg>All IEP team member absences have been approved in writing by the student's parents and the school district and when appropriate, written input was provided by the excused attendee</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+       <tu tuid="I/We understand the Individual Education Program (IEP) process:">
+           <tuv xml:lang="es"><seg>Yo/Nosotros entendemos el proceso del Programa de Educaci&#xF3;n Individualizada (IEP):</seg></tuv>
+           <tuv xml:lang="en"><seg>I/We understand the Individual Education Program (IEP) process:</seg></tuv>
+       </tu>
+       <tu tuid="I/We participated in the development of this IEP:">
+           <tuv xml:lang="es"><seg>Yo/Nosotros participamos en el desarrollo de este IEP: </seg></tuv>
+           <tuv xml:lang="en"><seg>I/We participated in the development of this IEP:</seg></tuv>
+       </tu>
+       <tu tuid="I/We agree to this IEP:">
+           <tuv xml:lang="es"><seg>SPANISH:Yo/Nosotros estamos de acuerdo con este IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>I/We agree to this IEP:</seg></tuv>
+       </tu>
+       <tu tuid="Necessary Action">
+           <tuv xml:lang="es"><seg>El distrito escolar ha tomado las medidas necesarias para asegurar que yo entienda los procedimientos de esta reuni&#xF3;n del IEP, (incluyendo los arreglos necesarios para contar con un int&#xE9;rprete, en caso de ser necesario):</seg></tuv>
+           <tuv xml:lang="en"><seg>The school district has taken the necessary action to insure that I understand the proceedings of this IEP conference (including arrangement for an interpreter, if appropriate):</seg></tuv>
+       </tu>
+       <tu tuid="I/We understand the purpose and content of this IEP:">
+           <tuv xml:lang="es"><seg>Yo/Nosotros entendemos la finalidad y el contenido de este IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>I/We understand the purpose and content of this IEP:</seg></tuv>
+       </tu>
+       <tu tuid="Normal School Calendar">
+           <tuv xml:lang="es"><seg>Yo/Nosotros entendemos que este  IEP cubre solamente el calendario escolar regular seg&#xFA;n es definido por la Junta Escolar de las Escuelas P&#xFA;blicas de Lincoln:</seg></tuv>
+           <tuv xml:lang="en"><seg>I/We understand that this IEP covers only the normal school calendar as defined by the Lincoln Public Schools Board of Education:</seg></tuv>
+       </tu>
+       <tu tuid="I/We understand that I/we will receive a copy of this IEP:">
+           <tuv xml:lang="es"><seg>Yo/Nosotros entendemos que yo/nosotros recibiremos una copia de este  IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>I/We understand that I/we will receive a copy of this IEP:</seg></tuv>
+       </tu>
+       <tu tuid="I/We have received a copy of Rights and Responsibilities Regarding Identification and Placement of Students in Special Education:">
+           <tuv xml:lang="es"><seg>Yo/Nosotros hemos recibido una copia de los Derechos y Responsabilidades Referentes a la Identificaci&#xF3;n y Ubicaci&#xF3;n de los Estudiantes en Educaci&#xF3;n Especial:</seg></tuv>
+           <tuv xml:lang="en"><seg>I/We have received a copy of Rights and Responsibilities Regarding Identification and Placement of Students in Special Education:</seg></tuv>
+       </tu>
+       <tu tuid="Please indicate whether the parent signature is on file.">
+           <tuv xml:lang="es"><seg>Por favor notifique si la firma de los padres est&#xE1; en el archivo.</seg></tuv>
+           <tuv xml:lang="en"><seg>Please indicate whether the parent signature is on file.</seg></tuv>
+       </tu>
+       <tu tuid="cannot be empty when Parent Signature is Yes and must be empty when Parent Signature is No.">
+           <tuv xml:lang="es"><seg>no puede estar vac&#xED;o cuando la Firma de los Padres figure como S&#xED; y debe estar vac&#xED;o cuando en la Firma de los Padres figure No.</seg></tuv>
+           <tuv xml:lang="en"><seg>cannot be empty when Parent Signature is Yes and must be empty when Parent Signature is No.</seg></tuv>
+       </tu>
+       <tu tuid="Please select Yes or No for the parent receiving a copy of the IEP.">
+           <tuv xml:lang="es"><seg>Por favor seleccione S&#xED; o No si los padres recibieron una copia del IEP.</seg></tuv>
+           <tuv xml:lang="en"><seg>Please select Yes or No for the parent receiving a copy of the IEP.</seg></tuv>
+       </tu>
+       <tu tuid="Please select Yes or No for necessary action.">
+           <tuv xml:lang="es"><seg>Por favor seleccione S&#xED; o No si una acci&#xF3;n es necesaria.</seg></tuv>
+           <tuv xml:lang="en"><seg>Please select Yes or No for necessary action.</seg></tuv>
+       </tu>
+       <tu tuid="cannot be empty when Parent Signature is No and must be empty when Parent Signature is Yes.">
+           <tuv xml:lang="es"><seg>no puede estar vac&#xED;o cuando la Firma de los Padres figure como No y debe estar vac&#xED;o cuando en la Firma de los Padres figure S&#xED;.</seg></tuv>
+           <tuv xml:lang="en"><seg>cannot be empty when Parent Signature is No and must be empty when Parent Signature is Yes.</seg></tuv>
+       </tu>
+       <tu tuid="Please indicate whether the Team Member Absences are approved.">
+           <tuv xml:lang="es"><seg>Por favor indique si se aprobaron las Ausencias de los miembros del equipo.</seg></tuv>
+           <tuv xml:lang="en"><seg>Please indicate whether the Team Member Absences are approved.</seg></tuv>
+       </tu>
+       <tu tuid="Understand process must be checked.">
+           <tuv xml:lang="es"><seg>Entiende el proceso debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand process must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Participated in development must be checked.">
+           <tuv xml:lang="es"><seg>Particip&#xF3; en el desarrollo debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Participated in development must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Agreement to IEP must be checked.">
+           <tuv xml:lang="es"><seg>Est&#xE1; de acuerdo con el IEP debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Agreement to IEP must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Non-agreement with IEP must be explained.">
+           <tuv xml:lang="es"><seg>No est&#xE1; de acuerdo con el IEP  debe estar explicado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Non-agreement with IEP must be explained.</seg></tuv>
+       </tu>
+       <tu tuid="Understand purpose and content must be checked.">
+           <tuv xml:lang="es"><seg>Entiende la finalidad y el contenido debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand purpose and content must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Understand coverage is limited to normal school calendar must be checked.">
+           <tuv xml:lang="es"><seg>Entiende que la cobertura est&#xE1; limitad al calendario escolar regular debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand coverage is limited to normal school calendar must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Understand that parents will receive a copy of the IEP must be checked.">
+           <tuv xml:lang="es"><seg>Entiende que los padres recibir&#xE1;n una copia del IEP debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand that parents will receive a copy of the IEP must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Have received a copy of Rights and Responsibilities must be checked.">
+           <tuv xml:lang="es"><seg>Ha recibido una copia de los Derechos y Responsabilidades debe estar marcado.</seg></tuv>
+           <tuv xml:lang="en"><seg>Have received a copy of Rights and Responsibilities must be checked.</seg></tuv>
+       </tu>
+       <tu tuid="Parent Signature on file:">
+           <tuv xml:lang="es"><seg>La firma de los padres est&#xE1; en archivo:</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Signature on file:</seg></tuv>
+       </tu>
+       <tu tuid="Signature on File:">
+           <tuv xml:lang="es"><seg>La firma aparece en el registro:</seg></tuv>
+           <tuv xml:lang="en"><seg>Signature on File:</seg></tuv>
+       </tu>
+       <tu tuid="Signature NOT File">
+           <tuv xml:lang="es"><seg>La firma NO aparece en el registro:</seg></tuv>
+           <tuv xml:lang="en"><seg>Signature NOT File</seg></tuv>
+       </tu>
+       <tu tuid="Conference Date:">
+           <tuv xml:lang="es"><seg>Fecha de la reuni&#xF3;n:</seg></tuv>
+           <tuv xml:lang="en"><seg>Conference Date:</seg></tuv>
+       </tu>
+       <tu tuid="Effect From:">
+           <tuv xml:lang="es"><seg>V&#xE1;lido a partir del:</seg></tuv>
+           <tuv xml:lang="en"><seg>Effect From:</seg></tuv>
+       </tu>
+       <tu tuid="Effect To:">
+           <tuv xml:lang="es"><seg>V&#xE1;lido hasta:</seg></tuv>
+           <tuv xml:lang="en"><seg>Effect To:</seg></tuv>
+       </tu>
+       <tu tuid="Date document signed by parent:">
+           <tuv xml:lang="es"><seg>Fecha del documento firmado por el padre o la madre:</seg></tuv>
+           <tuv xml:lang="en"><seg>Date document signed by parent:</seg></tuv>
+       </tu>
+       <tu tuid="Received Copy if IEP">
+           <tuv xml:lang="es"><seg>Recib&#xED; una copia del IEP</seg></tuv>
+           <tuv xml:lang="en"><seg>Received Copy if IEP</seg></tuv>
+       </tu>
+       <tu tuid="Necessary action:">
+           <tuv xml:lang="es"><seg>Acci&#xF3;n necesaria:</seg></tuv>
+           <tuv xml:lang="en"><seg>Necessary action:</seg></tuv>
+       </tu>
+       <tu tuid="(If No selected above, please explain)">
+           <tuv xml:lang="es"><seg>(Si seleccion&#xF3; NO anteriormente, por favor explique el motivo)</seg></tuv>
+           <tuv xml:lang="en"><seg>(If No selected above, please explain)</seg></tuv>
+       </tu>
+       <tu tuid="Team Member Absence Approval">
+           <tuv xml:lang="es"><seg>Aprobaci&#xF3;n de ausencia de los miembros del equipo</seg></tuv>
+           <tuv xml:lang="en"><seg>Team Member Absence Approval</seg></tuv>
+       </tu>
+       <tu tuid="Understand process:">
+           <tuv xml:lang="es"><seg>Entiende el proceso:</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand process:</seg></tuv>
+       </tu>
+       <tu tuid="Participated in development:">
+           <tuv xml:lang="es"><seg>Particip&#xF3; en el desarrollo:</seg></tuv>
+           <tuv xml:lang="en"><seg>Participated in development:</seg></tuv>
+       </tu>
+       <tu tuid="Agreement to IEP:">
+           <tuv xml:lang="es"><seg>Est&#xE1; de acuerdo con el IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>Agreement to IEP:</seg></tuv>
+       </tu>
+       <tu tuid="Necessary action:">
+           <tuv xml:lang="es"><seg>Acci&#xF3;n necesaria:</seg></tuv>
+           <tuv xml:lang="en"><seg>Necessary action:</seg></tuv>
+       </tu>
+       <tu tuid="Understand purpose and content:">
+           <tuv xml:lang="es"><seg>Entiende la finalidad y el contenido:</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand purpose and content:</seg></tuv>
+       </tu>
+       <tu tuid="Understand coverage:">
+           <tuv xml:lang="es"><seg>Entiende la cobertura:</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand coverage:</seg></tuv>
+       </tu>
+       <tu tuid="Understand that parents will receive a copy of the IEP:">
+           <tuv xml:lang="es"><seg>Entiende que los padres recibir&#xE1;n una copia del IEP:</seg></tuv>
+           <tuv xml:lang="en"><seg>Understand that parents will receive a copy of the IEP:</seg></tuv>
+       </tu>
+       <tu tuid="Have received a copy of Rights and Responsibilities:">
+           <tuv xml:lang="es"><seg>Ha recibido una copia de los Derechos y Responsabilidades:</seg></tuv>
+           <tuv xml:lang="en"><seg>Have received a copy of Rights and Responsibilities:</seg></tuv>
+       </tu>
+       <tu tuid="Value is required and can't be empty">
+           <tuv xml:lang="es"><seg>Se requiere ingresar un valor y no puede estar vac&#xED;o</seg></tuv>
+           <tuv xml:lang="en"><seg>Value is required and can't be empty</seg></tuv>
+       </tu>
+       <tu tuid="This field is required">
+           <tuv xml:lang="es"><seg>&#xC9;ste es un campo requerido</seg></tuv>
+           <tuv xml:lang="en"><seg>This field is required</seg></tuv>
+       </tu>
+       <tu tuid="Participant Name(s)">
+           <tuv xml:lang="es"><seg>Nombre(s) del participante</seg></tuv>
+           <tuv xml:lang="en"><seg>Participant Name(s)</seg></tuv>
+       </tu>
+       <tu tuid="Absent">
+           <tuv xml:lang="es"><seg>Ausente</seg></tuv>
+           <tuv xml:lang="en"><seg>Absent</seg></tuv>
+       </tu>
+       <tu tuid="Position/Relationship To Student">
+           <tuv xml:lang="es"><seg>Posici&#xF3;n/Relaci&#xF3;n con el Estudiante</seg></tuv>
+           <tuv xml:lang="en"><seg>Position/Relationship To Student</seg></tuv>
+       </tu>
+       <tu tuid="Date">
+           <tuv xml:lang="es"><seg>Fecha</seg></tuv>
+           <tuv xml:lang="en"><seg>Date</seg></tuv>
+       </tu>
+       <tu tuid="Reason if Absent">
+           <tuv xml:lang="es"><seg>Motivo de ausencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Reason if Absent</seg></tuv>
+       </tu>
+       <tu tuid="Absent(1)">
+           <tuv xml:lang="es"><seg>Ausente(1)</seg></tuv>
+           <tuv xml:lang="en"><seg>Absent(1)</seg></tuv>
+       </tu>
+       <tu tuid="Absent(2)">
+           <tuv xml:lang="es"><seg>Ausente(2)</seg></tuv>
+           <tuv xml:lang="en"><seg>Absent(2)</seg></tuv>
+       </tu>
+       <tu tuid="Absent">
+           <tuv xml:lang="es"><seg>Ausente</seg></tuv>
+           <tuv xml:lang="en"><seg>Absent</seg></tuv>
+       </tu>
+       <tu tuid="In attendance">
+           <tuv xml:lang="es"><seg>En asistencia</seg></tuv>
+           <tuv xml:lang="en"><seg>In attendance</seg></tuv>
+       </tu>
+       <tu tuid="Team Member Row">
+           <tuv xml:lang="es"><seg>Fila del miembro del equipo</seg></tuv>
+           <tuv xml:lang="en"><seg>Team Member Row</seg></tuv>
+       </tu>
+       <tu tuid="Participant Name">
+           <tuv xml:lang="es"><seg>Nombre del participante</seg></tuv>
+           <tuv xml:lang="en"><seg>Participant Name</seg></tuv>
+       </tu>
+       <tu tuid="Position Description">
+           <tuv xml:lang="es"><seg>Descripci&#xF3;n de la Posici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Position Description</seg></tuv>
+       </tu>
+       <tu tuid="Team Member Date:">
+           <tuv xml:lang="es"><seg>Fecha del miembro del equipo:</seg></tuv>
+           <tuv xml:lang="en"><seg>Team Member Date:</seg></tuv>
+       </tu>
+       <tu tuid="Absent Reason:">
+           <tuv xml:lang="es"><seg>Motivo de ausencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Absent Reason:</seg></tuv>
+       </tu>
+       <tu tuid="Curriculum Area Not Discussed">
+           <tuv xml:lang="es"><seg>&#xC1;rea del programa de estudios no discutida</seg></tuv>
+           <tuv xml:lang="en"><seg>Curriculum Area Not Discussed</seg></tuv>
+       </tu>
+       <tu tuid="Absent with Written Input (approved by parent)">
+           <tuv xml:lang="es"><seg>Ausencia con aportes por escrito (aprobada por padre o madre)</seg></tuv>
+           <tuv xml:lang="en"><seg>Absent with Written Input (approved by parent)</seg></tuv>
+       </tu>
+       <tu tuid="Parent">
+           <tuv xml:lang="es"><seg>Padre/Madre</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent</seg></tuv>
+       </tu>
+       <tu tuid="Student (whenever appropriate, or if the student is 16 years of age or older)">
+           <tuv xml:lang="es"><seg>Estudiante (cuando corresponda, o si el estudiente tiene 16 a&#xF1;os de edad o m&#xE1;s)</seg></tuv>
+           <tuv xml:lang="en"><seg>Student (whenever appropriate, or if the student is 16 years of age or older)</seg></tuv>
+       </tu>
+       <tu tuid="Regular education teacher">
+           <tuv xml:lang="es"><seg>Maestro de educaci&#xF3;n regular</seg></tuv>
+           <tuv xml:lang="en"><seg>Regular education teacher</seg></tuv>
+       </tu>
+       <tu tuid="Special education teacher or provider">
+           <tuv xml:lang="es"><seg>Maestro o proveedor de educaci&#xF3;n especial </seg></tuv>
+           <tuv xml:lang="en"><seg>Special education teacher or provider</seg></tuv>
+       </tu>
+       <tu tuid="School district representative">
+           <tuv xml:lang="es"><seg>Representante del distrito escolar</seg></tuv>
+           <tuv xml:lang="en"><seg>School district representative</seg></tuv>
+       </tu>
+       <tu tuid="Individual to interpret evaluation results">
+           <tuv xml:lang="es"><seg>Individuo que interpretar&#xE1; los resultados de las evaluaciones</seg></tuv>
+           <tuv xml:lang="en"><seg>Individual to interpret evaluation results</seg></tuv>
+       </tu>
+       <tu tuid="Service agency representative (If child is receiving services from an approved Service Agency)">
+           <tuv xml:lang="es"><seg>Representante de la agencia de servicio (si el ni&#xF1;o est&#xE1; recibiendo servicios de una Agencia de Servicios aprobada)</seg></tuv>
+           <tuv xml:lang="en"><seg>Service agency representative (If child is receiving services from an approved Service Agency)</seg></tuv>
+       </tu>
+       <tu tuid="Nonpublic representative (if student is attending a nonpublic school)">
+           <tuv xml:lang="es"><seg>Representante no p&#xFA;blico (si el estudiante estudia en una escuela que no es p&#xFA;blica)</seg></tuv>
+           <tuv xml:lang="en"><seg>Nonpublic representative (if student is attending a nonpublic school)</seg></tuv>
+       </tu>
+       <tu tuid="Other agency representative (when transition services are being provided or will be provided by another agency for children age 16 and older)">
+           <tuv xml:lang="es"><seg>Representante de otra agencia (cuando los servicios de transici&#xF3;n son provistos o ser&#xE1;n provistos por otras agencias para ni&#xF1;os de 16 a&#xF1;os de edad o m&#xE1;s)</seg></tuv>
+           <tuv xml:lang="en"><seg>Other agency representative (when transition services are being provided or will be provided by another agency for children age 16 and older)</seg></tuv>
+       </tu>
+       <tu tuid="Speech Language Pathologist">
+           <tuv xml:lang="es"><seg>Pat&#xF3;logo del habla </seg></tuv>
+           <tuv xml:lang="en"><seg>Speech Language Pathologist</seg></tuv>
+       </tu>
+       <tu tuid="Hearing Resource Teacher">
+           <tuv xml:lang="es"><seg>Maestro auxiliar de audici&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Hearing Resource Teacher</seg></tuv>
+       </tu>
+       <tu tuid="The Following Participants Were In Attendance At The IEP Meeting">
+           <tuv xml:lang="es"><seg>Los siguientes participantes asistieron a la reuni&#xF3;n del IEP</seg></tuv>
+           <tuv xml:lang="en"><seg>The Following Participants Were In Attendance At The IEP Meeting</seg></tuv>
+       </tu>
+       <tu tuid="Other">
+           <tuv xml:lang="es"><seg>Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Other</seg></tuv>
+       </tu>
+       <tu tuid="Remove">
+           <tuv xml:lang="es"><seg>Eliminar</seg></tuv>
+           <tuv xml:lang="en"><seg>Remove</seg></tuv>
+       </tu>
+       <tu tuid="Check to remove row">
+           <tuv xml:lang="es"><seg>Seleccione para eliminar una fila</seg></tuv>
+           <tuv xml:lang="en"><seg>Check to remove row</seg></tuv>
+       </tu>
+       <tu tuid="Name">
+           <tuv xml:lang="es"><seg>Nombre</seg></tuv>
+           <tuv xml:lang="en"><seg>Name</seg></tuv>
+       </tu>
+       <tu tuid="Relationship">
+           <tuv xml:lang="es"><seg>Relaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Relationship</seg></tuv>
+       </tu>
+       <tu tuid="Relationship Other">
+           <tuv xml:lang="es"><seg>Otra relaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Relationship Other</seg></tuv>
+       </tu>
+       <tu tuid="Adaptive Physical Education">
+           <tuv xml:lang="es"><seg>Educaci&#xF3;n f&#xED;sica adaptativa</seg></tuv>
+           <tuv xml:lang="en"><seg>Adaptive Physical Education</seg></tuv>
+       </tu>
+       <tu tuid="Assistive Technology">
+           <tuv xml:lang="es"><seg>Tecnolog&#xED;a asistiva</seg></tuv>
+           <tuv xml:lang="en"><seg>Assistive Technology</seg></tuv>
+       </tu>
+       <tu tuid="Audiologist">
+           <tuv xml:lang="es"><seg>Audi&#xF3;logo</seg></tuv>
+           <tuv xml:lang="en"><seg>Audiologist</seg></tuv>
+       </tu>
+       <tu tuid="Counselor">
+           <tuv xml:lang="es"><seg>Consejero</seg></tuv>
+           <tuv xml:lang="en"><seg>Counselor</seg></tuv>
+       </tu>
+       <tu tuid="Interpreter">
+           <tuv xml:lang="es"><seg>Int&#xE9;rprete</seg></tuv>
+           <tuv xml:lang="en"><seg>Interpreter</seg></tuv>
+       </tu>
+       <tu tuid="Notetaker">
+           <tuv xml:lang="es"><seg>Anotador</seg></tuv>
+           <tuv xml:lang="en"><seg>Notetaker</seg></tuv>
+       </tu>
+       <tu tuid="Occupational Therapist">
+           <tuv xml:lang="es"><seg>Terapeuta ocupacional</seg></tuv>
+           <tuv xml:lang="en"><seg>Occupational Therapist</seg></tuv>
+       </tu>
+       <tu tuid="Parent Trainer">
+           <tuv xml:lang="es"><seg>Instructor de los padres de familia</seg></tuv>
+           <tuv xml:lang="en"><seg>Parent Trainer</seg></tuv>
+       </tu>
+       <tu tuid="Physical  Therapist">
+           <tuv xml:lang="es"><seg>Terapeuta f&#xED;sico</seg></tuv>
+           <tuv xml:lang="en"><seg>Physical  Therapist</seg></tuv>
+       </tu>
+       <tu tuid="Physician">
+           <tuv xml:lang="es"><seg>M&#xE9;dico</seg></tuv>
+           <tuv xml:lang="en"><seg>Physician</seg></tuv>
+       </tu>
+       <tu tuid="Reader">
+           <tuv xml:lang="es"><seg>Lector</seg></tuv>
+           <tuv xml:lang="en"><seg>Reader</seg></tuv>
+       </tu>
+       <tu tuid="Recreational Therapist">
+           <tuv xml:lang="es"><seg>Terapeuta recreativo</seg></tuv>
+           <tuv xml:lang="en"><seg>Recreational Therapist</seg></tuv>
+       </tu>
+       <tu tuid="School Nurse">
+           <tuv xml:lang="es"><seg>Enfermera de la escuela</seg></tuv>
+           <tuv xml:lang="en"><seg>School Nurse</seg></tuv>
+       </tu>
+       <tu tuid="Speech Language Pathologist">
+           <tuv xml:lang="es"><seg>Pat&#xF3;logo del habla </seg></tuv>
+           <tuv xml:lang="en"><seg>Speech Language Pathologist</seg></tuv>
+       </tu>
+       <tu tuid="Transportation Services">
+           <tuv xml:lang="es"><seg>Servicios de transporte</seg></tuv>
+           <tuv xml:lang="en"><seg>Transportation Services</seg></tuv>
+       </tu>
+       <tu tuid="Vocational Education">
+           <tuv xml:lang="es"><seg>Educaci&#xF3;n vocacional</seg></tuv>
+           <tuv xml:lang="en"><seg>Vocational Education</seg></tuv>
+       </tu>
+       <tu tuid="Other (Please Specify)">
+           <tuv xml:lang="es"><seg>Otro (Por favor especificar)</seg></tuv>
+           <tuv xml:lang="en"><seg>Other (Please Specify)</seg></tuv>
+       </tu>
+       <tu tuid="Team Other Row">
+           <tuv xml:lang="es"><seg> Fila de Equipo Otro</seg></tuv>
+           <tuv xml:lang="en"><seg>Team Other Row</seg></tuv>
+       </tu>
+       <tu tuid="Relationship Other cannot be empty when Relationship is Other (Please Specify).">
+           <tuv xml:lang="es"><seg> Relaci&#xF3;n Otra no puede estar vac&#xED;a cuando se indica que la  Relaci&#xF3;n es Otra (Por favor especificar).</seg></tuv>
+           <tuv xml:lang="en"><seg>Relationship Other cannot be empty when Relationship is Other (Please Specify).</seg></tuv>
+       </tu>
+       <tu tuid="Others as determined by the parent">
+           <tuv xml:lang="es"><seg>Otros seg&#xFA;n lo determinen los padres</seg></tuv>
+           <tuv xml:lang="en"><seg>Others as determined by the parent</seg></tuv>
+       </tu>
+       <tu tuid="Others as determined by the district">
+           <tuv xml:lang="es"><seg>Otros seg&#xFA;n lo determine el distrito</seg></tuv>
+           <tuv xml:lang="en"><seg>Others as determined by the district</seg></tuv>
+       </tu>
+       <tu tuid="If no, reason:">
+           <tuv xml:lang="es"><seg>Si es "no", cu&#xE1;l es el motivo:</seg></tuv>
+           <tuv xml:lang="en"><seg>If no, reason:</seg></tuv>
+       </tu>
+       <tu tuid="Attendance">
+           <tuv xml:lang="es"><seg>Asistencia</seg></tuv>
+           <tuv xml:lang="en"><seg>Attendance</seg></tuv>
+       </tu>
+   </body>
+</tmx>

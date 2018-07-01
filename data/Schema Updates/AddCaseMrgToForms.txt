@@ -1,0 +1,3 @@
+alter table iep_form_026 add column id_case_mgr integer;
+alter table iep_form_027 add column id_case_mgr integer;
+alter table iep_form_028 add column id_case_mgr integer;

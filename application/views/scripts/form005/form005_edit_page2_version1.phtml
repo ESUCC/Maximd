@@ -1,0 +1,128 @@
+<?php 
+	$view = $this->element->page->getView();
+	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?php echo $this->element->id_form_005; ?>
+<?php echo $this->element->page; ?>
+ <br>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td><b>Give Consent for Initial Placement</b></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+			<div id="consent_wrapper_1-colorme" class="colorme">
+			<? 	 
+				$a = clone($this->element->consent);
+				$a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+				$a->setMultiOptions(array("1" => $this->element->consent->getMultiOption("1")));
+				$a->setAttrib('onchange', "modified('', '', '', '', '', '');" . "colorMeById(this.id, 'consent_wrapper_1');");
+                $a->setAttrib('label_class', 'sc_bulletInputLeft');
+				$a->removeDecorator('label');
+				echo $a;
+			?>
+			</div>
+        </td>
+    </tr>
+</table><br>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td><b>Do Not Give Consent for Initial Placement</b></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+			<div id="consent_wrapper_0-colorme" class="colorme">
+			<? 	 
+				$a = clone($this->element->consent);
+				$a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+				$a->setMultiOptions(array("0" => $this->element->consent->getMultiOption("0")));
+				$a->setAttrib('onchange', "modified('', '', '', '', '', '');" . "colorMeById(this.id, 'consent_wrapper_0');");
+                $a->setAttrib('label_class', 'sc_bulletInputLeft');
+				$a->removeDecorator('label');
+				echo $a;
+			?>
+			</div>
+        </td>
+    </tr>
+    
+    <tr>
+        <td colspan="2" class="p8888">
+		<?php 
+		if('print' == $view->mode && '' == $this->element->no_consent_reason->getValue() ) {
+			 echo '<BR /><hr size="1" /><BR />';
+			 echo '<hr size="1" /><BR />';
+			 echo '<hr size="1" /><BR />';
+		} else {
+			echo $this->element->no_consent_reason;
+		}
+		?>
+		</td>
+    </tr>
+</table>
+
+
+<?php 
+
+if('print' == $view->mode) {
+    ?>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Parent Signature:</td>
+            <td width="250px" align="left" valign="bottom" style="white-space: nowrap;">
+            <?php 
+            if('print' == $view->mode) {
+                echo '<hr size="1" />'; 
+            } else {
+                echo '<img src="/images/line_black.gif" width="250px" height="1px" border="0">&nbsp;&nbsp;';
+            }
+            ?></td>
+            <td  style="white-space: nowrap;">
+            <?php 
+            if('t' != $this->element->signature_on_file->getValue() && 'print' == $view->mode) {
+            } else {
+                echo $this->element->signature_on_file;
+            }
+            ?></td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td width="100" valign="bottom" style="height:25px;white-space: nowrap;">
+                <?php echo $view->dateOrUnderline($view, $this->element->consent_date); ?>
+            </td>
+        </tr>
+    </table>
+    <?php
+} else {
+    ?>
+	<table class="formInput" style="margin-top:1px;">
+	    <tr>
+	        <td width="100" valign="bottom" style="height:25px;white-space: nowrap;">Parent Signature:</td>
+	        <td width="250px" align="left" valign="bottom" style="white-space: nowrap;">
+	        <?php 
+	            echo '<img src="/images/line_black.gif" width="250px" height="1px" border="0">&nbsp;&nbsp;';
+	        ?></td>
+	        <td  style="white-space: nowrap;">
+	        <?php 
+	            echo $this->element->signature_on_file;
+	        ?></td>
+	    </tr>
+	</table>
+	<table class="formInput">
+	    <tr>
+	        <td style="white-space: nowrap;"><?php echo $this->element->consent_date; ?></td>
+	
+	    </tr>
+	</table>
+    <?php
+}
+
+echo $this->additionalResources('formSectionHead');
+
+
+

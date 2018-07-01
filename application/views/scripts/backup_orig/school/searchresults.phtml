@@ -1,0 +1,23 @@
+<?= $this->searchForm ?>
+
+<?php if (count($this->results) < 1) { ?>
+    
+    <div>No results matched your search</div>
+
+<?php } else { ?>
+    <div><?= count($this->results).' results' ?></div>
+    <table border="1">
+    <tr>
+        <td>Name School</td>
+        <td>View</td>
+        <td>Edit</td>
+    </tr>
+    <?php foreach ($this->results as $k => $r) { ?>
+        <tr>
+            <td><?= $r['name_school'] ?></td>
+            <td><a href="/school/view/id_county/<?= $r['id_county']; ?>/id_district/<?= $r['id_district']; ?>/id_school/<?= $r['id_school']; ?>">View</a></td>
+            <td><a href="/school/edit/id_county/<?= $r['id_county']; ?>/id_district/<?= $r['id_district']; ?>/id_school/<?= $r['id_school']; ?>">Edit</a></td>
+        </tr>
+    <?php } ?>
+    </table>
+<?php } ?>

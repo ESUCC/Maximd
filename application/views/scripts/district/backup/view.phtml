@@ -1,0 +1,232 @@
+
+
+<?php
+$this->title = "Edit Districts";
+$this->headTitle($this->title);
+?>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#srs_mainPane').css('margin-left', "10px");
+    });
+</script>
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php } ?>
+
+    <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance();  ?>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+
+    <table style=";" align="left" border="0">
+        <tr>
+            <td colspan="2" class="btsBig" align="center"><b>Welcome to the new SRS home page.</b><br><br>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" valign="top">
+                <table border="0" style="width:450px;">
+                    <?
+                    echo "<tr><td colspan=\"2\" class=\"btbRed\" >";
+                    // ADDED MESSAGE FOR NEW PRIVILAGE 030324-JL
+                    // ===========================================
+                    if(isset($option) && $option == 4) echo "To apply for a new privilege, select Edit Profile, then New Privilege.";
+                    // ===========================================
+                    echo "</tr></TD>";
+                    ?>
+                    <tr class="bgDark"><td align="center" nowrap="nowrap" style="height:19; width:10px;" colspan="2" class="menuTextBig"><B>Announcement Center</B></td><tr>
+                    <tr class="bgLGrey">
+                        <td align="center" nowrap="nowrap" style="height:19; width:1px;"><a href="/home/message-center" class="menuTextLinkBig" style="text-decoration:underline;"  >View Message Archive</a></td>
+                        <td align="center" nowrap="nowrap" style="height:19; width:1px;"><a href="/home/message-center" class="menuTextLinkBig" style="text-decoration:underline;"  >Search Message Archive</a></td>
+                    </tr>
+                    <tr class="btGrey"><td colspan="2" class="bts">Messages below were created in the last week or are required to stay posted. Click 'View Message Archive' to see all messages. Click 'Search Message Archive' to search all messages. </td></tr>
+                    <tr class="btGrey"><td colspan="2" class="bts"><img src='images/line_grey.gif' height=3 width='50%'></td></tr>
+                    <tr>
+                        <?
+                        if (isset($numRows) && $numRows) {
+                            for ($i = 0; $i < $numRows; $i++) {
+                                $arrData = pg_fetch_array($result, $i);
+                                if ($arrData['msg_type'] == "Warning") {
+                                    $cssClass = "btsbRed";
+                                } else {
+                                    $cssClass = "bts";
+                                }
+                                if($arrData['msg_type'] == "Announcement") {
+                                    $viewLink = " | <a href=\"srs.php?&area=home&sub=announcements&msgID=".$arrData['id_messages']."\"";
+                                    $viewLink .= windowStatus('View this announcement');
+                                    $viewLink .= ">View</a>";
+                                } else {
+                                    $viewLink = "&nbsp;";
+                                }
+                                echo "<tr><td class=\"$cssClass\" style=\"padding-left:{$padding}px;\"$arrNowrap[$j]>" . htmlEncode($arrData['msg_type']) . "</td><td class=\"$cssClass\" align=\"right\">".htmlEncode($arrData['create_date']).$viewLink."</tr>\n";
+                                echo "<tr><td class=\"$cssClass\" style=\"padding-left:{$padding}px;\"$arrNowrap[$j] colspan=\"2\">\t" . htmlEncode($arrData['msg_title']) . "</td></tr>\n";
+                                if($arrData['msg_type'] == "Warning") {
+                                    echo "<TR><td colspan=\"3\" class=\"$cssClass\" style=\"padding-left:{$padding}px;\"$arrNowrap[$j] >" . htmlEncode($arrData['message_text']) . "</td></TR>\n";
+                                }
+                                echo "<tr>\n<td colspan=\"" . (count($arrFieldLabels) + 1) . "\"><img src='images/line_grey.gif' height=1 width='100%'></td>\n</tr>\n";
+                            }
+                        }
+                        ?>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" colspan="5" class="btsBig"><BR><BR><i>This site is best viewed with a browser resolution of 1024x768 or greater.</i>
+            </td>
+        </tr>
+    </table>
+
+
+ 
+
+
+
+<style>
+<
+style
+>
+}
+.OptionalFeatures {
+	text-align: center;
+	color: red;
+}
+
+#optional {
+	text-align: left;
+	color: blue;
+}
+
+#fieldset-DIST {
+	width: 420px;
+	background: #c9e5e5;
+	border: 2px solid green;
+	outline-style: solid;
+	outline-color: blue;
+	outline-width: thin;
+}
+
+#fieldset-DIST_SETTINGS {
+	width: 620px;
+	height: 575px;
+	background: #111111 no-repeat fixed center;
+}
+
+#fieldset-Transition {
+	border: 1px solid #666;
+	border-radius: 8px;
+	box-shadow: 0 0 15px #666;
+}
+
+fieldset {
+	border: 1px solid #999;
+	border-radius: 8px;
+	box-shadow: 0 0 10px #111;
+}
+</style>
+
+
+
+
+
+</style>
+
+<?php
+echo $this->current_date_and_time;
+?>
+<style type="text/css">
+#wrap {
+   width:1400px;
+   margin:0 auto;
+}
+#left_col {
+   float:left;
+   width:20px;
+}
+#right_col {
+   float:right;
+   width:900px;
+}
+</style>
+
+
+
+<div id="wrap">
+ <div id="left_col">
+<?php echo $this->form."</div>";?>
+
+ <div id="right_col"><table><tr> 
+<td><b><u>
+<a href =<?php echo $this->url(array('controller'=>'district','action'=>'view','fieldname'=>'name'));?>>Full Name</a>
+
+
+</td><td><b><u>Main Phone</b></td><td><b><u>Email Address</td><td><b><u>Street Address</td><td><b><u>City</td><td><b><u>Zip Code</td><td><b><u>
+
+<a href =<?php echo $this->url(array('controller'=>'district','action'=>'view','fieldname'=>'status'));?>>Status</a>
+
+</td>
+ <td><u><b>
+ <a href =<?php echo $this->url(array('controller'=>'district','action'=>'view','fieldname'=>'school'));?>>School</a>
+ 
+ 
+ </td></tr>
+<tr><br><td><br></td></tr>
+<?php 
+
+
+
+
+
+foreach ($this->paginator2 as $staffmembers) {
+    
+    $fullName=$staffmembers['name_first']. " ".$staffmembers['name_last'];
+    
+  ?> <tr><td> <a href="<?php echo $this->url(array('controller'=>'personnelm','action'=>'view','id_personnel'=>$staffmembers['id_personnel']),null,true,false);?>">
+    <?php echo $this->escape($fullName);?></a></td>
+   <?php 
+   
+   // echo "<td>".$staffmembers['name_first']." ".$staffmembers['name_last']."</td>";
+    
+    
+    
+   echo "<td>".$staffmembers['phone_work']. "</td>";
+   echo "<td>".$staffmembers['email_address']."</td>";
+   echo "<td>".$staffmembers['address_street1']."</td>";
+   echo "<td>".$staffmembers['address_city']."</td>";
+    echo "<td>".$staffmembers['address_zip']."</td>";
+    echo "<td>".$staffmembers['status']."</td>";
+    
+   foreach($this->nameOfSchool as $schoolName) {
+        if ($schoolName['id_school']== $staffmembers['id_school'])
+            echo "<td>".$schoolName['name_school']."</td>";
+    
+            
+            
+            
+            
+    } 
+   // echo "<td>".$staffmembers['id_personnel']."</td></tr>";
+  
+ 
+     
+}
+   
+?> </table><center><?php echo $this->paginationControl($this->paginator2,'sliding','sqlpaginator.phtml',array('route'=> 'district'));?></div>
+
+

@@ -1,0 +1,16 @@
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr>
+        <td colspan="2">
+            <?php if ($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+</table>
+
+<form method="post">
+    <?
+    echo $this->formSelect('reportTitle', '', null, $this->reportTitles);
+    echo $this->formSubmit('Submit', 'Submit');
+    ?>
+</form>

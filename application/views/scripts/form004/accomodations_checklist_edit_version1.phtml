@@ -1,0 +1,427 @@
+<? 
+	$rowNum = $this->element->rownumber->getValue(); 
+	$view = $this->element->rownumber->getView();
+?>
+<table class="formDesc">
+    <tr>
+        <td>
+            <span class="btsb">
+                <?php echo $this->translate('Accomodations Checklist'); ?>&nbsp;
+            </span>
+        </td>
+        <td class="p2424 noprint" align="right">
+            <div id="accomodations_checklist_hide_label" style="display:inline-block;"><?php echo $this->translate('Check to Show Accommodations Checklist'); ?></div>
+            <span class="btsb" style="display:inline-block;">
+                <?php echo $this->element->hide; ?>
+            </span>
+        </td>
+    </tr>
+</table>
+<!-- 
+<table>
+	<tr>
+	    <td align="right" >
+        	<div id="team_other_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+	</tr>
+</table>
+ -->
+<table width="100%" class="bts" id="accomodations_checklist_container" style="<?php if ($this->element->hide->getValue() === 't') { echo 'display:block;'; } else { echo 'display:none;'; } ?>">
+    <tr><td>
+        <center><b><?php echo $this->translate('CONFIDENTIAL'); ?></b><br />
+        <b><?php echo $this->translate('Teacher Report for Students Receiving'); ?></b><br />
+        <b><?php echo $this->translate('In Effect From '); ?> <?php echo $view->db_form_data['effect_from_date']; ?> to <?php echo $view->db_form_data['effect_to_date'];?></b>
+        <br /><br />
+        </center>
+        <b><?php echo $this->translate('Student'); ?>:</b> <?php echo $view->db_form_data['student_data']['name_first']; ?> <?php echo $view->db_form_data['student_data']['name_middle']; ?> <?php echo $view->db_form_data['student_data']['name_last']; ?> | <b>School:</b> <?php echo $view->db_form_data['student_data']['name_school']; ?> | 
+        <b><?php echo $this->translate('Grade'); ?>:</b> <?php echo $view->db_form_data['student_data']['grade']; ?> | <b><?php echo $this->translate('DOB'); ?>:</b> <?php echo $view->db_form_data['student_data']['dob']; ?><br />
+        <b><?php echo $this->translate('IEP Manager'); ?>:</b> <?php echo $view->db_form_data['name_case_mgr']; ?><br /><br />
+        <br /><br />
+        <?php echo $this->translate('Dear Teachers'); ?>:<br />
+        <?php echo $this->translate('This student'); ?>, <?php echo $view->db_form_data['student_data']['name_first']; ?> <?php echo $view->db_form_data['student_data']['name_middle']; ?> <?php echo $view->db_form_data['student_data']['name_last']; ?>, <?php echo $this->translate('is eligible to receive special education services'); ?>. 
+        <?php echo $this->translate('The following is a list of modifications'); ?>.<br /><br />
+        <b><u><?php echo $this->translate('Instructional Modification Accommodation'); ?></u> <?php echo $this->translate('necessary to advance student toward attaining annual goals and progress in the general curriculum')?>.</b><br />
+        <br />
+<!--        --><?php //echo $this->translate('Note: Modification/Accommodation are not limited to the items marked and may be reviewed as needed'); ?><!--.<br /><br />-->
+        <b><u><?php echo $this->translate('General Education Program Participation'); ?>:</u></b> <?php echo $this->translate('Indicate the appropriate subject area'); ?>.<br /><br />
+        </td>
+    </tr>
+
+	<?php if ('print' == $view->mode || 'view' == $view->mode) { 
+	echo '<TR><td valign="top"><div style="columns:2;">';
+	$itemArr = array(  'pacing_extended_time',
+														'pacing_allow_breaks',
+														'pacing_omit_assignments',
+														'pacing_school_texts',
+														'pacing_vary_activity',
+														'pacing_other',
+														'lessson_teacher_emph',
+														'lessson_sm_grp_inst',
+														'lessson_spec_curr',
+														'lessson_tape_lectures',
+														'lessson_utilize_manip',
+														'lessson_emph_info',
+														'lessson_preteach_voc',
+														'lessson_reduce_lang',
+														'lessson_sign_lang',
+														'lessson_total_comm',
+														'lessson_oral_intrepreter',
+														'lessson_present_demo',
+														'lessson_teacher_provides',
+														'lessson_functional_app',
+														'lessson_visual_sequences',
+														'lessson_make_use_voc',
+														'lessson_other',
+										                'env_pref_seating',
+										                'env_seat_near_teacher',
+										                'env_seat_near_role',
+										                'env_avoid_distr',
+										                'env_increase_distance',
+										                'env_planned_seating',
+										                'env_alter_physical_room',
+										                'env_define_areas',
+										                'env_reduce_distractions',
+										                'env_teach_pos_rules',
+										                'env_comp_tech_work',
+										                'env_other',
+										                'mat_taped_texts',
+										                'mat_highlighted_texts',
+										                'mat_use_supp_mats',
+										                'mat_note_taking',
+										                'mat_type_handwritten',
+										                'mat_arrangement',
+										                'mat_large_print',
+										                'mat_enlarge_notes',
+										                'mat_special_equip',
+										                'mat_other',
+										                'ass_give_directions',
+										                'ass_allow_copying',
+										                'ass_provide_oral_directions',
+										                'ass_lower_diff_level',
+										                'ass_shorten_assign',
+										                'ass_reduce_paper_tasks',
+										                'ass_read_directions',
+										                'ass_give_oral_cues',
+										                'ass_record_assignment',
+										                'ass_adapt_worksheet',
+										                'ass_provide_alternate',
+										                'ass_avoide_penalizing',
+										                'ass_redo_for_grade',
+										                'ass_allo_use_resource',
+										                'ass_provide_electronic',
+										                'ass_other',
+										                'soc_perr_tutoring',
+										                'mot_nonverbal',
+										                'mot_positive_reinforcement',
+										                'mot_concrete_reinforcement',
+										                'mot_offer_choice',
+										                'mot_use_strengths_often',
+										                'mot_allow_movement',
+										                'mot_increase_rewards',
+										                'mot_use_contracts',
+										                'mot_other',
+										                'soc_peer_advocacy',
+										                'soc_perr_tutoring',
+										                'soc_structure_activities',
+										                'soc_social_process',
+										                'soc_shared_experience',
+										                'soc_coop_learning_groups',
+										                'soc_multiple_peers',
+										                'soc_teach_friendship',
+										                'soc_teach_social_com',
+										                'soc_other',
+                                                        'self_man_pos_reinforcement',
+                                                        'self_man_con_reinforcement',
+                                                        'self_man_understand_review',
+                                                        'self_man_peer_tutoring',
+                                                        'self_man_req_par_reinforcement',
+                                                        'self_man_repeat_directions',
+                                                        'self_man_voc_files',
+                                                        'self_man_teach_study_skills',
+                                                        'self_man_study_sheets',
+                                                        'self_man_long_term_assign',
+                                                        'self_man_repeated_review',
+                                                        'self_man_behavior_manage',
+                                                        'self_man_daily_schedule',
+                                                        'self_man_assignment_book',
+                                                        'self_man_plan_general',
+                                                        'self_man_teach_skill_sev',
+                                                        'self_man_redo_assignment',
+                                                        'self_man_other',
+                                                        'testing_extended_time',
+                                                        'testing_oral',
+                                                        'testing_short_ans',
+                                                        'testing_taped',
+                                                        'testing_mult_choice',
+                                                        'testing_read_test',
+                                                        'testing_mod_format',
+                                                        'testing_shorten_length',
+                                                        'testing_sign_directions',
+                                                        'testing_prev_lang',
+                                                        'testing_sign_test',
+                                                        'testing_test_admin',
+                                                        'testing_check_understand',
+                                                        'testing_provide_visual',
+                                                        'testing_para_test',
+                                                        'testing_utilize_writing_sys',
+                                                        'testing_color_coded',
+                                                        'testing_retest_options',
+                                                        'testing_flash_cards',
+                                                        'testing_provide_study',
+                                                        'testing_word_bank',
+                                                        'testing_circle_items',
+                                                        'testing_correct_test',
+                                                        'testing_reteach_material',
+                                                        'testing_divide_test',
+                                                        'testing_use_more_objective',
+                                                        'testing_provide_reminders',
+                                                        'testing_allow_students',
+                                                        'testing_other',
+                                                        'writing_dictate_ideas',
+                                                        'writing_shorten_assignment',
+                                                        'writing_use_tape_recorder',
+                                                        'writing_allow_computer',
+                                                        'writing_visual_rep_ideas',
+                                                        'writing_provide_structure',
+                                                        'writing_allow_flow_chart',
+                                                        'writing_grade_content',
+                                                        'writing_other',
+                                                        'grade_pass_fail',
+                                                        'grade_attendance',
+                                                        'grade_regular_grading',
+                                                        'grade_commensurate_effort',
+                                                        'grade_modified_grading',
+                                                        'grade_oral_presentation',
+                                                        'grade_graded_on_skills',
+                                                        'grade_other',
+                                                        'asstech_supp_writ_device',
+                                                        'asstech_pro_writ_sw',
+                                                        'asstech_speech_gen',
+                                                        'asstech_aug_options',
+                                                        'asstech_physical_access',
+                                                        'asstech_enlarged_print',
+                                                        'asstech_braille',
+                                                        'asstech_aud_trainer',
+                                                        'asstech_other');
+	
+	if('view' == $view->mode) {
+		echo $this->viewAccChecklistSection($this, $itemArr);
+	} else {
+		echo $this->printAccChecklistSection($this, $itemArr);
+	}
+	
+    echo '</div>'; 
+?>
+<table>
+    <tr><td height="25" colspan="2"><b>Assistive Technology</b></td></tr>
+                <tr><td colspan="2"><?= $this->element->asstech_other_text; ?></td></tr>
+
+                <?php if('print' == $view->mode && '' == $this->element->other->getValue()) { ?>
+                
+                <?php } else { ?>
+                    <tr><td height="25" colspan="2"><b>Other </b></td></tr>
+                    <tr class="noprint"><td height="25" colspan="2"><b><?= $this->element->flag_subject_areas_entered; ?></b></td></tr>
+                    <tr><td colspan="2"><?= $this->element->other; ?></td></tr>
+                <?php } ?>
+
+                </table>
+    <?php } else { ?>
+	<tr><td>
+		<table>
+			<tr>
+			<td valign="top">
+			<table>
+				<tr><td height="25"><b><?php echo $this->translate('Pacing'); ?></b></td></tr>
+				<tr><td><?= $this->element->pacing_extended_time; ?></td></tr>
+				<tr><td><?= $this->element->pacing_allow_breaks; ?></td></tr>
+				<tr><td><?= $this->element->pacing_omit_assignments; ?></td></tr>
+				<tr><td><?= $this->element->pacing_school_texts; ?></td></tr>
+				<tr><td><?= $this->element->pacing_vary_activity; ?></td></tr>
+				<tr><td><?= $this->element->pacing_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Lesson Presentation'); ?></b></td></tr>
+				<tr><td><?= $this->element->lessson_teacher_emph; ?></td></tr>
+				<tr><td><?= $this->element->lessson_sm_grp_inst; ?></td></tr>
+				<tr><td><?= $this->element->lessson_spec_curr; ?></td></tr>
+				<tr><td><?= $this->element->lessson_tape_lectures; ?></td></tr>
+				<tr><td><?= $this->element->lessson_utilize_manip; ?></td></tr>
+				<tr><td><?= $this->element->lessson_emph_info; ?></td></tr>
+				<tr><td><?= $this->element->lessson_preteach_voc; ?></td></tr>
+				<tr><td><?= $this->element->lessson_reduce_lang; ?></td></tr>
+				<tr><td><?= $this->element->lessson_sign_lang; ?></td></tr>
+				<tr><td><?= $this->element->lessson_total_comm; ?></td></tr>
+				<tr><td><?= $this->element->lessson_oral_intrepreter; ?></td></tr>
+				<tr><td><?= $this->element->lessson_present_demo; ?></td></tr>
+				<tr><td><?= $this->element->lessson_teacher_provides; ?></td></tr>
+				<tr><td><?= $this->element->lessson_functional_app; ?></td></tr>
+				<tr><td><?= $this->element->lessson_visual_sequences; ?></td></tr>
+				<tr><td><?= $this->element->lessson_make_use_voc; ?></td></tr>
+				<tr><td><?= $this->element->lessson_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Environment'); ?></b></td></tr>
+				<tr><td><?= $this->element->env_pref_seating; ?></td></tr>
+				<tr><td><?= $this->element->env_seat_near_teacher; ?></td></tr>
+				<tr><td><?= $this->element->env_seat_near_role; ?></td></tr>
+				<tr><td><?= $this->element->env_avoid_distr; ?></td></tr>
+				<tr><td><?= $this->element->env_increase_distance; ?></td></tr>
+				<tr><td><?= $this->element->env_planned_seating; ?></td></tr>
+				<tr><td><?= $this->element->env_alter_physical_room; ?></td></tr>
+				<tr><td><?= $this->element->env_define_areas; ?></td></tr>
+				<tr><td><?= $this->element->env_reduce_distractions; ?></td></tr>
+				<tr><td><?= $this->element->env_teach_pos_rules; ?></td></tr>
+				<tr><td><?= $this->element->env_comp_tech_work; ?></td></tr>
+				<tr><td><?= $this->element->env_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Materials'); ?></b></td></tr>
+				<tr><td><?= $this->element->mat_taped_texts; ?></td></tr>
+				<tr><td><?= $this->element->mat_highlighted_texts; ?></td></tr>
+				<tr><td><?= $this->element->mat_use_supp_mats; ?></td></tr>
+				<tr><td><?= $this->element->mat_note_taking; ?></td></tr>
+				<tr><td><?= $this->element->mat_type_handwritten; ?></td></tr>
+				<tr><td><?= $this->element->mat_arrangement; ?></td></tr>
+				<tr><td><?= $this->element->mat_large_print; ?></td></tr>
+				<tr><td><?= $this->element->mat_enlarge_notes; ?></td></tr>
+				<tr><td><?= $this->element->mat_special_equip; ?></td></tr>
+				<tr><td><?= $this->element->mat_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Assignments'); ?></b></td></tr>
+				<tr><td><?= $this->element->ass_give_directions; ?></td></tr>
+				<tr><td><?= $this->element->ass_allow_copying; ?></td></tr>
+				<tr><td><?= $this->element->ass_provide_oral_directions; ?></td></tr>
+				<tr><td><?= $this->element->ass_lower_diff_level; ?></td></tr>
+				<tr><td><?= $this->element->ass_shorten_assign; ?></td></tr>
+				<tr><td><?= $this->element->ass_reduce_paper_tasks; ?></td></tr>
+				<tr><td><?= $this->element->ass_read_directions; ?></td></tr>
+				<tr><td><?= $this->element->ass_give_oral_cues; ?></td></tr>
+				<tr><td><?= $this->element->ass_record_assignment; ?></td></tr>
+				<tr><td><?= $this->element->ass_adapt_worksheet; ?></td></tr>
+				<tr><td><?= $this->element->ass_provide_alternate; ?></td></tr>
+				<tr><td><?= $this->element->ass_avoide_penalizing; ?></td></tr>
+				<tr><td><?= $this->element->ass_redo_for_grade; ?></td></tr>
+				<tr><td><?= $this->element->ass_allo_use_resource; ?></td></tr>
+				<tr><td><?= $this->element->ass_provide_electronic; ?></td></tr>
+				<tr><td><?= $this->element->ass_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Motivation Reinforcement'); ?></b></td></tr>
+				<tr><td><?= $this->element->soc_perr_tutoring; ?></td></tr>
+				<tr><td><?= $this->element->mot_nonverbal; ?></td></tr>
+				<tr><td><?= $this->element->mot_positive_reinforcement; ?></td></tr>
+				<tr><td><?= $this->element->mot_concrete_reinforcement; ?></td></tr>
+				<tr><td><?= $this->element->mot_offer_choice; ?></td></tr>
+				<tr><td><?= $this->element->mot_use_strengths_often; ?></td></tr>
+				<tr><td><?= $this->element->mot_allow_movement; ?></td></tr>
+				<tr><td><?= $this->element->mot_increase_rewards; ?></td></tr>
+				<tr><td><?= $this->element->mot_use_contracts; ?></td></tr>
+				<tr><td><?= $this->element->mot_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Social Interaction Support'); ?></b></td></tr>
+				<tr><td><?= $this->element->soc_peer_advocacy; ?></td></tr>
+				<tr><td><?= $this->element->soc_perr_tutoring; ?></td></tr>
+				<tr><td><?= $this->element->soc_structure_activities; ?></td></tr>
+				<tr><td><?= $this->element->soc_social_process; ?></td></tr>
+				<tr><td><?= $this->element->soc_shared_experience; ?></td></tr>
+				<tr><td><?= $this->element->soc_coop_learning_groups; ?></td></tr>
+				<tr><td><?= $this->element->soc_multiple_peers; ?></td></tr>
+				<tr><td><?= $this->element->soc_teach_friendship; ?></td></tr>
+				<tr><td><?= $this->element->soc_teach_social_com; ?></td></tr>
+				<tr><td><?= $this->element->soc_other; ?></td></tr>
+				<tr><td height="25"><b><?php echo $this->translate('Self Management Follow-through'); ?></b></td></tr>
+				<tr><td><?= $this->element->self_man_pos_reinforcement; ?></td></tr>
+				<tr><td><?= $this->element->self_man_con_reinforcement; ?></td></tr>
+				<tr><td><?= $this->element->self_man_understand_review; ?></td></tr>
+				<tr><td><?= $this->element->self_man_peer_tutoring; ?></td></tr>
+				<tr><td><?= $this->element->self_man_req_par_reinforcement; ?></td></tr>
+				<tr><td><?= $this->element->self_man_repeat_directions; ?></td></tr>
+				<tr><td><?= $this->element->self_man_voc_files; ?></td></tr>
+				<tr><td><?= $this->element->self_man_teach_study_skills; ?></td></tr>
+				<tr><td><?= $this->element->self_man_study_sheets; ?></td></tr>
+				<tr><td><?= $this->element->self_man_long_term_assign; ?></td></tr>
+				<tr><td><?= $this->element->self_man_repeated_review; ?></td></tr>
+				<tr><td><?= $this->element->self_man_behavior_manage; ?></td></tr>
+				<tr><td><?= $this->element->self_man_daily_schedule; ?></td></tr>
+				<tr><td><?= $this->element->self_man_assignment_book; ?></td></tr>
+				<tr><td><?= $this->element->self_man_plan_general; ?></td></tr>
+				<tr><td><?= $this->element->self_man_teach_skill_sev; ?></td></tr>
+				<tr><td><?= $this->element->self_man_redo_assignment; ?></td></tr>
+				<tr><td><?= $this->element->self_man_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Testing Accommodations'); ?></b></td></tr>
+				<tr><td><?= $this->element->testing_extended_time; ?></td></tr>
+				<tr><td><?= $this->element->testing_oral; ?></td></tr>
+				<tr><td><?= $this->element->testing_short_ans; ?></td></tr>
+				<tr><td><?= $this->element->testing_taped; ?></td></tr>
+				<tr><td><?= $this->element->testing_mult_choice; ?></td></tr>
+				<tr><td><?= $this->element->testing_read_test; ?></td></tr>
+				<tr><td><?= $this->element->testing_mod_format; ?></td></tr>
+				<tr><td><?= $this->element->testing_shorten_length; ?></td></tr>
+				<tr><td><?= $this->element->testing_sign_directions; ?></td></tr>
+				<tr><td><?= $this->element->testing_prev_lang; ?></td></tr>
+				<tr><td><?= $this->element->testing_sign_test; ?></td></tr>
+				<tr><td><?= $this->element->testing_test_admin; ?></td></tr>
+				<tr><td><?= $this->element->testing_check_understand; ?></td></tr>
+				<tr><td><?= $this->element->testing_provide_visual; ?></td></tr>
+				<tr><td><?= $this->element->testing_para_test; ?></td></tr>
+				<tr><td><?= $this->element->testing_utilize_writing_sys; ?></td></tr>
+				<tr><td><?= $this->element->testing_color_coded; ?></td></tr>
+				<tr><td><?= $this->element->testing_retest_options; ?></td></tr>
+				<tr><td><?= $this->element->testing_flash_cards; ?></td></tr>
+				<tr><td><?= $this->element->testing_provide_study; ?></td></tr>
+				<tr><td><?= $this->element->testing_word_bank; ?></td></tr>
+				<tr><td><?= $this->element->testing_circle_items; ?></td></tr>
+				<tr><td><?= $this->element->testing_correct_test; ?></td></tr>
+				<tr><td><?= $this->element->testing_reteach_material; ?></td></tr>
+				<tr><td><?= $this->element->testing_divide_test; ?></td></tr>
+				<tr><td><?= $this->element->testing_use_more_objective; ?></td></tr>
+				<tr><td><?= $this->element->testing_provide_reminders; ?></td></tr>
+				<tr><td><?= $this->element->testing_allow_students; ?></td></tr>
+				<tr><td><?= $this->element->testing_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Writing Accommodations'); ?></b></td></tr>
+				<tr><td><?= $this->element->writing_dictate_ideas; ?></td></tr>
+				<tr><td><?= $this->element->writing_shorten_assignment; ?></td></tr>
+				<tr><td><?= $this->element->writing_use_tape_recorder; ?></td></tr>
+				<tr><td><?= $this->element->writing_allow_computer; ?></td></tr>
+				<tr><td><?= $this->element->writing_visual_rep_ideas; ?></td></tr>
+				<tr><td><?= $this->element->writing_provide_structure; ?></td></tr>
+				<tr><td><?= $this->element->writing_allow_flow_chart; ?></td></tr>
+				<tr><td><?= $this->element->writing_grade_content; ?></td></tr>
+				<tr><td><?= $this->element->writing_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Grading  Reporting Progress'); ?></b></td></tr>
+				<tr><td><?= $this->element->grade_pass_fail; ?></td></tr>
+				<tr><td><?= $this->element->grade_attendance; ?></td></tr>
+				<tr><td><?= $this->element->grade_regular_grading; ?></td></tr>
+				<tr><td><?= $this->element->grade_commensurate_effort; ?></td></tr>
+				<tr><td><?= $this->element->grade_modified_grading; ?></td></tr>
+				<tr><td><?= $this->element->grade_oral_presentation; ?></td></tr>
+				<tr><td><?= $this->element->grade_graded_on_skills; ?></td></tr>
+				<tr><td><?= $this->element->grade_other; ?></td></tr>
+				
+				<tr><td height="25"><b><?php echo $this->translate('Other Assistive Technologies'); ?></b></td></tr>
+				<tr><td><?= $this->element->asstech_supp_writ_device; ?></td></tr>
+				<tr><td><?= $this->element->asstech_pro_writ_sw; ?></td></tr>
+				<tr><td><?= $this->element->asstech_speech_gen; ?></td></tr>
+				<tr><td><?= $this->element->asstech_aug_options; ?></td></tr>
+				<tr><td><?= $this->element->asstech_physical_access; ?></td></tr>
+				<tr><td><?= $this->element->asstech_enlarged_print; ?></td></tr>
+				<tr><td><?= $this->element->asstech_braille; ?></td></tr>
+				<tr><td><?= $this->element->asstech_aud_trainer; ?></td></tr>
+				<tr><td><?= $this->element->asstech_other; ?></td></tr>
+				
+				<tr><td height="25" colspan="2"><b><?php echo $this->translate('Assistive Technology'); ?></b></td></tr>
+				<tr><td colspan="2"><?= $this->element->asstech_other_text; ?></td></tr>
+				
+				<tr><td height="25" colspan="2"><b><?php echo $this->translate('Other'); ?> </b></td></tr>
+				<tr><td height="25" colspan="2"><b><?= $this->element->flag_subject_areas_entered; ?></b></td></tr>
+				<tr><td colspan="2"><?= $this->element->other; ?></td></tr>
+				
+				</table>
+			</td>
+			</tr>
+		</table>
+    </td></tr>
+<?php } ?> 
+<? echo $this->element->id_accom_checklist; ?>
+</table>

@@ -1,0 +1,17 @@
+/* IE Style Sheet */
+
+#viewMode {
+	/* override for ie */
+	margin-top:40px;
+	margin-left:35px;
+
+	width:50px;
+	height:340px;
+}
+
+
+#srs_left .subBar_top_view {
+	/*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top;*/
+	height:31px;
+	padding-bottom:320px;
+	}

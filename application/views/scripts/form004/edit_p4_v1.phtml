@@ -1,0 +1,25 @@
+<?php $this->headScript()->appendFile('/js/radioHelper.js'); ?>
+<?php $this->headScript()->appendFile('/js/tabHelper.js'); ?>
+
+<?php
+$view = $this->element->page->getView();
+
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+echo $this->element->dob;
+
+// required for restore dates from schedule
+// field is hidden - remove the colorme decorator so it doesn't error red
+$this->element->date_conference->removeDecorator('colorme');
+echo $this->element->date_conference;
+
+// currently used by JS function to populate elements
+//Zend_Debug::dump($view->db_form_data['student_data']);
+foreach($view->db_form_data['student_data']['schoolReportDates'] as $k => $d) {
+	echo '<input type="hidden" name="schRptDate_'.($k+1).'" id="schRptDate_'.($k+1).'" value="'.$d.'" />';
+}
+
+echo $this->element->id_form_004;
+echo $this->element->page;
+// echo $this->subformTab($view, 'iep_form_004_goal', ('print' == $this->mode)?false:true, "Goal");
+echo $this->jqueryTab($view, 'iep_form_004_goal', ('print' == $this->mode)?false:true, "Goal");

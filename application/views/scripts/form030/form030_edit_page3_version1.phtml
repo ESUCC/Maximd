@@ -1,0 +1,82 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_030; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>IFSP Meeting Response Form</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td style="white-space: nowrap;">Child's Name:<span class="btsb"><?php echo $view->db_form_data['student_data']['name_student']; ?></span></td>
+        <td style="white-space: nowrap;"><?php echo $this->element->date_sent; ?></td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:0px;">
+    <tr>
+        <td style="width:15px"><?php echo $this->element->attend; ?>&nbsp;</td>
+    </tr>
+    
+</table>
+<table class="formInput" style="margin-top:0px;">
+    <tr>
+        <td colspan="2"><?php echo $this->element->schedule_meeting; ?></td>
+    </tr>
+</table>    
+<table class="formInput" style="margin-top:0px;">
+    <tr>
+        <td colspan="2">I have been fully informed of all information relevant to the proposed meeting and I understand the purpose of the meeting. I have also been provided a copy of my parental rights and procedural safeguards.</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+	    <tr>
+	        <td width="100" valign="bottom" style="height:25px;white-space: nowrap;"><?php echo $this->translate('Parent Signature'); ?>:</td>
+	        <td width="250px" align="left" valign="bottom" style="white-space: nowrap;">
+	        <?php 
+	        if('print' == $view->mode) {
+	            echo '<hr size="1" />'; 
+	        } else {
+	            echo '<img src="/images/line_black.gif" width="250px" height="1px" border="0">&nbsp;&nbsp;';
+	        }
+	        ?></td>
+	        <td  style="white-space: nowrap;">
+	        <?php 
+	        if('t' != $this->element->signature_on_file->getValue() && 'print' == $view->mode) {
+	        } else {
+	            echo $this->element->signature_on_file;
+	        }
+	        ?></td>
+	    </tr>
+	</table>
+<table class="formInput">
+    <tr>
+        <td colspan="2" style="white-space: nowrap;"><?php echo $view->DateOrUnderline($view, $this->element->parent_date_1); ?></td>
+        <td style="width:100%;white-space: nowrap;">&nbsp;</td>
+    </tr>
+</table>
+
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Please sign and date this form and return it to:</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td style="width:100%;"><?php echo $this->element->school_contact; ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->response_address; ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->city_state_zip; ?></td>
+    </tr>
+    <tr>
+        <td><?php echo $this->element->school_phone; ?></td>
+    </tr>
+</table>

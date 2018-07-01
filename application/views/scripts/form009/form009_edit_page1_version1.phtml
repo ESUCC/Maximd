@@ -1,0 +1,82 @@
+<?php 
+   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+   	
+	// get the view into a variable
+	$view = $this->element->page->getView();
+?>
+<?= $this->element->id_form_009; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr class="noprint">
+        <td><b>Notice of Discontinuation of Special Education Services</b></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">  
+   <tr class="noprint">
+      <td><blockquote>
+        <div id="date_notice-colorme" class="colorme">
+        <?php echo $this->element->date_notice; ?>
+      </blockquote>  </div>
+      </td>
+   </tr>
+   <tr>
+        <td>
+            <div id="dates_wrapper-colorme" class="colorme"> <b><h2>
+        	 After a careful review of the educational program for your child, the <?php echo $view->db_form_data['name_district']; ?> proposes to discontinue special education services for your child.
+            </b></h2>
+            <?php if ('print' == $view->mode) { ?>
+          
+            <?php } ?>
+	    </div><b>
+        	<p class="printBoldLabel">1: The proposed discontinuation of special education services is based on:</b></p><blockquote>
+        	 <?php echo $this->element->describe_discontinue; ?>
+            <?php if ('print' == $view->mode) { ?></b></blockquote>
+           <br />           
+            <?php } ?>
+        </td>
+    </tr>    
+    <tr>
+		<td><b>
+			<p class="printBoldLabel">2: The school district considered the following option(s) prior to reaching the 
+			decision to discontinue services, and rejected those option(s) because:</b></p>
+			<blockquote><?php echo $this->element->rejected_options; ?>
+            <?php if ('print' == $view->mode) { ?></blockquote>
+            <br />            
+            <?php } ?>
+		</td>
+    </tr>
+    <tr>
+		<td><b>
+			<p class="printBoldLabel">3: The proposed discontinuation of special education services is based upon the 
+			following evaluation procedures, tests, records, or reports:</p><blockquote>
+		<?php echo $this->element->basis; ?>
+            <?php if ('print' == $view->mode) { ?></blockquote>
+            <br />            
+            <?php } ?>
+		</td>
+	</tr>
+	<tr>
+		<td><b>
+			<p class="printBoldLabel">4: Other factors which are relevant to the school district's proposal, if any, are:</p>
+			<blockquote><?php echo $this->element->other_factors; ?>	
+            <?php if ('print' == $view->mode) { ?>
+            </b></blockquote><br />            
+            <?php } ?>
+		</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td colspan="2"><b>
+		Parents of children with disabilities have rights which are protected under the procedural safeguards of the Individual with Disabilities Education Act (IDEA). If you would like a copy of your procedural safeguards, or if you have any questions regarding this notice or your rights, you may contact:
+		</td>
+    </tr>
+    <tr>
+		<td><?php echo $this->element->contact_name; ?></td>
+		<td><?php echo $this->element->contact_num; ?></td>
+    </tr></b>
+</table> 
+<b><i>
+<?php echo $this->additionalResources(); ?>

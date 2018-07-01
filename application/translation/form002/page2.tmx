@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="assessment was not conducted">
+           <tuv xml:lang="es"><seg>Si la evaluaci&#xF3;n no se llev&#xF3; a cabo de acuerdo con las condiciones est&#xE1;ndares, d&#xE9; una descripci&#xF3;n de la medida en que la evaluaci&#xF3;n vari&#xF3; de las condiciones est&#xE1;ndares. </seg></tuv>
+           <tuv xml:lang="en"><seg>If the assessment was not conducted under standard conditions, state the description of the extent to which the assessment varied from standard conditions.</seg></tuv>
+       </tu>
+       <tu tuid="Check all that apply to this MDT Report">
+           <tuv xml:lang="es"><seg>Seleccione todas las que apliquen a este reporte MDT (de equipo multidisciplinario)</seg></tuv>
+           <tuv xml:lang="en"><seg>Check all that apply to this MDT Report</seg></tuv>
+       </tu>
+       <tu tuid="interpreting evaluation data">
+           <tuv xml:lang="es"><seg>Al interpretar datos con el fin de determinar si el ni&#xF1;o/a tiene una discapacidad y determinar sus  necesidades de aprendizaje, el distrito escolar o la cooperativa aprobada</seg></tuv>
+           <tuv xml:lang="en"><seg>In interpreting evaluation data for the purpose of determining if a child is a child with a disability and the educational needs of the child, the school district or approved cooperative</seg></tuv>
+       </tu>
+       <tu tuid="If the assessment was not conducted under standard conditions, state the description of the extent to which the assessment varied from standard conditions.">
+           <tuv xml:lang="es"><seg>Si la evaluaci&#xF3;n no se llev&#xF3; a cabo de acuerdo con las condiciones est&#xE1;ndares, d&#xE9; una descripci&#xF3;n de la medida en que la evaluaci&#xF3;n vari&#xF3; de las condiciones est&#xE1;ndares. </seg></tuv>
+           <tuv xml:lang="en"><seg>If the assessment was not conducted under standard conditions, state the description of the extent to which the assessment varied from standard conditions.</seg></tuv>
+       </tu>
+       <tu tuid="The assessments are administered by trained and knowledgeable personnel in accordance with any instructions provided by the producer of the assessments.">
+           <tuv xml:lang="es"><seg>Las evaluaciones son administradas por personal capacitado y bien informado de acuerdo con todas las instrucciones proporcionadas por los creadores de las evaluaciones. </seg></tuv>
+           <tuv xml:lang="en"><seg>The assessments are administered by trained and knowledgeable personnel in accordance with any instructions provided by the producer of the assessments.</seg></tuv>
+       </tu>
+       <tu tuid="Assessments and other evaluation materials were used for purposes for which the assessments or measures are valid and reliable.">
+           <tuv xml:lang="es"><seg>Las  evaluaciones y todas los materiales para las valoraciones fueron usados como corresponde para que las evaluaciones  o medidas sean v&#xE1;lidas.</seg></tuv>
+           <tuv xml:lang="en"><seg>Assessments and other evaluation materials were used for purposes for which the assessments or measures are valid and reliable.</seg></tuv>
+       </tu>
+       <tu tuid="Tests and other evaluation materials included those tailored to assess specific areas of educational need and not merely those that are designed to provide a single general intelligence quotient.">
+           <tuv xml:lang="es"><seg>Los ex&#xE1;menes y dem&#xE1;s materiales de evaluaci&#xF3;n incluyeron aquellos que fueron dise&#xF1;ados para evaluar &#xE1;reas espec&#xED;ficas de necesidades de aprendizaje y no solamente aquellos que est&#xE1;n creados para proporcionar un coeficiente general de inteligencia. </seg></tuv>
+           <tuv xml:lang="en"><seg>Tests and other evaluation materials included those tailored to assess specific areas of educational need and not merely those that are designed to provide a single general intelligence quotient.</seg></tuv>
+       </tu>
+       <tu tuid="Tests were selected and administered so as best to insure that if a test is administered to a child with impaired sensory, manual, or speaking skills, the test results accurately reflect the child's aptitude or achievement level or whatever other factors the test purports to measure, rather than reflecting the child's impaired sensory, manual, or speaking skills (unless those skills are the factors that the test purports to measure).">
+           <tuv xml:lang="es"><seg>Los ex&#xE1;menes fueron seleccionados y administrados de tal forma que asegurasen que si la prueba fuese administrada a un ni&#xF1;o/a con deficiencias sensoriales, manuales o del habla, los resultados reflejar&#xED;an de forma correcta la aptitud o nivel de rendimiento, o cualquiera que fuesen los factores que el examen estuviese dise&#xF1;ado para medir, m&#xE1;s no reflejar las deficiencias de las destrezas sensoriales, manuales o del habla ( a menos que dichas habilidades fuesen los factores que el examen estuviese destinado a medir).</seg></tuv>
+           <tuv xml:lang="en"><seg>Tests were selected and administered so as best to insure that if a test is administered to a child with impaired sensory, manual, or speaking skills, the test results accurately reflect the child's aptitude or achievement level or whatever other factors the test purports to measure, rather than reflecting the child's impaired sensory, manual, or speaking skills (unless those skills are the factors that the test purports to measure).</seg></tuv>
+       </tu>
+       <tu tuid="No single measure or assessment was used as the sole criterion for determining whether a child is a child with a disability and for determining an appropriate educational program for the child.">
+           <tuv xml:lang="es"><seg>No se utiliz&#xF3; tan s&#xF3;lo una medida o evaluaci&#xF3;n como criterio &#xFA;nico para determinar si un ni&#xF1;o/a tiene una discapacidad y determinar un programa de educaci&#xF3;n apropiado para &#xE9;l/ella. </seg></tuv>
+           <tuv xml:lang="en"><seg>No single measure or assessment was used as the sole criterion for determining whether a child is a child with a disability and for determining an appropriate educational program for the child.</seg></tuv>
+       </tu>
+       <tu tuid="The child was assessed in all areas related to the suspected disability, including if appropriate, health, vision, hearing, social and emotional status, general intelligence, academic performance, communicative status, and motor abilities.">
+           <tuv xml:lang="es"><seg>El ni&#xF1;o/a fue evaluado en todas la &#xE1;reas relacionadas con la discapacidad que se sospecha podr&#xED;a tener, incluyendo de ser apropiado: salud, visi&#xF3;n, audici&#xF3;n, estado social y emocional, inteligencia general, rendimiento acad&#xE9;mico, estado comunicativo y habilidades motrices. </seg></tuv>
+           <tuv xml:lang="en"><seg>The child was assessed in all areas related to the suspected disability, including if appropriate, health, vision, hearing, social and emotional status, general intelligence, academic performance, communicative status, and motor abilities.</seg></tuv>
+       </tu>
+       <tu tuid="The evaluation was sufficiently comprehensive to identify all of the child's special education and related services needs, whether or not commonly linked to the disability category in which the child has been classified.">
+           <tuv xml:lang="es"><seg>La evaluaci&#xF3;n fue lo suficientemente exhaustiva para identificar todas las necesidades de educaci&#xF3;n especial y relacionadas del ni&#xF1;o/a, ya sea que est&#xE9;n o no generalmente vinculadas a la categor&#xED;a de la discapacidad en la que el ni&#xF1;o/a ha sido clasificado. </seg></tuv>
+           <tuv xml:lang="en"><seg>The evaluation was sufficiently comprehensive to identify all of the child's special education and related services needs, whether or not commonly linked to the disability category in which the child has been classified.</seg></tuv>
+       </tu>
+       <tu tuid="The team used technically sound instruments to assess the relative contribution of cognitive and behavioral factors in addition to physical or development factors.">
+           <tuv xml:lang="es"><seg>El equipo utiliz&#xF3; herramientas t&#xE9;cnicamente apropiadas para evaluar la contribuci&#xF3;n relativa de factores conductuales y cognitivos adem&#xE1;s de los factores f&#xED;sicos y de desarrollo. </seg></tuv>
+           <tuv xml:lang="en"><seg>The team used technically sound instruments to assess the relative contribution of cognitive and behavioral factors in addition to physical or development factors.</seg></tuv>
+       </tu>
+       <tu tuid="The team used assessment tools and strategies that provide relevant information that directly assists persons in determining the educational needs of the child.">
+           <tuv xml:lang="es"><seg>El equipo utiliz&#xF3; herramientas de evaluaci&#xF3;n y estrategias que proporcionan informaci&#xF3;n relevante que ayuda de forma directa a que las personas determinen las necesidades de aprendizaje del ni&#xF1;o/a. </seg></tuv>
+           <tuv xml:lang="en"><seg>The team used assessment tools and strategies that provide relevant information that directly assists persons in determining the educational needs of the child.</seg></tuv>
+       </tu>
+       <tu tuid="Drew upon information from a variety of sources, including aptitude and achievement tests, parent input, teacher recommendations, physical condition, social or cultural background, and adaptive behavior;">
+           <tuv xml:lang="es"><seg>Se adquiri&#xF3; informaci&#xF3;n de una variedad de fuentes, incluyendo pruebas de aptitud y logro, aportaciones de los padres de familia, recomendaciones de los maestros, condiciones f&#xED;sicas, entorno social y cultural y comportamiento adaptivo. </seg></tuv>
+           <tuv xml:lang="en"><seg>Drew upon information from a variety of sources, including aptitude and achievement tests, parent input, teacher recommendations, physical condition, social or cultural background, and adaptive behavior;</seg></tuv>
+       </tu>
+       <tu tuid="The information obtained from all of these sources was documented and carefully considered.">
+           <tuv xml:lang="es"><seg>La informaci&#xF3;n que se obtuvo de todas estas fuentes fue documentada y considerada detenidamente.</seg></tuv>
+           <tuv xml:lang="en"><seg>The information obtained from all of these sources was documented and carefully considered.</seg></tuv>
+       </tu>
+       <tu tuid="In making a determination of eligibility, a child shall not be determined to be a child with a disability if the determining factor is lack of appropriate instruction in reading, lack of instruction in math, or limited English proficiency.">
+           <tuv xml:lang="es"><seg>Cuando se determina la elegibilidad, no se puede determinar que  un ni&#xF1;o/a tiene una discapacidad, si el factor decisivo es la falta de instrucci&#xF3;n apropiada en lectura, deficiencia en la instrucci&#xF3;n de matem&#xE1;ticas o debido a un dominio limitado del ingl&#xE9;s. </seg></tuv>
+           <tuv xml:lang="en"><seg>In making a determination of eligibility, a child shall not be determined to be a child with a disability if the determining factor is lack of appropriate instruction in reading, lack of instruction in math, or limited English proficiency.</seg></tuv>
+       </tu>
+       <tu tuid="and">
+           <tuv xml:lang="es"><seg>y</seg></tuv>
+           <tuv xml:lang="en"><seg>and</seg></tuv>
+       </tu>
+   </body>
+</tmx>

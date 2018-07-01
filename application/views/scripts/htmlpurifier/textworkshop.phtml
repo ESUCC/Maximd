@@ -1,0 +1,20 @@
+<form action="/Htmlpurifier/textworkshop" name="input" method="post">
+<table>
+	<tr>
+		<td><input type="submit" value="Submit"></td>
+		<td><input type="hidden" name="submitted" id="submitted" value="1"></td>
+	</tr>
+	<tr>
+		<td style="width:50%"><?= $this->form->paste_in?></td>
+		<td style="width:50%"><?= $this->filterForm->processed?></td>
+	</tr>
+	<tr>
+		<td><?= $this->form->paste_html?></td>
+		<td><?= $this->filterForm->processed_html?></td>
+	</tr>
+</table>
+</form>
+<BR /><BR /><BR /><BR />
+<span class="wordPasteStyle" id="finaldisplay"><?= $this->filterForm->processed_html->getValue()?></span>
+<span id="finaldisplayHtml"><? //Zend_Debug::dump($this->filterForm->processed_html->getValue()); ?></span>
+

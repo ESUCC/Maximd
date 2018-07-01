@@ -1,0 +1,110 @@
+<? 
+	$rowNum = $this->element->rownumber->getValue(); 
+	$view = $this->element->rownumber->getView();
+	$subformIdentifier = $this->element->subformIdentifier->getValue();
+//	$currentSubform = $view->form->getSubform($subformIdentifier);
+?>
+<?= $this->element->id_form_032_agency_representitive; ?>
+
+<table width="100%" border="0" class="bts">
+    <tbody>
+	<tr>
+	    <td class="noprint" style="padding-right:20px;" align="right" >
+        	<div id="outside_agency_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+	</tr>
+	</tbody>
+</table>
+
+<table>
+    <tr class="tanHead">
+        <td>
+            Agency                
+        </td>
+        <td>
+            Consent to invite
+        </td>
+        <td>
+        	Consent to release
+        </td>
+        <?php if ($view->mode == 'print') { ?>
+        <td valign="top">
+            Consent to release
+        </td>
+        <?php } ?>
+    </tr>
+    <tr>
+        <td <?php if ($view->mode != 'print') { ?>width="30%"<?php } else { ?>width="30%" valign="top"<?php } ?>>
+            <div id="outside_agency_<?= $rowNum; ?>-representitive_name-colorme" class="colorme">
+            <?php echo $this->element->representitive_name;?>                
+            </div>
+        </td>
+        <td <?php if ($view->mode != 'print') { ?>width="20%"<?php } else { ?>width="15%" valign="top"<?php } ?>>
+            <div id="outside_agency_<?= $rowNum; ?>-consent_invite-colorme" class="colorme">
+            <?php echo $this->element->consent_invite;?>
+            </div>
+        </td>
+        <td <?php if ($view->mode != 'print') { ?>width="50%"<?php } else { ?>width="15%" valign="top"<?php } ?>>
+            <div id="outside_agency_<?= $rowNum; ?>-consent_release-colorme" class="colorme">
+			<?php echo $this->element->consent_release;?>
+			</div>
+        <?php if ($view->mode == 'print') { ?>
+        </td>
+        <td <?php if ($view->mode != 'print') { ?>width="40%" valign="top"<?php } ?>>
+        <?php } ?>
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_show-colorme" <?php if ($view->mode != 'print') { ?>style="display:<?php if ($this->element->consent_release->getValue() != 1) { echo 'none'; } else { echo 'block'; } ?>"<?php } ?>>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_all-colorme" class="colorme">
+            <?php echo $this->element->release_records_all;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_scholastic_grades-colorme" class="colorme">
+            <?php echo $this->element->release_records_scholastic_grades;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_psychological_evaluations-colorme" class="colorme">
+            <?php echo $this->element->release_records_psychological_evaluations;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_activity_records-colorme" class="colorme">
+            <?php echo $this->element->release_records_activity_records;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_discipline_records-colorme" class="colorme">
+            <?php echo $this->element->release_records_discipline_records;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_health_records-colorme" class="colorme">
+            <?php echo $this->element->release_records_health_records;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_standardized_test_scores-colorme" class="colorme">
+            <?php echo $this->element->release_records_standardized_test_scores;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_special_educational_records-colorme" class="colorme">
+            <?php echo $this->element->release_records_special_educational_records;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_other-colorme" class="colorme">
+            <?php echo $this->element->release_records_other;?>
+            </div>
+
+            <div id="outside_agency_<?= $rowNum; ?>-release_records_other_description-colorme" class="colorme">
+            <?php echo $this->element->release_records_other_description;?>
+            </div>
+
+        	</div>
+        </td>
+    </tr>
+</table>
+
+<table class="formInput">
+    <tr>
+        <td class="bt" style="padding-top:10px;" align="left" valign="middle" colspan="2">
+			<hr />
+        </td>
+    </tr>
+</table>

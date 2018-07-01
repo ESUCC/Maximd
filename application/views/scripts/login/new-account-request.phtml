@@ -1,0 +1,132 @@
+<?if (isset($_SESSION['user']['id_personnel'])){?>
+    <table class="navTopMenu">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<br>
+<?}?>
+
+<script type="text/javascript">
+
+    var descriptionsArr = {
+        2:'<span style="text-decoration:underline;font-weight:bold;">District Manager</span><br><span style="font-weight:bold;">Description</span>: One District Manager is authorized for each district that is active in the system. The District Manager is the single point of contact and the person responsible for all activity within their district. The District Manager can authorize Associate District Managers (ADM’s) that share the same level of privileges with the exception of being able to authorize other ADM\'s. The District Manager is also responsible for designating a single person (themselves or one of the ADM’s) that is responsible for approving new account requests that come from schools in their district.<br><span style="font-weight:bold;">Authorization</span>: The School District Superintendent, for each district that wishes to participate, must complete a District Request &amp; Authorization Form (<a href="/pdf/district_rqst_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) that designates the person that will be the District Manager for their district. Once this document is received, the System Administrator will approve the new account request for the District Manager that has been authorized. If the District Manager needs to be changed, the Superintendent must complete a District Authorization Change Form (<a href="/pdf/district_change_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) and send it to the System Administrator.<br><span style="font-weight:bold;">Note</span>: If you are going to be the District Manager for your school district, please proceed with this process. Your request will be sent to the System Administrator, then when your paperwork is received, your account will be enabled.',
+        3:'<span style="text-decoration:underline;font-weight:bold;">Associate District Manager (ADM)</span><br><span style="font-weight:bold;">Description</span>: Associate District Managers allow the duties of the District Manager to be delegated to other staff members at the district level. These people have privileges identical to the District Manager except as noted above. The District Manager determines their duties.<br><span style="font-weight:bold;">Authorization</span>: ADM’s are authorized by the District Manager for their district. Your request will be sent to this person for approval.',
+        4:'<span style="text-decoration:underline;font-weight:bold;">School Manager</span><br><span style="font-weight:bold;">Description</span>: One School Manager is authorized for each school that is active in the system. The School Manager is the single point of contact and the person responsible for all activity within their school. The School Manager can authorize Associate School Managers (ASM’s) that share the same level of privileges with the exception of being able to authorize other ASM\'s. The School Manager is also responsible for designating a single person (themselves or one of the ASM’s) that is responsible for approving new account requests that come from people in their school.<br><span style="font-weight:bold;">Authorization</span>: The Principal, for each school that wishes to participate, must complete a School Request &amp; Authorization Form (<a href="/pdf/school_rqst_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) that designates the person that will be the School Manager for their school. Once this document is received, the District Manager will approve the new account request for the School Manager that has been authorized. If the School Manager needs to be changed, the Principal must complete a School Authorization Change Form (<a href="/pdf/school_change_form.pdf" onmouseover="javascript:window.status=\'Download Form\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">click here to download</a>) and send it to the District Manager.<br><span style="font-weight:bold;">Note</span>: If you are going to be the School Manager for your school, please proceed with this process. Your request will be sent to the District Manager, then when your paperwork is received, your account will be enabled.',
+        5:'<span style="text-decoration:underline;font-weight:bold;">Associate School Manager (ASM)</span><br><span style="font-weight:bold;">Description</span>: Associate School Managers allow the duties of the School Manager to be delegated to other staff members at the school level. These people have privileges identical to the School Manager except as noted above. The School Manager determines their duties.<br><span style="font-weight:bold;">Authorization</span>: ASM’s are authorized by the School Manager for their school. Your request will be sent to this person for approval.',
+        6:'<span style="text-decoration:underline;font-weight:bold;">Case Manager</span><br><span style="font-weight:bold;">Description</span>: Case Managers are responsible for managing individual Student cases. Their duties include adding new Students as needed, preparing and completing the various forms, maintaining the Student’s team (Personnel that are allowed to view the Student’s records and add notes) and managing Parent access (they communicate user name and temporary passwords to Parents so they can access their child’s information online). The Case Manager can reset or disable Parent access if needed.<br><span style="font-weight:bold;">Authorization</span>: Case Managers are authorized by the School Manager for their school. When Case Managers add new Students, they become the Case Manager for that student by default. Case Managers cannot change the assignment of the Case Manager for a Student. Only a School Manager or ASM can do this.',
+        8:'<span style="text-decoration:underline;font-weight:bold;">Specialist/Consultant</span><br><span style="font-weight:bold;">Description</span>: Specialists/Consultants include all of the various people that work with students but are not employees of a district or school. These people may be psychologists, PT’s, OT’s, etc. and may work for more than one school or district. These people may work for an ESU and may be ESU consultants or directors. <br><span style="font-weight:bold;">Authorization</span>: Specialists/Consultants are authorized by the School Manager in individual schools that they apply to. When applying for a new account, Specialists/Consultants must have a school that will sponsor their application. This is the school that you will choose in step 3 of this process. Once your application is approved by the initial school, you will be able to request access from other schools that you work with.',
+        7:'<span style="text-decoration:underline;font-weight:bold;">School Staff/Teachers</span><br><span style="font-weight:bold;">Description</span>: School Staff are Teachers or other Staff Members that work with Students as members of the Student’s team. Anyone that works for the school and participates on Student teams is considered School Staff. School Staff members are given access to Student records when the Case Manager adds them to a Student’s team. These people will be expected to review the Student’s records and contribute their notes as appropriate (to Student goals regarding progress reporting for example).<br><span style="font-weight:bold;">Authorization</span>: School Staff are authorized by the School Manager for their school.',
+        10:'<div class="btb" style="text-decoration:underline;">Service Coordinator</div> <span style="font-weight:bold;">Description</span>: Services coordination is available for children aged birth through two and families of these children. The services coordinator assists families of infants or toddlers in identifying needs through coordination of formal and informal supports.  The services coordinator acts as a liaison between service providers and schools to empower the family in taking the role of ensuring their needs are met by the special education service delivery system.<br> <p>Schools are responsible for assigning privileges to services coordinators within the SRS.</p> <span style="font-weight:bold;">Authorization</span>: The SRS permits schools to give privileges to services coordinators. Services coordinators may apply to and be approved by a school manager for an account/privilege at that school. Services coordinators must be assigned by the case manager to gain access to the child\'s records at that school by first clicking the students tab, then accessing the \'Edit Student\' page for that child, and finally assigning them to the service coordinator field.  This level of access will allow the services coordinators to view, edit, and print (Birth through 2) forms and view logs for those forms. <p>An individual with a services coordinator privilege can be added to the student team.  The services coordinator will be limited to viewing (Birth through 2) forms, unless edit access is granted by the early childhood case manager.</p> <div class="indentNewActBldUnd">Early Intervention Case Manager (EICM) Access</div> <div class="indentFlow">The early intervention case manager access (EICM) has been created to allow services coordinators, case, school, and district managers the ability to create, edit, view, print, and finalize (Birth through 2) forms and view logs for those forms.  This access also permits the individual assigned as the EICM to add and remove team members for early intervention.</div><br> <div class="indentFlow">The EICM position allows for additional access above a service coordinator role.  Access may include creating and finalizing forms or editing of the student team. Both levels of access allow the ability to view the MDT.</div><br> <div class="indentFlow">School districts may elect to choose this option when the services coordinator will be the case manager for that birth through aged two child.  This is essentially the same role performed by a case manager for children aged three to twenty-one.</div>'
+    };
+
+    $(function () {
+
+        var currentradio = $("input[name='user_type']:checked")[0];
+
+        /**
+         * show/hide the next button based on radio
+         */
+        if(undefined!=currentradio) {
+            $('#submit').show();
+        }
+
+        /**
+         * attach function to update user description on change
+         */
+        $("input[name='user_type']").change(function (event) {
+            var newRadio = $("input[name='user_type']:checked")[0];
+            if (newRadio === currentradio)
+                return;
+
+            /* update user description */
+            if(undefined!=newRadio) {
+                $('#user_type_description').html(descriptionsArr[$(newRadio).val()]);
+            } else {
+                $('#user_type_description').html('');
+            }
+
+            /* display submit if radio has a value */
+            if(undefined==newRadio) {
+                $('#submit').hide();
+            } else {
+                $('#submit').show();
+            }
+        });
+
+        /**
+         * attach function to update user description on hover
+         */
+        $('.focusLink').add('.radio').hover(
+            function () {
+                /* update user description with hovered value */
+                hoveredRadioValue = $(this).parent().children('input').val();
+                $('#user_type_description').html(descriptionsArr[hoveredRadioValue]);
+            },
+            function () {
+                /* update user description with selected value */
+                var newRadio = $("input[name='user_type']:checked")[0];
+                if(undefined!=newRadio) {
+                    $('#user_type_description').html(descriptionsArr[$(newRadio).val()]);
+                } else {
+                    $('#user_type_description').html('');
+                }
+            }
+        );
+
+    });
+</script>
+<?
+if (isset($this->msg)) {
+    echo '<div class="btsRed">' . $this->msg . '</div>';
+}
+?>
+<form method="post">
+    <table style="width:800px;">
+        <tr>
+            <td colspan="2"><b>Step 1: What type of user are you?</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">Please read ALL of the following descriptions and select the user type
+                that best describes your role. Not all schools will use all levels. At a minimum,
+                each district must have a District Manager and each school must have a School Manager.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+    		<?if (isset($_SESSION['user']['id_personnel'])){?>
+		    <button name="cancel" id="cancel" type="button" alt="Cancel" title="Cancel" onclick="window.location='/home/'">Cancel</button>
+		<?} else {?>
+		    <?= $this->form->getElement('cancel') ?>
+		<?}?>
+                <?= $this->form->getElement('submit') ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="font-style: italic;">Note: Click or hover over the privilege levels to see a full description.</div>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 250px;">
+                <?= $this->form->getElement('user_type') ?>
+            </td>
+            <td>
+                <div id="user_type_description"></div>
+            </td>
+        </tr>
+    </table>
+</form>

@@ -1,0 +1,30 @@
+--
+-- Name: get_class_description(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE OR REPLACE FUNCTION get_class_description(integer) RETURNS text
+    AS $_$DECLARE
+        privClass alias for $1;
+        ret varchar;
+    BEGIN
+        raise notice 'privClass: %', $1;
+        SELECT INTO ret
+            CAST( CASE WHEN
+            privClass = 1 THEN 'System Administrator'
+            when privClass = 2 THEN 'District Manager'
+            when privClass = 3 THEN 'Assistant District Manager'
+            when privClass = 4 then 'School Manager'
+            when privClass = 5 then 'Assistant School Manager'
+            when privClass = 6 then 'Case Manager'
+            when privClass = 7 then 'School Staff'
+            when privClass = 8 then 'Specialist'
+            when privClass = 9 then 'Parent'
+            when privClass = 10 then 'Service Coordinator'
+            else 'Unknown'
+            END AS varchar);
+    RETURN ret;
+END$_$
+LANGUAGE plpgsql;
+
+--select get_class_description(1);
+--select get_class_description('1');

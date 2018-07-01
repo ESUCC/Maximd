@@ -1,0 +1,44 @@
+<?php
+$formatFields = array(
+    'id_student' => array('SRS Student ID', 'searchId'),
+    'name_full' => array('Name', 'searchName'),
+    'name_county' => array('County', 'searchCounty'),
+    'name_district' => array('District', 'searchDistrict'),
+    'name_school' => array('School', 'searchSchool'),
+    'role' => array('User Role', 'searchUserRole'),
+    'manager' => array('Case Manager', 'searchCaseMGR'),
+    'address' => array('Address', 'searchAddress'),
+    'phone' => array('Phone', 'searchPhone'),
+    'iep' => array('IEP/IFSP* Due Date', 'searchIEP'),
+    'mdt' => array('MDT/Det. Notice* Due Date', 'searchMDT'),
+    'primary_disability' => array('Primary Disability', 'searchMDT'),
+    'dob' => array('Date of Birth', 'searchMDT'),
+    'age' => array('Age', 'searchId'),
+);
+?>
+<?php if ($this->maxResultsExceeded) : ?>
+<div class="notice">Your search returned more than the maximum allowed result set of 2500.  Please add additional search fields to further narrow your search result set.</div>
+<?php endif; /* href="javascript:printResults */ ?>
+<div class="success">
+    <ul id="exportOptions">
+      
+        <li><a href="javascript:exportToCSV('<?php echo $this->key; ?>');">Export Results to CSV</a></li>
+   
+   
+    </ul>
+    Now showing <strong><?php echo (($this->page*25)-25)+1; ?></strong> to <strong><?php echo ($this->resultCount < ($this->page*25)) ? $this->resultCount : $this->page*25; ?></strong> of <strong><?php echo $this->resultCount; ?></strong> results.
+</div>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml', array('key' => $this->key)); ?>
+<ul id="searchPseudoTable" class="pseudoTable">
+    <li class="head">
+        <ul>
+            <?php foreach ($this->formatFields AS $field) :
+            if (!empty($field)) : ?>
+                <li class="<?php echo $formatFields[$field][1]; ?>"><?php if ($field != 'role') : ?><a href="javascript:runSearchCall('/student/search-student/page/1/sort/<?php echo $this->{$field.'Sort'}; ?><?php echo ('1' == $this->showAll) ? '/showAll/1' : ''; ?>');"><?php endif; ?><?php echo $formatFields[$field][0]; ?><?php echo $this->sortDirectionHelper($field, $this->{$field.'Sort'}); ?><?php if ('role' != $field) :?></a><?php endif; ?></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </li>
+    <?php echo $this->partialLoop('partials/student-search-results.phtml',$this->paginator->getCurrentItems()); ?>
+</ul>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml', array('key' => $this->key)); ?>

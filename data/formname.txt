@@ -1,0 +1,47 @@
+-- DROP FUNCTION formname( varchar ) cascade;
+CREATE OR REPLACE FUNCTION formname( varchar ) RETURNS varchar AS 'DECLARE
+    FORM_NUM          alias for $1;
+    
+BEGIN 
+
+
+   return CASE 
+		WHEN FORM_NUM=''001'' THEN ''Notice and Consent For Initial Evaluation''
+		WHEN FORM_NUM=''002'' THEN ''Multi-disciplinary Team Report''
+		WHEN FORM_NUM=''003'' THEN ''Notification of Individualized Education Program Meeting''
+		WHEN FORM_NUM=''004'' THEN ''Individualized Education Plan''
+		WHEN FORM_NUM=''005'' THEN ''Notice and Consent for Initial Placement''
+		WHEN FORM_NUM=''006'' THEN ''Notice of School District&rsquo;s Decision Regarding Requested Special Education Services''
+		WHEN FORM_NUM=''007'' THEN ''Notice and Consent for Reevaluation''
+		WHEN FORM_NUM=''008'' THEN ''Notice of Change of Placement''
+		WHEN FORM_NUM=''009'' THEN ''Notice of Discontinuation of Special Education Services''
+		WHEN FORM_NUM=''010'' THEN ''Progress Report''
+		WHEN FORM_NUM=''011'' THEN ''Notification of Multidisciplinary Team (MDT) Conference''
+		WHEN FORM_NUM=''012'' THEN ''Notice That No Additional Information Is Needed To Determine Continued Eligibility''
+		WHEN FORM_NUM=''013'' THEN ''IFSP''
+		WHEN FORM_NUM=''014'' THEN ''Notification of Individualized Family Service Plan''
+		WHEN FORM_NUM=''015'' THEN ''Notice and Consent For Initial Evaluation (IFSP)''
+		WHEN FORM_NUM=''016'' THEN ''Notice and Consent for Initial Placement (IFSP)''
+		WHEN FORM_NUM=''017'' THEN ''Note Page''
+		WHEN FORM_NUM=''018'' THEN ''Summary of Performance''
+		WHEN FORM_NUM=''019'' THEN ''Functional Assessment''
+		WHEN FORM_NUM=''020'' THEN ''Specialized Transportation''
+		WHEN FORM_NUM=''021'' THEN ''Assistive Technology Considerations''
+		WHEN FORM_NUM=''022'' THEN ''MDT Card''
+		WHEN FORM_NUM=''023'' THEN ''IEP/IFSP Card''
+		WHEN FORM_NUM=''024'' THEN ''Agency Consent Invitation''
+		WHEN FORM_NUM=''025'' THEN ''Notification Of Multidisciplinary Team Planning Meeting''
+		WHEN FORM_NUM=''026'' THEN ''Revocation of Consent for Special Education and Related Services''
+		WHEN FORM_NUM=''027'' THEN ''Notice and Consent for Early Intervention Initial Screening''
+		WHEN FORM_NUM=''028'' THEN ''Equitable Service Plan''
+		WHEN FORM_NUM=''029'' THEN ''Notice of Meeting''
+		WHEN FORM_NUM=''030'' THEN ''Notice of Equitable Service Meeting''
+		WHEN FORM_NUM=''031'' THEN ''Notice of Initial Evaluation and Child Assessment''
+		WHEN FORM_NUM=''032'' THEN ''Notice of Meeting (IFSP)''
+		WHEN FORM_NUM=''033'' THEN ''Annual Transition Notice''
+        ELSE ''not found''
+   END;
+
+
+END;
+' LANGUAGE 'plpgsql';

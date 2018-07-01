@@ -1,0 +1,83 @@
+<? 
+	$rowNum = $this->element->rownumber->getValue(); 
+	$view = $this->element->rownumber->getView();
+?>
+    
+<?php if($rowNum == 1) { ?>
+<script>
+    dojo.require("dojo.data.ItemFileReadStore");
+    dojo.require("dijit.form.ComboBox");
+
+    var storeData = {
+        identifier: 'name',
+        label: 'name',
+        items: [
+		<?php 
+		$i = 1;
+		foreach($view->db_form_data['value_list']['student_team'] as $person) {
+			if($i > 1) echo ",";
+			echo "\n{";
+			echo "name: '".$person."',";
+			echo "}";
+			$i++;
+		}
+		?>
+        ]
+    }
+    
+</script>
+<div dojoType="dojo.data.ItemFileReadStore" data="storeData" jsId="studentTeamStore"></div>
+<?php } ?>
+
+<table class="formInput" style="width:100%;" border="0" id="tran_plan_<?= $rowNum; ?>">
+    <tr>
+        <td colspan="4" class="printBoldLabel">
+            What needs to be done?
+        </td>
+    </tr>
+    <tr>        
+        <td colspan="4">
+            <div id="tran_plan_<?= $rowNum; ?>-tpp_to_be_done-colorme" class="colorme">
+            <?php echo $this->element->tpp_to_be_done; ?>
+            </div>
+        </td>
+    </tr>
+    <tr>        
+        <td class="printBoldLabel">
+            Who is responsible?
+        </td>
+        <td class="printBoldLabel">
+            Time Line
+        </td>
+        <td class="printBoldLabel">
+            Date Completed
+        </td>
+        <td class="noprint">
+            Remove Row
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">
+            <div id="tran_plan_<?= $rowNum; ?>-tpp_responsible-colorme" class="colorme">
+            <?php echo $this->element->tpp_responsible; ?>
+            </div>
+        </td>
+        <td valign="top">
+            <div id="tran_plan_<?= $rowNum; ?>-tpp_time_line-colorme" class="colorme">
+            <?php echo $this->element->tpp_time_line; ?>
+            </div>
+        </td>
+        <td valign="top">
+            <div id="tran_plan_<?= $rowNum; ?>-tpp_date_completed-colorme" class="colorme">
+            <?php echo $this->element->tpp_date_completed; ?>
+            </div>
+        </td>
+        <td class="noprint" style="padding-right:20px;" align="right" >
+            <?= $this->element->id_ifsp_tran_plan_participants; ?>
+            <div id="team_other_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<hr />

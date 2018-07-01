@@ -1,0 +1,4 @@
+ALTER TABLE iep_form_004 ADD COLUMN expanded_options BOOLEAN;
+ALTER TABLE iep_form_004 ADD COLUMN reg_edu_student_services TEXT;
+ALTER TABLE iep_form_004 ADD COLUMN not_reg_edu_student_services TEXT;
+ALTER TABLE iep_form_004 ADD COLUMN other_services TEXT;

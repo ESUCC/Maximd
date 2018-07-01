@@ -1,0 +1,58 @@
+<div class="pagination" style="width:100%">
+    <div style="float:left;width:28%">
+    </div>
+    <div style="float:right;width:70%;">
+        
+	    <?php if (0): ?>
+	    	<!-- First page link -->
+	        <?php if (isset($this->previous)): ?>
+	        	<?= $this->formButton('Start', 'Start', array('onClick'=>"navigateToPage('1');")); ?> |
+	        <?php else: ?>
+	        	<?= $this->formButton('Start', 'Start', array('disabled'=>'disabled')); ?> |
+	        <?php endif; ?>
+        <?php endif; ?>
+        
+        
+    	<?php if (0): ?>
+    		<!-- Previous page link -->
+	        <?php if (isset($this->previous)): ?>
+	        	<?= $this->formButton($this->previous, 'Previous', array('onClick'=>"navigateToPage($this->previous);")); ?> |
+	        <?php else: ?>
+	        	<?= $this->formButton($this->previous, 'Previous', array('disabled'=>'disabled')); ?> |
+	        <?php endif; ?>
+        <?php endif; ?>
+
+        <!-- Numbered page links -->
+        <?php if ($this->last == 1): ?>
+			<? //= $this->formButton($this->current, $this->current, array('disabled'=>'disabled')); ?>
+		<?php else: ?>
+	        <?php foreach ($this->pagesInRange as $page): ?>
+	            <?php if ($page != $this->current): ?>
+		        	<?= $this->formButton($page, $page, array('onClick'=>"navigateToPage($page, this);")); ?>
+		        	<?php if($page != $this->last) echo ' |';?> 
+	            <?php else: ?>
+		        	<?= $this->formButton($page, $page, array('disabled'=>'disabled')); ?>
+		        	<?php if($page != $this->last) echo ' |';?>
+	            <?php endif; ?>
+	        <?php endforeach; ?>
+	    <?php endif; ?>
+        
+		
+        <?php if (0): ?>
+        
+	        <!-- Next page link -->
+	        <?php if (isset($this->next)): ?>
+	              | <?= $this->formButton($this->next, 'Next', array('onClick'=>"navigateToPage($this->next, this);")); ?> |
+	        <?php else: ?>
+	              | <?= $this->formButton($this->next, 'Next', array('disabled'=>'disabled')); ?> |
+	        <?php endif; ?>
+	        <!-- Last page link -->
+	        <?php if (isset($this->next)): ?>
+	              <?= $this->formButton($this->last, 'End', array('onClick'=>"navigateToPage($this->last, this);")); ?>
+	        <?php else: ?>
+	              <?= $this->formButton($this->last, 'End', array('disabled'=>'disabled')); ?>
+	        <?php endif; ?>
+	        &nbsp; Page <?= $this->current; ?> of <?= $this->last; ?>
+        <?php endif; ?>
+    </div>
+ </div>

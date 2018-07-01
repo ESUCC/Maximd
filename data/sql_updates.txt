@@ -1,0 +1,179 @@
+alter table iep_form_001 add column zend_checkout_time timestamp;
+alter table iep_form_001 add column zend_checkout_user integer;
+
+alter table iep_form_002 add column zend_checkout_time timestamp;
+alter table iep_form_002 add column zend_checkout_user integer;
+
+alter table iep_form_003 add column zend_checkout_time timestamp;
+alter table iep_form_003 add column zend_checkout_user integer;
+
+alter table iep_form_004 add column zend_checkout_time timestamp;
+alter table iep_form_004 add column zend_checkout_user integer;
+
+alter table iep_form_005 add column zend_checkout_time timestamp;
+alter table iep_form_005 add column zend_checkout_user integer;
+
+alter table iep_form_006 add column zend_checkout_time timestamp;
+alter table iep_form_006 add column zend_checkout_user integer;
+
+alter table iep_form_007 add column zend_checkout_time timestamp;
+alter table iep_form_007 add column zend_checkout_user integer;
+
+alter table iep_form_008 add column zend_checkout_time timestamp;
+alter table iep_form_008 add column zend_checkout_user integer;
+
+alter table iep_form_009 add column zend_checkout_time timestamp;
+alter table iep_form_009 add column zend_checkout_user integer;
+
+alter table iep_form_010 add column zend_checkout_time timestamp;
+alter table iep_form_010 add column zend_checkout_user integer;
+
+alter table iep_form_011 add column zend_checkout_time timestamp;
+alter table iep_form_011 add column zend_checkout_user integer;
+
+alter table iep_form_012 add column zend_checkout_time timestamp;
+alter table iep_form_012 add column zend_checkout_user integer;
+
+alter table iep_form_013 add column zend_checkout_time timestamp;
+alter table iep_form_013 add column zend_checkout_user integer;
+
+alter table iep_form_014 add column zend_checkout_time timestamp;
+alter table iep_form_014 add column zend_checkout_user integer;
+
+alter table iep_form_015 add column zend_checkout_time timestamp;
+alter table iep_form_015 add column zend_checkout_user integer;
+
+alter table iep_form_016 add column zend_checkout_time timestamp;
+alter table iep_form_016 add column zend_checkout_user integer;
+
+alter table iep_form_017 add column zend_checkout_time timestamp;
+alter table iep_form_017 add column zend_checkout_user integer;
+
+alter table iep_form_018 add column zend_checkout_time timestamp;
+alter table iep_form_018 add column zend_checkout_user integer;
+
+alter table iep_form_019 add column zend_checkout_time timestamp;
+alter table iep_form_019 add column zend_checkout_user integer;
+
+alter table iep_form_020 add column zend_checkout_time timestamp;
+alter table iep_form_020 add column zend_checkout_user integer;
+
+alter table iep_form_021 add column zend_checkout_time timestamp;
+alter table iep_form_021 add column zend_checkout_user integer;
+
+alter table iep_form_022 add column zend_checkout_time timestamp;
+alter table iep_form_022 add column zend_checkout_user integer;
+
+alter table iep_form_023 add column zend_checkout_time timestamp;
+alter table iep_form_023 add column zend_checkout_user integer;
+
+alter table iep_form_024 add column zend_checkout_time timestamp;
+alter table iep_form_024 add column zend_checkout_user integer;
+
+
+
+CREATE TABLE iep_session_zend (
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    expiration integer,
+    id_session character(32) NOT NULL,
+    id_user integer DEFAULT 10000001 NOT NULL,
+    ip character varying,
+    platform character varying,
+    value character varying,
+    version real,
+    status character varying DEFAULT 'Active'::character varying,
+    token_key character varying,
+    token_timeout timestamp without time zone,
+    zfvalue character varying,
+    token_key_non_zf character varying,
+    note character varying,
+    siteaccessgranted boolean default false
+);
+
+create index zend_id_session_idx on iep_session_zend (id_session);
+create index zend_id_user_session on iep_session_zend (id_user);
+create index zend_iep_session_status_token_key on iep_session_zend (status, token_key);
+create index zend_iep_session_token_key on iep_session_zend (token_key);
+create index zend_timestamp_created_session on iep_session_zend (timestamp_created);
+
+
+drop table error_log;
+CREATE TABLE error_log (
+	id_error_log serial,
+	status varchar default 'Active',
+    timestamp_created timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+	error_code varchar,
+	error_text varchar,
+	id_county varchar,
+	id_district varchar,
+	id_school varchar,
+	id_student varchar,
+	id_form varchar,
+	form_table varchar,
+	form_key varchar
+	
+);
+
+alter table iep_form_013 add column sc_agency varchar;
+alter table iep_form_004 add column pdf_filepath_present_lev_perf varchar;
+
+CREATE TABLE my_template_form_data (
+    id_my_template_data serial,
+    table_id integer,
+    table_name character varying,
+    table_keys character varying,
+    table_data character varying,
+    id_student integer,
+    student_name character varying,
+    date_created date,
+    date_deleted date,
+    status character varying,
+    created_by integer,
+    id_personnel integer,
+    template_type varchar
+);
+insert into my_template_form_data (id_personnel, template_type) VALUES ('1000254', 'iep_form_018_team_member');
+insert into my_template_form_data (id_personnel, template_type) VALUES ('1000254', 'iep_form_018_team_member');
+insert into my_template_form_data (id_personnel, template_type) VALUES ('1000254', 'iep_form_018_team_member');
+insert into my_template_form_data (id_personnel, template_type) VALUES ('1000254', 'iep_form_018_team_member');
+insert into my_template_form_data (id_personnel, template_type) VALUES ('1000254', 'iep_form_018_team_member');
+
+
+
+
+CREATE TABLE student_chart_template (
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    id_student_chart_template serial NOT NULL,
+    chart_type character varying DEFAULT 'simplechart'::character varying,
+    goal_desc character varying,
+    label_x character varying,
+    label_y character varying,
+    data_type_x character varying DEFAULT 'date'::character varying,
+    data_type_y character varying DEFAULT 'float'::character varying,
+    chart_color character varying DEFAULT 'black'::character varying,
+    status character varying DEFAULT 'Active'::character varying,
+    goal_line character varying,
+    line_style character varying DEFAULT 'solid'::character varying
+);
+
+alter table student_chart_template add column id_personnel integer;
+alter table public.iep_form_004_goal_progress add column progress_chart_scale integer default '100';
+
+CREATE TABLE student_search (
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    id_student_search serial NOT NULL,
+    id_personnel integer NOT NULL
+);
+
+CREATE TABLE student_search_rows (
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    id_student_search integer NOT NULL,
+    id_student_search_rows serial NOT NULL,
+    search_field varchar,
+    search_value varchar
+);

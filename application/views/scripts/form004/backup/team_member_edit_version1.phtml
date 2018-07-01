@@ -1,0 +1,63 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<?php $view = $this->element->rownumber->getView(); ?>
+<table class="formInput" id="team_member_<?= $rowNum; ?>">
+	<?php if(1 == $rowNum) { ?>
+	    <tr class="bgLight2 bts">
+	    	<?php if(1) { ?>
+	        <td>#</td>
+	        <?php } ?>
+	        <td><?php echo $this->translate('Participant Name(s)'); ?></td>
+		<td><?php echo $this->translate('Absent'); ?></td>
+		<td><?php echo $this->translate('Position/Relationship To Student'); ?></td>
+		<td><?php echo $this->translate('Date'); ?></td>
+	</tr>
+	<?php } ?>
+    <tr id="RS<?= $rowNum; ?>">
+        <td style="width: 4%">
+            <?= $rowNum; ?>.
+			<div style="display: none;">
+	            <?php echo $this->element->rownumber; ?>
+	            <?php echo $this->translate($this->element->positin_desc); ?>
+	            <?php echo $this->element->absent; ?>
+			</div>
+        </td>
+        <td style="width: 24%">
+			<div id="team_member_<?= $rowNum; ?>-participant_name-colorme"
+				class="colorme">
+            <?php $this->element->participant_name->setAttrib('class', 'participant-names'); ?>
+            <?= $this->element->participant_name; ?>
+            <?= $this->element->id_iep_team_member; ?>
+            </div>
+		</td>
+		<td style="width: 7%">
+            <?php if ($this->element->positin_desc->getValue() != 'Parent' && $this->element->positin_desc->getValue() != 'Student (whenever appropriate, or if the student is 16 years of age or older)') { ?>
+        	<div id="team_member_<?= $rowNum; ?>-absent-colorme"
+				class="colorme">
+            <?= $this->element->absent; ?>
+            </div>
+            <?php } ?>
+        </td>
+		<td style="width: 53%">
+            <?= $this->translate($this->element->positin_desc->getValue()); ?>
+            <div style="display: none"
+				id="team_member_<?= $rowNum; ?>-absent_reason-colorme"
+				class="colorme <?php if($this->element->absent->getValue() != 1) echo ' noprint'; ?>"
+				<?php 
+                // fade the element if 'absent' is not true
+                //if($this->element->absent->getValue() != 1) echo 'style="opacity: 0;"'; ?>>
+				<?php echo $this->translate('Reason if Absent'); ?>:<br />
+            <?= $this->element->absent_reason;?>
+            </div>
+		</td>
+		<td style="width: 12%"><span
+			id="<?php echo $this->element->participant_name->getAttrib('id'); ?>-conference-date"
+			class="page1_date_conference">
+            <?php if (strlen($this->element->participant_name->getValue()) >= 2) { ?>
+            <?php if (strlen($view->db_form_data['date_conference']) > 0) { ?>
+            <?php echo substr($view->db_form_data['date_conference'], 5, 2) . '/' . substr($view->db_form_data['date_conference'], 8, 2) . '/' . substr($view->db_form_data['date_conference'], 0, 4); ?>
+            <?php } ?>
+            <?php } ?>
+            </span>
+        </td>
+	</tr>
+</table>

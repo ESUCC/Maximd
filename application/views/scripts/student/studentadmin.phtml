@@ -1,0 +1,288 @@
+<style>
+    .mergeTable, .mergeForm {
+	width: 100%;
+    }
+    .mergeTable th {
+	font-weight: 700;
+	font-size: 14px;
+	background-color: #f0f0f0;
+	padding: 4px;
+	border: 1px solid #333;
+    }
+    .mergeTable td {
+	padding: 4px;
+	border: 1px solid #333;
+    }
+
+    #mergeForm {
+	margin: 10px 0px;
+	min-height: 30px;
+    }
+
+    .mergeForm {
+	float: left;
+	width: 48%;
+	margin: 1%;
+    }
+
+    .mergeForm th {
+	font-weight: 700;
+	font-size: 14px;
+	background-color: #f0f0f0;
+	padding: 4px;
+	border: 1px solid #333;
+    }
+
+    .mergeForm td {
+	padding: 4px;
+	border: 1px solid #333;
+    }
+
+    .mergeBtn {
+	width: 100%;
+	clear: both;
+	margin: 10px;
+	text-align: center;
+    }
+
+    .loadingform {
+	position: relative;
+	width: 100%;
+	margin: 10px;
+	text-align: center;
+    }
+</style>
+<?$auth = Zend_Auth::getInstance();?>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationSubmenu('student'); ?>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    $(document).on("click", "#mergeBtn1", function () {
+	var student_id_A1 = Number($("#student_id_A1").val()) * 1;
+	var student_id_B1 = Number($("#student_id_B1").val()) * 1;
+
+	if (student_id_A1 > 0 && student_id_B1 > 0 && student_id_A1 != student_id_B1) {
+    
+	    var data_var = Array;
+	    data_var['student_id_A'] = student_id_A1;
+	    data_var['student_id_B'] = student_id_B1;
+
+	    $("#student_id_A11").val(student_id_A1);
+	    $("#student_id_B11").val(student_id_B1);
+
+	    $.ajax({
+		type       : "POST",
+		url        : "/student/studentmerge/",
+		crossDomain: true,
+		cache      : false,
+		data       : data_var,
+		dataType   : "json",
+		beforeSend: function(){
+    			    $("#mergeForm").html('<div class="loadingform"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i><div>');
+
+		},
+		success    : function(response) {
+
+			    $("#FormMerge").hide();
+
+    			    $("#mergeForm").html('');
+
+
+		 	    if (response.studentsList[0]["id_student"] == 0) {
+    				$("#mergeForm").append('\
+				    <table class="mergeForm">\
+				        <tr><td>There was an error getting student A (' + student_id_A1 + ').</td></tr>\
+				    </table>\
+        		        ');
+			    }
+
+
+			    $.each(response.studentsList, function (indx, val) {
+
+			      if (val["id_student"] != 0) {
+				var unique_id_state = val["unique_id_state"] != null ? val["unique_id_state"] : "";
+				var email_address = val["email_address"] != null ? ('<a href="mailto:' + val["email_address"] + '">' + val["email_address"] + '</a>') : "";
+				var name_first = val["name_first"] != null ? val["name_first"] : "";
+				var name_middle = val["name_middle"] != null ? val["name_middle"] : "";
+				var name_last = val["name_last"] != null ? val["name_last"] : "";
+				var mgr_name_first = val["mgr_name_first"] != null ? val["mgr_name_first"] : "";
+				var mgr_name_last = val["mgr_name_last"] != null ? val["mgr_name_last"] : "";
+
+				var dob = val["dob"] != null ? val["dob"] : "";
+				if (dob != "") {
+				    dob = dob.split("-");
+				    dob = dob[1] + "/" + dob[2] + "/" + dob[0];
+				}
+
+				var grade = val["grade"] != null ? val["grade"] : "";
+				var address_street1 = val["address_street1"] != null ? val["address_street1"] : "";
+				var address_street2 = val["address_street2"] != null ? val["address_street2"] : "";
+				var address_city = val["address_city"] != null ? val["address_city"] : "";
+				var address_state = val["address_state"] != null ? val["address_state"] : "";
+				var address_zip = val["address_zip"] != null ? val["address_zip"] : "";
+				var phone = val["phone"] != null ? val["phone"] : "";
+
+    				$("#mergeForm").append('\
+				    <table class="mergeForm">\
+					<tr><th colspan="2">Student Information</th></tr>\
+					<tr><td>Unique State ID:</td><td>' + unique_id_state + '</td></tr>\
+					<tr><td>First Name:</td><td>' + name_first + '</td></tr>\
+					<tr><td>Middle Name:</td><td>' + name_middle + '</td></tr>\
+					<tr><td>Last Name:</td><td>' + name_last + '</td></tr>\
+					<tr><td>Resident County:</td><td>' + val["name_county"] + '</td></tr>\
+					<tr><td>School:</td><td>' + val["name_school"] + '</td></tr>\
+					<tr><td>Case Manager:</td><td>'  + mgr_name_first + ' ' + mgr_name_last + '</td></tr>\
+					<tr><td>Date Of Birth:</td><td>' + dob + '</td></tr>\
+					<tr><td>Grade:</td><td>' + grade + '</td></tr>\
+					<tr><td>Street 1:</td><td>' + address_street1 + '</td></tr>\
+					<tr><td>Street 2:</td><td>' + address_street2 + '</td></tr>\
+					<tr><td>City:</td><td>' + address_city + '</td></tr>\
+					<tr><td>State:</td><td>' + address_state + '</td></tr>\
+					<tr><td>Zip:</td><td>' + address_zip + '</td></tr>\
+					<tr><td>Phone:</td><td>' + phone + '</td></tr>\
+					<tr><td>Email:</td><td>' + email_address + '</td></tr>\
+				    </table>\
+				');
+
+
+			      }
+			    });
+
+		 	    if (response.studentsList[1]["id_student"] == 0) {
+    			        $("#mergeForm").append('\
+				    <table class="mergeForm">\
+					<tr><td>There was an error getting student B (' + student_id_B1 + ').</td></tr>\
+				    </table>\
+        			');
+			    }
+
+
+		     	    if ( response.studentsList[0]["id_student"] != 0 && response.studentsList[1]["id_student"] != 0) {
+				$("#mergeForm").append('<div class="mergeBtn"><button id="mergeStudentBtn"> Merge Students </button></div>');
+			    }
+		    }
+	    });
+
+	} else {
+	    $("#mergeForm").html('');
+
+	    $("#student_id_A11").val(0);
+	    $("#student_id_B11").val(0);
+
+	}
+
+        return false;
+    });
+
+    $(document).on("click", "#mergeStudentBtn", function () {
+	    var data_var = Array;
+
+	    var student_id_A1 = Number($("#student_id_A1").val()) * 1;
+    	    var student_id_B1 = Number($("#student_id_B1").val()) * 1;
+
+	    data_var['student_id_A'] = Number($("#student_id_A11").val()) * 1;
+	    data_var['student_id_B'] = Number($("#student_id_B11").val()) * 1;
+	    data_var['cm_merge'] = $("#cm_merge").prop("checked") ? 1 : 0;
+    
+	    $.ajax({
+		type       : "GET",
+		url        : "/student/studentmergesave/",
+		crossDomain: true,
+		cache      : false,
+		data       : data_var,
+		dataType   : "json",
+		beforeSend: function(){
+	    		    $("#mergeForm").html('<div class="loadingform"><i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i><div>');
+
+		},
+		success    : function(response) {
+
+			    $("#mergeForm").html('<br><br><center>Students was merged</center>');
+		}
+
+	    });
+
+
+        return false;
+    });
+
+    $(document).on("click", "#mergeBtn2", function () {
+
+	if (Number($("#student_id_A2").val()) * 1 > 0 && Number($("#student_id_B2").val()) * 1 > 0) {
+
+
+
+	}
+
+        return false;
+    });
+
+  });
+</script>
+
+
+<br>
+<table class="mergeTable" id="StudentsMerge">
+    <tr><th colspan="2">
+	    Merge Students
+    </th></tr>
+    <tr><td>
+	Student A SRS ID#:
+	<input type="text" size="10" id="student_id_A1" value="">
+    </td><td>
+	Student B SRS ID#:
+	<input type="text" size="10" id="student_id_B1" value="">
+	<button id="mergeBtn1"> Search </button>
+    </td></tr>
+    <tr><td colspan="2" nowrap="nowrap">
+	Copy/paste or type in the appropriate Student ID # into the boxes above<br><b>Student B will be merged into student A.</b><br>
+	Forms from Student B will be moved to Student A.<br>
+	Student B and their parent records will be deleted.<br>
+	Student B team records will be DELETED.
+    </td></tr>
+    <tr><td colspan="2" nowrap="nowrap">
+	<input id="cm_merge" type="checkbox" checked> Check this box to also: 
+	<ul>
+	    <li> Update student A with the CM from student B
+	    <li> Move the guardian records from student B to Student A
+	</ul>
+    </td></tr>
+    <tr><td colspan="2" align="center">
+	<b><font color="#FF0000">WARNING: This cannot be undone!!!</font></b>
+    </td></tr>
+</table>
+
+<input type="hidden" id="student_id_A11" value="0"><input type="hidden" id="student_id_B11" value="0">
+<div id="mergeForm"></div>
+
+<!-- ========================================================================= -->
+
+<br><br>
+
+<table class="mergeTable" id="FormMerge">
+    <tr><th colspan="2">
+            Merge Student Forms
+    </th></tr>
+    <tr><td>
+	Student A SRS ID#:
+	<input type="text" size="10" name="student_id_A2" value="">
+    </td><td>
+	Student B SRS ID#:
+	<input type="text" size="10" name="student_id_B2" value="">
+	<button id="mergeBtn2"> Search </button>
+
+    </td></tr>
+</table>

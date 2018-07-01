@@ -1,0 +1,21 @@
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>
+<?php if (count($this->resultCount) < 1) { ?>
+    <div>No results matched your search</div>
+<?php } else { ?>
+
+<table class="tableSchool">
+    <tr>
+        <th><a href="#" class="runSearchCall" rel="/school/search/page/<?=$this->page?>/nb/1/sort/<?if ($this->sort == 11){?>12<?}else{?>11<?}?>">School Name <?if ($this->sort == 12){?><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><?} else {?><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><?}?></a></th>
+	<th><a href="#" class="runSearchCall" rel="/school/search/page/<?=$this->page?>/nb/1/sort/<?if ($this->sort == 21){?>22<?}else{?>21<?}?>">District <?if ($this->sort == 22){?><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><?} else {?><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><?}?></a></th>
+        <th><a href="#" class="runSearchCall" rel="/school/search/page/<?=$this->page?>/nb/1/sort/<?if ($this->sort == 31){?>32<?}else{?>31<?}?>">County <?if ($this->sort == 32){?><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i><?} else {?><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i><?}?></a></th>
+    </tr>
+    <?php foreach ($this->results as $k => $r) { ?>
+    <tr>
+	<td><a href="#" rel="/school/view/id_county/<?=$r['id_county']?>/id_district/<?=$r['id_district']?>/id_school/<?=$r['id_school']?>" class="openWindow" title="<?=$r['name_school'] ?>"><?=$r['name_school'] ?></a></td>
+	<td><?=$r['name_district'] ?></td>
+	<td><?=$r['name_county'] ?></td>
+    </tr>
+    <?php } ?>
+</table>
+<?php } ?>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>

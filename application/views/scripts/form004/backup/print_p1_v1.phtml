@@ -1,0 +1,203 @@
+<?php
+$view = $this->element->page->getView();
+
+$showAbsentCheckbox = false;
+for($i = 1; $i <= $view->db_form_data['team_member']['count']; $i++) { 
+	if($view->db_form_data['team_member_'.$i]['absent'])
+	{
+		$showAbsentCheckbox = true;
+	} 
+}
+
+if(isset($view->db_form_data['team_member'])) { ?>
+	<table class="formInput" id="team_member_parent" style="width: 100%">
+	<tr><td>
+	<table class="formSectionHead">
+		<tr>
+			<td style="height:21px;text-align:left;">
+				<span class="">
+					<?= $view->form->getSubForm('team_member')->getElement('subformTitle')->getValue(); ?>&nbsp;
+					<?= $view->form->getSubForm('team_member')->getElement('count');?>
+				</span>
+			</td>
+			<td align="right">
+				<span class="btsb">
+					<?= $this->element->date_conference;?>
+				</span>
+			</td>
+		</tr>
+	</table>
+	</td>
+	</tr>
+	<?php echo $this->subform($view, 'team_member', false); ?>
+	<?php if($showAbsentCheckbox) { ?>
+    <tr>
+        <td style="text-align:right;margin-bottom:8px;">
+        <b><?php echo $this->translate('Reason if Absent'); ?></b>: (1) <?php echo $this->translate('Curriculum Area Not Discussed'); ?>. (2) <?php echo $this->translate('Absent with Written Input (approved by parent)'); ?>.
+        </td>
+    </tr>
+    <?php } ?>
+	</table>
+<?
+}
+if($view->db_form_data['team_other']['count'] > 0) echo $this->subform($view, 'team_other');
+if($view->db_form_data['team_district']['count'] > 0) echo $this->subform($view, 'team_district'); ?>
+<BR />
+<table class="formSectionHead">
+	<tr>
+		<td><?php echo $this->translate('Parent Signature'); ?></td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;">
+    <?php if($showAbsentCheckbox) { ?>
+    <tr>
+        <td colspan="5">
+            <div id="showHideAbsenceApproval">
+                <? echo $this->element->absences_approved;?>
+            </div>
+        </td>
+    </tr>
+    <?php } ?>
+	<tr>
+		<td colspan="4" style="padding-right:10px;">
+			<? 
+			$this->element->necessary_action->setDecorators(array('ViewHelper'));
+			echo $this->element->necessary_action;?>
+		</td>
+		<td><?php echo $this->translate('Necessary Action'); ?></td>
+	</tr>
+    <?php if ($view->lps) { ?>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <? 
+            $this->element->lps_sig_understand_process->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_understand_process;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We understand the Individual Education Program (IEP) process:'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <?             
+            $this->element->lps_sig_participated->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_participated;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We participated in the development of this IEP:'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <?                         
+            $this->element->lps_sig_agree->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_agree;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We agree to this IEP:'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <?php echo $this->translate('If no, reason:'); ?>
+        </td>
+        <td>
+           <? echo $this->element->lps_sig_no_agree_reason;?> 
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <?                                     
+            $this->element->lps_sig_understand_purpose->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_understand_purpose;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We understand the purpose and content of this IEP:'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <?                                                 
+            $this->element->lps_sig_understand_covers->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_understand_covers;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We understand that this IEP covers only the normal school calendar as defined by the Lincoln Public Schools Board of Education:'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <?                                                             
+            $this->element->lps_sig_understand_receive->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_understand_receive;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We understand that I/we will receive a copy of this IEP:'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4" style="padding-right:10px;">
+            <? $this->element->lps_sig_received_rights->setDecorators(array('ViewHelper'));
+            echo $this->element->lps_sig_received_rights;?>
+        </td>
+        <td>
+        <?php echo $this->translate('I/We have received a copy of Rights and Responsibilities Regarding Identification and Placement of Students in Special Education:'); ?>
+        </td>
+    </tr>
+    <?php } ?>
+	<tr>
+		<td colspan="4" style="white-space:nowrap;padding-right:10px;">
+			<? 
+			$this->element->received_copy->setDecorators(array('ViewHelper'));
+			echo $this->element->received_copy;?>
+		</td>
+		<td><?php echo $this->translate('I have received a copy of the IEP at no cost:'); ?></td>
+	</tr>
+	<tr>
+		<td colspan="4" style="white-space:nowrap;padding-right:10px;">
+			<?
+			$this->element->parental_rights->setDecorators(array('ViewHelper'));
+			echo $this->element->parental_rights;?>
+		</td>
+		<td><?php echo $this->translate('I have been offered a copy of my parental rights at no cost:'); ?></td>
+	</tr>
+    <?php if($view->lps) { ?>
+    <tr>
+    	<td colspan="4" style="white-space:nowrap;padding-right:10px;">
+			<? 
+			$this->element->recieve_electronic_copy->setDecorators(array('ViewHelper'));
+			echo $this->element->recieve_electronic_copy;?>
+		</td>
+		<td><?php echo $this->translate('I would like to receive an electronic copy of my child\'s IEP:'); ?></td>
+    </tr>
+    <tr>
+	    <td colspan="5">
+		    <B><?php echo $this->translate('Special Education records'); ?>.</B>
+	    </td>
+    </tr>
+    <?php } ?>
+	<tr>
+        <td colspan="5">
+            <? 
+            if('' == $this->element->doc_signed_parent->getValue()) 
+            {
+            	echo $this->translate('Parent Signature').": ________________________ ".$this->translate('Date').": _____________________ ";
+            } else {
+            	if($this->element->doc_signed_parent->getValue())
+            	{
+            		echo $this->translate('Signature on File:');
+            	} else {
+            		echo $this->translate('Signature NOT File');
+            	}
+            	if('' != $this->element->date_doc_signed_parent->getValue())
+            	{
+            		echo $this->translate('Date')." [" . $this->element->date_doc_signed_parent->getValue() . "]";
+            	}
+            }
+            ?>
+        </td>
+    </tr>
+</table>
+
+
+

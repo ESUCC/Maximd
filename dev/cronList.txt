@@ -1,0 +1,90 @@
+crontab lists as of 20141212
+
+# ========================================================================================================================================================================
+# iepd.nebraskacloud.org
+# ========================================================================================================================================================================
+[root@iep ~]# crontab -l
+1 * * * * /usr/sbin/ntpdate -s time.unl.edu &> /dev/null
+
+#
+# 20080611 jlavere
+# prflight check for bellevue
+#
+#0 15 * * * /usr/bin/php -c /var/www/html/srs/cron_scripts/php.ini /var/www/html/srs/bellevue.php
+
+#
+# build the nssrs exports
+#
+0 1 * * * /usr/bin/php -c /var/www/html/srs/cron_scripts/php.ini /var/www/html/srs/cron_scripts/build_nssrs_exports.php
+
+#
+# import LPS FILES
+#
+0 18 * * * /usr/bin/php -c /var/www/html/srs/cron_scripts/php.ini /var/www/html/srs/lps/upload_all.php
+
+
+#
+# import GRAND ISLAND - INCREMENTAL - WEEKDAYS
+#
+#0 23 * * 1,2,3,4,5 /usr/bin/php -c /var/www/html/srs/cron_scripts/php.ini /var/www/html/srs/grand_island/GI_update_script.php chgstu.csv chgpar.csv
+
+#
+# import GRAND ISLAND - FULL - SATURDAY
+#
+0 23 * * 1,2,3,4,5,6 /usr/bin/php -c /var/www/html/srs/cron_scripts/php.ini /var/www/html/srs/grand_island/GI_update_script.php gipsstu.csv GIPSPAR.csv
+
+#
+# backup important parts of the srs system
+# 12/11/2008 jlavere - removed some parts of backup, until new backup solution is determined
+#
+0 0 * * 0 sh /var/www/html/srs/cron_scripts/iep_backup.sh
+
+#
+# export files and uplad to LPS
+0 3 * * * sh /var/www/html/srs/lps/lps_export.sh
+
+0 0 * * * /usr/bin/find /var/www/html/srs/tmp -mtime +1 -exec rm -rf {} \;
+
+# moved from old server PPN
+0 3 * * * /usr/local/scripts/getscp.exp
+
+# ========================================================================================================================================================================
+# iepweb02
+# ========================================================================================================================================================================
+[root@iepweb02 ~]# crontab -l
+#
+# export FREMONT
+#
+0 2 * * * /usr/local/zend/bin/php /etc/httpd/srs-zf/exports/Fremont/run_export.php production
+
+#
+# export Grand Island
+#
+30 2 * * * /usr/local/zend/bin/php /etc/httpd/srs-zf/exports/GrandIsland/run_export.php production
+
+# ========================================================================================================================================================================
+# iepweb03
+# ========================================================================================================================================================================
+[root@iepweb03 ~]# crontab -l
+#
+# PPN Export PDFs
+#
+0 5 * * * /etc/httpd/srs-zf/scripts/cron/PPN-PDF-Export.sh
+
+# ========================================================================================================================================================================
+# iepdata
+# ========================================================================================================================================================================
+[root@iepdata01 ~]# crontab -l
+
+# Added by Tom Harvill 20091130
+# copied from old server
+0 4 * * * sh /scripts/pg_vacuum.sh
+
+# Added by Tom Harvill 20091130
+# copied from old server
+# new backup cron on iepxen02
+#0 2 * * * sh /scripts/iep_backup.sh
+
+# Added by Tom Harvill 20110630
+# slow query log analysis
+#0 23 * * * /scripts/create_slow_query_report.sh &> /dev/null

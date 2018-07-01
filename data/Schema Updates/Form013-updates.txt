@@ -1,0 +1,54 @@
+CREATE SEQUENCE form_013_other_services_id_form_013_other_services_seq;
+
+CREATE TABLE form_013_other_services (
+    id_form_013_other_services integer DEFAULT nextval('form_013_other_services_id_form_013_other_services_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_013 integer DEFAULT nextval('iep_form_013_id_form_013_seq'),
+    other_service character varying,
+    other_service_start date,
+    other_service_end date,
+    other_person_responsible character varying, 
+    other_funding_source character varying
+);
+
+CREATE SEQUENCE form_013_home_community_id_form_013_home_community_seq;
+
+CREATE TABLE form_013_home_community (
+    id_form_013_home_community integer DEFAULT nextval('form_013_home_community_id_form_013_home_community_seq'),
+    id_student integer NOT NULL,
+    id_author integer DEFAULT 0 NOT NULL,
+    id_author_last_mod integer DEFAULT 0 NOT NULL,
+    timestamp_created timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT ('now'::text)::timestamp without time zone NOT NULL,
+    status character varying DEFAULT 'Draft'::character varying NOT NULL,
+    id_form_013 integer DEFAULT nextval('iep_form_013_id_form_013_seq'),
+    home_service character varying,
+    home_how_much character varying,
+    home_to_help_with_outcome character varying,
+    home_start date,
+    home_end date,
+    home_funding_source character varying
+);
+
+ALTER TABLE iep_form_013 ADD COLUMN parent_understand_content_p7 boolean;
+ALTER TABLE iep_form_013 ADD COLUMN parent_understand_distribition_p7 boolean;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_1_p7 character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_1_on_file_p7 character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_2_p7 character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_2_on_file_p7 character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_date_1_p7 date;
+ALTER TABLE iep_form_013 ADD COLUMN parent_date_2_p7 date;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_on_file_explain_p7 character varying;
+
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_1_frequency character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_1_on_file_frequency character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_2_frequency character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_sig_2_on_file_frequency character varying;
+ALTER TABLE iep_form_013 ADD COLUMN parent_date_1_frequency date;
+ALTER TABLE iep_form_013 ADD COLUMN parent_date_2_frequency date;
+ALTER TABLE iep_form_013 ADD COLUMN frequency_consent text;

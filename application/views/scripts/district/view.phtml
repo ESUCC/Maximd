@@ -1,0 +1,455 @@
+<?php
+$this->title = "Edit Districts";
+$this->headTitle($this->title);
+?>
+
+<style> 
+    .TableList {
+        width: 99%;
+	margin: 10px; 
+    }
+
+    .TableList td {
+	padding: 3px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .TableList th {
+        padding: 5px;
+        border-bottom: 1px solid #e0e0e0;
+        font-weight: bold;
+    }
+
+    .TableList tbody tr:hover td {
+	background: #FFF999;
+    }
+    
+
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+.TableList tbody tr:hover td {
+    background: 		#F4A460;
+}
+
+TableList {
+    width: 100%;
+    min-width: 100%;
+    border: 4px solid LightSkyblue;
+    font-size: 14px;
+}
+
+.TableList td, .TableList th {
+    padding: 4px;
+    border: 2px solid LightSkyblue;
+    font-size: 14px;
+}
+
+.TableList .TableRow:hover {
+    background-color: #F4A460;
+}
+
+.paginationControl {
+    width: 80%;
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#searchAlphabetArea {
+    position: relative;
+    font-weight: 700;
+}
+
+#searchArea {
+    position: relative;
+    width: 300px;
+}
+
+#searchAlphabet {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 300px;
+}
+
+#cancelSearch {
+    position: absolute;
+    top: 1px;
+    right: 0px;
+    color: #a0a0a0;
+    cursor: pointer;
+}
+
+#tooltip_container {
+	color: black;
+	position: absolute;
+	display: none;
+	padding: 20px;
+	max-width: 400px; /* need i.e. rule */
+	background-color:gainsboro;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+.tooltip-source-html { display: none; }
+    
+</style>
+    
+<?
+    $staffArray = "";
+    $schoolList = Array();
+
+    foreach($this->nameOfSchool as $key => $val) $schoolList[$val['id_school']] = $val['name_school'];
+
+    foreach($this->allStaff as $key => $val) {
+        if (isset($schoolList[$val['id_school']])) $staffArray .= ", [ '". $val['id_personnel']."', '".addslashes($val['name_first']). "', '" .addslashes($val['name_last']) ."', '". $val['email_address']."', '".$val['status']."', '".$schoolList[$val['id_school']]."']";
+	    else $staffArray .= ", [ '". $val['id_personnel']."', '".addslashes($val['name_first']). "', '" .addslashes($val['name_last']) ."', '". $val['email_address']."', '".$val['status']."', '']"; // Status = Removed
+    }
+
+    $staffArray = substr($staffArray, 2);
+?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var staffList = [ <?=$staffArray?> ];
+    
+ 	   // tooltip
+        $('.tooltip').mouseover(function(e) {
+            		
+            		// data type - text
+            		if ( $(this).attr('data-tip-type') == 'text' ){
+            			$('#tooltip_container').html( $(this).attr('data-tip-source') );
+            		}
+            		
+            		// data type - html
+            		if ( $(this).attr('data-tip-type') == 'html' ){
+            			var elementToGet = '#' + $(this).attr('data-tip-source');
+            		//	var elementToGet2 = '#' + $(this).attr('data-tip-source2');
+            			
+            			var newHTML = $(elementToGet).html();
+            			$('#tooltip_container').html( newHTML );
+
+            		//	var newHTML2 = $(elementToGet).html();
+            		//	$('#tooltip_container').html( newHTML2 );
+            		}
+            		$('#tooltip_container').css({'display':'block','opacity':0}).animate({opacity:1},250);
+            	}).mouseout(function() {
+            		$('#tooltip_container').animate({opacity:0},250, function(){
+            			$('#tooltip_container').css('display','none')
+            		});
+            	});
+
+
+                // end of tooltip
+
+
+    	
+        
+
+      $(document).on("click", ".openWindow", function () { 
+    	  var title = $(this).attr("title");
+        var url = $(this).attr("rel"); 
+        if (url != ""){
+         $("#dialog").load( url,
+           function() {
+            $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, 
+                                          hide: {effect: "fade", duration: 500}, 
+                                          width: 550, height: 400, resizable : true, 
+                                          title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); } } );
+                                 });
+        }
+        return false;
+
+      });
+
+    $(document).on("keyup change", "#id_district", function () {
+   	  $("#schoolload").html('<i class="fa fa-spinner fa-pulse"></i>');
+       $("#GrandPriv").hide();
+       $("#id_school").empty().hide();
+       $("#label_school").show();
+
+       var data_sel = $("#id_district").val().split("|");
+       var data_var = Array;
+	
+       data_var["id_county"] = data_sel[0];
+       data_var["id_district"] = data_sel[1];
+       console.log(data_sel[0]);
+       console.log(data_sel[1]);
+       $.ajax({
+          type       : "GET",
+          url        : "/staff/addotherstaffschoollist/",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+            if (response.length > 0){
+              $("#schoolload").html('');
+              $("#id_school").append('<option value="">Choose...</option>');
+              $.each(response, function (key, val) { $("#id_school").append("<option value='"+val.id_school+"'>"+val.name_school+"</option>"); 
+                                                       console.log(key);console.log(val); });
+	      $("#id_school").show();
+	      $("#label_school").show();
+	    } else {
+	      $("#label_school").hide();
+	      $("#id_school").empty().hide();
+              $("#schoolload").html('');
+	    }
+          }
+        });
+
+      return false;
+    });
+    $(document).on("keyup change", "#id_school", function () {
+	var NameSchool = $("#id_school :selected").text();
+	$('#SchoolName').html(NameSchool);
+        $("#GrandPriv").show();
+
+      return false;
+    });
+
+    $(document).on("click", ".StaffSave", function () {
+
+       var data_var = Array;
+       data_var = {};
+       var res = "";
+
+       $("#StaffForm input, #StaffForm select").each( function(index, element) {
+	      if ($(element).attr("name") == "id_district") {
+		    var value = $(element).val().split("|");
+	            data_var[encodeURIComponent("id_county")] = encodeURIComponent(value[0]);
+                    data_var[encodeURIComponent("id_district")] = encodeURIComponent(value[1]);
+  	       } else if ($(element).attr('type') == "radio") {
+                    if ($(element).prop('checked')) data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+	       } else 
+                    data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+       });
+
+
+      $.ajax({
+          type       : "POST",
+          url        : "/staff/addotherstaffsave",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "html",
+          success    : function(response) {
+	    $('#StaffDiv').html(response);
+          }
+      });
+      return false;
+    });
+
+
+    $(document).on( "click", "#cancelSearch", function() {
+        $("#searchAlphabet").val("");
+        $("#searchTable").html("");
+        $("#searchTable").hide();	        
+        $("#originalTable").show();
+        return false;
+    });
+
+    $(document).on( "click", "#cancelSearch", function() {
+        $("#searchAlphabet").val("");
+        $("#searchTable").html("");
+        $("#searchTable").hide();	        
+        $("#originalTable").show();
+        return false;
+    });
+
+
+    $(document).on( "keyup", "#searchAlphabet", function() {
+        var searchAlphabet = $.trim($("#searchAlphabet").val());
+        var searchAlphabetLength = searchAlphabet.length;
+
+        if (searchAlphabet == "") {
+        $("#searchAlphabet").val("");
+        $("#searchTable").html("");		
+        $("#searchTable").hide();	        
+        $("#originalTable").show();
+         } else if ( searchAlphabetLength > 0 && searchAlphabet != "" ) {
+        $("#searchTable").html("");	    
+        $("#originalTable").hide();
+        $("#searchTable").show();	        
+
+        var color = "#B0C4DE";
+        var finded = 0;
+	var i = 0;
+        var searchRes = "";
+	var fullname = "";
+
+	$.each(staffList, function(indx, val) {
+    	    color = (finded % 2) ? "#B0C4DE" : "#FFE4C4";
+
+    	    if (i == 0){
+    		searchRes += '<table class="TableList">';
+	        searchRes += '<tr bgcolor="#B0C4DE"><th>Full Name</th><th>Email Address</th><th>Status</td><th>School</th><th>Add user to District</th></tr>';
+	        searchRes += '<tbody>';
+	    }
+
+	    if ((val[2].substr(0, searchAlphabetLength)).toLowerCase() == searchAlphabet.toLowerCase()) {
+       	        finded++;
+                searchRes += '<tr bgcolor="' + color + '" class="TableRow"><td><b>' + val[1] +' ' + val[2] +'</b></td><td><a href="mailto:' + val[3] + '">' + val[3] + '</a></td><td>' + val[4] + '</td><td>' + val[5] + '</td><td><a href="#" rel="/staff/addotherstaff/id_personnel/' + val[0] + '/name_last/' + val[2] + '/name_first/' + val[1] + '/id_district/<?=$this->id_district?>/id_county/<?=$this->id_county?>/id/0" class="openWindow" title="' + val[1] + ' ' + val[2] + '">' + val[1] + ' ' + val[2] + '</a></td></tr>';
+    	    }
+
+	    if (i == staffList.length - 1) {
+	        searchRes += '</tbody>';
+	        searchRes += '</table><br><br>';
+	    }
+	    i++;
+
+        });
+        $("#searchTable").html(searchRes)
+
+	    if (finded == 0) $("#findres").append('<center><br><br>No matches<br><br></center>');
+
+         } 
+
+        return false;
+    });
+
+ });
+</script>
+
+    <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance();  ?>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr> 
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                  echo $this->navigationSubmenu('district');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+
+<h1><b>District: <?=str_replace('+', ' ', urlencode($this->name_district))?></b></h1>
+<br>
+
+<div id="searchAlphabetArea">
+    Search by Aplhabet<br>
+    <div id="searchArea">
+        <input type="text" value="" id="searchAlphabet">
+        <div id="cancelSearch"><i class="fa fa-times fa-lg"></i></div>
+    </div>
+</div>
+
+
+<br>
+<br>
+
+<div id="searchTable"></div>
+
+<div id="originalTable">
+<?php echo $this->paginationControl($this->paginator2,'sliding','sqlpaginator.phtml', array('route'=> 'district'));?>      </center>
+<table class="TableList" style="font-size: 15px">
+<tr bgcolor="#B0C4DE"> 
+  <th align="left"><a href =<?php echo $this->url(array('controller'=>'district','action'=>'view','fieldname'=>'name'));?>>Full Name</a></th>
+  <th align="left">Email Address</th>
+  <th align="left"><a href =<?php echo $this->url(array('controller'=>'district','action'=>'view','fieldname'=>'status'));?>>Status</a></th>
+  <th align="left"><a href =<?php echo $this->url(array('controller'=>'district','action'=>'view','fieldname'=>'school'));?>>School</a></th>
+  <th align="left"><a class="tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar" href="#">Add user to District</a></th>
+</tr> 
+<tbody>
+<?php 
+$action=$this->edit;
+$i = 0;
+foreach ($this->paginator2 as $staffmembers) {
+    $i++;
+    $fullName=$staffmembers['name_first']. " ".$staffmembers['name_last'];
+    if($action=='true')
+    {
+
+?><tr bgcolor="<?=($i % 2) ? "#FFE4C4" : "#B0C4DE"?>" class="TableRow">
+
+    <td><a href="<?php echo $this->url(array('controller'=>'personnelm','action'=>'edit','id_personnel'=>$staffmembers['id_personnel']),null,true,false);?>">  
+        <?php echo $this->escape($fullName);?></a></td>
+        
+        <?php // 1-31-2017 Mike took out the user_name appended to this aboveecho $this->escape($fullName)."->".$staffmembers['user_name'];?>
+        
+   <?php 
+    } else {
+    ?><tr bgcolor="<?=($i % 2) ? "#FFE4C4" : "#B0C4DE"?>" class="TableRow">
+	<td><b><?php echo $this->escape($fullName)?></td>
+    <?php 
+    }
+   
+    echo "<td><a href=\"mailto:".$staffmembers['email_address']."\">".$staffmembers['email_address']."</a></td>";
+ //   echo "<td>".$staffmembers['address_street1']."</td>";
+ //   echo "<td>".$staffmembers['address_city']."</td>";
+ //   echo "<td>".$staffmembers['address_zip']."</td>";
+    echo "<td>".$staffmembers['status']."</td>";
+    
+   echo "<td>";
+   // @todo this does not work.  in lieu of this we just put in a blank
+   
+   foreach($this->nameOfSchool as $schoolName) {
+      if ($schoolName['id_school']== $staffmembers['id_school']) {
+          echo $schoolName['name_school'];
+      }
+      else {
+       echo " ";
+      }
+   } 
+?>  
+</td><td>
+    <a href="#" rel="<?php echo $this->url(array('controller'=>'staff',
+        'action'=>'addotherstaff','id_personnel'=>$staffmembers['id_personnel'],'name_last'=>$staffmembers['name_last'],
+        'name_first'=>$staffmembers['name_first'],'id_district'=>$staffmembers['id_district'],'id_county'=>$staffmembers['id_county'],'id'=>'0'),null,true,false);?>" class="openWindow" title="<?=$staffmembers['name_first']?> <?=$staffmembers['name_last']?>">
+        <?if ($this->edit2=='true'&& $action == 'true'){?> <?=$this->escape($fullName);?><?} else if ($this->edit2=='true'&& $action != 'true'){?><?=$this->escape($fullName);?><?}?>
+    </a>
+</td></tr>
+<?}?> 
+</table>
+<?php  echo $this->paginationControl($this->paginator2,'sliding','sqlpaginator.phtml', array('route'=> 'district'));?>
+</div>
+
+
+<div id="tooltip_container"> </div>
+		<div class="tooltip-source-html">
+			<div id="tooltip-sidebar">
+				<img src="/images/logo_small.gif" style="float:left;">
+				Click on a staff member to grant them privileges to a school.					
+				<div class="clear-all"></div>
+        		</div>
+		</div>
+
+<div id="dialog"></div>
+

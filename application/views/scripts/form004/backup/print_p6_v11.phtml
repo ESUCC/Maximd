@@ -1,0 +1,446 @@
+<?php
+$view = $this->element->page->getView();
+if (true !== $view->db_form_data['summary_form']) {
+    $summaryForm = false;
+} else {
+    $summaryForm = true;
+}
+if(isset($view->db_form_data['district'])) {
+    $district = $view->db_form_data['district'][0];
+} else {
+    $district = array();
+}
+?>
+<?php if (!$summaryForm || $district['iep_summary_primary_disability']) : ?>
+    <table class="formSectionHead" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="btb"><?php echo $this->translate('Statement of Special Education and Related Services'); ?></td>
+        </tr>
+    </table>
+    <?php
+    if($this->element->expanded_options) {
+        $showPdAndHideExpandedOptions = $this->element->expanded_options->getValue() == 't' ? true : false;
+    } else {
+        $showPdAndHideExpandedOptions = false;
+    }
+
+
+    ?>
+    <div id="showPrimaryDisabilityText" style="<? if('print' == $view->mode && $showPdAndHideExpandedOptions) echo 'display:none;'; ?>">
+        <table class="formDesc">
+            <tr>
+                <td><? echo($this->element->primary_disability); ?></td>
+            </tr>
+        </table>
+    </div>
+    <div id="showExpanedOptions" style="">
+        <table class="formInput" style="<? if('print' == $view->mode && !$showPdAndHideExpandedOptions) echo 'display:none;'; ?>">
+            <tr>
+                <td>
+                    <?php echo $this->printBold($view->mode, $this->element->reg_edu_student_services ? $this->element->reg_edu_student_services->getLabel() : ''); ?>
+                    <?php echo $this->element->reg_edu_student_services; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->printBold($view->mode, $this->element->not_reg_edu_student_services ? $this->element->not_reg_edu_student_services->getLabel() : ''); ?>
+                    <?php echo $this->element->not_reg_edu_student_services; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->printBold($view->mode, $this->element->other_services ? $this->element->other_services->getLabel():''); ?>
+                    <?php echo $this->element->other_services; ?>
+                </td>
+            </tr>
+        </table>
+    </div>
+<?php endif; ?>
+<BR/>
+<? echo "<span><B>" . $this->translate('statement of special education and related services') . "</B></span>"; ?>
+<table class="print" style="width:100%;" cellpadding="2" cellspacing="0">
+    <tr>
+        <td class="print_bgGreyBold" style="text-align:center;padding-left: 8px;width:*;"><?php echo $this->translate(
+                'Service'
+            ); ?></td>
+        <td class="print_bgGreyBold" style="text-align:center" colspan="2"><?php echo $this->translate(
+                'Duration'
+            ); ?></td>
+        <td class="print_bgGreyBold" style="text-align:center;width:200px;"><?php echo $this->translate(
+                'Location'
+            ); ?></td>
+        <td class="print_bgGreyBold" style="text-align:center" colspan="2"><?php echo $this->translate(
+                'Frequency'
+            ); ?></td>
+        <td class="print_bgGreyBold" style="text-align:center" rowspan="2"><?php echo $this->translate(
+                'Service follows school calendar'
+            ); ?></td>
+    </tr>
+    <tr>
+        <td class="print_bgWhiteSmall" style="text-align:center">&nbsp;</td>
+        <td class="print_bgWhiteSmall" style="text-align:center"><?php echo $this->translate('Start Date'); ?></td>
+        <td class="print_bgWhiteSmall" style="text-align:center"><?php echo $this->translate('End Date'); ?></td>
+        <td class="print_bgWhiteSmall" style="text-align:center">&nbsp;</td>
+        <td class="print_bgWhiteSmall" style="text-align:center"><?php echo $this->translate('Times/day'); ?></td>
+        <td class="print_bgWhiteSmall" style="text-align:center"><?php echo $this->translate('Frequency'); ?></td>
+    </tr>
+    <?php if (!$summaryForm || $district['iep_summary_primary_service']) : ?>
+        <tr>
+            <td class="print_bgGreyBold" style="text-align:left;padding-left: 8px;"
+                colspan="8"><?php echo $this->translate('Special Education Service'); ?></td>
+        </tr>
+        <tr>
+            <td class="print_bgWhiteSmall" style="text-align:left;padding-left: 8px;">
+                <?
+                $this->element->primary_disability_drop->removeDecorator('label');
+                echo $this->element->primary_disability_drop;
+                ?></td>
+            <td class="print_bgWhiteSmall"
+                style="text-align:center;white-space: nowrap;"><? echo($this->element->primary_service_from); ?></td>
+            <td class="print_bgWhiteSmall"
+                style="text-align:center;white-space: nowrap;"><? echo($this->element->primary_service_to); ?></td>
+            <td class="print_bgWhiteSmall" style="text-align:center;">
+                <?
+                $this->element->primary_service_location->removeDecorator('label');
+                echo $this->element->primary_service_location;
+                ?>
+            </td>
+            <td class="print_bgWhiteSmall"
+                style="text-align:center;white-space: nowrap;"><? echo $this->element->primary_service_tpd . " " . $this->element->primary_service_tpd_unit; ?></td>
+            <td class="print_bgWhiteSmall"
+                style="text-align:center;white-space: nowrap;"><? echo $this->element->primary_service_days_value . " " . $this->element->primary_service_days_unit; ?></td>
+            <td class="print_bgWhiteSmall"
+                style="text-align:center;white-space: nowrap;"><? if ($this->element->primary_service_calendar->getValue(
+                    ) == 't'
+                ) {
+                    echo $this->translate('Yes');
+                } else {
+                    echo $this->translate('No');
+                } ?></td>
+        </tr>
+    <?php endif; ?>
+    <?php if (!$summaryForm || $district['iep_summary_related_service']) : ?>
+        <?php if (0) : ?>
+            <tr>
+                <td class="print_bgGreyBold" style="text-align:left;padding-left: 8px;"
+                    colspan="8"><?php echo $this->translate('Special Education Related Services'); ?></td>
+            </tr>
+        <?php endif; ?>
+        <?php
+        //
+        // related_services subform
+        //
+        echo $this->subform($view, 'related_services', false, false, false);
+        ?>
+    <?php endif; ?>
+    <?php if (!$summaryForm || $district['iep_summary_supp_service']) : ?>
+        <tr>
+            <td class="print_bgGreyBold" style="text-align:left;padding-left: 8px;"
+                colspan="8"><?php echo $this->translate('Supplementary Aids Services'); ?></td>
+        </tr>
+        <?php
+        //
+        // supplemental services subform
+        //
+        echo $this->subform($view, 'supp_services', false, false, false);
+        ?>
+    <?php endif; ?>
+    <?php if (!$summaryForm || $district['iep_summary_prog_mod']) : ?>
+        <tr>
+            <td class="print_bgGreyBold" style="text-align:left;padding-left: 8px;"
+                colspan="8"><?php echo $this->translate('Program Modifications Accommodations'); ?></td>
+        </tr>
+        <?php
+        //
+        // program modification subform
+        //
+        echo $this->subform($view, 'program_modifications', false, false, false);
+        ?>
+    <?php endif; ?>
+    <?php if (0) : ?>
+        <?php if (!$summaryForm || $district['iep_summary_ass_tech']) : ?>
+            <tr>
+                <td class="print_bgGreyBold" style="text-align:left;padding-left: 8px;"
+                    colspan="8"><?php echo $this->translate('Assistive Technology Devices or Services'); ?></td>
+            </tr>
+            <?php
+            //
+            //  Assistive Technology Devices or Services subform
+            //
+            echo $this->subform($view, 'assist_tech', false, false, false);
+            ?>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if (!$summaryForm || $district['iep_summary_supports']) : ?>
+        <tr>
+            <td class="print_bgGreyBold" style="text-align:left;padding-left: 8px;"
+                colspan="8"><?php echo $this->translate('Supports for School Personnel'); ?></td>
+        </tr>
+        <?php
+        //
+        //   Supports for School Personnel subform
+        //
+        echo $this->subform($view, 'school_supp', false, false, false);
+        ?>
+    <?php endif; ?>
+</table>
+<?php if (!$summaryForm) : ?>
+    <hr/>
+    <?php //echo $this->subform($view, 'accomodations_checklist', false); ?>
+    <hr/>
+    <?php if (!$view->lps) { ?>
+        <table class="formSectionHead" cellspacing="0" cellpadding="0">
+            <tr>
+                <td><?php echo $this->translate('SESIS Information'); ?></td>
+            </tr>
+        </table>
+        <table class="formInput" style="margin-top:1px;">
+            <tr class="bgLight2" style="margin:0px;padding:0px;">
+                <td colspan="3" align="center">
+                    <?php echo $this->translate('Percent of time child spends in'); ?>:
+                </td>
+            </tr>
+            <tr class="bgLight2" style="margin:0px;padding:0px;">
+                <td colspan="2" align="center">
+                    A. <?php echo $this->translate('Special Education and Related Services'); ?>
+                </td>
+                <td align="center">
+                    B. <?php echo $this->translate('Regular Education'); ?>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <?= $this->element->special_ed_peer_percent; ?>
+                </td>
+                <td align="center">
+                    <?= $this->element->special_ed_non_peer_percent; ?>
+                </td>
+                <td align="center">
+                    <?= $this->element->reg_ed_percent; ?>
+                </td>
+            </tr>
+        </table>
+    <?php } ?>
+    STARTMIPS
+    <?php
+    $showMips = false;
+
+    if(
+        $view->db_form_data['primary_disability_drop'] == "Occupational Therapy Services" ||
+        $view->db_form_data['primary_disability_drop'] == "Physical Therapy" ||
+        $view->db_form_data['primary_disability_drop'] == "Speech-language therapy" ||
+        $view->db_form_data['primary_disability_drop'] == "Speech/Language Therapy"
+    ) {
+        $showMips = true;
+    }
+
+    for ($i = 1; $i <= $view->db_form_data['related_services']['count']; $i++) {
+        if (
+            $view->db_form_data['related_services_' . $i]['related_service_drop'] == "Occupational Therapy Services" ||
+            $view->db_form_data['related_services_' . $i]['related_service_drop'] == "Physical Therapy" ||
+            $view->db_form_data['related_services_' . $i]['related_service_drop'] == "Speech-language therapy"
+        ) {
+            $showMips = true;
+        }
+    }
+    if ($showMips ||
+        $this->element->primary_disability_drop->getValue() == "Occupational Therapy Services" ||
+        $this->element->primary_disability_drop->getValue() == "Physical Therapy" ||
+        $this->element->primary_disability_drop->getValue() == "Speech-language Therapy"
+    ) {
+        ?>
+        <div style="page-break-before: always;page-break-after: always;">
+            <table class="formSectionHead" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td><?php echo $this->translate(
+                            'PARENTAL CONSENT FOR PUBLIC SCHOOL DISTRICT TO ACCESS MEDICAID FUNDING (MIPS Consent Form)'
+                        ); ?></td>
+                </tr>
+            </table>
+            <table class="formInput">
+                <tr>
+                    <td><strong><?php echo $this->translate('Student'); ?>
+                            :</strong> <?php echo $view->db_form_data['student_data']['name_student']; ?></td>
+                    <td><strong><?php echo $this->translate('School District'); ?>
+                            :</strong> <?php echo $view->db_form_data['student_data']['name_district']; ?></td>
+                </tr>
+                <tr>
+                    <td><strong><?php echo $this->translate('Parents'); ?>
+                            :</strong> <?php echo $view->db_form_data['student_data']['parents']; ?></td>
+                    <td><strong><?php echo $this->translate('School'); ?>
+                            :</strong> <?php echo $view->db_form_data['student_data']['name_school']; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p style="margin:10px 0;"><?php echo $this->translate(
+                                'State Law requires public schools'
+                            ); ?></p>
+
+                        <p style="margin:10px 0;"><?php echo $this->translate('consent refusal'); ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php
+                        $a = clone($this->element->fape_consent);
+                        $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                        $a->setMultiOptions(array("1" => $this->element->fape_consent->getMultiOption("1")));
+                        $a->removeDecorator('label');
+                        $a->setAttrib('label_class', 'sc_bulletInputLeft');
+                        echo $a;
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        $b = clone($this->element->fape_consent);
+                        $b->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                        $b->setMultiOptions(array("0" => $this->element->fape_consent->getMultiOption("0")));
+                        $b->removeDecorator('label');
+                        $b->setAttrib('label_class', 'sc_bulletInputLeft');
+                        echo $b;
+                        ?>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="formSectionHead" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td><?php echo $this->translate('Parent Signature:'); ?> </td>
+                </tr>
+            </table>
+            <table class="formInput" style="margin-top:1px;">
+                <tr>
+                    <td>
+                        <?php echo $this->translate('Parent Signature:'); ?>________________________________
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php echo $this->translate('Date of Parent Signature:'); ?>________________________________
+                    </td>
+                </tr>
+            </table>
+
+            <?php if('' != $this->element->pg6_no_sig_explanation->getValue()): ?>
+                <table class="formSectionHead" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td><?php echo $this->translate('No Signature Explanation'); ?></td>
+                    </tr>
+                </table>
+                <table class="formInput" style="margin-top:1px;">
+                    <tr>
+                        <td>
+                            <?= $this->element->pg6_no_sig_explanation; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?= $this->element->pg6_no_sig_explanation; ?>
+                        </td>
+                    </tr>
+                </table>
+            <?php endif; ?>
+        </div>
+    <?php } ?>
+<?php endif; ?>
+<?php
+/* Commenting out, not ready for production
+	  $langToPrint = array();
+	  if ($view->db_form_data['print_english_permission_to_access'] == true) {
+		 $langToPrint[] = 'en';  
+	  }
+	  if ($view->db_form_data['print_spanish_permission_to_access'] == true) {
+	  	$langToPrint[] = 'es';
+	  } 
+
+	  for ($i=0;$i<count($langToPrint);$i++) {
+	  $translate = Zend_Registry::get('Zend_Translate');
+	  $translate->setLocale($langToPrint[$i]);
+	  $actionTranslation = new Zend_Translate(
+	  		array(
+	  				'adapter' => 'tmx',
+	  				'content' => APPLICATION_PATH . '/translation/form004/page6.tmx',
+	  				'scan' => Zend_Translate::LOCALE_FILENAME,
+	  				'disableNotices' => true
+	  		)
+	  );
+	  
+	  $translate->addTranslation(
+	  		array('content' => $actionTranslation)
+	  );
+?>
+<div class="page6" style="page-break-before: always;">
+    <table class="formSectionHead" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="btb"><?php echo $this->translate('Written Notification to Access'); ?></td>
+	    </tr>
+	</table>
+	<table class="formInput noBorder">
+		<tr>
+			<td align="right"><?php echo $this->translate('Date'); ?>: <?php echo $view->db_form_data['date_conference']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('Student'); ?>: <?php echo $view->db_form_data['name_first']; ?> <?php echo $view->db_form_data['name_middle']; ?> <?php echo $view->db_form_data['name_last']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('Parent Guardian'); ?>: <?php echo $view->db_form_data['student_data']['parents']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('As a parent of a child with a disability'); ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('Prior to utilizing your or your child'); ?><br />
+			<ul style="list-style:decimal">
+				<li><?php echo $this->translate('specify the personally identifiable'); ?></li>
+				<li><?php echo $this->translate('specify the purpose of the disclosure'); ?></li>
+				<li><?php echo $this->translate('specify the agency to which'); ?></li>
+				<li><?php echo $this->translate('specify that you'); ?></li>
+			</ul></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('if you consent'); ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('parents have the right to withdraw'); ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $this->translate('a school district may not'); ?>
+			<br />
+			<ul style="list-style:decimal">
+				<li><?php echo $this->translate('require parents to sign up'); ?></li>
+				<li><?php echo $this->translate('require parents to incur'); ?></li>
+				<li><?php echo $this->translate('may not use a child'); ?> 
+					<ul style="list-style:lower-alpha">
+						<li><?php echo $this->translate('decrease available lifetime'); ?></li>
+						<li><?php echo $this->translate('result in the family paying'); ?></li>
+						<li><?php echo $this->translate('increase premiums'); ?></li>
+						<li><?php echo $this->translate('risk loss of eligibility'); ?></li>
+					</ul>
+				</li>
+			</ul>	
+			</td>
+		</tr>
+	</table>
+	<table class="formInput" style="background-color:#eee;border:1px solid #000; padding:10px;">
+		<tr>
+			<td colspan="2"><?php echo $this->translate('note'); ?></td>
+		</tr>
+		<tr>
+			<td colspan="2"><?php echo $this->translate('this notice must be written and provided'); ?></td>
+		</tr>
+		<tr>
+			<td colspan="2"><?php echo $this->translate('if the parents native language'); ?></td>
+		</tr>
+		<tr>
+			<td width="25%"><input type="checkbox" name="spanish" /><?php echo $this->translate('spanish'); ?></td>
+			<td width="75%"><input type="checkbox" name="other" /><?php echo $this->translate('other'); ?></td>
+		</tr>
+		<tr>
+			<td colspan="2"><hr /></td>
+		</tr>
+		<tr>
+			<td colspan="2"><?php echo $this->translate('if the native language or other mode'); ?></td>
+		</tr>
+	</table>
+</div>
+<?php  } // end for langToPrint */ ?>

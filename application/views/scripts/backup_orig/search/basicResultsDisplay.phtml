@@ -1,0 +1,87 @@
+<div class="headerHome">
+<p>Returning Customer?&nbsp;&nbsp;<a href="">Log in here.</a></p>
+</div>
+
+<div class="iconsHome"></div>
+
+<p class="introHome">consectetuer molestie.</p>
+
+<div class="contentMain">
+<div class="leftColHome">
+<h2 class="columnHeaders">What's your business?</h2>
+<?php
+echo $this->searchForm;
+?>
+</div>
+<div class="rightColHome">
+<h2 class="columnHeaders">Find keywords</h2>
+<select name="categories" class="catSelectHome">
+	<option value="" selected="selected">Browse business categories</option>
+	<option value="">Category One</option>
+	<option value="">Category Two</option>
+	<option value="">Category Three</option>
+	<option value="">Category Four</option>
+	<option value="">Etc</option>
+</select>
+<p>Cras mollis.</p>
+</div>
+
+
+<form action="" method="post">
+
+<table class="treeTable" style="width: 100%;">
+
+	<tr>
+		<th>Category</th>
+		<th>Match Rate for<BR>Search Term</th>
+		<th>View Subcategories</th>
+		<th>Exact Matches Containing<BR>Search Term</th>
+		<th></th>
+		<th>Keywords Related to Category</th>
+		<th></th>
+		<th>Total Keywords in Category</th>
+	</tr>
+	
+		<?php
+		echo $this->resultsForm;
+		//pre_print_r($this->rObj);
+		?>
+	
+	<tr>
+		<td colspan="8" style="text-align: right;">
+			<?php echo $this->formHidden('displayedNodeCount', $this->displayedNodeCount); ?>
+			<?php echo $this->formHidden('showCatLev', $this->depth + 1); ?>			
+			<?php echo $this->formHidden('submissionType', ''); ?>
+			
+			<b> 
+			
+			<input type="button"
+			value="Back"
+			onclick="javascript:submissionType = document.getElementById('submissionType');submissionType.value='back'; catLevel = document.getElementById('showCatLev');catLevel.value -=2;this.form.submit();"
+			id="refineCategoryOne" name="refineCategoryOne" /> 
+			
+			<input type="button"
+			value="Continue Refining Search"
+			onclick="javascript:this.form.submit();" id="showCatLev2"
+			name="showCatLev2" />
+			
+			</b>
+			</td>
+	</tr>
+
+</table>
+
+</form>
+
+
+
+
+
+</div>
+<!-- end content -->
+
+
+<!--<div class="footer">-->
+<!--<h3>Footer</h3>-->
+<!--</div>-->
+<!-- end footer -->

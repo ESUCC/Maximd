@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="Notice and Consent for Initial Evaluation">
+           <tuv xml:lang="es"><seg>Notificaci&#xF3;n y consentimiento para una evaluaci&#xF3;n inicial</seg></tuv>
+           <tuv xml:lang="en"><seg>Notice and Consent for Initial Evaluation</seg></tuv>
+       </tu>
+       <tu tuid="Explanation of why the district proposes to evaluate your child">
+           <tuv xml:lang="es"><seg>Explicaci&#xF3;n del porqu&#xE9; el distrito propone evaluar a su ni&#xF1;o/a</seg></tuv>
+           <tuv xml:lang="en"><seg>Explanation of why the district proposes to evaluate your child</seg></tuv>
+       </tu>
+       <tu tuid="Date of Notice">
+           <tuv xml:lang="es"><seg>Fecha de la notificaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Date of Notice</seg></tuv>
+       </tu>
+       <tu tuid="Any options the district considered">
+           <tuv xml:lang="es"><seg>Opciones consideradas por el distrito</seg></tuv>
+           <tuv xml:lang="en"><seg>Any options the district considered</seg></tuv>
+       </tu>
+       <tu tuid="Reasons why the above options were rejected">
+           <tuv xml:lang="es"><seg>Motivos por los que las opciones que aparecen anteriormente fueron rechazadas</seg></tuv>
+           <tuv xml:lang="en"><seg>Reasons why the above options were rejected</seg></tuv>
+       </tu>
+       <tu tuid="This proposal is based on the evaluation procedures, tests, records, or reports described below">
+           <tuv xml:lang="es"><seg>Esta propuesta se basa en los ex&#xE1;menes, registros, reportes  o procesos de la evaluci&#xF3;n descritos a continuaci&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>This proposal is based on the evaluation procedures, tests, records, or reports described below</seg></tuv>
+       </tu>
+       <tu tuid="Any other factors relevant to this proposal">
+           <tuv xml:lang="es"><seg>Otros factores relacionados a esta propuesta</seg></tuv>
+           <tuv xml:lang="en"><seg>Any other factors relevant to this proposal</seg></tuv>
+       </tu>
+       <tu tuid="The estimated amount of time for completing the multidisciplinary evaluation and making the verification decision is">
+           <tuv xml:lang="es"><seg>Se estima que el tiempo requerido para completar la evaluaci&#xF3;n multidisciplinaria y para tomar la decisi&#xF3;n de verificaci&#xF3;n es</seg></tuv>
+           <tuv xml:lang="en"><seg>The estimated amount of time for completing the multidisciplinary evaluation and making the verification decision is</seg></tuv>
+       </tu>
+       <tu tuid="Not to exceed 45 school days">
+           <tuv xml:lang="es"><seg>No  debe exceder m&#xE1;s de 45 d&#xED;as escolares</seg></tuv>
+           <tuv xml:lang="en"><seg>Not to exceed 45 school days</seg></tuv>
+       </tu>
+       <tu tuid="proposes to conduct a multidisciplinary evaluation of your child. The district proposes to evaluate your child because">
+           <tuv xml:lang="es"><seg>propone llevar a cabo una evaluaci&#xF3;n multidisciplinaria de su hijo/a. El distrito propone evaluar a su hijo/a porque </seg></tuv>
+           <tuv xml:lang="en"><seg>proposes to conduct a multidisciplinary evaluation of your child. The district proposes to evaluate your child because</seg></tuv>
+       </tu>
+   </body>
+</tmx>

@@ -1,0 +1,37 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+<?php
+if($view->mode == "print") {
+	$dateCellWidthTop = "width:120px;";
+	$dateCellWidth = "width:99px;";
+} else {
+	$dateCellWidthTop = "width:150px;";
+	$dateCellWidth = "width:150px;";
+}
+?>
+<div style="clear:both;page-break-after: always;">
+	<table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+	    <tr>
+	        <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+	        <td>Child and Family Strengths</td>
+	    </tr>
+	</table>
+	<table class="formInput" style="margin-top:1px;">     
+	    <tr>
+	        <td valign="top" style="<?= $dateCellWidth; ?>">
+	        <?php 
+	            $this->element->date_child_strengths->removeDecorator('label');
+	            echo $this->element->date_child_strengths;
+	        ?></td>
+	        <td><?php echo $this->element->child_strengths; ?></td>
+	    </tr>
+	</table>
+
+    <?php echo $this->ifspHistory($view, $this, 'child_strengths_show_ifsps', 'child_strengths_print_ifsps', 'date_child_strengths', 'child_strengths') ?>
+
+</div>

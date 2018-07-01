@@ -1,0 +1,20 @@
+<?php $auth = Zend_Auth::getInstance();?>
+
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationSubmenu('parent'); ?>
+        </td>
+    </tr>
+</table>
+
+
+<div id="searchResults" class="clearfix">parent page<BR>
+</div>
+<div id="dialog"></div>

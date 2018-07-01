@@ -1,0 +1,81 @@
+<div class="header" style="margin-bottom:50px">
+    <h1>Header</h1>
+    <div class="loginBox">
+        <?php echo $this->loginForm; ?>
+    </div>
+    <!-- end loginBox -->
+</div>
+<!-- end header -->
+    
+<a href="index">Return to search</a>
+
+<div class="contentMain">
+<?php if($this->itemCount > 0) { ?>
+
+    <form action="" method="post">
+    <table name="treeTable" class="treeTable" style="width: 100%;" border="1">
+    
+        <TR>
+            <TH>
+                <input type="button" value="Uncheck All" onclick="javascript:uncheckAllCheckboxes('deleteme', 1, <?php echo $this->resultRowCounter-1; ?>);" id="Uncheck All" name="Uncheck All" />
+            </TH>
+            <TH>
+                <input type="button" value="Check All" onclick="javascript:checkAllCheckboxes('deleteme', 1, <?php echo $this->resultRowCounter-1; ?>);" id="Check All" name="Check All" />
+            </TH>
+            <th>&nbsp;</th>
+        </TR>
+    	<tr>
+    		<th>Check boxes and <br />click delete selected</th>
+    		<th>Keyword Count</th>
+    		<th>Cost<br />Bought Individually</th>
+    		<th>Category</th>
+    	</tr>
+    	
+    	<?php // output database rows ?>	
+    	<?php echo $this->purchaseForm; ?>
+    	
+    	<?php echo $this->purchaseFormUncat; ?>
+    
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td><B><?php  echo $this->keywordsTotal; ?></B></td>
+    		<td><B><?php echo "$" . My_Classes_iepFunctionGeneral::priceKeywords($this->keywordsTotal, $this->payRate); ?></B></td>
+    		<td style="text-align:left"><B>Total when bought together.</B></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>
+    			<?php echo $this->formHidden('resultRowCounter', $this->resultRowCounter); ?>
+    			<?php echo $this->formHidden('resultRowCounter_uncat', $this->resultRowCounter_uncat); ?>
+    			<input type="button" value="Delete All" onclick="javascript:var answer = confirm ('Are you sure you want to remove all these items from your cart?.'); if(answer) { this.form.action='purchase/delete?id=all'; this.form.submit(); }" id="DeleteAll" name="DeleteAll" /><br />
+    			<input type="button" value="Delete Selected" onclick="javascript:this.form.action='purchase/delete'; this.form.submit();" id="Delete" name="Delete" />
+    		</td>
+    		<td>&nbsp;</td>
+    		<td>
+    			<?php if($this->userLoggedIn) { ?>
+    				<input type="button" value="Purchase" onclick="window.location='saleinfo';" id="Purchase" name="Purchase" />
+    			<?php } else { ?>
+    				<b>You must be logged in before you can purchase.</b>
+    			<?php } ?>
+    		</td>
+    		<td>
+    		    <?php if(0) { ?>
+    			<input type="button" value="Download" onclick="javascript:this.form.action='purchase/downloadfile'; this.form.submit();" id="Download" name="Download" />
+    			<?php } else { ?>
+    			    &nbsp;
+    			<?php } ?>
+    		</td>
+    	</tr>
+    
+    </table>
+    </form>
+<?php } else { ?>
+	Your cart is empty
+<?php } ?>
+</div>
+<!-- end content -->
+
+<!--<div class="footer">-->
+<!--<h3>Footer</h3>-->
+<!--</div>-->
+<!-- end footer -->

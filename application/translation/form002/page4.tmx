@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence" adminlang="en" srclang="de-at" o-tmf="abc" creationtool="XYZTool">
+   </header>
+   <body>
+       <tu tuid="For students attending non-public schools, an administrator or a designated representative of the non-public school shall be a member of the MDT">
+           <tuv xml:lang="es"><seg>Los alumnos que asisten a escuelas que no son p&#xFA;blicas, deben tener a un miembro  administrativo o representante designado de dicha escuela como miembro del MDT</seg></tuv>
+           <tuv xml:lang="en"><seg>For students attending non-public schools, an administrator or a designated representative of the non-public school shall be a member of the MDT</seg></tuv>
+       </tu>
+       <tu tuid="Should a member(s) of the MDT not agree with the conclusion(s) of the report, they must submit a separate statement (minority report) presenting his or her conclusion(s)">
+           <tuv xml:lang="es"><seg>Si un(os) miembro(s) del MDT no est&#xE1;n de acuerdo con la(s) conclusi&#xF3;n(es) de este informe, debe(n) entregar una declaraci&#xF3;n por separado (informe minoritario) en el cual se presenten su(s) conclusi&#xF3;n(es)</seg></tuv>
+           <tuv xml:lang="en"><seg>Should a member(s) of the MDT not agree with the conclusion(s) of the report, they must submit a separate statement (minority report) presenting his or her conclusion(s)</seg></tuv>
+       </tu>
+       <tu tuid="Date Provided">
+           <tuv xml:lang="es"><seg>Fecha provista</seg></tuv>
+           <tuv xml:lang="en"><seg>Date Provided</seg></tuv>
+       </tu>
+       <tu tuid="The parent was provided a copy of the multidisciplinary evaluation team report on:">
+           <tuv xml:lang="es"><seg>El padre de familia recibi&#xF3; una copia del informe del equipo sobre la evaluaci&#xF3;n multidisciplinaria el </seg></tuv>
+           <tuv xml:lang="en"><seg>The parent was provided a copy of the multidisciplinary evaluation team report on:</seg></tuv>
+       </tu>
+       <tu tuid="By:">
+           <tuv xml:lang="es"><seg>Por:</seg></tuv>
+           <tuv xml:lang="en"><seg>By:</seg></tuv>
+       </tu>
+       <tu tuid=" (name)">
+           <tuv xml:lang="es"><seg>(nombre)</seg></tuv>
+           <tuv xml:lang="en"><seg> (name)</seg></tuv>
+       </tu>
+       <tu tuid="Yes">
+           <tuv xml:lang="es"><seg>S&#xED;</seg></tuv>
+           <tuv xml:lang="en"><seg>Yes</seg></tuv>
+       </tu>
+       <tu tuid="No">
+           <tuv xml:lang="es"><seg>No</seg></tuv>
+           <tuv xml:lang="en"><seg>No</seg></tuv>
+       </tu>
+       <tu tuid="Print blank rows">
+           <tuv xml:lang="es"><seg>Imprimir renglones en blanco</seg></tuv>
+           <tuv xml:lang="en"><seg>Print blank rows</seg></tuv>
+       </tu>
+       <tu tuid="Name">
+           <tuv xml:lang="es"><seg>Nombre</seg></tuv>
+           <tuv xml:lang="en"><seg>Name</seg></tuv>
+       </tu>
+       <tu tuid="Position on MDT">
+           <tuv xml:lang="es"><seg>Posici&#xF3;n en el MDT</seg></tuv>
+           <tuv xml:lang="en"><seg>Position on MDT</seg></tuv>
+       </tu>
+       <tu tuid="I agree with the MDT decision">
+           <tuv xml:lang="es"><seg>Estoy de acuerdo con la decisi&#xF3;n del MDT</seg></tuv>
+           <tuv xml:lang="en"><seg>I agree with the MDT decision</seg></tuv>
+       </tu>
+       <tu tuid="Remove Row">
+           <tuv xml:lang="es"><seg>Quitar el rengl&#xF3;n</seg></tuv>
+           <tuv xml:lang="en"><seg>Remove Row</seg></tuv>
+       </tu>
+       <tu tuid="MDT has been provided at no cost">
+           <tuv xml:lang="es"><seg>SPANISH: MDT has been provided at no cost</seg></tuv>
+           <tuv xml:lang="en"><seg>MDT has been provided at no cost</seg></tuv>
+       </tu>
+   </body>
+</tmx>

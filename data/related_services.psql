@@ -1,0 +1,112 @@
+drop type related_service_rec cascade;
+create type related_service_rec as (related_service_drop varchar, id_form_004 int, version_number int);
+
+drop function psql_merged_related_services() cascade;
+create or replace function psql_merged_related_services() returns setof related_service_rec as $_$declare
+    r related_service_rec%rowtype;
+    rs record;
+    dropval varchar;
+    stack varchar;
+begin
+    for r in select related_service_drop, id_form_004, version_number from iep_form_004 loop
+        --RAISE NOTICE 'START PROCESSING FORM: %', r.id_form_004;
+        --RAISE NOTICE 'form version: %', r.version_number;
+        if r.version_number >= 9 THEN
+            for rs IN EXECUTE 'select related_service_drop, id_form_004 from form_004_related_service where status = ''Active'' and id_form_004 = ' || quote_literal( r.id_form_004 ) loop
+                r.version_number := r.version_number;
+                r.related_service_drop := rs.related_service_drop;
+                r.id_form_004 := rs.id_form_004;
+                return next r;
+            end loop;
+        ELSE
+            stack := r.related_service_drop || '|';
+            while position('|' in stack) > 0 LOOP
+                dropval := substring(stack from 1 for position('|' in stack) -1);
+                stack := substring(stack from position('|' in stack)+1);
+                if char_length(dropval) > 0 THEN
+                    r.related_service_drop := dropval;
+                    return next r;
+                end if;
+            end loop;
+        END IF;
+    end loop;
+    return;
+end$_$ language 'plpgsql';
+
+--select * from psql_merged_related_services() where id_form_004 = 1296483;
+
+select cl.id_student, cl.final_id_form_004, rs.related_service_drop
+from my_caseload cl 
+left join psql_merged_related_services() rs on cl.final_id_form_004 = rs.id_form_004  
+where cl.final_id_form_004 = '1338334' and id_personnel = 1000254;
+
+
+
+
+
+
+
+
+
+
+
+
+abort;
+begin;
+
+
+
+
+CREATE or replace FUNCTION tgr_related_services() RETURNS trigger AS $tgr_related_services$
+    DECLARE
+	    r related_service_rec%rowtype;
+	    rs record;
+	    dropval varchar;
+	    stack varchar;
+    
+    BEGIN
+    
+		if NEW.version_number >= 9 THEN
+			--RAISE NOTICE 'Version greater than 9. Do not modify the form_004_related_service table.';
+		ELSE 
+			--RAISE NOTICE 'Version less than 9. Recreate form_004_related_service records based on saved related_service_drop value';
+        	delete from form_004_related_service where id_form_004 = NEW.id_form_004;
+            stack := NEW.related_service_drop || '|';
+            while position('|' in stack) > 0 LOOP
+                dropval := substring(stack from 1 for position('|' in stack) -1);
+                --RAISE NOTICE 'dropval: %', dropval;
+                stack := substring(stack from position('|' in stack)+1);
+                if char_length(dropval) > 0 THEN
+                    --RAISE NOTICE 'inserting: %', NEW.related_service_drop;
+                    insert into form_004_related_service (id_form_004, id_student, related_service_drop, trigger_created) VALUES (NEW.id_form_004, NEW.id_student, dropval, true);
+                end if;
+            end loop;
+			
+		END IF;
+        RETURN NEW;
+    END;
+$tgr_related_services$ LANGUAGE plpgsql;
+drop trigger convert_related_services_to_records on iep_form_004;
+create trigger convert_related_services_to_records after update on iep_form_004 FOR EACH ROW EXECUTE PROCEDURE tgr_related_services();
+
+update iep_form_004 set related_service_drop = 'test|gorilla|||monkey' where id_form_004 = 2;
+update iep_form_004 set related_service_drop = 'test|gorilla|||monkey' where id_form_004 = 22;
+select id_form_004, related_service_drop, trigger_created from form_004_related_service;
+
+
+
+update iep_form_004 set id_form_004 = id_form_004;
+select related_service_drop from iep_form_004 where id_form_004 = 1296483;
+
+select version_number, id_form_004 related_service_drop from iep_form_004 limit 10;
+
+select id_form_004, related_service_drop from form_004_related_service;                                                                                                                                         
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+<tr class="<?php echo $this->class?>">
+	<td class="cssCell">
+	    <?php echo $this->categoryName; ?>
+		<?php echo $this->element->nodeType; ?>
+		<?php echo $this->element->categoryName; ?>
+	</td>
+		<?php if('' == $this->kw_samples) { ?>
+    	<td class="cssCell"><?php echo $this->element->viewSubcategories; echo $this->element->id_subcategory; echo $this->hideNode; ?> 
+    		View Subcategories
+    	</td>
+	<?php } else { ?>
+    	<td class="cssCell"><?php echo $this->element->viewSubcategories; echo $this->element->id_subcategory; echo $this->hideNode; ?> 
+    		<a href="javascript:kwSamplesPopUp('<?php echo $this->categoryName; ?>', '<?php echo $this->kw_samples; ?>')">View Subcategories</a>
+    	</td>
+	<?php } ?>
+<td class="cssCell"><?php echo $this->countKeywords; ?><?php echo $this->element->kwcount; ?></td>
+</tr>

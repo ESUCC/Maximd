@@ -1,0 +1,191 @@
+<?php
+$view = $this->element->page->getView();
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013
+; ?>
+<?= $this->element->page
+; ?>
+<div style="clear:both;page-break-after: always;">
+    <table class="formTitleHead" cellspacing="0" cellpadding="0">
+        <tr>
+            <td><?php echo $view->db_form_data['ifsptype']; ?> IFSP - Child's Present Levels of Development</td>
+        </tr>
+    </table>
+    <?php
+    if ($view->mode == "print") {
+        $dateCellWidthTop = "width:124px;";
+        $dateCellWidth = "width:99px;";
+    } else {
+        $dateCellWidthTop = "width:150px;";
+        $dateCellWidth = "width:150px;";
+    }
+    ?>
+
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Vision - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_vision_date->removeDecorator('label');
+                echo $this->element->dev_vision_date; ?></td>
+            <td><?php echo $this->element->dev_vision_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_vision_show_ifsps', 'dev_vision_print_ifsps', 'dev_vision_date', 'dev_vision_desc') ?>
+
+    <hr/>
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Hearing - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_hearing_date->removeDecorator('label');
+                echo $this->element->dev_hearing_date; ?></td>
+            <td><?php echo $this->element->dev_hearing_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_hearing_show_ifsps', 'dev_hearing_print_ifsps', 'dev_hearing_date', 'dev_hearing_desc') ?>
+
+    <hr/>
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Health/Status - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_health_status_date->removeDecorator('label');
+                echo $this->element->dev_health_status_date; ?></td>
+            <td><?php echo $this->element->dev_health_status_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_health_show_ifsps', 'dev_health_print_ifsps', 'dev_health_status_date', 'dev_health_status_desc') ?>
+
+    <hr/>
+
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Cognitive/Thinking Skills - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_cognitive_date->removeDecorator('label');
+                echo $this->element->dev_cognitive_date; ?></td>
+            <td><?php echo $this->element->dev_cognitive_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_cognitive_show_ifsps', 'dev_cognitive_print_ifsps', 'dev_cognitive_date', 'dev_cognitive_desc') ?>
+
+    <hr/>
+
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Communication Skills - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_communication_date->removeDecorator('label');
+                echo $this->element->dev_communication_date; ?></td>
+            <td><?php echo $this->element->dev_communication_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_communication_show_ifsps', 'dev_communication_print_ifsps', 'dev_communication_date', 'dev_communication_desc') ?>
+
+    <hr/>
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Social/Behavior Skills - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_social_date->removeDecorator('label');
+                echo $this->element->dev_social_date; ?></td>
+            <td><?php echo $this->element->dev_social_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_social_show_ifsps', 'dev_social_print_ifsps', 'dev_social_date', 'dev_social_desc') ?>
+
+    <hr/>
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Self-Help/Adaptive Skills - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_self_help_date->removeDecorator('label');
+                echo $this->element->dev_self_help_date; ?></td>
+            <td><?php echo $this->element->dev_self_help_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_self_show_ifsps', 'dev_self_print_ifsps', 'dev_self_help_date', 'dev_self_help_desc') ?>
+
+    <hr/>
+
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Fine Motor Skills - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_fine_motor_date->removeDecorator('label');
+                echo $this->element->dev_fine_motor_date; ?></td>
+            <td><?php echo $this->element->dev_fine_motor_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_fine_motor_show_ifsps', 'dev_fine_motor_print_ifsps', 'dev_fine_motor_date', 'dev_fine_motor_desc') ?>
+
+    <hr/>
+
+    <table class="formTitleHeadBlue printGrey" cellspacing="0" cellpadding="0">
+        <tr>
+            <td valign="top" style="<?= $dateCellWidthTop; ?>">Date</td>
+            <td>Gross Motor Skills - Date / Current Abilities</td>
+        </tr>
+    </table>
+    <table class="formInput" style="margin-top:1px;">
+        <tr>
+            <td style="<?= $dateCellWidth; ?>"><?php
+                $this->element->dev_gross_motor_date->removeDecorator('label');
+                echo $this->element->dev_gross_motor_date; ?></td>
+            <td><?php echo $this->element->dev_gross_motor_desc; ?></td>
+        </tr>
+    </table>
+    <?php echo $this->ifspHistory($view, $this, 'dev_gross_motor_show_ifsps', 'dev_gross_motor_print_ifsps', 'dev_gross_motor_date', 'dev_gross_motor_desc') ?>
+
+</div>
+

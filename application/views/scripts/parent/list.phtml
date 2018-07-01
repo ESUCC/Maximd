@@ -1,0 +1,47 @@
+<?php if ($this->resultCount > $this->maxRecs) echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>
+<?php if ($this->resultCount < 1) { ?>
+<br><br><center>No results matched your search</center>
+<?php } else { 
+
+if ($this->page == 0) $page_real = 1; else $page_real = $this->page;
+?>
+
+<div style="margin: 8px;">Now showing <b><?=($page_real - 1) * $this->maxRecs + 1?></b> to <b><?if ($this->resultCount/$page_real < $this->maxRecs){?><?=$this->resultCount?><?}else{?><?=$this->maxRecs*$page_real?><?}?></b> of <b><?=$this->resultCount?></b> results.</div>
+
+<ul class="pseudoTable schoolTable">
+    <li class="head">
+        <ul class="odd">
+	    <li class="parentName">Name</li>
+	    <li class="parentAddress">Address</li>
+	    <li class="parentHPhone">Home Phone</li> 
+	    <li class="parentWPhone">Work Phone</li>
+	    <li class="parentEmail">Email</li>
+        </ul>
+
+    </li>
+    <?php foreach ($this->results as $k => $r) { ?>
+    <li>
+        <ul class="odd">
+	    <li class="parentName"><?=$r['name_last'] ?>, <?=$r['name_first'] ?></li>
+	    <li class="parentAddress"><?=$r['address_street1'] ?><?if ($r['address_street2'] != ""){?> <?=$r['address_street2']?><?}?>, <?=$r['address_city'] ?>, <?=$r['address_state'] ?>, <?=$r['address_zip'] ?></li>
+	    <li class="parentHPhone"><?=$r['phone_home'] ?></li>
+	    <li class="parentWPhone"><?=$r['phone_work'] ?></li>
+	    <li class="parentEmail"><a href="mailto:<a href="mailto:<?=$r['email_address'] ?>"><?=$r['email_address'] ?></a></li>
+	    <?if ($this->priv_student == 1){?>
+	    <li class="parentOption">
+                 <select id="parent_options" class="studentOptions openWindow" title="<?=$r['name_first'] ?> <?=$r['name_last'] ?>">
+                    <option value="">Choose...</option>
+                    <option value="/parent/view/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">View</option>
+                    <option value="/parent/edit/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">Edit</option>
+                    <option value="/parent/delete/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">Delete</option>
+                    <!-- Delete implemented as editable Status action -->
+                    <option value="/parent/log/id_guardian/<?=$r['id_guardian']?>/id_student/<?=$this->id_student?>/">ParentLog</option>
+                </select>
+	    <?}?>
+	   </li>
+        </ul> 
+    </li>
+    <?php } ?>
+</ul>
+<?php } ?>
+<?php if ($this->resultCount > $this->maxRecs) echo $this->paginationControl($this->paginator, 'Sliding', 'partials/pagination-control.phtml');?>

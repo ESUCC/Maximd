@@ -1,0 +1,27 @@
+<?php // results ?>
+
+<div>Results List</div>
+
+<div style="margin:10px 0px">survey name: <?= $this->survey[0]['survey_name'] ?></div>
+
+<?php if (count($this->results) < 1) { ?>
+    
+    <div>This survey has no results</div>
+
+<?php } else { ?>
+    <div><?= count($this->results).' results' ?></div>
+    <table border="1">
+    <tr>
+        <td>Responder</td>
+        <td>Question</td>
+        <td>Response</td>
+    </tr>
+    <?php foreach ($this->results as $k => $r) { ?>
+        <tr>
+            <td><?= $r['id_neb_response'] ?></td>
+            <td><?= $r['question_text'] ?></td>
+            <td><?= $r['response_answer'] ?></td>
+        </tr>
+    <?php } ?>
+    </table>
+<?php } ?>

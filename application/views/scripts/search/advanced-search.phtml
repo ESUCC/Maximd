@@ -1,0 +1,32 @@
+
+<div class="headerHome">
+<?php if (!Zend_Auth::getInstance()->hasIdentity()) { ?>
+	<p>Returning Customer?&nbsp;&nbsp;<a href="profile/register">Register here.</a>
+<?php } ?>
+<?php echo $this->loginForm;?></p>
+</div>
+
+<!--<div class="iconsHome"></div>-->
+
+<div class="contentMain">
+    <?php if($this->searchType == 'advanced') { ?>
+    	<div><a href="search/basicsearch">Basic Search</a></div>
+    <?php } ?>
+    
+    <?php echo $this->searchForm; ?>
+    <?php if($this->resultRows == 0) echo "<div style=\"color:red\"><B>Nothing was found during your last search</b></div>"; ?>
+</div>
+
+<!-- end content -->
+
+<!--<div class="footer">-->
+<!--<h3>Footer</h3>-->
+<!--</div>-->
+<!-- end footer -->
+<pre>
+<?php //pre_print_r($this->rObj); ?>
+<?php //echo "sid: " . Zend_Session::getId(); //pre_print_r($_SESSION); ?>
+<?php //echo 'version: ' . $this->version . "<BR>"; ?>
+<?php //echo "sqlStmt: " . $this->sqlStmt; ?>
+<?php //echo "mionkey: " . $this->searchType; ?>
+</pre>

@@ -1,0 +1,38 @@
+<?php $this->headScript()->appendFile('/js/translation.init.js'); ?>
+<div id="transFormContain">
+<?php
+echo $this->partial('partials/translation-header.phtml', array('action' => $this->action));
+echo $this->formAndPageSelection;
+?>
+</div>
+<?php
+if ($this->updateSuccess)  
+echo $this->partial('partials/alert.phtml',
+array('type' => 'alert-success',
+'bold' => 'Success:',
+'msg' => 'Keys updated successfully.'
+)); ?>
+<?php if (count($this->keys) > 0) : ?>
+<form class="siteTable" id="modifyKeys" name="modifyKeys" method="post" action="/translation/manual-key-update/form/<?php echo $this->form; ?>/page/<?php echo $this->page; ?>">
+<div class="form-actions">
+   <?php echo $this->gateKeeper->getElement('updateKeys'); ?>
+</div>
+<table id="list-client" class="datatables table table-hover table-striped table-condensed">
+    <tbody>
+<?php
+echo $this->gateKeeper; ?>
+    </tbody>
+</table>
+<div class="form-actions">
+   <?php echo $this->gateKeeper->getElement('updateKeys'); ?>
+</div>
+</form>
+<?php 
+else :
+echo $this->partial('partials/alert.phtml',
+		array('type' => 'alert-info',
+				'bold' => 'Notice:',
+				'msg' => 'No Keys found for form and page.'
+		));
+endif;
+?>

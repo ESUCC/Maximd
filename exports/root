@@ -1,0 +1,6 @@
+#
+# PPN Export PDFs
+#
+0 5 * * * /etc/httpd/srs-zf/scripts/cron/PPN-PDF-Export.sh
+
+0 16 * * * /root/backup/RSYNC.sh

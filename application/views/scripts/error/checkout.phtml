@@ -1,0 +1,12 @@
+<h1>Sorry, this form is already checked out to another user</h1>
+<?php if (isset($this->info)): ?>
+<?php if (404 == $this->code): ?>
+    <p>
+        <b>Reason:</b> <?php echo $this->info ?>
+    </p>
+<?php elseif (500 == $this->code): ?>
+    <p>
+        <b>Message:</b> <?php echo $this->info->getMessage() ?>
+    </p>
+<?php endif ?>
+<?php endif ?>

@@ -1,0 +1,14 @@
+// Carlos' Local install of apache solr
+http://localhost:8983/solr/
+
+// staring solr from the cmd line
+cd /Users/jlavere/Downloads/apache-solr-3.6.0/example
+java -jar start.jar
+
+// importing docs
+cd exampledocs
+sh post.sh *.xml
+
+// now we can search for docs in the admin interface
+
+ 

@@ -1,0 +1,34 @@
+<table border="1">
+  <tr>
+    <td colspan="2">
+		<h1>Simple List</h1>
+		<p>This is a custom built widget. It uses ajax to query the server for data. It is passed an id on load and/or from an event (like a button push).</p>
+		<p>Saving uses an ajax call to modify the record based on the last set id.</p>
+	</td>
+  </tr>
+  <tr>
+    <td style="width:270px;vertical-align:top;">
+		<div dojoType="soliant.widget.WidgetFactory" id="WidgetFactoryExample" style="height:30px;background-color:LightGrey;"></div>
+	</td>
+    <td style="vertical-align:top;">
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('WidgetFactoryExample')._setFkId('1');dijit.byId('WidgetFactoryExample').relatedRecords();">Set widget related value to 1</button>
+		<br />
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('WidgetFactoryExample')._setFkId('2');dijit.byId('WidgetFactoryExample').relatedRecords();">Set widget related value to 2</button>
+		<br />
+		<button dojoType="dijit.form.Button" onClick="dijit.byId('WidgetListExample')._setFkId('3');dijit.byId('WidgetListExample').relatedRecords();">Set widget related value to 3</button>
+	</td>
+  </tr>
+</table>
+<BR />
+<p>Code to create the table in Postgres</p>
+<pre>
+create table widget_factory (
+    timestamp_created timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    timestamp_last_mod timestamp with time zone DEFAULT "timestamp"('now'::text) NOT NULL,
+    id_widget_factory serial NOT NULL,
+    status varchar DEFAULT 'Active' NOT NULL,
+    name varchar,
+    id_foreign_key integer not null
+);
+insert into widget_factory (name) VALUES ('this is the first entry');
+</pre>

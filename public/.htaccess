@@ -1,0 +1,9 @@
+SetEnv APPLICATION_ENV maximd 
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ /index.php
+
+AddType image/gif .gif .GIF
+AddType image/jpeg .jpeg .jpg .jpe .JPG
+AddType image/png .png

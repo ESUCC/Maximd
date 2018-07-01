@@ -1,0 +1,69 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_003; ?>
+<?= $this->element->page; ?>
+
+<?php if('print' != $view->mode) { ?>
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notification of Individualized Education Program Meeting Continued</td>
+    </tr>
+</table>
+<?php } ?>
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td colspan="2">If the above date, time, or place is not agreeable to you; if you 
+		would like to schedule an appointment to review your child's records; or 
+		if you have any questions regarding your rights, please contact:<br/>
+		</td>
+	</TR>
+	<tr>
+		<td>
+		<?php echo $this->element->contact_name; ?>
+		</td>
+		<td>
+		<?php echo $this->element->contact_num; ?>
+		</td>
+    </tr>
+</table> 
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Procedural Safeguards to Protect Parents' Rights</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+		<td colspan="2">Both state and federal laws concerning the education of children with 
+		disabilities include many parental rights. Receiving notices of action the 
+		school wants to take in regard to your child and being part of your child's 
+		educational planning team are examples of the rights these laws give you. 
+		These laws also require that the school follow certain procedures to make 
+		sure you know your rights and have an opportunity to exercise those rights.
+		<br/><br/>
+		<span style="">Parents shall receive a copy of the parental 
+		rights once per year<span class="noprint" > (<a href="
+		<?php 
+		  echo $view->url(array(
+            'controller' => 'form003',
+            'action' => 'resourcepdf',
+            'document' => 'PARENTSRIGHTS.pdf',
+            ), null, true); // 3rd param removes default values
+		
+        ?>">Download here</a>)</span>. You should read them carefully, 
+		and if you have any questions regarding your rights, you may contact:</span>
+		</td>
+	</TR>
+	<tr>
+		<td>
+		<?php echo $this->element->rights_contact; ?>
+		</td>
+		<td>
+		<?php echo $this->element->rights_contact_num; ?>
+		</td>
+    </tr>
+</table> 

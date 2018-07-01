@@ -1,0 +1,227 @@
+<?
+$this->headLink()->appendStylesheet('/css/_layout.css', 'screen');
+?>
+<script type="text/javascript">
+  $(document).ready(function () {
+        /**
+         * add click event for public school radio
+         * this should do the
+         */
+        $('#pub_school_student-colorme input:radio').change(function (event) {
+            publicSchoolStudentToggle();
+        })
+        publicSchoolStudentToggle();
+
+        $('#ward-colorme input:radio').change(function (event) {
+            wardOfStateToggle();
+        })
+        wardOfStateToggle();
+
+        $('#status').change(function (event) {
+            statusToggle();
+        })
+        statusToggle();
+
+        $('#grade').change(function (event) {
+            gradeToggle();
+        })
+        gradeToggle();
+
+        $('#id_school').change(function (event) {
+            fetchCaseManagers(); //api-student/get-case-managers/id_county/99/id_district/9999/id_school/01
+        })
+
+        $(".datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+
+        buildNonPublicSchools();
+
+        $('.studentOptions').each(function() { 
+			$(this).change(function() {
+				if ($(this).val() != '') {
+					if ($(this).val().match(/IEP/) == 'IEP' ||
+                        $(this).val().match(/MDT/) == 'MDT' ||
+                        $(this).val().match(/IFSP/) == 'IFSP' ||
+                        $(this).val().match(/Progress Report/) == 'Progress Report') {
+						$.ajax({
+							type: 'POST',
+							dataType: 'json',
+							url: '/student/get-most-recent/'+$(this).val(),
+							success: function(json) {
+								if (json['success'] == '1')
+									window.location.href = json['url'];
+								else
+									alert('The system was unable to locate the most recent form.');
+							}
+						});
+                    } else {
+                    	window.location.href = $(this).val();
+                    }
+
+				}
+			});
+		});
+    });
+    function fetchCaseManagers() {
+        if($('#id_county').val()  && $('#id_district').val()  && $('#id_school').val() ) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/api-student/get-case-managers/id_county/'+$('#id_county').val()+
+                    '/id_district/'+$('#id_district').val()+'/id_school/'+$('#id_school').val(),
+                success: function(json) {
+                    if(json.success) {
+
+                        var options = '';
+                        var optionsPrefix = '<option value="">Choose...</option>';
+                        var size = 0;
+                        $.each(json['data'], function(optionValue, optionDisplay) {
+                            options += '<option value="' + optionValue + '">' + optionDisplay + '</option>';
+                            size += 1;
+                        });
+                        if(size>1) {
+                            options = optionsPrefix+options;
+                        }
+                        // triggerHandler causes onChange to fire on district
+                        $("#id_case_mgr").html(options).triggerHandler("change");
+//                    $('#id_district').add('#id_school').closest('.wrapperDiv').slideDown();
+
+                    }
+                }
+            });
+        }
+    }
+    function publicSchoolStudentToggle() {
+        /**
+         * hide parental_placement when student is in public school
+         */
+        var pubSchoolStudentSelectedOptions = $("input[type='radio'][name='pub_school_student']:checked");
+        if (pubSchoolStudentSelectedOptions.length > 0) {
+            var publicSchoolStudent = pubSchoolStudentSelectedOptions.val();
+        }
+        if (undefined == publicSchoolStudent || 1 == publicSchoolStudent) {
+            $("input[type='radio'][name='parental_placement']").prop('checked', false).closest('div').hide();
+        } else {
+            $("input[type='radio'][name='parental_placement']").closest('div').show();
+        }
+        /**
+         * Non-Pub County:
+         Non-Pub District:
+         Non-Pub School:
+         – These three options should only appear if the Public School = NO
+         – If Public School = NO then these three options should be required
+         – Just make this work like it did on the old page.
+         – Could we add a checkbox to the right of "Non-Public County" that is labeled "home Schooled".
+         If this box is checked, the other three non-public questions can be left blank and need not be revealed.
+         */
+        if (undefined == publicSchoolStudent || 1 == publicSchoolStudent) {
+            $('#nonpubcounty').closest('div').hide();
+            $('#nonpubdistrict').closest('div').hide();
+            $('#nonpubschool').closest('div').hide();
+        } else {
+            // not public school student
+            $('#nonpubcounty').closest('div').show();
+            $('#nonpubdistrict').closest('div').show();
+            $('#nonpubschool').closest('div').show();
+        }
+    }
+    function statusToggle() {
+        /**
+         * Exit Date and exit reason are hidden when status is not Inactive
+         */
+        if ('Inactive' == $('#status :selected').val() || 'No Longer Qualifies' == $('#status :selected').val()) {
+            $('#sesis_exit_date').closest('div').show();
+            $('#sesis_exit_code').closest('div').show();
+
+            $("select#sesis_exit_code option:first").attr("disabled", "disabled");
+
+            $("#id_ser_cord").val('');
+            $('#id_ei_case_mgr').val('');
+            $('#id_ser_cord').parent().append(' Forced empty while status is Inactive or Never Qualified.');
+            $('#id_ei_case_mgr').parent().append(' Forced empty while status is Inactive or Never Qualified.');
+        } else {
+            $('#sesis_exit_date').closest('div').hide();
+            $('#sesis_exit_code').closest('div').hide();
+        }
+    }
+    function gradeToggle() {
+        /**
+         * Exit Date and exit reason are hidden when status is not Inactive
+         */
+        if ('EI 0-2' == $('#grade :selected').val()) {
+            $('#id_ser_cord').closest('div').show();
+            $('#id_ei_case_mgr').closest('div').show();
+            $('#medicaid').closest('div').show();
+            $('#ssn').closest('div').show();
+            $('#ei_ref_date').closest('div').show();
+        } else {
+            $('#id_ser_cord').closest('div').hide();
+            $('#id_ei_case_mgr').closest('div').hide();
+            $('#medicaid').closest('div').hide();
+            $('#ssn').closest('div').hide();
+            $('#ei_ref_date').closest('div').hide();
+        }
+    }
+    function wardOfStateToggle() {
+        /**
+         * get ward of state value from radio
+         */
+        var wardOfStateOptions = $("input[type='radio'][name='ward']:checked");
+        if (wardOfStateOptions.length > 0) {
+            var wardOfState = wardOfStateOptions.val();
+        }
+
+        /**
+         * Has a surrogate parent been appointed?:
+         If surrogate not needed, is it because parents are involved?:
+         Other reason that surrogate is not needed, please explain:
+         – These three questions should be hidden if Ward of State (above) = NO
+         – They should be revealed if Ward of State = YES
+         – The validations should work just like they do now on the old site
+         */
+        if (1 == wardOfState) {
+            $("input[type='radio'][name='ward_surrogate']").closest('div').show();
+            $("input[type='radio'][name='ward_surrogate_nn']").closest('div').show();
+            $("#ward_surrogate_other").closest('div').show();
+        } else {
+            $("input[type='radio'][name='ward_surrogate']").prop('checked', false).closest('div').hide();
+            $("input[type='radio'][name='ward_surrogate_nn']").prop('checked', false).closest('div').hide();
+            $("#ward_surrogate_other").val('').closest('div').hide();
+        }
+    }
+</script>
+    <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu();
+                } ?>
+            </td>
+        </tr>
+    </table>
+    <div class="clearfix sectionContainer">
+        <h3 class="blueHeadline">Edit Student Detail</h3>
+        <div style="margin-left: 15px;">
+            <div class="note">Note: Fields followed by an asterisk * are required.</div>
+            <? if(isset($this->errorMessage)): ?><div class="errorMessage"><?= $this->errorMessage; ?></div><? endif; ?>
+            <? if(isset($this->successMessage)): ?><div class="successMessage"><?= $this->successMessage; ?></div><? endif; ?>
+        </div>
+        <div style="margin-left: 15px;padding-left: 664px;">
+            <div><a href="/pdf/NewEditStudentScreenOverview.pdf" onmouseover="javascript:window.status=\'Click here to learn more about our new Edit Student Screen\'; return true" onmouseout="javascript:window.status=\'\'; return true;" class="btLBlue" style="text-decoration:underline;">Click here to learn more about our new Edit Student Screen</a></div>
+            <div>Student Options: <?php echo $this->studentOptions($this->id_student); ?></div>
+        </div>
+        <?= $this->countyDistrictSchoolNoElements(); ?>
+        <?= $this->nonPublicCdsHelper(); ?>
+        <?= $this->form; ?>
+    </div>

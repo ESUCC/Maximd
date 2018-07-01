@@ -1,0 +1,196 @@
+<?php
+
+
+$view = $this->element->page->getView();
+
+
+
+/*
+ * determine if there are any absences
+ */
+$absenceExists = false;
+for( $i = 1; $i<$view->form->getSubForm('team_member')->getElement('count')->getValue()+1; $i++) {
+	if($view->form->getSubForm('team_member_'.$i)->absent->getValue()) {
+		$absenceExists = true;
+	}
+}
+
+echo "<div>";
+echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+//echo '<input type="hidden" name="clearRadioButtons" id="clearRadioButtons" value="" />';
+echo $this->element->id_form_004;
+echo $this->element->page;
+echo $this->element->dob;
+echo "</div>";
+if(isset($view->db_form_data['team_member'])) { ?>
+	<table class="formTitleHead" id="team_member_parent">
+	<tr><td>
+	<table class="formDesc" style="margin-bottom:5px;">
+		<tr>
+			<td>
+				<span class="btsb">
+					<?= $view->form->getSubForm('team_member')->getElement('subformTitle')->getValue(); ?>&nbsp;
+					<?= $view->form->getSubForm('team_member')->getElement('count');?>
+				</span>
+			</td>
+			<td align="right">
+				<span class="btsb">
+					<?= $this->element->date_conference;?>
+				</span>
+			</td>
+		</tr>
+	</table>
+    <table class="formDesc">
+        <tr>
+            <td style="width:200px;">
+                <span class="btsb">
+                    <?php echo $this->translate('This IEP will be in effect from'); ?> 
+                </span>
+            </td>
+            <td align="left" style="width:135px;">
+                <span class="btsb">
+                    <?php echo $this->element->effect_from_date; ?> 
+                </span>
+            </td>
+            <td align="left" style="width:50px;">
+                <span class="btsb">&nbsp; <?php echo $this->translate('to'); ?> &nbsp; </span>
+            </td>
+            <td>
+                <span class="btsb">
+                    <?php echo $this->element->effect_to_date; ?>
+                </span>
+            </td>
+        </tr>
+    </table>
+	</td>
+	</tr>
+	<?php echo $this->subform($view, 'team_member', false, false, false); ?>
+	</table>
+<?
+}
+echo $this->subform($view, 'team_other');
+echo $this->subform($view, 'team_district'); ?>
+
+<table class="sc_subSectionHead">
+	<tr>
+		<td><?php echo $this->translate('Parent Signature'); ?> 
+		</td>
+		<td>
+		<?php 
+			if('Draft' == $view->db_form_data['status']) {
+				echo $this->formCheckbox('clearRadioButtons', 1, array('ignore' => true, 'onChange' => "modified();")) . ' ' . $this->translate('Clear Radio Buttons');
+			}
+		?>
+		</td>
+	</tr>
+</table>
+<table class="formInput noBorder">
+    <tr>
+        <td colspan="4">
+            <div id="showHideAbsenceApproval" style="<?php if(!$absenceExists) echo "display:none;height:auto;"; ?>" >
+                <? echo $this->element->absences_approved;?>
+            </div>
+        </td>
+    </tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->necessary_action;?>
+		</td>
+	</tr>
+	<?php if($view->lps) { ?>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_understand_process;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_participated;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_agree;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_no_agree_reason;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_understand_purpose;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_understand_covers;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_understand_receive;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->lps_sig_received_rights;?>
+		</td>
+	</tr>
+	<?php  } ?>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->received_copy;?>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4">
+			<? echo $this->element->parental_rights;?>
+		</td>
+	</tr>
+	<?php if($view->lps) { ?>
+    <tr>
+        <td colspan="4">
+            <? echo $this->element->recieve_electronic_copy;?>
+        </td>
+    </tr>
+	<tr>
+		<td colspan="4">
+			<B><?php echo $this->translate('Special Education records'); ?>.</B>
+		</td>
+	</tr>
+	<?php } ?>
+	<tr>
+		<td colspan="4"><? echo $this->element->doc_signed_parent;?></td>
+		<table class="formInputSub">	
+		  <tr>
+			<td><?php echo $this->translate('signature is on file'); ?>.</td>
+		  </tr>
+		  <tr>
+			<td><?=$this->element->date_doc_signed_parent;?></td>
+		  </tr>
+		  <tr>
+			<td><?=$this->element->no_sig_explanation;?></td>
+		  </tr>
+		</table>
+	</tr>
+</table>
+<?php if(0) { ?>
+<input type="file" name="uploadFile" dojoType="soliant.widget.FileInput">
+<?php } ?>
+<?php 
+
+//$value = '<p class="MsoNormal"><span lang="EN" style="font-family:Arial;mso-bidi-font-family:
+//Arial;mso-ansi-language:EN">Font=Arial12pt.Lorem ipsum dolor sit
+//amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+//et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+//ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+//in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+//pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+//deserunt mollit anim id est laborum (one empty space below)</span></p>';
+//
+//$value = preg_replace('/style="(.*?)"/im', '', $value);
+//
+//Zend_Debug::dump($value);

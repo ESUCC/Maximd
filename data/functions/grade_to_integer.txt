@@ -1,0 +1,26 @@
+CREATE OR REPLACE FUNCTION grade_to_integer(v_input text)
+RETURNS INTEGER AS $$
+DECLARE v_int_value INTEGER DEFAULT NULL;
+BEGIN
+    BEGIN
+        v_int_value := v_input::INTEGER;
+    EXCEPTION WHEN OTHERS THEN
+        --
+        -- This is not a valid integer
+        -- map the possible text values to integers
+        --
+        RAISE NOTICE 'Invalid integer value: "%".', v_input;
+        IF 'EI 0-2' ilike v_input THEN
+            RETURN -2;
+        ELSIF 'ECSE' ilike v_input THEN
+            RETURN -1;
+        ELSIF 'K' ilike v_input THEN
+            RETURN 0;
+        ELSE
+            RAISE NOTICE 'Invalid value: "%".', v_input;
+            RETURN NULL;
+        END IF;
+    END;
+RETURN v_int_value;
+END;
+$$ LANGUAGE plpgsql;

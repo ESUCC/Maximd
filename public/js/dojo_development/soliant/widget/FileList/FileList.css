@@ -1,0 +1,33 @@
+.fileList {
+	border-style:solid;
+	border-width:1px;
+	width:380px;
+}
+.fileListHeader {
+	font-weight:600;
+	border-bottom:1px solid;
+}
+.fileListHeaderDelete {
+	text-align:center;
+}
+.fileListHeaderPreview {
+	text-align:center;
+}
+
+
+.fileListListDelete {
+	text-align:center;
+}
+.fileListListPreview {
+	text-align:center;
+}
+
+
+.fileListContainer {
+	margin:3px;
+	border:1px;
+}
+.fileListDeleteButton {
+	visibility:hidden;
+	height:18px;
+}

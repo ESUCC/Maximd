@@ -1,0 +1,13 @@
+drop table js_err_log;
+CREATE TABLE js_err_log (
+    js_err_log_id serial NOT NULL,
+    status varchar default 'open',
+    info varchar,
+    i integer,
+    sn varchar,
+    fl varchar,
+    ln integer,
+    err varchar,
+    ui varchar
+);
+

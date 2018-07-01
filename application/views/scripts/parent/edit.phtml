@@ -1,0 +1,107 @@
+<form action="#" id="ParentEditForm">
+<input type="hidden" name="id_guardian" value="<?=$this->id_guardian?>">
+<input type="hidden" name="id_student" value="<?=$this->id_student?>">
+<table class="ParentForm">
+<tr><th colspan="2" class="NameParent">
+  <b>Student:</b> <?=$this->student?>
+</th></tr>
+<tr>
+<td colspan="2">
+ <div style="float: left">
+   <small><b>Note:</b> Fields followed by an asterisk * are required</small>
+ </div>
+ <div style="float: right" class="formButton">
+    <button class="ui-button ui-widget ui-corner-all doneWindowConfirm" style="padding: 2px;">Done</button>
+    <button class="ui-button ui-widget ui-corner-all ParentEditCancel" style="padding: 2px;" disabled>Revert</button>
+    <button class="ui-button ui-widget ui-corner-all ParentEditSave" style="padding: 2px;" disabled>Save</button>
+    <?if ($this->id_guardian > 0){?><button class="ui-button ui-widget ui-corner-all printWindow" style="padding: 2px;" rel="/parent/view/print/1/id_guardian/<?=$this->result["id_guardian"]?>/id_student/<?=$this->result["id_student"]?>/">Print</button><?}?>
+ </div>
+</td>
+</tr>
+
+<tr class="ParentHeader">
+ <td colspan="2">Parent Information</td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Status <sup>*</sup></td><td class="ParentFormValue"><select name="status"><option<?if ($this->result["status"] == "Active"){?> selected<?}?>>Active</option><option<?if ($this->result["status"] == "Inactive"){?> selected<?}?>>Inactive</option></select></td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">First Name <sup>*</sup></td><td class="ParentFormValue"><input type="input" id="name_first" name="name_first" value="<?=$this->result["name_first"]?>"></td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Middle Name </td><td class="ParentFormValue"><input type="input" id="name_middle" name="name_middle" value="<?=$this->result["name_middle"]?>"></td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Last Name <sup>*</sup></td><td class="ParentFormValue"><input type="input" id="name_last" name="name_last" value="<?=$this->result["name_last"]?>"></td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Relation <sup>*</sup></td><td class="ParentFormValue"><select name="relation_to_child"><option<?if ($this->result["relation_to_child"] == "Parent"){?> selected<?}?>>Parent</option><option<?if ($this->result["relation_to_child"] == "Guardian"){?> selected<?}?>>Guardian</option></select></td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Street 1 <sup>*</sup></td><td class="ParentFormValue"><input type="input" id="address_street1" name="address_street1" value="<?=$this->result["address_street1"]?>"></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Street 2</td><td class="ParentFormValue"><input type="input" id="address_street2" name="address_street2" value="<?=$this->result["address_street2"]?>"></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">City <sup>*</sup></td><td class="ParentFormValue"><input type="input" id="address_city" name="address_city" value="<?=$this->result["address_city"]?>"></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">State <sup>*</sup></td><td class="ParentFormValue"><input type="input" id="address_state" name="address_state" value="<?=$this->result["address_state"]?>"> <small>2-letter state code</small></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">ZIP <sup>*</sup></td><td class="ParentFormValue"><input type="input" id="address_zip" name="address_zip" value="<?=$this->result["address_zip"]?>"> <small>ZIP or ZIP+4</small></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Home Phone</td><td class="ParentFormValue"><input type="input" id="phone_home" name="phone_home" value="<?=$this->result["phone_home"]?>"> <small>include area code, ex: 308-555-1234</small></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Work Phone</td><td class="ParentFormValue"><input type="input" id="phone_work" name="phone_work" value="<?=$this->result["phone_work"]?>"> <small>include area code, ex: 308-555-1234</small></td>
+</tr>
+<tr>
+ <td class="ParentFormTitle">Email</td><td class="ParentFormValue"><input type="input" id="email_address" name="email_address" value="<?=$this->result["email_address"]?>"> <small>ex: user@host.com</small></td>
+</tr>
+
+
+<tr class="ParentHeader">
+ <td colspan="2">Online Access</td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Online Access</td><td class="ParentFormValue"><select name="online_access"><option<?if ($this->result["online_access"] == "Enabled"){?> selected<?}?>>Enabled</option><option<?if ($this->result["online_access"]  == "Disabled"){?> selected<?}?>>Disabled</option></select></td>
+</tr>
+
+<tr id="user_name_row">
+ <td class="ParentFormTitle">User Name</td><td class="ParentFormValue">
+     <input type="text" value="<?=$this->result["user_name"]?>" id="user_name" name="user_name" readonly></td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Temp Password</td><td class="ParentFormValue">
+     <input type="text" value="<?=$this->result["password"]?>" id="password" name="password" readonly>
+     <input type="hidden" value="0" id="password_change" name="password_change">
+     <button class="ui-button ui-widget ui-corner-all generatePassword" style="padding: 2px;">Generate a new password</button>
+</td>
+</tr>
+
+<tr>
+ <td class="ParentFormTitle">Access Expires</td><td class="ParentFormValue"><input type="text" value="<?=$this->result["date_expiration"]?>" id="date_expiration" name="date_expiration" class="datepicker">
+  <small>Access expiration date, leave blank if account doesn't expire</small>
+</td>
+</tr>
+
+<?if ($this->id_guardian > 0){?>
+<tr>
+ <td class="ParentFormTitle">Password Changed</td><td class="ParentFormValue"><?=$this->result["date_last_pw_change"]?></td>
+</tr>
+<?}?>
+
+</table>
+</form>
+<div id="successSave"></div>

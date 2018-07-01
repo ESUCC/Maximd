@@ -1,0 +1,334 @@
+<?php $auth = Zend_Auth::getInstance();?>
+
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<style>
+    .NameParent, .formButton {
+	padding: 4px;
+    }
+
+    .ParentHeader td {
+	font-size: 16px;
+	font-weight: 700;
+	background: #e0e0e0;
+	padding: 4px;
+	margin: 4px;
+
+    }
+    .ParentFormTitle {
+        font-weight: 700;
+	padding: 3px;
+    }
+
+    .DeleteMsg {
+	text-align: center;
+	padding-top: 50px;
+    }
+    .DeleteMsgText {
+	font-size: 16px;
+	font-weight: 700;
+    }
+
+</style>
+
+<table class="navTopMenu">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('parent'); ?>
+	</td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+  var current_url = "/parent/search/nb/1/";
+  $(document).ready(function () {
+//     var reports = Array;
+     openURL(current_url);
+     function openURL(url){
+        $(".loading").clone().css("position", "absolute").css("top", "0px").css("bottom", "0px").css("left", "0px").css("margin-top", "110px").show().appendTo("#searchResults");
+
+        $("#searchResults").load(url, function() {
+         // Paginator Bug fix - href="javascript:XXX" -----
+         var uri = "";
+         var reg = /\'(.+)\'/i;
+         $(".paginator a").each( function(index, element) {
+          uri = $(element).attr("href").match(reg);
+          uri = uri[0].substring(1, uri[0].length - 1);
+          $(element).attr("rel", uri);
+          $(element).attr("href", "#");
+          $(element).attr("class", "runSearchCall");
+         });
+         // ----- END FIX --------------------------------   
+      
+      });
+     }
+    $(document).on("click", ".runSearchCall", function () {
+        var url = $(this).attr("rel");
+        openURL ( url );
+    });
+
+
+    $(document).on("change", ".openWindow", function () {
+	var title = $(this).attr("title");
+	var url = $(this).attr("value");
+	$("#dialog").load( url, 
+           function() {
+            if (Number($("input[name='id_guardian']").val()) == 0) $("#user_name_row").hide(); 
+	    if ($("input").is(".datepicker")) $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy' });
+	    if ($("form").is("#ParentEditForm")){
+	       console.log("!");
+
+	      $("#ParentEditForm").validate({
+		   rules: {
+		    name_first: {
+		      required: true,
+		      minlength: 2
+		    },
+		    name_last: {
+		      required: true,
+		      minlength: 2
+		    },
+		    address_city: {
+		      required: true,
+		      minlength: 1
+		    },
+		    address_street1: {
+		      required: true,
+		      minlength: 5
+		    },
+		    address_zip: {
+		      zipcodeUS: true,
+		      required: true,
+		      minlength: 5,
+		      maxlength: 10
+		    },
+		    address_state: {
+		      required: true,
+		      minlength: 2,
+		      maxlength: 2
+		    },
+                    phone_home: {
+                      phoneUS: true,
+		      maxlength: 12,
+		      minlength: 0
+                    },
+                    phone_work: {
+                      phoneUS: true,
+		      maxlength: 12,
+		      minlength: 0
+                    },
+		    email_address: {
+		      email: true
+		    }
+	       },
+	       submitHandler: function(form) {
+	         $("div.error").hide();
+	 	 return false;
+	       },
+	       highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+	       },
+	       unhighlight: function (element, errorClass, validClass) {
+	        $(element).css('border', ''); 
+	       }
+	      });
+	      $.validator.addMethod("zipcodeUS", function(value, element) {
+		return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+	      }, "The specified US ZIP Code is invalid");
+	      $.validator.addMethod('phoneUS', function (value, element) {
+	        return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
+	      }, "Please enter a valid phone number");
+           }
+ 
+	 });
+
+        $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 900, height: 600, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); openURL(current_url); } } );
+        return false;
+    });
+    $(document).on("keyup change", "#ParentEditForm input", function () {
+	$(".ParentEditSave, .ParentEditCancel").prop("disabled", false);
+	return false;
+    });
+    $(document).on("change", "#ParentEditForm select", function () {
+	$(".ParentEditSave, .ParentEditCancel").prop("disabled", false);
+	return false;
+    });
+    $(document).on("change", "#parent_options", function () {
+	$(this).prop('selectedIndex',0);
+	return false;
+    });
+    $(document).on("click", ".doneWindowConfirm", function () {
+	if (!$(".ParentEditSave").prop("disabled") && confirm("You haven't saved your changes. Are you sure you want to Exit?")) $("#dialog").dialog( "close" ); else $("#dialog").dialog( "close" );
+	return false;
+    });
+    $(document).on("click", ".cancelWindowConfirm", function () {
+	if (confirm("Are you sure you want to Exit?")) $("#dialog").dialog( "close" ); else $("#dialog").dialog( "close" );
+	return false;
+    });
+    $(document).on("click", ".doneWindow", function () {
+	$("#dialog").dialog( "close" );
+	return false;
+    });
+    $(document).on("click", ".printWindow", function () {
+	var url = $(this).attr("rel");
+	window.open(url, '_blank');
+	return false;
+    });
+    $(document).on("click", ".ParentEditCancel", function () {
+	$("#ParentEditForm").trigger('reset');
+	$(".ParentEditSave, .ParentEditCancel").prop("disabled", true);
+	return false;
+    });
+    $(document).on("change", "#ParentEditForm input" , function( event, ui ) {
+        $(this).valid();
+    });
+
+    $(document).on("click", ".ParentEditSave", function () {
+      if ($("#ParentEditForm").valid()) {
+       var data_var = Array;
+       data_var = {};
+	var res = "";
+       $("#ParentEditForm input, #ParentEditForm select").each( function(index, element) {
+	      data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+       });
+      $.ajax({
+	  type       : "POST",
+          url        : "/parent/save",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+//          dataType   : "html",
+          success    : function(response) {
+            if (response.err == 1) $("#successSave").html(response.msg).removeClass("blueAlert").addClass("redAlert").show({ effect: "fade", duration: 500 });
+               else {
+                      $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                      $(".ParentEditSave, .ParentEditCancel").prop("disabled", true);
+		      $("input[name='id_guardian']").val(response.id_guardian);
+		      $("#password_change").val("0");
+	              if (Number($("input[name='id_guardian']").val()) != 0 && !$("#user_name_row").is(":visible")) {
+			   $("#user_name").val( $("#user_name").val() + response.id_guardian );
+                           $("#user_name_row").show(); 
+                      }     
+               }
+            setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+//	    $("#successSave").html(response).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+          }
+      });
+     
+    }
+     return false;
+  });
+    $(document).on("click", ".generatePassword", function () {
+	var result = "";
+	var words = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+	var max_position = words.length - 1;
+	    for( i = 0; i < 7; ++i ) {
+		position = Math.floor ( Math.random() * max_position );
+		result = result + words.substring(position, position + 1);
+	    }
+	var words = '0123456789';
+	var max_position = words.length - 1;
+	position = Math.floor ( Math.random() * max_position );
+	result = result + words.substring(position, position + 1);
+	$("#password").val(result);
+	$("#password_change").val("1");
+	$(".ParentEditSave, .ParentEditCancel").prop("disabled", false);
+	return false;
+    });
+    $(document).on("focusout", "#name_first, #name_last", function () {
+       if (Number($("input[name='id_guardian']").val()) == 0 && $("#name_first").val() != "" && $("#name_last").val() != "") {
+	  var username = ($("#name_first").val().replace(/\s+/g, '').substr(0,1) + $("#name_last").val().replace(/\s+/g, '')).toLowerCase();
+	  $("#user_name").val(username);
+          if ($("#password").val() == "") $(".generatePassword").click();
+	}
+	return false;
+    });
+
+
+        $(document).on( "change", "#student_options", function() {
+            var url = $("#student_options").val();
+
+            var regExMark = new RegExp("\/IEP\/|\/MDT\/|\/IFSP\/|\/Progress Report\/", "ig");
+            if (url.match( regExMark )) {
+                url = "/student/get-most-recent/" + url;
+                $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: url,
+                        success: function(response) {
+                            if (response['success'] == '1') {
+                                window.location.href = response['url'];
+
+                              } else {
+                                alert('The system was unable to locate the most recent form.');
+                            }
+                        }
+                    });
+            } else
+                 window.location = url;
+
+            return false;
+        });
+
+    $(document).on("click", ".deleteWindow", function () {
+	if (confirm("Are you sure?")) {
+
+         var data_var = Array;
+         data_var = {};
+	  $("#ParentDeleteForm input").each( function(index, element) {
+	      data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+          });
+
+          $.ajax({
+    	      type       : "GET",
+	      url        : "/parent/deletedone",
+              crossDomain: true,
+	      cache      : false,
+	      data       : data_var,
+              dataType   : "json",
+              success    : function(response) {
+
+		console.log(response);
+
+		$("#dialog").dialog( "close" );
+             }
+         });
+
+	} else $("#dialog").dialog( "close" );
+	return false;
+    });
+
+
+});
+</script>
+
+<?if ($this->id_student > 0){?>
+<div style="width: 90%; height: 20px; margin: 10px;">
+  <div style="float: left;"><b>Student:</b> <?=$this->name_first?> <?=$this->name_last?> (<?=$this->id_student?>)</div>
+  <div style="float: right;">Student Options: <?=$this->studentOptions($this->id_student, $this->id_district, $this->action)?></div>
+</div>
+
+<?if ($this->priv_student == 1){?>
+<div id="searchContainer" class="clearfix">
+        <div style="padding:10px">
+	    Welcome to the Parent area. Choose from following options to manage the parents for this student. Each student must have at least 1 parent.
+	</div>
+        <div style="padding: 10px; text-align: center;">
+	    <select id="parent_options" class="studentOptions openWindow" title="Parent/Guardians">
+              <option value="">Choose...</option>
+	      <option value="/parent/edit/id_student/<?=$this->id_student?>/">Add a new Parent/Guardians</option>
+	    </select>
+  	</div>
+</div>
+<?}
+}?>
+<div id="searchResults" class="clearfix"></div>
+<div id="dialog"></div>

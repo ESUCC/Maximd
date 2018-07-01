@@ -1,0 +1,21 @@
+<?php 
+    $view = $this->element->page->getView();
+    /*
+    echo '<pre>';
+    print_r($view);
+    echo '</pre>';
+    exit();
+    */
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_013; ?>
+<?= $this->element->page; ?>
+<?php 
+//if('print'==$view->mode) {
+//	echo $this->subformTab($view, 'ifsp_goals', false, 'Goal');
+//} else {
+//	echo $this->subformTab($view, 'ifsp_goals', true, 'Goal');
+//}
+echo $this->jqueryTab($view, 'ifsp_goals', ('print' == $this->mode)?false:true, "Goal");
+

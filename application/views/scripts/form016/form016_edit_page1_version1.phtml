@@ -1,0 +1,76 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_016; ?>
+<?= $this->element->page; ?>
+    
+<table class="formTitleHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>Notice and Consent For Initial Placement in Special Education Services</td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+    <tr>
+		<td colspan="2">
+		    <div id="dates_wrapper-colorme" class="colorme">
+            On <?php echo $this->element->date_met; ?> the Individualized Family Service Plan (IFSP) 
+            Team met to develop the family service plan for your child. 
+            Your child will be provided supports and services in a natural 
+            environment unless it is not feasible to do so. Justification of 
+            the extent, if any, to which a service will not be provided 
+            in a natural environment will be required. 
+            Based on the IFSP which has been developed for your child, the 
+            <span class="btsb"><?php echo $this->db_form_data['student_data']['name_district']; ?></span> 
+            proposes to serve your child within the following program <i>(describe the proposed program)</i>:
+            <?php echo $this->element->describe_program; ?>
+            </div>
+		</td>
+    </tr>
+    <tr>
+        <td colspan="2">The suggested early intervention program is based on (describe the reasons 
+        why the district proposes to place):
+        <?php echo $this->element->describe_reason; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">To determine the appropriate placement for your child, the school district 
+        considered the following option(s) prior to reaching the placement decision, and 
+        rejected those option(s) because (provide a description of any options the district 
+        considered and the reasons why those options were rejected):
+        <?php echo $this->element->provide_description; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">The proposed placement is based upon the following evaluation procedures, tests, records or reports:
+        <?php echo $this->element->proposed_placement; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">Other factors which are relevant to the school district's proposal, if any, are:
+        <?php echo $this->element->other_factors; ?>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">Parents of children with disabilities have rights which are protected under the 
+        procedural safeguards of the Individual with Disabilities Education Act (IDEA). If 
+        you would like a copy of your procedural safeguards, or if you have any questions 
+        regarding this notice or your rights, you may contact:
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <?php echo $this->element->contact_name; ?>
+        </td>
+        <td>
+        <?php echo $this->element->contact_num; ?>
+        </td>
+    </tr>
+</table> 

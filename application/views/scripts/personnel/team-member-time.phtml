@@ -1,0 +1,75 @@
+<?
+$this->jQuery()->addJavascriptFile('/js/DataTables/media/js/jquery.dataTables.min.js');
+$this->jQuery()->addJavascriptFile('/js/DataTables/extras/TableTools/media/js/TableTools.min.js');
+$this->headLink()->appendStylesheet('/js/DataTables/media/css/jquery.dataTables.css');
+$this->headLink()->appendStylesheet('/js/DataTables/extras/TableTools/media/css/TableTools.css');
+?>
+<h1><?= $this->personnel->name_first . ' ' . $this->personnel->name_last ?></h1>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#report').dataTable({
+            "bPaginate": false,
+            "bSort": false,
+            "bFilter": false,
+            "sDom": 'T<"clear">lfrtip',
+            "oTableTools": {
+                "sSwfPath": "/js/DataTables/extras/TableTools/media/swf/copy_csv_xls.swf"
+            }
+        });
+    });
+</script>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="report">
+    <?
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Student Name</th>";
+    echo "<th>County</th>";
+    echo "<th>District</th>";
+    echo "<th>DOB</th>";
+    echo "<th></th>";
+    echo "<th></th>";
+    echo "<th></th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+
+    $tpdUnits = array("m" => "min/day", "h" => "hrs/day");
+
+    $arrLabel = array("days/week", "days/month", "days/quarter", "days/semester", "days/year");
+    $arrValue = array("w", "m", "q", "s", "y");
+
+    $daysUnits = array_combine($arrValue, $arrLabel);
+
+    foreach ($this->students as $key => $student) {
+        $timeDataRowOne = array_shift($student['timeData']);
+        echo "<TR>";
+        echo "<TD>" . $student['name_student_full'] . "</TD>";
+        echo "<TD>" . $student['countyName'] . "</TD>";
+        echo "<TD>" . $student['districtName'] . "</TD>";
+        echo "<TD>" . $student['dob'] . "</TD>";
+        if (is_null($timeDataRowOne)) {
+            echo "<TD></TD>";
+            echo "<TD></TD>";
+            echo "<TD></TD>";
+        } else {
+            echo "<TD>" . $timeDataRowOne['service_tpd'] . ' ' . $tpdUnits[$timeDataRowOne['service_tpd_unit']] . "</TD>";
+            echo "<TD>" . $timeDataRowOne['service_days_value'] . ' ' . $daysUnits[$timeDataRowOne['service_days_unit']] . "</TD>";
+            echo "<TD>" . $timeDataRowOne['service_mpy'] . " months</TD>";
+        }
+        echo "</TR>";
+        foreach ($student['timeData'] as $key => $additionalTimeDataRow) {
+            echo "<TR>";
+            echo "<TD></TD>";
+            echo "<TD></TD>";
+            echo "<TD></TD>";
+            echo "<TD></TD>";
+            echo "<TD>" . $additionalTimeDataRow['service_tpd'] . ' ' . $tpdUnits[$additionalTimeDataRow['service_tpd_unit']] . "</TD>";
+            echo "<TD>" . $additionalTimeDataRow['service_days_value'] . ' ' . $daysUnits[$additionalTimeDataRow['service_days_unit']] . "</TD>";
+            echo "<TD>" . $additionalTimeDataRow['service_mpy'] . " months</TD>";
+            echo "</TR>";
+        }
+
+    }
+    echo "</tbody>";
+
+    ?></table>

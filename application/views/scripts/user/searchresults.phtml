@@ -1,0 +1,25 @@
+<?= $this->searchForm ?>
+
+<?php if (count($this->results) < 1) { ?>
+    
+    <div>No results matched your search</div>
+
+<?php } else { ?>
+    <div><?= count($this->results).' results' ?></div>
+    <table border="1">
+    <tr>
+        <td>Name First</td>
+        <td>Name Last</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    <?php foreach ($this->results as $k => $r) { ?>
+        <tr>
+            <td><?= $r['name_first'] ?></td>
+            <td><?= $r['name_last'] ?></td>
+            <td><a href="/user/view/id/<?= $r['id_neb_user'] ?>">View</a></td>
+            <td><a href="/user/edit/id/<?= $r['id_neb_user'] ?>">Edit</a></td>
+        </tr>
+    <?php } ?>
+    </table>
+<?php } ?>

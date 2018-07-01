@@ -1,0 +1,254 @@
+<?php 
+    $view = $this->element->page->getView();
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_002; ?>
+<?= $this->element->page; ?>
+
+<table class="formTitleHead" cellspacing="0" cellpadding="0" width="100%">
+   <tr>
+        <td><div class="printBoldLabeWithBorder"><?php echo $this->translate('Check the appropriate line to indicate the verification decision'); ?></div></td>
+    </tr>
+</table>
+
+<?php 
+//	$helper = new My_View_Helper_Form002page3Helper();
+//	
+//	$noDisabilityName = $this->element->mdt_00603e2a->options['A'];
+//	$verificationReqName = $this->element->mdt_00603e2a->options['B'];
+//	$satDate = $this->element->mdt_00603g->getValue();
+//	$satContact = $this->element->mdt_00603g_contact->getValue(); 
+	
+	//echo $helper->getSubform($noDisabilityName, 'A', $satDate, $satContact, $verificationReqName, 'B');
+?>
+	<table class="formInput" style="margin-top:1px;">
+	<tr><td>
+	<div id="mdt_00603e2a_A_wrapper-colorme" class="colorme">
+	<? 	//$a = $this->IndividualRadioButton($this->element->mdt_00603e2a, "A") . "<BR/><BR/>"; 
+		$a = clone($this->element->mdt_00603e2a);
+		$a->setMultiOptions(array("A" => $this->element->mdt_00603e2a->getMultiOption("A")));
+		$a->setAttrib('onchange', "modified('', '', '', '', '', '');" . "colorMeById(this.id, 'mdt_00603e2a_A_wrapper');");
+		$a->setAttrib('onfocus', "modified('', '', '', '', '', '');" . "colorMeById(this.id, 'mdt_00603e2a_A_wrapper');");
+		$a->removeDecorator('label');
+		echo $a;
+	?>
+	<div style="padding-left:20px">
+	<?php echo $this->translate('If no disability is verified refer student to SAT (Student Assistance Team) or problem-solving team and provide MDT information to SAT.'); ?><br />
+	<? echo $this->element->mdt_00603g; ?>
+	<? echo $this->element->mdt_00603g_contact; ?>
+	</div>
+	</div>
+	<div id="mdt_00603e2a_B_wrapper-colorme" class="colorme">
+	<? 	$b = clone($this->element->mdt_00603e2a);
+		$b->setMultiOptions(array("B" => $this->element->mdt_00603e2a->getMultiOption("B")));
+		$b->setAttrib('onchange', "modified('', '', '', '', '', '');" . "colorMeById(this.id, 'mdt_00603e2a_B_wrapper');");
+		$b->setAttrib('onfocus', "modified('', '', '', '', '', '');" . "colorMeById(this.id, 'mdt_00603e2a_B_wrapper');");
+		$b->removeDecorator('label');
+		echo $b;
+	
+	?>
+			<table class="formInput" style="margin-top:1px;">
+				<tr>
+					<td valign="top">
+					<div style="text-align:right;margin-right:30px;">
+						<?php echo $this->element->disability_au; ?><BR/>
+						<?php echo $this->element->disability_bd; ?><BR/>
+						<?php echo $this->element->disability_db; ?><BR/>
+						<?php echo $this->element->disability_hi; ?><BR/>
+					</div>
+					<div style="text-align:right;margin-right:40px;">
+                        <?php $this->element->disability_hi_detail->removeDecorator('Label'); ?>
+                        <span class="noBold"><?php echo $this->element->disability_hi_detail->getLabel(); ?></span>
+                        <br />
+						<?php echo $this->element->disability_hi_detail; ?>
+                        <BR/>
+					</div>
+					<div style="text-align:right;margin-right:30px;">
+						<?php echo $this->element->disability_mhmi; ?><BR/>
+						<?php echo $this->element->disability_multi; ?><BR/>
+						<?php echo $this->element->disability_oi; ?><BR/>
+						<?php echo $this->element->disability_ohi; ?><BR/>
+						<?php echo $this->element->disability_sld; ?>
+					</div>
+					</td>
+					<td valign="top">
+					<div style="text-align:right;margin-right:30px;">
+						<?php echo $this->translate('Speech Language Impairment (SLI) in the area'); ?>:<BR/>
+					</div>
+					<div style="text-align:right;margin-right:60px;">
+						<?php echo $this->element->disability_sli_language; ?><BR/>
+						<?php echo $this->element->disability_sli_articulation; ?><BR/>
+						<?php echo $this->element->disability_sli_voice; ?><BR/>
+						<?php echo $this->element->disability_sli_fluency; ?><BR/>
+					</div>
+					<div style="text-align:right;margin-right:30px;">
+						<?php echo $this->element->disability_tbi; ?><BR/>
+						<?php echo $this->element->disability_vi_checkbox; ?><BR/>
+					</div>
+					<div style="text-align:right;margin-right:40px;">
+                        <?php $this->element->disability_vi->removeDecorator('Label'); ?>        
+                        <span class="noBold"><?php echo $this->element->disability_vi->getLabel(); ?></span>
+                        <br />
+						<?php echo $this->element->disability_vi; ?><BR/>
+					</div>
+					<?php if($this->element->disability_dd) { ?>
+					<div style="text-align:right;margin-right:30px;">
+						<?php echo $this->element->disability_dd; ?><BR/>
+					</div>
+					<?php } ?>
+					</td>
+				</tr>
+			</table>
+	</div>
+	</td></tr>
+</table> 
+<table class="formInput" style="margin-top:1px;">
+	<tr>
+		<td>
+				<?php 
+				if('print' == $view->mode) {
+					$this->element->disability_primary->removeDecorator('label');
+					echo "<center><B>".$this->translate('Primary Disability').": </B>" . $this->element->disability_primary->getValue() . "</center>";
+				} else {
+					echo $this->translate('Please indicate which of the above disabilities is the primary disability').":<br/>";
+					echo $this->element->disability_primary;
+				}
+				?>
+		</td>
+	</tr>
+</table>
+<?php  //Zend_Debug::dump($this->element->disability_primary->getValue()); ?>
+<?php if('print' != $view->mode || ('print' == $view->mode && 'Multiple Impairment (MULTI)' == $this->element->disability_primary->getValue())) { ?>
+<div id="showMultiAreas" style="">
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Additional information required for Multiple Impairments (MULTI)'); ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+	<tr>
+		<td>
+			<?php echo $this->element->sesisdisability_bl; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->sesisdisability_dl; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->sesisdisability_none; ?>
+		</td>
+	</tr>
+</table>
+</div>
+<?php } ?>
+<table class="formInput" style="margin-top:1px;">
+	<tr>
+		<td>
+			<B><?php echo $this->translate('Basis for making the determination'); ?>: </B><br/>
+			<?php echo $this->element->mdt_00603e2b; ?>
+		</td>
+	</tr>
+</table>
+<?php
+// conditionally hide the DevelopmentalAreas in print mode
+$showDdAndHideEduNeeds = $this->element->educationalneeds_ddview->getValue() == 't' ? true : false;
+?>
+<table class="formInput" style="margin-top:1px;">
+	<tr>
+		<td>
+			<p><?php echo $this->translate("Describe the child's education"); ?></p>
+			<?php if('print' != $view->mode && isset($this->element->educationalneeds_ddview)) echo $this->element->educationalneeds_ddview; ?>
+            <!-- educationalneeds_text shoud show when educationalneeds_ddview is checked -->
+            <div id="showEducationalNeedsText" style="<? if('print' == $view->mode && $showDdAndHideEduNeeds) echo 'display:none;'; ?>">
+			<?php echo $this->element->educationalneeds_text; ?>
+            </div>
+		</td>
+	</tr>
+</table>
+<div id="showDevelopmentalAreas" style="">
+<?php if(1) { // hides area in print mode when edu dd is not checked ?>
+<table class="formInput" style="<? if('print' == $view->mode && !$showDdAndHideEduNeeds) echo 'display:none;'; ?>">
+	<tr>
+		<td>
+            <?php echo $this->printBold($view->mode, $this->element->educationalneeds_cognitive_dev->getLabel()); ?>
+			<?php echo $this->element->educationalneeds_cognitive_dev; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+            <?php echo $this->printBold($view->mode, $this->element->educationalneeds_fine_dev->getLabel()); ?>
+			<?php echo $this->element->educationalneeds_fine_dev; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+            <?php echo $this->printBold($view->mode, $this->element->educationalneeds_lang_dev->getLabel()); ?>
+			<?php echo $this->element->educationalneeds_lang_dev; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+            <?php echo $this->printBold($view->mode, $this->element->educationalneeds_social_dev->getLabel()); ?>
+			<?php echo $this->element->educationalneeds_social_dev; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+            <?php echo $this->printBold($view->mode, $this->element->educationalneeds_self_help_skills->getLabel()); ?>
+			<?php echo $this->element->educationalneeds_self_help_skills; ?>
+		</td>
+	</tr>
+</table>
+<?php } ?>
+</div>
+<?php //} ?>
+<?php //if('print' != $view->mode || 'Specific Learning Disability (SLD)' == $this->element->disability_primary->getValue() ) { ?>
+<?php if('print' != $view->mode || ('print' == $view->mode && 'Specific Learning Disability (SLD)' == $this->element->disability_primary->getValue())) { ?>
+<div id="showSLDAreas" style="">
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Additional information required for verification of specific learning disabilities'); ?></td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+	<tr>
+		<td>
+			<?php echo $this->element->mdt_00603f2->getLabel(); ?>
+			<?php echo $this->element->mdt_00603f2; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->mdt_00603f2d->getLabel(); ?>
+			<?php echo $this->element->mdt_00603f2d; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->mdt_00603f2e->getLabel(); ?>
+			<?php echo $this->element->mdt_00603f2e; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->mdt_00603f2f; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->mdt_00603f2f_correctable; ?>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<?php echo $this->element->mdt_00603f2g->getLabel(); ?>
+			<?php echo $this->element->mdt_00603f2g; ?>
+		</td>
+	</tr>
+</table>
+</div>
+<?php }

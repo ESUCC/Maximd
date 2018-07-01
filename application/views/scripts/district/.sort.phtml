@@ -1,0 +1,96 @@
+<?php
+$this->title = "SRS_Districts";
+$this->headTitle($this->title);
+
+// echo $this->headLink()->prependStylesheet('/css/site.css');
+?>
+<p>
+	<a
+		href="<?php
+
+echo $this->url(array(
+    'controller' => 'index',
+    'action' => 'add'
+));
+?>">Add New User</a>
+</p>
+<a
+	href="<?php
+
+echo $this->url(array(
+    'controller' => 'index',
+    'action' => 'search'
+));
+?>">Search for a User</a>
+</p>
+<h2><?php  echo $this->current_date_and_time; ?></h2>
+<table>
+	<tr>
+		<th><h2><a
+			href=<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'name_district'));?>>District
+				Name</a></th>
+
+		<th><B>County Name</B></th>
+
+		<th><h2><a
+			href=<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'id_county'));?>>County
+				ID</a></th>
+		<th><h2><a
+			href=<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'id_district'));?>>District
+				ID</a></th>
+		<th><h2><a
+			href=<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'address_city'));?>>City</a></th>
+		<th><h2><a
+			href=<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'address_zip'));?>>Zip
+				Code</a></th>
+		<th><h2><a
+			href=<?php echo $this->url(array('controller'=>'district','action'=>'sort','fieldname'=>'address_state'));?>>State</a></th></h2>
+
+
+		<th>&nbsp;</th>
+	</tr>
+
+<?php foreach($this->paginator as $iep_districts) : ?>
+<tr>
+
+<td><a href="<?php echo $this->url(array('controller'=>'district','action'=>'edit','name_district'=>$iep_districts->name_district));?>">
+<?php echo $this->escape($iep_districts->name_district);?></a></td>
+
+<?php //echo $this->escape($iep_districts->name_district); This is what it was?>
+
+
+
+		<td>
+<?php
+    
+foreach ($this->iep_county as $iep_countys) {
+        if ($this->escape($iep_districts->id_county) == $this->escape($iep_countys->id_county)) {
+            echo $this->escape($iep_countys->name_county);
+        }
+    }
+    ?></td>
+
+		<td><?php echo $this->escape($iep_districts->id_county);?></td>
+		<td><?php echo $this->escape($iep_districts->id_district)?></td>
+		<td><?php echo $this->escape($iep_districts->address_city)?></td>
+		<td><?php echo $this->escape($iep_districts->address_zip)?></td>
+		<td><?php echo $this->escape($iep_districts->address_state)?></td></tr>
+
+
+
+
+
+		<td><a
+	<?php // href=" etc...echo $this->url(array('controller'=>'district','action'=>'edit', 'name_district'=>$iep_districts->name_district));">Edit</a></td>?>
+
+	<?php //	<td><a href="<?php echo $this->url(array('controller'=>'district','action'=>'delete', 'id_district'=>$iep_districts->id_district));">Delete</a></td>?>
+
+	</tr> 
+
+<?php
+
+endforeach;?><center><h2><?php  echo  $this->paginationControl($this->paginator,'sliding','sqlpaginator.phtml',array('route'=> 'district'));
+ ?>
+ <br>
+	<br>
+</table>

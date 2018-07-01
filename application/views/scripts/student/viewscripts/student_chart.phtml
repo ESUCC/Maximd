@@ -1,0 +1,150 @@
+<?php
+
+	$view = $this->element->id_student_chart->getView();
+	
+    echo $this->element->student;
+    echo '<input type="hidden" name="doaction" id="doaction" value="" />';
+    echo $this->element->id_student_chart;
+    
+    if(isset($view->selectedChart)) {
+    	
+    	echo App_Classes_StudentChart::render($view->student, $this->element->id_student_chart->getValue(), 'simplechart');
+    
+        ?>
+
+    <script type="text/javascript">
+        dojo.require("dojox.charting.Chart2D");
+        var ROTATION = -90;
+        var surface = null, t1, t2, t3, t4, t5;
+        var makeText = function(surface, text, font, fill, stroke){
+            var t = surface.createText(text);
+            if(font)   t.setFont(font);
+            if(fill)   t.setFill(fill);
+            if(stroke) t.setStroke(stroke);
+            return t;
+        };
+    
+        <?php
+            if('' != $this->element->id_student_chart->getValue()) { 
+                echo App_Classes_StudentChart::buildChartJavascript($view->student, $this->element->id_student_chart->getValue());
+            }
+        ?>
+    </script>
+
+
+<?php } ?>
+    
+<table style="width:650px;" border="0" align="center">
+    <tr>
+        <td style="background-color:#b0c4de;padding: 5px;font-family: sans-serif;font-size: 12px; }" valign="top" nowrap="nowrap" width="29%">
+        <?
+//            include_once("workflow_helper.php");
+    
+//            $sqlStmt =  "SELECT *, s.name_first || ' ' || s.name_last AS name_full,
+//                        date_part('year',age(dob)) as age from student_search4 ss 
+//                        JOIN iep_student s ON 
+//                            s.id_student   = ss.id_student 
+//                        where (ss.id_case_mgr = '$sessIdUser' or ss.id_list_team ilike '%$sessIdUser%' ) AND ss.id_personnel = '$sessIdUser';";
+//
+//            $workflow = new workflow('pgHelper');
+//            $myStudents = $workflow->getStudentList($sqlStmt, $pos, $maxRecs);
+//            //pre_print_r($_SESSION);
+//            echo $workflow->getDisplayHTML_chartHelper($myStudents, $area, $sub, $_GET['student']);
+        ?>
+        </td>
+        <td>&nbsp;</td>
+
+        <td style="background-color:#b0c4de;padding: 5px;font-family: sans-serif;font-size: 12px; }" valign="top" nowrap="nowrap" width="29%">
+        <button type="submit" name="Search" value="Search" onClick="javascript:dojo.byId('doaction').value='insert';document.myform.submit();">Insert Chart</button><BR/>
+        Chart List:<BR/>
+        <?
+            if($studentCharts = App_Classes_StudentChart::getAll($view->student))
+            {
+#
+                $multiOptions = array();
+                $checkedArr = array();
+                foreach($studentCharts as $row)
+                {                    
+                    $checked = substr_count($view->selectedChart['secondary_plot_charts'], $row['id_student_chart']."\n") > 0 ? 't' : '';
+                    if('t' == $checked)
+                    {
+                        $checkedArr[] = $row['id_student_chart'];
+                    }
+                    
+                    if($row['id_student_chart'] != $view->selectedChart['id_student_chart']) 
+                    {
+//	                    $label = '<a href="srs.php?area=student&sub=student&student='.$view->student.'&option=charting&view_chart_id='.$row['id_student_chart'].'">';
+	                    $label = "<font color=\"".$row['chart_color']."\"><u>";
+	                    $label .= $row['chart_type'] . ' ('. substr($row['goal_desc'], 0,10).')';
+	                    $label .= "</u></font>";
+//	                    $label .= '</a><BR/>';
+
+			            $link = $view->url(array(
+				            'controller' => 'student',
+				            'action' => 'charts',
+				            'student' => $view->student,
+				            'view_chart_id' => $row['id_student_chart'],
+			            ), null, true); // 3rd param removes default values
+				                    
+	                    $multiOptions[$row['id_student_chart']] = " <a href=\"" . $view->baseUrl() .  $link . "\">$label</a>";
+	                    
+                    } else {
+                        $label = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"".$row['chart_color']."\"><u>";
+                        $label .= $row['chart_type'] . ' ('. substr($row['goal_desc'], 0,10).')';
+                        $label .= "</u></font>";
+                    	echo $label;
+                    }
+                }
+                
+                $element = new Zend_Form_Element_MultiCheckbox('secondaryPlots', array(
+                    'multiOptions' => $multiOptions
+                ));
+                $element->setValue($checkedArr);
+                echo $element;
+                
+            }
+        ?>
+        </td>
+        <td>&nbsp;</td>
+        <td style="background-color:#b0c4de;" align="center" width="70%">
+            <table style="background-color:#b0c4de;padding: 5px;font-family: sans-serif;font-size: 12px; }" border="0">
+            <? if(isset($view->selectedChart['id_student_chart'])) { ?>
+                <tr>
+                    <td align="right" nowrap="nowrap" colspan="2"><? echo $this->element->goal_desc; ?></td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="2"><? echo $this->element->chart_type; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="2"><? echo $this->element->chart_color; ?>
+                        <BR><BR><BR>
+                    </td>
+                </tr>
+                <tr>
+                    <td><? echo $this->element->label_x; ?></td>
+                    <td><? echo $this->element->label_y; ?></td>
+                </tr>
+                <tr>
+                    <td><? echo $this->element->data_type_x; ?></td>
+                    <td><? echo $this->element->data_type_y; ?></td>
+                </tr>
+                <tr>
+                    <td><? echo $this->element->data_x; ?></td>
+                    <td><? echo $this->element->data_y; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" name="Search" value="Search" onClick="dojo.byId('doaction').value='save';document.myform.submit();">Save Chart</button>
+                    </td>
+                </tr>
+            <? } else { ?>
+                <tr>
+                    <td align="right" nowrap="nowrap" colspan="2">No chart selected.</td>
+                </tr>
+            <? } ?>
+            </table>
+            
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,71 @@
+<?php 
+
+$initialValue =  <<<EOT
+<p class="MsoNormal">Georgia<span> 8point</span></p><p class="MsoNormal">Georgia<span> 10 Point</span></p><p class="MsoNormal"><font><span>Georgia</span><span> 12 Point</span></font></p><p class="MsoNormal">Georgia<span> 16 Point</span></p><br /><p class="MsoNormal"><span>Arial
+8point</span></p><p class="MsoNormal"><span>Arial
+10 Point</span></p><p class="MsoNormal"><span><font>Arial 12
+Point</font></span></p><p class="MsoNormal"><span>Arial
+16 Point</span></p><br /><p class="MsoNormal"><font>Time New Roman 8point</font></p><p class="MsoNormal"><font>Time New Roman 10 Point</font></p><p class="MsoNormal"><font>Time New Roman 12 Point</font></p><p class="MsoNormal"><font>Time New Roman 16 Point</font></p><br /><p class="MsoNormal"><span>Tahoma
+8point</span></p><p class="MsoNormal"><span>Tahoma
+10 Point</span></p><p class="MsoNormal"><span><font>Tahoma 12
+Point</font></span></p><p class="MsoNormal"><span>Tahoma
+16 Point</span></p><br /><br /><p class="MsoNormal"><font>Style = Body Text</font></p><p class="MsoBodyText"><font><font>Georgia
+8point</font></font></p><p class="MsoBodyText"><font><span>Georgia</span><span> 10 Point</span></font></p><p class="MsoBodyText"><font><font>Georgia
+12 Point</font></font></p><p class="MsoBodyText"><font><span>Georgia</span><span> 16 Point</span></font></p><p class="MsoBodyText"></p><p class="MsoBodyText"><span><font>Arial
+8point</font></span></p><p class="MsoBodyText"><span>Arial
+10 Point</span></p><p class="MsoBodyText"><span><font>Arial 12
+Point</font></span></p><p class="MsoBodyText"><span>Arial
+16 Point</span></p><p class="MsoBodyText"></p><p class="MsoBodyText"><font>Time New Roman 8point</font></p><p class="MsoBodyText"><font>Time New Roman 10 Point</font></p><p class="MsoBodyText"><font>Time New Roman 12 Point</font></p><p class="MsoBodyText"><font>Time New Roman 16 Point</font></p><p class="MsoBodyText"></p><p class="MsoBodyText"><span><font>Tahoma
+8point</font></span></p><p class="MsoBodyText"><span>Tahoma
+10 Point</span></p><p class="MsoBodyText"><span><font>Tahoma 12
+Point</font></span></p><p class="MsoBodyText"><span>Tahoma
+16 Point</span></p><br /><br /><br /><p class="MsoNormal"><font>Style = Plain Text</font></p><br /><p class="MsoPlainText"><font><font>Georgia
+8point</font></font></p><p class="MsoPlainText"><font><font>Georgia
+10 Point</font></font></p><p class="MsoPlainText"><font><font>Georgia
+12 Point</font></font></p><p class="MsoPlainText"><font><span>Georgia</span><span> 16 Point</span></font></p><p class="MsoPlainText"></p><p class="MsoPlainText"><span><font>Arial
+8point</font></span></p><p class="MsoPlainText"><span><font>Arial 10
+Point</font></span></p><p class="MsoPlainText"><span><font>Arial 12
+Point</font></span></p><p class="MsoPlainText"><span>Arial
+16 Point</span></p><p class="MsoPlainText"></p><p class="MsoPlainText"><font>Time New Roman 8point</font></p><p class="MsoPlainText"><font>Time New Roman 10 Point</font></p><p class="MsoPlainText"><font>Time New Roman 12 Point</font></p><p class="MsoPlainText"><font>Time New Roman 16 Point</font></p><p class="MsoPlainText"></p><p class="MsoPlainText"><span><font>Tahoma
+8point</font></span></p><p class="MsoPlainText"><span><font>Tahoma 10
+Point</font></span></p><p class="MsoPlainText"><span><font>Tahoma 12
+Point</font></span></p><p class="MsoPlainText"><span>Tahoma
+16 Point</span></p><br />
+
+EOT;
+
+
+$filter = new App_Filter_TestWordFilter();
+$filteredValue = $filter->filter($initialValue);
+
+$editor = new App_Form_Element_TestEditor ( 'tempEditor' );
+$editor->setValue ( $initialValue );
+
+$tempForm = new Zend_Form ();
+$tempForm->addElement ( $editor );
+?>
+<table width="100%" border="1">
+	<tr>
+		<th width="50%">initialValue</th>
+		<th>filteredValue</th>
+	</tr>		
+	<tr>
+		<td><?php echo htmlspecialchars($initialValue) ?></td>
+		<td><?php echo htmlspecialchars($editor->getValue()); ?></td>
+	</tr>		
+	<tr>
+		<td><?php echo $initialValue; ?></td>
+		<td><?php echo $filteredValue; ?></td>
+	</tr>		
+	<tr>
+		<td colspan="2"><?php echo $editor; ?></td>
+	</tr>		
+</table>
+<?php 
+
+
+
+
+
+
+

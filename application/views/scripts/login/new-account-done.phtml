@@ -1,0 +1,53 @@
+<?if (isset($_SESSION['user']['id_personnel'])){?>
+    <table class="navTopMenu">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<br>
+<?}?>
+
+<table>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;"><span class="btb"><? echo $this->newPersonnelRecord['name_first'] . " " . $this->newPersonnelRecord['name_last']; ?></span> your request has been submitted.</td>
+    </tr>
+    <? if(is_array($this->accountSupervisor)) { ?>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;">Notification of your request has been sent to <? echo $this->accountSupervisor['name_full']; if (!empty($this->accountSupervisor['email_address'])) { echo " (<a href=\"mailto:" . $this->accountSupervisor['email_address'] . "\">" . $this->accountSupervisor['email_address'] . "</a>)"; } ?>.</td>
+    </tr>
+    <? } ?>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;">Your user name is: <? echo $this->newPersonnelRecord['user_name']?>.</td>
+    </tr>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;">Once your account is approved, you&rsquo;ll be able to log on using the above user name along with the password you chose in the previous step.</td>
+    </tr>
+    <? if (!empty($this->newPersonnelRecord['email_address'])) { ?>
+    <tr>
+        <td align="left" class="bt" style="padding-top:5px;">You should also receive an email notification that includes your user name and password for future reference.</td>
+    </tr>
+    <? } ?>
+    <tr>
+        <td align="left" class="bt" style="padding-top:15px;"><span class="btb">Thank you</span> for taking the time to apply. You&rsquo;ll be notified when your account is approved.</td>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td style="padding-top:5px;">
+            <button onClick="window.location='/login'">Go to Login</button>
+        </td>
+    </tr>
+</table>

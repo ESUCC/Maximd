@@ -1,0 +1,95 @@
+	<?php 
+	    $view = $this->element->page->getView();
+	   	echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+	   	echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+    ?>
+    <?= $this->element->id_form_030; ?>
+    <?= $this->element->page; ?>
+
+<br />
+<table class="formInput">  
+   <tr>
+        <td>
+            <?php echo $this->element->date_notice; ?>
+        </td>
+    </tr>    
+   <tr>
+        <td>
+        	<?php echo $this->element->notice_to; ?>
+        </td>
+    </tr>    
+    <tr>
+		<td>
+			<?php echo $this->element->address; ?><br />
+			On Behalf of: <strong><?php echo $view->db_form_data['student_data']['name_student']; ?></strong>
+		</td>
+    </tr>
+    <tr>
+		<td>
+			<?php if ($view->mode != 'print') : ?>
+			<?php echo $this->element->iep_meeting; ?>
+			<?php else : ?>
+			<?php echo $this->element->iep_meeting->getDescription(); ?>: <strong><?php echo $this->element->iep_meeting->getValue(); ?></strong>
+			<?php endif; ?>
+		</td>
+	</tr>
+	<tr>
+		<td><p>We must meet with you, and if appropriate your child who is 16 yr. old or will be turning 16 during to develop your child's education services plan. It is very important that you attend this meeting. With your input, we can develop an education services plan describing the specific services the district will provide in light of the services the school district will provide as determined through the consultation plan with nonpublic school representatives. If you would like, you may review your child's education records prior to the meeting. At this services plan meeting we will be discussing:</p>
+		<ol>
+			<li>Your child's present levels of performance and educational needs;</li>
+			<li>Annual goals;</li>
+			<li>Services your child will receive.</li>
+		</ol>
+		<p>In addition to you, the following people will be in attendance at the equitable Services plan meeting: </p>
+			<table class="formInput">
+				<tr>
+					<td><?php
+                        if($view->mode == 'edit') {
+                            echo $this->element->general_ed;
+                        } else {
+                            echo $this->element->general_ed->getLabel() .
+                            ' <B>' .$this->element->general_ed->getValue() . '</B>';
+                        }
+                        ?>
+                    </td>
+				</tr>
+				<tr>
+                    <td><?php
+                        if($view->mode == 'edit') {
+                            echo $this->element->special_ed;
+                        } else {
+                            echo $this->element->special_ed->getLabel() .
+                                ' <B>' .$this->element->special_ed->getValue() . '</B>';
+                        }
+                        ?>
+                    </td>
+				</tr>
+                <tr>
+                    <td><?php
+                        if($view->mode == 'edit') {
+                            echo $this->element->school_rep;
+                        } else {
+                            echo $this->element->school_rep->getLabel() .
+                                ' <B>' .$this->element->school_rep->getValue() . '</B>';
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><?php
+                        if($view->mode != 'edit') {
+                            $this->element->other_attendees->removeDecorator('colorme');
+                        }
+                        if ($view->mode != 'print') :
+						        echo $this->element->other_attendees;
+						  else :
+
+						  		echo $this->element->other_attendees->getDescription(); ?> <strong><?php echo $this->element->other_attendees->getValue(); ?></strong>
+						<?php endif; ?>
+                    </td>
+                </tr>
+			</table>	
+			
+		</td>
+	</tr>
+</table>

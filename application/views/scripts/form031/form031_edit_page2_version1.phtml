@@ -1,0 +1,136 @@
+<?php 
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+?>
+<?= $this->element->id_form_031; ?>
+<?= $this->element->page; ?>
+<?php $view = $this->element->page->getView(); ?>
+
+<table class="formTitleHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>GIVE CONSENT FOR INITIAL EVALUATION/CHILD ASSESSMENT</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <div id="consent_wrapper_1-colorme" class="colorme">
+                <?
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                $a->setMultiOptions(array("1" => $this->element->consent->getMultiOption("1")));
+                $a->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'consent_wrapper_1');");
+                $a->removeDecorator('label');
+                echo $a;
+                ?>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>DO NOT GIVE CONSENT FOR INITIAL EVALUATION</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td>
+            <div id="consent_wrapper_0-colorme" class="colorme">
+                <?
+                $a = clone($this->element->consent);
+                $a->setDecorators(App_Form_DecoratorHelper::inlineElement());
+                $a->setMultiOptions(array("0" => $this->element->consent->getMultiOption("0")));
+                $a->setAttrib('onchange', $this->JSmodifiedCode . "colorMeById(this.id, 'consent_wrapper_0');");
+                $a->removeDecorator('label');
+                echo $a;
+                ?>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" class="p8888">
+            <?php echo $this->element->no_consent_reason; ?>
+        </td>
+    </tr>
+</table>
+<table class="formInput" style="padding-bottom: 10px;text-align: left">
+    <?
+    if('print'==$view->mode){ //PRINT ?>
+        <tr>
+            <td>
+                <table width="100%">
+                    <?php if (1==$this->element->signature_on_file->getValue()) { ?>
+                        <td>Signature is on File</td>
+                    <?php } else { ?>
+                        <td width="22%;white-space:nowrap">Parent Signature:</td><td width="38%" class="printCellUnderlineThin">&nbsp;</td>
+                    <?php } ?>
+                    <?php if (''!=$this->element->consent_date->getValue()) { ?>
+                        <td>Date: <?php echo $this->element->consent_date->getValue(); ?></td>
+                    <?php } else { ?>
+                        <td width="5%;white-space:nowrap">Date:</td><td width="35%" class="printCellUnderlineThin">&nbsp;</td>
+                    <?php } ?>
+                </table>
+            </td>
+        </tr>
+    <? } ?>
+    <? if('print'!=$view->mode) { ?>
+        <tr>
+            <td align="right">Signature on File: </td><td><?php echo $this->element->signature_on_file; ?></td>
+            <td><?php echo $this->element->consent_date; ?></td>
+        </tr>
+    <? } ?>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td colspan="6">
+            Parents of children with a suspected disability have protection under the procedural safeguards of the
+            Individuals with Disabilities Education Act (IDEA). A copy of the "Part C Procedural Safeguards,"
+            as well as the procedures for filing a complaint and request for a due process hearing are provided with
+            this notice. You should carefully read the information and, if you have questions regarding your rights,
+            you may contact:
+        </td>
+    </tr>
+    <tr align="center">
+        <td nowrap="nowrap"><?php echo $this->element->contact_name; ?></td>
+        <td nowrap="nowrap"><?php echo $this->element->contact_num; ?></td>
+    </tr>
+</table>
+<table class="formSectionHead" cellpadding="0" cellspacing="0" style="margin-bottom:1px;">
+    <tr>
+        <td>Additional Resources</td>
+    </tr>
+</table>
+<table class="formInput" style="margin-top:1px;">
+    <tr>
+        <td style="width:635px">You may contact any of the following resources to help you understand the federal
+            and state laws for educating children with disabilities and parental rights granted by those laws.
+            An explanation of your rights will be provided at no cost by any of the following organizations:
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="formInput">
+                <tr>
+                    <td colspan="2">Nebraska Department of Education Regional Offices of Special Education:</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;Lincoln Office</td>
+                    <td>(402) 471-2471</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;Omaha Office</td>
+                    <td>(402) 595-2177</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;Scottsbluff Office</td>
+                    <td>(308) 632-1349</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;Hotline for Disability Services</td>
+                    <td>(800) 742-7594</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

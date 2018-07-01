@@ -1,0 +1,12 @@
+<?php
+echo $this->partial('partials/translation-header.phtml', array('action' => $this->action));
+
+if (count($this->pendingTranslations) > 0) : ?>
+<?php //echo $this->partial?>
+<?php else : ?>
+echo $this->partial('partials/alert.phtml',
+array('type' => 'alert-info',
+'bold' => 'Notice:',
+'msg' => 'All translation keys are currently up to date.'
+));
+<?php endif; ?>

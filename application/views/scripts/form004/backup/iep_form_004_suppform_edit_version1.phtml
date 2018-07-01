@@ -1,0 +1,59 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+<? $view = $this->element->rownumber->getView(); ?>
+
+<?php if('print' != $view->mode) { ?>
+<table class="noprint">
+   <tr>
+        <td>
+	        <?php if('edit' == $view->mode) {?>
+	            <div id="iep_form_004_suppform_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+	            	<?= $this->element->remove_row; ?>
+	            </div>
+	        <?php } ?>
+            <?= $this->element->id_form_004_suppform; ?>
+        </td>
+    </tr>
+</table>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>
+        	<?php echo $this->translate('Title'); ?><?= $this->element->id_form_004_supplemental_form; ?>
+        </td>
+    </tr>
+</table>
+
+<table class="formInput noBorder">   
+    <tr>
+		<td style="">
+			<div id="iep_form_004_suppform_<?= $rowNum; ?>-title-colorme" class="colorme">
+			<?php echo $this->element->title; ?>
+			</div>
+		</td>
+    </tr>
+</table>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Content'); ?></td>
+    </tr>
+</table>
+<?php } else { ?>
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>
+            <?= $this->element->title; ?>
+        </td>
+    </tr>
+</table>
+
+<?php } ?>
+<table class="sc_formInputBlock" style="margin-top:1px;">     
+    <tr class="sc_richTextBox">
+        <td>
+			<div id="iep_form_004_suppform_<?= $rowNum; ?>-text-colorme" class="colorme">
+        	<?php echo $this->element->text; ?>
+        	</div> 
+        </td>
+    </tr>
+</table>  

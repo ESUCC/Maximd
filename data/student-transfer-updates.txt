@@ -1,0 +1,38 @@
+--
+-- SRSSUPP-775 - Cannot confirm transfers on ZF Confirm Transfer Screen
+--
+ALTER TABLE iep_form_026 ADD COLUMN suspended_date character varying;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_student_name character varying;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_dob date;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_grade character varying;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_age character varying;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_gender character varying;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_parents character varying;
+ALTER TABLE iep_form_026 ADD COLUMN suspended_id_county character(2);
+ALTER TABLE iep_form_026 ADD COLUMN suspended_id_district character(4);
+ALTER TABLE iep_form_026 ADD COLUMN suspended_id_school character(3);
+ALTER TABLE iep_form_026 ADD COLUMN suspended_address character varying;
+
+ALTER TABLE iep_form_027 ADD COLUMN suspended_date character varying;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_student_name character varying;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_dob date;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_grade character varying;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_age character varying;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_gender character varying;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_parents character varying;
+ALTER TABLE iep_form_027 ADD COLUMN suspended_id_county character(2);
+ALTER TABLE iep_form_027 ADD COLUMN suspended_id_district character(4);
+ALTER TABLE iep_form_027 ADD COLUMN suspended_id_school character(3);
+ALTER TABLE iep_form_027 ADD COLUMN suspended_address character varying;
+
+ALTER TABLE iep_form_028 ADD COLUMN suspended_date character varying;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_student_name character varying;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_dob date;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_grade character varying;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_age character varying;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_gender character varying;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_parents character varying;
+ALTER TABLE iep_form_028 ADD COLUMN suspended_id_county character(2);
+ALTER TABLE iep_form_028 ADD COLUMN suspended_id_district character(4);
+ALTER TABLE iep_form_028 ADD COLUMN suspended_id_school character(3);
+ALTER TABLE iep_form_028 ADD COLUMN suspended_address character varying;

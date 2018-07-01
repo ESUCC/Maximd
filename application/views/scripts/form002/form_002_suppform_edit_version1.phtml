@@ -1,0 +1,50 @@
+<? $rowNum = $this->element->rownumber->getValue(); ?>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td style="width: 70%;">
+            &nbsp;
+        </td>
+        <td class="noprint" style="padding-right:10px; width: 30%;" align="right" >
+            <div id="form_002_suppform_<?= $rowNum; ?>-remove_row-colorme" class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+            <?= $this->element->id_form_002_suppform; ?>
+        </td>
+    </tr>
+</table>
+
+<table style="<?php if ($rowNum !== 1) { echo 'page-break-before: always;'; } ?>" class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td>
+        	<?php echo $this->translate('Title'); ?>
+        	<?= $this->element->id_form_002_supplemental_form; ?>
+        </td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">   
+    <tr>
+		<td style="">
+			<div id="form_002_suppform_<?= $rowNum; ?>-title-colorme" class="colorme">
+			<?php echo $this->element->title; ?>
+			</div>
+		</td>
+    </tr>
+</table>
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+   <tr>
+        <td><?php echo $this->translate('Content'); ?></td>
+    </tr>
+</table>
+
+<table class="formInput" style="margin-top:1px;">     
+    <tr>
+        <td style="">
+			<div id="form_002_suppform_<?= $rowNum; ?>-text-colorme" class="colorme">
+        	<?php echo $this->element->text; ?>
+        	</div> 
+        </td>
+    </tr>
+</table>  

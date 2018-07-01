@@ -1,0 +1,74 @@
+<?
+$config = Zend_Registry::get('config');
+$refreshCode = '?refreshCode=' . $config->externals->refresh;
+
+$sessUser = new Zend_Session_Namespace ('user');
+$privCheck = new My_Classes_privCheck($sessUser->user->privs);
+
+$this->headScript()->appendFile('/js/backbone.marionette/mustache.js' . $refreshCode);
+$this->headScript()->appendFile('/js/backbone.marionette/underscore.js' . $refreshCode);
+$this->headScript()->appendFile('/js/backbone.marionette/backbone.js' . $refreshCode);
+$this->headScript()->appendFile('/js/backbone.marionette/backbone.marionette.js' . $refreshCode);
+$this->headScript()->appendFile('/js/collection/srs.backbone.collection.js' . $refreshCode);
+$parent = $sessUser->parent;
+$parentCss = '';
+if ($parent) {
+    $parentCss = "display:none;";
+}
+$this->headScript()->appendFile('/js/studentSearch.js' . $refreshCode);
+$this->headScript()->appendFile('/js/reportSearch.js' . $refreshCode);
+$this->headScript()->appendFile('https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js');
+$this->headLink()->appendStylesheet('/css/collectionManager.css');
+$this->headLink()->appendStylesheet('https://cdn.datatables.net/1.10.7/css/jquery.dataTables.css');
+?>
+<table border="0">
+    <!-- logo row -->
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <tr><td colspan="2"><?php if ($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?></td></tr>
+    <tr><td colspan="2"><?php if($auth->hasIdentity()) echo $this->navigationSubmenu('report'); ?></td></tr>
+</table><?
+/**
+ * left sidebar
+ */
+//echo $this->partial('searchSidebarScripts.phtml', array(
+//    'sessUser' => $sessUser,
+//    'privCheck' => $privCheck,
+//    'showEditLink' => false,
+//    'showGroupAction' => false,
+//    'message' => 'Click students to view their NSSRS Report.',
+//    'clickStudentLink' => 'nssrsReport',
+//));
+?>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    $(document).on("dialogopen", ".ui-dialog", function () {
+            $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy' });
+	    $( ".ui-dialog" ).focus();
+    });
+
+  });
+</script>
+
+
+<div style="<? if ($this->collectionEditing) echo 'float:left;'; ?>">
+    <div id="searchContainer" class="clearfix" style="<?= $parentCss ?>">
+        <table style="width:100%;">
+            <? if (!$this->collectionEditing) { ?>
+                <tr>
+                    <td width="" style="padding-left:6px;"><a href="/student/search/collection/student">Start student
+                            collection.</a></td>
+                </tr>
+            <? } ?>
+        </table>
+        <h3 id="searchStudents">Search Students</h3>
+        <?php echo $this->searchForm; ?>
+    </div>
+    <table id="nssrsSearchResults" class="display">
+    </table>
+    <div id="searchResults" class="clearfix">
+
+    </div>
+
+</div>

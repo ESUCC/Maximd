@@ -1,0 +1,40 @@
+<?php
+$view = $this->element->page->getView();
+if (!isset($view->db_form_data['summary_form']) || true !== $view->db_form_data['summary_form']) {
+    $summaryForm = false;
+} else {
+    $summaryForm = true;
+}
+// Check to see if there are Supplemental Forms to display
+// If there are show them.
+if ($view->db_form_data['iep_form_004_suppform']['count'] > 0 || $view->mode != 'print') {
+    echo '<input type="hidden" name="returnResult" id="returnResult" value="" />';
+    echo '<input type="hidden" name="changePageAction" id="changePageAction" value="" />';
+    echo $this->element->id_form_004;
+    echo $this->element->page;
+    echo $this->element->dob;
+    ?>
+<!-- File Uploader -->
+<? //= $this->pdfUpload($view, $this->element->id_form_004->getValue(), '004'); ?>
+<? // uploader
+    if ('print' != $view->mode) {
+        echo $this->fileUploader();
+    }
+//    echo $this->subformTab($view, 'iep_form_004_suppform', true, "Supplemental Form", true);
+    echo $this->jqueryTab($view, 'iep_form_004_suppform', true, "Supplemental Form");
+}
+
+if ('print' == $view->mode) {
+
+    if (!$summaryForm || (isset($view->db_form_data['district'][0]['iep_summary_modifications_accommodations']) && $view->db_form_data['district'][0]['iep_summary_modifications_accommodations'])) :
+        $checklistModel = new Model_Table_Form004AccomodationsChecklist();
+        if (!$checklistModel->checklistEmpty($view->db_form_data['accomodations_checklist_1'])) {
+            echo '<div style="page-break-before: always;">' . $this->subform($view, 'accomodations_checklist', false) . '</div>';
+        }
+    endif;
+}
+
+//require_once APPLICATION_PATH . '/../library/PDFMerger/PDFMerger.php';
+//$pdf = new PDFMerger;
+//$pdf->addPDF(APPLICATION_PATH.'user_images/uploaded_pdf/PDF_004_22/000000001.pdf', 'all')
+//->merge('file', 'TEST2.pdf');

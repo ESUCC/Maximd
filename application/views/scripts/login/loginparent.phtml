@@ -1,0 +1,9 @@
+<?php if ($this->message) { ?>
+    <div class="message"><?= $this->message ?></div>
+<?php } ?>
+
+<div>New user? <a href="/privilege/selectclass">Sign up</a>.</div>
+
+<?= $this->userLogonForm; ?>
+
+<div>Forgot your password? <a href="/login/requestnewpass">Request a change</a></div>

@@ -1,0 +1,184 @@
+<?if (isset($_SESSION['user']['id_personnel'])){?>
+    <table class="navTopMenu">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                   echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                   echo $this->navigationSubmenu('home');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<br>
+<?}?>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    <?
+    /**
+     * do not display school for DM or ADM
+     */
+    if ($this->user_type == 2 || $this->user_type == 3) {
+        echo "\t\t$('#id_school-colorme').css('display', 'none');\n";
+    } ?>
+    });
+</script>
+<?
+/**
+ * disable CDS selection on details screen
+ * enable when submitting
+ */
+if (isset($this->details)) {
+    ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#id_county').attr('disabled', 'disabled');
+        $('#id_district').attr('disabled', 'disabled');
+        $('#id_school').attr('disabled', 'disabled');
+
+        $('#accountRequestDetails').submit(function () {
+            $('#id_county').attr('disabled', false);
+            $('#id_district').attr('disabled', false);
+            $('#id_school').attr('disabled', false);
+            $('input[type=checkbox]:checked').attr('disabled', false);
+        });
+
+        buildSchools(<?= Zend_Json::encode($this->selectedSchools);?>, true);
+    });
+</script>
+<? } ?>
+<?
+/**
+ * parent section, just msg and let cancel or exit
+ */
+if (9 == $this->user_type) {
+    ?>
+<table style="width: 600px">
+    <tbody>
+    <tr>
+        <td><b>Parent Instructions</b></td>
+    </tr>
+    <tr>
+        <td style="padding-top:5px;">Parent accounts are established by your student’s case manager when your child’s
+            student record is created. Please contact your student’s case manager to receive a user name and password
+            for online access.
+        </td>
+    </tr>
+    <tr>
+        <td style="padding-top:5px;">
+            <button onclick="window.location='/login/new-account-request'">Back</button>
+
+	    <?if (isset($_SESSION['user']['id_personnel'])){?>
+                <button onclick="window.location='/home/'">Cancel</button>
+	       <?}else{?>
+                <button onclick="window.location='/'">Cancel</button>
+	    <?}?>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<?
+    /**
+     * all other user_types must fill out details to continue
+     */
+} else {
+    ?>
+
+<form id="accountRequestDetails" method="post"<?if (isset($_SESSION['user']['id_personnel'])){?> action="/login/new-account-request-done"<?}?>>
+    <table style="width: 600px">
+        <tr>
+            <td colspan="2" style="font-size: 14px">
+                <B>User Type Selected:</B>
+                <input type="hidden" id="user_type" name="user_type" value="<?= $this->user_type?>"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                From the menus below, please select the County, District, school(s) that you would like to
+                request <?= $this->userDesc ?> privileges from.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+   	    <?if (isset($_SESSION['user']['id_personnel'])){?>
+		<button name="cancel" id="cancel" type="button" alt="Cancel" title="Cancel" onclick="window.location='/home/'">Cancel</button>
+	      <?} else {?>
+                <?= $this->form->getElement('cancel') ?>
+	    <?}?>
+                <?= $this->form->getElement('submit') ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><img width="100%" height="1" src="/images/line_grey.gif"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <?= $this->countyDistrictSchoolLogin($this->id_county, $this->id_district, $this->id_school); ?>
+            </td>
+        </tr>
+        <? if (isset($this->msg)) { ?>
+        <tr>
+            <td colspan="2" class="btsRed">
+                <?=$this->msg;?>
+            </td>
+        </tr>
+        <? } ?>
+        <tr>
+            <td colspan="2"><img width="100%" height="1" src="/images/line_grey.gif"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table class=formInput
+                " id="schools_display">
+    </table>
+    </td>
+    </tr>
+    <tr>
+        <td colspan="2"><img width="100%" height="1" src="/images/line_grey.gif"></td>
+    </tr>
+    <? if (isset($this->details)) { ?>
+    <tr>
+        <td colspan="2" style="font-size: 14px">
+            <B>Please enter your user details:</B>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2"><img width="100%" height="1" src="/images/line_grey.gif"></td>
+    </tr>
+    <? foreach ($this->details->getElements() as $name => $element) {
+        echo '<tr>';
+        echo '  <td style="text-align: right; padding-right: 4px">';
+        echo $element->getLabel();
+        $element->removeDecorator('Label');
+        echo '  </td>';
+        echo '  <td>';
+        echo $element;
+        $sep = '';
+        if ($this->displayMessages) {
+            echo '<span  class="btsRed">';
+            foreach ($element->getMessages() as $err) {
+                echo $sep . $err;
+                $sep = ', ';
+            }
+            echo '</div>';
+        }
+        echo '  </td>';
+        echo '</tr>';
+        echo '<tr><td colspan="2"><img width="100%" height="1" src="/images/line_grey.gif"></td></tr>';
+    }
+} ?>
+    </table>
+</form>
+<? } ?>
+
+
+

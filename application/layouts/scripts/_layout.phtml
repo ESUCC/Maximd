@@ -1,0 +1,41 @@
+<?php 
+    // build top bottom splitting border container
+    //
+    // this is the top/middle/bottom level three piece division of the site
+    //
+    // the left/middle/right split is done in the _mainPane.phtml file
+    //
+    //
+    // to get the border containers to display properly on the main page
+    // we need to build the main container last
+    //
+    // I am pretty sure it's related to capturing inside a capture.
+    // not sure this is the best way to render this. but it's currently working
+    //
+	
+	// added option for variable layout name
+	// this allows different layout css rules
+	// that are being added for admin debugging
+	$mainLayoutIdName = 'layout';
+//	if(App_Debug::adminDebugConsoleEnabled()) {
+//		// add admin to the layout name if user listed in conf file
+//		$mainLayoutIdName .= 'Admin';
+//	}
+
+	$this->borderContainer()->captureStart($mainLayoutIdName, array('design' => 'headline')) ?>
+
+    <?php echo $this->render('_headline.phtml') ?>
+    <?php 
+//    if(App_Debug::adminDebugConsoleEnabled()) {
+//    	// add right pane for admin debugging
+//		$this->contentPane()->captureStart('srs_rightPane', array('region' => 'right'));
+//		echo '<div id="adminConsole">Gorilla</div>';
+//		echo $this->contentPane()->captureEnd('srs_rightPane'); 
+//    }
+    ?>
+    <?php // keep this last until we figure out how to properly render the main border containers ?>
+    <?php echo $this->render('_mainPane.phtml'); ?>
+    <?php // echo $this->render('_footer.phtml') 
+	?>
+
+<?php echo $this->borderContainer()->captureEnd($mainLayoutIdName) ?>

@@ -1,0 +1,148 @@
+<?
+$rowNum = $this->element->rownumber->getValue ();
+$view = $this->element->rownumber->getView ();
+$subformIdentifier = $this->element->subformIdentifier->getValue ();
+?>
+<?= $this->element->id_iep_absence; ?>
+
+<table class="noprint" width="100%" border="0">
+	<tr>
+		<td align="right">
+			<div id="team_member_absences_<?= $rowNum; ?>-remove_row-colorme"
+				class="colorme">
+            <?= $this->element->remove_row; ?>
+            </div>
+		</td>
+	</tr>
+</table>
+
+<table border="0" class="team_member_absence formInput">
+	<tr>
+		<td class="bt">
+			<div id="team_member_absences_<?= $rowNum; ?>-absence_name-colorme"
+				class="colorme">
+            <?php
+												if ('print' == $view->mode) {
+													$this->element->absence_name->removeDecorator ( 'label' );
+													echo "<B>Name of Team Member</B>";
+												}
+												echo $this->element->absence_name;
+												?>
+            </div>
+		</td>
+		<td class="bt">
+			<div id="team_member_absences_<?= $rowNum; ?>-absence_role-colorme"
+				class="colorme">
+            <?php
+												if ('print' == $view->mode) {
+													$this->element->absence_role->removeDecorator ( 'label' );
+													echo "<B>Role</B>";
+												}
+												?>
+            <span id="absence_role-label"> <label>
+            <?php
+												echo $this->element->absence_role->getLabel ();
+												?>
+             </label>
+				</span> <br />
+            <?php echo $this->element->absence_role; ?>
+            <?php if('print'!=$view->mode || ('print' == $view->mode && 'Other (Please Specify)'==$this->element->absence_role->getValue())) {
+            	if('print'==$view->mode) {
+            		$this->element->absence_role_other->removeDecorator('Label');
+            	} ?>
+	            <div id="team_member_absences_<?= $rowNum; ?>-absence_role_other-colorme"
+						class="colorme">
+	            <?php echo $this->element->absence_role_other; ?>
+	            </div>
+            <?php } ?>
+			</div>
+		</td>
+	
+	
+	<tr>
+		<td colspan="2">Reason for Absence
+			<div
+				id="team_member_absences_<?= $rowNum; ?>-area_of_curriculum-colorme"
+				class="colorme">
+            <?php echo $this->element->area_of_curriculum;?>
+            </div>
+		</td>
+	</tr>
+    <?php
+				if ('' == $this->element->absence_role_other->getValue ()) {
+					$noPrintClass = "noprint";
+				} else {
+					$noPrintClass = "";
+				}
+				?>
+</table>
+<?php
+$display = "display:inline;";
+if ('mod' != $this->element->area_of_curriculum->getValue ()) {
+	$display = "display:none;";
+}
+?>
+<div id="team_member_input-team_member_absences_<?= $rowNum; ?>" style="<?php echo $display; ?>">
+	<table class="formSectionHead" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>Individual Education Program Team Member Input</td>
+		</tr>
+	</table>
+	<table cellpadding="5" border="0" class="formInput">
+		<tr>
+			<td valign="top" align="left" class="bt">
+				<div
+					id="team_member_absences_<?= $rowNum; ?>-input_information-colorme"
+					class="colorme">
+	            <?php echo $this->element->input_information; ?>
+	            </div>
+			</td>
+		</tr>
+	</table>
+
+</div>
+
+
+<table class="formSectionHead" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>Parent Signature</td>
+	</tr>
+</table>
+<table class="formInput" style="margin-top: 1px;" border="0">
+	<tr>
+		<td colspan="4">
+		    <?php if('print' == $view->mode && '' == $this->element->doc_signed_parent->getValue()) { ?>
+		        Parent Signature: ________________________________________
+		    <?php } else { ?>
+	            <div
+				id="team_member_absences_<?= $rowNum; ?>-doc_signed_parent-colorme"
+				class="colorme">
+				<? echo $this->element->doc_signed_parent;?>
+				(select 'Yes' to indicate that signature is on file)
+				</div>
+			<?php } ?>
+			
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+            <?php if('print' == $view->mode && '' == $this->element->doc_signed_parent->getValue()) { ?>
+                Date: _______________
+            <?php } else { ?>
+                <div
+				id="team_member_absences_<?= $rowNum; ?>-date_doc_signed_parent-colorme"
+				class="colorme">
+                <?=$this->element->date_doc_signed_parent;?>
+                </div>
+            <?php } ?>
+		</td>
+		<td colspan="2">
+			<div
+				id="team_member_absences_<?= $rowNum; ?>-no_sig_explanation-colorme"
+				class="colorme">
+			<?=$this->element->no_sig_explanation;?>
+			</div>
+		</td>
+	</tr>
+</table>
+<hr />

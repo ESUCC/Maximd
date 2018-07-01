@@ -1,0 +1,477 @@
+<?php $auth = Zend_Auth::getInstance();?>
+
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+<style>
+
+.tableSchool {
+    width: 100%;
+    min-width: 800px;
+}
+
+.tableSchool tbody tr:hover td {
+    background: #F4A460;
+}
+
+.tableSchool th{
+    padding: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    border-bottom: 1px dotted #a0a0a0;
+}
+
+.tableSchool td {
+    padding: 4px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 12px;
+}
+
+.rdcopy {
+    display: block;
+    width: 15px;
+    height: 16px;
+    background: #e0e0e0;
+    padding: 2px;
+    text-decoration : none;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+#report_date_0_1-error, #report_date_1_1-error, #report_date_2_1-error, #report_date_3_1-error, #report_date_4_1-error, #report_date_5_1-error, #report_date_6_1-error,
+#report_date_0_2-error, #report_date_1_2-error, #report_date_2_2-error, #report_date_3_2-error, #report_date_4_2-error, #report_date_5_2-error, #report_date_6_2-error {
+    position: fixed;
+    left: -500px;
+}
+
+
+.highlighted {
+    background-color: Red;
+}
+
+.rowsList ul li:hover  {
+    background: #F4A460;
+}
+
+
+</style>
+<table class="navTopMenu">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('school'); ?>
+	</td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    var reports = Array;
+
+     openURL("/school/search/nb/1/");
+
+     function openURL(url){
+        $(".loading").clone().css("position", "absolute").css("top", "0px").css("bottom", "10px").css("left", "0px").css("right", "0px").css("margin-top", "100px").show().appendTo("#searchResults");
+        $("#searchResults").load(url, function() {
+         // Paginator Bug fix - href="javascript:XXX" -----
+         var uri = "";
+         var reg = /\'(.+)\'/i;
+         $(".paginator a").each( function(index, element) {
+          uri = $(element).attr("href").match(reg);
+          uri = uri[0].substring(1, uri[0].length - 1);
+          $(element).attr("rel", uri);
+          $(element).attr("href", "#");
+          $(element).attr("class", "runSearchCall");
+         });
+         // ----- END FIX --------------------------------   
+      
+      });
+
+     }
+
+    $(document).on("click", ".runSearchCall", function () {
+        var url = $(this).attr("rel");
+        openURL ( url );
+
+    });
+
+    $(document).on("click", ".openWindow", function () {
+	var title = $(this).attr("title");
+	var url = $(this).attr("rel");
+	$("#dialog").load( url, 
+           function() {
+
+	    if ($("input").is(".datepicker")) $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy' });
+
+	    if ($("form").is("#SchoolEditForm") && $("form").is("#SchoolEditForm2")){
+	      $("#SchoolEditForm").validate({
+		   rules: {
+		    name_school: {
+		      required: true,
+		      minlength: 2
+		    },
+		    address_city: {
+		      required: true,
+		      minlength: 1
+		    },
+		    address_street1: {
+		      required: true,
+		      minlength: 5
+		    },
+		    address_zip: {
+		      zipcodeUS: true,
+		      required: true,
+		      minlength: 5,
+		      maxlength: 10
+		    },
+		    address_state: {
+		      required: true,
+		      minlength: 2,
+		      maxlength: 2
+		    },
+		    phone_main: {
+		      required: true,
+		      phoneUS: true
+		    },
+		    minutes_per_week: {
+		      required: true,
+		      digits: true,
+  		      range: [0, 1000000],
+		    }
+		},
+	       submitHandler: function(form) {
+	         $("div.error").hide();
+	 	 return false;
+	       },
+	       highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+	       },
+	       unhighlight: function (element, errorClass, validClass) {
+	        $(element).css('border', ''); 
+	       }
+	      });
+
+
+	      $("#SchoolEditForm2").validate({
+		   rules: {
+		    report_date_0_1: 
+		    {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_1_1: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_2_1: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_3_1: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_4_1: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_5_1: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_0_2: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_1_2: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_2_2: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_3_2: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_4_2: {
+		        date: true,
+			minlength: 10
+		    },
+		    report_date_5_2: {
+		        date: true,
+			minlength: 10
+		    }
+	       },
+	       messages: {
+		    report_date_0_1: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_1_1: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_2_1: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_3_1: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_4_1: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_5_1: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_0_2: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_1_2: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_2_2: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_3_2: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_4_2: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    },
+		    report_date_5_2: {
+			    minlength: "Incorrect date format",
+			    date: "Incorrect date format"
+		    }
+		},
+	       submitHandler: function(form) {
+	         $("div.error").hide();
+	 	 return false;
+	       },
+	       highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+	       },
+	       unhighlight: function (element, errorClass, validClass) {
+	        $(element).css('border', ''); 
+	       }
+	      });
+
+	      $.validator.addMethod("zipcodeUS", function(value, element) {
+		return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+	      }, "The specified US ZIP Code is invalid");
+
+	      $.validator.addMethod('phoneUS', function (value, element) {
+	        return this.optional(element) || /^\d{3}-\d{3}-\d{4}$/.test(value);
+	      }, "Please enter a valid phone number");
+           }
+ 
+	 });
+
+
+        $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 900, height: 700, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); } } );
+        return false;
+
+    });
+
+    $(document).on("keyup", "#SchoolEditForm input, .datepicker, #minutes_per_week", function () {
+	$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+	return false;
+    }); 
+
+
+    $(document).on("change", "#SchoolEditForm select", function () {
+	$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+	return false;
+    });
+
+    $(document).on("click", ".doneWindowConfirm", function () {
+	if (!$(".SchoolEditSave").prop("disabled") && confirm("You haven't saved your changes. Are you sure you want to Exit?")) $("#dialog").dialog( "close" ); else $("#dialog").dialog( "close" );
+	return false;
+    });
+
+    $(document).on("click", ".doneWindow", function () {
+	$("#dialog").dialog( "close" );
+	return false;
+    });
+
+    $(document).on("click", ".printWindow", function () {
+	var url = $(this).attr("rel");
+	window.open(url, '_blank');
+	return false;
+    });
+
+    $(document).on("click", ".SchoolEditCancel", function () {
+	$("#SchoolEditForm").trigger('reset');
+	$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", true);
+	return false;
+    });
+
+    $(document).on("click", ".SchoolEditSave", function () {
+      if ($("#SchoolEditForm").valid() && $("#SchoolEditForm2").valid()) {
+
+       var data_var = Array;
+       data_var = {};
+
+       $("#SchoolEditForm input, #SchoolEditForm select, #SchoolEditForm2 input, #SchoolEditForm2 select").each( function(index, element) {
+	    if (!$(element).attr("name").match(/report_date/ig) && !$(element).attr("name").match(/select_year/ig)){
+	      data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+	    }
+       });
+
+       var data_reports = Array;
+       data_reports = {};
+
+       $.each(reports, function(index, element) {
+	      data_reports[index] =  [ encodeURIComponent(element[0]), encodeURIComponent(element[1]), encodeURIComponent(element[2]), encodeURIComponent(element[3]), encodeURIComponent(element[4]), encodeURIComponent(element[5]) ];
+       });
+
+       data_var["reports"] = data_reports;
+
+      $.ajax({
+	  type       : "POST",
+          url        : "/school/save",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+//          dataType   : "html",
+          success    : function(response) {
+
+            if (response.err == 1) $("#successSave").html(response.msg).removeClass("blueAlert").addClass("redAlert").show({ effect: "fade", duration: 500 });
+               else {
+                      $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                      $(".SchoolEditSave, .SchoolEditCancel").prop("disabled", true);
+               }
+
+            setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+
+//	    $("#successSave").html(response).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+
+          }
+      });
+     
+    }
+     return false;
+
+  });
+	
+    $(document).on("change", ".SelectYear", function () {
+       var year = Number($(this).val());
+       var yearNext = year + 1;
+       var yearNext2 = year + 2;
+	$("#CurrentSchoolYearTitle").html(year+"-"+yearNext);
+	$("#NextSchoolYearTitle").html(yearNext+"-"+yearNext2);
+
+        $("input[name='report_date_0_1']").val(reports[year][0]);
+        $("input[name='report_date_1_1']").val(reports[year][1]);
+        $("input[name='report_date_2_1']").val(reports[year][2]);
+        $("input[name='report_date_3_1']").val(reports[year][3]);
+        $("input[name='report_date_4_1']").val(reports[year][4]);
+        $("input[name='report_date_5_1']").val(reports[year][5]);
+
+        $("input[name='report_date_0_2']").val(reports[year+1][0]);
+        $("input[name='report_date_1_2']").val(reports[year+1][1]);
+        $("input[name='report_date_2_2']").val(reports[year+1][2]);
+        $("input[name='report_date_3_2']").val(reports[year+1][3]);
+        $("input[name='report_date_4_2']").val(reports[year+1][4]);
+        $("input[name='report_date_5_2']").val(reports[year+1][5]);
+
+     return false;
+    })
+
+    $(document).on("change focusout", ".datepicker", function () {
+      if ($(this).valid()) {
+          var valueField = $(this).val();
+	  var nameField = $(this).attr("name").split("_");
+          var year = Number($(".SelectYear").val());
+	  var yearNext = Number($(".SelectYear").val()) + 1;
+          if (Number(nameField[3]) == 1) reports[year][nameField[2]] = valueField;
+	    else if (Number(nameField[3]) == 2) reports[yearNext][nameField[2]] = valueField;
+          $(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+      } 
+      return false;
+    });
+
+    $(document).on("click", ".rdcopy", function () {
+	var rd = $(this).attr("rel");
+	var id = $(this).attr("id");
+        var year = Number($(".SelectYear").val());
+	var yearNext = Number($(".SelectYear").val()) + 1;
+	var chng = -1;
+	    switch(rd) {
+		case 'rd0': if ($("#report_date_0_1").val() != "") {
+				$("#report_date_0_2").val(addYear($("#report_date_0_1").val()));
+				chng = 0;
+			    }
+			    break;
+		case 'rd1': if ($("#report_date_1_1").val() != "") { 
+				$("#report_date_1_2").val(addYear($("#report_date_1_1").val())); 
+				chng = 1;
+			    }
+			    break;
+		case 'rd2': if ($("#report_date_2_1").val() != "") { 
+			        $("#report_date_2_2").val(addYear($("#report_date_2_1").val())); 
+				chng = 2;
+			    }
+			    break;
+		case 'rd3': if ($("#report_date_3_1").val() != "") {  
+				$("#report_date_3_2").val(addYear($("#report_date_3_1").val())); 
+				chng = 3;
+			    }
+			    break;
+		case 'rd4': if ($("#report_date_4_1").val() != "") {  
+				$("#report_date_4_2").val(addYear($("#report_date_4_1").val())); 
+				chng = 4;
+			    }
+			    break;
+		case 'rd5': if ($("#report_date_5_1").val() != "") {   
+				$("#report_date_5_2").val(addYear($("#report_date_5_1").val())); 
+				chng = 5;
+			    }
+			    break;
+	    }
+
+
+   	if (chng >= 0) {
+		reports[yearNext][chng] = $("#report_date_" + chng +"_2").val();
+		$(".SchoolEditSave, .SchoolEditCancel").prop("disabled", false);
+	}
+
+
+	return false;
+    });
+
+    function addYear(newDate) {
+	if (newDate) {
+	    newDate = newDate.split("/");
+            newDate[2] = Number(newDate[2]) + 1;
+	    newDate = newDate[0] + "/" + newDate[1] + "/" + newDate[2] ;
+	}
+	return newDate;
+    }
+
+});
+</script>
+
+<div id="searchResults"></div>
+<div id="dialog"></div>
+

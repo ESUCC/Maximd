@@ -1,0 +1,1 @@
+ALTER TABLE form_029_other_attendee ADD COLUMN meeting_type character varying;

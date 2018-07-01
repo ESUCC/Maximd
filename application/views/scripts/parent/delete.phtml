@@ -1,0 +1,28 @@
+<form action="#" id="ParentDeleteForm">
+<input type="hidden" name="id_guardian" value="<?=$this->id_guardian?>">
+<input type="hidden" name="id_student" value="<?=$this->id_student?>">
+<table class="ParentForm">
+<tr><th colspan="2" class="NameParent">
+  <b>Student:</b> <?=$this->student?>
+</th></tr>
+<tr>
+<td colspan="2">
+ <div style="float: right" class="formButton">
+    <button class="ui-button ui-widget ui-corner-all cancelWindowConfirm" style="padding: 2px;">Cancel</button>
+ </div>
+</td>
+</tr>
+
+<tr><td colspan="2" class="DeleteMsg">
+<span class="DeleteMsgText"> Are you sure you want to Delete?</span>
+<br><br>
+
+
+<button class="ui-button ui-widget ui-corner-all cancelWindowConfirm" style="padding: 2px; margin: 4px;"> No </button>
+<button class="ui-button ui-widget ui-corner-all deleteWindow" style="padding: 2px; margin: 4px;"> Yes </button>
+
+
+</td></tr></table>
+
+</table>
+</form>
