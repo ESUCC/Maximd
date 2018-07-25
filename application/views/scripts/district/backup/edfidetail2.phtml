@@ -1,0 +1,380 @@
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<style>
+
+#ResultsTable {
+    font-size:0.7em;
+}
+
+#ResultsTable th {
+        font-weight:bold;
+        padding:2px;
+    }
+
+#ResultsTable td {
+        padding:2px;
+    }
+
+.CellTable {
+    border: width 0px;  
+    border-style: none;
+    padding:0px;
+    background-color: red;
+}
+
+.CellTable td th {
+    padding:0px;
+    background-color: red;
+}
+
+
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+.TableList tbody tr:hover td {
+    background: 		#F4A460;
+    }
+	
+</style>
+<script type="text/javascript">
+        $("document").ready(function() {
+        	$(".paginationControl").css("width","80%");
+        	 
+            $(".paginationControl").css("font-size",'14px');
+            $(".paginationControl").css("margin-bottom",'14px');
+            $(".paginationControl").css("margin-top",'14px');
+            $(".paginationControl").css("float",'left'); 
+
+        
+        $(".TableList").css("width","80%");
+       	$(".TableList").css("border", "4px solid LightSkyblue");
+       	$(".Tablelist th").css('width','50px');
+       	$(".Tablelist td").css('width','50px');
+      	$(".TableList").css("font-size","14px");
+        $(".TableList a").css("color","MidnightBlue");
+        $(".TableList  tr:even").css("background-color","LightSteelBlue");
+        $(".TableList tr:odd").css("background-color","bisque");
+        
+        
+        $(".tableCell").css("width","100%");
+        $(".TableList").css("font-size","0.9em");
+        $(".tableCell  tr:even").css("background-color","transparent");
+        $(".tableCell tr:odd").css("background-color","transparent");
+        $(".tableCell td").css("border-bottom", "1px solid silver");
+        
+        });
+    </script>
+    
+    <table border="0">
+        <!-- logo row -->
+        <?php $auth = Zend_Auth::getInstance(); ?>
+            <td>
+                <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
+                    echo $this->navigationTopTabs('simple');
+                } ?>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php if ($auth->hasIdentity()) {
+                    echo $this->navigationSubmenu('district');
+                } ?>
+            </td>
+        </tr>
+    </table>
+
+<?php include("Writeit.php"); //writevar($this->person,'this is what is in the person array \n'); ?>
+
+<?php if ($auth->hasIdentity()) { ?>
+
+
+<?php  echo $this->current_date_and_time; ?><br>
+
+<?  
+   }    
+?> 
+<script type="text/javascript">
+$("document").ready(function() {
+	document.getElementById("change").addEventListener("click", function (evt) {
+        changeContent();
+    });
+    document.getElementById("create").addEventListener("click", function (evt) {
+        createContent();
+    });
+    
+    document.getElementById("changeAll").addEventListener("click", function (evt) {
+        changeAllTheContent();
+    });
+    // use the html() function to get the current HTML of an element
+    //alert($("#example").html());
+});
+ 
+function changeContent() {
+    // use the html() function to change the content of the div
+    var Message= $("<p><font size=\"+1\">Warning: Please wait until this message disappears before leaving this page. </p><p><font size=\"+1\">SRS is updating the State ODS with your Districts Data! </p>")
+    $(".new").html(Message);
+   
+    $(".new").css("color","red");
+    
+    
+}
+
+function createContent() {
+    // set the text content of the last paragraph
+    var newItem = $("<p>This is a new paragraph</p>");
+    $("#example").html(newItem);
+}
+
+function changeAllTheContent() {
+    $("#example p").text("<p>This is a paragraph</p>");
+}
+
+
+</script>
+
+<?php 
+?>
+
+<h2 id="change" class="new" ><a href="/ods/advisorset/id_county/<?php echo $this->countyId?>/id_district/<?php echo $this->districtId?>"> <b> Update ODS with Student's Data </b></a></h2>
+
+
+
+
+<center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
+
+<table class="TableList" id="ResultsTable" width="100%">
+<tr >
+    <th width="20%">
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishtime', "sort" => $this->sort ));?>>Publish time</a>
+        
+    </th>
+    <th width="10%">
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'educationorganzationid', "sort" => $this->sort ));?>>Org ID</a>
+    </th>
+    <th style="text-align:center;">
+        <a href =<?php echo $this->url(array('controller'=>'district','action'=>'edfidetail2','fieldname'=>'edfipublishstatus', "sort" => $this->sort ));?>>Result</a>
+    </th>
+    <th>
+        Error
+    </th>
+    <th width="20%">
+        Student
+    </th>
+    <th width="20%">
+        Dates/Reason exited
+    </th>
+    <th width="20%">
+        Details
+    </th>
+</tr>
+<tbody>
+<style>
+
+</style>
+<?php 
+
+?>
+<?php  
+    foreach($this->districtModel as $district) {
+    
+        ?>
+<tr >
+    <td >
+        School Name:<b><?php echo $this->escape($district['name_school']);?> </b><br>
+        <?php echo $this->escape($district['edfipublishtime']);?>
+    </td>
+    <td>
+        <?php echo $this->escape($district['educationorganzationid']);?>
+    </td>
+    <td style="text-align:center;"> 
+<b>
+        <?php
+         $color="";
+         switch($district['edfipublishstatus']){
+            case "S":
+                $color="#009933";
+                break;
+
+            case "E":
+                $color="#FF0000";
+                break;
+
+        };
+        ?>
+
+        <span style='color:<?php echo($color) ?>'><?php echo ($this->escape($district['edfipublishstatus'])) ?>  <span>
+        
+   </b>     
+        
+    </td>
+    <td>
+        <?php 
+        $error_msg1="Authorization denied. The claim does not have any established relationships with the requested resource.";
+        $replacement_msg1='The student does not seem to have an entry from your SIS.  Please check your SIS and make sure the student is being exported to the State ODS.';
+        
+        
+        
+        echo $this->escape($district['edfierrormessage']);?>
+    </td>
+    <td>
+        Name:<b><?php echo $this->escape($district['name_first'])." ".$this->escape($district['name_last'])?></b>
+        <br>
+        Id: <?php echo $this->escape($district['id_student']);?>
+        <br/>
+        Unique: <?php echo $this->escape($district['studentuniqueid']);?>
+    </td>
+    
+    <td>
+        Begin: <?php echo $this->escape($district['begindate']);?>
+        <br>
+        End: <?php 
+            echo $this->escape(  (($district['enddate']=="") ? "-" : $district['enddate']) );?>
+        <br>
+        Reason Exited Descriptor: <?php echo $this->escape($district['reasonexiteddescriptor']);?>
+        <br>
+        <a href="/student/edit/id_student/<?php echo $district['id_student']?>">Edit Student Link</a>
+        <br>
+        <?php if($district['iep_ifsp_code']=='form004'){
+                   $iepFormName='Latest IEP';
+                   $pageIep='6';
+        }
+              if($district['iep_ifsp_code']=='form023'){
+                  $iepFormName='Latest IEP Data Card';          
+                  $pageIep='1';
+              }
+              if($district['mdt_code']=='form002'){
+                  $mdtFormName='Latest MDT';
+                  $pageMdt='3';
+              }
+              if($district['mdt_code']=='form022') {
+                  $mdtFormName='Latest MDT Card';
+                  $pageMdt='1';
+              }
+              
+         //     echo $district['iep_ifsp_code'];
+            ?>
+        <a href="/<?php echo $district['iep_ifsp_code']?>/view/document/<?php echo $district['iep_ifsp_id']?>/page/<?php echo $pageIep?>">View <?php echo $iepFormName?></a>
+        <br>
+        <a href="/<?php echo $district['mdt_code']?>/view/document/<?php echo $district['mdt_id']?>/page/<?php echo $pageMdt?>">View <?php echo $mdtFormName?></a>
+        <br>
+        <a href="/student/search-forms/id_student/<?php echo $district['id_student']?>">Search Student Forms</a>
+    </td>
+    <td>
+        <table class="tableCell">
+            <tr>
+                <td>
+                    Special Ed Setting:
+                </td>
+                <td>
+                    <?php echo $this->escape($district['specialeducationsettingdescriptor']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Level Program Participation: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['levelofprogramparticipationdescriptor']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Placement Type:
+                </td>
+                <td>
+                    <?php echo $this->escape($district['placementtypedescriptor']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    SPED Percent Time  %:
+                </td>
+                <td>
+                     <?php echo $this->escape($district['specialeducationpercentage']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    To Take Alt Assessment: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['totakealternateassessment']);?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Disabilities: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['disabilities']);?>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    Speach Language: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_slt']);?>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    Occupational Therapy: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_ot']);?>
+                </td>
+                
+            </tr>
+            
+            <tr>
+                <td>
+                    Physical Therapy: 
+                </td>
+                <td>
+                    <?php echo $this->escape($district['servicedescriptor_pt']);?>
+                </td>
+                
+            </tr>
+            
+            
+        </table><br>
+        
+    </td>
+</td>
+
+</tr> 
+<? } ?>
+</tbody>
+</table>
+
+<center><?php echo $this->paginationControl($this->districtModel,'sliding','sqlpaginator.phtml', array('route'=> 'district')); ?> </center>
+
