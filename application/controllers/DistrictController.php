@@ -52,26 +52,19 @@ class DistrictController extends Zend_Controller_Action
 
     function testprintAction() {
 
-     // $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/01/0018/003/2012/1130587/1130587-002-1206342-archived(20121227).pdf';
-       // $filename=$path.'/'.$file;
+        $filename='/usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/443/1.0.0_268/srs-form-archive/NewRoot/';
+        // $filename=$path.'/'.$file;
         $pdf1=new Zend_Pdf;
         $iep_form_number=$this->_getParam('id');
-       // $filename=$this->_getParam('id');
+        // $filename=$this->_getParam('id');
 
         $getForm=new Model_Table_ArchiveNew();
         $formMetaData=$getForm->getFormMetaDataTableId($iep_form_number);
-    //    $this->writevar1($formMetaData,'this is the form metadata');
-
-
-
-
-        $filename=$formMetaData['path_location'];
+        $filename .=$formMetaData['path_location'];
         $filename .= "/";
         $filename .=$formMetaData['file_name'];
         $filename .='.pdf';
 
-
-    //    $this->writevar1($filename,'this is the filename in dist controller');
         //  $pdfString=$pdf1->render();
         $this->_helper->layout()->disableLayout();
         //     $this->_helper->viewRenderer->setNoRender(true);
@@ -83,13 +76,15 @@ class DistrictController extends Zend_Controller_Action
         //                 header("Content-Type: text/html; charset=utf-8");
         //Mike line 1478 came up as an error in line 1481 because it was split on 3 lines.  put it together and it worked on the printing
         header("Content-Transfer-Encoding: binary");
-     //Mike took this out 2-22-2018 because the file size was smaller than the actual file name.Thus it was only printing part of it.
-      //  header('Content-Length: ' . filesize($filename));
+        //Mike took this out 2-22-2018 because the file size was smaller than the actual file name.Thus it was only printing part of it.
+        //  header('Content-Length: ' . filesize($filename));
+        $result=$pdf1->load($filename);
         readfile($filename);
         $this->view->pdfString=$pdf1->render($result);
         //$tmpPDFpath;
 
     }
+
     // Mike added these two tables on 9-7-2017 for edfi reporting purposes
 
     public function edfireportAction(){

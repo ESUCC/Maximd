@@ -207,13 +207,16 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 
 
 		$this->view->db_form_data = $modelform->find ( $document, $this->view->mode, $page, null, true );
+
+
+
 		$this->view->status = $this->view->db_form_data ['status'];
 
 		// old site is for forms 1-8
 		// redirect there if version is not greater or equal to 9
 
-
 		if (9 > $this->view->db_form_data ['version_number']) {
+		//if (0 == $this->view->db_form_data ['version_number']) {
 			if ($this->getRequest()->getActionName() == 'print') {
 				$this->_redirect('https://iep.nebraskacloud.org/form_print.php?form=form_'.$this->getFormNumber().'&document='.$document);
 			} else {
@@ -933,7 +936,7 @@ abstract class My_Form_AbstractFormController extends App_Zend_Controller_Action
 
 		// create link to most recent MDT
 		if (null !== $prevMdt) {
-			if (9 <= $prevMdt ['version_number']) {
+			if (0 <= $prevMdt ['version_number']) {
 				$link = $this->view->url ( array ('controller' => 'form002', 'action' => 'view', 'document' => $prevMdt ['id_form_002'], 'page' => '1' ), null, true ); // 3rd param removes default values
 				$sessQuickLinks->primary_disability = "<a href=\"" . $this->view->baseUrl () . $link . "\" target=\"_blank\">{$form->getElement('disability_primary')->getMultiOption($prevMdt['disability_primary'])}</a>";
 			} else {
@@ -1961,7 +1964,10 @@ END;
 		if ('iepweb03' == APPLICATION_ENV) {
 			$this->_redirector->gotoSimple ( 'forms', 'student', null, array ('student' => '1366090' ) );
 		} else {
-			$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
+		    // SRS-269 the redirect takes you to the iepweb02 site after hitting done inside a form.  No more iep.  7-26-2018
+		    //	$this->_redirect ( 'https://iepd.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
+		    $this->redirect('https://iepweb02d.nebraskacloud.org/student/search-forms/id_student/'.$current['id_student']);
+		//	$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
 		}
 
 	}
@@ -2083,7 +2089,7 @@ END;
 
 
 		$dbData = $modelform->find ( $document, $mode, 'all', null, true );
-      //  $this->writevar1($document,'this is the $document data inside the build model function line 1990 called from json ');
+        $this->writevar1($document,'this is the $document data inside the build model function line 1990 called from json ');
 		// Mike added this 3-8-2017 so that no 2 people can edit a form together.
 		if(isset($dbData[0]['message'])) {
 		    echo $this->view->partial('school/form-access-denied.phtml',array('note'=>$dbData[0]['message']));
@@ -2112,7 +2118,20 @@ END;
 
 		// get the version number
 		if (isset ( $dbData ['version_number'] )) {
-			$this->view->version = $dbData['version_number'];
+
+
+
+		    /* MIKE MIKE MIKE
+		     * This is what you have to change in order to get form 002 to display old forms into new form format.
+		   */
+		    $this->writevar1($dbData['form_config']['controller'],'this is the db data');
+
+		    $fmNum=$dbData['form_config']['controller'];
+		    $vers=$dbData['version'];
+		    if ($fmNum='form002' and $ver <  '9') $dbData['version_number']='9';
+
+
+		    $this->view->version = $dbData['version_number'];
 		}
 
 
@@ -2520,6 +2539,8 @@ END;
 	}
 
 	public function viewAction() {
+
+
 		// get refresh code for externals
 		// changing this code will cause clients
 		// to get fresh coppies of the external files
@@ -2533,8 +2554,10 @@ END;
 		// configure options
 		$this->view->mode = 'view';
 
+
 		// get requested page, if any
 		$this->view->page = ($this->getRequest ()->getParam ( 'page' ) > 0) ? $this->getRequest ()->getParam ( 'page' ) : $this->startPage;
+        $this->writevar1($this->view->page,'the page view');
 
 		// set form title
 		$this->view->headTitle ( ' - ' . $this->getFormTitle () . ' Page ' . $this->view->page );
@@ -2542,7 +2565,6 @@ END;
 		// build the model
 		$this->view->db_form_data = $this->buildModel ( $this->getRequest ()->getParam ( 'document' ), $this->view->mode );
 
-		//$this->writevar1($this->view->db_form_data,'this is the db form data');
 
 		$config = array ('className' => $this->getFormClass (), 'mode' => 'edit', 'page' => 'all', 'version' => $this->view->version, 'lps' => $this->view->lps );
 
@@ -2815,7 +2837,7 @@ END;
 
 
 		// build the model
-		// getting db data so we can confirm version from db
+		// getting db data so we can confirm from db
 		// also sets $this->view->lps based on county and district
 
 
