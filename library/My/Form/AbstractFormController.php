@@ -2124,11 +2124,11 @@ END;
 		    /* MIKE MIKE MIKE
 		     * This is what you have to change in order to get form 002 to display old forms into new form format.
 		   */
-		    $this->writevar1($dbData['form_config']['controller'],'this is the db data');
-
-		    $fmNum=$dbData['form_config']['controller'];
+		    $form2=false;
 		    $vers=$dbData['version'];
-		    if ($fmNum='form002' and $ver <  '9') $dbData['version_number']='9';
+            if(isset($dbData['id_form_002'])) $form2=true;
+		
+            if ($form2==true and $vers <  '9') $dbData['version_number']='9';
 
 
 		    $this->view->version = $dbData['version_number'];

@@ -221,7 +221,7 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
        }
 
        if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
- /*if($formInfo==false or $OldVersion==false)  */       $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+       // if($formInfo==false or $OldVersion==false)  */       $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
         }
 
 
