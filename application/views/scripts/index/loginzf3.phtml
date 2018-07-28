@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <?php
+        if($this->logged): ?>
+            <script>
+            if(window !== top){
+                parent.postMessage("success", "*");
+            }
+            </script>
+        <?php else: ?>
+            <script>
+            if(window !== top){
+                parent.postMessage("failed", "*");
+            }
+            </script>
+        <?php endif; ?>
+    </head>
+    <body>
+
+    </body>
+</html>

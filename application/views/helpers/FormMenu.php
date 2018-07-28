@@ -49,7 +49,9 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         $preVersion=new Model_Table_ArchiveNew();
         $formInfo=$preVersion->getFormMetaData($form->id_student,$form->id,$form->form_no);
         $OldVersion=false;
+        $form2=false;
         if($formInfo['version_number']<9) $OldVersion=true;
+        if($formInfo['form_type']=='002') $form2=true;
 
 
 
@@ -100,7 +102,9 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
 
         if (isset($formAccessArr[$form->status]['view']) && $formAccessArr[$form->status]['view']) {
         // Mike put the if in 2-23-2018 SRS-190
-        /*    if($formInfo==false or $OldVersion==false)*/ $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+            if($formInfo==false or $form2==true or $OldVersion==false) {
+           $options[] = '<option href="/form'.$form->form_no.'/view/document/'.$form->id.'/page/1">View</option >';
+           }
         }
 
     // Mike changed this 4-18-2017 as per jira SRS-42
@@ -176,13 +180,20 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
         }
 
         if($form->status=='Final' && $Unfinalize==true){
+
+            if($formInfo==false or $form2==true or $OldVersion==false) {
             $options[] = '<option href="/form'.$form->form_no.'/unfinalize/document/'.$form->id.'">Unfinalize</option >';
+           }
         }
 
     // End of Mike SRS-222
         if('Final'==$form->status && '004' == $form->form_no) {
+
             if (isset($formAccessArr['Final']['delete']) && $formAccessArr['Final']['delete']) {
+                // Mike added 7-27-2018 SRS-180 and
+                if($formInfo==false or $form2==true or $OldVersion==false) {
                 $options[] = '<option href="/form'.$form->form_no.'/delete/document/'.$form->id.'">Delete</option >';
+              }
             }
             if (isset($formAccessArr['Final']['dupe_form_004']) && $formAccessArr['Final']['dupe_form_004']) {
                 $options[] = '<option href="/form004/dupe/document/'.$form->id.'/page//option/dupe_form_004">Dupe</option >';
@@ -203,8 +214,12 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
             }
         }
         if (isset($formAccessArr[$form->status]['log']) && $formAccessArr[$form->status]['log']) {
+
+            // Mike added 7-27-2018 SRS-180 gets rid of old forms being able to do anything.
+            if($formInfo==false or $form2==true or $OldVersion==false) {
             $options[] = '<option href="/form'.$form->form_no.'/log/document/'.$form->id.'" target="_blank">Log</option >';
-        }
+            }
+            }
 
       //  $preVersion=new Model_Table_ArchiveNew();
       //  $formInfo=$preVersion->getFormMetaData($form->id_student,$form->id,$form->form_no);
@@ -221,7 +236,14 @@ class Zend_View_Helper_FormMenu extends Zend_View_Helper_Abstract
        }
 
        if (isset($formAccessArr[$form->status]['print']) && $formAccessArr[$form->status]['print']) {
-       // if($formInfo==false or $OldVersion==false)  */       $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+// Mike added this 7-27-2018 SRS-180 It will not display the Print option if there is not an archive of this form
+// or if this is form 002 or if a version number is 9 or above.  Stop going back to iep.
+
+          if($formInfo==false or $form2==true or $OldVersion==false) {
+              $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
+
+          }
+       // if($formInfo==false or $OldVersion==false)         $options[] = '<option href="/form'.$form->form_no.'/print/document/'.$form->id.'">Print</option >';
         }
 
 
