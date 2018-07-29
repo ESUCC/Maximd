@@ -2,6 +2,16 @@
 class LoginController extends App_Zend_Controller_Action_Abstract
 {
 
+    /*
+     * This is the only change from Ariel Tripple login Mike added 7-29-2018 Sunday
+     */
+    public function logoutzf3Action()
+    {
+        App_Helper_Session::cleanSessionForReuse();
+        Zend_Session::destroy(1);
+	$this->_helper->layout()->disableLayout();
+}
+
     public function preDispatch()
     {
         $this->EMAIL_SYS_ADMIN = "srshelp@esu1.org";

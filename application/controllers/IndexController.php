@@ -79,6 +79,8 @@ class IndexController extends App_Zend_Controller_Action_Abstract
             }
         }
 
+
+	$this->_helper->layout()->disableLayout();
         $this->view->logged = $logged;
     }
 
