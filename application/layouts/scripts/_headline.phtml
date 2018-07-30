@@ -3,7 +3,7 @@
 	Nebraska School District
 	<div class="logosub">Student Record System for Special Education</div>
 </div>
-<?php 
+<?php
 $auth = Zend_Auth::getInstance();
 if($auth->hasIdentity()) {
     /**
@@ -15,7 +15,12 @@ if($auth->hasIdentity()) {
 		<B>Logged In:&nbsp;</b><?php echo $session->user->user['name_first'] . ' '. $session->user->user['name_last']; ?><br />
 		<div style="">
 		  <?php if('production' == APPLICATION_ENV) { ?>
-		  <a href="https://iep.nebraskacloud.org/srs.php?area=logoff">Log Out</a> 
+
+		  <!-- MIke changed this 7-30-2018 in order to logout of iepw SRS-269
+		  <a href="https://iep.nebraskacloud.org/srs.php?area=logoff">Log Out</a>
+		  --->
+		   <a href="http://srsz3.nebraskacloud.org/logout">Log Out</a>
+
 		  <?php } else { ?>
 		  <a href="/login/logout">Log Out</a>
 		  <?php } ?>

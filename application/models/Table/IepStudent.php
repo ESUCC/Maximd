@@ -10,6 +10,69 @@ class Model_Table_IepStudent extends Zend_Db_Table_Abstract {
         'Model_Table_StudentTeamMember',
     );
 
+
+    // Mike added this 7-29-2018 from Maxim so that we can get a search from the Transfer section
+    public function studentsNameSearch($charsName, $typeName)
+    {
+
+        $db = Zend_Registry::get('db');
+
+        if ($typeName == "firstname"){
+
+            $select = $db->select()
+            ->from('iep_student', 'name_first')
+            ->distinct('name_first')
+            ->where('LOWER(name_first) ILIKE ?', $charsName.'%')
+            ->order('name_first');
+
+        } else {
+
+            $select = $db->select()
+            ->from('iep_student', 'name_last')
+            ->distinct('name_last')
+            ->where('LOWER(name_last) ILIKE ?', $charsName.'%')
+            ->order('name_last');
+
+        }
+
+        $dataStudent = $db->fetchAll($select);
+
+        return $dataStudent;
+    }
+
+
+    public function studentsRequestSend($options)
+    {
+
+        $db = Zend_Registry::get('db');
+
+        $data = array(
+            'id_author'    	=> $options["userID"],
+            'id_county_from'    => $options["from_county"],
+            'id_district_from'  => $options["from_district"],
+            'id_school_from'    => $options["from_school"],
+            'id_county_to'      => $options["to_county"],
+            'id_district_to'    => $options["to_district"],
+            'id_school_to'      => $options["to_school"],
+            'student_count'     => $options["studentsCount"],
+            'student_name_list' => $options["fullnameList"],
+            'transfer_type' 	=> 'request'
+        );
+
+        $db->insert('iep_transfer_request', $data);
+
+
+        $select = $db->select()
+        ->from('iep_personnel', ('*'))
+        ->join('iep_school', "(iep_school.id_county = '".$options["to_county"]."' AND iep_school.id_district = '".$options["to_district"]."' AND iep_school.id_school = '".$options["to_school"]."' AND iep_school.id_school_mgr = iep_personnel.id_personnel)")
+        ->where('iep_personnel.status = ?', 'Active');
+
+        $dataMng = $db->fetchRow($select);
+
+        return $dataMng;
+    }
+    // End of Mike add
+
     static public function getUserById($id_student)
     {
 

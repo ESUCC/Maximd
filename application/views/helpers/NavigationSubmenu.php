@@ -36,7 +36,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
     {
         $session = new Zend_Session_Namespace ( 'user' );
         $this->returnText .= '<ul id="nav2">';
-        $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=list">Student List</a></li>';
+        $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=list">Student List</a></li>';
         if(!$session->parent) {
           //  $this->returnText .= '  <li '.(($actionName == 'studentadd') ? 'class="current"' : '').'><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
 
@@ -44,7 +44,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
              * SRS-269 taken out 7-27-2018 by Mike
             $this->returnText .= '  <li ><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
 
-            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
 */
             $this->returnText .= '  <li ><a href="http://srsz3.nebraskacloud.org/student/addedit"><b><i><font color="green">New Student</a></font></b></i></li>';
 
@@ -54,8 +54,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/staff"><b><i><font color="green">Student\'s  Team</b></i></font></a></li>';
 
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
 
          //   $this->returnText .= '  <li ><a href="https://iepweb02m.nebraskacloud.org/ods/advisorset/id_county/87/id_district/0017"><b><i><font color="green">ODS Link</a></font></b></i></li>';
 
@@ -84,7 +84,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $privCheck = new My_Classes_privCheck($session->user->privs);
         $admin = 1==$privCheck->getMinPriv()?true:false;
         $this->returnText .= '<ul id="nav2">';
-        $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
+        $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
         if(!$session->parent) {
 
 
@@ -95,14 +95,14 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
-            $this->returnText .= '  <li><a href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
 
 // Mike added this July 26 so that only the New Privilege tab would show up
 // where appropriate
 
 
             if($showNewPrivs==true){
-           $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
+           $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             }
 // End of Mike add
         }
@@ -110,7 +110,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 
 
         if($admin) {
-            $this->returnText .= '  <li><a href="https://iep.esucc.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
         }
         $this->returnText .= '</ul>';
         return $this->returnText;
@@ -124,9 +124,9 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $this->returnText .= '  <li><a href="/home">Welcome</a></li>';
         if(!$session->parent) {
             $this->returnText .= '  <li><a href="/home/message-center">My Messages</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">Announcements</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">Announcements</a></li>';
             $this->returnText .= '  <li><a href="/personnel/edit/id_personnel/'.$session->sessIdUser.'">Edit Profile</a></li>';
-//            $this->returnText .= '  <li><a href="https://iep.esucc.org/new_privilege.php?personnel='.$session->sessIdUser.'">Password</a></li>';
+//            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">Password</a></li>';
             $this->returnText .= '  <li><a href="https://docs.google.com/forms/d/1qwgwOVAAcLCgn9JR8FbBnEOLGLH3c-hWpM5HxNbvgOo/viewform">Suggestions</a></li>';
 
         }

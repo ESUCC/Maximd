@@ -1,0 +1,65 @@
+<strong>Please select a school FROM which to request student transfers and a school TO which to transfer them.</strong>
+<br><br>
+
+<form id="studentTransfer">
+<table class="transferTable">
+<tr><th></th><th>County</th><th>Distirct</th><th>School</th><tr>
+<tr>
+    <td class="rowLabel">
+	From
+    </td>
+    <td>
+	<select id="from_county"><option value="">Choose...</option>
+<?foreach ($this->fromCountyList as $indx => $val) {?>
+	    <option value="<?=$indx?>"><?=$val?></option>
+<?}?>
+	</select>
+    </td>
+    <td>
+	<select id="from_district" class="select_choose"></select> <span id="from_county_load" class="data_load"></span>
+
+    </td>
+    <td>
+	<select id="from_school" class="select_choose"></select> <span id="from_district_load" class="data_load"></span>
+    </td>
+</tr>
+<tr>
+    <td class="rowLabel">
+	To
+    </td>
+    <td>
+	<select id="to_county">
+	    <option value="">Choose...</option>
+<?foreach ($this->toCountyList as $indx => $val) {?>
+	    <option value="<?=$indx?>"><?=$val?></option>
+<?}?>
+	</select>
+    </td>
+    <td>
+	<select id="to_district" class="select_choose"></select> <span id="to_county_load" class="data_load"></span>
+    </td>
+    <td>
+	<select id="to_school" class="select_choose"></select> <span id="to_district_load" class="data_load"></span>
+    </td>
+</tr>
+<tr><td class="bottomLine" colspan="4"></td></tr>
+</table>
+</form>
+
+<form id="studentList">
+<table class="transferTable" id="StudentList">
+<tr><td colspan="4" class="rowLabel">Please enter a first and last name for each student you wish to request be transferred.</td><tr>
+<tr><th></th><th>First Name</th><th>Last Name</th><th></th><tr>
+<tr><td class="rowLabel tdDot"><i class="fa fa-circle"></i></td>
+    <td><input type="text" id="fname_1" class="fname" value=""> <span id="fname_1_load" class="data_load"></span></td>
+    <td><input type="text" id="lname_1" class="lname" value=""> <span id="lname_1_load" class="data_load"></span></td>
+<td></td></tr>
+</table>
+</form>
+
+<table class="transferTable">
+<tr><td colspan="2"></td><td class="rowLabel"><input type="button" value=" Add a student " id="addName" rel="1"></td><td></td></tr>
+
+<tr><td class="bottomLine" colspan="4"></td></tr>
+<tr><td colspan="4"><input type="button" id="SendBtn" value=" Send a request " disabled></td></tr>
+</table>

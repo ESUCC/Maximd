@@ -15,6 +15,12 @@ class IndexController extends App_Zend_Controller_Action_Abstract
      * @return void
      */
 
+    public function logoutzf3Action()
+    {
+        App_Helper_Session::cleanSessionForReuse();
+        Zend_Session::destroy(1);
+        $this->_helper->layout()->disableLayout();
+    }
 
     public function loginzf3Action() {
 
@@ -26,7 +32,7 @@ class IndexController extends App_Zend_Controller_Action_Abstract
         App_Helper_Session::cleanSessionForReuse();
 
         // get IEP session record from passed token
-        // this is the session record for the iep.esucc.org site
+        // this is the session record for the iep.nebraskacloud.org site
         $tk = new Model_Table_IepSession();
         $session = $tk->getSessionByToken($token);
         $logged = false;

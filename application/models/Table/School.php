@@ -28,6 +28,23 @@ class Model_Table_School extends Model_Table_AbstractIepForm
         fclose($fp);
     }
 
+
+    // Mike added this 7-29-2018 so the transfer student would work
+    public function schoolGetInfo($options)
+    {
+        $db = Zend_Registry::get('db');
+
+        $select = $db->select()
+        ->from( array('s' => 'iep_school'), array('*'))
+        ->where('s.status = ?', 'Active')
+        ->where("s.id_school = '".$options['from_school']."'")
+        ->where("s.id_county = '".$options['from_county']."'")
+        ->where("s.id_district = '".$options['from_district']."'");
+        $school_row = $db->fetchRow($select);
+        return $school_row;
+    }
+
+    // End of Mike add
 // Mike added this 1-26-2018 so that the autofill on the state id would identify to the end user the location of the school
 // with the state id trying to be used.
 

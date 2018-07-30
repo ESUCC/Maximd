@@ -62,6 +62,136 @@ class StudentController extends My_Form_AbstractFormController
         fclose($fp);
     }
 
+    public function transferrequestAction() {
+        $this->_helper->layout()->disableLayout();
+
+        $fromCountyList = new Model_Table_County();
+        $this->view->fromCountyList = $fromCountyList->countyMultiOtions(); // Get result
+
+        //$id_county = $this->usersession->user->user['id_district'];
+        //$id_district = $this->usersession->user->user['id_county'];
+
+
+        $toCountyList = new Model_Table_County();
+        $this->view->toCountyList = $toCountyList->countyMultiOtions(); // Get result
+
+
+    }
+
+    public function transfergetdataAction() {
+
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+
+        $todo = $this->getRequest()->getParam('todo');
+        $from_county = $this->getRequest()->getParam('from_county');
+        $from_distirct = $this->getRequest()->getParam('from_district');
+        $from_school = $this->getRequest()->getParam('from_school');
+        $to_county = $this->getRequest()->getParam('to_county');
+        $to_distirct = $this->getRequest()->getParam('to_district');
+        $to_school = $this->getRequest()->getParam('to_school');
+
+
+        switch ($todo) {
+            case 'from_county' :
+                $fromDistrictList = new Model_Table_District();
+                $this->view->fromDistrictList = $fromDistrictList->districtMultiOtions($from_county);
+                $jsonData = array ( 'fromDistrictList' => $this->view->fromDistrictList );
+                break;
+            case 'from_district' :
+                $fromSchoolList = new Model_Table_School();
+                $this->view->fromSchoolList = $fromSchoolList->schoolMultiOtions($from_county, $from_distirct);
+                $jsonData = array ( 'fromSchoolList' => $this->view->fromSchoolList );
+                break;
+            case 'to_county' :
+                $toDistrictList = new Model_Table_District();
+                $this->view->toDistrictList = $toDistrictList->districtMultiOtions($to_county);
+                $jsonData = array ( 'toDistrictList' => $this->view->toDistrictList );
+                break;
+            case 'to_district' :
+                $toSchoolList = new Model_Table_School();
+                $this->view->toSchoolList = $toSchoolList->schoolMultiOtions($to_county, $to_distirct);
+                $jsonData = array ( 'toSchoolList' => $this->view->toSchoolList );
+                break;
+            default:
+                $jsonData = array ();
+        }
+
+        $this->_helper->json->sendJson($jsonData);
+    }
+
+    public function transfersendAction() {
+
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout()->disableLayout();
+
+        $fullnameList = "";
+        $cntStudents = 0;
+        $options = array();
+        foreach ($_REQUEST as $indx => $val) {
+            if (preg_match('/fname/', $indx)) $fullnameList .= $val.' ';
+            else if (preg_match('/lname/', $indx)) { $fullnameList .= $val.'|'; $cntStudents++; }
+            else $options[$indx] = $val;
+        }
+
+        $options['fullnameList'] = substr($fullnameList, 0, strlen($fullnameList) - 1);
+        $options['studentsCount'] = $cntStudents;
+        $options['userID'] = $this->usersession->user->user['id_personnel'];
+
+        $studentsRequest = new Model_Table_IepStudent();
+        $result = $studentsRequest->studentsRequestSend($options);
+
+        $schoolGet = new Model_Table_School();
+        $resultSchool = $schoolGet->schoolGetInfo($options);
+
+        $options['email_address_person'] = $this->usersession->user->user['email_address'];
+        $options['name_full_person'] = $this->usersession->user->user['name_full'];
+
+
+        if ( $result["email_address"] != '' ) {
+            $subject = "SRS Student Transfer Request submitted by ".$options['name_full_person'];
+            $message = '';
+            $message .= "Dear " . $result['name_first'] . " " . $result['name_last'] . ":\n\n";
+            $message .= $options['name_full_person']. " has requested the transfer of the following students from your school, " . strtoupper( $resultSchool['name_school'] ) . ", to " . strtoupper( $result['name_school']) . ":\n\n";
+
+            $fullnameList = explode("|", $fullnameList);
+            foreach ($fullnameList as $indx => $val) {
+                $message .= $val . "\n";
+            }
+
+            $mail = mail($result['email_address'], $subject, $message, "cc:" . $options['email_address_person'] . "\nX-Mailer: PHP/" . phpversion());
+            $mailResult = $mail?"success":"failure";
+        } else {
+            $mailResult = "noemail";
+        }
+
+        if ($mailResult == "noemail")
+            $msg = "Your transfer request could not be sent because the school manager does not have an email address in the system.";
+            else if ($mailResult == "success")
+                $msg = "Your transfer request has been successfully mailed to " . strtoupper ( $result['name_first'] . " " . $result['name_last'] ) . " (" . $result['email_address'] . "), the school manager for " . strtoupper( $result['name_school'] ) . ".";
+                else $msg = "Your transfer request could not be sent because of an internal email error.";
+
+                $jsonData = array ( 'msg' => $msg );
+
+                $this->_helper->json->sendJson($jsonData);
+    }
+
+
+    public function transfernamesearchAction() {
+
+        $charsName = $this->getRequest()->getParam('charsName');
+        $typeName = $this->getRequest()->getParam('typeName');
+
+        $studentsName = new Model_Table_IepStudent();
+        $result = $studentsName->studentsNameSearch($charsName, $typeName);
+
+        $jsonData = array ( 'NameList' => $result );
+
+        $this->_helper->json->sendJson($jsonData);
+    }
+
+
+ // Mike added this above  from maximd. MIKE
 // Maxim modified this code October 20 2016
     public function logAction()
     {
