@@ -1966,7 +1966,7 @@ END;
 		} else {
 		    // SRS-269 the redirect takes you to the iepweb02 site after hitting done inside a form.  No more iep.  7-26-2018
 		    //	$this->_redirect ( 'https://iepd.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
-		    $this->redirect('https://iepweb02d.nebraskacloud.org/student/search-forms/id_student/'.$current['id_student']);
+		    $this->redirect('https://iepweb02.nebraskacloud.org/student/search-forms/id_student/'.$current['id_student']);
 		//	$this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=student&sub=student&student=' . $current ['id_student'] . '&option=forms' );
 		}
 
@@ -2127,7 +2127,7 @@ END;
 		    $form2=false;
 		    $vers=$dbData['version'];
             if(isset($dbData['id_form_002'])) $form2=true;
-		
+
             if ($form2==true and $vers <  '9') $dbData['version_number']='9';
 
 

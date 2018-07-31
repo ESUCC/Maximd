@@ -70,8 +70,12 @@ echo $this->partial('searchSidebarScripts.phtml', array(
                     <tr>
                         <td width="" style="padding-left:6px;">Use student search:</td>
                         <td style="padding-left:6px;" class="bgLight">
+
+                        <!--  Mike change this so that they can no longer get back to iep.  SRS-269 July 30-2018
                             <input type="radio" onclick="$('form#change_search_format').submit()" <? if('srs'==$this->currentSearchPref) echo 'checked="checked"';?> value="srs" name="pref_student_search_location">Original&nbsp;
                             <input type="radio" onclick="$('form#change_search_format').submit()" <? if('srs-zf'==$this->currentSearchPref) echo 'checked="checked"';?> value="srs-zf" name="pref_student_search_location">New&nbsp;</td>
+                      -->
+                      <a href="http://srsz3.nebraskacloud.org/">SRS Link</a>
                     </tr>
                     <? if(!$this->collectionEditing) { ?>
                     <tr>

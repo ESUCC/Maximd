@@ -45,9 +45,11 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li ><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
 
             $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
-*/
-            $this->returnText .= '  <li ><a href="http://srsz3.nebraskacloud.org/student/addedit"><b><i><font color="green">New Student</a></font></b></i></li>';
 
+            $this->returnText .= '  <li ><a href="http://srsz3.nebraskacloud.org/student/addedit"><b><i><font color="green">New Student</a></font></b></i></li>';
+*/
+            $this->returnText .= '  <li ><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
+// Mike had to put this back until we can find a way to secure srsz3 7-30-2018 SRS-269
 
         // SRS-269 The students team link changed
         //   $this->returnText .= '  <li><a href="/staff"><b><i><font color="green">Student\'s  Team</b></i></font></a></li>';

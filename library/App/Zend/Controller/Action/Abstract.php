@@ -4,14 +4,14 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
 {
     public function preDispatch()
     {
-       
+
         /**
          * set the default email based on the config file.
          */
         $config = Zend_Registry::get ( 'config' );
         $transport = new Zend_Mail_Transport_Smtp($config->email->host, $config->email->toArray());
         Zend_Mail::setDefaultTransport($transport);
-       
+
 
     }
 
@@ -21,12 +21,12 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
         // if redirectWithMessage was called
         // restore that message to the view here
 		$session = new Zend_Session_Namespace('nebsrsmessage');
-		
+
         if ($session->message) {
             $this->view->message = $session->message;
             unset($session->message);
         }
-		
+
 	}
     protected function redirectWithMessage($redirectto, $message)
     {
@@ -50,7 +50,7 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
     protected function setupStudentSearch()
     {
         $this->view->collectionEditing = true;
-//Mike maade this false 
+//Mike maade this false
         if ($this->usersession->parent) {
             /**
              * not implemented for parents
@@ -64,9 +64,13 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
                 "id_personnel = " . $this->usersession->sessIdUser
             );
             $this->view->currentSearchPref = $personnel->pref_student_search_location;
-            if ('srs' == $this->view->currentSearchPref && 'iepweb03' != APPLICATION_ENV) {
+
+           // Mike changed this 7-30-2018 SRS-269 to prevent Original or New decision
+          //  if ('srs' == $this->view->currentSearchPref && 'iepweb03' != APPLICATION_ENV) {
+               if ('srs1' == $this->view->currentSearchPref && 'iepweb03' != APPLICATION_ENV) {
                 // redirect to ZF
                 header("Location:https://iep.nebraskacloud.org/srs.php?area=student&sub=list");
+              //  header("Location:https://iepweb02.nebraskacloud.org/student/search");
                 exit;
             }
         }
@@ -101,12 +105,12 @@ class App_Zend_Controller_Action_Abstract extends Zend_Controller_Action
         */
         if (false == $this->usersession->parent) {
             $privCheck = new My_Classes_privCheck($this->usersession->user->privs);
-    
+
      /*    if (2 != $privCheck->getMinPriv() && 1 != $privCheck->getMinPriv()) {
            Mike changed this for jira SRS-14 on APril 18th for the live site.
-    */   
+    */
             if($privCheck->getMinPriv() > 3 ){
-                $this->view->showAll = true; 
+                $this->view->showAll = true;
             } else {
                 $this->view->showAll = false;
             }
