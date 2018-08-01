@@ -1,0 +1,102 @@
+<?php $auth = Zend_Auth::getInstance();?>
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+	</td>
+    </tr>
+</table>
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy' });
+
+
+    $("#ReportingForm").validate({
+       rules: {
+                nssrs_submition_date: {
+                                required: true
+                              },
+                nssrs_school_year: {
+                                required: true
+                              },
+                october_cutoff: {
+                                required: true
+                              },
+                transfer_report_cutoff: {
+                                required: true
+                              }
+               },
+               submitHandler: function(form) {
+                 $("div.error").hide();
+                 return false;
+               },
+               highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+               },
+               unhighlight: function (element, errorClass, validClass) {
+                $(element).css('border', '');
+               }
+              });
+
+
+    $(document).on("click", ".saveButton", function () {
+
+      if ($("#ReportingForm").valid()){
+
+       $(".saveButton").prop("disabled", true);
+
+       var data_var = Array;
+       data_var['nssrs_submition_date'] = encodeURIComponent($('#nssrs_submition_date').val());
+       data_var['nssrs_school_year'] = encodeURIComponent($('#nssrs_school_year').val());
+       data_var['october_cutoff'] = encodeURIComponent($('#october_cutoff').val());
+       data_var['transfer_report_cutoff'] = encodeURIComponent($('#transfer_report_cutoff').val());
+
+        $.ajax({
+          type       : "POST",
+          url        : "/admin/reportingsave/",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+                 $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                 setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+           }
+
+         });
+
+       }
+       return false;
+     })
+
+
+    $(document).on("change", "input", function () {
+       $(".saveButton").prop("disabled", false);
+       return false;
+     })
+
+
+  });
+</script>
+
+<form id="ReportingForm">
+<table id="reporting" style="margin: 0 auto; margin-top: 30px;">
+<tr><th colspan="2">NSSRS Report</th><tr>
+<tr><td>Fiels 003 - School Year</td><td> <input type="text" readonly class="datepicker" value="<?=$this->result['nssrs_submition_date']?>" id="nssrs_submition_date" name="nssrs_submition_date">&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></td><tr>
+<tr><td>Fiels 003 - Snapshot</td><td> <input type="text" readonly class="datepicker" value="<?=$this->result['nssrs_school_year']?>" id="nssrs_school_year" name="nssrs_school_year">&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></td><tr>
+<tr><td>October Cutoff</td><td> <input type="text" readonly class="datepicker" value="<?=$this->result['october_cutoff']?>" id="october_cutoff" name="october_cutoff">&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></td><tr>
+<tr><td>Transfer Report Cutoff</td><td> <input type="text" readonly class="datepicker" value="<?=$this->result['transfer_report_cutoff']?>" id="transfer_report_cutoff" name="transfer_report_cutoff">&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></td><tr>
+<tr><td colspan="2"><input type="button" value="Save" class="ui-button ui-widget ui-corner-all saveButton" style="padding: 2px;" disabled></td></tr>
+</table>
+</form>
+<div id="successSave"></div>

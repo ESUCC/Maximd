@@ -1,8 +1,12 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#srs_mainPane').css('margin-left', "10px");
+        $(".subNav").hide();
+
+        $('#srs_mainPane').css('margin-left', "30px");
     });
 </script>
+
+</style>
 <?php if ($this->message) { ?>
     <div class="message"><?= $this->message ?></div>
 <?php } ?>
@@ -86,4 +90,4 @@
     </table>
 
 
-<?= $this->allowedContent; 
+<?= $this->allowedContent;

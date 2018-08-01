@@ -1,0 +1,14 @@
+<?php $auth = Zend_Auth::getInstance();?>
+<table class="navTopMenu">
+    <!-- logo row -->
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+        </td>
+    </tr>
+    <tr>
+        <td>
+                <?php if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+        </td>
+    </tr>
+</table>

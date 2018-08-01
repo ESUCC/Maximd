@@ -1,0 +1,94 @@
+<?php $auth = Zend_Auth::getInstance();?>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+	</td>
+    </tr>
+</table>
+<style>
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 90px;
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+</style>
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy', changeYear:true, changeMonth: true });
+
+
+     openURL("/admin/sessions/nb/1/");
+
+
+     function openURL(url){
+        $(".loading").clone().css("position", "absolute").css("top", "0px").css("bottom", "0px").css("left", "0px").css("margin-top", "110px").show().appendTo("#searchResults");
+        $("#searchResults").load(url, function() {
+         // Paginator Bug fix - href="javascript:XXX" -----
+         var uri = "";
+         var reg = /\'(.+)\'/i;
+         $(".paginator a").each( function(index, element) {
+          uri = $(element).attr("href").match(reg);
+          uri = uri[0].substring(1, uri[0].length - 1);
+          $(element).attr("rel", uri);
+          $(element).attr("href", "#");
+          $(element).attr("class", "runSearchCall");
+         });
+         // ----- END FIX --------------------------------   
+      
+      });
+
+     }
+
+    $(document).on("click", ".runSearchCall", function () {
+        var url = $(this).attr("rel");
+        openURL ( url );
+        return false;
+    });
+
+    $(document).on("click", ".sessionButton", function () {
+       var sessionDate = $(".sessionDate").val().replace(/\//g,"_");
+       openURL("/admin/sessions/nb/1/session_date/"+sessionDate+"/");
+       return false;
+    })
+});
+</script>
+<div style="position: relative; width: 100%; float: right; margin-top: 10px;"><b>Display users from a certain date: </b><input class="datepicker sessionDate" value="<?=$this->sessionDate?>" readonly> <input type="button" class="ui-button ui-widget ui-corner-all sessionButton" style="padding: 2px;" value=" Go "></div>
+
+<div id="searchResults" class="clearfix"></div>

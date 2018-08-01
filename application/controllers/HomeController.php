@@ -25,9 +25,9 @@ class HomeController extends My_Form_AbstractFormController {
 //        $request = Zend_Controller_Front::getInstance()->getRequest();
 //        $this->view->headTitle($request->getControllerName())
 //                   ->headTitle($request->getActionName());
-                   
+
     	if('production' == APPLICATION_ENV) {
-     		$this->_redirect('https://iep.nebraskacloud.org/srs.php?area=home&sub=home');
+     		//$this->_redirect('https://iep.nebraskacloud.org/srs.php?area=home&sub=home');
     	}
 //    	if('iepweb03' == APPLICATION_ENV && '1018436' == $sessUser->id_personnel) {
 //    		$this->_redirect('/student/forms/student/1366090');

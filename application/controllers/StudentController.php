@@ -73,11 +73,26 @@ class StudentController extends My_Form_AbstractFormController
 
 
         $toCountyList = new Model_Table_County();
+
+
         $this->view->toCountyList = $toCountyList->countyMultiOtions(); // Get result
 
+// Mike added this 8-02-2018 so that only counties sys admin is responsible for show up on student transfers.
+        $t=$this->view->toCountyList;
+        $countyArray=array();
+        foreach($_SESSION['user']['user']->privs as $privs){
+
+            if ($privs['class']<=3 ) $county=$privs['id_county'];
+            foreach($t as $key=>$value){
+                if($county==$key){
+                    $countyArray[$key]=$value;
+                }
+            }
+        }
+
+        $this->view->toCountyList = $countyArray;
 
     }
-
     public function transfergetdataAction() {
 
         $this->_helper->viewRenderer->setNoRender(true);
@@ -105,7 +120,33 @@ class StudentController extends My_Form_AbstractFormController
                 break;
             case 'to_county' :
                 $toDistrictList = new Model_Table_District();
+
+
                 $this->view->toDistrictList = $toDistrictList->districtMultiOtions($to_county);
+
+                // Mike added this 8-1-2018 so that only districts with admin priv show up on the transfer to district
+
+                $t=$this->view->toDistrictList;
+                $districtArray=array();
+                foreach($_SESSION['user']['user']->privs as $privs){
+
+                     $dist=$toDistrictList->getDistrict($privs['id_county'],$privs['id_district']);
+
+
+                     $distName=$dist['name_district'];
+                   //  $this->writevar1($distName,'this is the district name');
+                    if ($privs['class']<=3 and $privs['status']=='Active' ) {
+                    foreach($t as $key=>$value){
+                       $this->writevar1($distName,'this is the district name '.$value);
+                        if($distName==$value){
+                            $this->writevar1($distName,'this is the district name '.$value);
+                            $districtArray[$key]=$value;
+                        }
+                      }
+                    }
+                 }
+                $this->view->toDistrictList=$districtArray;
+                // End of the Mike add 8-1-2018
                 $jsonData = array ( 'toDistrictList' => $this->view->toDistrictList );
                 break;
             case 'to_district' :

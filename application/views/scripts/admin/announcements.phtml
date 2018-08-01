@@ -1,0 +1,109 @@
+<?php $auth = Zend_Auth::getInstance();?>
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+	</td>
+    </tr>
+</table>
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $( ".datepicker" ).datepicker({ dateFormat: 'mm/dd/yy' });
+
+
+    $("#AnnouncementsForm").validate({
+       rules: {
+                display_until_date: {
+                                yearUS: true,
+                                required: true,
+                                minlength: 10
+                              },
+                msg_title:    {
+                                required: true,
+                                minlength: 2
+                              },
+                message_text: {
+                                required: true,
+                                minlength: 2
+                              },
+                msg_type: {
+                                required: true
+                              }
+               },
+               submitHandler: function(form) {
+                 $("div.error").hide();
+                 return false;
+               },
+               highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+               },
+               unhighlight: function (element, errorClass, validClass) {
+                $(element).css('border', '');
+               }
+              });
+ 
+       $.validator.addMethod("yearUS", function(value, element) {
+          return this.optional(element) || /\d{2}\/\d{2}\/\d{4}$/.test(value)
+       }, "Please enter a valid Date");
+
+    $(document).on("click", ".createButton", function () {
+
+      if ($("#AnnouncementsForm").valid()){
+
+       $(".createButton").prop("disabled", true);
+
+       var data_var = Array;
+       data_var['msg_title'] = encodeURIComponent($('#msg_title').val());
+       data_var['message_text'] = encodeURIComponent($('#message_text').val());
+       data_var['create_date'] = encodeURIComponent($('#create_date').val());
+       data_var['display_until_date'] = encodeURIComponent($('#display_until_date').val());
+       data_var['msg_type'] = encodeURIComponent($('#msg_type:checked').val());
+
+        $.ajax({
+          type       : "POST",
+          url        : "/admin/announcementssave/",
+          crossDomain: true,
+          cache      : false,
+          data       : data_var,
+          dataType   : "json",
+          success    : function(response) {
+                 $("#successSave").html(response.msg).removeClass("redAlert").addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                 setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+                 $(".createButton").remove();
+           }
+
+         });
+       }
+       return false;
+     })
+
+    $(document).on("keyup change", "input, textarea", function () {
+       $(".createButton").prop("disabled", false);
+       return false;
+     })
+
+
+  });
+</script>
+
+<form id="AnnouncementsForm">
+<table id="announcements" style="margin: 0 auto; margin-top: 30px;">
+<tr><th colspan=2>Creation Date: <?=date("m/d/Y")?></th><th>Display Until Date <input type="text" readonly class="datepicker" id="display_until_date" name="display_until_date">&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></th><tr>
+<tr><td colspan="3">Title <input type="text" style="width: 70%" id="msg_title" name="msg_title"></td></tr>
+<tr><th>Message Text</th><th colspan="2"><input type="radio" id="msg_type" name="msg_type" value="Announcement"> Annonuncement 
+                                         <input type="radio" id="msg_type" name="msg_type" value="Warning"> Warning</th></tr>
+<tr><td colspan="3"><textarea id="message_text" name="message_text"></textarea></td></tr>
+<tr><td colspan="3"><input type="button" value="Create" class="ui-button ui-widget ui-corner-all createButton" style="padding: 2px;" disabled></td></tr>
+</table>
+</form>
+<div id="successSave"></div>

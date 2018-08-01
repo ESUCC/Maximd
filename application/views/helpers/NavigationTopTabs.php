@@ -51,6 +51,8 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
 
 
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=admin&sub=server\');">Admin</a></li>';
+
+
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=reports&sub=reports\');">Reports</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials\');">Help</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'http://72.15.175.198/video/studentteam.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\')">Training Video</a></li>';
@@ -72,9 +74,10 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
         } else {
             $this->returnText .= '<ul id="nav">';
         }
-
-        $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org">Home</a></li>';
+// Mike changed this back 7-31-2018 but going to use iepweb02 home screen
+       // $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org">Home</a></li>';
       //  $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=home&sub=home">Home</a></li>';
+        $this->returnText .= '  <li><a href="/home">Home</a></li>';
 
         $this->returnText .= '  <li '.(($controllerName == 'student') ? 'class="current"' : '').'><a href="/student/search">Students</a></li>';
 
@@ -103,8 +106,10 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
 
       //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=district&sub=list">Districts</a></li>';
 
+            // SRS-269 Mike changed this 7-31-2018
+        //    $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=admin&sub=server">Admin</a></li>';
+            $this->returnText .= '  <li><a href="/admin/server">Admin</a></li>';
 
-            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=admin&sub=server">Admin</a></li>';
 
             // SRS-269 reports tab
             $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/report">Reports</a></li>';

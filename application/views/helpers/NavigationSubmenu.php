@@ -2,6 +2,25 @@
 class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 {
     public $returnText;
+
+    public function navigationSubmenuAdmin($actionName)
+    {
+        $session = new Zend_Session_Namespace ( 'user' );
+        $this->returnText .= '<ul id="nav2">';
+
+        if(!$session->parent) {
+            $this->returnText .= '  <li '.(($actionName == 'server') ? 'class="current"' : '').'><a href="/admin/server">Server</a></li>';
+            $this->returnText .= '  <li '.(($actionName == 'sessions') ? 'class="current"' : '').'><a href="/admin/sessions">Sessions</a></li>';
+            $this->returnText .= '  <li '.(($actionName == 'announcements') ? 'class="current"' : '').'><a href="/admin/announcements">Announcements</a></li>';
+            $this->returnText .= '  <li '.(($actionName == 'dataadmin') ? 'class="current"' : '').'><a href="/admin/dataadmin">Data Admin</a></li>';
+            $this->returnText .= '  <li '.(($actionName == 'reporting') ? 'class="current"' : '').'><a href="/admin/reporting">Reporting Admin</a></li>';
+        }
+        $this->returnText .= '</ul>';
+        return $this->returnText;
+    }
+
+
+
     public function navigationSubmenu($type = 'student')
     {
         switch(strtolower($type)) {
@@ -17,6 +36,9 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
                 break;
             case 'home':
                 return $this->navigationSubmenuHome();
+                break;
+            case 'admin':
+                return $this->navigationSubmenuAdmin($actionName);
                 break;
         }
     }
@@ -56,7 +78,12 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/staff"><b><i><font color="green">Student\'s  Team</b></i></font></a></li>';
 
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
-            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
+
+         // SRS-269 Student admin link no longer goes to iep
+            //$this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
+            $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/student/index3">Student Admin</a></li>';
+
+
             $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
 
          //   $this->returnText .= '  <li ><a href="https://iepweb02m.nebraskacloud.org/ods/advisorset/id_county/87/id_district/0017"><b><i><font color="green">ODS Link</a></font></b></i></li>';

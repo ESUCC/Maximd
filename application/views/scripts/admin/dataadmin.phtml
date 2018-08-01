@@ -1,0 +1,241 @@
+<?php $auth = Zend_Auth::getInstance();?>
+<script src="/js/validate/jquery.validate.min.js"></script>
+<script src="/js/validate/additional-methods.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    $(document).on("click", ".transferTeacher, .createDistrict, .createSchool", function () {
+        var url = "";
+        var title = $(this).attr("value");
+         switch (title) {
+            case 'Transfer teachers': url = "/admin/dataadminform/do/transfertearcher";
+                                      break; 
+            case 'Create District':   url = "/admin/dataadminform/do/createdistrict";
+                                      break; 
+            case 'Create School':     url = "/admin/dataadminform/do/createschool";
+                                      break; 
+         }
+
+        $("#dialog").load( url, function() {        
+           $("#dialog").dialog({  show: { effect: "fade", duration: 500 }, hide: {effect: "fade", duration: 500}, width: 650, height: 350, resizable : false, title: title, modal: true, beforeClose: function(event, ui) { $("#dialog").html(""); } } );
+
+           var validator = $("#DistrictForm").validate({
+	          rules: {
+    	            id_county: {
+        	      required: true
+                    },
+	            name_district: {
+    		      required: true
+    	    	    },
+                    address_street1: {
+	              required: true
+        	    },
+                    address_city: {
+	              required: true
+                    },
+                    address_state: {
+                      required: true
+                    },
+                    address_zip: {
+                      zipcodeUS: true,
+                      required: true,
+                      minlength: 5,
+                      maxlength: 10
+                    }
+               },
+               submitHandler: function(form) {
+                 $("div.error").hide();
+                 return false;
+               },
+               highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+               },
+               unhighlight: function (element, errorClass, validClass) {
+                 $(element).css('border', '');
+               }
+	    });
+
+           var validator = $("#SchoolForm").validate({
+	          rules: {
+    	            id_county: {
+        	      required: true
+                    },
+    	            id_district: {
+        	      required: true
+                    },
+	            name_school: {
+    		      required: true
+    	    	    },
+                    address_street1: {
+	              required: true
+        	    },
+                    address_city: {
+	              required: true
+                    },
+                    address_state: {
+                      required: true
+                    },
+                    address_zip: {
+                      zipcodeUS: true,
+                      required: true,
+                      minlength: 5,
+                      maxlength: 10
+                    }
+               },
+               submitHandler: function(form) {
+                 $("div.error").hide();
+                 return false;
+               },
+               highlight: function (element, required) {
+                  $(element).css('border', '2px solid #FDADAF');
+               },
+               unhighlight: function (element, errorClass, validClass) {
+                 $(element).css('border', '');
+               }
+	    });
+
+
+    	    $.validator.addMethod("zipcodeUS", function(value, element) {
+                return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+	    }, "The specified US ZIP Code is invalid");
+
+        });
+
+        return false;
+    
+    });
+
+    $(document).on("click", "#createDistrictButton, #createSchoolButton", function () {
+
+        $(this).prop("disabled", true);
+        var title = $(this).val();
+        var formName = "";
+        var data_var = Array;
+        data_var = {};
+        if ( title == 'Create District') formName = "#DistrictForm";
+           else if (title == 'Create School') formName = "#SchoolForm";
+
+            if ($(formName).valid()){
+
+              $(formName + " input, " + formName + " select").each( function(index, element) {
+                  data_var[encodeURIComponent($(element).attr("name"))] = encodeURIComponent($(element).val());
+              });
+
+               $.ajax({
+                 type       : "POST",
+                 url        : "/admin/dataadminsave/",
+                 crossDomain: true,
+                 cache      : false,
+                 data       : data_var,
+                 dataType   : "json",
+                 success    : function(response) {
+                    $("#successSave").html(response.msg).addClass("blueAlert").show({ effect: "fade", duration: 500 });
+                    setTimeout(function(){$('#successSave').hide({ effect: "fade", duration: 500 }).html();}, 3000);
+	         }
+              });
+          } else return false;
+
+
+        return false;
+    }); 
+
+
+
+
+    $(document).on("change", "#id_county", function () {
+     if ($("select").is("#id_district")){
+      $("#districtload").html('<i class="fa fa-spinner fa-pulse"></i>');
+      $("#id_district").empty().hide();
+      var id_county = $("#id_county").val();
+      var data_var = Array;
+      data_var['id_county'] = id_county;
+
+       $.ajax({
+          type       : "POST",
+          url        : "/admin/districtlist/",
+          crossDomain: true,
+          data       : data_var,
+          cache      : false,
+          dataType   : "json",
+          success    : function(response) {
+            if (response.length > 0){
+              $("#id_district").append('<option value="">Choose...</option>');
+              $.each(response, function (key, val) { $("#id_district").append("<option value="+val.id_district+">" + val.name_district + "</option>");  });
+              $("#districtload").html('');
+              $("#id_district").show();
+            } else {
+              $("#districtload").html('');
+
+            }
+          }
+        });
+       } else {
+         $("#districtload").html('');
+         $("#id_district").empty().hide();
+       }
+      return false;
+    });
+
+
+});
+</script>
+<style>
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 10px;
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+</style>
+
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+	</td>
+    </tr>
+</table>
+<br><br>
+<input type="button" class="ui-button ui-widget ui-corner-all transferTeacher" style="padding: 2px;" value="Transfer teachers">
+<br><br>
+<input type="button" class="ui-button ui-widget ui-corner-all createDistrict" style="padding: 2px;" value="Create District">
+<br><br>
+<input type="button" class="ui-button ui-widget ui-corner-all createSchool" style="padding: 2px;" value="Create School">
+<br><br>
+
+<div id="dialog"></div>

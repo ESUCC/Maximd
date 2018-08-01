@@ -1,0 +1,71 @@
+
+
+<?php $auth = Zend_Auth::getInstance();?>
+<style>
+#srs_mainPane {
+    top: 115px;
+    border: none;
+    overflow: visible;
+    margin-left: 10px;
+}
+#srs_left .subBar_top {
+    /*background:url(../images_srs/b_sbar_bg_top.jpg) no-repeat -8px top; */
+    height: 0px;
+    padding-bottom: 0; 
+}
+
+#srs_left .subBar_btm {
+    /* background:url(../images_srs/b_sbar_bg_btm.jpg) no-repeat -8px top; */
+    height: 0px; 
+}
+#leftTop {
+    /*background:url(../images_srs/c_left_bg_top.png) no-repeat right top;*/
+    height: 2px;
+    padding: 0;
+}	
+
+#srs_left {
+    position: fixed;
+    top: 41px;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    overflow: visible;
+    font-size: 1em;
+    color: #FFF;
+    border: none;
+}
+
+</style>
+<table border="0">
+    <!-- logo row -->
+    <tr>
+        <td>
+		<?php if($auth->hasIdentity()) echo $this->navigationTopTabs('simple'); ?>
+	</td>
+    </tr>
+    <tr>
+	<td>
+		<?php if($auth->hasIdentity()) echo $this->navigationSubmenu('admin'); ?>
+	</td>
+    </tr>
+</table>
+
+
+<h1>Administrative Functions</h1> 
+<br>
+<strong>Current Server Time is <?=date('r')?></strong>
+<br><br>
+<table style="width: 100%;">
+<tr><th></th><th>Month (MM)</th><th>Day (DD)</th><th>Year (CC/YY)</th><th>Hour (hh)</th><th>Minutes (mm)</th><th>Second(ss)</th><th></th></tr>
+<tr><th style="width: 100px; vertical-align: top;"><b>Server Time:</b></th><td><input type="text" style="width: 90%;"></td><td><input type="text" style="width: 90%;"></td><td><input type="text" style="width: 90%;"><input type="text" style="width: 90%;"></td><td><input type="text" style="width: 90%;"></td><td><input type="text" style="width: 90%;"></td><td><input type="text" style="width: 90%;"></td><td><input type="button" value="Update" class="ui-button ui-widget ui-corner-all" style="padding: 2px;"></td></tr>
+
+</table>
+<br>
+
+<hr noshade size="1" width="99%">
+<strong>IEP Application Status: Down</strong> <input type="button" value="Toggle" class="ui-button ui-widget ui-corner-all" style="margin-left: 100px; padding: 2px;">
+<hr noshade size="1" width="99%">
+
+
