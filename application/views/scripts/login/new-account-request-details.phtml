@@ -80,7 +80,7 @@ if (9 == $this->user_type) {
 	    <?if (isset($_SESSION['user']['id_personnel'])){?>
                 <button onclick="window.location='/home/'">Cancel</button>
 	       <?}else{?>
-                <button onclick="window.location='/'">Cancel</button>
+               <button onclick="window.location='/'">Cancel</button>
 	    <?}?>
         </td>
     </tr>
@@ -112,7 +112,13 @@ if (9 == $this->user_type) {
    	    <?if (isset($_SESSION['user']['id_personnel'])){?>
 		<button name="cancel" id="cancel" type="button" alt="Cancel" title="Cancel" onclick="window.location='/home/'">Cancel</button>
 	      <?} else {?>
-                <?= $this->form->getElement('cancel') ?>
+	         <form>
+              <input type="button" value="Cancel" onclick="window.location.href='http://srsz3.nebraskacloud.org'" />
+             </form>
+
+               <?php  // This was changes Aug 1 so that we don't go back to iep Mike
+                  //$this->form->getElement('cancel') ?>
+
 	    <?}?>
                 <?= $this->form->getElement('submit') ?>
             </td>

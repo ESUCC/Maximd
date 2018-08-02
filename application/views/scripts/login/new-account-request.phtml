@@ -1,7 +1,7 @@
 
-    <table border="0"> 
+    <table border="0">
         <!-- logo row -->
-        <?php $auth = Zend_Auth::getInstance(); ?> 
+        <?php $auth = Zend_Auth::getInstance(); ?>
             <td colspan="2">
                 <?php if ($auth->hasIdentity()) { // writevar($auth->getInstance(),'this is the identity of the person \n');
                    echo $this->navigationTopTabs('simple');
@@ -16,7 +16,7 @@
             </td>
         </tr>
     </table>
-   
+
 
 
 
@@ -48,7 +48,7 @@ var descriptionsArr = {
 
 
 
-    
+
     $(function () {
 
         var currentradio = $("input[name='user_type']:checked")[0];
@@ -108,7 +108,7 @@ var descriptionsArr = {
 
 <?
 
- 
+
 if (isset($this->msg)) {
     echo '<div class="btsRed">' . $this->msg . '</div>';
 }
@@ -133,11 +133,15 @@ if (isset($this->msg)) {
         </tr>
         <tr>
             <td colspan="2" align="right">
-                <?= $this->form->getElement('cancel') ?>
-                <?= $this->form->getElement('submit') ?>
+            <form>
+              <input type="button" value="Cancel" onclick="window.location.href='http://srsz3.nebraskacloud.org'" />
+             </form>
+                <?php  // This was changes Aug 1 so that we don't go back to iep Mike
+                  //$this->form->getElement('cancel') ?>
+                 <?= $this->form->getElement('submit') ?>
             </td>
         </tr>
-        
+
         <tr>
             <td colspan="2">
                 <div style="font-style: italic;">Note: Click or hover over the privilege levels to see a full description.</div>
@@ -152,7 +156,7 @@ if (isset($this->msg)) {
             </td>
         </tr>
         <tr>
-        
+
     </table>
 </form>
 </body>

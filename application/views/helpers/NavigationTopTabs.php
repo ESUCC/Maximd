@@ -83,9 +83,10 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
 
         if(!$parent) {
 
+            $this->returnText .= ' <li><a href="https://iepweb02.nebraskacloud.org/personnelm"><font color="green"><b><i>Personnel</b></i></font></a></li>';
 
             // SRS-269 get rid of old personnel
-            $this->returnText .= ' <li><a href="http://srsz3.nebraskacloud.org/personnel"><font color="green"><b><i>Personnel</b></i></font></a></li>';
+            $this->returnText .= ' <li><a href="http://srsz3.nebraskacloud.org/personnel"><font color="green"><b><i>Staff Search</b></i></font></a></li>';
 
        //  $this->returnText .= ' <li><a href="https://iepweb02m.nebraskacloud.org/personnelm"><font color="green"><b><i>Personnel</b></i></font></a></li>';
       //      $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel</a></li>';
@@ -98,10 +99,11 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
       //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=school&sub=list">Schools</a></li>';
 //
 
-            // SRS-269 change
-            $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
+            // SRS-269 change 7-30-2018
+            //SRS-269 changed it back due to issues with srsz3
+          //  $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
 
-          //  $this->returnText .= '  <li><a href="/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
+            $this->returnText .= '  <li><a href="/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
 
 
       //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=district&sub=list">Districts</a></li>';
