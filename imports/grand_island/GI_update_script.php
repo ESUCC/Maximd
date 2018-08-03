@@ -3,7 +3,7 @@
 
 // new sl 2003-04-22: ini directives to allow long exec time
 // sl 2005-08-15 modified to talk to db on iepdata.unl.edu
-// jl 2009-11-05 modified to talk to db on iepdata01.nebraskacloud.org
+// jl 2009-11-05 modified to talk to db on iepdatastage.nebraskacloud.org
 
 ini_set("max_execution_time", 79200); // 24 hours
 //ini_set("memory_limit", "128MB"); // got RAM to burn on the main machine so ...
@@ -84,10 +84,10 @@ $emailCC = "tom@harvill.net,mshellha@hotmail.com, mdanahy@esucc.org, mshellha@es
             $updateOBJ->port = '';
         } else {
 //             $updateOBJ->db = "iep_db";
-//             $updateOBJ->host = "iepdata01.nebraskacloud.org";
+//             $updateOBJ->host = "iepdatastage.nebraskacloud.org";
 //             $updateOBJ->port = '5432';
             $updateOBJ->db = "nebraska_srs";
-            $updateOBJ->host = "iepdata01.nebraskacloud.org";
+            $updateOBJ->host = "iepdatastage.nebraskacloud.org";
             $updateOBJ->port = '5434';
         }
 //        $updateOBJ->user = "postgres";
