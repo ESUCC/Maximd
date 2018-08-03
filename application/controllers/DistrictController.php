@@ -22,7 +22,22 @@ class DistrictController extends Zend_Controller_Action
         fclose($fp);
     }
 
+    function viewformorprintarchiveAction() {
 
+        $typeForm=$this->_getParam('id_form_archive');
+        $idDoc=$this->getParam('id_doc');
+        $length=strlen($typeForm);
+        $this->writevar1($typeForm,'this is the form type and id '.$length);
+        if($length < 6){
+            $urlArchive='/district/testprint/id/'.$idDoc;
+            $this->redirect($urlArchive);
+        }
+        if($length >6 ){
+            $url='/'.$typeForm.'/view/document/'.$idDoc.'/page/1';
+            $this->redirect($url);
+        }
+
+    }
 
     function testprintAction1() {
 
