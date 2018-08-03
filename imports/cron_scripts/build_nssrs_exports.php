@@ -29,12 +29,12 @@ if($onXanthos == true) {
 
 //     $DB_NAME        = "iep_db";
 //     $DB_USER_NAME   = "postgres";
-//     $DB_HOST		= "iepdatastage.nebraskacloud.org";
+//     $DB_HOST		= "iepdata01.nebraskacloud.org";
 //     $DB_PORT        = "5432";
 
     $DB_NAME        = "nebraska_srs";
     $DB_USER_NAME   = "psql-primary";
-    $DB_HOST		= "iepdatastage.nebraskacloud.org";
+    $DB_HOST		= "iepdata01.nebraskacloud.org";
     $DB_PORT        = "5434";
 
 }
