@@ -40,21 +40,21 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
     	$config = new Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
 
 		$this->returnText .= '<ul id="nav">';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=home&sub=home\');">Home</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=home&sub=home\');">Home</a></li>';
 		$this->returnText .= '  <li '.(($controllerName != 'translation') ? 'class="current"' : '').'><a href="javascript:checkEditedStatus(\'/student/search\');">Students</a></li>';
 
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=list\');">Personnel</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list\');">Personnel</a></li>';
 
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=school&sub=list\');">Schools</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=school&sub=list\');">Schools</a></li>';
 
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=district&sub=list\');">Districts</a></li>';
-
-
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=admin&sub=server\');">Admin</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=district&sub=list\');">Districts</a></li>';
 
 
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=reports&sub=reports\');">Reports</a></li>';
-		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iepdev.nebraskacloud.org/srs.php?area=help&sub=tutorials\');">Help</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=admin&sub=server\');">Admin</a></li>';
+
+
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=reports&sub=reports\');">Reports</a></li>';
+		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials\');">Help</a></li>';
 		$this->returnText .= '  <li><a href="javascript:checkEditedStatus(\'http://72.15.175.198/video/studentteam.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\')">Training Video</a></li>';
 
 
@@ -75,63 +75,76 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
             $this->returnText .= '<ul id="nav">';
         }
 // Mike changed this back 7-31-2018 but going to use iepweb02 home screen
-       // $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org">Home</a></li>';
-      //  $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=home&sub=home">Home</a></li>';
+       // $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org">Home</a></li>';
+      //  $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=home&sub=home">Home</a></li>';
         $this->returnText .= '  <li><a href="/home">Home</a></li>';
 
         $this->returnText .= '  <li '.(($controllerName == 'student') ? 'class="current"' : '').'><a href="/student/search">Students</a></li>';
 
         if(!$parent) {
 
-            $this->returnText .= ' <li><a href="https://iepweb02dev.nebraskacloud.org/personnelm"><font color="green"><b><i>Personnel</b></i></font></a></li>';
+            $this->returnText .= ' <li><a href="https://iepweb02.nebraskacloud.org/personnelm"><font color="green"><b><i>Personnel</b></i></font></a></li>';
 
             // SRS-269 get rid of old personnel
-            $this->returnText .= ' <li><a href="http://srsz3.nebraskacloud.org/personnel"><font color="green"><b><i>Staff Search</b></i></font></a></li>';
+            $this->returnText .= ' <li><a href="https://srs.nebraskacloud.org/personnel"><font color="green"><b><i>Staff Search</b></i></font></a></li>';
 
        //  $this->returnText .= ' <li><a href="https://iepweb02m.nebraskacloud.org/personnelm"><font color="green"><b><i>Personnel</b></i></font></a></li>';
-      //      $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel</a></li>';
+      //      $this->returnText .= '  <li '.(($controllerName == 'personnel') ? 'class="current"' : '').'><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel</a></li>';
 
 
             // SRS-269 Schools tab
-            $this->returnText .= ' <li><a href="http://srsz3.nebraskacloud.org/school"><font color="green"><b><i>Schools</b></i></font></a></li>';
+            $this->returnText .= ' <li><a href="https://srs.nebraskacloud.org/school"><font color="green"><b><i>Schools</b></i></font></a></li>';
 
         //    $this->returnText .= ' <li><a href="https://iepweb02m.nebraskacloud.org/school/search"><font color="green"><b><i>Schools</b></i></font></a></li>';
-      //      $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=school&sub=list">Schools</a></li>';
+      //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=school&sub=list">Schools</a></li>';
 //
 
             // SRS-269 change 7-30-2018
             //SRS-269 changed it back due to issues with srsz3
-          //  $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
+          //  $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
 
             $this->returnText .= '  <li><a href="/district"><font color="green"><b><i>Districts</a></i></b?</font></li>';
 
 
-      //      $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=district&sub=list">Districts</a></li>';
+      //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=district&sub=list">Districts</a></li>';
 
             // SRS-269 Mike changed this 7-31-2018
-        //    $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=admin&sub=server">Admin</a></li>';
+        //    $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=admin&sub=server">Admin</a></li>';
             $this->returnText .= '  <li><a href="/admin/server">Admin</a></li>';
 
 
             // SRS-269 reports tab
-            $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/report">Reports</a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/report">Reports</a></li>';
            // $this->returnText .= '  <li><a href="/report">Reports</a></li>';
 
+           // changed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/help">Help</a></li>';
 
-            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
-            $this->returnText .= '  <li><a id="localvideo" href="javascript:void(window.open(\'http://72.15.175.198/video/greentabs.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\'))"><font color="green"><b>Green Tabs Video Training</font></b></a></li>';
+
+      //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
+      //      $this->returnText .= '  <li><a id="localvideo" href="javascript:void(window.open(\'http://72.15.175.198/video/greentabs.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\'))"><font color="green"><b>Green Tabs Video Training</font></b></a></li>';
+            // removed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a id="localvideo" href="javascript:void(window.open(\'http://72.15.175.198/video/greentabs.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\'))"><font color="green"><b>Green Tabs Video Training</font></b></a></li>';
+
 
 
 
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
         }
-        //$this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
-        if(!$parent) {
+//<<<<<<< HEAD
+        //$this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
+       // if(!$parent) {
+//=======
+        //$this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
+        // if(!$parent) {
+
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
-        }
-        if ($admin) {
-            $this->returnText .= '  <li '.(($controllerName == 'translation') ? 'class="current"' : '').'><a href="/translation">Translation</a></li>';
-        }
+        // }
+        // removed for SRS-269 8/6/2018 SI
+        // if ($admin) {
+        //     $this->returnText .= '  <li '.(($controllerName == 'translation') ? 'class="current"' : '').'><a href="/translation">Translation</a></li>';
+        // }
         $this->returnText .= '</ul>';
         return $this->returnText;
     }

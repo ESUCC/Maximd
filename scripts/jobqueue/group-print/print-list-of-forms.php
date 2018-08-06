@@ -58,7 +58,7 @@ if(isset($vars['formList'])) {
     }
 
     // new HTTP request to old site
-    $oldSiteClient = new Zend_Http_Client('https://iepdev.nebraskacloud.org/logon.php?option=1', $httpParams);
+    $oldSiteClient = new Zend_Http_Client('https://iep.nebraskacloud.org/logon.php?option=1', $httpParams);
     $oldSiteClient->setMethod(Zend_Http_Client::POST);
     $oldSiteClient->setCookieJar();
     $oldSiteClient->setParameterPost('userName', 'archiver');
@@ -70,7 +70,7 @@ if(isset($vars['formList'])) {
     $dom = new Zend_Dom_Query($response->getBody());
     if($dom->query('#ferpa')->count()>=1) {
         // login failed
-        Zend_Debug::dump('login failed on iepdev.nebraskacloud.org');
+        Zend_Debug::dump('login failed on iep.nebraskacloud.org');
     }
     $initialPathList = array();
     /**
@@ -125,7 +125,7 @@ function getPrintHtml($oldSiteClient, $newSiteClient, $formPrintConfig) {
 //        Zend_Debug::dump($response, 'new');
     } else {
         // old site
-        $url = 'https://iepdev.nebraskacloud.org/form_print.php?form=form_'.$formNumber.'&document='.$document;
+        $url = 'https://iep.nebraskacloud.org/form_print.php?form=form_'.$formNumber.'&document='.$document;
         if($summary) {
             $url .= '&summary=1';
         }

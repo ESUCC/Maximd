@@ -34,7 +34,8 @@ $this->headLink()->appendStylesheet('/css/srs_style_IE.css', 'screen', 'IE');
 $this->headLink()->appendStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css', 'screen');
 
 // bad browser display/detection
-$this->jQuery()->addJavascriptFile('/js/jquery_addons/jquery.badBrowser.js');
+// outdated, commented out 8/6/2018 SI
+// $this->jQuery()->addJavascriptFile('/js/jquery_addons/jquery.badBrowser.js');
 $this->jQuery()->addJavascriptFile('/js/jquery.blockUI.js'.$refreshCode);
 $this->jQuery()->addJavascriptFile('/js/jquery_addons/jquery.client.js'.$refreshCode);
 

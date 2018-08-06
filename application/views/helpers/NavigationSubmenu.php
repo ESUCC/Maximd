@@ -11,7 +11,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         if(!$session->parent) {
             $this->returnText .= '  <li '.(($actionName == 'server') ? 'class="current"' : '').'><a href="/admin/server">Server</a></li>';
             $this->returnText .= '  <li '.(($actionName == 'sessions') ? 'class="current"' : '').'><a href="/admin/sessions">Sessions</a></li>';
-            $this->returnText .= '  <li '.(($actionName == 'announcements') ? 'class="current"' : '').'><a href="/admin/announcements">Announcements</a></li>';
+            // changed for SRS-269 8/6/2018 SI
+            $this->returnText .= '  <li '.(($actionName == 'announcements') ? 'class="current"' : '').'><a href="https://srs.nebraskacloud.org/admin">Announcements</a></li>';
             $this->returnText .= '  <li '.(($actionName == 'dataadmin') ? 'class="current"' : '').'><a href="/admin/dataadmin">Data Admin</a></li>';
             $this->returnText .= '  <li '.(($actionName == 'reporting') ? 'class="current"' : '').'><a href="/admin/reporting">Reporting Admin</a></li>';
         }
@@ -58,7 +59,7 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
     {
         $session = new Zend_Session_Namespace ( 'user' );
         $this->returnText .= '<ul id="nav2">';
-        $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?&area=student&sub=list">Student List</a></li>';
+        $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=list">Student List</a></li>';
         if(!$session->parent) {
           //  $this->returnText .= '  <li '.(($actionName == 'studentadd') ? 'class="current"' : '').'><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
 
@@ -66,25 +67,30 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
              * SRS-269 taken out 7-27-2018 by Mike
             $this->returnText .= '  <li ><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
 
-            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=student&option=new">New Student</a></li>';
 
-            $this->returnText .= '  <li ><a href="http://srsz3.nebraskacloud.org/student/addedit"><b><i><font color="green">New Student</a></font></b></i></li>';
+            $this->returnText .= '  <li ><a href="https://srs.nebraskacloud.org/student/addedit"><b><i><font color="green">New Student</a></font></b></i></li>';
 */
             $this->returnText .= '  <li ><a href="/student/studentadd"><b><i><font color="green">New Student</a></font></b></i></li>';
 // Mike had to put this back until we can find a way to secure srsz3 7-30-2018 SRS-269
 
         // SRS-269 The students team link changed
         //   $this->returnText .= '  <li><a href="/staff"><b><i><font color="green">Student\'s  Team</b></i></font></a></li>';
-            $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/staff"><b><i><font color="green">Student\'s  Team</b></i></font></a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/staff"><b><i><font color="green">Student\'s  Team</b></i></font></a></li>';
 
             $this->returnText .= '  <li><a href="/student/transfer-center">Transfer Students</a></li>';
 
          // SRS-269 Student admin link no longer goes to iep
-            //$this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
-            $this->returnText .= '  <li><a href="http://srsz3.nebraskacloud.org/student/index3">Student Admin</a></li>';
+            //$this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/student/index3">Student Admin</a></li>';
 
+//<<<<<<< HEAD
 
-            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
+        //    $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
+//=======
+            // removed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
+
 
          //   $this->returnText .= '  <li ><a href="https://iepweb02m.nebraskacloud.org/ods/advisorset/id_county/87/id_district/0017"><b><i><font color="green">ODS Link</a></font></b></i></li>';
 
@@ -113,7 +119,15 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $privCheck = new My_Classes_privCheck($session->user->privs);
         $admin = 1==$privCheck->getMinPriv()?true:false;
         $this->returnText .= '<ul id="nav2">';
-        $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
+//<<<<<<< HEAD
+  //      $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
+//=======
+
+        // changed for SRS-269 8/6/2018 SI
+        // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
+        $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/personnel">Personnel List</a></li>';
+
+
         if(!$session->parent) {
 
 
@@ -124,14 +138,19 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
-            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
+//<<<<<<< HEAD
+//            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
+//=======
+            // removed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
+// >>>>>>> 9c6dd8d2f798acb71a7b32557db832bae9d0b9a7
 
 // Mike added this July 26 so that only the New Privilege tab would show up
 // where appropriate
 
 
             if($showNewPrivs==true){
-           $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iepdev.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
+           $this->returnText .= '  <li ><a id="hideme" class="openWindow mike tooltip" data-tip-type="html" data-tip-source="tooltip-sidebar3"   title="var" href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'"><font color="green"><b><i>New Privileges</font></b></i></a></li>';
             }
 // End of Mike add
         }
@@ -139,7 +158,13 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 
 
         if($admin) {
-            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
+//<<<<<<< HEAD
+//            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
+//=======
+          // changed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/personnel/admin">Personnel Admin</a></li>';
+
         }
         $this->returnText .= '</ul>';
         return $this->returnText;
@@ -153,9 +178,9 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $this->returnText .= '  <li><a href="/home">Welcome</a></li>';
         if(!$session->parent) {
             $this->returnText .= '  <li><a href="/home/message-center">My Messages</a></li>';
-            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">Announcements</a></li>';
+            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">Announcements</a></li>';
             $this->returnText .= '  <li><a href="/personnel/edit/id_personnel/'.$session->sessIdUser.'">Edit Profile</a></li>';
-//            $this->returnText .= '  <li><a href="https://iepdev.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">Password</a></li>';
+//            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">Password</a></li>';
             $this->returnText .= '  <li><a href="https://docs.google.com/forms/d/1qwgwOVAAcLCgn9JR8FbBnEOLGLH3c-hWpM5HxNbvgOo/viewform">Suggestions</a></li>';
 
         }

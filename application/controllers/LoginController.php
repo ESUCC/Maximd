@@ -137,7 +137,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
             App_Helper_Session::grantSiteAccess($user, false);
            // Replaced this with link back to srsz3.
            // $this->_redirect('home');
-            $this->redirect('http://srsz3.nebraskacloud.org');
+            $this->redirect('https://srs.nebraskacloud.org');
             return;
 
         } else {
@@ -177,7 +177,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
         App_Helper_Session::cleanSessionForReuse();
         Zend_Session::destroy(1);
         if ('production' == APPLICATION_ENV) {
-             $this->_redirect('https://iepdev.nebraskacloud.org/');
+             $this->_redirect('https://iep.nebraskacloud.org/');
         } else {
             $this->_helper->redirector('index', 'index');
         }
@@ -628,7 +628,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
             $message .= "\nFor future reference, your user name and password are included below:\n\n";
             $message .= "User Name: $newPersonnelRecord->user_name\n";
             $message .= "Password: {$userFormData['password']}\n\n";
-            $message .= "Once you're approved, you can use the following link to log on:\n\nhttps://iepdev.nebraskacloud.org/\n\n";
+            $message .= "Once you're approved, you can use the following link to log on:\n\nhttps://iep.nebraskacloud.org/\n\n";
             $message .= "To add a 'New Privilege'\n\n1) Logon using your current username and password.\n";
             $message .= "2) Then click on the Personnel tab.\n";
             $message .= "3) Now click on the 'New Privilege' link in the blue ribbon below the personnel tab.\n";
@@ -716,8 +716,8 @@ class LoginController extends App_Zend_Controller_Action_Abstract
 
 
             // Mike changed this 1=17-2017 SRS-156 the link is totally wrong. Switched them
-           // $message .= " https://iepdev.nebraskacloud.org/goto.php?goto=area&personnel=sub&personnel=personnel&$newPersonnelId=option&edit\n\n";
-            $message .= " https://iepweb02dev.nebraskacloud.org/personnel/edit/id_personnel/$newPersonnelId\n\n";
+           // $message .= " https://iep.nebraskacloud.org/goto.php?goto=area&personnel=sub&personnel=personnel&$newPersonnelId=option&edit\n\n";
+            $message .= " https://iepweb02.nebraskacloud.org/personnel/edit/id_personnel/$newPersonnelId\n\n";
 
 
             $message .= "If you have questions, you can contact {$userFormData['name_first']} {$userFormData['name_last']} at: {$userFormData['phone_work']}";

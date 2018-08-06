@@ -8,7 +8,7 @@ class TranslationController extends Zend_Controller_Action {
         if (! App_Helper_Session::siteAccessGranted ()) {
             if ('production' == APPLICATION_ENV) {
                 // try to get the token from iep and relogin
-                return $this->_redirect ( 'https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination=' . str_replace ( '/', '-', $_SERVER ['REQUEST_URI'] ) );
+                return $this->_redirect ( 'https://iep.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination=' . str_replace ( '/', '-', $_SERVER ['REQUEST_URI'] ) );
             } else {
                 // redirect home
                 return $this->redirectWithMessage ( '/', "You do not have site access granted." );

@@ -15,7 +15,7 @@ class BellevueExport extends ExportFactoryBellevue {
         echo "\n\nBegin Export Student's\n";
         $finalLog = "\n\nBegin Exports Students...\n";
         $finalLog .= $this->dumpLog();
-        // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02dev.nebraskacloud.org/80/1.0.0_18/application
+        // print_r($finalLog); dumped /usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/80/1.0.0_18/application
         $this->clearMetaData();clear;
 
         /**
@@ -27,7 +27,7 @@ class BellevueExport extends ExportFactoryBellevue {
        // print_r($exportConfig); die();
         $this->exportConfig = $exportConfig;
         $this->dataSource = $exportConfig->data_source;
-      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02dev.nebraskacloud.org/80/1.0.0_18/application is what is printed
+      //  print_r($this->dataSource);die(); /usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/80/1.0.0_18/application is what is printed
       // echo($this->dataSource);
 
         $this->initEmail($exportConfig->email);
