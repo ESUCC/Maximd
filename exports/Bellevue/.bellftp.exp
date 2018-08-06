@@ -9,7 +9,7 @@ spawn /bin/bash
 expect "#"
 
 
-send "/usr/bin/scp /usr/local/zend/var/apps/https/iepweb02.nebraskacloud.org/80/1.0.0_84/exports/Bellevue/SRStoBellevue.txt bellevue@205.202.253.9:SRStoBellevue.txt\r"
+send "/usr/bin/scp /usr/local/zend/var/apps/https/iepweb02dev.nebraskacloud.org/80/1.0.0_84/exports/Bellevue/SRStoBellevue.txt bellevue@205.202.253.9:SRStoBellevue.txt\r"
 expect "assword:"
 send "My2C3nts\r"
 expect "#"

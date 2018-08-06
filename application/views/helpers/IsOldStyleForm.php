@@ -4,7 +4,7 @@ class Zend_View_Helper_IsOldStyleForm extends Zend_View_Helper_Abstract
 {
 
     /**
-     * Returns true if form should redirect to iep.nebraskacloud.org form
+     * Returns true if form should redirect to iepdev.nebraskacloud.org form
      * 
      * @return string
      */
