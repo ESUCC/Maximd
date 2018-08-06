@@ -11,7 +11,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         if(!$session->parent) {
             $this->returnText .= '  <li '.(($actionName == 'server') ? 'class="current"' : '').'><a href="/admin/server">Server</a></li>';
             $this->returnText .= '  <li '.(($actionName == 'sessions') ? 'class="current"' : '').'><a href="/admin/sessions">Sessions</a></li>';
-            $this->returnText .= '  <li '.(($actionName == 'announcements') ? 'class="current"' : '').'><a href="/admin/announcements">Announcements</a></li>';
+            // changed for SRS-269 8/6/2018 SI
+            $this->returnText .= '  <li '.(($actionName == 'announcements') ? 'class="current"' : '').'><a href="https://srs.nebraskacloud.org/admin">Announcements</a></li>';
             $this->returnText .= '  <li '.(($actionName == 'dataadmin') ? 'class="current"' : '').'><a href="/admin/dataadmin">Data Admin</a></li>';
             $this->returnText .= '  <li '.(($actionName == 'reporting') ? 'class="current"' : '').'><a href="/admin/reporting">Reporting Admin</a></li>';
         }
@@ -83,8 +84,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
             //$this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=admin">Student Admin</a></li>';
             $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/student/index3">Student Admin</a></li>';
 
-
-            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
+            // removed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=student&sub=helper_pg">Progess Report Helper</a></li>';
 
          //   $this->returnText .= '  <li ><a href="https://iepweb02m.nebraskacloud.org/ods/advisorset/id_county/87/id_district/0017"><b><i><font color="green">ODS Link</a></font></b></i></li>';
 
@@ -113,7 +114,11 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
         $privCheck = new My_Classes_privCheck($session->user->privs);
         $admin = 1==$privCheck->getMinPriv()?true:false;
         $this->returnText .= '<ul id="nav2">';
-        $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
+
+        // changed for SRS-269 8/6/2018 SI
+        // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list">Personnel List</a></li>';
+        $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/personnel">Personnel List</a></li>';
+
         if(!$session->parent) {
 
 
@@ -124,7 +129,8 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 
             // Mike added this 7-5-2017 in order to get the new privileges to work
             // It skips the first one so you will not get two
-            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
+            // removed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/new_privilege.php?personnel='.$session->sessIdUser.'">New Privilege Request</a></li>';
 
 // Mike added this July 26 so that only the New Privilege tab would show up
 // where appropriate
@@ -139,7 +145,9 @@ class Zend_View_Helper_NavigationSubmenu extends Zend_View_Helper_Abstract
 
 
         if($admin) {
-            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
+          // changed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?&area=personnel&sub=admin">Personnel Admin</a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/personnel/admin">Personnel Admin</a></li>';
         }
         $this->returnText .= '</ul>';
         return $this->returnText;

@@ -117,21 +117,25 @@ class Zend_View_Helper_NavigationTopTabs extends Zend_View_Helper_Abstract
             $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/report">Reports</a></li>';
            // $this->returnText .= '  <li><a href="/report">Reports</a></li>';
 
+           // changed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
+            $this->returnText .= '  <li><a href="https://srs.nebraskacloud.org/help">Help</a></li>';
 
-            $this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
-            $this->returnText .= '  <li><a id="localvideo" href="javascript:void(window.open(\'http://72.15.175.198/video/greentabs.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\'))"><font color="green"><b>Green Tabs Video Training</font></b></a></li>';
+            // removed for SRS-269 8/6/2018 SI
+            // $this->returnText .= '  <li><a id="localvideo" href="javascript:void(window.open(\'http://72.15.175.198/video/greentabs.html\',\'_blank\',\'location=yes,width=850,height=700,scrollbars=yes,status=yes\'))"><font color="green"><b>Green Tabs Video Training</font></b></a></li>';
 
 
 
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
         }
         //$this->returnText .= '  <li><a href="https://iep.nebraskacloud.org/srs.php?area=help&sub=tutorials">Help</a></li>';
-        if(!$parent) {
+        // if(!$parent) {
             //$this->returnText .= '  <li><a href="'.$config->DOC_ROOT .'personnel/stylescope">Stylescope</a></li>';
-        }
-        if ($admin) {
-            $this->returnText .= '  <li '.(($controllerName == 'translation') ? 'class="current"' : '').'><a href="/translation">Translation</a></li>';
-        }
+        // }
+        // removed for SRS-269 8/6/2018 SI
+        // if ($admin) {
+        //     $this->returnText .= '  <li '.(($controllerName == 'translation') ? 'class="current"' : '').'><a href="/translation">Translation</a></li>';
+        // }
         $this->returnText .= '</ul>';
         return $this->returnText;
     }
