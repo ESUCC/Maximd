@@ -27,7 +27,7 @@ class Zend_View_Helper_PrintHeader extends Zend_View_Helper_Abstract
 	        case 'Notice of Initial Evaluation and Child Assessment':
 	        case 'Individual Family Service Plan':
 	        case 'Annual Transition Notice':
-	            $ednImg = 'http://iepweb02.nebraskacloud.org/images/EDN.jpg';
+	            $ednImg = 'http://iepweb02dev.nebraskacloud.org/images/EDN.jpg';
 	            $this->_retString .= '<td><img src="' . $ednImg . '" width="125" height="93" /></td>';
 	            break;
 	    }

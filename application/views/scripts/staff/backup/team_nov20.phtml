@@ -124,7 +124,7 @@ a:active {
     }
      ?>
   
-   <a href="https://iepweb02.nebraskacloud.org/staff/team/id_student/<?php echo $pg2['id_student']?>/id_personnel/<?php echo $this->user_id?>/id_school/<?php echo $pg2['id_school']?>">
+   <a href="https://iepweb02dev.nebraskacloud.org/staff/team/id_student/<?php echo $pg2['id_student']?>/id_personnel/<?php echo $this->user_id?>/id_school/<?php echo $pg2['id_school']?>">
       <?php echo $pg2['id_student']." ". $pg2['name_first']." ".$pg2['name_last']?></a>
       </th></tr>
  
@@ -156,7 +156,7 @@ a:active {
 
 
 <div class="w3-col w3-lightblue w3-center w3-striped w3-border w3-border-red  w3-round-xlarge"style="width:40%">
- <form action ="https://iepweb02.nebraskacloud.org/staff/update/" method="post">
+ <form action ="https://iepweb02dev.nebraskacloud.org/staff/update/" method="post">
 <table><tr>
 
 <h3 class="w3-text-shadow w3-light-blue"> <i>Student:</i> <?php  echo $this->nameStudentFull; ?></h3></tr>
@@ -388,7 +388,7 @@ $cnt=count($this->schoolName);
 
 for ($x=0;$x<$cnt;$x++){
 ?>
-  <h3> <a href="https://iepweb02.nebraskacloud.org/staff/team/id_school/<?php echo $this->schoolName[$x]['id_school']?>">
+  <h3> <a href="https://iepweb02dev.nebraskacloud.org/staff/team/id_school/<?php echo $this->schoolName[$x]['id_school']?>">
      <?php echo "Students at ".$this->schoolName[$x]['name_school']?></a></p></h3>
       
     

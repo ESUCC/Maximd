@@ -12,12 +12,12 @@ class ErrorReportingController extends App_Zend_Controller_Action_Abstract {
 //		if($this->getRequest()->getParam('PHPSESSID')) {
 //			$sessionRec = $sessObj->getSessionRecordBySessId($this->getRequest()->getParam('PHPSESSID'));
 //			if('Active' != $sessionRec['status'] || true != $sessionRec['siteaccessgranted']) {
-//	    		return $this->_redirect('https://iep.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination='.str_replace('/', '-', $_SERVER['REQUEST_URI']));
+//	    		return $this->_redirect('https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination='.str_replace('/', '-', $_SERVER['REQUEST_URI']));
 //			}
 //		} elseif(!App_Helper_Session::siteAccessGranted()) {
 //	    	if('production' == APPLICATION_ENV) {
 //	    		// try to get the token from iep and relogin
-//	    		return $this->_redirect('https://iep.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination='.str_replace('/', '-', $_SERVER['REQUEST_URI']));
+//	    		return $this->_redirect('https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=gettoken&destination='.str_replace('/', '-', $_SERVER['REQUEST_URI']));
 //	    	} else {
 //	    		// redirect home
 //	    		return $this->redirectWithMessage('/', "You are not logged in an cannot access this image.");

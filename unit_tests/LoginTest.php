@@ -41,7 +41,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     public function loginOldSite()
     {
         // new HTTP request to old site
-        $oldSiteClient = new Zend_Http_Client('https://iep.nebraskacloud.org/logon.php?option=1', $this->httpParams);
+        $oldSiteClient = new Zend_Http_Client('https://iepdev.nebraskacloud.org/logon.php?option=1', $this->httpParams);
         $oldSiteClient->setMethod(Zend_Http_Client::POST);
         $oldSiteClient->setCookieJar();
         $oldSiteClient->setParameterPost('userName', 'archiver');
@@ -60,7 +60,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     public function loginIepweb02Site()
     {
         // new HTTP request to new
-        $newSiteClient = new Zend_Http_Client('https://iepweb02.nebraskacloud.org/login', $this->httpParams);
+        $newSiteClient = new Zend_Http_Client('https://iepweb02dev.nebraskacloud.org/login', $this->httpParams);
         $newSiteClient->setMethod(Zend_Http_Client::POST);
         $newSiteClient->setCookieJar();
         $newSiteClient->setParameterPost('email', 'archiver');
@@ -79,7 +79,7 @@ class LoginTest extends PHPUnit_Framework_TestCase
     public function loginIepweb03Site()
     {
         // new HTTP request to new
-        $newSiteClient = new Zend_Http_Client('https://iepweb02.nebraskacloud.org/login', $this->httpParams);
+        $newSiteClient = new Zend_Http_Client('https://iepweb02dev.nebraskacloud.org/login', $this->httpParams);
         $newSiteClient->setMethod(Zend_Http_Client::POST);
         $newSiteClient->setCookieJar();
         $newSiteClient->setParameterPost('email', 'archiver');

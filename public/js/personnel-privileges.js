@@ -3,7 +3,7 @@ $(function() {
      * override main cancel/done button
      */
     $('#cancel').click(function() {
-        window.location.href = 'https://iep.nebraskacloud.org/srs.php?area=personnel&sub=list';
+        window.location.href = 'https://iepdev.nebraskacloud.org/srs.php?area=personnel&sub=list';
         return false;
     });
     /**
