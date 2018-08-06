@@ -137,7 +137,7 @@ class LoginController extends App_Zend_Controller_Action_Abstract
             App_Helper_Session::grantSiteAccess($user, false);
            // Replaced this with link back to srsz3.
            // $this->_redirect('home');
-            $this->redirect('http://srsz3.nebraskacloud.org');
+            $this->redirect('https://srs.nebraskacloud.org');
             return;
 
         } else {
