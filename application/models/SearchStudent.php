@@ -102,13 +102,13 @@ class Model_SearchStudent
         if(empty($options['searchValues']) && '1' != $options['showAll'] && '1' != $options['defaultCacheResult'])
             return array('error' => 'You must enter at least one search field above. (201)');
 
-        // if($this->_session->parent) {
-        //     $admin = false;
-        // } else {
-        //     // get best priv
-        //     $privCheck = new My_Classes_privCheck($this->_session->user->privs);
-        //     $admin = 1==$privCheck->getMinPriv()?true:false;
-        // }
+         if($this->_session->parent) {
+             $admin = false;
+         } else {
+             // get best priv
+             $privCheck = new My_Classes_privCheck($this->_session->user->privs);
+             $admin = 1==$privCheck->getMinPriv()?true:false;
+         }
 
 //         $binds = array();
 //         $sqlStmt = "SELECT s.*, s.id_student, " 
@@ -524,13 +524,13 @@ class Model_SearchStudent
 //         /*
 //          * Check to see if there is a cache key set
 //          */
-//         if (empty($options['key'])) {
-//             $key = Model_CacheManager::generateCacheKey();
-//         } else {
-//             $key = $options['key'];
-//         }
-//         $this->_session->user->searchCacheKey = $key;
-//         $this->_session->user->searchPage = $options['page'];
+         if (empty($options['key'])) {
+             $key = Model_CacheManager::generateCacheKey();
+         } else {
+             $key = $options['key'];
+         }
+         $this->_session->user->searchCacheKey = $key;
+         $this->_session->user->searchPage = $options['page'];
 
         // if($returnRaw) {
         //     return $this->_student->getAdapter()->fetchAll($sqlStmt . $fromStmt . $whereStmt . $orderLimitStmt, $binds);
